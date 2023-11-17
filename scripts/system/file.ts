@@ -27,12 +27,27 @@ function getUserFolder() {
   }
   return filePath;
 }
-function Delete(name: string) {
+function deleteFile(name: string) {
   const fname = getFilePath(name);
 
   return Process("fs.system.Remove", fname);
 }
 
+function getBasename(filename: string) {
+  if (filename == null) {
+    return "";
+  }
+  // Get the last index of the path separator '/'
+  const lastIndex = filename.lastIndexOf("/");
+
+  // If the separator is found, return the substring after it
+  if (lastIndex !== -1) {
+    return filename.substring(lastIndex + 1);
+  }
+
+  // If no separator found, return the filename as it is
+  return filename;
+}
 // yao run scripts.system.file.getFileName
 function getFilePath(name: string) {
   // console.log("filename:", name);
@@ -106,10 +121,10 @@ function getFolderList(parent: string) {
   if (!Process("fs.system.Exists", uploadFolder)) {
     return [];
   }
-  const list = Process("fs.system.ReadDir", uploadFolder);
-
+  let list = Process("fs.system.ReadDir", uploadFolder);
+  list = list.map((l) => l.replace(/\\/g, "/"));
   let list2 = list.filter((dir: string) => Process("fs.system.isDir", dir));
-  console.log("list2:", list2);
+  // console.log("list2:", list2);
   list2 = list2.map((dir: string) => {
     const d = dir.replace(uploadFolder, "");
 
@@ -133,7 +148,8 @@ function getFileList(folder: string) {
   let userFolder = getUserFolder();
   const uploadFolder = `${userFolder}/${folder}/`;
 
-  const list = Process("fs.system.ReadDir", uploadFolder);
+  let list = Process("fs.system.ReadDir", uploadFolder);
+  list = list.map((l) => l.replace(/\\/g, "/"));
 
   const list2 = [] as FileList[];
   list.forEach((f: string) => {

@@ -1,0 +1,35 @@
+{
+    "label": "下载文件",
+    "version": "1.0.0",
+    "description": "下载文件",
+    "nodes": [
+        {
+            "description": "文件名",
+            "name": "basename",
+            "process": "scripts.system.file.getBasename",
+            "args": [
+                "{{$in.0}}"
+            ]
+        },
+        {
+            "description": "获取用户文件下载地址",
+            "name": "filename",
+            "process": "scripts.system.file.getFilePath",
+            "args": [
+                "{{$in.0}}"
+            ]
+        },
+        {
+            "name": "下载文件",
+            "process": "fs.system.Download",
+            "args": [
+                "{{$res.filename}}"
+            ]
+        }
+    ],
+    "output": {
+        "content": "{{$res.下载文件.content}}",
+        "type": "{{$res.下载文件.type}}",
+        "filename": "{{$res.basename}}"
+    }
+}

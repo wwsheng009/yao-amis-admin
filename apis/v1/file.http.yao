@@ -39,12 +39,31 @@
       }
     },
     {
+      // /api/v1/file/download
+      "label": "下载成附件",
+      "description": "下载成附件",
+      "path": "/download_file",
+      "method": "GET",
+      "process": "flows.system.download_file",
+      "in": [
+        "$query.name"
+      ],
+      "out": {
+        "status": 200,
+        "body": "{{content}}",
+        "headers": {
+          "Content-Type": "{{type}}",
+          "Content-Disposition": "attachment; filename={{filename}}" //这里需要调整gou的bind函数的代码才能适配，要不然无法进行部分绑定
+        }
+      }
+    },
+    {
       // /api/v1/file/delete
       "label": "删除文件",
       "description": "下载文件",
       "path": "/delete",
       "method": "GET",
-      "process": "scripts.system.file.delete",
+      "process": "scripts.system.file.deleteFile",
       "in": [
         "$query.name"
       ],

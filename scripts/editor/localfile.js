@@ -116,7 +116,7 @@ function savePage(file, payload) {
   WriteFile(nfilename, payload);
   // fs.WriteFile(fname, JSON.stringify(payload), "0644");
 
-  console.log("nfilename", nfilename);
+  // console.log("nfilename", nfilename);
   saveFileRecord(user_id, nfilename);
 
   return { message: "Page Saved" };
@@ -200,11 +200,11 @@ function WriteFile(filename, data) {
       fs.MkdirAll(folder);
     }
   }
-  const res = fs.WriteFile(filename, JSON.stringify(data));
-  if (res && res.code && res.message) {
-    console.log(`创建配置文件失败【${res.code},${res.message}】：${filename}`);
+  const res = fs.WriteFile(filename, JSON.stringify(data, null, 2));
+  if (res?.code && res?.message) {
+    console.log(`保存配置文件失败【${res.code},${res.message}】：${filename}`);
   } else {
-    console.log(`创建配置文件成功：${filename}`);
+    console.log(`保存配置文件成功：${filename}`);
   }
 }
 
