@@ -1,0 +1,27 @@
+// 读取部门节点下的数据
+// 测试：
+// yao run flows.system.sub_dept 7
+// 读取根节点下的部门配置列表
+// yao run flows.system.sub_dept 0
+{
+  "label": "部门子节点",
+  "version": "1.0.0",
+  "description": "类目树",
+  "nodes": [
+    {
+      "name": "部门",
+      "engine": "default",
+      "query": {
+        // "debug": true,
+        "select": ["id", "name", "name as label", "parent", "status"],
+        "wheres": [
+          // { ":deleted_at": "删除", "=": null },
+          { ":parent": "父节点", "=": "?:$in.0" }
+        ],
+        "from": "$system.dept",
+        "limit": 1000
+      }
+    }
+  ],
+  "output": "{{$res.部门}}"
+}

@@ -1,0 +1,14 @@
+{
+  "label": "clean Api",
+  "version": "1.0.0",
+  "description": "Initialize Api list",
+  "nodes": [
+    {
+      "name": "Clean Api LIST",
+      "engine": "default",
+      "query": {
+        "sql": { "stmt": "delete from system_api" }
+      }
+    }
+  ]
+}

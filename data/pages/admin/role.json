@@ -1,0 +1,365 @@
+{
+  "body": [
+    {
+      "columns": [
+        {
+          "type": "static-number",
+          "static": true,
+          "searchable": true,
+          "sortable": true,
+          "name": "id",
+          "label": "编号"
+        },
+        {
+          "searchable": true,
+          "sortable": true,
+          "name": "name",
+          "label": "名称",
+          "quickEdit": {
+            "saveImmediately": true,
+            "required": true,
+            "type": "input-text",
+            "maxLength": 200
+          },
+          "type": "text"
+        },
+        {
+          "searchable": true,
+          "sortable": true,
+          "name": "desc",
+          "label": "描述",
+          "quickEdit": {
+            "maxLength": 200,
+            "saveImmediately": true,
+            "required": true,
+            "type": "input-text"
+          },
+          "type": "text"
+        },
+        {
+          "quickEdit": {
+            "saveImmediately": true,
+            "required": true,
+            "type": "switch"
+          },
+          "name": "status",
+          "label": "启用",
+          "type": "status",
+          "searchable": true,
+          "sortable": true
+        }
+      ],
+      "filterTogglable": true,
+      "quickSaveItemApi": "post:/api/v1/table/system.auth.role/update/${id}",
+      "primaryField": "id",
+      "perPage": 10,
+      "autoFillHeight": true,
+      "itemActions": [
+        {
+          "dialog": {
+            "type": "dialog",
+            "body": {
+              "api": "post:/api/v1/table/system.auth.role/bulkUpdate/$id",
+              "body": [
+                {
+                  "name": "id",
+                  "label": "编号",
+                  "type": "static"
+                },
+                {
+                  "maxLength": 200,
+                  "name": "name",
+                  "label": "名称",
+                  "required": true,
+                  "type": "input-text"
+                },
+                {
+                  "maxLength": 200,
+                  "name": "desc",
+                  "label": "描述",
+                  "required": true,
+                  "type": "input-text"
+                },
+                {
+                  "type": "input-tree",
+                  "name": "permission",
+                  "label": "权限",
+                  "multiple": true,
+                  "cascade": true,
+                  "required": true,
+                  "source": "/api/v1/system/tree/system.auth.permission/find?__label=desc",
+                  "joinValues": false,
+                  "extractValue": true
+                },
+                {
+                  "name": "status",
+                  "label": "状态",
+                  "required": true,
+                  "type": "switch"
+                }
+              ],
+              "name": "update",
+              "silentPolling": false,
+              "trimValues": true,
+              "type": "form"
+            },
+            "size": "lg",
+            "title": "更新"
+          },
+          "icon": "fa fa-pencil",
+          "tooltip": "更新",
+          "type": "button",
+          "actionType": "dialog"
+        },
+        {
+          "icon": "fa fa-times text-danger",
+          "tooltip": "删除",
+          "type": "button",
+          "actionType": "ajax",
+          "api": "delete:/api/v1/table/system.auth.role/delete/$id",
+          "confirmText": "你确定要删除行${id}?"
+        }
+      ],
+      "footerToolbar": [
+        "statistics",
+        "switch-per-page",
+        "pagination",
+        "load-more",
+        "export-csv",
+        "export-excel"
+      ],
+      "filterDefaultVisible": false,
+      "api": {
+        "method": "get",
+        "url": "/api/v1/table/system.auth.role/search?page=${page}&perPage=${perPage}&orderBy=${orderBy}&orderDir=${orderDir}",
+        "data": {
+          "&": "$$"
+        }
+      },
+      "headerToolbar": [
+        "filter-toggler",
+        "reload",
+        "bulkActions",
+        {
+          "align": "right",
+          "type": "columns-toggler"
+        },
+        {
+          "align": "right",
+          "type": "drag-toggler"
+        },
+        {
+          "align": "right",
+          "type": "pagination"
+        },
+        {
+          "tpl": "显示${total}条结果中的${items|count}条",
+          "type": "tpl",
+          "align": "right",
+          "className": "v-middle"
+        },
+        {
+          "level": "primary",
+          "type": "button",
+          "actionType": "dialog",
+          "dialog": {
+            "size": "lg",
+            "title": "新增",
+            "type": "dialog",
+            "body": {
+              "silentPolling": false,
+              "type": "form",
+              "api": "post:/api/v1/table/system.auth.role/create",
+              "body": [
+                {
+                  "name": "name",
+                  "label": "名称",
+                  "required": true,
+                  "type": "input-text",
+                  "maxLength": 200
+                },
+                {
+                  "label": "描述",
+                  "required": true,
+                  "type": "input-text",
+                  "maxLength": 200,
+                  "name": "desc"
+                },
+                {
+                  "name": "status",
+                  "label": "状态",
+                  "type": "switch"
+                },
+                {
+                  "type": "input-tree",
+                  "name": "permission",
+                  "label": "权限",
+                  "multiple": true,
+                  "cascade": true,
+                  "required": true,
+                  "joinValues": false,
+                  "extractValue": true,
+                  "source": "/api/v1/system/tree/system.auth.permission/find?__label=desc"
+                }
+              ],
+              "name": "create"
+            }
+          },
+          "icon": "fa fa-plus pull-left",
+          "label": "新增"
+        },
+        {
+          "dialog": {
+            "body": {
+              "api": {
+                "data": {
+                  "batch": {
+                    "&": {
+                      "$excel": {
+                        "menu": "${menu}",
+                        "status": "${status}",
+                        "name": "${name}",
+                        "desc": "${desc}"
+                      }
+                    }
+                  }
+                },
+                "method": "post",
+                "url": "/api/v1/table/system.auth.role/batch_create"
+              },
+              "body": [
+                {
+                  "name": "excel",
+                  "type": "input-excel"
+                },
+                {
+                  "copyable": true,
+                  "editable": true,
+                  "name": "excel",
+                  "removable": true,
+                  "showIndex": true,
+                  "type": "input-table",
+                  "addable": true,
+                  "columns": [
+                    {
+                      "searchable": true,
+                      "sortable": true,
+                      "name": "name",
+                      "label": "名称",
+                      "quickEdit": {
+                        "type": "input-text",
+                        "maxLength": 200,
+                        "required": true
+                      },
+                      "type": "static-text"
+                    },
+                    {
+                      "sortable": true,
+                      "name": "desc",
+                      "label": "描述",
+                      "quickEdit": {
+                        "maxLength": 200,
+                        "required": true,
+                        "type": "input-text"
+                      },
+                      "type": "static-text",
+                      "searchable": true
+                    },
+                    {
+                      "type": "static-status",
+                      "searchable": true,
+                      "sortable": true,
+                      "name": "status",
+                      "label": "状态",
+                      "quickEdit": {
+                        "type": "switch"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "mode": "normal",
+              "silentPolling": false,
+              "type": "form"
+            },
+            "size": "full",
+            "title": "批量新增",
+            "type": "dialog"
+          },
+          "icon": "fa fa-plus pull-left",
+          "label": "批量新增",
+          "level": "primary",
+          "type": "button",
+          "actionType": "dialog"
+        }
+      ],
+      "bulkActions": [
+        {
+          "actionType": "ajax",
+          "api": "delete:/api/v1/table/system.auth.role/delete/${ids|raw}",
+          "confirmText": "你确定要批量删除选中行吗?",
+          "label": "批量删除",
+          "type": "button"
+        }
+      ],
+      "syncLocation": false,
+      "keepItemSelectionOnPageChange": true,
+      "type": "crud",
+      "filter": {
+        "mode": "inline",
+        "name": "list",
+        "silentPolling": false,
+        "title": "数据筛选",
+        "trimValues": true,
+        "type": "",
+        "actions": [
+          {
+            "actionType": "clear-and-submit",
+            "label": "清空",
+            "level": "default",
+            "type": "button"
+          },
+          {
+            "label": "重置",
+            "level": "default",
+            "type": "button",
+            "actionType": "reset-and-submit"
+          },
+          {
+            "label": "搜索",
+            "level": "primary",
+            "type": "button",
+            "actionType": "submit"
+          }
+        ],
+        "body": [
+          {
+            "name": "id",
+            "label": "编号",
+            "type": "static"
+          },
+          {
+            "name": "name",
+            "label": "名称",
+            "required": true,
+            "type": "input-text",
+            "maxLength": 200
+          },
+          {
+            "name": "desc",
+            "label": "描述",
+            "required": true,
+            "type": "input-text",
+            "maxLength": 200
+          },
+          {
+            "name": "status",
+            "label": "状态",
+            "type": "switch"
+          }
+        ]
+      }
+    }
+  ],
+  "type": "page"
+}

@@ -1,0 +1,79 @@
+{
+  "title": "查看详情 ${params.id}",
+  "toolbar": [
+    {
+      "type": "button",
+      "id": "u:afdcbc74d231",
+      "actionType": "link",
+      "label": "返回列表",
+      "link": "/crud/list"
+    }
+  ],
+  "type": "page",
+  "id": "u:9a48a7cc3178",
+  "body": [
+    {
+      "initApi": "/api/v1/mock/sample/${params.id}",
+      "type": "form",
+      "id": "u:ce995a5c552d",
+      "body": [
+        {
+          "label": "Engine",
+          "name": "engine",
+          "type": "static",
+          "id": "u:4924ce6ca9ba"
+        },
+        {
+          "type": "divider",
+          "id": "u:fc5c3fe1801b"
+        },
+        {
+          "id": "u:d81d832be729",
+          "label": "Browser",
+          "name": "browser",
+          "type": "static"
+        },
+        {
+          "type": "divider",
+          "id": "u:20e1d787de1c"
+        },
+        {
+          "label": "Platform(s)",
+          "name": "platform",
+          "type": "static",
+          "id": "u:65825313ccbd"
+        },
+        {
+          "type": "divider",
+          "id": "u:f37993166f97"
+        },
+        {
+          "id": "u:8f8992ad7d9e",
+          "label": "Engine version",
+          "name": "version",
+          "type": "static"
+        },
+        {
+          "id": "u:c80fd14b26d0",
+          "type": "divider"
+        },
+        {
+          "label": "CSS grade",
+          "name": "grade",
+          "type": "static",
+          "id": "u:3f3567b76bd6"
+        },
+        {
+          "type": "divider",
+          "id": "u:0efbf9eb01b0"
+        },
+        {
+          "id": "u:eede81df9ba1",
+          "html": "<p>添加其他 <span>Html 片段</span> 需要支持变量替换（todo）.</p>",
+          "type": "html"
+        }
+      ]
+    }
+  ],
+  "remark": null
+}

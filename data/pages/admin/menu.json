@@ -1,0 +1,643 @@
+{
+  "definitions": {
+    "icon": {
+      "type": "picker",
+      "name": "icon",
+      "joinValues": true,
+      "valueField": "icon",
+      "labelField": "label",
+      "label": "图标",
+      "source": "/api/v1/table/system.font/search",
+      "size": "lg",
+      "pickerSchema": {
+        "mode": "table",
+        "name": "thelist",
+        "label": "",
+        "perPage": 5,
+        "draggable": true,
+        "headerToolbar": {
+          "wrapWithPanel": false,
+          "type": "form",
+          "className": "text-right",
+          "target": "thelist",
+          "mode": "inline",
+          "body": [
+            {
+              "type": "input-text",
+              "name": "keywords",
+              "addOn": {
+                "type": "submit",
+                "label": "搜索",
+                "level": "primary",
+                "icon": "fa fa-search pull-left"
+              }
+            }
+          ]
+        },
+        "columns": [
+          {
+            "label": "名称",
+            "name": "name",
+            "type": "text",
+            "id": "u:067e7bc0d228"
+          },
+          {
+            "label": "图标",
+            "name": "icon",
+            "type": "text"
+          },
+          {
+            "type": "icon",
+            "label": "图标",
+            "vendor": "",
+            "icon": "${icon}",
+            "labelClassName": "text-base",
+            "className": "text-2xl",
+            "name": "icon"
+          },
+          {
+            "label": "描述",
+            "name": "label",
+            "type": "text"
+          },
+          {
+            "label": "风格",
+            "name": "style",
+            "type": "text"
+          }
+        ]
+      }
+    },
+    "icon2": {
+      "type": "picker",
+      "name": "icon",
+      "joinValues": true,
+      "valueField": "icon",
+      "labelField": "label",
+      "label": "Awsome图标",
+      "source": "/api/v1/table/system.font/search",
+      "size": "lg",
+      "pickerSchema": {
+        "mode": "cards",
+        "name": "thelist2",
+        "label": "",
+        "perPage": 16,
+        "draggable": false,
+        "columnsCount": 8,
+        "headerToolbar": {
+          "wrapWithPanel": false,
+          "type": "form",
+          "className": "text-right",
+          "target": "thelist2",
+          "mode": "inline",
+          "body": [
+            {
+              "type": "input-text",
+              "name": "keywords",
+              "addOn": {
+                "type": "submit",
+                "label": "搜索",
+                "level": "primary",
+                "icon": "fa fa-search pull-left"
+              }
+            }
+          ]
+        },
+        "card": {
+          "className": "hover:shadow",
+          "body": {
+            "type": "wrapper",
+            "className": "h-15 flex items-center justify-center",
+            "body": [
+              {
+                "type": "wrapper",
+                "size": "none",
+                "className": "text-center",
+                "body": {
+                  "type": "icon",
+                  "vendor": "",
+                  "icon": "${icon}",
+                  "className": "text-2xl",
+                  "name": "icon"
+                }
+              },
+              {
+                "type": "wrapper",
+                "size": "none",
+                "body": "${label}"
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "type": "page",
+  "body": [
+    {
+      "bulkActions": [
+        {
+          "level": "danger",
+          "type": "button",
+          "id": "u:0ca1d58aedef",
+          "actionType": "ajax",
+          "api": "delete:/api/v1/system/menu/delete/$ids",
+          "confirmText": "确定要删除？",
+          "label": "批量删除"
+        }
+      ],
+      "expandConfig": {
+        "expand": "all"
+      },
+      "headerToolbar": [
+        {
+          "level": "primary",
+          "type": "button",
+          "actionType": "dialog",
+          "dialog": {
+            "size": "lg",
+            "body": {
+              "body": [
+                {
+                  "type": "group",
+                  "body": [
+                    {
+                      "label": "名称",
+                      "name": "name",
+                      "required": true,
+                      "type": "input-text"
+                    },
+                    {
+                      "label": "标题",
+                      "name": "title",
+                      "required": true,
+                      "type": "input-text"
+                    }
+                  ]
+                },
+                {
+                  "type": "group",
+                  "body": [
+                    {
+                      "type": "input-text",
+                      "className": "text-2xl",
+                      "icon": "${icon}",
+                      "name": "icon",
+                      "label": "图标名称",
+                      "vendor": ""
+                    },
+                    {
+                      "$ref": "icon2"
+                    },
+                    {
+                      "type": "icon",
+                      "className": "text-2xl",
+                      "icon": "${icon}",
+                      "name": "icon",
+                      "label": "Awesome图标",
+                      "vendor": ""
+                    }
+                  ]
+                },
+                {
+                  "source": "/api/v1/system/menu/find",
+                  "type": "tree-select",
+                  "valueField": "id",
+                  "label": "上级菜单",
+                  "name": "parent"
+                },
+                {
+                  "label": "链接",
+                  "name": "url",
+                  "type": "input-text",
+                  "validateOnChange": true,
+                  "validationErrors": {
+                    "matchRegexp": "需要以 / 开头"
+                  },
+                  "required": true,
+                  "validations": {
+                    "matchRegexp": "/^(http(s)?\\:\\/)?(\\/)+/"
+                  }
+                },
+                {
+                  "type": "group",
+                  "body": [
+                    {
+                      "type": "list-select",
+                      "name": "url_type",
+                      "label": "类型",
+                      "options": {
+                        "1": "路由",
+                        "2": "外链",
+                        "3": "AMIS"
+                      },
+                      "value": 1
+                    },
+                    {
+                      "type": "select",
+                      "name": "component",
+                      "label": "组件",
+                      "options": {
+                        "amis": "amis",
+                        "basic": "basic",
+                        "multi": "multi",
+                        "self": "self"
+                      },
+                      "value": "self"
+                    },
+                    {
+                      "type": "select",
+                      "name": "single_layout",
+                      "label": "单级路由布局",
+                      "options": {
+                        "amis": "amis",
+                        "basic": "basic",
+                        "multi": "multi",
+                        "self": "self"
+                      },
+                      "visibleOn": "data.parent == 0"
+                    }
+                  ]
+                },
+                {
+                  "label": "重定向",
+                  "name": "rewrite",
+                  "type": "input-text",
+                  "validateOnChange": true,
+                  "validationErrors": {
+                    "matchRegexp": "需要以 / 开头"
+                  },
+                  "validations": {
+                    "matchRegexp": "/^(http(s)?\\:\\/)?(\\/)+/"
+                  }
+                },
+                {
+                  "type": "input-text",
+                  "label": "配置接口",
+                  "name": "schema_api",
+                  "visibleOn": "!data.schema?.source"
+                },
+                {
+                  "type": "input-sub-form",
+                  "label": "页面配置",
+                  "btnLabel": "源代码",
+                  "name": "schema",
+                  "visibleOn": "!data.schema_api",
+                  "form": {
+                    "size": "lg",
+                    "body": [
+                      {
+                        "labelClassName": "hidden",
+                        "language": "json",
+                        "name": "source",
+                        "type": "editor"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "group",
+                  "body": [
+                    {
+                      "label": "是否可见",
+                      "name": "visible",
+                      "type": "switch",
+                      "onText": "可见",
+                      "offText": "隐藏",
+                      "value": 1
+                    },
+                    {
+                      "label": "需要认证",
+                      "name": "requires_auth",
+                      "type": "switch",
+                      "value": 1
+                    },
+                    {
+                      "label": "状态保持",
+                      "name": "keep_alive",
+                      "type": "switch"
+                    },
+                    {
+                      "label": "默认",
+                      "name": "is_default_page",
+                      "type": "switch"
+                    },
+                    {
+                      "label": "排序",
+                      "required": true,
+                      "displayMode": "enhance",
+                      "description": "升序排序",
+                      "min": 0,
+                      "value": 0,
+                      "type": "input-number",
+                      "name": "rank"
+                    }
+                  ]
+                }
+              ],
+              "type": "form",
+              "mode": "horizontal",
+              "api": {
+                "method": "post",
+                "url": "/api/v1/system/menu/create",
+                "data": {
+                  "&": "$$",
+                  "schema": "${schema.source}"
+                }
+              }
+            },
+            "title": "新增"
+          },
+          "label": "新增"
+        },
+        "bulkActions"
+      ],
+      "itemActions": [],
+      "syncLocation": false,
+      "api": {
+        "method": "get",
+        "url": "/api/v1/system/menu/find"
+      },
+      "columns": [
+        {
+          "label": "ID",
+          "name": "id",
+          "type": "text",
+          "placeholder": "-"
+        },
+        {
+          "label": "名称",
+          "name": "name",
+          "type": "text"
+        },
+        {
+          "label": "标题",
+          "name": "title",
+          "type": "text"
+        },
+        {
+          "name": "icon",
+          "label": "图标",
+          "type": "flex",
+          "justify": "start",
+          "items": [
+            {
+              "type": "icon",
+              "icon": "${icon}",
+              "className": "mr-2 text-lg",
+              "vendor": ""
+            },
+            "${icon}"
+          ]
+        },
+
+        {
+          "name": "url",
+          "type": "text",
+          "label": "链接"
+        },
+        {
+          "id": "u:266f854c54bf",
+          "label": "重定向",
+          "name": "redirect",
+          "type": "text",
+          "visible": false
+        },
+        {
+          "id": "u:a0714948b14e",
+          "label": "配置接口",
+          "name": "schema_api",
+          "type": "text",
+          "visible": false
+        },
+        {
+          "id": "u:937660155a2a",
+          "label": "是否可见",
+          "name": "visible",
+          "type": "status"
+        },
+        {
+          "buttons": [
+            {
+              "actionType": "dialog",
+              "dialog": {
+                "size": "lg",
+                "body": {
+                  "api": "/api/v1/system/menu/edit/${id}",
+                  "body": [
+                    {
+                      "type": "group",
+                      "body": [
+                        {
+                          "label": "名称",
+                          "name": "name",
+                          "required": true,
+                          "type": "input-text"
+                        },
+                        {
+                          "label": "标题",
+                          "name": "title",
+                          "required": true,
+                          "type": "input-text"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "group",
+                      "body": [
+                        {
+                          "type": "input-text",
+                          "className": "text-2xl",
+                          "icon": "${icon}",
+                          "name": "icon",
+                          "label": "图标名称",
+                          "vendor": ""
+                        },
+                        {
+                          "$ref": "icon2"
+                        },
+                        {
+                          "type": "icon",
+                          "className": "text-2xl",
+                          "icon": "${icon}",
+                          "name": "icon",
+                          "label": "图标",
+                          "vendor": ""
+                        }
+                      ]
+                    },
+                    {
+                      "source": "/api/v1/system/menu/find",
+                      "type": "tree-select",
+                      "valueField": "id",
+                      "label": "上级菜单",
+                      "name": "parent"
+                    },
+                    {
+                      "label": "链接",
+                      "name": "url",
+                      "type": "input-text",
+                      "validateOnChange": true,
+                      "validationErrors": {
+                        "matchRegexp": "需要以 / 开头"
+                      },
+                      "validations": {
+                        "matchRegexp": "/^(http(s)?\\:\\/)?(\\/)+/"
+                      },
+                      "required": true
+                    },
+                    {
+                      "type": "group",
+                      "body": [
+                        {
+                          "type": "list-select",
+                          "name": "url_type",
+                          "label": "类型",
+                          "options": {
+                            "1": "路由",
+                            "2": "外链",
+                            "3": "AMIS"
+                          },
+                          "value": 1
+                        },
+                        {
+                          "type": "select",
+                          "name": "component",
+                          "label": "组件",
+                          "options": {
+                            "amis": "amis",
+                            "basic": "basic",
+                            "multi": "multi",
+                            "self": "self"
+                          },
+                          "value": "self"
+                        },
+                        {
+                          "type": "select",
+                          "name": "single_layout",
+                          "label": "单级路由布局",
+                          "options": {
+                            "amis": "amis",
+                            "basic": "basic",
+                            "multi": "multi",
+                            "self": "self"
+                          },
+                          "visibleOn": "data.parent == 0"
+                        }
+                      ]
+                    },
+
+                    {
+                      "label": "重定向",
+                      "name": "rewrite",
+                      "type": "input-text",
+                      "validateOnChange": true,
+                      "validationErrors": {
+                        "matchRegexp": "需要以 / 开头"
+                      },
+                      "validations": {
+                        "matchRegexp": "/^(http(s)?\\:\\/)?(\\/)+/"
+                      }
+                    },
+                    {
+                      "type": "input-text",
+                      "label": "配置接口",
+                      "name": "schema_api",
+                      "visibleOn": "!data.schema?.source"
+                    },
+                    {
+                      "type": "input-sub-form",
+                      "label": "页面配置",
+                      "btnLabel": "源代码",
+                      "name": "schema",
+                      "visibleOn": "!data.schema_api",
+                      "form": {
+                        "size": "lg",
+                        "body": [
+                          {
+                            "labelClassName": "hidden",
+                            "language": "json",
+                            "name": "source",
+                            "type": "editor"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "group",
+                      "body": [
+                        {
+                          "label": "是否可见",
+                          "name": "visible",
+                          "type": "switch",
+                          "onText": "可见",
+                          "offText": "隐藏",
+                          "value": 1
+                        },
+                        {
+                          "label": "需要认证",
+                          "name": "requires_auth",
+                          "type": "switch",
+                          "value": 1
+                        },
+                        {
+                          "label": "状态保持",
+                          "name": "keep_alive",
+                          "type": "switch"
+                        },
+                        {
+                          "label": "默认",
+                          "name": "is_default_page",
+                          "type": "switch"
+                        },
+                        {
+                          "label": "排序",
+                          "required": true,
+                          "displayMode": "enhance",
+                          "description": "升序排序",
+                          "min": 0,
+                          "value": 0,
+                          "type": "input-number",
+                          "name": "rank"
+                        }
+                      ]
+                    }
+                  ],
+                  "type": "form"
+                },
+                "title": "编辑"
+              },
+              "id": "u:740efa7a0f27",
+              "label": "编辑",
+              "level": "link",
+              "type": "button"
+            },
+            {
+              "type": "button",
+              "actionType": "ajax",
+              "api": {
+                "method": "delete",
+                "url": "/api/v1/system/menu/delete/${id}"
+              },
+              "class_name": "text-danger",
+              "confirmText": "确定要删除？",
+              "id": "u:fc0d9728eda3",
+              "label": "删除",
+              "level": "link"
+            }
+          ],
+          "id": "u:2924312a8d63",
+          "label": "操作",
+          "type": "operation"
+        }
+      ],
+      "expandConfig": {
+        "expand": "none"
+      },
+      "filterColumnCount": 3,
+      "id": "u:bce8807bd85e",
+      "type": "crud"
+    }
+  ],
+  "id": "u:2b38c6e5694c"
+}

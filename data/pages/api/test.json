@@ -1,0 +1,114 @@
+{
+  "type": "page",
+  "body": [
+    {
+      "id": "u:e4133097208c",
+      "type": "form",
+      "title": "接口测试",
+      "mode": "horizontal",
+      "dsType": "api",
+      "feat": "Insert",
+      "body": [
+        {
+          "name": "api",
+          "label": "接口",
+          "type": "input-text",
+          "id": "u:4b0d0a154204",
+          "value": "/api/v1/system/account/get"
+        },
+        {
+          "name": "method",
+          "label": "方法",
+          "type": "select",
+          "id": "u:dd0925648b5b",
+          "multiple": false,
+          "options": [
+            {
+              "label": "GET",
+              "value": "get"
+            },
+            {
+              "label": "POST",
+              "value": "post"
+            },
+            {
+              "label": "PUT",
+              "value": "put"
+            },
+            {
+              "label": "DELETE",
+              "value": "delete"
+            }
+          ],
+          "value": "get"
+        },
+        {
+          "name": "payload",
+          "label": "请求",
+          "type": "editor",
+          "id": "u:ec7de0286278",
+          "lanuage": "json",
+          "language": "json",
+          "hidden": false,
+          "visibleOn": "data.router === `post`"
+        },
+        {
+          "type": "button-toolbar",
+          "className": "text-right",
+          "buttons": [
+            {
+              "type": "button",
+              "label": "测试",
+              "onEvent": {
+                "click": {
+                  "actions": [
+                    {
+                      "actionType": "ajax",
+                      "outputVar": "responseData",
+                      "ignoreError": false,
+                      "options": {},
+                      "api": {
+                        "url": "${api}",
+                        "requestAdaptor": "api.method = context.method;\r\napi.data = context.payload\r\nreturn api\r\n",
+                        "adaptor": "",
+                        "messages": {},
+                        "dataType": "json",
+                        "method": "get"
+                      }
+                    },
+                    {
+                      "componentId": "u:92925dc0d5d0",
+                      "ignoreError": false,
+                      "actionType": "setValue",
+                      "args": {
+                        "value": "${event.data.responseData.responseData|json}"
+                      }
+                    }
+                  ]
+                }
+              },
+              "level": "primary",
+              "id": "u:da608d9b9125"
+            }
+          ]
+        },
+        {
+          "name": "result",
+          "label": "结果",
+          "type": "editor",
+          "id": "u:92925dc0d5d0",
+          "lauage": "json",
+          "language": "json"
+        }
+      ],
+      "actions": [],
+      "resetAfterSubmit": true
+    }
+  ],
+  "id": "u:bad0d6c00797",
+  "title": "API调试",
+  "pullRefresh": {
+    "disabled": true
+  },
+  "regions": ["body"]
+}

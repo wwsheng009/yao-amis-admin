@@ -1,0 +1,86 @@
+{
+  "name": "菜单信息",
+  "version": "1.0.0",
+  "description": "菜单信息",
+  "group": "",
+  "guard": "bearer-jwt",
+  "paths": [
+    {
+      // /api/v1/system/menu/find
+      "label": "菜单信息",
+      "description": "获取系统配置菜单信息",
+      "path": "/find",
+      "method": "GET",
+      "guard": "bearer-jwt",
+      "process": "scripts.system.menu.GetMenuNodes",
+      "in": [
+        ":query"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "label": "读取菜单节点信息",
+      "path": "/edit_get", //编辑器使用
+      "method": "GET",
+      "guard": "bearer-jwt",
+      "process": "flows.system.menu_raw",
+      "in": [],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/system/menu/create
+      "label": "创建菜单节点",
+      "description": "创建一个菜单节点",
+      "path": "/create",
+      "method": "POST",
+      "guard": "bearer-jwt",
+      "process": "scripts.system.menu.CreateMenuNode",
+      "in": [
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/system/menu/edit/:id
+      "label": "更新菜单节点",
+      "description": "更新一个菜单节点",
+      "path": "/edit/:id",
+      "method": "POST",
+      "guard": "bearer-jwt",
+      "process": "scripts.system.menu.UpdateMenuNode",
+      "in": [
+        "$param.id",
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/system/menu/delete/:id
+      "label": "删除一个菜单节点",
+      "description": "删除一个菜单节点",
+      "path": "/delete/:id",
+      "method": "DELETE",
+      "guard": "bearer-jwt",
+      "process": "scripts.system.menu.DeleteMenuNode",
+      "in": [
+        "$param.id"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    }
+  ]
+}

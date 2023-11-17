@@ -1,0 +1,186 @@
+{
+  "pullRefresh": {
+    "disabled": true
+  },
+  "regions": ["body"],
+  "type": "page",
+  "asideResizor": false,
+  "id": "main_page",
+  "name": "main_page",
+  "body": [
+    {
+      "name": "combo",
+      "onEvent": {
+        "change": {
+          "actions": [
+            {
+              "actionType": "reload",
+              "args": {
+                "current_item": "${value}"
+              },
+              "componentName": "service1",
+              "type": "action"
+            }
+          ],
+          "weight": 0
+        }
+      },
+      "selectMode": "table",
+      "columns": [
+        {
+          "name": "label",
+          "label": "描述"
+        },
+        {
+          "name": "value",
+          "label": "表名"
+        }
+      ],
+      "source": "get:/api/v1/system/meta/table/name_list",
+      "type": "select",
+      "id": "u:1aaf7e1e5008",
+      "label": "数据库表"
+    },
+    {
+      "api": {
+        "dataType": "json",
+        "method": "post",
+        "url": "/api/__yao/app/service/schema",
+        "data": {
+          "args": ["${current_item}"],
+          "method": "getTable"
+        }
+      },
+      "body": [
+        {
+          "id": "u:85816239110d",
+          "inline": false,
+          "tpl": "内容",
+          "type": "tpl",
+          "wrapperComponent": ""
+        },
+        {
+          "columns": [
+            {
+              "type": "static",
+              "fixed": "left",
+              "id": "u:cd25694a856a",
+              "label": "字段名",
+              "name": "name"
+            },
+            {
+              "id": "u:abf090e260ea",
+              "label": "主键",
+              "name": "primary",
+              "type": "status"
+            },
+            {
+              "id": "u:58272439366d",
+              "label": "类型",
+              "name": "type",
+              "type": "static"
+            },
+            {
+              "name": "default",
+              "type": "static",
+              "id": "u:9a6f9e8e95ea",
+              "label": "默认值"
+            },
+            {
+              "name": "title",
+              "type": "static",
+              "id": "u:8b725590e85f",
+              "label": "标题"
+            },
+            {
+              "id": "u:4f4b3affd10b",
+              "label": "长度",
+              "name": "length",
+              "type": "static-number"
+            },
+            {
+              "id": "u:c72e712f91a3",
+              "label": "字段长度",
+              "name": "precision",
+              "type": "static-number"
+            },
+            {
+              "id": "u:0924d8127b7f",
+              "label": "小数位数",
+              "name": "scale",
+              "type": "static-number"
+            },
+            {
+              "type": "status",
+              "id": "u:4107234e9711",
+              "label": "可空",
+              "name": "nullable"
+            },
+            {
+              "id": "u:1c9b757244c1",
+              "label": "生成器",
+              "name": "generate",
+              "toggled": false,
+              "type": "static"
+            },
+            {
+              "id": "u:811a44573837",
+              "label": "加密方式",
+              "name": "crypt",
+              "toggled": false,
+              "type": "static"
+            },
+            {
+              "id": "u:dd4ccd3980d7",
+              "label": "索引",
+              "name": "index",
+              "static": true,
+              "type": "status"
+            },
+            {
+              "id": "u:54e38f6f426f",
+              "label": "唯一",
+              "name": "unique",
+              "type": "status"
+            },
+            {
+              "id": "u:481240e3d24b",
+              "label": "origin",
+              "name": "origin",
+              "toggled": false,
+              "type": "static"
+            },
+            {
+              "id": "u:466f360facf2",
+              "label": "选项",
+              "name": "option",
+              "type": "tpl"
+            },
+            {
+              "type": "static",
+              "id": "u:bc370b4c76b5",
+              "label": "描述",
+              "name": "description"
+            },
+            {
+              "id": "u:249977f4fa17",
+              "label": "备注",
+              "name": "comment",
+              "type": "static"
+            }
+          ],
+          "id": "u:988a73cfd2ee",
+          "type": "table"
+        }
+      ],
+      "id": "u:70aaf268ffc5",
+      "messages": {},
+      "name": "service1",
+      "type": "service"
+    }
+  ],
+  "data": {
+    "current_item": "admin_user"
+  },
+  "title": "数据库表字段列表"
+}

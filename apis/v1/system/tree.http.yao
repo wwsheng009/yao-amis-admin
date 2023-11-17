@@ -1,0 +1,94 @@
+{
+  "name": "树结构数据读取",
+  "version": "1.0.0",
+  "description": "树结构数据读取",
+  "group": "",
+  "guard": "bearer-jwt",
+  "paths": [
+    {
+      // /api/v1/system/tree/:tree/find
+      "label": "读取树形数据",
+      "description": "读取树形数据",
+      "path": "/:tree/find",
+      "method": "GET",
+      "process": "scripts.system.tree.GetTreeNodes",
+      "in": [
+        "$param.tree",
+        ":query"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/system/tree/:tree/create
+      "label": "创建菜单节点",
+      "description": "创建一个菜单节点",
+      "path": "/:tree/create",
+      "method": "POST",
+      "guard": "bearer-jwt",
+      "process": "scripts.system.tree.CreateTreeNode",
+      "in": [
+        "$param.tree",
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/system/tree/:tree/edit/:id
+      "label": "更新菜单节点",
+      "description": "更新一个菜单节点",
+      "path": "/:tree/edit/:id",
+      "method": "POST",
+      "guard": "bearer-jwt",
+      "process": "scripts.system.tree.UpdateTreeNode",
+      "in": [
+        "$param.tree",
+        "$param.id",
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/system/tree/:tree/delete/:id
+      "label": "删除一个菜单节点",
+      "description": "删除一个菜单节点",
+      "path": "/:tree/delete/:id",
+      "method": "DELETE",
+      "guard": "bearer-jwt",
+      "process": "scripts.system.tree.DeleteTreeNode",
+      "in": [
+        "$param.tree",
+        "$param.id"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/system/tree/:tree/delete/:id
+      "label": "删除一个菜单节点",
+      "description": "删除一个菜单节点",
+      "path": "/:tree/delete/:id",
+      "method": "post",
+      "guard": "bearer-jwt",
+      "process": "scripts.system.tree.DeleteTreeNode",
+      "in": [
+        "$param.tree",
+        "$param.id"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    }
+  ]
+}

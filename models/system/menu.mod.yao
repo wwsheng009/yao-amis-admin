@@ -1,0 +1,187 @@
+//yao migrate -n system.menu --reset
+//
+{
+  "name": "菜单",
+  "table": {
+    "name": "system_menu",
+    "comment": "菜单表",
+    "engine": "InnoDB"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "type": "ID",
+      "comment": "ID"
+    },
+    {
+      "name": "parent",
+      "type": "bigInteger",
+      "comment": "父级",
+      "nullable": false,
+      "default": 0,
+      "index": true
+    },
+    {
+      "label": "菜单名称",
+      "name": "name",
+      "type": "string",
+      "length": 200,
+      "comment": "菜单名称",
+      "index": true
+    },
+    {
+      "label": "标题",
+      "name": "title",
+      "type": "string",
+      "comment": "标题",
+    },
+    {
+      "label": "图标",
+      "name": "icon",
+      "type": "string",
+      "nullable": true,
+      "length": 200,
+      "comment": "图标"
+    },
+    {
+      "label": "路由",
+      "name": "url",
+      "type": "string",
+      "length": 200,
+      "comment": "路由",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "路由类型",
+      "name": "url_type",
+      "type": "integer",
+      "comment": "路由类型,1路由，2外链，3amis",
+      "default": 1
+    },
+    {
+      "label": "组件",
+      "name": "component",
+      "type": "string",
+      "comment": "组件",
+      "default": "self"
+    },
+    {
+      "label": "单路由布局",
+      "name": "single_layout",
+      "type": "string",
+      "comment": "作为单级路由的父级路由布局组件",
+      "nullable": true
+    },
+    {
+      "label": "缓存页面",
+      "name": "keep_alive",
+      "type": "boolean",
+      "comment": "缓存页面",
+      "default": false
+    },
+    {
+      "label": "重定位",
+      "name": "redirect",
+      "type": "string",
+      "nullable": true,
+      "length": 200,
+      "comment": "重定位"
+    },
+    {
+      "label": "重渲染",
+      "name": "rewrite",
+      "type": "string",
+      "nullable": true,
+      "length": 200,
+      "comment": "重渲染"
+    },
+    {
+      "label": "默认页面",
+      "name": "is_default_page",
+      "type": "boolean",
+      "default": false,
+      "nullable": true,
+      "comment": "默认页面"
+    },
+    {
+      "label": "页面配置",
+      "name": "schema",
+      "type": "json",
+      "nullable": true,
+      "comment": "页面的配置"
+    },
+    {
+      "label": "配置接口",
+      "name": "schema_api",
+      "type": "string",
+      "nullable": true,
+      "comment": "配置接口"
+    },
+    {
+      "label": "是否可见",
+      "name": "visible",
+      "type": "boolean",
+      "default": true,
+      "comment": "是否可见"
+    },
+    {
+      "label": "需要认证",
+      "name": "requires_auth",
+      "type": "boolean",
+      "default": true,
+      "comment": "需要认证"
+    },
+    {
+      "label": "排列",
+      "name": "rank",
+      "type": "integer",
+      "default": 100,
+      "nullable": true,
+      "comment": "排列"
+    },
+    {
+      "label": "类名",
+      "name": "class_name",
+      "type": "string",
+      "nullable": true,
+      "comment": "类名"
+    },
+    {
+      "label": "来源",
+      "name": "source",
+      "type": "string",
+      "nullable": true,
+      "comment": "来源"
+    },
+    {
+      "label": "状态",
+      "name": "status",
+      "type": "enum",
+      "default": "enabled",
+      "option": [
+        "enabled",
+        "disabled"
+      ],
+      "comment": "状态"
+    }
+  ],
+  "relations": {
+    "children": {
+      "type": "hasMany",
+      "model": "system.menu",
+      "key": "id",
+      "foreign": "parent",
+      "query": {
+        "select": []
+      }
+    }
+  },
+  "values": [],
+  "indexes": [],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": false
+  }
+}
+// yao migrate -n system.menu --reset

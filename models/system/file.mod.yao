@@ -1,0 +1,36 @@
+{
+    "columns": [
+        {
+            "label": "ID",
+            "name": "id",
+            "type": "id"
+        },
+        {
+            "label": "用户ID",
+            "name": "user_id",
+            "type": "integer"
+        },
+        {
+            "label": "文件名",
+            "name": "file_name",
+            "type": "string"
+        }
+    ],
+    "comment": "用户的编辑器文件",
+    "name": "文件编辑记录",
+    "option": {
+        "timestamps": true
+    },
+    "relations": {
+        "user": {
+            "foreign": "user_id",
+            "key": "id",
+            "model": "admin.user",
+            "type": "hasOne"
+        }
+    },
+    "table": {
+        "comment": "用户的编辑器文件",
+        "name": "system_file"
+    }
+}

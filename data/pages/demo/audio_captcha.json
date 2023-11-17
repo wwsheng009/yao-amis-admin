@@ -1,0 +1,256 @@
+{
+  "body": [
+    {
+      "isFixedWidth": false,
+      "items": [
+        {
+          "id": "u:03d22f862544",
+          "isFixedHeight": false,
+          "isFixedWidth": false,
+          "size": "xs",
+          "style": {
+            "overflowX": "auto",
+            "position": "static",
+            "display": "block",
+            "flex": "1 1 auto",
+            "flexBasis": "auto",
+            "flexGrow": "0",
+            "maxWidth": "400px",
+            "minWidth": "400px"
+          },
+          "type": "container",
+          "wrapperBody": false,
+          "body": [
+            {
+              "isFixedWidth": false,
+              "style": {
+                "display": "block",
+                "position": "static",
+                "text-align": "center"
+              },
+              "type": "container",
+              "wrapperBody": false,
+              "body": [
+                {
+                  "inline": true,
+                  "tpl": "Amis-Yao Admin",
+                  "type": "tpl",
+                  "wrapperComponent": "h1",
+                  "id": "u:984c8b793d59"
+                }
+              ],
+              "id": "u:ca90e0af9a90",
+              "isFixedHeight": false
+            },
+            {
+              "actions": [
+                {
+                  "isFixedHeight": false,
+                  "isFixedWidth": false,
+                  "style": {
+                    "display": "block",
+                    "marginLeft": "0",
+                    "position": "static",
+                    "text-align": "center"
+                  },
+                  "type": "container",
+                  "wrapperBody": false,
+                  "body": [
+                    {
+                      "className": "className-77438f42a265 className-b4412e3fb86c",
+                      "disabled": false,
+                      "id": "u:b4412e3fb86c",
+                      "label": "登录",
+                      "level": "primary",
+                      "onEvent": {
+                        "click": {
+                          "actions": [
+                            {
+                              "actionType": "submit",
+                              "args": {},
+                              "componentId": "u:478b66087163"
+                            }
+                          ]
+                        }
+                      },
+                      "themeCss": {
+                        "className": {
+                          "--Panel-footerButtonMarginLeft:default": "0",
+                          "width:default": "100%"
+                        }
+                      },
+                      "type": "button"
+                    }
+                  ],
+                  "id": "u:67c274c06d4c"
+                }
+              ],
+              "redirect": "/amis-admin",
+              "className": "",
+              "data": {
+                "password": "",
+                "username": "${cookie:username}"
+              },
+              "id": "u:478b66087163",
+              "mode": "horizontal",
+              "name": "login_form",
+              "title": "",
+              "api": {
+                "adaptor": "return yao_amis.login(payload,response,api,context)",
+                "data": {
+                  "captcha": {
+                    "code": "${code}",
+                    "id": "${captcha.id}"
+                  },
+                  "email": "${username}",
+                  "password": "${password}"
+                },
+                "dataType": "json",
+                "messages": {},
+                "method": "post",
+                "requestAdaptor": "",
+                "url": "/api/__yao/login/admin"
+              },
+              "body": [
+                {
+                  "labelWidth": "25%",
+                  "name": "username",
+                  "required": true,
+                  "type": "input-email",
+                  "id": "u:31e63ad3f078",
+                  "label": "用户名"
+                },
+                {
+                  "validations": {},
+                  "id": "u:1409ae59b46a",
+                  "label": "密码",
+                  "labelWidth": "25%",
+                  "validationErrors": {},
+                  "type": "input-password",
+                  "name": "password",
+                  "required": true,
+                  "showCounter": false,
+                  "size": "full"
+                },
+                {
+                  "label": "验证码",
+                  "labelWidth": "93px",
+                  "name": "code",
+                  "required": true,
+                  "id": "u:ec84b7362fdc",
+                  "type": "input-text"
+                },
+                {
+                  "isFixedWidth": false,
+                  "id": "u:d2b92ed5a457",
+                  "type": "flex",
+                  "className": "p-1",
+                  "items": [
+                    {
+                      "messages": {},
+                      "name": "captcha",
+                      "body": [
+                        {
+                          "clickAction": {
+                            "target": "captcha",
+                            "actionType": "reload"
+                          },
+                          "enlargeAble": false,
+                          "height": 50,
+                          "id": "u:110613f636ea",
+                          "src": "${captcha.code}",
+                          "type": "audio",
+                          "width": 111,
+                          "controls": ["play", "process", "volume"]
+                        }
+                      ],
+                      "id": "u:ba0cc1228748",
+                      "type": "service",
+                      "api": {
+                        "requestAdaptor": "",
+                        "url": "/api/v1/amis/captcha?type=audio",
+                        "messages": {},
+                        "method": "get"
+                      }
+                    },
+                    {
+                      "editorState": "default",
+                      "label": "刷新",
+                      "onEvent": {
+                        "click": {
+                          "weight": 0,
+                          "actions": [
+                            {
+                              "componentId": "u:ba0cc1228748",
+                              "actionType": "reload",
+                              "data": null
+                            }
+                          ]
+                        }
+                      },
+                      "type": "button",
+                      "id": "u:32d18364c760"
+                    }
+                  ],
+                  "style": {
+                    "flexWrap": "nowrap",
+                    "alignItems": "center",
+                    "justifyContent": "center",
+                    "position": "relative",
+                    "inset": "auto"
+                  },
+                  "isFixedHeight": false
+                },
+                {
+                  "id": "u:663b59115c4a",
+                  "style": {
+                    "text-align": "right",
+                    "position": "static",
+                    "display": "block",
+                    "padding": "4px"
+                  },
+                  "body": [
+                    {
+                      "value": "http://www.baidu.com/",
+                      "body": "注册新账号",
+                      "className": "",
+                      "href": "/amis-admin/register.html",
+                      "id": "u:cd8a818c14a6",
+                      "type": "link"
+                    }
+                  ],
+                  "isFixedHeight": false,
+                  "isFixedWidth": false,
+                  "wrapperBody": false,
+                  "type": "container"
+                }
+              ],
+              "type": "form",
+              "wrapWithPanel": true
+            }
+          ]
+        }
+      ],
+      "style": {
+        "flexWrap": "nowrap",
+        "height": "100%",
+        "inset": "auto",
+        "justifyContent": "center",
+        "overflowY": "auto",
+        "position": "relative",
+        "alignItems": "center",
+        "flexDirection": "column"
+      },
+      "type": "flex",
+      "className": "p-1",
+      "id": "u:b966e0d731ee",
+      "isFixedHeight": true
+    }
+  ],
+  "id": "u:a7238be79bbc",
+  "regions": ["body"],
+  "title": "x1",
+  "type": "page",
+  "aside": [],
+  "asideResizor": false
+}

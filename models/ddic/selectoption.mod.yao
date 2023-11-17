@@ -1,0 +1,69 @@
+{
+    "ID": "ddic.selectoption",
+    "columns": [
+        {
+            "comment": "ID",
+            "label": "ID",
+            "name": "id",
+            "type": "id"
+        },
+        {
+            "comment": "搜索定义",
+            "index": true,
+            "label": "搜索定义",
+            "name": "name",
+            "type": "string",
+            "unique": true
+        },
+        {
+            "comment": "模型",
+            "label": "模型",
+            "name": "model",
+            "type": "string",
+            "unique": true
+        },
+        {
+            "comment": "标签字段",
+            "default": "name",
+            "label": "标签字段",
+            "name": "label_field",
+            "type": "string"
+        },
+        {
+            "comment": "值字段",
+            "default": "id",
+            "label": "值字段",
+            "name": "value_field",
+            "type": "string"
+        },
+        {
+            "comment": "搜索条件",
+            "label": "搜索条件",
+            "name": "wheres",
+            "nullable": true,
+            "type": "json"
+        },
+        {
+            "comment": "数量限制",
+            "default": "500",
+            "label": "数量限制",
+            "name": "limit",
+            "type": "integer"
+        },
+        {
+            "comment": "合并显示",
+            "default": false,
+            "label": "合并显示",
+            "name": "join",
+            "type": "boolean"
+        }
+    ],
+    "id": 4,
+    "name": "搜索帮助",
+    "option": {
+        "timestamps": true
+    },
+    "table": {
+        "name": "ddic_selectoption"
+    }
+}

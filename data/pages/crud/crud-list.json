@@ -1,0 +1,180 @@
+{
+  "type": "page",
+  "id": "u:a211b1cee88e",
+  "body": [
+    {
+      "affixHeader": true,
+      "defaultParams": {
+        "perPage": 100
+      },
+      "api": {
+        "method": "get",
+        "requestAdaptor": "",
+        "url": "/api/v1/mock/samples?page=${page}&perPage=${perPage}&keywords=${keywords}",
+        "messages": {},
+        "adaptor": ""
+      },
+      "bodyClassName": "panel-default",
+      "columnsTogglable": "auto",
+      "headerClassName": "crud-table-header",
+      "messages": {},
+      "placeholder": "暂无数据",
+      "id": "u:1044ec331968",
+      "perPageAvailable": [10],
+      "name": "sample",
+      "syncLocation": false,
+      "toolbarClassName": "crud-table-toolbar",
+      "type": "crud",
+      "bulkActions": [
+        {
+          "actionType": "dialog",
+          "dialog": {
+            "title": "批量编辑",
+            "body": {
+              "api": "/api/v1/mock/bulkUpdate/$ids",
+              "controls": [
+                {
+                  "label": "Engine",
+                  "name": "engine",
+                  "type": "text"
+                }
+              ],
+              "type": "form"
+            },
+            "name": "sample-bulk-edit"
+          },
+          "label": "批量修改",
+          "level": "primary",
+          "type": "button",
+          "id": "u:f2e12360aaf5"
+        },
+        {
+          "label": "批量删除",
+          "level": "danger",
+          "type": "button",
+          "id": "u:bb9b485dfa90",
+          "actionType": "ajax",
+          "api": "delete:/api/v1/mock/sample/$ids",
+          "confirmText": "确定要批量删除?"
+        }
+      ],
+      "columns": [
+        {
+          "label": "Rendering engine",
+          "name": "engine",
+          "sortable": true,
+          "id": "u:94789824ff0d"
+        },
+        {
+          "label": "ID",
+          "name": "id",
+          "sortable": true,
+          "width": 20,
+          "id": "u:2315276c4e95"
+        },
+        {
+          "name": "browser",
+          "sortable": true,
+          "id": "u:c5a65e02d839",
+          "label": "Browser"
+        },
+        {
+          "label": "Platform(s)",
+          "name": "platform",
+          "sortable": true,
+          "id": "u:eb3b8a221907"
+        },
+        {
+          "id": "u:31f24846412d",
+          "label": "Engine version",
+          "name": "version"
+        },
+        {
+          "name": "grade",
+          "id": "u:6f085c53a288",
+          "label": "CSS grade"
+        },
+        {
+          "width": "",
+          "id": "u:efcca3626dde",
+          "buttons": [
+            {
+              "buttons": [
+                {
+                  "type": "button",
+                  "id": "u:51eab16f6325",
+                  "actionType": "link",
+                  "label": "查看",
+                  "level": "primary",
+                  "link": "/crud/${id}"
+                },
+                {
+                  "actionType": "link",
+                  "label": "修改",
+                  "level": "info",
+                  "link": "/crud/${id}/edit",
+                  "type": "button",
+                  "id": "u:60c2b54030ad"
+                },
+                {
+                  "confirmText": "您确认要删除?",
+                  "label": "删除",
+                  "level": "danger",
+                  "type": "button",
+                  "id": "u:2a303b7bc6f4",
+                  "actionType": "ajax",
+                  "api": "delete:/api/v1/mock/sample/$id"
+                }
+              ],
+              "type": "button-group",
+              "id": "u:7cc5e29c0518"
+            }
+          ],
+          "fixed": "right",
+          "label": "操作",
+          "placeholder": "-",
+          "type": "operation"
+        }
+      ],
+      "combineNum": 0,
+      "filter": {
+        "title": "",
+        "wrapWithPanel": false,
+        "id": "u:840520b1be91",
+        "body": [
+          {
+            "addOn": {
+              "className": "btn-success",
+              "label": "搜索",
+              "type": "submit",
+              "id": "u:388252a75959"
+            },
+            "clearable": true,
+            "name": "keywords",
+            "placeholder": "通过关键字搜索",
+            "type": "input-text",
+            "id": "u:d7dfac1774c9"
+          }
+        ],
+        "className": "m-b-sm",
+        "mode": "inline",
+        "submitText": ""
+      },
+      "footerClassName": "crud-table-footer",
+      "tableClassName": "table-db table-striped"
+    }
+  ],
+  "name": "page-demo",
+  "remark": null,
+  "title": "列表",
+  "toolbar": [
+    {
+      "id": "u:4862440567d8",
+      "actionType": "link",
+      "label": "新增",
+      "link": "/crud/new",
+      "primary": true,
+      "type": "button"
+    }
+  ]
+}

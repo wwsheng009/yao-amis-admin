@@ -1,0 +1,36 @@
+//用于读取显示菜单项
+{
+  "label": "用户列表",
+  "version": "1.0.0",
+  "description": "用户列表",
+  "nodes": [
+    {
+      "name": "用户列表",
+      "engine": "default",
+      "query": {
+        // "debug": true,
+        "select": [
+          "id",
+          "name",
+          "created_at",
+          "email",
+          "extra",
+          //   "idcard",
+          "key",
+          "mobile",
+          //   "password",
+          //   "password2nd",
+          //   "secret",
+          "status",
+          "type",
+          "updated_at"
+        ],
+        "wheres": [{ ":deleted_at": "删除", "=": null }],
+        "from": "$admin.user",
+        "limit": 1000
+      }
+    }
+  ],
+  "output": "{{$res.用户列表}}"
+}
+// yao run flows.system.account

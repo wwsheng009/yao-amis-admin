@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta http-equiv="refresh" content="0; url=/index.html"> -->
+
+    <title>Document</title>
+    <script src="./scripts/token.js"></script>
+</head>
+<script>
+
+    (function () {
+        if (!yao_amis.getToken()) {
+            window.location.href = "/amis-admin/login.html"
+        } else {
+            window.location.href = "/amis-admin/index.html"
+        }
+        yao_amis.checkToken();
+    })()
+
+
+</script>
+
+<body>
+
+</body>
+
+</html>

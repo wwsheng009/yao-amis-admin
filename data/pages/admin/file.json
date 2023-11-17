@@ -1,0 +1,221 @@
+{
+  "wrapperCustomStyle": {
+    ".cxd-Page-aside": { "min-width": "200px", "width": "auto" }
+  },
+  "asideResizor": true,
+  "asideSticky": false,
+  "id": "u:b3a36a017400",
+  "pullRefresh": { "disabled": true },
+  "title": "当前目录:${folder}",
+  "aside": [
+    {
+      "editDialog": {
+        "title": "编辑选项",
+        "actions": [
+          { "type": "button", "actionType": "cancel", "label": "取消" },
+          {
+            "label": "确定",
+            "primary": true,
+            "type": "button",
+            "actionType": "confirm"
+          }
+        ]
+      },
+      "rootCreateTip": "创建目录",
+      "enableNodePath": false,
+      "hideRoot": true,
+      "showIcon": true,
+      "name": "folder",
+      "creatable": true,
+      "id": "u:6f79e0bedca8",
+      "rootCreatable": true,
+      "initiallyOpen": true,
+      "label": "",
+      "addApi": {
+        "url": "/api/v1/file/create_folder",
+        "adaptor": "",
+        "data": { "folder": "${folder}", "name": "${name}" },
+        "messages": {},
+        "method": "get",
+        "requestAdaptor": ""
+      },
+      "removable": true,
+      "addDialog": {
+        "actions": [
+          { "type": "button", "actionType": "cancel", "label": "取消" },
+          {
+            "actionType": "confirm",
+            "label": "确定",
+            "primary": true,
+            "type": "button"
+          }
+        ],
+        "title": "新增选项"
+      },
+      "deleteApi": {
+        "method": "get",
+        "url": "/api/v1/file/delete_folder?folder=${folder}"
+      },
+      "source": {
+        "messages": {},
+        "method": "get",
+        "requestAdaptor": "",
+        "url": "/api/v1/file/dir_tree?parent=${value}",
+        "adaptor": ""
+      },
+      "multiple": false,
+      "editControls": [
+        {
+          "label": "当前名称",
+          "name": "folder",
+          "editorState": "default",
+          "readOnly": true,
+          "type": "input-text"
+        },
+        {
+          "placeholder": "请输入名称",
+          "editorState": "default",
+          "type": "input-text",
+          "name": "name",
+          "label": "新名称",
+          "required": true
+        }
+      ],
+      "addControls": [
+        {
+          "name": "folder",
+          "static": true,
+          "type": "input-text",
+          "editorState": "default",
+          "label": "上级目录"
+        },
+        {
+          "label": "新目录",
+          "name": "name",
+          "placeholder": "请输入名称",
+          "required": true,
+          "type": "input-text",
+          "editorState": "default"
+        }
+      ],
+      "editable": true,
+      "type": "input-tree",
+      "editApi": {
+        "messages": {},
+        "data": { "folder": "${folder}", "name": "${name}" },
+        "url": "/api/v1/file/move_folder",
+        "method": "get",
+        "requestAdaptor": "",
+        "adaptor": ""
+      }
+    }
+  ],
+  "editorState": "default",
+  "body": [
+    {
+      "body": [
+        {
+          "multiple": false,
+          "useChunk": false,
+          "autoUpload": true,
+          "drag": false,
+          "id": "u:ed4431f9629c",
+          "label": "文件上传",
+          "type": "input-file",
+          "name": "file",
+          "receiver": {
+            "requestAdaptor": "",
+            "url": "/api/v1/file/upload",
+            "adaptor": "",
+            "data": { "folder": "${folder}" },
+            "dataType": "form-data",
+            "messages": {},
+            "method": "post"
+          },
+          "accept": "",
+          "btnLabel": "文件上传",
+          "uploadType": "fileReceptor",
+          "proxy": true
+        },
+        {
+          "multiple": true,
+          "limit": false,
+          "proxy": true,
+          "type": "input-image",
+          "name": "image",
+          "accept": ".jpeg, .jpg, .png, .gif",
+          "uploadType": "fileReceptor",
+          "editorState": "default",
+          "hideUploadButton": false,
+          "imageClassName": "r w-full",
+          "receiver": {
+            "data": { "folder": "${folder}" },
+            "adaptor": "",
+            "messages": {},
+            "method": "post",
+            "requestAdaptor": "",
+            "url": "/api/v1/file/upload"
+          },
+          "id": "u:4dab53d25ad7",
+          "label": "",
+          "autoUpload": true
+        }
+      ],
+      "type": "group",
+      "id": "u:141a71ecae07"
+    },
+    {
+      "type": "crud",
+      "columns": [
+        {
+          "id": "u:7b8873789c05",
+          "label": "file_name",
+          "name": "file_name",
+          "type": "text"
+        },
+        {
+          "id": "u:3afb93fb3f0c",
+          "label": "file_path",
+          "name": "file_path",
+          "type": "text"
+        },
+        {
+          "label": "file_url",
+          "name": "file_url",
+          "type": "image",
+          "id": "u:c7c86912ea8c"
+        },
+        {
+          "name": "mime_type",
+          "type": "text",
+          "id": "u:c1ca24719e23",
+          "label": "mime_type"
+        }
+      ],
+      "syncLocation": false,
+      "id": "u:bb8385fe805b",
+      "initFetchOn": "this.folder",
+      "perPageAvailable": [10],
+      "api": {
+        "messages": {},
+        "method": "get",
+        "requestAdaptor": "",
+        "sendOn": "this.folder",
+        "url": "/api/v1/file/file_list?name=${folder}",
+        "adaptor": ""
+      },
+      "bulkActions": [],
+      "itemActions": [],
+      "filterSettingSource": [
+        "file_name",
+        "file_path",
+        "file_url",
+        "mime_type"
+      ],
+      "messages": {}
+    }
+  ],
+  "type": "page",
+  "asideMaxWidth": 350,
+  "asideMinWidth": 250
+}

@@ -1,0 +1,26 @@
+{
+  "onEvent": {
+    "init": {
+      "actions": [
+        {
+          "actionType": "custom",
+          "script": "window.yao_amis.logout(false)"
+        },
+        {
+          "actionType": "url",
+          "args": {
+            "url": "/amis-admin/login.html"
+          }
+        }
+      ],
+      "weight": 0
+    }
+  },
+  "pullRefresh": {
+    "disabled": true
+  },
+  "regions": ["body"],
+  "title": "退出登录",
+  "type": "page",
+  "id": "u:cf6fa1f12e1d"
+}

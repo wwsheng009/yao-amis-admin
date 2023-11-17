@@ -1,0 +1,14 @@
+{
+  "name": "::Admin Login",
+  "action": {
+    "process": "yao.login.Admin",
+    "args": [
+      ":payload"
+    ]
+  },
+  "layout": {
+    "entry": "/iframe?src=/amis-admin/redirect.html",
+    "slogan": "::Chat with AI",
+    "site": "https://yaoapps.com?from=instance-admin-login"
+  }
+}

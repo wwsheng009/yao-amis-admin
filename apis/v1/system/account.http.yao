@@ -1,0 +1,64 @@
+{
+  "name": "账户信息",
+  "version": "1.0.0",
+  "description": "账户信息",
+  "group": "",
+  "guard": "bearer-jwt",
+  "paths": [
+    {
+      "path": "/get",
+      "method": "GET",
+      "guard": "bearer-jwt",
+      "process": "scripts.system.account.UserInfo",
+      "in": [],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "label": "更新用户的信息",
+      "description": "更新用户的信息",
+      "path": "/update",
+      "method": "POST",
+      "guard": "bearer-jwt",
+      "process": "scripts.amis.data.model.saveData",
+      "in": [
+        "admin.user",
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "path": "/change_password",
+      "method": "POST",
+      "guard": "bearer-jwt",
+      "process": "scripts.system.account.change_password",
+      "in": [
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "label": "用户注册",
+      "description": "用户注册",
+      "path": "/register",
+      "method": "POST",
+      "guard": "-",
+      "process": "scripts.system.account.register",
+      "in": [
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    }
+  ]
+}

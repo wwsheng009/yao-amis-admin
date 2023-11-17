@@ -1,0 +1,67 @@
+{
+  "pullRefresh": {
+    "disabled": true
+  },
+  "regions": ["body", "toolbar"],
+  "toolbar": [
+    {
+      "type": "container",
+      "body": [
+        {
+          "size": "md",
+          "labelAlign": "right",
+          "name": "select",
+          "id": "u:fc6740e2cc60",
+          "source": {
+            "url": "/api/v1/system/meta/model/model_name_list",
+            "method": "get"
+          },
+          "mode": "horizontal",
+          "onEvent": {
+            "change": {
+              "weight": 0,
+              "actions": [
+                {
+                  "componentId": "u:5ce017fa279d",
+                  "actionType": "reload",
+                  "data": {
+                    "table": "${value}"
+                  },
+                  "dataMergeMode": "merge"
+                }
+              ]
+            }
+          },
+          "horizontal": {
+            "left": 1,
+            "right": 11
+          },
+          "type": "select",
+          "label": "模型：",
+          "multiple": false
+        }
+      ],
+      "style": {
+        "position": "static",
+        "display": "block"
+      },
+      "wrapperBody": false,
+      "id": "u:ad562680664e"
+    }
+  ],
+  "type": "page",
+  "body": [
+    {
+      "schemaApi": {
+        "url": "/api/v1/table/schema/${table}/crud-all",
+        "method": "get"
+      },
+      "initFetchSchema": false,
+      "type": "service",
+      "body": [],
+      "id": "u:5ce017fa279d",
+      "messages": {}
+    }
+  ],
+  "id": "u:568b02cd6929"
+}

@@ -1,0 +1,191 @@
+{
+  "body": [
+    {
+      "body": [
+        {
+          "editable": true,
+          "id": "u:aaeb539b44ab",
+          "multiple": false,
+          "name": "menu",
+          "showIcon": true,
+          "hideRoot": true,
+          "valueField": "id",
+          "source": {
+            "requestAdaptor": "",
+            "url": "/api/v1/system/menu/find",
+            "adaptor": "",
+            "dataType": "json",
+            "messages": {},
+            "method": "get"
+          },
+          "type": "input-tree",
+          "addApi": "/api/v1/system/menu/create",
+          "enableNodePath": false,
+          "label": "菜单编辑",
+          "onEvent": {},
+          "deleteApi": "/api/v1/system/menu/delete/${id}",
+          "editApi": "/api/v1/system/menu/edit/${id}",
+          "addControls": [
+            {
+              "required": true,
+              "type": "input-text",
+              "name": "name",
+              "label": "菜单名称"
+            },
+            {
+              "name": "icon",
+              "label": "菜单图标",
+              "type": "input-text"
+            },
+            {
+              "label": "路由",
+              "type": "input-text",
+              "name": "url"
+            },
+            {
+              "name": "link",
+              "label": "链接",
+              "type": "input-text"
+            },
+            {
+              "name": "redirect",
+              "label": "重定位",
+              "type": "input-text"
+            },
+            {
+              "name": "rewrite",
+              "label": "重渲染",
+              "type": "input-text"
+            },
+            {
+              "label": "配置接口",
+              "type": "input-text",
+              "maxLength": 200,
+              "name": "schema_api"
+            },
+            {
+              "label": "排列",
+              "type": "input-number",
+              "name": "rank"
+            },
+            {
+              "label": "类名",
+              "type": "input-text",
+              "name": "class_name"
+            },
+            {
+              "type": "group",
+              "body": [
+                {
+                  "label": "设置成默认页面",
+                  "type": "switch",
+                  "name": "is_default_page"
+                },
+                {
+                  "name": "visible",
+                  "label": "是否可见",
+                  "type": "switch"
+                },
+                {
+                  "name": "status",
+                  "label": "启用",
+                  "type": "switch"
+                }
+              ]
+            },
+            {
+              "label": "页面的配置",
+              "type": "editor",
+              "language": "json",
+              "name": "schema"
+            }
+          ],
+          "editControls": [
+            {
+              "required": true,
+              "type": "input-text",
+              "name": "name",
+              "label": "菜单名称"
+            },
+            {
+              "name": "icon",
+              "label": "菜单图标",
+              "type": "input-text"
+            },
+            {
+              "label": "路由",
+              "type": "input-text",
+              "name": "url"
+            },
+            {
+              "name": "link",
+              "label": "链接",
+              "type": "input-text"
+            },
+            {
+              "name": "redirect",
+              "label": "重定位",
+              "type": "input-text"
+            },
+            {
+              "name": "rewrite",
+              "label": "重渲染",
+              "type": "input-text"
+            },
+            {
+              "label": "配置接口",
+              "type": "input-text",
+              "maxLength": 200,
+              "name": "schema_api"
+            },
+            {
+              "label": "排列",
+              "type": "input-number",
+              "name": "rank"
+            },
+            {
+              "label": "类名",
+              "type": "input-text",
+              "name": "class_name"
+            },
+            {
+              "type": "group",
+              "body": [
+                {
+                  "label": "设置成默认页面",
+                  "type": "switch",
+                  "name": "is_default_page"
+                },
+                {
+                  "name": "visible",
+                  "label": "是否可见",
+                  "type": "switch"
+                },
+                {
+                  "name": "status",
+                  "label": "启用",
+                  "type": "switch"
+                }
+              ]
+            },
+            {
+              "label": "页面的配置",
+              "type": "editor",
+              "language": "json",
+              "name": "schema"
+            }
+          ],
+          "creatable": true,
+          "initiallyOpen": true,
+          "removable": true
+        }
+      ],
+      "id": "u:04e551491cc3",
+      "title": "表单",
+      "type": "form"
+    }
+  ],
+  "id": "u:ce39576ad681",
+  "title": "菜单树编辑",
+  "type": "page"
+}

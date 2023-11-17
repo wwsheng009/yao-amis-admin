@@ -1,0 +1,135 @@
+{
+  "definitions": {
+    "icon": {
+      "type": "picker",
+      "name": "icon",
+      "joinValues": true,
+      "valueField": "icon",
+      "labelField": "label",
+      "label": "Awsome图标",
+      "source": "/api/v1/table/system.font/search",
+      "size": "lg",
+      "pickerSchema": {
+        "mode": "table",
+        "name": "thelist",
+        "label": "",
+        "perPage": 5,
+        "draggable": true,
+        "headerToolbar": {
+          "wrapWithPanel": false,
+          "type": "form",
+          "className": "text-right",
+          "target": "thelist",
+          "mode": "inline",
+          "body": [
+            {
+              "type": "input-text",
+              "name": "keywords",
+              "addOn": {
+                "type": "submit",
+                "label": "搜索",
+                "level": "primary",
+                "icon": "fa fa-search pull-left"
+              }
+            }
+          ]
+        },
+        "columns": [
+          {
+            "label": "名称",
+            "name": "name",
+            "type": "text",
+            "id": "u:067e7bc0d228"
+          },
+          {
+            "label": "图标",
+            "name": "icon",
+            "type": "text"
+          },
+          {
+            "type": "icon",
+            "label": "图标",
+            "vendor": "",
+            "icon": "${icon}",
+            "labelClassName": "text-base",
+            "className": "text-2xl",
+            "name": "icon"
+          },
+          {
+            "label": "描述",
+            "name": "label",
+            "type": "text"
+          },
+          {
+            "label": "风格",
+            "name": "style",
+            "type": "text"
+          }
+        ]
+      }
+    },
+    "icon2": {
+      "type": "picker",
+      "name": "icon",
+      "joinValues": true,
+      "valueField": "icon",
+      "labelField": "label",
+      "label": "Awsome图标",
+      "source": "/api/v1/table/system.font/search",
+      "size": "lg",
+      "pickerSchema": {
+        "mode": "cards",
+        "name": "thelist2",
+        "label": "",
+        "perPage": 16,
+        "draggable": false,
+        "columnsCount": 8,
+        "headerToolbar": {
+          "wrapWithPanel": false,
+          "type": "form",
+          "className": "text-right",
+          "target": "thelist2",
+          "mode": "inline",
+          "body": [
+            {
+              "type": "input-text",
+              "name": "keywords",
+              "addOn": {
+                "type": "submit",
+                "label": "搜索",
+                "level": "primary",
+                "icon": "fa fa-search pull-left"
+              }
+            }
+          ]
+        },
+        "card": {
+          "className": "hover:shadow",
+          "body": {
+            "type": "wrapper",
+            "className": "h-15 flex items-center justify-center",
+            "body": [
+              {
+                "type": "wrapper",
+                "size": "none",
+                "className": "text-center",
+                "body": {
+                  "type": "icon",
+                  "vendor": "",
+                  "icon": "${icon}",
+                  "className": "text-2xl",
+                  "name": "icon"
+                }
+              },
+              {
+                "type": "wrapper",
+                "size": "none",
+                "body": "${label}"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

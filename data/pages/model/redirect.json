@@ -1,0 +1,22 @@
+{
+  "onEvent": {
+    "init": {
+      "actions": [
+        {
+          "actionType": "url",
+          "args": {
+            "url": "/admin/x/Table/demo.table"
+          }
+        }
+      ],
+      "weight": 0
+    }
+  },
+  "pullRefresh": {
+    "disabled": true
+  },
+  "regions": ["body"],
+  "title": "跳转到yao管理后端",
+  "type": "page",
+  "id": "u:cf6fa1f12e1d"
+}

@@ -1,0 +1,671 @@
+{
+  "body": [
+    {
+      "api": {
+        "data": {
+          "&": "$$"
+        },
+        "method": "post",
+        "url": "/api/v1/table/admin.user/search?page=${page}&perPage=${perPage}&orderBy=${orderBy}&orderDir=${orderDir}&__select=id,type,email,phone,role,status,created_at,updated_at"
+      },
+      "autoFillHeight": true,
+      "bulkActions": [
+        {
+          "actionType": "ajax",
+          "api": "delete:/api/v1/table/admin.user/delete/${ids|raw}",
+          "confirmText": "你确定要批量删除选中行吗?",
+          "label": "批量删除",
+          "type": "button"
+        }
+      ],
+      "columns": [
+        {
+          "label": "ID",
+          "name": "id",
+          "quickEdit": false,
+          "searchable": true,
+          "sortable": true,
+          "type": "number"
+        },
+        {
+          "label": "类型",
+          "name": "type",
+          "quickEdit": false,
+          "searchable": true,
+          "sortable": true,
+          "type": "text"
+        },
+        {
+          "label": "邮箱",
+          "name": "email",
+          "quickEdit": false,
+          "searchable": true,
+          "sortable": true,
+          "type": "text"
+        },
+        {
+          "label": "手机号",
+          "name": "mobile",
+          "quickEdit": false,
+          "searchable": true,
+          "sortable": true,
+          "type": "text"
+        },
+        {
+          "label": "角色",
+          "levelExpand": 0,
+          "name": "role",
+          "quickEdit": false,
+          "searchable": true,
+          "sortable": true,
+          "type": "text"
+        },
+        {
+          "label": "状态",
+          "name": "status",
+          "quickEdit": false,
+          "searchable": true,
+          "sortable": true,
+          "type": "text"
+        },
+        {
+          "format": "YYYY-MM-DD HH:mm:ss",
+          "label": "创建时间",
+          "name": "created_at",
+          "quickEdit": false,
+          "searchable": true,
+          "sortable": true,
+          "type": "date"
+        },
+        {
+          "format": "YYYY-MM-DD HH:mm:ss",
+          "label": "更新时间",
+          "name": "updated_at",
+          "quickEdit": false,
+          "searchable": true,
+          "sortable": true,
+          "type": "date"
+        },
+        {
+          "buttons": [
+            {
+              "actionType": "dialog",
+              "dialog": {
+                "body": {
+                  "body": [
+                    {
+                      "label": "ID",
+                      "name": "id",
+                      "static": true,
+                      "type": "input-number"
+                    },
+                    {
+                      "label": "类型",
+                      "name": "type",
+                      "static": true,
+                      "type": "select"
+                    },
+                    {
+                      "label": "邮箱",
+                      "name": "email",
+                      "static": true,
+                      "type": "input-email"
+                    },
+                    {
+                      "label": "手机号",
+                      "name": "mobile",
+                      "static": true,
+                      "type": "input-text"
+                    },
+                    {
+                      "type": "input-text",
+                      "static": true,
+                      "name": "role",
+                      "label": "角色"
+                    },
+                    {
+                      "label": "状态",
+                      "name": "status",
+                      "static": true,
+                      "type": "input-text"
+                    },
+                    {
+                      "format": "YYYY-MM-DD HH:mm:ss",
+                      "label": "创建时间",
+                      "name": "created_at",
+                      "type": "static-datetime",
+                      "visibleOn": "!!this.created_at"
+                    },
+                    {
+                      "format": "YYYY-MM-DD HH:mm:ss",
+                      "label": "更新时间",
+                      "name": "updated_at",
+                      "type": "static-datetime",
+                      "visibleOn": "!!this.updated_at"
+                    },
+                    {
+                      "format": "YYYY-MM-DD HH:mm:ss",
+                      "label": "删除时间",
+                      "name": "deleted_at",
+                      "type": "static-datetime",
+                      "visibleOn": "!!this.deleted_at"
+                    }
+                  ],
+                  "type": "form"
+                },
+                "size": "lg",
+                "title": "查看"
+              },
+              "icon": "fa fa-eye",
+              "tooltip": "查看",
+              "type": "button"
+            },
+            {
+              "actionType": "dialog",
+              "dialog": {
+                "body": {
+                  "api": "post:/api/v1/table/admin.user/bulkUpdate/$id",
+                  "body": [
+                    {
+                      "isID": true,
+                      "label": "ID",
+                      "name": "id",
+                      "type": "input-number"
+                    },
+                    {
+                      "label": "类型",
+                      "name": "type",
+                      "options": [
+                        {
+                          "label": "super",
+                          "value": "super"
+                        },
+                        {
+                          "label": "admin",
+                          "value": "admin"
+                        },
+                        {
+                          "label": "staff",
+                          "value": "staff"
+                        },
+                        {
+                          "label": "user",
+                          "value": "user"
+                        },
+                        {
+                          "label": "robot",
+                          "value": "robot"
+                        }
+                      ],
+                      "type": "select",
+                      "value": "user"
+                    },
+                    {
+                      "label": "邮箱",
+                      "maxLength": 50,
+                      "name": "email",
+                      "type": "input-email",
+                      "validationErrors": {
+                        "isEmail": "${col.name}不是邮箱地址"
+                      },
+                      "validations": {
+                        "isEmail": true
+                      }
+                    },
+                    {
+                      "label": "手机号",
+                      "maxLength": 50,
+                      "name": "mobile",
+                      "type": "input-text",
+                      "validationErrors": {
+                        "isTelNumber": "${col.name}格式错误"
+                      },
+                      "validations": {
+                        "isTelNumber": true
+                      }
+                    },
+                    {
+                      "type": "select",
+                      "name": "role",
+                      "label": "角色",
+                      "multiple": true,
+                      "cascade": true,
+                      "source": "/api/v1/table/system.auth.role/select_options?__label=desc",
+                      "joinValues": false,
+                      "extractValue": true
+                    },
+                    {
+                      "label": "状态",
+                      "name": "status",
+                      "type": "select",
+                      "value": "enabled",
+                      "options": [
+                        {
+                          "label": "启用",
+                          "value": "enabled"
+                        },
+                        {
+                          "label": "停用",
+                          "value": "disabled"
+                        }
+                      ]
+                    },
+                    {
+                      "format": "YYYY-MM-DD HH:mm:ss",
+                      "label": "创建时间",
+                      "name": "created_at",
+                      "type": "static-datetime",
+                      "visibleOn": "!!this.created_at"
+                    },
+                    {
+                      "format": "YYYY-MM-DD HH:mm:ss",
+                      "label": "更新时间",
+                      "name": "updated_at",
+                      "type": "static-datetime",
+                      "visibleOn": "!!this.updated_at"
+                    },
+                    {
+                      "format": "YYYY-MM-DD HH:mm:ss",
+                      "label": "删除时间",
+                      "name": "deleted_at",
+                      "type": "static-datetime",
+                      "visibleOn": "!!this.deleted_at"
+                    }
+                  ],
+                  "name": "update",
+                  "silentPolling": false,
+                  "trimValues": true,
+                  "type": "form"
+                },
+                "size": "lg",
+                "title": "更新",
+                "type": "dialog"
+              },
+              "icon": "fa fa-pencil",
+              "tooltip": "更新",
+              "type": "button"
+            },
+            {
+              "actionType": "ajax",
+              "api": "delete:/api/v1/table/admin.user/delete/$id",
+              "confirmText": "你确定要删除行${id}?",
+              "icon": "fa fa-times text-danger",
+              "tooltip": "删除",
+              "type": "button"
+            }
+          ],
+          "label": "操作",
+          "type": "operation",
+          "width": 100
+        }
+      ],
+      "filter": {
+        "actions": [
+          {
+            "actionType": "clear-and-submit",
+            "label": "清空",
+            "level": "default",
+            "type": "button"
+          },
+          {
+            "actionType": "reset-and-submit",
+            "label": "重置",
+            "level": "default",
+            "type": "button"
+          },
+          {
+            "actionType": "submit",
+            "label": "搜索",
+            "level": "primary",
+            "type": "button"
+          }
+        ],
+        "body": [
+          {
+            "label": "ID",
+            "name": "id",
+            "type": "input-number"
+          },
+          {
+            "label": "类型",
+            "name": "type",
+            "options": [
+              {
+                "label": "super",
+                "value": "super"
+              },
+              {
+                "label": "admin",
+                "value": "admin"
+              },
+              {
+                "label": "staff",
+                "value": "staff"
+              },
+              {
+                "label": "user",
+                "value": "user"
+              },
+              {
+                "label": "robot",
+                "value": "robot"
+              }
+            ],
+            "type": "select",
+            "value": "user"
+          },
+          {
+            "label": "邮箱",
+            "maxLength": 50,
+            "name": "email",
+            "type": "input-email",
+            "validationErrors": {
+              "isEmail": "${col.name}不是邮箱地址"
+            },
+            "validations": {
+              "isEmail": true
+            }
+          },
+          {
+            "label": "手机号",
+            "maxLength": 50,
+            "name": "mobile",
+            "type": "input-text",
+            "validationErrors": {
+              "isTelNumber": "${col.name}格式错误"
+            },
+            "validations": {
+              "isTelNumber": true
+            }
+          },
+          {
+            "label": "状态",
+            "name": "status",
+            "type": "select",
+            "value": "enabled",
+            "options": [
+              {
+                "label": "启用",
+                "value": "enabled"
+              },
+              {
+                "label": "停用",
+                "value": "disabled"
+              }
+            ]
+          },
+          {
+            "format": "YYYY-MM-DD HH:mm:ss",
+            "label": "创建时间",
+            "name": "created_at",
+            "type": "static-datetime",
+            "visibleOn": "!!this.created_at"
+          },
+          {
+            "format": "YYYY-MM-DD HH:mm:ss",
+            "label": "更新时间",
+            "name": "updated_at",
+            "type": "static-datetime",
+            "visibleOn": "!!this.updated_at"
+          },
+          {
+            "format": "YYYY-MM-DD HH:mm:ss",
+            "label": "删除时间",
+            "name": "deleted_at",
+            "type": "static-datetime",
+            "visibleOn": "!!this.deleted_at"
+          }
+        ],
+        "mode": "inline",
+        "name": "list",
+        "silentPolling": false,
+        "title": "",
+        "trimValues": true,
+        "type": ""
+      },
+      "filterDefaultVisible": false,
+      "filterTogglable": true,
+      "footerToolbar": [
+        "statistics",
+        "switch-per-page",
+        "pagination",
+        "load-more",
+        "export-csv",
+        "export-excel"
+      ],
+      "headerToolbar": [
+        {
+          "type": "columns-toggler"
+        },
+        "filter-toggler",
+        "reload",
+        "bulkActions",
+        {
+          "align": "right",
+          "type": "drag-toggler"
+        },
+        {
+          "actionType": "dialog",
+          "align": "right",
+          "dialog": {
+            "body": {
+              "api": "post:/api/v1/table/admin.user/create",
+              "body": [
+                {
+                  "label": "类型",
+                  "name": "type",
+                  "options": [
+                    {
+                      "label": "super",
+                      "value": "super"
+                    },
+                    {
+                      "label": "admin",
+                      "value": "admin"
+                    },
+                    {
+                      "label": "staff",
+                      "value": "staff"
+                    },
+                    {
+                      "label": "user",
+                      "value": "user"
+                    },
+                    {
+                      "label": "robot",
+                      "value": "robot"
+                    }
+                  ],
+                  "type": "select",
+                  "value": "user"
+                },
+                {
+                  "label": "邮箱",
+                  "maxLength": 50,
+                  "name": "email",
+                  "type": "input-email",
+                  "validationErrors": {
+                    "isEmail": "${col.name}不是邮箱地址"
+                  },
+                  "validations": {
+                    "isEmail": true
+                  }
+                },
+                {
+                  "label": "手机号",
+                  "maxLength": 50,
+                  "name": "mobile",
+                  "type": "input-text",
+                  "validationErrors": {
+                    "isTelNumber": "${col.name}格式错误"
+                  },
+                  "validations": {
+                    "isTelNumber": true
+                  }
+                },
+                {
+                  "type": "select",
+                  "name": "role",
+                  "label": "角色",
+                  "multiple": true,
+                  "cascade": true,
+                  "source": "/api/v1/table/system.auth.role/select_options?__label=desc",
+                  "joinValues": false,
+                  "extractValue": true
+                },
+                {
+                  "label": "状态",
+                  "name": "status",
+                  "type": "select",
+                  "value": "enabled",
+                  "options": [
+                    {
+                      "label": "启用",
+                      "value": "enabled"
+                    },
+                    {
+                      "label": "停用",
+                      "value": "disabled"
+                    }
+                  ]
+                },
+                {
+                  "format": "YYYY-MM-DD HH:mm:ss",
+                  "label": "创建时间",
+                  "name": "created_at",
+                  "type": "static-datetime",
+                  "visibleOn": "!!this.created_at"
+                },
+                {
+                  "format": "YYYY-MM-DD HH:mm:ss",
+                  "label": "更新时间",
+                  "name": "updated_at",
+                  "type": "static-datetime",
+                  "visibleOn": "!!this.updated_at"
+                },
+                {
+                  "format": "YYYY-MM-DD HH:mm:ss",
+                  "label": "删除时间",
+                  "name": "deleted_at",
+                  "type": "static-datetime",
+                  "visibleOn": "!!this.deleted_at"
+                }
+              ],
+              "name": "create",
+              "silentPolling": false,
+              "type": "form"
+            },
+            "size": "lg",
+            "title": "新增",
+            "type": "dialog"
+          },
+          "icon": "fa fa-plus pull-left",
+          "label": "新增",
+          "level": "primary",
+          "type": "button"
+        },
+        {
+          "actionType": "dialog",
+          "dialog": {
+            "body": {
+              "api": {
+                "data": {
+                  "batch": {
+                    "&": {
+                      "$excel": {
+                        "created_at": "${created_at}",
+                        "deleted_at": "${deleted_at}",
+                        "email": "${email}",
+                        "mobile": "${mobile}",
+                        "role": "${role}",
+                        "status": "${status}",
+                        "updated_at": "${updated_at}"
+                      }
+                    }
+                  }
+                },
+                "method": "post",
+                "url": "/api/v1/table/admin.user/batch_create"
+              },
+              "body": [
+                {
+                  "name": "excel",
+                  "type": "input-excel"
+                },
+                {
+                  "addable": true,
+                  "columns": [
+                    {
+                      "label": "类型",
+                      "name": "type",
+                      "quickEdit": false,
+                      "searchable": true,
+                      "sortable": true,
+                      "type": "select"
+                    },
+                    {
+                      "label": "邮箱",
+                      "name": "email",
+                      "quickEdit": false,
+                      "searchable": true,
+                      "sortable": true,
+                      "type": "text"
+                    },
+                    {
+                      "label": "手机号",
+                      "name": "mobile",
+                      "quickEdit": false,
+                      "searchable": true,
+                      "sortable": true,
+                      "type": "text"
+                    },
+                    {
+                      "label": "角色",
+                      "levelExpand": 0,
+                      "name": "role",
+                      "quickEdit": false,
+                      "searchable": true,
+                      "sortable": true,
+                      "type": "text"
+                    },
+                    {
+                      "label": "状态",
+                      "name": "status",
+                      "quickEdit": false,
+                      "searchable": true,
+                      "sortable": true,
+                      "type": "text"
+                    }
+                  ],
+                  "copyable": true,
+                  "editable": true,
+                  "name": "excel",
+                  "removable": true,
+                  "showIndex": true,
+                  "type": "input-table"
+                }
+              ],
+              "mode": "normal",
+              "silentPolling": false,
+              "type": "form"
+            },
+            "size": "full",
+            "title": "批量新增",
+            "type": "dialog"
+          },
+          "icon": "fa fa-plus pull-left",
+          "label": "批量新增",
+          "level": "primary",
+          "type": "button"
+        }
+      ],
+      "itemActions": [],
+      "keepItemSelectionOnPageChange": true,
+      "perPage": 10,
+      "primaryField": "id",
+      "syncLocation": false,
+      "type": "crud"
+    }
+  ],
+  "type": "page"
+}

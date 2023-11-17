@@ -1,0 +1,204 @@
+{
+  "name": "业务模型定义",
+  "table": {
+    "name": "ddic_model",
+    "comment": "业务模型"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "type": "ID",
+      "label": "ID",
+      "comment": "ID"
+    },
+    {
+      "name": "identity",
+      "type": "string",
+      "label": "模型标识",
+      "comment": "模型标识",
+      "length": 64,
+      "unique": true,
+      "index": true,
+      "nullable": false,
+      "validations": [
+        {
+          "method": "maxLength",
+          "args": [
+            64
+          ],
+          "message": "{{label}}最大长度64"
+        },
+        {
+          "method": "pattern",
+          "args": [
+            "^[a-zA-Z.][a-zA-Z0-9.]*$"
+          ],
+          "message": "{{label}}只允许数字与字母，点号"
+        }
+      ]
+    },
+    {
+      "label": "名称",
+      "name": "name",
+      "comment": "名称",
+      "type": "string",
+      "index": true
+    },
+    {
+      "label": "备注",
+      "name": "comment",
+      "type": "string",
+      "comment": "备注",
+      "nullable": true
+    },
+    {
+      "label": "数据库表名",
+      "name": "table_name",
+      "comment": "数据库表名",
+      "type": "string",
+      "length": 64,
+      "nullable": false,
+      "validations": [
+        {
+          "method": "maxLength",
+          "args": [
+            64
+          ],
+          "message": "{{label}}最大长度64"
+        },
+        {
+          "method": "pattern",
+          "args": [
+            "^[a-zA-Z_][a-zA-Z0-9_]*$"
+          ],
+          "message": "{{label}}只允许数字与字母，下划线，划线"
+        }
+      ]
+    },
+    {
+      "label": "数据库表备注",
+      "name": "table_comment",
+      "type": "string",
+      "length": 100,
+      "comment": "数据库表备注",
+      "nullable": true
+    },
+    {
+      "label": "软删除",
+      "name": "soft_deletes",
+      "type": "boolean",
+      "default": true,
+      "comment": "软删除，不直接删除"
+    },
+    {
+      "label": "时间戳",
+      "name": "timestamps",
+      "type": "boolean",
+      "default": true,
+      "comment": "增加创建，更新时间戳"
+    },
+    {
+      "label": "只读",
+      "name": "read_only",
+      "type": "boolean",
+      "default": true,
+      "comment": "只读，忽略迁移操作"
+    },
+    {
+      "comment": "关联关系",
+      "label": "关联关系",
+      "name": "relations",
+      "type": "json",
+      "nullable": true
+    }
+  ],
+  "relations": {
+    "columns": {
+      "label": "字段列表",
+      "type": "hasMany",
+      "model": "ddic.model.column",
+      "key": "model_id",
+      "foreign": "id"
+    }
+  },
+  "option": {},
+  "xgen": {
+    "form": {
+      "layout": {
+        "actions": [
+          {
+            "title": "生成模型文件",
+            "icon": "icon-layers",
+            "showWhenView": true,
+            "action": [
+              {
+                "name": "StudioModel",
+                "type": "Studio.ddic.generator",
+                "payload": {
+                  "method": "GenerateModelFile",
+                  "args": [
+                    "{{id}}"
+                  ]
+                }
+              },
+              {
+                "name": "Confirm",
+                "type": "Common.confirm",
+                "payload": {
+                  "title": "提示",
+                  "content": "[[$StudioModel]]"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "fields": {
+        "form": {
+          "关联关系": {
+            "edit": {
+              "type": "List",
+              "props": {
+                "name": "ddic.model.relation",
+                "showLabel": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "table": {
+      "layout": {
+        "filter": {
+          "actions": [
+            {
+              "icon": "icon-plus",
+              "width": 3,
+              "action": [
+                {
+                  "name": "HistoryPush",
+                  "type": "Common.historyPush",
+                  "payload": {
+                    "pathname": "/x/Form/ddic.model/0/edit"
+                  }
+                }
+              ],
+              "title": "创建"
+            }
+          ]
+        }
+      },
+      "fields": {
+        "table": {
+          "关联关系": {
+            "view": {
+              "props": {
+                "ddic_hide": true
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

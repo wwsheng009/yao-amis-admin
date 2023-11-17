@@ -1,0 +1,31 @@
+//用于菜单编辑的读取处理
+//字段没有使用as别名
+//使用label作前端显示
+// yao run flows.system.dept_raw
+{
+  "label": "部门",
+  "version": "1.0.0",
+  "description": "类目树",
+  "nodes": [
+    {
+      "name": "部门",
+      "engine": "default",
+      "query": {
+        // "debug": true,
+        "select": ["id", "name", "name as label", "parent", "status"],
+        "wheres": [
+          // { ":deleted_at": "删除", "=": null }
+        ],
+        "from": "$system.dept",
+        "limit": 1000
+      }
+    },
+    {
+      "name": "部门树",
+      "process": "utils.arr.Tree",
+      "args": ["{{$res.部门}}", { "parent": "parent", "empty": 0 }]
+    }
+  ],
+  "output": "{{$res.部门树}}"
+}
+// yao run fows.amis.menu

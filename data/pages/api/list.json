@@ -1,0 +1,442 @@
+{
+  "body": [
+    {
+      "autoFillHeight": true,
+      "footerToolbar": [
+        "statistics",
+        "switch-per-page",
+        "pagination",
+        "load-more"
+      ],
+      "keepItemSelectionOnPageChange": true,
+      "mode": "table",
+      "perPage": 10,
+      "perPageAvailable": [10],
+      "syncLocation": false,
+      "type": "crud",
+      "filter": {
+        "silentPolling": false,
+        "title": "",
+        "trimValues": true,
+        "type": "",
+        "actions": [
+          {
+            "label": "清空",
+            "level": "default",
+            "type": "button",
+            "actionType": "clear-and-submit"
+          },
+          {
+            "actionType": "reset-and-submit",
+            "label": "重置",
+            "level": "default",
+            "type": "button"
+          },
+          {
+            "label": "搜索",
+            "level": "primary",
+            "type": "button",
+            "actionType": "submit"
+          }
+        ],
+        "body": [
+          {
+            "label": "调用方法",
+            "name": "method",
+            "type": "select",
+            "options": [
+              {
+                "label": "GET",
+                "value": "get"
+              },
+              {
+                "label": "POST",
+                "value": "post"
+              },
+              {
+                "label": "PUT",
+                "value": "put"
+              },
+              {
+                "label": "DELETE",
+                "value": "delete"
+              }
+            ]
+          },
+          {
+            "label": "路由",
+            "name": "router",
+            "type": "input-text"
+          },
+          {
+            "label": "名称",
+            "name": "name",
+            "type": "input-text"
+          },
+          {
+            "label": "描述",
+            "name": "description",
+            "type": "input-text"
+          },
+          {
+            "label": "处理器",
+            "name": "process",
+            "type": "input-text"
+          },
+
+          {
+            "label": "守卫",
+            "name": "guard",
+            "type": "input-text"
+          }
+        ],
+        "mode": "inline",
+        "name": "list"
+      },
+      "filterDefaultVisible": false,
+      "filterTogglable": true,
+      "messages": {},
+      "id": "u:319bcd86da4d",
+      "itemActions": [],
+      "primaryField": "id",
+      "api": {
+        "method": "post",
+        "url": "/api/v1/system/meta/api/all_with_page"
+      },
+      "columns": [
+        {
+          "label": "方法",
+          "name": "method",
+          "searchable": true,
+          "sortable": true,
+          "type": "text",
+          "id": "u:2d02c670942e"
+        },
+        {
+          "id": "u:8c96911962d0",
+          "label": "路由",
+          "name": "router",
+          "searchable": true,
+          "sortable": true,
+          "type": "text"
+        },
+        {
+          "type": "text",
+          "id": "u:3e6f96e7477b",
+          "label": "名称",
+          "name": "name",
+          "searchable": true,
+          "sortable": true
+        },
+        {
+          "id": "u:fd324d0528c3",
+          "label": "描述",
+          "name": "description",
+          "searchable": true,
+          "sortable": true,
+          "type": "text"
+        },
+        {
+          "label": "守卫",
+          "name": "guard",
+          "type": "text",
+          "searchable": true,
+          "sortable": true
+        },
+        {
+          "type": "text",
+          "id": "u:3e0a1761d74e",
+          "label": "处理器",
+          "name": "process",
+          "searchable": true,
+          "sortable": true
+        },
+        {
+          "label": "操作",
+          "type": "operation",
+          "width": 100,
+          "buttons": [
+            {
+              "id": "u:2dbfefdc54ea",
+              "tooltip": "查看",
+              "type": "button",
+              "actionType": "dialog",
+              "dialog": {
+                "size": "lg",
+                "body": {
+                  "type": "form",
+                  "body": [
+                    {
+                      "type": "group",
+                      "body": [
+                        {
+                          "label": "编号",
+                          "name": "id",
+                          "type": "static-number"
+                        },
+                        {
+                          "label": "名称",
+                          "name": "name",
+                          "type": "static"
+                        },
+                        {
+                          "label": "描述",
+                          "name": "description",
+                          "type": "static"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "group",
+                      "body": [
+                        {
+                          "label": "分组",
+                          "name": "group",
+                          "type": "static"
+                        },
+                        {
+                          "label": "路径",
+                          "name": "path",
+                          "type": "static"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "static",
+                      "label": "路由",
+                      "name": "router"
+                    },
+                    {
+                      "type": "group",
+                      "body": [
+                        {
+                          "label": "处理器",
+                          "name": "process",
+                          "type": "static"
+                        },
+                        {
+                          "label": "调用方法",
+                          "name": "method",
+                          "type": "static"
+                        },
+                        {
+                          "type": "static",
+                          "label": "守卫",
+                          "name": "guard"
+                        }
+                      ]
+                    },
+                    {
+                      "label": "传入参数",
+                      "name": "in",
+                      "type": "static-json"
+                    },
+                    {
+                      "label": "传出参数",
+                      "name": "out",
+                      "type": "static-json"
+                    },
+                    {
+                      "label": "参数",
+                      "name": "url_params",
+                      "type": "static-json"
+                    },
+                    {
+                      "type": "group",
+                      "body": [
+                        {
+                          "visibleOn": "!!this.created_at",
+                          "format": "YYYY-MM-DD HH:mm:ss",
+                          "label": "创建时间",
+                          "name": "created_at",
+                          "type": "static-datetime"
+                        },
+                        {
+                          "name": "updated_at",
+                          "type": "static-datetime",
+                          "visibleOn": "!!this.updated_at",
+                          "format": "YYYY-MM-DD HH:mm:ss",
+                          "label": "更新时间"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "title": "查看"
+              },
+              "icon": "fa fa-eye"
+            },
+            {
+              "id": "u:2dbfefdc54ea",
+              "tooltip": "测试",
+              "type": "button",
+              "actionType": "dialog",
+
+              "dialog": {
+                "actions": [],
+                "size": "lg",
+                "body": {
+                  "type": "form",
+                  "body": [
+                    {
+                      "type": "group",
+                      "body": [
+                        {
+                          "name": "name",
+                          "label": "名称",
+                          "type": "input-text",
+                          "static": true
+                        },
+                        {
+                          "name": "description",
+                          "label": "描述",
+                          "static": true,
+                          "type": "input-text"
+                        },
+                        {
+                          "name": "method",
+                          "label": "方法",
+                          "type": "select",
+                          "static": true
+                        },
+                        {
+                          "type": "button-toolbar",
+                          "className": "text-right",
+                          "buttons": [
+                            {
+                              "type": "button",
+                              "label": "接口测试",
+                              "onEvent": {
+                                "click": {
+                                  "actions": [
+                                    {
+                                      "actionType": "ajax",
+                                      "outputVar": "responseResult",
+                                      "ignoreError": false,
+                                      "options": {},
+                                      "api": {
+                                        "url": "${router}",
+                                        "requestAdaptor": "api.method = context.method;\r\napi.data = context.payload\r\nreturn api\r\n",
+                                        "adaptor": "",
+                                        "messages": {},
+                                        "dataType": "json",
+                                        "method": "get"
+                                      }
+                                    },
+                                    {
+                                      "componentId": "u:92925dc0d5d0",
+                                      "ignoreError": false,
+                                      "actionType": "setValue",
+                                      "args": {
+                                        "value": "${event.data.responseResult.responseData|json}"
+                                      }
+                                    }
+                                  ]
+                                }
+                              },
+                              "level": "primary",
+                              "id": "u:da608d9b9125"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "router",
+                      "label": "接口",
+                      "type": "input-text",
+                      "id": "u:4b0d0a154204"
+                    },
+
+                    {
+                      "label": "传入参数",
+                      "name": "in",
+                      "type": "static-json",
+                      "levelExpand": 0
+                    },
+                    {
+                      "name": "payload",
+                      "label": "请求",
+                      "type": "editor",
+                      "id": "u:ec7de0286278",
+                      "lanuage": "json",
+                      "language": "json",
+                      "hidden": false,
+                      "visibleOn": "data.method === `post`"
+                    },
+
+                    {
+                      "name": "result",
+                      "label": "结果",
+                      "type": "editor",
+                      "id": "u:92925dc0d5d0",
+                      "lauage": "json",
+                      "language": "json"
+                    }
+                  ]
+                },
+                "title": "测试"
+              },
+              "icon": "fas fa-history "
+            }
+          ],
+          "id": "u:540c562b5cdf"
+        }
+      ],
+      "headerToolbar": [
+        {
+          "type": "filter-toggler"
+        },
+        {
+          "align": "right",
+          "type": "drag-toggler"
+        },
+        {
+          "onEvent": {
+            "click": {
+              "weight": 0,
+              "actions": [
+                {
+                  "actionType": "disabled",
+                  "componentId": "u:f32e3ecbcb67",
+                  "ignoreError": false
+                },
+                {
+                  "outputVar": "responseResult",
+                  "actionType": "ajax",
+                  "api": {
+                    "url": "/api/v1/system/meta/api/save_apis",
+                    "method": "get"
+                  },
+                  "ignoreError": false,
+                  "options": {}
+                },
+                {
+                  "actionType": "enabled",
+                  "componentId": "u:f32e3ecbcb67",
+                  "ignoreError": false
+                },
+                {
+                  "actionType": "reload",
+                  "args": {
+                    "resetPage": true
+                  },
+                  "componentId": "u:319bcd86da4d",
+                  "ignoreError": false
+                }
+              ]
+            }
+          },
+          "type": "button",
+          "align": "right",
+          "editorState": "default",
+          "id": "u:f32e3ecbcb67",
+          "label": "保存API列表到数据库",
+          "level": "info"
+        }
+      ]
+    }
+  ],
+  "id": "u:52f05240115b",
+  "type": "page"
+}

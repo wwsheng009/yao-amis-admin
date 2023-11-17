@@ -1,0 +1,168 @@
+{
+  "name": "amis的请求",
+  "version": "1.0.0",
+  "description": "amis集成请求",
+  "group": "",
+  "guard": "-",
+  "paths": [
+    {
+      // /api/v1/amis/login
+      "label": "登录请求",
+      "description": "用户自定义登录请求",
+      "path": "/login",
+      "method": "POST",
+      "guard": "-",
+      "process": "scripts.amis.user.Login",
+      "in": [
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "label": "验证码",
+      "description": "验证码",
+      "path": "/captcha",
+      "method": "GET",
+      "guard": "-",
+      "process": "yao.utils.Captcha",
+      "in": [
+        ":query"
+      ], //type=audio音频验证码，type=digit图形验证码
+      "out": {
+        "status": 200,
+        "type": "application/json",
+        "body": {
+          "captcha": {
+            "code": "${{content}}",
+            "id": "${{id}}"
+          }
+        }
+      }
+    },
+    {
+      // api/v1/amis/menu
+      "label": "菜单列表",
+      "description": "菜单列表",
+      "path": "/menu",
+      "method": "GET",
+      "guard": "bearer-jwt",
+      "process": "scripts.amis.site.Menu",
+      "in": [],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "label": "用户信息",
+      "description": "用户信息",
+      "path": "/user_info",
+      "method": "GET",
+      "guard": "bearer-jwt",
+      "process": "scripts.amis.user.Info",
+      "in": [
+        ""
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "label": "调试",
+      "description": "调试会话信息",
+      "path": "/debug",
+      "method": "GET",
+      "guard": "bearer-jwt",
+      "process": "scripts.amis.debug.dumpSession",
+      "in": [
+        ""
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/amis/demo_page
+      "label": "测试页面",
+      "description": "测试页面",
+      "path": "/demo_page",
+      "method": "GET",
+      "guard": "bearer-jwt",
+      "process": "scripts.amis.debug.demoPage",
+      "in": [
+        ""
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/amis/pages/:page
+      "label": "测试页面",
+      "description": "测试页面",
+      "path": "/pages/:page",
+      "method": "GET",
+      "guard": "bearer-jwt",
+      "process": "scripts.admin.menu.getAmisPage",
+      "in": [
+        "$param.page"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/amis/edit_pages/:page
+      "label": "开发页面",
+      "description": "开发页面",
+      "path": "/edit_pages/:page",
+      "method": "GET",
+      "guard": "bearer-jwt",
+      "process": "scripts.admin.menu.getAmisEditorPageSource",
+      "in": [
+        "$param.page"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/amis/setting
+      "label": "读取设置",
+      "description": "读取设置",
+      "path": "/setting",
+      "method": "GET",
+      "guard": "scripts.security.CheckToken",
+      "process": "scripts.admin.user.readSetting",
+      "in": [],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/amis/setting
+      "label": "保存设置",
+      "description": "保存设置",
+      "path": "/setting",
+      "method": "POST",
+      "guard": "bearer-jwt",
+      "process": "scripts.admin.user.saveSetting",
+      "in": [
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    }
+  ]
+}

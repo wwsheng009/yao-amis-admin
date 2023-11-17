@@ -1,0 +1,125 @@
+{
+  "type": "page",
+  "title": "x1",
+  "body": [
+    {
+      "type": "flex",
+      "className": "p-1",
+      "items": [
+        {
+          "type": "container",
+          "body": [
+            {
+              "type": "container",
+              "body": [
+                {
+                  "type": "tpl",
+                  "tpl": "Amis-Yao Admin",
+                  "inline": true,
+                  "wrapperComponent": "h1",
+                  "id": "u:984c8b793d59"
+                }
+              ],
+              "style": {
+                "position": "static",
+                "display": "block",
+                "text-align": "center"
+              },
+              "wrapperBody": false,
+              "id": "u:ca90e0af9a90",
+              "isFixedHeight": false,
+              "isFixedWidth": false
+            },
+            {
+              "type": "form",
+              "title": "",
+              "api": {
+                "url": "/api/v1/amis/login",
+                "method": "post",
+                "adaptor": "return yao_amis.login(payload,response,api,context)"
+              },
+              "redirect": "/amis-admin",
+              "body": [
+                {
+                  "label": "用户名",
+                  "type": "input-email",
+                  "name": "username",
+                  "id": "u:31e63ad3f078",
+                  "labelWidth": "25%",
+                  "required": true
+                },
+                {
+                  "type": "input-password",
+                  "name": "password",
+                  "id": "u:1409ae59b46a",
+                  "label": "密码",
+                  "showCounter": false,
+                  "validations": {},
+                  "validationErrors": {},
+                  "size": "full",
+                  "labelWidth": "25%",
+                  "required": true
+                }
+              ],
+              "mode": "horizontal",
+              "id": "u:478b66087163",
+              "actions": [
+                {
+                  "type": "button",
+                  "label": "登录",
+                  "level": "primary",
+                  "onEvent": {
+                    "click": {
+                      "actions": [
+                        {
+                          "actionType": "submit",
+                          "componentId": "u:478b66087163",
+                          "args": {}
+                        }
+                      ]
+                    }
+                  }
+                }
+              ],
+              "wrapWithPanel": true,
+              "className": "",
+              "name": "login_form"
+            }
+          ],
+          "size": "xs",
+          "style": {
+            "position": "static",
+            "display": "block",
+            "flex": "1 1 auto",
+            "flexGrow": "0",
+            "flexBasis": "auto",
+            "maxWidth": "400px",
+            "overflowX": "auto",
+            "minWidth": "400px"
+          },
+          "wrapperBody": false,
+          "isFixedHeight": false,
+          "isFixedWidth": false,
+          "id": "u:03d22f862544"
+        }
+      ],
+      "style": {
+        "position": "relative",
+        "inset": "auto",
+        "flexWrap": "nowrap",
+        "height": "100%",
+        "overflowY": "auto",
+        "justifyContent": "center",
+        "flexDirection": "column",
+        "alignItems": "center"
+      },
+      "id": "u:b966e0d731ee",
+      "isFixedHeight": true,
+      "isFixedWidth": false
+    }
+  ],
+  "id": "u:a7238be79bbc",
+  "aside": [],
+  "regions": ["body"],
+  "asideResizor": false
+}

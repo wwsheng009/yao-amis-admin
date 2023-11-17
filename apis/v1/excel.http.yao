@@ -1,0 +1,29 @@
+{
+  "name": "excel data",
+  "version": "1.0.0",
+  "description": "excel data",
+  "group": "",
+  "guard": "scripts.security.CheckAccessKey",
+  "paths": [
+    {
+      "path": "/save",
+      "method": "post",
+      "process": "scripts.amis.excel.importData",
+      "in": [":payload"],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "path": "/chart",
+      "method": "get",
+      "process": "scripts.amis.excel.getStatic",
+      "in": [],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "name": "amis source code table",
+  "action": {
+    "bind": {
+      "model": "system.amis"
+    }
+  }
+}

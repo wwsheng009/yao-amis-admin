@@ -1,0 +1,1084 @@
+{
+  "regions": ["body"],
+  "title": "form_create",
+  "type": "page",
+  "asideResizor": false,
+  "body": [
+    {
+      "actions": [
+        {
+          "label": "强制更新",
+          "mode": "inline",
+          "name": "option.migrate_force",
+          "type": "switch",
+          "value": false,
+          "visibleOn": "data.ID != `ddic.model`",
+          "onEvent": {
+            "change": {
+              "actions": [
+                {
+                  "actionType": "setValue",
+                  "args": {
+                    "value": "${event.data.value}"
+                  },
+                  "componentId": "force_update"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "label": "保存模型",
+          "primary": true,
+          "type": "submit",
+          "id": "u:f962cfe8b5fc"
+        },
+        {
+          "actionType": "dialog",
+          "dialog": {
+            "body": {
+              "api": "/api/v1/system/meta/model/source/${header.id}",
+              "body": {
+                "language": "json",
+                "name": "source",
+                "static": true,
+                "type": "editor",
+                "value": "{}"
+              },
+              "type": "service"
+            },
+            "title": "模型源代码",
+            "size": "lg"
+          },
+          "label": "查看代码",
+          "level": "info",
+          "type": "button",
+          "visibleOn": "this.header && !!this.header.id",
+          "id": "u:27013c1a44fa"
+        }
+      ],
+      "api": {
+        "adaptor": "",
+        "messages": {
+          "saveSuccess": "保存成功"
+        },
+        "method": "post",
+        "requestAdaptor": "",
+        "url": "/api/v1/system/meta/model/save"
+      },
+      "body": [
+        {
+          "body": [
+            {
+              "validations": {
+                "matchRegexp": "^[a-zA-Z.][a-zA-Z0-9.]*$",
+                "maxLength": 64
+              },
+              "label": "模型标识",
+              "name": "header.identity",
+              "required": true,
+              "type": "input-text",
+              "validationErrors": {
+                "maxLength": "标识最大长度64",
+                "matchRegexp": "标识名只允许数字与字母，句号"
+              }
+            },
+            {
+              "id": "u:835bc4590999",
+              "label": "名称",
+              "name": "header.name",
+              "type": "input-text",
+              "validationErrors": {
+                "maxLength": "名称最大长度64"
+              }
+            },
+            {
+              "name": "header.comment",
+              "type": "input-text",
+              "id": "u:1c6e0c5459dc",
+              "label": "备注"
+            },
+            {
+              "static": true,
+              "type": "input-text",
+              "id": "u:e371abb2743e",
+              "label": "模型ID",
+              "name": "header.id",
+              "size": "sm"
+            }
+          ],
+          "id": "u:fe16ac20a403",
+          "type": "group"
+        },
+        {
+          "body": [
+            {
+              "label": "数据库表名",
+              "maxLength": 64,
+              "name": "table.name",
+              "type": "input-text",
+              "validationErrors": {
+                "matchRegexp": "数据库表名只允许数字与字母，下划线，划线",
+                "maxLength": "数据库表名最大长度64"
+              },
+              "validations": {
+                "matchRegexp": "^[a-zA-Z_][a-zA-Z0-9_]*$",
+                "maxLength": 64
+              },
+              "id": "u:04ff664aee90"
+            },
+            {
+              "maxLength": 100,
+              "name": "table.comment",
+              "type": "input-text",
+              "id": "u:352a9aed1771",
+              "label": "数据库表备注"
+            },
+            {
+              "id": "u:586940a71db2",
+              "label": "软删除",
+              "mode": "inline",
+              "name": "option.soft_deletes",
+              "type": "switch",
+              "value": false
+            },
+            {
+              "id": "u:827263ae5ac4",
+              "label": "增加时间戳",
+              "mode": "inline",
+              "name": "option.timestamps",
+              "type": "switch",
+              "value": false
+            },
+            {
+              "label": "模型只读",
+              "mode": "inline",
+              "name": "option.read_only",
+              "type": "switch",
+              "value": false
+            },
+            {
+              "label": "强制更新",
+              "id": "force_update",
+              "mode": "inline",
+              "name": "option.migrate_force",
+              "type": "switch",
+              "value": false,
+              "visibleOn": "data.ID != `ddic.model`"
+            }
+          ],
+          "id": "u:2c464e3063a5",
+          "type": "group"
+        },
+        {
+          "id": "u:855e695d8223",
+          "tabs": [
+            {
+              "body": [
+                {
+                  "type": "button-group",
+                  "buttons": [
+                    {
+                      "type": "button",
+                      "label": "插入ID列",
+                      "level": "secondary",
+                      "onEvent": {
+                        "click": {
+                          "actions": [
+                            {
+                              "componentId": "model_columns",
+                              "groupType": "component",
+                              "actionType": "addItem",
+                              "args": {
+                                "index": 0,
+                                "item": [
+                                  {
+                                    "name": "id",
+                                    "type": "id",
+                                    "label": "ID"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "label": "创建列定义",
+                      "level": "primary",
+                      "onEvent": {
+                        "click": {
+                          "actions": [
+                            {
+                              "actionType": "dialog",
+                              "dialog": {
+                                "showErrorMsg": true,
+                                "title": "创建新记录",
+                                "type": "dialog",
+                                "body": [
+                                  {
+                                    "body": [
+                                      {
+                                        "type": "group",
+                                        "body": [
+                                          {
+                                            "type": "input-text",
+                                            "validationErrors": {
+                                              "matchRegexp": "字母开头,并且只只允许数字与字母，下划线，划线"
+                                            },
+                                            "validations": {
+                                              "matchRegexp": "^[a-zA-Z_][a-zA-Z0-9_]*$"
+                                            },
+                                            "id": "u:d4e11459310a",
+                                            "label": "字段名称",
+                                            "maxLength": 80,
+                                            "name": "name",
+                                            "required": true
+                                          },
+                                          {
+                                            "label": "标签",
+                                            "maxLength": 80,
+                                            "name": "label",
+                                            "required": true,
+                                            "type": "input-text",
+                                            "id": "u:f264f6ee9217"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "type": "group",
+                                        "body": [
+                                          {
+                                            "id": "u:2797346f4fd0",
+                                            "label": "类型",
+                                            "name": "type",
+                                            "required": true,
+                                            "source": "/api/v1/system/meta/model/col_type_options2",
+                                            "type": "picker"
+                                          },
+                                          {
+                                            "id": "u:3e88c759b11d",
+                                            "label": "数据元素",
+                                            "name": "element_id",
+                                            "type": "input-number"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "body": [
+                                          {
+                                            "trueValue": 1,
+                                            "type": "switch",
+                                            "falseValue": 0,
+                                            "label": "是否主键",
+                                            "name": "primary",
+                                            "visibleOn": "data.type !== `id`"
+                                          },
+                                          {
+                                            "trueValue": 1,
+                                            "type": "switch",
+                                            "falseValue": 0,
+                                            "id": "u:6a9cc4786648",
+                                            "label": "是否索引",
+                                            "name": "is_index"
+                                          },
+                                          {
+                                            "trueValue": 1,
+                                            "type": "switch",
+                                            "falseValue": 0,
+                                            "id": "u:a794f77d4117",
+                                            "label": "唯一索引",
+                                            "name": "unique"
+                                          },
+                                          {
+                                            "trueValue": 1,
+                                            "type": "switch",
+                                            "falseValue": 0,
+                                            "id": "u:d5d9f15dccc2",
+                                            "label": "允许空值",
+                                            "name": "nullable"
+                                          }
+                                        ],
+                                        "hiddenOn": "data.type == `id`",
+                                        "type": "group"
+                                      },
+                                      {
+                                        "name": "length",
+                                        "type": "input-number",
+                                        "hiddenOn": "data.type == `id`",
+                                        "id": "u:0c1ce84792ef",
+                                        "label": "长度"
+                                      },
+                                      {
+                                        "body": [
+                                          {
+                                            "id": "u:31401a86f996",
+                                            "label": "位数(含小数位)",
+                                            "name": "precision",
+                                            "type": "input-number"
+                                          },
+                                          {
+                                            "id": "u:27769926063c",
+                                            "label": "小数位",
+                                            "name": "scale",
+                                            "type": "input-number"
+                                          }
+                                        ],
+                                        "hiddenOn": "data.type != `float` && data.type != `double` &&data.type != `demical`",
+                                        "type": "group"
+                                      },
+                                      {
+                                        "hiddenOn": "data.type != `string`",
+                                        "id": "u:348d4522ca85",
+                                        "label": "加密方式",
+                                        "name": "crypt",
+                                        "options": [
+                                          {
+                                            "label": "密码",
+                                            "value": "PASSWORD"
+                                          },
+                                          {
+                                            "label": "AES",
+                                            "value": "AES"
+                                          }
+                                        ],
+                                        "type": "select"
+                                      },
+                                      {
+                                        "hiddenOn": "data.type == `id`",
+                                        "id": "u:98ee194e43c2",
+                                        "label": "默认值",
+                                        "maxLength": 200,
+                                        "name": "default",
+                                        "type": "input-text"
+                                      },
+                                      {
+                                        "name": "options",
+                                        "type": "combo",
+                                        "value": [{}],
+                                        "hiddenOn": "data.type != `enum`",
+                                        "items": [
+                                          {
+                                            "columnClassName": "w-sm",
+                                            "name": "label",
+                                            "placeholder": "标签",
+                                            "type": "input-text",
+                                            "value": ""
+                                          },
+                                          {
+                                            "columnClassName": "w-sm",
+                                            "name": "value",
+                                            "placeholder": "值",
+                                            "type": "input-text",
+                                            "value": ""
+                                          }
+                                        ],
+                                        "label": "多选项",
+                                        "multiple": true
+                                      },
+                                      {
+                                        "type": "input-text",
+                                        "default": "${label}",
+                                        "id": "u:ff789489f74e",
+                                        "label": "注释",
+                                        "maxLength": 200,
+                                        "name": "comment"
+                                      },
+                                      {
+                                        "type": "combo",
+                                        "name": "validations",
+                                        "label": "检验",
+                                        "multiple": true,
+                                        "multiLine": false,
+                                        "items": [
+                                          {
+                                            "name": "method",
+                                            "label": "方法",
+                                            "type": "select",
+                                            "placeholder": "请选择校验方法",
+                                            "required": true,
+                                            "options": [
+                                              "typeof",
+                                              "min",
+                                              "max",
+                                              "enum",
+                                              "pattern",
+                                              "minLength",
+                                              "maxLength",
+                                              "email",
+                                              "mobile"
+                                            ]
+                                          },
+                                          {
+                                            "name": "args",
+                                            "type": "input-array",
+                                            "visibleOn": "data.method == `min` || data.method == `max` || data.method == `minLength` || data.method == `maxLength`",
+                                            "items": {
+                                              "type": "input-number"
+                                            }
+                                          },
+                                          {
+                                            "name": "args",
+                                            "type": "input-array",
+                                            "hiddenOn": "data.method == `min` || data.method == `max` || data.method == `minLength` || data.method == `maxLength`",
+                                            "items": {
+                                              "type": "input-text"
+                                            }
+                                          },
+                                          {
+                                            "name": "message",
+                                            "required": true,
+                                            "label": "报错消息",
+                                            "type": "input-text",
+                                            "placeholder": "报错显示的消息",
+                                            "size": "full"
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "id": "u:027d9a2fcd2d",
+                                    "type": "form"
+                                  }
+                                ],
+                                "className": "app-popover",
+                                "closeOnEsc": false,
+                                "id": "u:194e3149f60d",
+                                "onEvent": {
+                                  "confirm": {
+                                    "actions": [
+                                      {
+                                        "componentName": "columns",
+                                        "actionType": "addItem",
+                                        "args": {
+                                          "item": [
+                                            {
+                                              "&": "$$"
+                                            }
+                                          ]
+                                        }
+                                      }
+                                    ],
+                                    "weight": 0
+                                  }
+                                },
+                                "showCloseButton": true,
+                                "showLoading": true,
+                                "size": "full"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    },
+
+                    {
+                      "label": "编辑Json",
+                      "type": "button",
+                      "actionType": "dialog",
+                      "level": "warning",
+                      "dialog": {
+                        "size": "lg",
+                        "body": [
+                          {
+                            "type": "form",
+                            "body": [
+                              {
+                                "labelClassName": "hidden",
+                                "type": "editor",
+                                "name": "columns",
+                                "language": "json"
+                              }
+                            ]
+                          }
+                        ],
+                        "onEvent": {
+                          "confirm": {
+                            "actions": [
+                              {
+                                "actionType": "setValue",
+                                "args": {
+                                  "value": {
+                                    "&": "${columns|toJson}"
+                                  }
+                                },
+                                "componentId": "model_columns"
+                              }
+                            ],
+                            "weight": 0
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "label": "解析Json数据",
+                      "type": "button",
+                      "actionType": "dialog",
+                      "level": "warning",
+                      "dialog": {
+                        "size": "lg",
+                        "header": [],
+                        "actions": [],
+                        "title": "",
+                        "body": [
+                          {
+                            "type": "form",
+                            "data": { "columns": [], "type": "amis" },
+                            "body": [
+                              {
+                                "type": "button-toolbar",
+
+                                "className": "text-right",
+                                "buttons": [
+                                  {
+                                    "className": "mb-0",
+                                    "inline": true,
+                                    "label": "类型",
+                                    "name": "type",
+                                    "type": "select",
+                                    "options": [
+                                      {
+                                        "label": "json 对象",
+                                        "value": "json"
+                                      },
+                                      {
+                                        "label": "Amis列定义",
+                                        "value": "amis"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "label": "检查",
+                                    "actionType": "ajax",
+                                    "primary": true,
+                                    "type": "button",
+                                    "disabledOn": "!data.json",
+                                    "api": "/api/v1/system/meta/model/check_json"
+                                  },
+                                  {
+                                    "type": "button",
+                                    "label": "确认",
+                                    "disabledOn": "!data.status",
+                                    "close": true,
+                                    "level": "success",
+                                    "onEvent": {
+                                      "click": {
+                                        "weight": 0,
+                                        "actions": [
+                                          {
+                                            "componentId": "model_columns",
+                                            "ignoreError": false,
+                                            "actionType": "setValue",
+                                            "args": {
+                                              "value": "${columns|toJson}"
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    "id": "u:2839cfc70229"
+                                  }
+                                ]
+                              },
+
+                              {
+                                "labelClassName": "hidden",
+                                "name": "json",
+                                "type": "editor",
+                                "language": "json",
+                                "size": "sm"
+                              },
+                              {
+                                "labelClassName": "hidden",
+                                "name": "columns",
+                                "type": "editor",
+                                "language": "json",
+                                "size": "md"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "editable": true,
+                  "maxLength": "",
+                  "required": true,
+                  "showIndex": true,
+                  "type": "input-table",
+                  "addable": true,
+                  "draggable": true,
+                  "needConfirm": true,
+                  "columns": [
+                    {
+                      "type": "text",
+                      "id": "u:cf4048bcdc7e",
+                      "label": "字段名",
+                      "name": "name",
+                      "quickEdit": {
+                        "name": "name",
+                        "required": true,
+                        "type": "input-text",
+                        "validationErrors": {
+                          "matchRegexp": "字母开头,并且只只允许数字与字母，下划线，划线"
+                        },
+                        "validations": {
+                          "matchRegexp": "^[a-zA-Z_][a-zA-Z0-9_]*$"
+                        }
+                      }
+                    },
+                    {
+                      "label": "字段类型",
+                      "placeholder": "-",
+                      "type": "select",
+                      "id": "u:ae584cb4e14a",
+                      "name": "type",
+                      "source": {
+                        "method": "get",
+                        "url": "/api/v1/system/meta/model/col_type_options2",
+                        "cache": 2000
+                      },
+                      "width": 200
+                    },
+                    {
+                      "type": "input-text",
+                      "label": "描述",
+                      "name": "label",
+                      "quickEdit": {
+                        "name": "label",
+                        "required": true,
+                        "type": "input-text"
+                      }
+                    },
+                    {
+                      "type": "switch",
+                      "label": "主键",
+                      "name": "primary",
+                      "disabledOn": "data.type == `id`"
+                    },
+                    {
+                      "type": "switch",
+                      "id": "u:539fbcb8d611",
+                      "label": "允许空值",
+                      "name": "nullable",
+                      "disabledOn": "data.type == `id`"
+                    },
+                    {
+                      "type": "switch",
+                      "label": "索引",
+                      "name": "is_index",
+                      "disabledOn": "data.type == `id`"
+                    },
+                    {
+                      "type": "switch",
+                      "label": "唯一",
+                      "name": "unique",
+                      "disabledOn": "data.type == `id`"
+                    },
+                    {
+                      "name": "length",
+                      "type": "input-number",
+                      "disabledOn": "data.type !== `string`",
+                      "id": "u:0c1ce84792ef",
+                      "label": "长度"
+                    },
+                    {
+                      "name": "default",
+                      "type": "input-text",
+                      "label": "默认值",
+                      "disabledOn": "data.type == `id`"
+                    },
+                    {
+                      "label": "操作",
+                      "placeholder": "-",
+                      "popOver": false,
+                      "quickEdit": false,
+                      "type": "operation",
+                      "width": 180,
+                      "buttons": [
+                        {
+                          "onEvent": {
+                            "click": {
+                              "actions": [
+                                {
+                                  "actionType": "dialog",
+                                  "dialog": {
+                                    "showErrorMsg": true,
+                                    "title": "明细",
+                                    "type": "dialog",
+                                    "body": [
+                                      {
+                                        "body": [
+                                          {
+                                            "type": "group",
+                                            "body": [
+                                              {
+                                                "label": "ID",
+                                                "maxLength": 80,
+                                                "name": "id",
+                                                "static": true,
+                                                "type": "input-text"
+                                              },
+                                              {
+                                                "type": "input-text",
+                                                "validationErrors": {
+                                                  "matchRegexp": "字母开头,并且只只允许数字与字母，下划线，划线"
+                                                },
+                                                "validations": {
+                                                  "matchRegexp": "^[a-zA-Z_][a-zA-Z0-9_]*$"
+                                                },
+                                                "id": "u:d4e11459310a",
+                                                "label": "字段名称",
+                                                "maxLength": 80,
+                                                "name": "name",
+                                                "required": true
+                                              },
+                                              {
+                                                "label": "标签",
+                                                "maxLength": 80,
+                                                "name": "label",
+                                                "required": true,
+                                                "type": "input-text"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "type": "group",
+                                            "body": [
+                                              {
+                                                "id": "u:2797346f4fd0",
+                                                "label": "类型",
+                                                "name": "type",
+                                                "required": true,
+                                                "source": "/api/v1/system/meta/model/col_type_options2",
+                                                "type": "picker"
+                                              },
+                                              {
+                                                "id": "u:3e88c759b11d",
+                                                "label": "数据元素",
+                                                "name": "element_id",
+                                                "type": "input-number"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "body": [
+                                              {
+                                                "trueValue": 1,
+                                                "type": "switch",
+                                                "falseValue": 0,
+                                                "label": "是否主键",
+                                                "name": "primary"
+                                              },
+                                              {
+                                                "trueValue": 1,
+                                                "type": "switch",
+                                                "falseValue": 0,
+                                                "id": "u:6a9cc4786648",
+                                                "label": "是否索引",
+                                                "name": "is_index"
+                                              },
+                                              {
+                                                "trueValue": 1,
+                                                "type": "switch",
+                                                "falseValue": 0,
+                                                "id": "u:a794f77d4117",
+                                                "label": "唯一索引",
+                                                "name": "unique"
+                                              },
+                                              {
+                                                "trueValue": 1,
+                                                "type": "switch",
+                                                "falseValue": 0,
+                                                "id": "u:d5d9f15dccc2",
+                                                "label": "允许空值",
+                                                "name": "nullable"
+                                              }
+                                            ],
+                                            "hiddenOn": "data.type == `id`",
+                                            "type": "group"
+                                          },
+                                          {
+                                            "name": "length",
+                                            "type": "input-number",
+                                            "hiddenOn": "data.type == `id`",
+                                            "id": "u:0c1ce84792ef",
+                                            "label": "长度"
+                                          },
+                                          {
+                                            "body": [
+                                              {
+                                                "id": "u:31401a86f996",
+                                                "label": "位数(含小数位)",
+                                                "name": "precision",
+                                                "type": "input-number"
+                                              },
+                                              {
+                                                "id": "u:27769926063c",
+                                                "label": "小数位",
+                                                "name": "scale",
+                                                "type": "input-number"
+                                              }
+                                            ],
+                                            "hiddenOn": "data.type != `float` && data.type != `double` &&data.type != `demical`",
+                                            "type": "group"
+                                          },
+                                          {
+                                            "hiddenOn": "data.type != `string`",
+                                            "id": "u:348d4522ca85",
+                                            "label": "加密方式",
+                                            "name": "crypt",
+                                            "options": [
+                                              {
+                                                "label": "密码",
+                                                "value": "PASSWORD"
+                                              },
+                                              {
+                                                "label": "AES",
+                                                "value": "AES"
+                                              }
+                                            ],
+                                            "type": "select"
+                                          },
+                                          {
+                                            "hiddenOn": "data.type == `id`",
+                                            "id": "u:98ee194e43c2",
+                                            "label": "默认值",
+                                            "maxLength": 200,
+                                            "name": "default",
+                                            "type": "input-text"
+                                          },
+                                          {
+                                            "name": "options",
+                                            "type": "combo",
+                                            "value": [{}],
+                                            "hiddenOn": "data.type != `enum`",
+                                            "items": [
+                                              {
+                                                "columnClassName": "w-sm",
+                                                "name": "label",
+                                                "placeholder": "标签",
+                                                "type": "input-text",
+                                                "value": ""
+                                              },
+                                              {
+                                                "columnClassName": "w-sm",
+                                                "name": "value",
+                                                "placeholder": "值",
+                                                "type": "input-text",
+                                                "value": ""
+                                              }
+                                            ],
+                                            "label": "多选项",
+                                            "multiple": true
+                                          },
+                                          {
+                                            "type": "input-text",
+                                            "default": "${label}",
+                                            "id": "u:ff789489f74e",
+                                            "label": "注释",
+                                            "maxLength": 200,
+                                            "name": "comment"
+                                          },
+                                          {
+                                            "type": "combo",
+                                            "name": "validations",
+                                            "label": "检验",
+                                            "multiple": true,
+                                            "multiLine": false,
+                                            "items": [
+                                              {
+                                                "name": "method",
+                                                "label": "方法",
+                                                "type": "select",
+                                                "placeholder": "请选择校验方法",
+                                                "required": true,
+                                                "options": [
+                                                  "typeof",
+                                                  "min",
+                                                  "max",
+                                                  "enum",
+                                                  "pattern",
+                                                  "minLength",
+                                                  "maxLength",
+                                                  "email",
+                                                  "mobile"
+                                                ]
+                                              },
+                                              {
+                                                "name": "args",
+                                                "type": "input-array",
+                                                "visibleOn": "data.method == `min` || data.method == `max` || data.method == `minLength` || data.method == `maxLength`",
+                                                "items": {
+                                                  "type": "input-number"
+                                                }
+                                              },
+                                              {
+                                                "name": "args",
+                                                "type": "input-array",
+                                                "hiddenOn": "data.method == `min` || data.method == `max` || data.method == `minLength` || data.method == `maxLength`",
+                                                "items": {
+                                                  "type": "input-text"
+                                                }
+                                              },
+                                              {
+                                                "name": "message",
+                                                "required": true,
+                                                "label": "报错消息",
+                                                "type": "input-text",
+                                                "placeholder": "报错显示的消息",
+                                                "size": "full"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "id": "u:027d9a2fcd2d",
+                                        "type": "form"
+                                      }
+                                    ],
+                                    "className": "app-popover",
+                                    "closeOnEsc": false,
+                                    "id": "u:194e3149f60d",
+                                    "onEvent": {
+                                      "confirm": {
+                                        "actions": [
+                                          {
+                                            "groupType": "component",
+                                            "actionType": "setValue",
+                                            "args": {
+                                              "value": {
+                                                "&": "$$"
+                                              },
+                                              "index": "${index}"
+                                            },
+                                            "componentId": "model_columns"
+                                          }
+                                        ],
+                                        "weight": 0
+                                      }
+                                    },
+                                    "showCloseButton": true,
+                                    "showLoading": true,
+                                    "size": "full"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "type": "button",
+                          "id": "u:bd001ec75605",
+                          "label": "更多",
+                          "level": "link"
+                        }
+                      ],
+                      "id": "u:e25f6a8464c3"
+                    }
+                  ],
+                  "id": "model_columns",
+                  "name": "columns",
+                  "perPage": 10,
+                  "size": "full",
+                  "minLength": 0,
+                  "removable": true,
+                  "copyable": true,
+                  "label": false,
+                  "strictMode": true
+                }
+              ],
+              "id": "u:8d16e1bfdf04",
+              "title": "字段列表"
+            },
+            {
+              "title": "关联关系",
+              "name": "relations",
+              "labelClassName": "hidden",
+              "type": "input-kvs",
+              "addButtonText": "新增关联关系",
+              "keyItem": {
+                "label": "关联关系"
+              },
+              "valueItems": [
+                {
+                  "type": "group",
+                  "body": [
+                    {
+                      "type": "input-text",
+                      "name": "foreign",
+                      "label": "当前模型的外键",
+                      "required": true,
+                      "default": "${_key}_id"
+                    },
+                    {
+                      "type": "select",
+                      "name": "model",
+                      "label": "关联模型",
+                      "source": {
+                        "method": "post",
+                        "url": "/api/v1/table/ddic.model/select_options",
+                        "data": {
+                          "__label": "name",
+                          "__value": "identity"
+                        }
+                      },
+                      "required": true
+                    },
+                    {
+                      "multiple": false,
+                      "type": "select",
+                      "name": "key",
+                      "label": "关联模型key",
+                      "id": "module_key",
+                      "required": true,
+                      "source": {
+                        "method": "post",
+                        "url": "/api/v1/table/ddic.model.column/select_options",
+                        "data": {
+                          "model_identity": "${model}",
+                          "__value": "name",
+                          "__label": "label"
+                        },
+                        "trackExpression": "${model}",
+                        "sendOn": "data.model"
+                      }
+                    },
+                    {
+                      "type": "select",
+                      "name": "type",
+                      "label": "关联类型",
+                      "options": ["hasMany", "hasOne"],
+                      "required": true
+                    }
+                  ]
+                },
+                {
+                  "type": "editor",
+                  "name": "query",
+                  "label": "关联查询",
+                  "language": "json",
+                  "size": "sm"
+                }
+              ]
+            }
+          ],
+          "type": "tabs"
+        }
+      ],
+      "id": "u:8a1edb98584a",
+      "initApi": {
+        "method": "get",
+        "sendOn": "${!!params.id}",
+        "url": "/api/v1/system/meta/model/get/${params.id}"
+      },
+      "mode": "horizontal",
+      "name": "main_form",
+      "type": "form"
+    }
+  ],
+  "id": "u:31ec52d502a5",
+  "pullRefresh": {
+    "disabled": true
+  }
+}

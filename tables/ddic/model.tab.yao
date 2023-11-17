@@ -1,0 +1,8 @@
+{
+    "name": "model table",
+    "action": {
+        "bind": {
+            "model": "ddic.model"
+        }
+    }
+}

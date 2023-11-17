@@ -1,0 +1,81 @@
+{
+  "name": "excel data",
+  "version": "1.0.0",
+  "description": "excel data",
+  "group": "",
+  "guard": "bearer-jwt",
+  "paths": [
+    {
+      "path": "/crud-menu",
+      "method": "get",
+      "process": "scripts.system.menu.main",
+      "in": [],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // api/v1/table/schema/:table/crud-all
+      //动态直接生成的curd维护页面
+      "path": "/:table/crud-all",
+      "method": "get",
+      "process": "scripts.amis.curd.curdTemplate",
+      "in": [
+        "$param.table"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "path": "/:table/crud-list",
+      "method": "get",
+      "process": "scripts.amis.schema.curdList",
+      "in": [
+        "$param.table"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "path": "/:table/crud-new",
+      "method": "get",
+      "process": "scripts.amis.schema.curdNew",
+      "in": [
+        "$param.table"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "path": "/:table/crud-view",
+      "method": "get",
+      "process": "scripts.amis.schema.curdView",
+      "in": [
+        "$param.table"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "path": "/:table/crud-edit",
+      "method": "get",
+      "process": "scripts.amis.schema.curdEdit",
+      "in": [
+        "$param.table"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    }
+  ]
+}

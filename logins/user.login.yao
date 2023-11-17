@@ -1,0 +1,14 @@
+{
+  "name": "::User Login",
+  "action": {
+    "process": "scripts.user.Login",
+    "args": [
+      ":payload"
+    ]
+  },
+  "layout": {
+    "entry": "/iframe?src=/amis-admin/redirect.html",
+    "slogan": "::Make Your Dream With Yao App Engine",
+    "site": "https://yaoapps.com/?from=instance-user-login"
+  }
+}

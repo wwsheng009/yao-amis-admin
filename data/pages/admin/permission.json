@@ -1,0 +1,681 @@
+{
+  "body": [
+    {
+      "api": {
+        "data": {
+          "&": "$$"
+        },
+        "method": "post",
+        "url": "/api/v1/table/system.auth.permission/search?page=${page}&perPage=${perPage}&orderBy=${orderBy}&orderDir=${orderDir}"
+      },
+      "autoFillHeight": true,
+      "bulkActions": [
+        {
+          "actionType": "ajax",
+          "api": "delete:/api/v1/table/system.auth.permission/delete/${ids|raw}",
+          "confirmText": "你确定要批量删除选中行吗?",
+          "label": "批量删除",
+          "type": "button"
+        }
+      ],
+      "columns": [
+        {
+          "label": "ID",
+          "name": "id",
+          "quickEdit": false,
+          "searchable": true,
+          "sortable": true,
+          "type": "number"
+        },
+        {
+          "label": "名称",
+          "name": "name",
+          "searchable": true,
+          "sortable": true,
+          "type": "text"
+        },
+        {
+          "label": "描述",
+          "name": "desc",
+          "searchable": true,
+          "sortable": true,
+          "type": "text"
+        },
+        {
+          "label": "请求方式",
+          "type": "each",
+          "items": {
+            "type": "tag",
+            "label": "${item}"
+          },
+          "placeholder": {
+            "type": "tag",
+            "label": "ANY"
+          }
+        },
+        {
+          "label": "排序",
+          "name": "order",
+          "searchable": true,
+          "sortable": true,
+          "type": "number"
+        },
+        {
+          "label": "路由",
+          "levelExpand": 0,
+          "name": "http_path",
+          "type": "each",
+          "items": {
+            "type": "tag",
+            "label": "${item}"
+          },
+          "searchable": true,
+          "sortable": true
+        },
+        {
+          "label": "模型",
+          "levelExpand": 0,
+          "name": "models",
+          "type": "each",
+          "items": {
+            "type": "tag",
+            "label": "${item}"
+          },
+          "searchable": true,
+          "sortable": true
+        },
+        {
+          "buttons": [
+            {
+              "actionType": "dialog",
+              "dialog": {
+                "body": {
+                  "api": "post:/api/v1/table/system.auth.permission/bulkUpdate/$id",
+                  "body": [
+                    {
+                      "label": "ID",
+                      "name": "id",
+                      "type": "input-number",
+                      "static": true
+                    },
+                    {
+                      "label": "名称",
+                      "name": "name",
+                      "required": true,
+                      "type": "input-text"
+                    },
+                    {
+                      "label": "描述",
+                      "name": "desc",
+                      "required": true,
+                      "type": "input-text"
+                    },
+                    {
+                      "label": "上级",
+                      "name": "parent",
+                      "type": "tree-select",
+                      "source": "/api/v1/system/tree/system.auth.permission/find?__label=desc",
+                      "validations": {
+                        "isSameId": true
+                      }
+                    },
+                    {
+                      "type": "checkboxes",
+                      "name": "http_method",
+                      "label": "请求方式",
+                      "options": [
+                        {
+                          "value": "GET",
+                          "label": "GET"
+                        },
+                        {
+                          "value": "POST",
+                          "label": "POST"
+                        },
+                        {
+                          "value": "PUT",
+                          "label": "PUT"
+                        },
+                        {
+                          "value": "DELETE",
+                          "label": "DELETE"
+                        },
+                        {
+                          "value": "PATCH",
+                          "label": "PATCH"
+                        },
+                        {
+                          "value": "OPTIONS",
+                          "label": "OPTIONS"
+                        },
+                        {
+                          "value": "HEAD",
+                          "label": "HEAD"
+                        }
+                      ],
+                      "description": "不选则为ANY",
+                      "joinValues": false,
+                      "extractValue": true
+                    },
+                    {
+                      "type": "input-number",
+                      "name": "order",
+                      "label": "排序",
+                      "required": true,
+                      "labelRemark": "升序排序",
+                      "displayMode": "enhance",
+                      "min": 0,
+                      "value": 0
+                    },
+                    {
+                      "type": "input-array",
+                      "name": "http_path",
+                      "required": true,
+                      "label": "路由",
+                      "items": {
+                        "type": "input-text",
+                        "source": "/api/v1/table/system.api/select_options?__label=router&__value=router"
+                      }
+                    },
+                    {
+                      "label": "菜单",
+                      "name": "menus",
+                      "required": true,
+                      "searchable": true,
+                      "multiple": true,
+                      "type": "tree-select",
+                      "labelField": "title",
+                      "valueField": "id",
+                      "autoCheckChildren": false,
+                      "joinValues": false,
+                      "extractValue": true,
+                      "source": "/api/v1/system/tree/system.menu/find?__label=title"
+                    },
+                    {
+                      "label": "模型",
+                      "name": "models",
+                      "required": true,
+                      "type": "select",
+                      "multiple": true,
+                      "joinValues": false,
+                      "extractValue": true,
+                      "source": "/api/v1/table/ddic.model/select_options?__value=identity&__label=name"
+                    },
+                    {
+                      "type": "checkboxes",
+                      "name": "model_method",
+                      "label": "操作方式",
+                      "options": [
+                        {
+                          "value": "读取",
+                          "label": "READ"
+                        },
+                        {
+                          "value": "修改",
+                          "label": "UPDATE"
+                        },
+                        {
+                          "value": "创建",
+                          "label": "CREATE"
+                        },
+                        {
+                          "value": "删除",
+                          "label": "DELETE"
+                        }
+                      ],
+                      "description": "不选则为ANY",
+                      "joinValues": false,
+                      "extractValue": true
+                    },
+                    {
+                      "format": "YYYY-MM-DD HH:mm:ss",
+                      "label": "创建时间",
+                      "name": "created_at",
+                      "type": "static-datetime",
+                      "visibleOn": "!!this.created_at"
+                    },
+                    {
+                      "format": "YYYY-MM-DD HH:mm:ss",
+                      "label": "更新时间",
+                      "name": "updated_at",
+                      "type": "static-datetime",
+                      "visibleOn": "!!this.updated_at"
+                    }
+                  ],
+                  "name": "update",
+                  "silentPolling": false,
+                  "trimValues": true,
+                  "type": "form"
+                },
+                "size": "lg",
+                "title": "更新",
+                "type": "dialog"
+              },
+              "icon": "fa fa-pencil",
+              "tooltip": "更新",
+              "type": "button"
+            },
+            {
+              "actionType": "ajax",
+              "api": "delete:/api/v1/table/system.auth.permission/delete/$id",
+              "confirmText": "你确定要删除行${id}?",
+              "icon": "fa fa-times text-danger",
+              "tooltip": "删除",
+              "type": "button"
+            }
+          ],
+          "label": "操作",
+          "type": "operation",
+          "width": 100
+        }
+      ],
+      "filter": {
+        "actions": [
+          {
+            "actionType": "clear-and-submit",
+            "label": "清空",
+            "level": "default",
+            "type": "button"
+          },
+          {
+            "actionType": "reset-and-submit",
+            "label": "重置",
+            "level": "default",
+            "type": "button"
+          },
+          {
+            "actionType": "submit",
+            "label": "搜索",
+            "level": "primary",
+            "type": "button"
+          }
+        ],
+        "body": [
+          {
+            "label": "ID",
+            "name": "id",
+            "type": "input-number"
+          },
+          {
+            "label": "名称",
+            "name": "name",
+            "type": "input-text"
+          },
+          {
+            "label": "描述",
+            "name": "desc",
+            "type": "input-text"
+          },
+          {
+            "label": "上级",
+            "name": "parent",
+            "type": "tree-select",
+            "source": "/api/v1/system/tree/system.auth.permission/find?__label=desc"
+          },
+          {
+            "label": "排序",
+            "name": "order",
+            "type": "input-number"
+          }
+        ],
+        "mode": "inline",
+        "name": "list",
+        "silentPolling": false,
+        "title": "",
+        "trimValues": true,
+        "type": ""
+      },
+      "filterDefaultVisible": false,
+      "filterTogglable": true,
+      "footerToolbar": [
+        "statistics",
+        "switch-per-page",
+        "pagination",
+        "load-more",
+        "export-csv",
+        "export-excel"
+      ],
+      "headerToolbar": [
+        {
+          "type": "columns-toggler"
+        },
+        "filter-toggler",
+        "reload",
+        "bulkActions",
+        {
+          "align": "right",
+          "type": "drag-toggler"
+        },
+        {
+          "actionType": "dialog",
+          "align": "right",
+          "dialog": {
+            "body": {
+              "api": "post:/api/v1/table/system.auth.permission/create",
+              "body": [
+                {
+                  "label": "名称",
+                  "name": "name",
+                  "required": true,
+                  "type": "input-text"
+                },
+                {
+                  "label": "描述",
+                  "name": "desc",
+                  "required": true,
+                  "type": "input-text"
+                },
+                {
+                  "label": "上级",
+                  "name": "parent",
+                  "type": "tree-select",
+                  "source": "/api/v1/system/tree/system.auth.permission/find?__label=desc"
+                },
+                {
+                  "type": "checkboxes",
+                  "name": "http_method",
+                  "label": "请求方式",
+                  "options": [
+                    {
+                      "value": "GET",
+                      "label": "GET"
+                    },
+                    {
+                      "value": "POST",
+                      "label": "POST"
+                    },
+                    {
+                      "value": "PUT",
+                      "label": "PUT"
+                    },
+                    {
+                      "value": "DELETE",
+                      "label": "DELETE"
+                    },
+                    {
+                      "value": "PATCH",
+                      "label": "PATCH"
+                    },
+                    {
+                      "value": "OPTIONS",
+                      "label": "OPTIONS"
+                    },
+                    {
+                      "value": "HEAD",
+                      "label": "HEAD"
+                    }
+                  ],
+                  "description": "不选则为ANY",
+                  "joinValues": false,
+                  "extractValue": true
+                },
+                {
+                  "type": "input-number",
+                  "name": "order",
+                  "label": "排序",
+                  "required": true,
+                  "labelRemark": "升序排序",
+                  "displayMode": "enhance",
+                  "min": 0,
+                  "value": 0
+                },
+                {
+                  "type": "input-array",
+                  "name": "http_path",
+                  "required": true,
+                  "label": "路由",
+                  "items": {
+                    "type": "input-text",
+                    "source": "/api/v1/table/system.api/select_options?__label=router&__value=router"
+                  }
+                },
+                {
+                  "label": "菜单",
+                  "name": "menus",
+                  "required": true,
+                  "searchable": true,
+                  "multiple": true,
+                  "type": "tree-select",
+                  "labelField": "title",
+                  "valueField": "id",
+                  "autoCheckChildren": false,
+                  "joinValues": false,
+                  "extractValue": true,
+                  "source": "/api/v1/system/tree/system.menu/find?__label=title"
+                },
+                {
+                  "label": "模型",
+                  "name": "models",
+                  "required": true,
+                  "type": "select",
+                  "multiple": true,
+                  "joinValues": false,
+                  "extractValue": true,
+                  "source": "/api/v1/table/ddic.model/select_options?__value=identity&__label=name"
+                },
+                {
+                  "type": "checkboxes",
+                  "name": "model_method",
+                  "label": "操作方式",
+                  "options": [
+                    {
+                      "value": "读取",
+                      "label": "READ"
+                    },
+                    {
+                      "value": "修改",
+                      "label": "UPDATE"
+                    },
+                    {
+                      "value": "创建",
+                      "label": "CREATE"
+                    },
+                    {
+                      "value": "删除",
+                      "label": "DELETE"
+                    }
+                  ],
+                  "description": "不选则为ANY",
+                  "joinValues": false,
+                  "extractValue": true
+                }
+              ],
+              "name": "create",
+              "silentPolling": false,
+              "type": "form"
+            },
+            "size": "lg",
+            "title": "新增",
+            "type": "dialog"
+          },
+          "icon": "fa fa-plus pull-left",
+          "label": "新增",
+          "level": "primary",
+          "type": "button"
+        },
+        {
+          "actionType": "dialog",
+          "dialog": {
+            "body": {
+              "api": {
+                "data": {
+                  "batch": {
+                    "&": {
+                      "$excel": {
+                        "desc": "${desc}",
+                        "http_method": "${http_method}",
+                        "http_path": "${http_path}",
+                        "menus": "${menus}",
+                        "model_method": "${model_method}",
+                        "models": "${models}",
+                        "name": "${name}",
+                        "order": "${order}",
+                        "parent": "${parent}"
+                      }
+                    }
+                  }
+                },
+                "method": "post",
+                "url": "/api/v1/table/system.auth.permission/batch_create"
+              },
+              "body": [
+                {
+                  "name": "excel",
+                  "type": "input-excel"
+                },
+                {
+                  "addable": true,
+                  "columns": [
+                    {
+                      "label": "名称",
+                      "name": "name",
+                      "quickEdit": {
+                        "required": true,
+                        "saveImmediately": true,
+                        "type": "input-text"
+                      },
+                      "searchable": true,
+                      "sortable": true,
+                      "type": "text"
+                    },
+                    {
+                      "label": "描述",
+                      "name": "desc",
+                      "quickEdit": {
+                        "required": true,
+                        "saveImmediately": true,
+                        "type": "input-text"
+                      },
+                      "searchable": true,
+                      "sortable": true,
+                      "type": "text"
+                    },
+                    {
+                      "label": "上级",
+                      "name": "parent",
+                      "quickEdit": {
+                        "label": "上级",
+                        "name": "parent",
+                        "type": "tree-select",
+                        "source": "/api/v1/system/tree/system.auth.permission/find?__label=desc"
+                      },
+                      "searchable": true,
+                      "sortable": true,
+                      "type": "number"
+                    },
+                    {
+                      "label": "请求方式",
+                      "levelExpand": 0,
+                      "name": "http_method",
+                      "quickEdit": {
+                        "language": "json",
+                        "required": true,
+                        "saveImmediately": true,
+                        "type": "editor"
+                      },
+                      "searchable": true,
+                      "sortable": true,
+                      "type": "json"
+                    },
+                    {
+                      "label": "排序",
+                      "name": "order",
+                      "quickEdit": {
+                        "required": true,
+                        "saveImmediately": true,
+                        "type": "input-number"
+                      },
+                      "searchable": true,
+                      "sortable": true,
+                      "type": "number"
+                    },
+                    {
+                      "label": "路由",
+                      "levelExpand": 0,
+                      "name": "http_path",
+                      "quickEdit": {
+                        "language": "json",
+                        "required": true,
+                        "saveImmediately": true,
+                        "type": "editor"
+                      },
+                      "searchable": true,
+                      "sortable": true,
+                      "type": "json"
+                    },
+                    {
+                      "label": "菜单",
+                      "levelExpand": 0,
+                      "name": "menus",
+                      "quickEdit": {
+                        "language": "json",
+                        "required": true,
+                        "saveImmediately": true,
+                        "type": "editor"
+                      },
+                      "searchable": true,
+                      "sortable": true,
+                      "type": "json"
+                    },
+                    {
+                      "label": "模型",
+                      "levelExpand": 0,
+                      "name": "models",
+                      "quickEdit": {
+                        "language": "json",
+                        "required": true,
+                        "saveImmediately": true,
+                        "type": "editor"
+                      },
+                      "searchable": true,
+                      "sortable": true,
+                      "type": "json"
+                    },
+                    {
+                      "label": "模型操作",
+                      "levelExpand": 0,
+                      "name": "model_method",
+                      "quickEdit": {
+                        "language": "json",
+                        "required": true,
+                        "saveImmediately": true,
+                        "type": "editor"
+                      },
+                      "searchable": true,
+                      "sortable": true,
+                      "type": "json"
+                    }
+                  ],
+                  "copyable": true,
+                  "editable": true,
+                  "name": "excel",
+                  "removable": true,
+                  "showIndex": true,
+                  "type": "input-table"
+                }
+              ],
+              "mode": "normal",
+              "silentPolling": false,
+              "type": "form"
+            },
+            "size": "full",
+            "title": "批量新增",
+            "type": "dialog"
+          },
+          "icon": "fa fa-plus pull-left",
+          "label": "批量新增",
+          "level": "primary",
+          "type": "button"
+        }
+      ],
+      "itemActions": [],
+      "keepItemSelectionOnPageChange": true,
+      "perPage": 10,
+      "primaryField": "id",
+      "quickSaveItemApi": "post:/api/v1/table/system.auth.permission/update/${id}",
+      "syncLocation": false,
+      "type": "crud"
+    }
+  ],
+  "type": "page"
+}

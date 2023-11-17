@@ -1,0 +1,349 @@
+{
+  "body": [
+    {
+      "filterSettingSource": ["cached", "label", "loaded", "model", "name"],
+      "id": "u:de315aac9687",
+      "type": "crud",
+      "api": {
+        "method": "get",
+        "url": "/api/v1/system/meta/table/search?page=${page}&perPage=${perPage}&keywords=${name}"
+      },
+      "bulkActions": [
+        {
+          "api": {
+            "url": "/api/v1/system/meta/model/import_cached_batch",
+            "data": {
+              "items": "${items}"
+            },
+            "method": "post"
+          },
+          "ignoreError": false,
+          "outputVar": "responseResult",
+          "id": "u:722e200d5547",
+          "editorState": "default",
+          "label": "批量导入本地缓存",
+          "confirmText": "确定需要批量导入本地缓存吗",
+          "actionType": "ajax"
+        },
+        {
+          "api": {
+            "url": "/api/v1/system/meta/model/import_table_batch",
+            "data": {
+              "items": "${items}"
+            },
+            "messages": {},
+            "method": "post"
+          },
+          "ignoreError": false,
+          "outputVar": "responseResult",
+          "id": "u:722e200d5547",
+          "editorState": "default",
+          "label": "批量导入表结构",
+          "confirmText": "确定需要批量导入表结构吗",
+          "actionType": "ajax"
+        }
+      ],
+      "columns": [
+        {
+          "name": "name",
+          "type": "text",
+          "id": "u:6269c92a78b5",
+          "label": "表名"
+        },
+        {
+          "id": "u:25baab2508c3",
+          "label": "名称",
+          "name": "label",
+          "placeholder": "-",
+          "type": "text"
+        },
+        {
+          "id": "u:bb6b0bed2a98",
+          "label": "关联模型",
+          "name": "model",
+          "type": "text"
+        },
+        {
+          "label": "模型名称",
+          "name": "model_name",
+          "type": "text"
+        },
+        {
+          "name": "created",
+          "type": "status",
+          "label": "数据库已创建"
+        },
+        {
+          "name": "cached",
+          "type": "status",
+          "id": "u:f805d02eccc5",
+          "label": "是否已缓存"
+        },
+        {
+          "id": "u:cc1dd9ddb24c",
+          "label": "是否已保存",
+          "name": "saved",
+          "type": "status"
+        },
+        {
+          "buttons": [
+            {
+              "level": "link",
+              "type": "button",
+              "api": {
+                "url": "/api/v1/system/meta/model/import_table",
+                "method": "post",
+                "data": {
+                  "&": "$$"
+                }
+              },
+              "ignoreError": false,
+              "outputVar": "resultData",
+              "actionType": "ajax",
+              "editorState": "default",
+              "disabledOn": "data.saved === true",
+              "id": "u:0bc61d973af7",
+              "label": "导入表结构"
+            },
+            {
+              "level": "link",
+              "type": "button",
+              "api": {
+                "url": "/api/v1/system/meta/model/import_cache",
+                "method": "post",
+                "data": {
+                  "&": "$$"
+                }
+              },
+              "ignoreError": false,
+              "outputVar": "resultData",
+              "actionType": "ajax",
+              "editorState": "default",
+              "disabledOn": "!data.cached",
+              "id": "u:0bc61d973af7",
+              "label": "导入本地模型"
+            },
+            {
+              "level": "link",
+              "type": "button",
+              "api": {
+                "url": "/api/v1/system/meta/model/load_to_cache",
+                "method": "post",
+                "data": {
+                  "&": "$$"
+                }
+              },
+              "ignoreError": false,
+              "outputVar": "resultData",
+              "actionType": "ajax",
+              "editorState": "default",
+              "disabledOn": "!data.saved",
+              "id": "u:0bc61d973af7",
+              "label": "从数据库更新缓存"
+            },
+            {
+              "type": "button",
+              "actionType": "dialog",
+              "dialog": {
+                "title": "查看详情",
+                "type": "dialog",
+                "actions": [
+                  {
+                    "actionType": "cancel",
+                    "id": "u:79999362274b",
+                    "label": "取消",
+                    "type": "button"
+                  },
+                  {
+                    "type": "button",
+                    "actionType": "confirm",
+                    "id": "u:83530830ca68",
+                    "label": "确定",
+                    "primary": true
+                  }
+                ],
+                "body": [
+                  {
+                    "id": "u:f511d4d3f209",
+                    "initFetch": true,
+                    "messages": {},
+                    "api": {
+                      "data": {
+                        "args": ["${name}"],
+                        "method": "getTable"
+                      },
+                      "messages": {},
+                      "method": "post",
+                      "requestAdaptor": "",
+                      "url": "/api/__yao/app/service/schema",
+                      "adaptor": ""
+                    },
+                    "bulkActions": [],
+                    "columns": [
+                      {
+                        "fixed": "left",
+                        "id": "u:cd25694a856a",
+                        "label": "字段名",
+                        "name": "name",
+                        "type": "text"
+                      },
+                      {
+                        "id": "u:abf090e260ea",
+                        "label": "主键",
+                        "name": "primary",
+                        "type": "status"
+                      },
+                      {
+                        "id": "u:58272439366d",
+                        "label": "类型",
+                        "name": "type",
+                        "type": "text"
+                      },
+                      {
+                        "label": "默认值",
+                        "name": "default",
+                        "type": "text",
+                        "id": "u:9a6f9e8e95ea"
+                      },
+                      {
+                        "id": "u:8b725590e85f",
+                        "label": "标题",
+                        "name": "title",
+                        "type": "text"
+                      },
+                      {
+                        "id": "u:4f4b3affd10b",
+                        "label": "长度",
+                        "name": "length",
+                        "type": "static-number"
+                      },
+                      {
+                        "id": "u:c72e712f91a3",
+                        "label": "字段长度",
+                        "name": "precision",
+                        "type": "static-number"
+                      },
+                      {
+                        "id": "u:0924d8127b7f",
+                        "label": "小数位数",
+                        "name": "scale",
+                        "type": "static-number"
+                      },
+                      {
+                        "id": "u:4107234e9711",
+                        "label": "可空",
+                        "name": "nullable",
+                        "type": "status"
+                      },
+                      {
+                        "id": "u:1c9b757244c1",
+                        "label": "生成器",
+                        "name": "generate",
+                        "toggled": false,
+                        "type": "static"
+                      },
+                      {
+                        "id": "u:811a44573837",
+                        "label": "加密方式",
+                        "name": "crypt",
+                        "toggled": false,
+                        "type": "static"
+                      },
+                      {
+                        "label": "索引",
+                        "name": "index",
+                        "static": true,
+                        "type": "status",
+                        "id": "u:dd4ccd3980d7"
+                      },
+                      {
+                        "type": "status",
+                        "id": "u:54e38f6f426f",
+                        "label": "唯一",
+                        "name": "unique"
+                      },
+                      {
+                        "id": "u:481240e3d24b",
+                        "label": "origin",
+                        "name": "origin",
+                        "toggled": false,
+                        "type": "static"
+                      },
+                      {
+                        "type": "tpl",
+                        "id": "u:466f360facf2",
+                        "label": "选项",
+                        "name": "option"
+                      },
+                      {
+                        "label": "描述",
+                        "name": "description",
+                        "type": "text",
+                        "id": "u:bc370b4c76b5"
+                      },
+                      {
+                        "id": "u:249977f4fa17",
+                        "label": "备注",
+                        "name": "comment",
+                        "type": "text"
+                      }
+                    ],
+                    "itemActions": [],
+                    "perPageAvailable": [10],
+                    "syncLocation": false,
+                    "type": "crud"
+                  }
+                ],
+                "id": "u:e611494752b0",
+                "size": "lg"
+              },
+              "id": "u:47866716fff6",
+              "label": "表字段",
+              "level": "link",
+              "disabledOn": "!data.created"
+            }
+          ],
+          "id": "u:67a8014c3598",
+          "label": "操作",
+          "type": "operation"
+        }
+      ],
+      "filter": {
+        "body": [
+          {
+            "editorState": "default",
+            "id": "u:88b757c09fe6",
+            "label": "关键字",
+            "name": "name",
+            "type": "input-text",
+            "addOn": {
+              "type": "submit",
+              "id": "u:02004312fbc2",
+              "label": "搜索",
+              "primary": true
+            }
+          }
+        ],
+        "columnCount": 3,
+        "id": "u:ea5258eeb135",
+        "mode": "horizontal",
+        "title": "查询条件",
+        "actions": []
+      },
+      "syncLocation": false,
+      "features": ["filter", "bulkUpdate", "update", "view"],
+      "filterColumnCount": 3,
+      "filterEnabledList": [
+        {
+          "label": "name",
+          "value": "name"
+        }
+      ],
+      "itemActions": []
+    }
+  ],
+  "id": "u:da68f8dace1a",
+  "regions": ["body"],
+  "title": "导入模型",
+  "type": "page"
+}

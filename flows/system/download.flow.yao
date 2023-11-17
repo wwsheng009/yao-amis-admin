@@ -1,0 +1,23 @@
+{
+    "label": "下载文件",
+    "version": "1.0.0",
+    "description": "下载文件",
+    "nodes": [
+        {
+            "description": "获取用户文件下载地址",
+            "name": "filename",
+            "process": "scripts.system.file.getFilePath",
+            "args": [
+                "{{$in.0}}"
+            ]
+        },
+        {
+            "name": "下载文件",
+            "process": "fs.system.Download",
+            "args": [
+                "{{$res.filename}}"
+            ]
+        }
+    ],
+    "output": "{{$res.下载文件}}"
+}

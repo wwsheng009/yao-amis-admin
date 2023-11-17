@@ -1,0 +1,4 @@
+{
+  "name": "demo table",
+  "action": { "bind": { "model": "demo.table" } }
+}

@@ -1,0 +1,46 @@
+//系统角色
+//yao migrate -n system.auth.role --reset
+{
+  "columns": [
+    {
+      "comment": "标识",
+      "label": "编号",
+      "name": "id",
+      "type": "ID"
+    },
+    {
+      "comment": "角色名称",
+      "index": true,
+      "label": "名称",
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "comment": "描述",
+      "index": true,
+      "label": "描述",
+      "name": "desc",
+      "type": "string"
+    },
+    {
+      "comment": "权限",
+      "label": "权限",
+      "name": "permission",
+      "type": "json"
+    },
+    {
+      "comment": "状态",
+      "default": true,
+      "label": "状态",
+      "name": "status",
+      "type": "boolean"
+    }
+  ],
+  "option": {
+    "timestamps": true
+  },
+  "table": {
+    "name": "system_auth_role",
+    "comment": "角色"
+  }
+}

@@ -1,0 +1,52 @@
+{
+    "name": "用户管理",
+    "version": "1.0.0",
+    "description": "用户列表",
+    "group": "",
+    "guard": "bearer-jwt",
+    "paths": [
+        {
+            // /api/v1/admin/user/user_list
+            "label": "用户列表",
+            "description": "用户列表",
+            "path": "/user_list",
+            "method": "POST",
+            "process": "scripts.admin.user.userList",
+            "in": [
+                ":payload"
+            ],
+            "out": {
+                "status": 200,
+                "type": "application/json"
+            }
+        },
+        {
+            // api/v1/admin/user/menu_soybean
+            "label": "菜单列表",
+            "description": "菜单列表",
+            "path": "/menu_soybean",
+            "method": "POST",
+            "guard": "bearer-jwt",
+            "process": "scripts.amis.site.MenuSoybean",
+            "in": [],
+            "out": {
+                "status": 200,
+                "type": "application/json"
+            }
+        },
+        {
+            // api/v1/admin/user/menu_soybean
+            "label": "菜单列表",
+            "description": "菜单列表",
+            "path": "/menu_admin",
+            "method": "POST",
+            "guard": "bearer-jwt",
+            "process": "scripts.admin.menu.getSoyAdminUserMenu",
+            "in": [],
+            "out": {
+                "status": 200,
+                "type": "application/json"
+            }
+        },
+    ]
+}

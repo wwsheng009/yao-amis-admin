@@ -1,0 +1,93 @@
+//yao migrate -n system.auth.permission
+{
+    "columns": [
+        {
+            "comment": "ID",
+            "label": "ID",
+            "name": "id",
+            "type": "id"
+        },
+        {
+            "comment": "名称",
+            "label": "名称",
+            "name": "name",
+            "type": "string"
+        },
+        {
+            "comment": "描述",
+            "label": "描述",
+            "name": "desc",
+            "type": "string"
+        },
+        {
+            "comment": "上级",
+            "default": 0,
+            "label": "上级",
+            "name": "parent",
+            "nullable": true,
+            "type": "integer"
+        },
+        {
+            "comment": "请求方式",
+            "default": "[]",
+            "label": "请求方式",
+            "name": "http_method",
+            "type": "json"
+        },
+        {
+            "comment": "排序",
+            "label": "排序",
+            "name": "order",
+            "type": "integer"
+        },
+        {
+            "comment": "路由",
+            "label": "路由",
+            "name": "http_path",
+            "type": "json"
+        },
+        {
+            "comment": "菜单",
+            "label": "菜单",
+            "name": "menus",
+            "type": "json"
+        },
+        {
+            "comment": "模型",
+            "label": "模型",
+            "name": "models",
+            "type": "json"
+        },
+        {
+            "comment": "模型操作",
+            "default": "[]",
+            "label": "模型操作",
+            "name": "model_method",
+            "type": "json"
+        }
+    ],
+    "name": "权限",
+    "option": {
+        "timestamps": true
+    },
+    "relations": {
+        "objects": {
+            "foreign": "id",
+            "key": "permision_id",
+            "model": "system.auth.object",
+            "name": "objects",
+            "type": "hasMany"
+        },
+        "parent": {
+            "foreign": "parent_id",
+            "key": "id",
+            "model": "system.auth.permission",
+            "name": "parent",
+            "type": "hasOne"
+        }
+    },
+    "table": {
+        "comment": "权限",
+        "name": "system_auth_permission"
+    }
+}

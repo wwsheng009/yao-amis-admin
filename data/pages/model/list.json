@@ -1,0 +1,247 @@
+{
+  "type": "page",
+  "id": "u:a211b1cee88e",
+  "body": [
+    {
+      "affixHeader": true,
+      "defaultParams": {
+        "perPage": 10
+      },
+      "api": {
+        "method": "get",
+        "requestAdaptor": "",
+        "url": "/api/v1/table/ddic.model/search?page=${page}&perPage=${perPage}&keywords=${keywords}",
+        "messages": {},
+        "adaptor": ""
+      },
+      "bodyClassName": "panel-default",
+      "columnsTogglable": "auto",
+      "headerClassName": "crud-table-header",
+      "messages": {},
+      "placeholder": "暂无数据",
+      "id": "u:1044ec331968",
+      "perPageAvailable": [10],
+      "name": "model-list",
+      "syncLocation": false,
+      "toolbarClassName": "crud-table-toolbar",
+      "type": "crud",
+      "bulkActions": [
+        {
+          "label": "删除",
+          "level": "danger",
+          "type": "button",
+          "id": "u:bb9b485dfa90",
+          "actionType": "ajax",
+          "api": "delete:/api/v1/system/meta/model/delete/$ids",
+          "confirmText": "确定要批量删除?",
+          "visible": false
+        }
+      ],
+      "columns": [
+        {
+          "label": "ID",
+          "name": "id",
+          "type": "number"
+        },
+        {
+          "label": "标识",
+          "name": "identity",
+          "type": "text"
+        },
+        {
+          "label": "名称",
+          "name": "name",
+          "type": "text"
+        },
+        {
+          "label": "模型备注",
+          "name": "comment",
+          "type": "text"
+        },
+        {
+          "label": "数据库表名",
+          "name": "table_name",
+          "type": "text"
+        },
+        {
+          "label": "数据库表备注",
+          "name": "table_comment",
+          "type": "text"
+        },
+        {
+          "falseValue": 0,
+          "label": "软删除",
+          "name": "soft_deletes",
+          "trueValue": 1,
+          "type": "status"
+        },
+        {
+          "falseValue": 0,
+          "label": "时间戳",
+          "name": "timestamps",
+          "trueValue": 1,
+          "type": "status"
+        },
+        {
+          "label": "关联关系",
+          "levelExpand": 0,
+          "name": "relations",
+          "type": "json"
+        },
+        {
+          "width": "",
+          "id": "u:efcca3626dde",
+          "buttons": [
+            {
+              "buttons": [
+                {
+                  "actionType": "link",
+                  "label": "修改",
+                  "level": "link",
+                  "link": "/amis/model/model.create/${id}/",
+                  "type": "button",
+                  "id": "u:60c2b54030ad"
+                },
+                {
+                  "confirmText": "您确认要删除?",
+                  "label": "删除",
+                  "level": "link",
+                  "type": "button",
+                  "id": "u:2a303b7bc6f4",
+                  "actionType": "ajax",
+                  "api": "post:/api/v1/system/meta/model/delete/${id}"
+                }
+              ],
+              "type": "button-group",
+              "id": "u:7cc5e29c0518"
+            }
+          ],
+          "fixed": "right",
+          "label": "操作",
+          "placeholder": "-",
+          "type": "operation"
+        }
+      ],
+      "combineNum": 0,
+      "filter": {
+        "title": "",
+        "wrapWithPanel": false,
+        "id": "u:840520b1be91",
+        "body": [
+          {
+            "addOn": {
+              "className": "btn-success",
+              "label": "搜索",
+              "type": "submit",
+              "id": "u:388252a75959"
+            },
+            "clearable": true,
+            "name": "keywords",
+            "placeholder": "通过关键字搜索",
+            "type": "input-text",
+            "id": "u:d7dfac1774c9"
+          }
+        ],
+        "className": "m-b-sm",
+        "mode": "inline",
+        "submitText": ""
+      },
+      "footerClassName": "crud-table-footer",
+      "tableClassName": "table-db table-striped",
+      "footerToolbar": ["statistics", "switch-per-page", "pagination"]
+    }
+  ],
+  "name": "page-demo",
+  "remark": null,
+  "title": "列表",
+  "toolbar": [
+    {
+      "id": "u:4862440567d8",
+      "actionType": "link",
+      "label": "新增",
+      "link": "/model/new",
+      "primary": true,
+      "type": "button"
+    },
+    {
+      "type": "button",
+      "label": "导入模型",
+      "onEvent": {
+        "click": {
+          "actions": [
+            {
+              "actionType": "dialog",
+              "dialog": {
+                "size": "lg",
+                "showErrorMsg": true,
+                "showLoading": true,
+                "className": "app-popover",
+                "id": "u:b39aecfdb5fd",
+                "type": "dialog",
+                "title": "导入模型代码",
+                "body": [
+                  {
+                    "type": "form",
+                    "api": "post:/api/v1/system/meta/model/import_source",
+                    "body": [
+                      {
+                        "labelClassName": "hidden",
+                        "language": "json",
+                        "id": "u:18805e926840",
+                        "name": "source",
+                        "type": "editor"
+                      }
+                    ],
+                    "id": "u:297a88684e22",
+                    "onEvent": {
+                      "submitSucc": {
+                        "actions": [
+                          {
+                            "actionType": "link",
+                            "args": {
+                              "link": "${`/model/` + result.data.id}"
+                            }
+                          }
+                        ],
+                        "weight": 0
+                      }
+                    }
+                  }
+                ],
+                "showCloseButton": true
+              }
+            }
+          ]
+        }
+      },
+      "id": "u:40c005c0a0f1",
+      "editorState": "default"
+    },
+    {
+      "type": "button",
+      "label": "导入系统模型",
+      "onEvent": {
+        "click": {
+          "actions": [
+            {
+              "ignoreError": false,
+              "outputVar": "",
+              "actionType": "ajax",
+              "options": {},
+              "api": {
+                "url": "/api/v1/system/meta/model/import_system_models",
+                "method": "post"
+              }
+            },
+            {
+              "componentName": "model-list",
+              "ignoreError": false,
+              "actionType": "reload"
+            }
+          ]
+        }
+      },
+      "id": "u:9bde38141acd"
+    }
+  ]
+}

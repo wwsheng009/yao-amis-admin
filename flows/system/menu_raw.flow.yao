@@ -1,0 +1,45 @@
+//用于菜单编辑的读取处理
+//字段没有使用as别名
+//使用label作前端显示
+{
+  "label": "菜单",
+  "version": "1.0.0",
+  "description": "类目树",
+  "nodes": [
+    {
+      "name": "菜单",
+      "engine": "default",
+      "query": {
+        // "debug": true,
+        "select": [
+          "id",
+          "name",
+          "name as label",
+          "parent",
+          "icon",
+          "url",
+          "schema",
+          "schema_api",
+          "link",
+          "redirect",
+          "rewrite",
+          "is_default_page",
+          "visible",
+          "class_name"
+        ],
+        "wheres": [
+          // { ":deleted_at": "删除", "=": null }
+        ],
+        "from": "$system.menu",
+        "limit": 1000
+      }
+    },
+    {
+      "name": "菜单树",
+      "process": "utils.arr.Tree",
+      "args": ["{{$res.菜单}}", { "parent": "parent", "empty": 0 }]
+    }
+  ],
+  "output": "{{$res.菜单树}}"
+}
+// yao run fows.amis.menu

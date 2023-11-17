@@ -1,0 +1,80 @@
+{
+  "name": "mock data",
+  "version": "1.0.0",
+  "description": "mock data",
+  "group": "",
+  "guard": "scripts.security.CheckAccessKey",
+  "paths": [
+    {
+      "path": "/table/:table",
+      "method": "get",
+      "guard": "-",
+      "process": "scripts.amis.mock.tableData",
+      "in": ["$param.table"],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "path": "/samples",
+      "method": "get",
+      "process": "scripts.amis.mock.samples",
+      "in": ["$query.page", "$query.perPage", "$query.keywords"],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "path": "/sample",
+      "method": "post",
+      "process": "scripts.amis.mock.newSample",
+      "in": [":payload"],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "path": "/bulkUpdate/:ids",
+      "method": "post",
+      "process": "scripts.amis.mock.bulkUpdateSample",
+      "in": ["$param.ids", ":payload"],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "path": "/sample/:id",
+      "method": "get",
+      "process": "scripts.amis.mock.getSample",
+      "in": ["$param.id"],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "path": "/sample/:id",
+      "method": "post",
+      "process": "scripts.amis.mock.saveSample",
+      "in": ["$param.id", ":payload"],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "path": "/sample/:id",
+      "method": "delete",
+      "process": "scripts.amis.mock.deleteSample",
+      "in": ["$param.id"],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    }
+  ]
+}

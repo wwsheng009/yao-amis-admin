@@ -1,0 +1,35 @@
+//部门管理
+// yao migrate -n system.dept --reset
+{
+  "name": "部门管理",
+  "table": { "name": "system_dept" },
+  "columns": [
+    {
+      "name": "id",
+      "type": "ID",
+      "label": "编号",
+      "comment": "编号"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "label": "名称",
+      "comment": "名称"
+    },
+    {
+      "name": "parent",
+      "type": "bigInteger",
+      "label": "上级",
+      "comment": "上级",
+      "default": 0
+    },
+    {
+      "label": "状态",
+      "name": "status",
+      "type": "boolean",
+      "default": 1,
+      "comment": "状态"
+    }
+  ],
+  "option": { "timestamps": true, "soft_deletes": false }
+}

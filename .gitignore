@@ -1,0 +1,15 @@
+logs
+# public/amis-editor
+public/amis-admin/*.tar.gz
+.trash
+*.db
+*.session
+data/amis_editor
+data/pages_temp
+data/upload
+amis.json
+public/soy-admin
+public/amis-editor
+public/amis
+
+.env

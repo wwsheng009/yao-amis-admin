@@ -1,0 +1,95 @@
+{
+  "name": "模型关联关系",
+  "table": {
+    "name": "ddic_model_relation",
+    "comment": "模型关联关系"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "type": "ID",
+      "label": "ID",
+      "comment": "ID"
+    },
+    {
+      "label": "名称",
+      "name": "name",
+      "type": "string",
+      "length": 80,
+      "nullable": false,
+      "comment": "名称",
+      "validations": [
+        {
+          "method": "pattern",
+          "args": [
+            "^[a-zA-Z_][a-zA-Z0-9_]*$"
+          ],
+          "message": "只允许数字与字母，下划线，划线"
+        }
+      ]
+    },
+    {
+      "label": "关系描述",
+      "name": "label",
+      "type": "string",
+      "length": 80,
+      "nullable": false,
+      "comment": "关系描述"
+    },
+    {
+      "name": "type",
+      "type": "enum",
+      "option": [
+        "hasOne",
+        "hasMany"
+      ],
+      "label": "关联关系",
+      "comment": "关联关系",
+      "nullable": false
+    },
+    {
+      "name": "model",
+      "type": "string",
+      "label": "关联模型",
+      "comment": "关联模型",
+      "nullable": false,
+      "validations": [
+        {
+          "method": "pattern",
+          "args": [
+            "^[a-zA-Z_][a-zA-Z0-9_]*$"
+          ],
+          "message": "只允许数字与字母，下划线，划线"
+        }
+      ]
+    },
+    {
+      "name": "foreign",
+      "type": "string",
+      "label": "外键",
+      "comment": "外键",
+      "nullable": false
+    },
+    {
+      "name": "key",
+      "type": "string",
+      "label": "关联模型主键",
+      "comment": "关联模型主键",
+      "nullable": false
+    },
+    {
+      "name": "query",
+      "type": "JSON",
+      "label": "关联条件",
+      "comment": "关联条件",
+      "nullable": true
+    }
+  ],
+  "relations": {},
+  "option": {},
+  "xgen": {
+    "menu": {
+      "no_display": true
+    }
+  }
+}

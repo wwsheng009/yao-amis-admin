@@ -1,0 +1,18 @@
+{
+  "body": [
+    {
+      "tpl": "404",
+      "type": "tpl",
+      "wrapperComponent": "",
+      "id": "u:eeba6331410e",
+      "inline": false
+    }
+  ],
+  "id": "u:3918b0767883",
+  "pullRefresh": {
+    "disabled": true
+  },
+  "regions": ["body"],
+  "title": "Hello world",
+  "type": "page"
+}

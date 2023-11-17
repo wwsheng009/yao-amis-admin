@@ -1,0 +1,62 @@
+{
+    "columns": [
+        {
+            "comment": "ID",
+            "label": "ID",
+            "name": "id",
+            "type": "id"
+        },
+        {
+            "comment": "授权对象",
+            "label": "授权对象",
+            "name": "object",
+            "type": "string"
+        },
+        {
+            "comment": "类型",
+            "label": "类型",
+            "name": "object_type",
+            "type": "enum",
+            "option": [
+                "model",
+                "api",
+                "menu"
+            ]
+        },
+        {
+            "comment": "描述",
+            "label": "描述",
+            "name": "desc",
+            "type": "string"
+        },
+        {
+            "comment": "操作",
+            "label": "操作",
+            "name": "operation",
+            "type": "json"
+        },
+        {
+            "comment": "权限ID",
+            "label": "权限ID",
+            "name": "permission_id",
+            "type": "integer"
+        }
+    ],
+    "name": "授权对象",
+    "option": {
+        "timestamps": true
+    },
+    "relations": {
+        "permission": {
+            "foreign": "permission_id",
+            "key": "id",
+            "model": "system.auth.permission",
+            "name": "permission",
+            "type": "hasOne"
+        }
+    },
+    "table": {
+        "comment": "授权对象",
+        "name": "system_auth_object"
+    }
+}

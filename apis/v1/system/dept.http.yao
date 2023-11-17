@@ -1,0 +1,74 @@
+{
+  "name": "部门信息",
+  "version": "1.0.0",
+  "description": "部门信息",
+  "group": "",
+  "guard": "bearer-jwt",
+  "paths": [
+    {
+      // /api/v1/system/dept/find
+      "path": "/find",
+      "method": "GET",
+      "guard": "bearer-jwt",
+      "process": "scripts.system.dept.GetDeptNodes",
+      "in": [
+        ":query"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "path": "/edit_get", //编辑器使用
+      "method": "GET",
+      "guard": "bearer-jwt",
+      "process": "flows.system.dept_raw",
+      "in": [],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "path": "/add",
+      "method": "POST",
+      "guard": "bearer-jwt",
+      "process": "scripts.system.dept.CreateDeptNode",
+      "in": [
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "path": "/edit/:id",
+      "method": "POST",
+      "guard": "bearer-jwt",
+      "process": "scripts.system.dept.UpdateDeptNode",
+      "in": [
+        "$param.id",
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "path": "/delete/:id",
+      "method": "DELETE",
+      "guard": "bearer-jwt",
+      "process": "scripts.system.dept.DeleteDeptNode",
+      "in": [
+        "$param.id"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    }
+  ]
+}

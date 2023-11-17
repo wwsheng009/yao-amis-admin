@@ -1,0 +1,415 @@
+{
+  "type": "page",
+  "body": [
+    {
+      "type": "crud",
+      "perPage": 20,
+      "affixHeader": false,
+      "filterTogglable": false,
+      "filterDefaultVisible": false,
+      "primaryField": "id",
+      "api": "/system/admin_menus?_action=getData",
+      "quickSaveApi": "post:/system/admin_menus?_action=quickEdit",
+      "quickSaveItemApi": "post:/system/admin_menus?_action=quickEditItem",
+      "bulkActions": [
+        {
+          "type": "button",
+          "actionType": "ajax",
+          "api": "delete:/system/admin_menus/${ids}",
+          "icon": "fa-solid fa-trash-can",
+          "label": "删除",
+          "confirmText": "确认删除选中项？",
+          "reload": "window",
+          "id": "u:ebdbb0ce64cd"
+        }
+      ],
+      "perPageAvailable": [
+        10,
+        20,
+        30,
+        50,
+        100,
+        200
+      ],
+      "footerToolbar": [
+        "statistics"
+      ],
+      "headerToolbar": [
+        {
+          "type": "button",
+          "actionType": "dialog",
+          "dialog": {
+            "type": "dialog",
+            "title": "新增",
+            "body": {
+              "type": "form",
+              "panelClassName": "px-48 m:px-0",
+              "title": " ",
+              "mode": "horizontal",
+              "onEvent": [],
+              "body": [
+                {
+                  "type": "group",
+                  "body": [
+                    {
+                      "type": "input-text",
+                      "name": "title",
+                      "label": "名称",
+                      "required": true
+                    },
+                    {
+                      "type": "input-text",
+                      "name": "icon",
+                      "label": "图标",
+                      "description": "请参考<a href=\"https://icones.js.org/collection/all\" target=\"_blank\"> https://icones.js.org</a>"
+                    }
+                  ]
+                },
+                {
+                  "type": "group",
+                  "body": [
+                    {
+                      "type": "tree-select",
+                      "name": "parent_id",
+                      "label": "父级",
+                      "labelField": "title",
+                      "valueField": "id",
+                      "showIcon": false,
+                      "value": 0,
+                      "source": "/system/admin_menus?_action=getData"
+                    },
+                    {
+                      "type": "input-text",
+                      "name": "component",
+                      "label": "组件",
+                      "description": "默认为 amis , 非自定义前端页面请勿修改",
+                      "value": "amis"
+                    }
+                  ]
+                },
+                {
+                  "type": "input-text",
+                  "name": "url",
+                  "label": "链接",
+                  "required": true,
+                  "validateOnChange": true,
+                  "validations": {
+                    "matchRegexp": "/^(http(s)?\\:\\/)?(\\/)+/"
+                  },
+                  "validationErrors": {
+                    "matchRegexp": "需要以 / 开头"
+                  },
+                  "placeholder": "eg: /admin_menus"
+                },
+                {
+                  "type": "input-number",
+                  "name": "order",
+                  "label": "排序",
+                  "required": true,
+                  "displayMode": "enhance",
+                  "description": "升序排序",
+                  "min": 0,
+                  "value": 0
+                },
+                {
+                  "type": "list-select",
+                  "name": "url_type",
+                  "label": "类型",
+                  "options": {
+                    "1": "路由",
+                    "2": "外链"
+                  },
+                  "value": 1
+                },
+                {
+                  "type": "switch",
+                  "name": "visible",
+                  "label": "可见",
+                  "onText": "可见",
+                  "offText": "隐藏",
+                  "value": 1
+                },
+                {
+                  "type": "switch",
+                  "name": "is_home",
+                  "label": "首页",
+                  "onText": "是",
+                  "offText": "否",
+                  "description": "在多页签卡模式下，页面标签将固定在左侧",
+                  "value": 0
+                },
+                {
+                  "type": "switch",
+                  "name": "is_full",
+                  "label": "全屏",
+                  "onText": "是",
+                  "offText": "否",
+                  "description": "开启后将隐藏该页面的菜单栏部分",
+                  "value": 0
+                }
+              ],
+              "api": "post:/system/admin_menus"
+            },
+            "size": "lg"
+          },
+          "label": "新增",
+          "icon": "fa fa-add",
+          "level": "primary",
+          "id": "u:832cd168c414"
+        },
+        "bulkActions",
+        {
+          "type": "reload",
+          "align": "right",
+          "id": "u:b05705689a1d"
+        },
+        {
+          "type": "filter-toggler",
+          "align": "right"
+        }
+      ],
+      "loadDataOnce": true,
+      "syncLocation": false,
+      "columns": [
+        {
+          "name": "id",
+          "label": "ID",
+          "sortable": true,
+          "id": "u:f8607ce47065"
+        },
+        {
+          "name": "title",
+          "label": "名称",
+          "id": "u:84a917b00333"
+        },
+        {
+          "name": "icon",
+          "label": "图标",
+          "type": "flex",
+          "justify": "start",
+          "items": [
+            {
+              "type": "icon",
+              "icon": "${icon}",
+              "className": "mr-2 text-lg",
+              "id": "u:4d2cb56b0780"
+            },
+            {
+              "type": "tpl",
+              "tpl": "${icon}",
+              "wrapperComponent": "",
+              "inline": false,
+              "id": "u:3cf693fd76f9"
+            }
+          ],
+          "id": "u:f60932d6ab79"
+        },
+        {
+          "name": "url",
+          "label": "链接",
+          "id": "u:7562e04fb96a"
+        },
+        {
+          "name": "order",
+          "label": "排序",
+          "quickEdit": {
+            "type": "input-number",
+            "min": 0,
+            "saveImmediately": true
+          },
+          "id": "u:a2fb2e06d4d3"
+        },
+        {
+          "name": "visible",
+          "label": "可见",
+          "quickEdit": {
+            "type": "switch",
+            "mode": "inline",
+            "saveImmediately": true,
+            "id": "u:eb524c110c23"
+          },
+          "id": "u:e485e84b8ee2"
+        },
+        {
+          "name": "is_home",
+          "label": "首页",
+          "quickEdit": {
+            "type": "switch",
+            "mode": "inline",
+            "saveImmediately": true,
+            "id": "u:a3b04e71bb26"
+          },
+          "id": "u:b173fe8bc205"
+        },
+        {
+          "type": "operation",
+          "label": "操作",
+          "buttons": [
+            {
+              "type": "button",
+              "actionType": "dialog",
+              "dialog": {
+                "type": "dialog",
+                "title": "编辑",
+                "body": {
+                  "type": "form",
+                  "panelClassName": "px-48 m:px-0",
+                  "title": " ",
+                  "mode": "horizontal",
+                  "onEvent": [],
+                  "body": [
+                    {
+                      "type": "group",
+                      "body": [
+                        {
+                          "type": "input-text",
+                          "name": "title",
+                          "label": "名称",
+                          "required": true
+                        },
+                        {
+                          "type": "input-text",
+                          "name": "icon",
+                          "label": "图标",
+                          "description": "请参考<a href=\"https://icones.js.org/collection/all\" target=\"_blank\"> https://icones.js.org</a>"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "group",
+                      "body": [
+                        {
+                          "type": "tree-select",
+                          "name": "parent_id",
+                          "label": "父级",
+                          "labelField": "title",
+                          "valueField": "id",
+                          "showIcon": false,
+                          "value": 0,
+                          "source": "/system/admin_menus?_action=getData"
+                        },
+                        {
+                          "type": "input-text",
+                          "name": "component",
+                          "label": "组件",
+                          "description": "默认为 amis , 非自定义前端页面请勿修改",
+                          "value": "amis"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "input-text",
+                      "name": "url",
+                      "label": "链接",
+                      "required": true,
+                      "validateOnChange": true,
+                      "validations": {
+                        "matchRegexp": "/^(http(s)?\\:\\/)?(\\/)+/"
+                      },
+                      "validationErrors": {
+                        "matchRegexp": "需要以 / 开头"
+                      },
+                      "placeholder": "eg: /admin_menus"
+                    },
+                    {
+                      "type": "input-number",
+                      "name": "order",
+                      "label": "排序",
+                      "required": true,
+                      "displayMode": "enhance",
+                      "description": "升序排序",
+                      "min": 0,
+                      "value": 0
+                    },
+                    {
+                      "type": "list-select",
+                      "name": "url_type",
+                      "label": "类型",
+                      "options": {
+                        "1": "路由",
+                        "2": "外链"
+                      },
+                      "value": 1
+                    },
+                    {
+                      "type": "switch",
+                      "name": "visible",
+                      "label": "可见",
+                      "onText": "可见",
+                      "offText": "隐藏",
+                      "value": 1
+                    },
+                    {
+                      "type": "switch",
+                      "name": "is_home",
+                      "label": "首页",
+                      "onText": "是",
+                      "offText": "否",
+                      "description": "在多页签卡模式下，页面标签将固定在左侧",
+                      "value": 0
+                    },
+                    {
+                      "type": "switch",
+                      "name": "is_full",
+                      "label": "全屏",
+                      "onText": "是",
+                      "offText": "否",
+                      "description": "开启后将隐藏该页面的菜单栏部分",
+                      "value": 0
+                    }
+                  ],
+                  "api": "put:/system/admin_menus/${id}",
+                  "initApi": "/system/admin_menus/${id}/edit?_action=getData",
+                  "redirect": ""
+                },
+                "size": "lg"
+              },
+              "label": "编辑",
+              "icon": "fa-regular fa-pen-to-square",
+              "level": "link",
+              "id": "u:1a642f9a367e"
+            },
+            {
+              "type": "button",
+              "actionType": "ajax",
+              "label": "删除",
+              "icon": "fa-regular fa-trash-can",
+              "level": "link",
+              "confirmText": "确认删除选中项？",
+              "api": "delete:/system/admin_menus/${id}",
+              "id": "u:db54c8b93b1a"
+            }
+          ],
+          "id": "u:38e77103a83b"
+        }
+      ],
+      "id": "u:afef2648837f"
+    }
+  ],
+  "className": "m:overflow-auto",
+  "toolbar": [
+    {
+      "type": "button",
+      "actionType": "dialog",
+      "label": "页面源码",
+      "icon": "fa fa-code",
+      "dialog": {
+        "type": "dialog",
+        "title": "",
+        "actions": [],
+        "size": "lg",
+        "closeOnEsc": true,
+        "closeOnOutside": true,
+        "body": {
+          "type": "editor",
+          "language": "php",
+          "readOnly": true,
+          "size": "xxl",
+          "value": ""
+        }
+      },
+      "id": "u:0c77227400eb"
+    }
+  ],
+  "id": "u:dfe03cdc305d"
+}

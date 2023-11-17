@@ -1,0 +1,41 @@
+{
+  "name": "APP Menu",
+  "nodes": [],
+  "output": {
+    "items": [
+      {
+        "parent": null,
+        "path": "/iframe?src=/amis-admin",
+        "visible_menu": 0,
+        "blocks": 0,
+        "icon": "icon-activity",
+        "id": 1,
+        "name": "AMIS管理"
+      },
+      {
+        "parent": null,
+        "path": "/x/Table/demo.table",
+        "visible_menu": 0,
+        "blocks": 0,
+        "icon": "icon-activity",
+        "id": 1,
+        "name": "演示表"
+      }
+    ],
+    "setting": [
+      {
+        "path": "/setting",
+        "children": [
+          {
+            "id": 10002,
+            "name": "系统设置",
+            "path": "/setting"
+          }
+        ],
+        "icon": "icon-settings",
+        "id": 999999,
+        "name": "设置"
+      }
+    ]
+  }
+}

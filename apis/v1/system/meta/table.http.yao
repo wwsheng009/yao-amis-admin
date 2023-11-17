@@ -1,0 +1,56 @@
+{
+    "name": "data operation",
+    "version": "1.0.0",
+    "description": "table data operation",
+    "group": "",
+    "guard": "bearer-jwt",
+    "paths": [
+        {
+            "label": "数据库表清单",
+            "description": "数据库表清单",
+            "path": "/name_list", //api/v1/system/meta/table/name_list
+            "method": "GET",
+            "process": "scripts.system.table.TableNameList",
+            "in": [
+                ""
+            ],
+            "out": {
+                "status": 200,
+                "type": "application/json"
+            }
+        },
+        {
+            //api/v1/system/meta/table/list
+            "label": "数据库表清单",
+            "description": "获取数据库表清单",
+            "path": "/list",
+            "method": "get",
+            "process": "scripts.system.table.TableListUniq",
+            "in": [
+                ":query"
+            ],
+            "out": {
+                "status": 200,
+                "type": "application/json"
+            }
+        },
+        {
+            //api/v1/system/meta/table/search
+            "label": "数据库表清单",
+            "description": "获取数据库表清单",
+            "path": "/search",
+            "method": "get",
+            "process": "scripts.system.table.TableListSearch",
+            "in": [
+                "$query.page",
+                "$query.perPage",
+                ":query",
+                ":payload"
+            ],
+            "out": {
+                "status": 200,
+                "type": "application/json"
+            }
+        }
+    ]
+}

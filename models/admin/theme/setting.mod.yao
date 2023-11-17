@@ -1,0 +1,23 @@
+{
+    "columns": [
+        {
+            "comment": "用户ID",
+            "label": "用户ID",
+            "name": "user_id",
+            "primary": true,
+            "type": "integer",
+            "unique": true
+        },
+        {
+            "comment": "配置",
+            "label": "主题配置",
+            "name": "theme_setting",
+            "nullable": true,
+            "type": "json"
+        }
+    ],
+    "name": "admin.theme.setting",
+    "table": {
+        "name": "admin_theme_setting"
+    }
+}

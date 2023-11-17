@@ -1,0 +1,324 @@
+// yao migrate -n ddic.model.column --reset
+{
+  "name": "模型字段定义",
+  "table": {
+    "name": "ddic_model_column",
+    "comment": "模型字段列表"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "type": "ID",
+      "label": "ID",
+      "comment": "ID"
+    },
+    {
+      "name": "model_id",
+      "type": "integer",
+      "label": "所属模型",
+      "comment": "所属模型",
+      "nullable": false
+    },
+    {
+      "name": "model_identity",
+      "type": "string",
+      "label": "模型标识",
+      "comment": "模型标识",
+      "nullable": false,
+      "index": true
+    },
+    {
+      "label": "字段名称",
+      "name": "name",
+      "type": "string",
+      "length": 80,
+      "nullable": false,
+      "comment": "字段名称",
+      "validations": [
+        {
+          "method": "pattern",
+          "args": [
+            "^[a-zA-Z_][a-zA-Z0-9_]*$"
+          ],
+          "message": "只允许数字与字母，下划线，划线"
+        }
+      ]
+    },
+    {
+      "label": "是否主键",
+      "name": "primary",
+      "type": "boolean",
+      "comment": "是否主键",
+      "nullable": true
+    },
+    {
+      "label": "标签",
+      "name": "label",
+      "type": "string",
+      "length": 200,
+      "nullable": true,
+      "comment": "标题"
+    },
+    {
+      "label": "标题",
+      "name": "title",
+      "type": "string",
+      "length": 200,
+      "nullable": true,
+      "comment": "标题"
+    },
+    {
+      "label": "注释",
+      "name": "comment",
+      "type": "string",
+      "length": 200,
+      "comment": "注释",
+      "nullable": true
+    },
+    {
+      "label": "是否索引",
+      "name": "index",
+      "type": "boolean",
+      "default": false,
+      "comment": "是否索引"
+    },
+    {
+      "label": "唯一索引",
+      "name": "unique",
+      "type": "boolean",
+      "default": false,
+      "comment": "唯一索引"
+    },
+    {
+      "name": "element_id",
+      "type": "integer",
+      "label": "数据元素",
+      "comment": "数据元素",
+      "nullable": true
+    },
+    {
+      "label": "数据类型",
+      "name": "type",
+      "nullable": true,
+      "type": "string",
+      "comment": "数据类型"
+    },
+    {
+      "label": "长度",
+      "name": "length",
+      "type": "integer",
+      "comment": "长度",
+      "nullable": true
+    },
+    {
+      "label": "位数(含小数位)",
+      "name": "precision",
+      "type": "integer",
+      "comment": "字段位数(含小数位)",
+      "nullable": true
+    },
+    {
+      "label": "小数位",
+      "name": "scale",
+      "type": "integer",
+      "comment": "小数位数",
+      "nullable": true
+    },
+    {
+      "label": "允许空值",
+      "name": "nullable",
+      "type": "boolean",
+      "default": false,
+      "comment": "允许空值"
+    },
+    {
+      "name": "crypt",
+      "type": "enum",
+      "option": [
+        "PASSWORD",
+        "AES"
+      ],
+      "comment": "加密方式",
+      "label": "加密方式",
+      "nullable": true
+    },
+    {
+      "label": "默认值",
+      "name": "default",
+      "type": "string",
+      "comment": "默认值",
+      "nullable": true
+    },
+    {
+      "label": "默认值原始值",
+      "name": "default_raw",
+      "type": "string",
+      "comment": "默认值原始值",
+      "nullable": true
+    },
+    {
+      "label": "生成器",
+      "name": "generate",
+      "type": "string",
+      "comment": "生成器",
+      "nullable": true
+    },
+    {
+      "label": "示例",
+      "name": "example",
+      "type": "json",
+      "comment": "示例",
+      "nullable": true
+    },
+    {
+      "comment": "可选项",
+      "label": "可选项",
+      "name": "options",
+      "type": "json",
+      "nullable": true
+    },
+    {
+      "label": "校验规则",
+      "name": "validations",
+      "type": "json",
+      "comment": "校验规则",
+      "nullable": true
+    },
+    {
+      "label": "描述",
+      "name": "description",
+      "type": "text",
+      "comment": "描述",
+      "nullable": true
+    }
+  ],
+  "relations": {
+    "model": {
+      "type": "hasOne",
+      "model": "ddic.model",
+      "key": "id",
+      "foreign": "model_id"
+    },
+    "element": {
+      "type": "hasOne",
+      "model": "ddic.model.element",
+      "key": "id",
+      "foreign": "element_id"
+    }
+  },
+  "option": {},
+  "xgen": {
+    "list": {
+      "fields": {
+        "list": {
+          "数据类型": {
+            "edit": {
+              "type": "Select",
+              "props": {
+                "xProps": {
+                  "$remote": {
+                    "process": "yao.component.SelectOptions",
+                    "query": {
+                      "model": "ddic.model.column.type",
+                      "label": "name",
+                      "value": "type",
+                      "wheres": [
+                        {
+                          "column": "status",
+                          "op": "=",
+                          "value": "enabled"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "table": {
+      "fields": {
+        "table": {
+          "数据类型": {
+            "edit": {
+              "type": "Select",
+              "props": {
+                "xProps": {
+                  "$remote": {
+                    "process": "yao.component.SelectOptions",
+                    "query": {
+                      "model": "ddic.model.column.type",
+                      "label": "name",
+                      "value": "type",
+                      "wheres": [
+                        {
+                          "column": "status",
+                          "op": "=",
+                          "value": "enabled"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "view": {
+              "type": "Tag",
+              "props": {
+                "xProps": {
+                  "$remote": {
+                    "process": "yao.component.SelectOptions",
+                    "query": {
+                      "model": "ddic.model.column.type",
+                      "label": "name",
+                      "value": "type",
+                      "wheres": [
+                        {
+                          "column": "status",
+                          "op": "=",
+                          "value": "enabled"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "form": {
+      "fields": {
+        "form": {
+          "数据类型": {
+            "edit": {
+              "type": "Select",
+              "props": {
+                "xProps": {
+                  "$remote": {
+                    "process": "yao.component.SelectOptions",
+                    "query": {
+                      "model": "ddic.model.column.type",
+                      "label": "name",
+                      "value": "type",
+                      "wheres": [
+                        {
+                          "column": "status",
+                          "op": "=",
+                          "value": "enabled"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

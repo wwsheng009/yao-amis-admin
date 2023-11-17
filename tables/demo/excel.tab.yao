@@ -1,0 +1,4 @@
+{
+  "name": "dexcel table",
+  "action": { "bind": { "model": "demo.excel" } }
+}

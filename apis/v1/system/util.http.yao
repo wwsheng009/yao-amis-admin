@@ -1,0 +1,28 @@
+// api/v1/system/util/version
+{
+  "name": "工具类",
+  "version": "1.0.0",
+  "description": "工具类",
+  "group": "",
+  "guard": "bearer-jwt",
+  "paths": [
+    {
+      "label": "获取版本",
+      "description": "获取yao版本",
+      "path": "/version",
+      "method": "GET",
+      "guard": "-",
+      "process": "utils.app.Ping",
+      "in": [],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    }
+  ]
+}
+//输出对象
+// {
+//     "engine": "yao",
+//     "version": "0.10.4"
+// }

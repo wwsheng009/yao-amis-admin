@@ -1,0 +1,46 @@
+// 根据ID读取用户信息
+// yao run flows.system.account.session
+// 只有使用http api调用，才会有效
+{
+  "label": "用户列表",
+  "version": "1.0.0",
+  "description": "用户列表",
+  "nodes": [
+    {
+      "name": "session",
+      "process": "session.get",
+      "args": ["user_id"]
+    },
+    {
+      "name": "用户列表",
+      "engine": "default",
+      "query": {
+        // "debug": true,
+        "select": [
+          "id",
+          "name",
+          "created_at",
+          "email",
+          "extra",
+          //   "idcard",
+          "key",
+          "mobile",
+          //   "password",
+          //   "password2nd",
+          //   "secret",
+          "status",
+          "type",
+          "updated_at"
+        ],
+        "wheres": [
+          { ":deleted_at": "删除", "=": null },
+          { "field": "id", "op": "=", "value": "?:$res.session" } //使用传入参数
+        ],
+        "from": "$admin.user",
+        "limit": 1000
+      }
+    }
+  ],
+  "output": "{{$res.用户列表.0}}" //使用.0返回数组中的第一个对象
+}
+// yao run flows.system.account.session

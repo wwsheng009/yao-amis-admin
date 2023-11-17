@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>用户登录</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+  <link rel="stylesheet" title="default" href="/amis/sdk/sdk.css" />
+  <link rel="stylesheet" href="/amis/sdk/helper.css" />
+  <link rel="stylesheet" href="/amis/sdk/iconfont.css" />
+  <script src="/amis/sdk/sdk.js"></script>
+  <!-- <script src="https://unpkg.com/vue@2"></script> -->
+  <script src="history.js"></script>
+  <script src="./scripts/login_logout.js"></script>
+  <style>
+    html,
+    body,
+    .app-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root" class="app-wrapper"></div>
+  <script type="text/javascript">
+    (async function () {
+      let amis = amisRequire('amis/embed');
+      const axios = amisRequire('axios')
+
+      const configJson = await axios.get("pages/user/login2.json")
+      // 通过替换下面这个配置来生成不同页面
+      let amisJSON = configJson.data;
+
+      let amisScoped = amis.embed('#root', amisJSON);
+      // console.log(JSON.stringify(amisJSON))
+    })();
+  </script>
+</body>
+
+</html>

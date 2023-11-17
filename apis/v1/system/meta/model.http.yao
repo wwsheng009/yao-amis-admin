@@ -1,0 +1,328 @@
+{
+  "name": "元数据",
+  "version": "1.0.0",
+  "description": "元数据",
+  "group": "",
+  "guard": "bearer-jwt",
+  "paths": [
+    {
+      "label": "字段类型列表",
+      "description": "字段类型列表",
+      "path": "/col_type_options2", //api/v1/system/meta/model/col_type_options2
+      "method": "GET",
+      "process": "scripts.system.meta.GetColumnOptions2",
+      "in": [
+        ""
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "label": "字段类型列表",
+      "description": "字段类型列表",
+      "path": "/col_type_options", //api/v1/system/meta/model/col_type_options
+      "method": "GET",
+      "process": "scripts.system.meta.GetColumnOptions",
+      "in": [
+        ""
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "label": "模型选项列表",
+      "description": "模型列表",
+      "path": "/model_name_list", //api/v1/system/meta/model/model_name_list
+      "method": "GET",
+      "process": "scripts.system.model.modelNameList",
+      "in": [
+        ""
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      //api/v1/system/meta/model/page
+      "label": "模型列表-分页",
+      "description": "模型列表-分页",
+      "path": "/page",
+      "method": "POST",
+      "process": "scripts.system.model.page",
+      "in": [
+        "$query.page",
+        "$query.perPage",
+        ":query",
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      //api/v1/system/meta/model/page
+      "label": "模型列表-分页",
+      "description": "模型列表-分页",
+      "path": "/page",
+      "method": "GET",
+      "process": "scripts.system.model.page",
+      "in": [
+        "$query.page",
+        "$query.perPage",
+        ":query"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      //api/v1/system/meta/model/list
+      "label": "模型列表",
+      "description": "所有的模型定义明细",
+      "path": "/list",
+      "method": "GET",
+      "guard": "-",
+      "process": "widget.models", //"",
+      "in": [
+        ""
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    // {
+    //   //api/v1/system/meta/model/column_delete/82
+    //   "label": "删除模型列",
+    //   "description": "删除模型列",
+    //   "path": "/column_delete/:id",
+    //   "method": "POST",
+    //   "process": "models.ddic.model.column.delete", //"",
+    //   "in": [
+    //     "$param.id"
+    //   ],
+    //   "out": {
+    //     "status": 200,
+    //     "type": "application/json"
+    //   }
+    // },
+    // {
+    //   //api/v1/system/meta/model/column_delete
+    //   //在删除列时，没有保存就没有传入ID，
+    //   "label": "删除模型列-dummy",
+    //   "description": "删除模型列-dummy",
+    //   "path": "/column_delete/",
+    //   "method": "POST",
+    //   "process": "scripts.amis.data.model.dummy",
+    //   "in": [
+    //     ":payload"
+    //   ],
+    //   "out": {
+    //     "status": 200,
+    //     "type": "application/json"
+    //   }
+    // },
+    {
+      // /api/v1/system/meta/model/get/admin.user
+      "label": "模型读取",
+      "description": "模型读取",
+      "path": "/get/:id",
+      "method": "GET",
+      "process": "scripts.system.model.getModelApi",
+      "in": [
+        "$param.id"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/system/meta/model/columns/admin.user
+      "label": "读取模型列定义",
+      "description": "读取模型列定义",
+      "path": "/columns/:id",
+      "method": "GET",
+      "process": "scripts.system.model.getModelColumnsApi",
+      "in": [
+        "$param.id"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/system/meta/model/save
+      "label": "模型保存",
+      "description": "模型读取",
+      "path": "/save",
+      "method": "POST",
+      "process": "scripts.system.model.saveModelApi",
+      "in": [
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      //api/v1/system/meta/model/delete/:id
+      "label": "删除模型",
+      "description": "删除模型",
+      "path": "/delete/:id",
+      "method": "POST",
+      "process": "scripts.system.model.DeleteModelMetaById",
+      "in": [
+        "$param.id"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      //api/v1/system/meta/model/source/:id
+      "label": "模型源码",
+      "description": "模型源码",
+      "path": "/source/:id",
+      "method": "GET",
+      "process": "scripts.system.model.Source",
+      "in": [
+        "$param.id"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      //api/v1/system/meta/model/import_source/
+      "label": "导入模型源码",
+      "description": "导入模型源码",
+      "path": "/import_source",
+      "method": "POST",
+      "process": "scripts.system.model.ImportModelSource",
+      "in": [
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      //api/v1/system/meta/model/import_system_models/
+      "label": "导入系统本身模型",
+      "description": "导入系统本身模型",
+      "path": "/import_system_models",
+      "method": "POST",
+      "process": "scripts.system.model.ImportSystemModels",
+      "in": [
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      //api/v1/system/meta/model/load_to_cache/
+      "label": "更新缓存",
+      "description": "从数据库读取元数据并更新缓存",
+      "path": "/load_to_cache",
+      "method": "POST",
+      "process": "scripts.system.model.LoadToCacheFromDB",
+      "in": [
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      //api/v1/system/meta/model/import_cache/
+      "label": "导入表定义",
+      "description": "导入表定义",
+      "path": "/import_cache",
+      "method": "POST",
+      "process": "scripts.system.model.ImportFromCached",
+      "in": [
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      //api/v1/system/meta/model/import_table/
+      "label": "导入表定义",
+      "description": "导入表定义",
+      "path": "/import_table",
+      "method": "POST",
+      "process": "scripts.system.model.ImportFromTable",
+      "in": [
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      //api/v1/system/meta/model/import_table_batch
+      "label": "批量导入表定义",
+      "description": "批量导入表定义",
+      "path": "/import_table_batch",
+      "method": "POST",
+      "process": "scripts.system.model.ImportFromTableBatch",
+      "in": [
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      //api/v1/system/meta/model/import_cached_batch
+      "label": "批量导入本地缓存",
+      "description": "批量导入本地缓存",
+      "path": "/import_cached_batch",
+      "method": "POST",
+      "process": "scripts.system.model.ImportFromCachedBatch",
+      "in": [
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      //api/v1/system/meta/model/check_json
+      "label": "检查JSON",
+      "description": "检查JSON，并返回JSON结构",
+      "path": "/check_json",
+      "method": "POST",
+      "process": "scripts.system.model.CheckAndGuessJson",
+      "in": [
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    }
+  ]
+}

@@ -1,0 +1,255 @@
+{
+  "regions": ["body"],
+  "title": "用户注册",
+  "type": "page",
+  "aside": [],
+  "asideResizor": false,
+  "body": [
+    {
+      "className": "p-1",
+      "id": "u:b966e0d731ee",
+      "isFixedHeight": true,
+      "isFixedWidth": false,
+      "items": [
+        {
+          "isFixedWidth": false,
+          "size": "xs",
+          "style": {
+            "flex": "1 1 auto",
+            "flexBasis": "auto",
+            "flexGrow": "0",
+            "maxWidth": "400px",
+            "minWidth": "400px",
+            "overflowX": "auto",
+            "position": "static",
+            "display": "block"
+          },
+          "type": "container",
+          "wrapperBody": false,
+          "body": [
+            {
+              "body": [
+                {
+                  "tpl": "注册新用户",
+                  "type": "tpl",
+                  "wrapperComponent": "h1",
+                  "id": "u:984c8b793d59",
+                  "inline": true,
+                  "style": {
+                    "color": "white"
+                  }
+                }
+              ],
+              "id": "u:ca90e0af9a90",
+              "isFixedHeight": false,
+              "isFixedWidth": false,
+              "style": {
+                "display": "block",
+                "position": "static",
+                "text-align": "center"
+              },
+              "type": "container",
+              "wrapperBody": false
+            },
+            {
+              "mode": "horizontal",
+              "name": "register_form",
+              "wrapWithPanel": true,
+              "body": [
+                {
+                  "name": "email",
+                  "required": true,
+                  "type": "input-email",
+                  "id": "u:31e63ad3f078",
+                  "label": "邮件地址",
+                  "labelWidth": "25%"
+                },
+                {
+                  "label": "用户密码",
+                  "required": true,
+                  "showCounter": false,
+                  "size": "full",
+                  "validations": {},
+                  "id": "u:1409ae59b46a",
+                  "labelWidth": "25%",
+                  "name": "password",
+                  "type": "input-password",
+                  "validationErrors": {}
+                },
+                {
+                  "required": true,
+                  "showCounter": false,
+                  "validationErrors": {},
+                  "id": "u:1409ae59b46a",
+                  "label": "确认密码",
+                  "labelWidth": "25%",
+                  "name": "confirm",
+                  "size": "full",
+                  "type": "input-password",
+                  "validations": {}
+                },
+                {
+                  "id": "u:31e63ad3f078",
+                  "label": "用户名",
+                  "labelWidth": "25%",
+                  "name": "name",
+                  "type": "input-text"
+                },
+                {
+                  "className": "p-1",
+                  "id": "u:964b6f951a7b",
+                  "isFixedHeight": false,
+                  "isFixedWidth": false,
+                  "items": [
+                    {
+                      "size": "xs",
+                      "style": {
+                        "display": "block",
+                        "flex": "1 1 auto",
+                        "flexBasis": "auto",
+                        "flexGrow": 2,
+                        "position": "static"
+                      },
+                      "type": "container",
+                      "wrapperBody": false,
+                      "body": [
+                        {
+                          "type": "input-text",
+                          "id": "u:ec84b7362fdc",
+                          "label": "验证码",
+                          "labelWidth": "40%",
+                          "name": "code",
+                          "required": true
+                        }
+                      ],
+                      "id": "u:ffb31fbc5a2f",
+                      "isFixedHeight": false,
+                      "isFixedWidth": false
+                    },
+                    {
+                      "id": "u:484e51667851",
+                      "isFixedHeight": false,
+                      "isFixedWidth": false,
+                      "size": "xs",
+                      "style": {
+                        "flex": "1 1 auto",
+                        "flexBasis": "auto",
+                        "flexGrow": "0",
+                        "margin-left": "5px",
+                        "position": "static",
+                        "display": "block"
+                      },
+                      "type": "container",
+                      "wrapperBody": false,
+                      "body": [
+                        {
+                          "api": {
+                            "url": "/api/v1/amis/captcha?type=digit",
+                            "messages": {},
+                            "method": "get",
+                            "requestAdaptor": ""
+                          },
+                          "body": [
+                            {
+                              "clickAction": {
+                                "actionType": "reload",
+                                "target": "captcha"
+                              },
+                              "enlargeAble": false,
+                              "height": 50,
+                              "id": "u:ba0e071441b0",
+                              "src": "${captcha.code}",
+                              "type": "image",
+                              "width": 124.88542175292969
+                            }
+                          ],
+                          "id": "u:8397fdf65bcf",
+                          "messages": {},
+                          "name": "captcha",
+                          "type": "service"
+                        }
+                      ]
+                    }
+                  ],
+                  "style": {
+                    "alignItems": "stretch",
+                    "flexWrap": "nowrap",
+                    "inset": "auto",
+                    "justifyContent": "flex-end",
+                    "position": "relative"
+                  },
+                  "type": "flex"
+                }
+              ],
+              "api": {
+                "dataType": "json",
+                "messages": {},
+                "method": "post",
+                "requestAdaptor": "",
+                "url": "/api/v1/system/account/register",
+                "data": {
+                  "captcha": {
+                    "code": "${code}",
+                    "id": "${captcha.id}"
+                  },
+                  "confirm": "${confirm}",
+                  "email": "${email}",
+                  "name": "${name}",
+                  "password": "${password}"
+                }
+              },
+              "className": "",
+              "id": "u:478b66087163",
+              "redirect": "/amis-admin/login.html",
+              "title": "",
+              "type": "form",
+              "actions": [
+                {
+                  "editorState": "default",
+                  "label": "注册",
+                  "type": "button",
+                  "disabled": false,
+                  "id": "u:b4412e3fb86c",
+                  "level": "primary",
+                  "onEvent": {
+                    "click": {
+                      "actions": [
+                        {
+                          "actionType": "custom",
+                          "script": "document.cookie = `email=${event.data.email};path=/`;\n"
+                        },
+                        {
+                          "actionType": "submit",
+                          "args": {},
+                          "componentId": "u:478b66087163"
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ],
+          "id": "u:03d22f862544",
+          "isFixedHeight": false
+        }
+      ],
+      "style": {
+        "padding": 0,
+        "alignItems": "center",
+        "background-repeat": "no-repeat",
+        "background-size": "cover",
+        "flexDirection": "column",
+        "justifyContent": "center",
+        "overflowY": "auto",
+        "position": "relative",
+        "background-image": "url('/image/background.jpeg')",
+        "flexWrap": "nowrap",
+        "height": "100%",
+        "inset": "auto"
+      },
+      "type": "flex"
+    }
+  ],
+  "id": "u:a7238be79bbc"
+}

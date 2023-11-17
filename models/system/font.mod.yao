@@ -1,0 +1,78 @@
+//yao migrate -n system.font --reset
+{
+  "name": "图标",
+  "table": {
+    "name": "system_font"
+  },
+  "columns": [
+    {
+      "label": "编号",
+      "name": "id",
+      "type": "ID",
+      "comment": "标识"
+    },
+    {
+      "label": "图标",
+      "name": "icon",
+      "type": "string",
+      "comment": "图标",
+      "index": true
+    },
+    {
+      "label": "名称",
+      "name": "name",
+      "type": "string",
+      "comment": "名称",
+      "index": true
+    },
+    {
+      "label": "描述",
+      "name": "label",
+      "type": "string",
+      "comment": "描述",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "风格",
+      "name": "style",
+      "type": "string",
+      "comment": "风格",
+      "index": true
+    },
+    {
+      "label": "标签", //url
+      "name": "tag",
+      "type": "json",
+      "comment": "标签",
+      "nullable": true
+    },
+    {
+      "label": "版本", //fontawesome
+      "name": "version",
+      "type": "json",
+      "comment": "版本",
+      "nullable": true
+    },
+    {
+      "label": "标签文本", //url
+      "name": "tag_text",
+      "type": "string",
+      "comment": "标签",
+      "nullable": true
+    },
+    {
+      "label": "版本文本", //fontawesome
+      "name": "version_text",
+      "type": "string",
+      "comment": "版本",
+      "nullable": true
+    }
+  ],
+  "option": {
+    "soft_deletes": false,
+    "timestamps": true
+  }
+}
+// yao migrate system.font --reset
+// 

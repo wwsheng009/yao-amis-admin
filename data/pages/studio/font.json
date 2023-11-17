@@ -1,0 +1,184 @@
+{
+  "body": [
+    {
+      "syncLocation": false,
+      "filterColumnCount": 3,
+      "filterSettingSource": ["icon", "name", "label", "tag", "version"],
+      "columns": [
+        {
+          "label": "名称",
+          "name": "name",
+          "type": "text",
+          "id": "u:067e7bc0d228"
+        },
+
+        {
+          "label": "图标",
+          "name": "icon",
+          "type": "text"
+        },
+        {
+          "type": "icon",
+          "label": "图标",
+          "vendor": "",
+          "icon": "${icon}",
+          "labelClassName": "text-base",
+          "className": "text-2xl",
+          "name": "icon"
+        },
+        {
+          "label": "描述",
+          "name": "label",
+          "type": "text"
+        },
+        {
+          "label": "风格",
+          "name": "style",
+          "type": "text"
+        },
+        {
+          "label": "标签",
+          "name": "tag",
+          "type": "input-tag",
+          "static": true
+        },
+        {
+          "id": "u:ee2f3dabf840",
+          "label": "版本",
+          "name": "version",
+          "type": "input-tag",
+          "static": true
+        },
+        {
+          "buttons": [
+            {
+              "type": "button",
+              "actionType": "dialog",
+              "dialog": {
+                "body": [
+                  {
+                    "header": {
+                      "subTitle": "标签：${label}",
+                      "title": "名称：${name}"
+                    },
+                    "type": "card"
+                  },
+                  {
+                    "type": "tpl",
+                    "tpl": "${icon}  "
+                  },
+                  {
+                    "type": "icon",
+                    "vendor": "",
+                    "icon": "${icon}",
+                    "labelClassName": "text-base",
+                    "className": "text-2xl"
+                  }
+                ],
+                "title": "查看详情",
+                "type": "dialog"
+              },
+              "id": "u:c0e64d4bda4c",
+              "label": "查看",
+              "level": "link"
+            }
+          ],
+          "id": "u:b524ef0ce256",
+          "label": "操作",
+          "type": "operation"
+        }
+      ],
+      "features": ["filter", "view"],
+      "filter": {
+        "mode": "horizontal",
+        "reload": "",
+        "title": "",
+        "actions": [],
+        "body": [
+          {
+            "type": "input-text",
+            "addOn": {
+              "id": "u:f54337d63552",
+              "label": "查询",
+              "onEvent": {
+                "click": {
+                  "actions": [
+                    {
+                      "actionType": "submit",
+                      "componentId": "u:cf73209228d7"
+                    }
+                  ],
+                  "weight": 0
+                }
+              },
+              "position": "right",
+              "type": "button",
+              "editorState": "default"
+            },
+            "editorState": "default",
+            "id": "u:c3f3050dbaf3",
+            "label": "关键字",
+            "name": "keywords"
+          }
+        ],
+        "columnCount": 3,
+        "id": "u:cf73209228d7"
+      },
+      "filterEnabledList": [
+        {
+          "label": "name",
+          "value": "name"
+        }
+      ],
+      "id": "u:c705bbef737f",
+      "itemActions": [],
+      "api": {
+        "method": "get",
+        "url": "/api/v1/table/system.font/search"
+      },
+      "bulkActions": [],
+      "headerToolbar": [
+        {
+          "label": "重新加载",
+          "type": "button",
+          "id": "u:27f71d79fe5b",
+          "editorState": "default",
+          "align": "right",
+          "onEvent": {
+            "click": {
+              "weight": 0,
+              "actions": [
+                {
+                  "ignoreError": false,
+                  "actionType": "disabled",
+                  "componentId": "u:27f71d79fe5b"
+                },
+                {
+                  "options": {},
+                  "api": {
+                    "url": "/api/v1/system/meta/reload_fonts",
+                    "method": "get"
+                  },
+                  "ignoreError": false,
+                  "actionType": "ajax",
+                  "outputVar": "responseResult"
+                },
+                {
+                  "componentId": "u:27f71d79fe5b",
+                  "ignoreError": false,
+                  "actionType": "enabled"
+                }
+              ]
+            }
+          },
+          "level": "info"
+        }
+      ],
+      "type": "crud"
+    }
+  ],
+  "id": "u:e9402f51750a",
+  "regions": ["body"],
+  "title": "",
+  "type": "page"
+}

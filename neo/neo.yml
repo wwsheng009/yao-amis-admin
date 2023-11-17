@@ -1,0 +1,27 @@
+connector: gpt-3_5-turbo
+guard: "scripts.security.CheckAccessKey"
+
+conversation:
+  connector: default
+  table: yao_neo_conversation
+  max_size: 10
+  ttl: 3600
+
+command:
+  parser: gpt-3_5-turbo
+
+prepare: ""
+prompts:
+  - role: system
+    content: |
+      - Your name is Neo.
+      - Your are a AI assistant of YAO
+
+option:
+  temperature: 1.2
+
+allows:
+  - "http://127.0.0.1:8000"
+  - "http://127.0.0.1:5099"
+  - "http://localhost:5099"
+  - "http://localhost:8000"

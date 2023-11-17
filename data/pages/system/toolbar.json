@@ -1,0 +1,104 @@
+{
+  "isFixedWidth": false,
+  "items": [
+    {
+      "type": "tpl",
+      "tpl": "<div class=\"flex justify-between\"><div></div></div><div><a href=\"https://github.com/wwsheng009/yao-amis-admin\" target=\"_blank\" title=\"Copyright\"><i class=\"fa fa-github fa-2x\"></i></a></div></div>",
+      "className": "w-full"
+    },
+    {
+      "body": "页面编辑器",
+      "href": "/amis-editor",
+      "id": "u:a156b4d9b8de",
+      "type": "link",
+      "style": {
+        "text-wrap": "nowrap"
+      },
+      "className": "mr-4"
+    },
+    {
+      "className": "",
+      "fit": "cover",
+      "style": {
+        "height": 30,
+        "width": 30,
+        "borderRadius": 20,
+        "boxShadow": "32px"
+      },
+      "className": "mr-4",
+      "gap": 4,
+      "icon": "",
+      "showtype": "image",
+      "src": "https://suda.cdn.bcebos.com/images/amis/ai-fake-face.jpg",
+      "type": "avatar"
+    },
+    {
+      "icon": "fa fa-user",
+      "label": "${cookie:username}",
+      "level": "default",
+      "menuClassName": "min-w-full",
+      "className": "text-center",
+      "trigger": "hover",
+      "type": "dropdown-button",
+      "buttons": [
+        {
+          "type": "button",
+          "id": "u:4f4221803f6b",
+          "label": "个人信息",
+          "className": "text-center",
+          "onEvent": {
+            "click": {
+              "actions": [
+                {
+                  "actionType": "link",
+                  "args": {
+                    "link": "/system/user/info"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "confirmText": "确认退出系统",
+          "editorState": "default",
+          "id": "u:b5a126222c78",
+          "className": "text-center",
+          "label": "退出登录",
+          "onEvent": {
+            "click": {
+              "actions": [
+                {
+                  "actionType": "custom",
+                  "script": "window.yao_amis.logout(false)"
+                },
+                {
+                  "actionType": "url",
+                  "args": {
+                    "url": "/amis-admin/login.html"
+                  }
+                }
+              ]
+            }
+          },
+          "type": "button"
+        }
+      ],
+      "id": "u:0aa349d9d468"
+    }
+  ],
+  "style": {
+    "alignItems": "center",
+    "flexWrap": "nowrap",
+    "inset": "auto",
+    "justifyContent": "flex-end",
+    "position": "relative",
+    "width": "100%"
+  },
+  "type": "flex",
+  "className": "w-full",
+  "justify": "flex-end",
+  "alignItems": "flex-end",
+  "id": "u:f5e246833f16",
+  "isFixedHeight": false
+}

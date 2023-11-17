@@ -1,0 +1,80 @@
+{
+  "name": "Dynamic Form Remote Source",
+  "version": "0.2.0",
+  "doc": "https://wwsheng009.github.io/yao-docs/YaoDSL/Widget/%E8%87%AA%E5%AE%9A%E4%B9%89Widget%E5%8D%87%E7%BA%A7%E7%89%88.html",
+  "description": "A form widget. Users can design forms online",
+  // DSL Source  from application path: iforms/feedback.form.yao
+  // "path": "iforms",
+  // "extensions": ["*.form.yao"],
+  // Remote storage options (optional) - set "reload" to true to reload when DSL is updated (calls the Reload loader)
+  // If remote storage is set, DSL is loaded from remote storage; otherwise, it is loaded locally.
+  // If connector is default or not set, using the default database connection
+  // If table not set, the default name is __yao_dsl_<Widget ID>
+  "remote": {
+    "connector": "default",
+    "table": "system_amis",
+    "reload": true
+  },
+  // Widget DSL loader
+  "loader": {
+    "load": "scripts.dyform.Load",
+    "reload": "scripts.dyform.Reload",
+    "unload": "scripts.dyform.Unload"
+  },
+  // Custom Widget handlers
+  "process": {
+    "setting": "scripts.dyform.Setting" // widgets.iform.Setting
+    // "find": "scripts.dyform.Find", // widgets.iform.Find
+    // "save": "scripts.dyform.Save", // widgets.iform.Save
+    // "delete": "scripts.dyform.Delete", // widgets.iform.Delete
+    // "cancel": "scripts.dyform.Cancel" // widgets.iform.Cancel
+  },
+  // Custom Widget API
+  // In production, if the API is changed, the service needs to be restarted.
+  "api": {
+    // "guard": "bearer-jwt",
+    "guard": "bearer-jwt",
+    "paths": [
+      {
+        "path": "/:id/setting", // GET /api/__yao/widget/amis/test/setting
+        "method": "GET",
+        "process": "widgets.amis.Setting",
+        "in": [
+          "$param.id"
+        ],
+        "out": {
+          "status": 200,
+          "type": "application/json"
+        }
+      }
+      // {
+      //   "path": "/:id/find/:primary", // GET /api/__yao/widget/iform/feedback/find/1?select=id,name
+      //   "method": "GET",
+      //   "process": "widgets.amis.Find",
+      //   "in": ["$param.id", "$param.primary", ":query-param"],
+      //   "out": { "status": 200, "type": "application/json" }
+      // },
+      // {
+      //   "path": "/:id/save/:primary", // POST /api/__yao/widget/iform/feedback/save/1
+      //   "method": "POST",
+      //   "process": "widgets.iform.Save",
+      //   "in": ["$param.id", "$param.primary", ":payload"],
+      //   "out": { "status": 200, "type": "application/json" }
+      // },
+      // {
+      //   "path": "/:id/cancel/:primary", // POST /api/__yao/widget/iform/feedback/cancel/1
+      //   "method": "POST",
+      //   "process": "widgets.amis.Cancel",
+      //   "in": ["$param.id", "$param.primary", ":payload"],
+      //   "out": { "status": 200, "type": "application/json" }
+      // },
+      // {
+      //   "path": "/:id/delete/:primary", // POST /api/__yao/widget/iform/feedback/delete/1
+      //   "method": "POST",
+      //   "process": "widgets.amis.Delete",
+      //   "in": ["$param.id", "$param.primary"],
+      //   "out": { "status": 200, "type": "application/json" }
+      // }
+    ]
+  }
+}

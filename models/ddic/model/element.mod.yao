@@ -1,0 +1,271 @@
+{
+  "description": "数据元素",
+  "name": "模型数据元素",
+  "option": {},
+  "table": {
+    "name": "ddic_model_element",
+    "comment": "数据元素"
+  },
+  "columns": [
+    {
+      "type": "ID",
+      "comment": "ID",
+      "label": "ID",
+      "name": "id"
+    },
+    {
+      "label": "描述",
+      "comment": "描述",
+      "length": 80,
+      "name": "name",
+      "type": "string",
+      "unique": true,
+      "validations": [
+        {
+          "method": "maxLength",
+          "args": [
+            80
+          ],
+          "message": "{{label}}最大长度为80"
+        }
+      ]
+    },
+    {
+      "label": "数据类型",
+      "name": "type",
+      "nullable": false,
+      "type": "string",
+      "length": 80,
+      "comment": "数据类型",
+      "validations": [
+        {
+          "method": "maxLength",
+          "args": [
+            80
+          ],
+          "message": "{{label}}最大长度为80"
+        }
+      ]
+    },
+    {
+      "comment": "长度",
+      "label": "长度",
+      "name": "length",
+      "precision": 10,
+      "type": "integer",
+      "nullable": true
+    },
+    {
+      "comment": "位数(含小数位)",
+      "label": "位数(含小数位)",
+      "name": "precision",
+      "precision": 10,
+      "type": "integer",
+      "nullable": true
+    },
+    {
+      "label": "小数位位数",
+      "name": "scale",
+      "precision": 10,
+      "type": "integer",
+      "comment": "小数位位数",
+      "nullable": true
+    },
+    {
+      "comment": "可选项",
+      "label": "可选项",
+      "name": "options",
+      "type": "json",
+      "nullable": true
+    },
+    {
+      "label": "校验规则",
+      "name": "validations",
+      "type": "json",
+      "comment": "校验规则",
+      "nullable": true
+    },
+    {
+      "label": "备注",
+      "name": "comment",
+      "type": "string",
+      "length": 100,
+      "comment": "备注",
+      "nullable": true,
+      "validations": [
+        {
+          "method": "maxLength",
+          "args": [
+            100
+          ],
+          "message": "{{label}}最大长度为80"
+        }
+      ]
+    }
+  ],
+  "relations": {},
+  "values": [
+    {
+      "name": "ID",
+      "type": "ID",
+      "comment": "主键"
+    },
+    {
+      "name": "电话号码",
+      "type": "string",
+      "length": "10",
+      "comment": "电话号码",
+      "validations": [
+        {
+          "method": "mobile",
+          "args": [],
+          "message": "::{{input}} should be mobile"
+        }
+      ]
+    },
+    {
+      "name": "邮件地址",
+      "type": "string",
+      "length": "50",
+      "comment": "邮件地址",
+      "validations": [
+        {
+          "method": "email",
+          "args": [],
+          "message": "::{{input}} should be email"
+        }
+      ]
+    },
+    {
+      "name": "状态",
+      "type": "",
+      "length": "10",
+      "comment": "状态",
+      "options": [
+        {
+          "label": "启用",
+          "value": "enabled"
+        },
+        {
+          "label": "禁用",
+          "value": "disabled"
+        }
+      ],
+      "validations": [
+        {
+          "method": "enum",
+          "args": [
+            "enabled",
+            "disabled"
+          ],
+          "message": "::{{input}} Error, {{label}} should be enabled/disabled"
+        }
+      ]
+    }
+  ],
+  "xgen": {
+    "table": {
+      "fields": {
+        "table": {
+          "数据类型": {
+            "edit": {
+              "type": "Select",
+              "props": {
+                "xProps": {
+                  "$remote": {
+                    "process": "yao.component.SelectOptions",
+                    "query": {
+                      "model": "ddic.model.column.type",
+                      "label": "name",
+                      "value": "type",
+                      "wheres": [
+                        {
+                          "column": "status",
+                          "op": "=",
+                          "value": "enabled"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "view": {
+              "type": "Tag",
+              "props": {
+                "xProps": {
+                  "$remote": {
+                    "process": "yao.component.SelectOptions",
+                    "query": {
+                      "model": "ddic.model.column.type",
+                      "label": "name",
+                      "value": "type",
+                      "wheres": [
+                        {
+                          "column": "status",
+                          "op": "=",
+                          "value": "enabled"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "form": {
+      "fields": {
+        "form": {
+          "可选项": {
+            "edit": {
+              "type": "List",
+              "props": {
+                "name": "ddic.option",
+                "showLabel": true
+              }
+            }
+          },
+          "校验规则": {
+            "edit": {
+              "type": "List",
+              "props": {
+                "name": "ddic.validation",
+                "showLabel": true
+              }
+            }
+          },
+          "数据类型": {
+            "edit": {
+              "type": "Select",
+              "props": {
+                "xProps": {
+                  "$remote": {
+                    "process": "yao.component.SelectOptions",
+                    "query": {
+                      "model": "ddic.model.column.type",
+                      "label": "name",
+                      "value": "type",
+                      "wheres": [
+                        {
+                          "column": "status",
+                          "op": "=",
+                          "value": "enabled"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "$on:change": {
+                  "process": "scripts.ddic.xgen.element.onChange"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

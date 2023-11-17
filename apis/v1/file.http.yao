@@ -1,0 +1,134 @@
+{
+  "name": "文档管理接口(Test)",
+  "version": "1.0.3",
+  "description": "文档管理接口",
+  "guard": "-",
+  "paths": [
+    {
+      // /api/v1/file/upload
+      "description": "文件上传",
+      "label": "文件上传",
+      "path": "/upload",
+      "method": "POST",
+      "process": "scripts.system.file.Upload",
+      "in": [
+        "$file.file",
+        "$form.folder"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/file/download
+      "label": "下载文件",
+      "description": "下载文件",
+      "path": "/download",
+      "method": "GET",
+      "process": "flows.system.download",
+      "in": [
+        "$query.name"
+      ],
+      "out": {
+        "status": 200,
+        "body": "{{content}}",
+        "headers": {
+          "Content-Type": "{{type}}"
+        }
+      }
+    },
+    {
+      // /api/v1/file/delete
+      "label": "删除文件",
+      "description": "下载文件",
+      "path": "/delete",
+      "method": "GET",
+      "process": "scripts.system.file.delete",
+      "in": [
+        "$query.name"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/file/dir_tree
+      "label": "文件目录树结构",
+      "description": "文件目录树结构",
+      "path": "/dir_tree",
+      "method": "GET",
+      "process": "scripts.system.file.getFolderList",
+      "in": [
+        "$query.parent"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/file/file_list
+      "label": "文件列表",
+      "description": "文件列表",
+      "path": "/file_list",
+      "method": "GET",
+      "process": "scripts.system.file.getFileList",
+      "in": [
+        "$query.name"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/file/file_list
+      "label": "创建目录",
+      "description": "创建目录",
+      "path": "/create_folder",
+      "method": "GET",
+      "process": "scripts.system.file.createFolder",
+      "in": [
+        "$query.folder",
+        "$query.name"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/file/file_list
+      "label": "删除目录",
+      "description": "删除目录",
+      "path": "/delete_folder",
+      "method": "GET",
+      "process": "scripts.system.file.deleteFolder",
+      "in": [
+        "$query.folder"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/file/file_list
+      "label": "移动目录",
+      "description": "移动目录",
+      "path": "/move_folder",
+      "method": "GET",
+      "process": "scripts.system.file.moveFolder",
+      "in": [
+        "$query.folder",
+        "$query.name"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    }
+  ]
+}

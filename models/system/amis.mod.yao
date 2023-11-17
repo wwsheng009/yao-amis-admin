@@ -1,0 +1,34 @@
+{
+  "name": "保存amis源代码",
+  "comment": "保存amis页面的源代码",
+  "table": {
+    "name": "dsl_amis"
+  },
+  "columns": [
+    {
+      "name": "id",
+      "type": "ID",
+      "label": "标识"
+    },
+    {
+      "name": "file",
+      "type": "string",
+      "comment": "",
+      "label": "文件名"
+    },
+    {
+      "name": "source",
+      "type": "json",
+      "label": "源代码"
+    },
+    {
+      "name": "expired_at",
+      "type": "timestamp",
+      "label": "失效时间"
+    }
+  ],
+  "option": {
+    "soft_deletes": false,
+    "timestamps": true
+  }
+}

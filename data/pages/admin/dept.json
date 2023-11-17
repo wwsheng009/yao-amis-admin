@@ -1,0 +1,191 @@
+{
+  "body": [
+    {
+      "syncLocation": false,
+      "bulkActions": [
+        {
+          "level": "danger",
+          "label": "批量删除",
+          "actionType": "ajax",
+          "confirmText": "确定要删除？",
+          "api": "delete:/api/v1/system/dept/delete/$ids",
+          "type": "button"
+        }
+      ],
+      "expandConfig": {
+        "expand": "all"
+      },
+
+      "filterColumnCount": 3,
+      "headerToolbar": [
+        {
+          "actionType": "dialog",
+          "level": "primary",
+          "dialog": {
+            "title": "创建部门",
+            "body": {
+              "type": "form",
+              "api": {
+                "method": "post",
+                "url": "/api/v1/system/dept/add"
+              },
+              "data": {
+                "status": true
+              },
+              "body": [
+                {
+                  "label": "部门",
+                  "type": "input-text",
+                  "name": "name",
+                  "required": true
+                },
+                {
+                  "type": "tree-select",
+                  "name": "parent",
+                  "label": "上级部门",
+                  "valueField": "id",
+                  "source": "/api/v1/system/dept/find"
+                },
+                {
+                  "type": "switch",
+                  "name": "status",
+                  "label": "是否启用"
+                }
+              ]
+            }
+          },
+          "label": "创建",
+          "type": "button"
+        },
+        "bulkActions"
+      ],
+      "itemActions": [],
+      "type": "crud",
+      "columns": [
+        {
+          "id": "u:68395f367962",
+          "label": "标识",
+          "name": "id",
+          "type": "text"
+        },
+        {
+          "id": "u:1d4551162272",
+          "label": "部门",
+          "name": "name",
+          "type": "text"
+        },
+        {
+          "type": "tree-select",
+          "name": "parent",
+          "label": "上级部门",
+          "valueField": "id",
+          "source": "/api/v1/system/dept/find",
+          "static": true
+        },
+        {
+          "type": "status",
+          "name": "status",
+          "label": "是否启用"
+        },
+        {
+          "buttons": [
+            {
+              "actionType": "dialog",
+              "dialog": {
+                "body": {
+                  "api": "/api/v1/system/dept/edit/${id}",
+                  "body": [
+                    {
+                      "label": "部门",
+                      "name": "name",
+                      "required": true,
+                      "type": "input-text"
+                    },
+                    {
+                      "type": "tree-select",
+                      "name": "parent",
+                      "label": "上级部门",
+                      "valueField": "id",
+                      "source": "/api/v1/system/dept/find"
+                    },
+                    {
+                      "name": "status",
+                      "type": "switch",
+                      "label": "是否可见"
+                    }
+                  ],
+                  "type": "form"
+                },
+                "title": "编辑"
+              },
+              "id": "u:740efa7a0f27",
+              "label": "编辑",
+              "level": "link",
+              "type": "button"
+            },
+            {
+              "type": "button",
+              "actionType": "ajax",
+              "api": {
+                "method": "delete",
+                "url": "/api/v1/system/dept/delete/${id}"
+              },
+              "class_name": "text-danger",
+              "confirmText": "确定要删除？",
+              "id": "u:fc0d9728eda3",
+              "label": "删除",
+              "level": "link"
+            },
+            {
+              "level": "link",
+              "type": "button",
+              "actionType": "dialog",
+              "dialog": {
+                "body": {
+                  "body": [
+                    {
+                      "name": "id",
+                      "type": "static",
+                      "label": "标识"
+                    },
+                    {
+                      "name": "name",
+                      "type": "static",
+                      "label": "部门"
+                    },
+                    {
+                      "type": "tree-select",
+                      "name": "parent",
+                      "label": "上级部门",
+                      "valueField": "id",
+                      "source": "/api/v1/system/dept/find",
+                      "static": true
+                    },
+                    {
+                      "label": "是否启用",
+                      "name": "status",
+                      "type": "static-status"
+                    }
+                  ],
+                  "type": "form"
+                },
+                "title": "查看详情"
+              },
+              "id": "u:99a120f73ebe",
+              "label": "查看"
+            }
+          ],
+          "id": "u:2924312a8d63",
+          "label": "操作",
+          "type": "operation"
+        }
+      ],
+      "api": {
+        "method": "get",
+        "url": "/api/v1/system/dept/find"
+      }
+    }
+  ],
+  "id": "u:2b38c6e5694c",
+  "type": "page"
+}

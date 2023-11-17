@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js源代码转换</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        textarea {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+
+<body>
+    <label for="input">输入:</label>
+    <textarea id="input" rows="15"></textarea>
+    <button onclick="convertToJSON()">JS转换成JSON</button>
+    <button onclick="convertToJS()">JSON转换成JS</button>
+
+    <label for="output">输出:</label>
+    <textarea id="output" rows="15"></textarea>
+
+    <script>
+        function convertToJSON() {
+            // Get input value
+            const inputValue = document.getElementById("input").value;
+
+            // Convert to JSON
+            const jsonData = JSON.stringify(inputValue);
+
+            // Output JSON data
+            document.getElementById("output").value = jsonData;
+        }
+        function convertToJS() {
+            // Get input value
+            const inputValue = document.getElementById("input").value;
+            let jsonData = ""
+            try {
+                // Convert to JSON
+                jsonData = JSON.parse(inputValue);
+
+            } catch (error) {
+                jsonData = inputValue.replace(/\\r\\n/g, '\n');
+
+                jsonData = jsonData.replace(/\\n/g, '\n');
+
+            }
+
+            // Output JSON data
+            document.getElementById("output").value = jsonData;
+        }
+    </script>
+</body>
+
+</html>

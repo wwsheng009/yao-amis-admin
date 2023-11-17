@@ -1,0 +1,222 @@
+//通用的操作数据库表的api接口
+{
+  "name": "data operation",
+  "version": "1.0.0",
+  "description": "table data operation",
+  "group": "/v1/table",
+  "guard": "bearer-jwt",
+  "paths": [
+    {
+      // /api/v1/table/:table/preview
+      "label": "表数据预览",
+      "description": "预览表数据",
+      "path": "/:table/preview",
+      "method": "get",
+      "guard": "-",
+      "process": "scripts.amis.data.model.PreViewtableData", //表数据预览，可以用于amis
+      "in": [
+        "$param.table"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      //api/v1/table/admin.user/search?page=${page}&perPage=${perPage}&keywords=${keywords}
+      "label": "读取模型的表数据",
+      "description": "读取模型的表数据",
+      "path": "/:table/search",
+      "method": "post",
+      "process": "scripts.amis.data.model.Search",
+      "in": [
+        "$param.table",
+        "$query.page",
+        "$query.perPage",
+        ":query",
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      //api/v1/table/admin.user/search?page=${page}&perPage=${perPage}&keywords=${keywords}
+      "label": "读取模型的表数据",
+      "description": "读取模型的表数据",
+      "path": "/:table/search",
+      "method": "get",
+      "process": "scripts.amis.data.model.Search",
+      "in": [
+        "$param.table",
+        "$query.page",
+        "$query.perPage",
+        ":query"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "label": "创建表数据",
+      "description": "创建表数据",
+      "path": "/:table/create",
+      "method": "post",
+      "process": "scripts.amis.data.model.newData",
+      "in": [
+        "$param.table",
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "label": "批量创建表数据",
+      "description": "批量创建表数据",
+      "path": "/:table/batch_create",
+      "method": "post",
+      "process": "scripts.amis.data.model.newBatchData",
+      "in": [
+        "$param.table",
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "label": "批量更新表数据",
+      "description": "批量更新表数据",
+      "path": "/:table/bulkUpdate/:ids",
+      "method": "post",
+      "process": "scripts.amis.data.model.bulkUpdate",
+      "in": [
+        "$param.table",
+        "$param.ids",
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/table/:table/find/:id
+      "label": "读取表数据",
+      "description": "根据表主键读取表数据",
+      "path": "/:table/find/:id",
+      "method": "get",
+      "process": "scripts.amis.data.model.getData",
+      "in": [
+        "$param.table",
+        "$param.id"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "label": "更新表数据",
+      "description": "更新表数据",
+      "path": "/:table/update/:id",
+      "method": "post",
+      "process": "scripts.amis.data.model.saveDataById",
+      "in": [
+        "$param.table",
+        "$param.id",
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "label": "更新表数据-put",
+      "description": "更新表数据-put",
+      "path": "/:table/update/:id",
+      "method": "put",
+      "process": "scripts.amis.data.model.saveDataById",
+      "in": [
+        "$param.table",
+        "$param.id",
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/table/:table/delete/:id
+      "label": "删除表数据",
+      "description": "删除表数据",
+      "path": "/:table/delete/:id",
+      "method": "post",
+      "process": "scripts.amis.data.model.deleteData",
+      "in": [
+        "$param.table",
+        "$param.id"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/table/:table/delete/:id
+      "label": "删除表数据",
+      "description": "删除表数据",
+      "path": "/:table/delete/:id",
+      "method": "delete",
+      "process": "scripts.amis.data.model.deleteData",
+      "in": [
+        "$param.table",
+        "$param.id"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/table/:table/select_options
+      "label": "表的选项值",
+      "description": "表的选项值",
+      "path": "/:table/select_options",
+      "method": "get",
+      "process": "scripts.amis.data.model.selectOptions",
+      "in": [
+        "$param.table",
+        ":query"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/table/:table/select_options
+      "label": "表的选项值",
+      "description": "表的选项值",
+      "path": "/:table/select_options",
+      "method": "post",
+      "process": "scripts.amis.data.model.selectOptions",
+      "in": [
+        "$param.table",
+        ":query",
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    }
+  ]
+}

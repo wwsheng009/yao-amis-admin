@@ -1,0 +1,21 @@
+{
+  "name": "excel",
+  "table": { "name": "demo_excel" },
+  "columns": [
+    {
+      "label": "ID",
+      "type": "id",
+      "name": "id"
+    },
+    {
+      "label": "number",
+      "name": "number",
+      "type": "integer"
+    },
+    {
+      "label": "时间",
+      "name": "time",
+      "type": "datetime"
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+//系统API
+//yao migrate -n system.api --reset
+{
+  "name": "API清单",
+  "table": {
+    "name": "system_api"
+  },
+  "columns": [
+    {
+      "label": "编号",
+      "name": "id",
+      "type": "ID",
+      "comment": "标识"
+    },
+    {
+      "label": "名称",
+      "name": "name",
+      "type": "string",
+      "comment": "API名称",
+      "index": true,
+      "nullable": true
+    },
+    {
+      "label": "描述",
+      "name": "description",
+      "type": "string",
+      "comment": "描述",
+      "index": true,
+      "nullable": true
+    },
+    {
+      "label": "路径",
+      "name": "path",
+      "type": "string",
+      "comment": "API定义路径",
+      "index": true,
+      "nullable": true
+    },
+    {
+      "label": "全路径",
+      "name": "fullpath",
+      "type": "string",
+      "comment": "API访问全路径",
+      "index": true,
+      "nullable": true
+    },
+    {
+      "label": "分组",
+      "name": "group",
+      "type": "string",
+      "comment": "分组",
+      "index": true,
+      "nullable": true
+    },
+    {
+      "label": "路由",
+      "name": "router",
+      "type": "string",
+      "comment": "路由",
+      "index": true,
+      "nullable": false
+    },
+    {
+      "label": "处理器",
+      "name": "process",
+      "type": "string",
+      "comment": "处理器",
+      "index": true,
+      "nullable": false
+    },
+    {
+      "label": "调用方法",
+      "name": "method",
+      "type": "string",
+      "comment": "调用方法",
+      "nullable": true
+    },
+    {
+      "label": "守卫",
+      "name": "guard",
+      "type": "string",
+      "comment": "守卫",
+      "nullable": true
+    },
+    {
+      "label": "传入参数",
+      "name": "in",
+      "type": "json",
+      "comment": "传入参数",
+      "nullable": true
+    },
+    {
+      "label": "传出参数",
+      "name": "out",
+      "type": "json",
+      "comment": "传出参数",
+      "nullable": true
+    },
+    {
+      "label": "参数",
+      "name": "url_params",
+      "type": "json",
+      "comment": "参数",
+      "nullable": true
+    },
+    {
+      "label": "DSL名称",
+      "name": "dsl_name",
+      "type": "string",
+      "comment": "描述",
+      "index": true,
+      "nullable": true
+    },
+    {
+      "label": "DSL文件路径",
+      "name": "dsl_path",
+      "type": "string",
+      "comment": "DSL文件路径",
+      "index": true,
+      "nullable": true
+    },
+    {
+      "label": "版本",
+      "name": "version",
+      "type": "string",
+      "comment": "版本",
+      "nullable": true
+    }
+  ],
+  "option": {
+    "timestamps": true
+  }
+}
