@@ -32,8 +32,14 @@ function deleteFile(name: string) {
 
   return Process("fs.system.Remove", fname);
 }
-
+function queryEscape(str) {
+  return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
+    return "%" + c.charCodeAt(0).toString(16);
+  });
+}
 function getBasename(filename: string) {
+  console.log("getBasename1", filename);
+
   if (filename == null) {
     return "";
   }
@@ -42,11 +48,10 @@ function getBasename(filename: string) {
 
   // If the separator is found, return the substring after it
   if (lastIndex !== -1) {
-    return filename.substring(lastIndex + 1);
+    filename = filename.substring(lastIndex + 1);
   }
-
   // If no separator found, return the filename as it is
-  return filename;
+  return queryEscape(filename);
 }
 // yao run scripts.system.file.getFileName
 function getFilePath(name: string) {
@@ -159,18 +164,59 @@ function getFileList(folder: string) {
 
       const fname = f.replace(uploadFolder, "");
       const mimeType = Process("fs.system.MimeType", f);
-
+      const bytes = Process("fs.system.Size", f);
       list2.push({
-        file_name: fname,
-        file_path: fpath,
-        file_url: `/api/v1/file/download?name=${fpath}`,
-        mime_type: mimeType,
+        size: convertFileSize(bytes),
+        name: fname,
+        path: fpath,
+        url: `/api/v1/file/download?name=${fpath}`,
+        mime: mimeType,
+        type: getFileTypeFromMimeType(mimeType),
       } as FileList);
     }
   });
   return list2;
 }
 
+function getFileTypeFromMimeType(mimeType) {
+  // Remove any additional information after the main MIME type
+  const mainType = mimeType.split(";")[0];
+
+  // Map MIME types to human-readable file types
+  const typeMap = {
+    "application/pdf": "PDF Document",
+    "image/jpeg": "JPEG Image",
+    "image/png": "PNG Image",
+    "image/gif": "GIF Image",
+    "text/plain": "Text Document",
+    "application/msword": "MS Word Document",
+    "application/vnd.ms-excel": "MS Excel Spreadsheet",
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation":
+      "MS PPT",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+      "MS WORD",
+    // Add more MIME types and their corresponding file types as needed
+  };
+
+  // Check if the MIME type exists in the typeMap
+  if (typeMap.hasOwnProperty(mainType)) {
+    return typeMap[mainType];
+  } else {
+    return mimeType;
+  }
+}
+function convertFileSize(fileSizeInBytes: number) {
+  const units = ["bytes", "KB", "MB", "GB"];
+  let unitIndex = 0;
+  let fileSize = fileSizeInBytes;
+
+  while (fileSize >= 1024 && unitIndex < units.length - 1) {
+    fileSize /= 1024;
+    unitIndex++;
+  }
+
+  return `${fileSize.toFixed(2)} ${units[unitIndex]}`;
+}
 // yao run scripts.system.file.normalizeFolder "../"
 function normalizeFolder(folder: string) {
   if (folder == null) {
@@ -297,10 +343,12 @@ function removeEmptyChildren(node) {
 }
 
 interface FileList {
-  file_name: string;
-  file_path: string;
-  file_url: string;
-  mime_type: string;
+  name: string;
+  path: string;
+  url: string;
+  size: string;
+  mime: string;
+  type: string;
 }
 
 interface YaoFile {
