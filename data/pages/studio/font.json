@@ -134,7 +134,7 @@
       "itemActions": [],
       "api": {
         "method": "get",
-        "url": "/api/v1/table/system.font/search"
+        "url": "/api/v1/table/data/system.font/search"
       },
       "bulkActions": [],
       "headerToolbar": [

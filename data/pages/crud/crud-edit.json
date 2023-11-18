@@ -1,8 +1,8 @@
 {
   "body": [
     {
-      "api": "/api/v1/mock/sample/$id",
-      "initApi": "/api/v1/mock/sample/${params.id}",
+      "api": "/api/v1/demo/sample/$id",
+      "initApi": "/api/v1/demo/sample/${params.id}",
       "redirect": "/crud/list",
       "type": "form",
       "id": "u:ea935870f642",

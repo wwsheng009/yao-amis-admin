@@ -36,8 +36,8 @@
         "type": "application/json",
         "body": {
           "captcha": {
-            "code": "${{content}}",
-            "id": "${{id}}"
+            "code": "{{content}}",
+            "id": "{{id}}"
           }
         }
       }

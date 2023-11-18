@@ -3,11 +3,11 @@
   "name": "data operation",
   "version": "1.0.0",
   "description": "table data operation",
-  "group": "/v1/table",
+  "group": "",
   "guard": "bearer-jwt",
   "paths": [
     {
-      // /api/v1/table/:table/preview
+      // /api/v1/table/data/:table/preview
       "label": "表数据预览",
       "description": "预览表数据",
       "path": "/:table/preview",
@@ -23,7 +23,7 @@
       }
     },
     {
-      //api/v1/table/admin.user/search?page=${page}&perPage=${perPage}&keywords=${keywords}
+      //api/v1/table/data/admin.user/search?page=${page}&perPage=${perPage}&keywords=${keywords}
       "label": "读取模型的表数据",
       "description": "读取模型的表数据",
       "path": "/:table/search",
@@ -42,7 +42,7 @@
       }
     },
     {
-      //api/v1/table/admin.user/search?page=${page}&perPage=${perPage}&keywords=${keywords}
+      //api/v1/table/data/admin.user/search?page=${page}&perPage=${perPage}&keywords=${keywords}
       "label": "读取模型的表数据",
       "description": "读取模型的表数据",
       "path": "/:table/search",
@@ -106,7 +106,7 @@
       }
     },
     {
-      // /api/v1/table/:table/find/:id
+      // /api/v1/table/data/:table/find/:id
       "label": "读取表数据",
       "description": "根据表主键读取表数据",
       "path": "/:table/find/:id",
@@ -154,7 +154,7 @@
       }
     },
     {
-      // /api/v1/table/:table/delete/:id
+      // /api/v1/table/data/:table/delete/:id
       "label": "删除表数据",
       "description": "删除表数据",
       "path": "/:table/delete/:id",
@@ -170,7 +170,7 @@
       }
     },
     {
-      // /api/v1/table/:table/delete/:id
+      // /api/v1/table/data/:table/delete/:id
       "label": "删除表数据",
       "description": "删除表数据",
       "path": "/:table/delete/:id",
@@ -186,7 +186,7 @@
       }
     },
     {
-      // /api/v1/table/:table/select_options
+      // /api/v1/table/data/:table/select_options
       "label": "表的选项值",
       "description": "表的选项值",
       "path": "/:table/select_options",
@@ -202,7 +202,7 @@
       }
     },
     {
-      // /api/v1/table/:table/select_options
+      // /api/v1/table/data/:table/select_options
       "label": "表的选项值",
       "description": "表的选项值",
       "path": "/:table/select_options",

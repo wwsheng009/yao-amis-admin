@@ -97,7 +97,7 @@ function returnData(
         api: {
           method: "post",
           url:
-            `/api/v1/table/${tableName}` +
+            `/api/v1/table/data/${tableName}` +
             "/search?page=${page}&perPage=${perPage}&orderBy=${orderBy}&orderDir=${orderDir}",
           data: {
             "&": "$$",
@@ -135,7 +135,7 @@ function returnData(
                   type: "dialog",
                   size: "lg",
                   body: {
-                    api: `post:/api/v1/table/${tableName}/bulkUpdate/$id`,
+                    api: `post:/api/v1/table/data/${tableName}/bulkUpdate/$id`,
                     body: updateForm,
                     name: "update",
                     silentPolling: false,
@@ -145,7 +145,7 @@ function returnData(
                 },
               },
               {
-                api: `delete:/api/v1/table/${tableName}/delete/$id`,
+                api: `delete:/api/v1/table/data/${tableName}/delete/$id`,
                 confirmText: "你确定要删除行${id}?",
                 icon: "fa fa-times text-danger",
                 tooltip: "删除",
@@ -184,7 +184,7 @@ function returnData(
             actionType: "dialog",
             dialog: {
               body: {
-                api: `post:/api/v1/table/${tableName}/create`,
+                api: `post:/api/v1/table/data/${tableName}/create`,
                 body: newForm,
                 name: "create",
                 silentPolling: false,
@@ -219,7 +219,7 @@ function returnData(
                     },
                   },
                   method: "post",
-                  url: `/api/v1/table/${tableName}/batch_create`,
+                  url: `/api/v1/table/data/${tableName}/batch_create`,
                 },
               },
             },
@@ -233,7 +233,8 @@ function returnData(
         bulkActions: [
           {
             actionType: "ajax",
-            api: `delete:/api/v1/table/${tableName}` + "/delete/${ids|raw}",
+            api:
+              `delete:/api/v1/table/data/${tableName}` + "/delete/${ids|raw}",
             confirmText: "你确定要批量删除选中行吗?",
             label: "批量删除",
             type: "button",
@@ -247,7 +248,8 @@ function returnData(
           "export-csv",
           "export-excel",
         ],
-        quickSaveItemApi: `post:/api/v1/table/${tableName}` + "/update/${id}",
+        quickSaveItemApi:
+          `post:/api/v1/table/data/${tableName}` + "/update/${id}",
         syncLocation: false,
       },
     ],

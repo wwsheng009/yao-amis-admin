@@ -1017,7 +1017,7 @@
                       "label": "关联模型",
                       "source": {
                         "method": "post",
-                        "url": "/api/v1/table/ddic.model/select_options",
+                        "url": "/api/v1/table/data/ddic.model/select_options",
                         "data": {
                           "__label": "name",
                           "__value": "identity"
@@ -1034,7 +1034,7 @@
                       "required": true,
                       "source": {
                         "method": "post",
-                        "url": "/api/v1/table/ddic.model.column/select_options",
+                        "url": "/api/v1/table/data/ddic.model.column/select_options",
                         "data": {
                           "model_identity": "${model}",
                           "__value": "name",

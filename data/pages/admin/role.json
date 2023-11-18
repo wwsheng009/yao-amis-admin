@@ -50,7 +50,7 @@
         }
       ],
       "filterTogglable": true,
-      "quickSaveItemApi": "post:/api/v1/table/system.auth.role/update/${id}",
+      "quickSaveItemApi": "post:/api/v1/table/data/system.auth.role/update/${id}",
       "primaryField": "id",
       "perPage": 10,
       "autoFillHeight": true,
@@ -59,7 +59,7 @@
           "dialog": {
             "type": "dialog",
             "body": {
-              "api": "post:/api/v1/table/system.auth.role/bulkUpdate/$id",
+              "api": "post:/api/v1/table/data/system.auth.role/bulkUpdate/$id",
               "body": [
                 {
                   "name": "id",
@@ -116,7 +116,7 @@
           "tooltip": "删除",
           "type": "button",
           "actionType": "ajax",
-          "api": "delete:/api/v1/table/system.auth.role/delete/$id",
+          "api": "delete:/api/v1/table/data/system.auth.role/delete/$id",
           "confirmText": "你确定要删除行${id}?"
         }
       ],
@@ -131,7 +131,7 @@
       "filterDefaultVisible": false,
       "api": {
         "method": "get",
-        "url": "/api/v1/table/system.auth.role/search?page=${page}&perPage=${perPage}&orderBy=${orderBy}&orderDir=${orderDir}",
+        "url": "/api/v1/table/data/system.auth.role/search?page=${page}&perPage=${perPage}&orderBy=${orderBy}&orderDir=${orderDir}",
         "data": {
           "&": "$$"
         }
@@ -169,7 +169,7 @@
             "body": {
               "silentPolling": false,
               "type": "form",
-              "api": "post:/api/v1/table/system.auth.role/create",
+              "api": "post:/api/v1/table/data/system.auth.role/create",
               "body": [
                 {
                   "name": "name",
@@ -225,7 +225,7 @@
                   }
                 },
                 "method": "post",
-                "url": "/api/v1/table/system.auth.role/batch_create"
+                "url": "/api/v1/table/data/system.auth.role/batch_create"
               },
               "body": [
                 {
@@ -296,7 +296,7 @@
       "bulkActions": [
         {
           "actionType": "ajax",
-          "api": "delete:/api/v1/table/system.auth.role/delete/${ids|raw}",
+          "api": "delete:/api/v1/table/data/system.auth.role/delete/${ids|raw}",
           "confirmText": "你确定要批量删除选中行吗?",
           "label": "批量删除",
           "type": "button"

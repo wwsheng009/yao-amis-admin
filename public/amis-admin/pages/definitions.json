@@ -7,7 +7,7 @@
       "valueField": "icon",
       "labelField": "label",
       "label": "Awsome图标",
-      "source": "/api/v1/table/system.font/search",
+      "source": "/api/v1/table/data/system.font/search",
       "size": "lg",
       "pickerSchema": {
         "mode": "table",
@@ -75,7 +75,7 @@
       "valueField": "icon",
       "labelField": "label",
       "label": "Awsome图标",
-      "source": "/api/v1/table/system.font/search",
+      "source": "/api/v1/table/data/system.font/search",
       "size": "lg",
       "pickerSchema": {
         "mode": "cards",

@@ -13,7 +13,7 @@
   "id": "u:9a48a7cc3178",
   "body": [
     {
-      "initApi": "/api/v1/mock/sample/${params.id}",
+      "initApi": "/api/v1/demo/sample/${params.id}",
       "type": "form",
       "id": "u:ce995a5c552d",
       "body": [

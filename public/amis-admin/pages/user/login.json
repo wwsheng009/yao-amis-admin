@@ -153,8 +153,8 @@
                             {
                               "height": 50,
                               "id": "u:ba0e071441b0",
-                              "src": "${captcha.code}",
                               "type": "image",
+                              "name": "captcha.code",
                               "width": 111,
                               "clickAction": {
                                 "target": "captcha",

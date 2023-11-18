@@ -16,7 +16,7 @@
       "type": "form",
       "redirect": "/crud/list",
       "name": "sample-edit-form",
-      "api": "/api/v1/mock/sample",
+      "api": "/api/v1/demo/sample",
       "controls": [
         {
           "type": "text",

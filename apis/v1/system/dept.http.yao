@@ -20,17 +20,6 @@
       }
     },
     {
-      "path": "/edit_get", //编辑器使用
-      "method": "GET",
-      "guard": "bearer-jwt",
-      "process": "flows.system.dept_raw",
-      "in": [],
-      "out": {
-        "status": 200,
-        "type": "application/json"
-      }
-    },
-    {
       "path": "/add",
       "method": "POST",
       "guard": "bearer-jwt",

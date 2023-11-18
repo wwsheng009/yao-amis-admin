@@ -6,13 +6,13 @@
           "&": "$$"
         },
         "method": "post",
-        "url": "/api/v1/table/system.auth.permission/search?page=${page}&perPage=${perPage}&orderBy=${orderBy}&orderDir=${orderDir}"
+        "url": "/api/v1/table/data/system.auth.permission/search?page=${page}&perPage=${perPage}&orderBy=${orderBy}&orderDir=${orderDir}"
       },
       "autoFillHeight": true,
       "bulkActions": [
         {
           "actionType": "ajax",
-          "api": "delete:/api/v1/table/system.auth.permission/delete/${ids|raw}",
+          "api": "delete:/api/v1/table/data/system.auth.permission/delete/${ids|raw}",
           "confirmText": "你确定要批量删除选中行吗?",
           "label": "批量删除",
           "type": "button"
@@ -90,7 +90,7 @@
               "actionType": "dialog",
               "dialog": {
                 "body": {
-                  "api": "post:/api/v1/table/system.auth.permission/bulkUpdate/$id",
+                  "api": "post:/api/v1/table/data/system.auth.permission/bulkUpdate/$id",
                   "body": [
                     {
                       "label": "ID",
@@ -174,7 +174,7 @@
                       "label": "路由",
                       "items": {
                         "type": "input-text",
-                        "source": "/api/v1/table/system.api/select_options?__label=router&__value=router"
+                        "source": "/api/v1/table/data/system.api/select_options?__label=router&__value=router"
                       }
                     },
                     {
@@ -199,7 +199,7 @@
                       "multiple": true,
                       "joinValues": false,
                       "extractValue": true,
-                      "source": "/api/v1/table/ddic.model/select_options?__value=identity&__label=name"
+                      "source": "/api/v1/table/data/ddic.model/select_options?__value=identity&__label=name"
                     },
                     {
                       "type": "checkboxes",
@@ -257,7 +257,7 @@
             },
             {
               "actionType": "ajax",
-              "api": "delete:/api/v1/table/system.auth.permission/delete/$id",
+              "api": "delete:/api/v1/table/data/system.auth.permission/delete/$id",
               "confirmText": "你确定要删除行${id}?",
               "icon": "fa fa-times text-danger",
               "tooltip": "删除",
@@ -351,7 +351,7 @@
           "align": "right",
           "dialog": {
             "body": {
-              "api": "post:/api/v1/table/system.auth.permission/create",
+              "api": "post:/api/v1/table/data/system.auth.permission/create",
               "body": [
                 {
                   "label": "名称",
@@ -426,7 +426,7 @@
                   "label": "路由",
                   "items": {
                     "type": "input-text",
-                    "source": "/api/v1/table/system.api/select_options?__label=router&__value=router"
+                    "source": "/api/v1/table/data/system.api/select_options?__label=router&__value=router"
                   }
                 },
                 {
@@ -451,7 +451,7 @@
                   "multiple": true,
                   "joinValues": false,
                   "extractValue": true,
-                  "source": "/api/v1/table/ddic.model/select_options?__value=identity&__label=name"
+                  "source": "/api/v1/table/data/ddic.model/select_options?__value=identity&__label=name"
                 },
                 {
                   "type": "checkboxes",
@@ -516,7 +516,7 @@
                   }
                 },
                 "method": "post",
-                "url": "/api/v1/table/system.auth.permission/batch_create"
+                "url": "/api/v1/table/data/system.auth.permission/batch_create"
               },
               "body": [
                 {
@@ -672,7 +672,7 @@
       "keepItemSelectionOnPageChange": true,
       "perPage": 10,
       "primaryField": "id",
-      "quickSaveItemApi": "post:/api/v1/table/system.auth.permission/update/${id}",
+      "quickSaveItemApi": "post:/api/v1/table/data/system.auth.permission/update/${id}",
       "syncLocation": false,
       "type": "crud"
     }

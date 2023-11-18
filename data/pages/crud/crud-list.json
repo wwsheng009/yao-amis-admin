@@ -10,7 +10,7 @@
       "api": {
         "method": "get",
         "requestAdaptor": "",
-        "url": "/api/v1/mock/samples?page=${page}&perPage=${perPage}&keywords=${keywords}",
+        "url": "/api/v1/demo/samples?page=${page}&perPage=${perPage}&keywords=${keywords}",
         "messages": {},
         "adaptor": ""
       },
@@ -31,7 +31,7 @@
           "dialog": {
             "title": "批量编辑",
             "body": {
-              "api": "/api/v1/mock/bulkUpdate/$ids",
+              "api": "/api/v1/demo/bulkUpdate/$ids",
               "controls": [
                 {
                   "label": "Engine",
@@ -54,7 +54,7 @@
           "type": "button",
           "id": "u:bb9b485dfa90",
           "actionType": "ajax",
-          "api": "delete:/api/v1/mock/sample/$ids",
+          "api": "delete:/api/v1/demo/sample/$ids",
           "confirmText": "确定要批量删除?"
         }
       ],
@@ -123,7 +123,7 @@
                   "type": "button",
                   "id": "u:2a303b7bc6f4",
                   "actionType": "ajax",
-                  "api": "delete:/api/v1/mock/sample/$id"
+                  "api": "delete:/api/v1/demo/sample/$id"
                 }
               ],
               "type": "button-group",

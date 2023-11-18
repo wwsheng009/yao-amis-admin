@@ -22,18 +22,6 @@
       }
     },
     {
-      "label": "读取菜单节点信息",
-      "path": "/edit_get", //编辑器使用
-      "method": "GET",
-      "guard": "bearer-jwt",
-      "process": "flows.system.menu_raw",
-      "in": [],
-      "out": {
-        "status": 200,
-        "type": "application/json"
-      }
-    },
-    {
       // /api/v1/system/menu/create
       "label": "创建菜单节点",
       "description": "创建一个菜单节点",

@@ -10,7 +10,7 @@
       "api": {
         "method": "get",
         "requestAdaptor": "",
-        "url": "/api/v1/table/ddic.model/search?page=${page}&perPage=${perPage}&keywords=${keywords}",
+        "url": "/api/v1/table/data/ddic.model/search?page=${page}&perPage=${perPage}&keywords=${keywords}",
         "messages": {},
         "adaptor": ""
       },
