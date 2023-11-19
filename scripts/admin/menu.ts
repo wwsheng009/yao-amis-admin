@@ -327,7 +327,7 @@ function getAmisEditorPagesAsRoute() {
     });
     const routes = convertFileListToSoyRoute(files);
 
-    rootRoutes[0].children = routes[0].children;
+    rootRoutes[0].children = routes[0]?.children || [];
   }
   updateSoyRoutePath("/api/v1/amis/edit_pages/", rootRoutes, undefined);
   updateSoyRouteComponent(rootRoutes);
