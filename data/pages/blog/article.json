@@ -1,0 +1,648 @@
+{
+  "type": "page",
+  "body": {
+    "type": "crud",
+    "columns": [
+      {
+        "name": "id",
+        "label": "id",
+        "sortable": true,
+        "required": false
+      },
+      {
+        "name": "title",
+        "label": "标题",
+        "quickEdit": {
+          "type": "input-text",
+          "required": true,
+          "clearable": true,
+          "clearValueOnEmpty": true,
+          "maxLength": 200,
+          "saveImmediately": true
+        },
+        "sortable": true,
+        "maxLength": 200,
+        "required": true
+      },
+      {
+        "type": "image",
+        "name": "img",
+        "label": "图片",
+        "quickEdit": {
+          "type": "group",
+          "body": [
+            {
+              "type": "input-image",
+              "name": "img",
+              "label": "图片",
+              "required": false,
+              "receiver": "post:/api/v1/file/upload",
+              "maxSize": 2097152,
+              "maxLength": 300
+            },
+            {
+              "type": "input-text",
+              "name": "img",
+              "label": "图片",
+              "required": false,
+              "maxSize": 2097152
+            }
+          ],
+          "saveImmediately": true
+        },
+        "sortable": true,
+        "width": 100,
+        "height": 60,
+        "enlargeAble": true,
+        "maxLength": 300,
+        "required": false
+      },
+      {
+        "type": "mapping",
+        "name": "status",
+        "label": "状态",
+        "quickEdit": {
+          "type": "select",
+          "required": false,
+          "joinValues": false,
+          "clearable": true,
+          "extractValue": true,
+          "options": [
+            {
+              "label": "未发布",
+              "value": 0
+            },
+            {
+              "label": "已发布",
+              "value": 1
+            },
+            {
+              "label": "审核中",
+              "value": 2
+            },
+            {
+              "label": "已禁用",
+              "value": 3
+            }
+          ],
+          "saveImmediately": true
+        },
+        "sortable": false,
+        "filterable": {
+          "options": [
+            {
+              "label": "未发布",
+              "value": 0
+            },
+            {
+              "label": "已发布",
+              "value": 1
+            },
+            {
+              "label": "审核中",
+              "value": 2
+            },
+            {
+              "label": "已禁用",
+              "value": 3
+            }
+          ]
+        },
+        "map": {
+          "0": "<span class='label label-primary'>未发布</span>",
+          "1": "<span class='label label-success'>已发布</span>",
+          "2": "<span class='label label-warning'>审核中</span>",
+          "3": "<span class='label label-danger'>已禁用</span>"
+        },
+        "required": false
+      },
+      {
+        "type": "input-tag",
+        "name": "category_id",
+        "static": true,
+        "label": "分类",
+        "multiple": true,
+        "cascade": true,
+        "source": "/api/v1/table/data/blog.category/select_options",
+        "joinValues": false,
+        "extractValue": true
+      },
+      {
+        "type": "input-tag",
+        "name": "tag_id",
+        "static": true,
+        "label": "标签",
+        "multiple": true,
+        "cascade": true,
+        "source": "/api/v1/table/data/blog.tag/select_options",
+        "joinValues": false,
+        "extractValue": true
+      },
+      {
+        "type": "tpl",
+        "label": "文章来源",
+        "tpl": "<a href=\"${source}\" target=\"_blank\">ID:${id},Title:${title}</a>"
+      },
+
+      {
+        "name": "description",
+        "label": "描述",
+        "quickEdit": {
+          "type": "textarea",
+          "required": false,
+          "clearable": true,
+          "clearValueOnEmpty": true,
+          "saveImmediately": true
+        },
+        "sortable": true,
+        "required": false
+      },
+      {
+        "format": "YYYY-MM-DD HH:mm:ss",
+        "label": "创建时间",
+        "name": "created_at",
+        "quickEdit": false,
+        "searchable": true,
+        "sortable": true,
+        "type": "date"
+      },
+      {
+        "format": "YYYY-MM-DD HH:mm:ss",
+        "label": "更新时间",
+        "name": "updated_at",
+        "quickEdit": false,
+        "searchable": true,
+        "sortable": true,
+        "type": "date"
+      },
+      {
+        "type": "operation",
+        "label": "操作",
+        "fixed": "right",
+        "buttons": [
+          {
+            "type": "button",
+            "actionType": "dialog",
+            "icon": "fa fa-pencil",
+            "tooltip": "Update",
+            "dialog": {
+              "type": "dialog",
+              "body": {
+                "type": "form",
+                "name": "update",
+                "body": [
+                  {
+                    "type": "input-text",
+                    "name": "title",
+                    "label": "文章标题",
+                    "required": false,
+                    "clearable": true,
+                    "clearValueOnEmpty": true,
+                    "maxLength": 200
+                  },
+                  {
+                    "type": "group",
+                    "name": "img",
+                    "body": [
+                      {
+                        "type": "input-image",
+                        "name": "img",
+                        "label": "图片",
+                        "required": false,
+                        "receiver": "post:/api/v1/file/upload",
+                        "maxSize": 2097152,
+                        "maxLength": 300
+                      },
+                      {
+                        "type": "input-text",
+                        "name": "img",
+                        "label": "图片",
+                        "required": false,
+                        "maxSize": 2097152
+                      }
+                    ]
+                  },
+                  {
+                    "type": "textarea",
+                    "name": "description",
+                    "label": "描述",
+                    "required": false,
+                    "clearable": true,
+                    "clearValueOnEmpty": true
+                  },
+                  {
+                    "type": "select",
+                    "name": "status",
+                    "label": "状态",
+                    "required": false,
+                    "joinValues": false,
+                    "clearable": true,
+                    "extractValue": true,
+                    "options": [
+                      {
+                        "label": "未发布",
+                        "value": 0
+                      },
+                      {
+                        "label": "已发布",
+                        "value": 1
+                      },
+                      {
+                        "label": "审核中",
+                        "value": 2
+                      },
+                      {
+                        "label": "已禁用",
+                        "value": 3
+                      }
+                    ]
+                  },
+                  {
+                    "type": "input-rich-text",
+                    "name": "content",
+                    "label": "ArticleContent",
+                    "required": false,
+                    "receiver": "post:/api/v1/file/upload",
+                    "videoReceiver": "post:/api/v1/file/upload"
+                  },
+                  {
+                    "type": "input-text",
+                    "name": "source",
+                    "label": "文章来源",
+                    "required": false,
+                    "clearable": true,
+                    "clearValueOnEmpty": true,
+                    "maxLength": 200
+                  },
+                  {
+                    "type": "select",
+                    "name": "category_id",
+                    "label": "分类标识",
+                    "multiple": true,
+                    "cascade": true,
+                    "source": "/api/v1/table/data/blog.category/select_options",
+                    "joinValues": false,
+                    "extractValue": true
+                  },
+                  {
+                    "type": "input-tag",
+                    "name": "tag_id",
+                    "label": "标签",
+                    "multiple": true,
+                    "cascade": true,
+                    "source": "/api/v1/table/data/blog.tag/select_options",
+                    "joinValues": false,
+                    "extractValue": true
+                  },
+                  {
+                    "format": "YYYY-MM-DD HH:mm:ss",
+                    "label": "创建时间",
+                    "name": "created_at",
+                    "type": "static-datetime",
+                    "visibleOn": "!!this.created_at"
+                  },
+                  {
+                    "format": "YYYY-MM-DD HH:mm:ss",
+                    "label": "更新时间",
+                    "name": "updated_at",
+                    "type": "static-datetime",
+                    "visibleOn": "!!this.updated_at"
+                  }
+                ],
+                "api": "post:/api/v1/table/data/blog.article/update/$id",
+                "trimValues": true
+              },
+              "size": "lg",
+              "title": "更新文章"
+            }
+          },
+          {
+            "type": "button",
+            "actionType": "ajax",
+            "icon": "fa fa-times text-danger",
+            "confirmText": "你确定要删除行${id}?",
+            "tooltip": "Delete",
+            "api": "post:/api/v1/table/data/blog.article/delete/$id"
+          }
+        ]
+      }
+    ],
+    "itemActions": [],
+    "autoFillHeight": true,
+    "footable": true,
+    "mode": "table",
+    "api": {
+      "url": "/api/v1/table/data/blog.article/search?page=${page}&perPage=${perPage}&orderBy=${orderBy}&orderDir=${orderDir}",
+      "method": "POST"
+    },
+    "filter": {
+      "type": "",
+      "name": "filter",
+      "mode": "inline",
+      "title": "Filter",
+      "body": [
+        {
+          "type": "input-text",
+          "name": "id",
+          "label": "id",
+          "clearable": true,
+          "clearValueOnEmpty": true
+        },
+        {
+          "type": "input-text",
+          "name": "title",
+          "label": "文章标题",
+          "clearable": true,
+          "clearValueOnEmpty": true
+        },
+        {
+          "type": "input-text",
+          "name": "img",
+          "label": "图片",
+          "clearable": true,
+          "clearValueOnEmpty": true
+        },
+        {
+          "type": "select",
+          "name": "status",
+          "label": "状态",
+          "joinValues": false,
+          "clearable": true,
+          "extractValue": true,
+          "options": [
+            {
+              "label": "未发布",
+              "value": 0
+            },
+            {
+              "label": "已发布",
+              "value": 1
+            },
+            {
+              "label": "审核中",
+              "value": 2
+            },
+            {
+              "label": "已禁用",
+              "value": 3
+            }
+          ]
+        },
+        {
+          "type": "input-text",
+          "name": "category__name",
+          "label": "CategoryName",
+          "clearable": true,
+          "clearValueOnEmpty": true
+        },
+        {
+          "type": "input-datetime-range",
+          "name": "created_time",
+          "label": "创建时间",
+          "ranges": "today,yesterday,7daysago,prevweek,thismonth,prevmonth,prevquarter",
+          "format": "YYYY-MM-DD HH:mm:ss"
+        },
+        {
+          "type": "input-text",
+          "name": "description",
+          "label": "描述",
+          "clearable": true,
+          "clearValueOnEmpty": true
+        },
+        {
+          "type": "input-text",
+          "name": "category",
+          "label": "分类",
+          "clearable": true,
+          "clearValueOnEmpty": true
+        },
+        {
+          "type": "input-text",
+          "name": "category2",
+          "label": "分类名称",
+          "clearable": true,
+          "clearValueOnEmpty": true
+        }
+      ],
+      "actions": [
+        {
+          "type": "button",
+          "actionType": "clear-and-submit",
+          "label": "Clear",
+          "level": "default"
+        },
+        {
+          "type": "button",
+          "actionType": "reset-and-submit",
+          "label": "Reset",
+          "level": "default"
+        },
+        {
+          "type": "button",
+          "actionType": "submit",
+          "label": "Search",
+          "level": "primary"
+        }
+      ],
+      "trimValues": true
+    },
+    "filterTogglable": true,
+    "filterDefaultVisible": false,
+    "syncLocation": false,
+    "quickSaveItemApi": "post:/api/v1/table/data/blog.article/update/${id}",
+    "bulkActions": [
+      {
+        "type": "button",
+        "actionType": "ajax",
+        "label": "批量删除",
+        "confirmText": "你确定要批量删除选中行吗?",
+        "api": "delete:/api/v1/table/data/blog.article/delete/${ids|raw}"
+      }
+    ],
+    "primaryField": "id",
+    "perPage": 10,
+    "defaultParams": {
+      "_replace": "1"
+    },
+    "keepItemSelectionOnPageChange": true,
+    "headerToolbar": [
+      "filter-toggler",
+      "reload",
+      "bulkActions",
+      {
+        "type": "columns-toggler",
+        "align": "right",
+        "draggable": true
+      },
+      {
+        "type": "drag-toggler",
+        "align": "right"
+      },
+      {
+        "type": "pagination",
+        "align": "right"
+      },
+      {
+        "type": "tpl",
+        "tpl": "${items|count} / ${total}",
+        "className": "v-middle",
+        "align": "right"
+      },
+      {
+        "type": "button",
+        "actionType": "dialog",
+        "label": "创建文章",
+        "level": "primary",
+        "icon": "fa fa-plus pull-left",
+        "dialog": {
+          "type": "dialog",
+          "body": {
+            "type": "form",
+            "name": "create",
+            "body": [
+              {
+                "type": "input-text",
+                "name": "title",
+                "label": "文章标题",
+                "required": true,
+                "clearable": true,
+                "clearValueOnEmpty": true,
+                "maxLength": 200
+              },
+              {
+                "type": "group",
+                "name": "img",
+                "body": [
+                  {
+                    "type": "input-image",
+                    "name": "img",
+                    "label": "图片",
+                    "required": false,
+                    "receiver": "post:/api/v1/file/upload",
+                    "maxSize": 2097152,
+                    "maxLength": 300
+                  },
+                  {
+                    "type": "input-text",
+                    "name": "img",
+                    "label": "图片",
+                    "required": false,
+                    "maxSize": 2097152
+                  }
+                ]
+              },
+              {
+                "type": "textarea",
+                "name": "description",
+                "value": "",
+                "label": "描述",
+                "required": false,
+                "clearable": true,
+                "clearValueOnEmpty": true
+              },
+              {
+                "type": "select",
+                "name": "status",
+                "value": 0,
+                "label": "状态",
+                "required": false,
+                "joinValues": false,
+                "clearable": true,
+                "extractValue": true,
+                "options": [
+                  {
+                    "label": "未发布",
+                    "value": 0
+                  },
+                  {
+                    "label": "已发布",
+                    "value": 1
+                  },
+                  {
+                    "label": "审核中",
+                    "value": 2
+                  },
+                  {
+                    "label": "已禁用",
+                    "value": 3
+                  }
+                ]
+              },
+              {
+                "type": "input-rich-text",
+                "name": "content",
+                "label": "ArticleContent",
+                "required": true,
+                "receiver": "post:/api/v1/file/upload",
+                "videoReceiver": "post:/api/v1/file/upload"
+              },
+              {
+                "type": "input-text",
+                "name": "source",
+                "value": "",
+                "label": "文章来源",
+                "required": false,
+                "clearable": true,
+                "clearValueOnEmpty": true,
+                "maxLength": 200
+              },
+              {
+                "type": "select",
+                "name": "category_id",
+                "label": "分类标识",
+                "multiple": true,
+                "cascade": true,
+                "source": "/api/v1/table/data/blog.category/select_options",
+                "joinValues": false,
+                "extractValue": true
+              }
+            ],
+            "api": "post:/api/v1/table/data/blog.article/create"
+          },
+          "size": "lg",
+          "title": "创建文章"
+        }
+      },
+      {
+        "type": "button",
+        "actionType": "drawer",
+        "label": "维护分类",
+        "level": "info",
+        "drawer": {
+          "body": {
+            "type": "service",
+            "lable": "维护分类",
+            "schemaApi": {
+              "url": "/api/v1/table/schema/blog.category/crud-all",
+              "method": "get"
+            }
+          }
+        }
+      },
+      {
+        "type": "button",
+        "actionType": "drawer",
+        "label": "维护标签",
+        "level": "info",
+        "drawer": {
+          "body": {
+            "type": "service",
+            "lable": "维护标签",
+            "schemaApi": {
+              "url": "/api/v1/table/schema/blog.tag/crud-all",
+              "method": "get"
+            }
+          }
+        }
+      }
+    ],
+    "footerToolbar": [
+      "statistics",
+      "switch-per-page",
+      "pagination",
+      "load-more",
+      "export-csv",
+      "export-excel"
+    ]
+  }
+}

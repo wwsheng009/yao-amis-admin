@@ -22,6 +22,9 @@ function getUserAuthMenuIds() {
   }
   // get user roles
   const user = Process("models.admin.user.find", user_id, {});
+  if (user == null) {
+    throw new Exception("用户不存在", 500);
+  }
   if (user.role == null) {
     throw new Exception("用户未配置角色", 500);
   }
@@ -80,19 +83,22 @@ function getUserAuthMenuIds() {
  */
 function getSoyAdminUserMenu() {
   let user = Process("session.get", "user");
-  console.log("user>>>>>>>>>>", user);
+  // console.log("user>>>>>>>>>>", user);
   if (user?.type === "super") {
     return getSoySuperUserMenu();
   }
 
   const menusIds = getUserAuthMenuIds();
-  // get menus
-  let routes = getSoyRoutesFromDB();
-  routes = Process(`utils.arr.Tree`, routes, { parent: "parent", empty: 0 });
-  routes = filterTreeDataWithFunc(routes, (item) => {
-    return menusIds.includes(item.id) || !item.meta?.requiresAuth;
-  });
-  return cleanUpRouteMenu(routes);
+  if (menusIds.length) {
+    // get menus
+    let routes = getSoyRoutesFromDB();
+    routes = Process(`utils.arr.Tree`, routes, { parent: "parent", empty: 0 });
+    routes = filterTreeDataWithFunc(routes, (item) => {
+      return menusIds.includes(item.id) || !item.meta?.requiresAuth;
+    });
+    return cleanUpRouteMenu(routes);
+  }
+  return [];
 }
 
 /**

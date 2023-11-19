@@ -1,0 +1,78 @@
+{
+  "columns": [
+    {
+      "comment": "id",
+      "label": "id",
+      "name": "id",
+      "type": "id"
+    },
+    {
+      "comment": "标题",
+      "label": "标题",
+      "name": "title",
+      "type": "string"
+    },
+    {
+      "comment": "图片",
+      "label": "图片",
+      "name": "img",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "comment": "描述",
+      "label": "描述",
+      "name": "description",
+      "type": "string"
+    },
+    {
+      "comment": "状态",
+      "default": true,
+      "label": "状态",
+      "name": "status",
+      "type": "boolean"
+    },
+    {
+      "comment": "内容",
+      "label": "内容",
+      "name": "content",
+      "type": "text"
+    },
+    {
+      "comment": "来源",
+      "label": "来源",
+      "name": "source",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "comment": "分类标识",
+      "label": "分类标识",
+      "name": "category_id",
+      "type": "json",
+      "nullable": true
+    },
+    {
+      "comment": "标签标识",
+      "label": "标签标识",
+      "name": "tag_id",
+      "type": "json",
+      "nullable": true
+    },
+    {
+      "comment": "用户标识",
+      "label": "用户标识",
+      "name": "user_id",
+      "type": "integer"
+    }
+  ],
+  "name": "文章",
+  "option": {
+    "timestamps": true
+  },
+  "table": {
+    "name": "blog_article"
+  }
+}
+// yao migrate -n blog.article --reset
+// yao migrate -n system.api --reset

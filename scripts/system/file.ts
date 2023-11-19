@@ -1,18 +1,60 @@
 /**
  * 文件管理
+ * 文件管理分两部分，一部分是公共资源，没有权限控制，比如在博客中使用的图片文件，就不需要进行登录访问。
+ * 第二部分是用户的个人资源，api访问需要登录认证，放在用户id目录下面。
  */
 
 /**
- * Upload and parse file
+ * yao run scripts.system.file.UploadPublicFile
+ * 这里的文件上传是保存在用户的id目录下
+ * @param {*} file
+ * @returns
+ */
+function UploadPublicFile(file: YaoFile) {
+  const filePath = savePublicFile(file);
+  return {
+    value: `/api/v1/file/download?name=${filePath}`,
+  };
+}
+
+function savePublicFile(file: YaoFile) {
+  const ext = file.name.split(".").pop();
+  // 使用时间戳，防止覆盖，但是同一个文件可能会上传多次
+  const timestamp = Date.now();
+
+  let folder = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+  const filename = `/${folder}/${timestamp}.${ext}`;
+  const uploadFolder = `/upload/public/${folder}`;
+
+  const fileNameFull = `/upload/public/${filename}`;
+  // 只返回目录下的相对路径
+
+  let fs = new FS("system");
+  if (!fs.Exists(uploadFolder)) {
+    fs.MkdirAll(uploadFolder);
+  }
+  fs.Move(file.tempFile, `${fileNameFull}`);
+
+  return filename;
+}
+
+// yao run scripts.system.file.getPublicFilePath
+function getPublicFilePath(name: string) {
+  const filePath = `/upload/public/${name}`;
+  return filePath;
+}
+
+/**
  * yao run scripts.system.file.Upload
+ * 这里的文件上传是保存在用户的id目录下
  * @param {*} file
  * @param {*} folder folder to upload
  * @returns
  */
-function Upload(file: YaoFile, folder: string) {
-  const filePath = saveFile(file, folder);
+function UploadUserFile(file: YaoFile, folder: string) {
+  const filePath = saveUserFile(file, folder);
   return {
-    value: `/api/v1/file/download?name=${filePath}`,
+    value: `/api/v1/file/user/file/download?name=${filePath}`,
   };
 }
 
@@ -28,7 +70,7 @@ function getUserFolder() {
   return filePath;
 }
 function deleteFile(name: string) {
-  const fname = getFilePath(name);
+  const fname = getUserFilePath(name);
 
   return Process("fs.system.Remove", fname);
 }
@@ -53,9 +95,8 @@ function getBasename(filename: string) {
   // If no separator found, return the filename as it is
   return queryEscape(filename);
 }
-// yao run scripts.system.file.getFileName
-function getFilePath(name: string) {
-  // console.log("filename:", name);
+// yao run scripts.system.file.getUserFilePath
+function getUserFilePath(name: string) {
   const filePath = `${getUserFolder()}/${name}`;
   return filePath;
 }
@@ -84,7 +125,7 @@ function Download_abandan(name: string) {
   };
 }
 
-function saveFile(file: YaoFile, folder: string) {
+function saveUserFile(file: YaoFile, folder: string) {
   // const ext = name.split(".").pop();
   // const timestamp = Date.now();
   // const currentDate = new Date().toISOString().slice(0, 10).replace(/-/g, "");
@@ -169,7 +210,7 @@ function getFileList(folder: string) {
         size: convertFileSize(bytes),
         name: fname,
         path: fpath,
-        url: `/api/v1/file/download?name=${fpath}`,
+        url: `/api/v1/file/user/file/download?name=${fpath}`,
         mime: mimeType,
         type: getFileTypeFromMimeType(mimeType),
       } as FileList);

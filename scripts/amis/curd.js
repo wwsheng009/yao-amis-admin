@@ -135,7 +135,7 @@ function returnData(
                   type: "dialog",
                   size: "lg",
                   body: {
-                    api: `post:/api/v1/table/data/${tableName}/bulkUpdate/$id`,
+                    api: `post:/api/v1/table/data/${tableName}/update/$id`,
                     body: updateForm,
                     name: "update",
                     silentPolling: false,

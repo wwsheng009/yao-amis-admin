@@ -4,17 +4,9 @@
     "description": "下载文件",
     "nodes": [
         {
-            "description": "文件名",
-            "name": "basename",
-            "process": "scripts.system.file.getBasename",
-            "args": [
-                "{{$in.0}}"
-            ]
-        },
-        {
             "description": "获取用户文件下载地址",
             "name": "filename",
-            "process": "scripts.system.file.getFilePath",
+            "process": "scripts.system.file.getUserFilePath",
             "args": [
                 "{{$in.0}}"
             ]
@@ -27,9 +19,5 @@
             ]
         }
     ],
-    "output": {
-        "content": "{{$res.下载文件.content}}",
-        "type": "{{$res.下载文件.type}}",
-        "filename": "{{$res.basename}}"
-    }
+    "output": "{{$res.下载文件}}"
 }

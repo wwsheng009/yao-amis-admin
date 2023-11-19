@@ -1,0 +1,32 @@
+{
+  "columns": [
+    {
+      "comment": "id",
+      "label": "id",
+      "name": "id",
+      "type": "id"
+    },
+    {
+      "comment": "名称",
+      "label": "名称",
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "comment": "描述",
+      "label": "描述",
+      "name": "description",
+      "type": "string"
+    },
+    {
+      "comment": "状态",
+      "label": "状态",
+      "name": "status",
+      "type": "boolean"
+    }
+  ],
+  "name": "博客分类",
+  "table": {
+    "name": "blog_category"
+  }
+}

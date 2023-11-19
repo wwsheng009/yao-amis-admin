@@ -1178,12 +1178,6 @@ function guessType(value) {
   if (!value) {
     return "string";
   }
-  if (Number.isInteger(value)) {
-    return "integer";
-  } else if (!isNaN(value)) {
-    return "float";
-  }
-
   const timestamp = Date.parse(value); // Parse the datetime string
 
   if (!isNaN(timestamp)) {
@@ -1202,7 +1196,11 @@ function guessType(value) {
   if (value === null) {
     return "string";
   } else if (typeof value === "number") {
-    return "number";
+    if (Number.isInteger(value)) {
+      return "integer";
+    } else if (!isNaN(value)) {
+      return "float";
+    }
   } else if (typeof value === "boolean") {
     return "boolean";
   } else if (typeof value === "string") {

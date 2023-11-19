@@ -1,0 +1,20 @@
+{
+  "columns": [
+    {
+      "comment": "id",
+      "label": "id",
+      "name": "id",
+      "type": "id"
+    },
+    {
+      "comment": "标签",
+      "label": "标签",
+      "name": "name",
+      "type": "string"
+    }
+  ],
+  "name": "标签",
+  "table": {
+    "name": "blog_tag"
+  }
+}

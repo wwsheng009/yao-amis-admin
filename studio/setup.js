@@ -5,7 +5,7 @@
  */
 function run() {
   //加载页面数据到数据库
-  Process("studio.editor.loadPageToDB");
+  // Process("studio.editor.loadPageToDB");
 
   //加载字段列表
   try {

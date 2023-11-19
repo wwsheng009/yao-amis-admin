@@ -673,10 +673,10 @@ function getHomeMenu() {
 function getSystemMenu() {
   return [
     {
-      url: "/system",
       children: [
         {
           label: "系统管理",
+          url: "/system",
           icon: "fas fa-toolbox",
           children: [
             {
@@ -705,25 +705,50 @@ function getSystemMenu() {
               label: "权限管理",
               icon: "fa fa-group",
               schemaApi: "/api/v1/amis/pages/admin.permission",
-              url: "/admin.permission",
+              url: "admin.permission",
             },
             {
               label: "角色管理",
               icon: "fa fa-group",
               schemaApi: "/api/v1/amis/pages/admin.role",
-              url: "/admin.role",
+              url: "admin.role",
             },
             {
               label: "用户管理",
               icon: "fa fa-user",
               schemaApi: "/api/v1/amis/pages/admin.user",
-              url: "/admin.user",
+              url: "admin.user",
             },
             {
               label: "文件管理",
               icon: "fa fa-file",
               schemaApi: "/api/v1/amis/pages/admin.file",
-              url: "/admin.file",
+              url: "admin.file",
+            },
+          ],
+        },
+        {
+          label: "博客管理",
+          url: "/blog",
+          icon: "fas fa-blog",
+          children: [
+            {
+              label: "文章管理",
+              icon: "fa fa-file",
+              schemaApi: "/api/v1/amis/pages/blog.article",
+              url: "blog.article",
+            },
+            {
+              label: "标签管理",
+              icon: "fas fa-tag",
+              schemaApi: "/api/v1/table/schema/blog.tag/crud-all",
+              url: "blog.tag",
+            },
+            {
+              label: "分类管理",
+              icon: "fa far fa-flag",
+              schemaApi: "/api/v1/table/schema/blog.category/crud-all",
+              url: "blog.category",
             },
           ],
         },

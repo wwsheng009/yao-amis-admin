@@ -2,15 +2,15 @@
   "name": "文档管理接口(Test)",
   "version": "1.0.3",
   "description": "文档管理接口",
-  "guard": "-",
+  "guard": "scripts.security.CheckAccessKey",
   "paths": [
     {
       // /api/v1/file/upload
-      "description": "文件上传",
-      "label": "文件上传",
+      "description": "公共文件上传",
+      "label": "公共文件上传",
       "path": "/upload",
       "method": "POST",
-      "process": "scripts.system.file.Upload",
+      "process": "scripts.system.file.UploadPublicFile",
       "in": [
         "$file.file",
         "$form.folder"
@@ -22,11 +22,12 @@
     },
     {
       // /api/v1/file/download
-      "label": "下载文件",
-      "description": "下载文件",
+      "label": "下载公共文件",
+      "description": "下载公共文件",
       "path": "/download",
       "method": "GET",
-      "process": "flows.system.download",
+      "guard": "-",
+      "process": "flows.system.download_public",
       "in": [
         "$query.name"
       ],
@@ -39,12 +40,46 @@
       }
     },
     {
-      // /api/v1/file/download
-      "label": "下载成附件",
-      "description": "下载成附件",
-      "path": "/download_file",
+      // /api/v1/file/user/file/upload
+      "description": "用户文件上传",
+      "label": "用户文件上传",
+      "path": "/user/upload",
+      "method": "POST",
+      "process": "scripts.system.file.UploadUserFile",
+      "in": [
+        "$file.file",
+        "$form.folder"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/file/user/file/download
+      "label": "下载文件",
+      "description": "下载，或是预览文件",
+      "path": "/user/file/download",
       "method": "GET",
-      "process": "flows.system.download_file",
+      "process": "flows.system.download_user",
+      "in": [
+        "$query.name"
+      ],
+      "out": {
+        "status": 200,
+        "body": "{{content}}",
+        "headers": {
+          "Content-Type": "{{type}}"
+        }
+      }
+    },
+    {
+      // /api/v1/file/user/download/attachement
+      "label": "通过api下载附件",
+      "description": "通过api下载附件，带有attachement的 header",
+      "path": "/user/download/attachement",
+      "method": "GET",
+      "process": "flows.system.download_attachment",
       "in": [
         "$query.name"
       ],
@@ -58,25 +93,10 @@
       }
     },
     {
-      // /api/v1/file/delete
-      "label": "删除文件",
-      "description": "下载文件",
-      "path": "/delete",
-      "method": "GET",
-      "process": "scripts.system.file.deleteFile",
-      "in": [
-        "$query.name"
-      ],
-      "out": {
-        "status": 200,
-        "type": "application/json"
-      }
-    },
-    {
-      // /api/v1/file/dir_tree
+      // /api/v1/file/user/folder/list
       "label": "文件目录树结构",
       "description": "文件目录树结构",
-      "path": "/dir_tree",
+      "path": "/user/folder/list",
       "method": "GET",
       "process": "scripts.system.file.getFolderList",
       "in": [
@@ -88,10 +108,25 @@
       }
     },
     {
-      // /api/v1/file/file_list
+      // /api/v1/file/user/file/delete
+      "label": "删除文件",
+      "description": "删除文件",
+      "path": "/user/delete",
+      "method": "GET",
+      "process": "scripts.system.file.deleteFile",
+      "in": [
+        "$query.name"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/file/user/file/list
       "label": "文件列表",
       "description": "文件列表",
-      "path": "/file_list",
+      "path": "/user/file/list",
       "method": "GET",
       "process": "scripts.system.file.getFileList",
       "in": [
@@ -103,10 +138,10 @@
       }
     },
     {
-      // /api/v1/file/file_list
+      // /api/v1/file/user/folder/create
       "label": "创建目录",
       "description": "创建目录",
-      "path": "/create_folder",
+      "path": "/user/folder/create",
       "method": "GET",
       "process": "scripts.system.file.createFolder",
       "in": [
@@ -119,10 +154,10 @@
       }
     },
     {
-      // /api/v1/file/file_list
+      // /api/v1/file/user/folder/delete
       "label": "删除目录",
       "description": "删除目录",
-      "path": "/delete_folder",
+      "path": "/user/folder/delete",
       "method": "GET",
       "process": "scripts.system.file.deleteFolder",
       "in": [
@@ -134,7 +169,7 @@
       }
     },
     {
-      // /api/v1/file/file_list
+      // /api/v1/file/user/folder/move
       "label": "移动目录",
       "description": "移动目录",
       "path": "/move_folder",

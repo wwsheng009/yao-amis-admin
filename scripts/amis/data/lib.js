@@ -98,7 +98,7 @@ function queryToQueryParam(model, querysIn) {
     const conditions = querys[key]; //查询都是一个数组
 
     for (const condition of conditions) {
-      if (condition == "") {
+      if (condition === "") {
         //前端无法清空搜索值
         continue;
       }
@@ -219,20 +219,35 @@ function updateInputData(model, Data) {
   //     }
   //   }
   // }
+  const hasUserId = columnMap["user_id"] !== null; // columns.some(col=>col.name = 'user_id')
+  const user_id = Process("session.get", "user_id");
 
   function updateLine(line) {
     for (const key of columns) {
       const modelCol = columnMap[key];
       const type = modelCol.type.toLowerCase();
+      const field = line[key];
       if (type === "integer") {
-        if (typeof line[key] === "string" && line[key] === "") {
+        if (typeof field === "string" && field === "") {
           // tree-select控件清空时的值是字符串
           line[key] = null;
         }
-      } else if (type === "json") {
+      } else if (
+        type === "json" &&
+        field != null &&
+        typeof field === "string" &&
+        field.length > 0 &&
+        !/^\s*\[/.test(field)
+      ) {
         try {
-          line[key] = JSON.parse(line[key]);
+          line[key] = JSON.parse(field);
         } catch (error) {}
+      }
+    }
+    // 存在用户ID定义,但是前台没有明显输入
+    if (hasUserId && line["user_id"] == null) {
+      if (user_id != null) {
+        line["user_id"] = user_id;
       }
     }
   }
