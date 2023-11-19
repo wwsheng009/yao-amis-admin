@@ -54,6 +54,22 @@ function GetColumnOptions2() {
       label: "枚举型[enum]",
       value: "enum",
     },
+    {
+      label: "图片[image]",
+      value: "image",
+    },
+    {
+      label: "图片集[images]",
+      value: "images",
+    },
+    {
+      label: "视频[video]",
+      value: "video",
+    },
+    {
+      label: "文件[file]",
+      value: "file",
+    },
   ];
 }
 

@@ -700,6 +700,25 @@ function column2AmisFormItem(column) {
       }
 
       break;
+    case "FILE":
+      newColumn.type = "input-file";
+      newColumn.receiver = "/api/v1/system/file/upload";
+      newColumn.useChunk = false; //暂时关闭，分块还不知怎么处理
+      break;
+    case "IMAGE":
+      newColumn.type = "input-image";
+      newColumn.receiver = "/api/v1/system/file/upload";
+      break;
+    case "IMAGES":
+      newColumn.type = "input-image";
+      newColumn.receiver = "/api/v1/system/file/upload";
+      newColumn.multiple = true;
+      break;
+    case "VIDEO":
+      newColumn.type = "input-file";
+      newColumn.receiver = "/api/v1/system/file/upload";
+      newColumn.useChunk = false; //暂时关闭，分块还不知怎么处理
+      break;
     default:
       break;
   }
@@ -845,6 +864,20 @@ function column2AmisTableViewColumn(column) {
     case "ENUM":
       newColumn.type = "text";
       break;
+    case "FILE":
+      newColumn.type = "static-link";
+      newColumn.href = "${" + `${column.name}` + "}";
+      newColumn.body = "${" + `${column.name}` + "}";
+      break;
+    case "IMAGE":
+      newColumn.type = "static-image";
+      break;
+    case "IMAGES":
+      newColumn.type = "static-images";
+      break;
+    case "VIDEO":
+      newColumn.type = "static-video";
+      break;
     default:
       break;
   }
@@ -988,6 +1021,20 @@ function column2AmisFormViewColumn(column) {
       //input-tag
       newColumn.type = "input-text";
       newColumn.static = true;
+      break;
+    case "FILE":
+      newColumn.type = "static-link";
+      newColumn.href = "${" + `${column.name}` + "}";
+      newColumn.body = "${" + `${column.name}` + "}";
+      break;
+    case "IMAGE":
+      newColumn.type = "static-image";
+      break;
+    case "IMAGES":
+      newColumn.type = "static-images";
+      break;
+    case "VIDEO":
+      newColumn.type = "static-video";
       break;
     default:
       break;

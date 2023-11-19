@@ -465,6 +465,11 @@ function migrateModel(modelId, forceIn) {
 
   return err;
 }
+
+function deepCopyObject(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
+
 /**
  * 把模型定义加载到模型缓存中。
  * Yao中的模型定义可以保存在文件中，也可以放在别的地方，最终是加载到Yao的应用缓存中
@@ -477,18 +482,33 @@ function loadModeltoMemory(modelDsl, migrate, force) {
   if (!Array.isArray(modelDsl.columns) && !modelDsl.columns?.length) {
     return;
   }
-  if (modelDsl.table?.name && modelDsl.ID && modelDsl.columns?.length) {
-    let fname = `${modelDsl.ID}.mod.json`;
+
+  let modelYao = deepCopyObject(modelDsl);
+  modelYao.columns.forEach((col) => {
+    switch (col.type) {
+      case "image":
+      case "video":
+      case "images":
+      case "file":
+        col.type = "longText";
+        col.length = undefined;
+        break;
+      default:
+        break;
+    }
+  });
+  if (modelYao.table?.name && modelYao.ID && modelYao.columns?.length) {
+    let fname = `${modelYao.ID}.mod.json`;
     fname = FileNameConvert(fname);
 
-    // console.log("modelDsl", modelDsl);
+    // console.log("modelYao", modelYao);
     let err = Process(
-      `models.${modelDsl.ID}.load`,
+      `models.${modelYao.ID}.load`,
       fname,
-      JSON.stringify(modelDsl)
+      JSON.stringify(modelYao)
     );
     if (!err && migrate) {
-      err = migrateModel(modelDsl.ID, force);
+      err = migrateModel(modelYao.ID, force);
     }
     return err;
   } else {
@@ -958,6 +978,7 @@ function removeModelColumnIds(model) {
   model.columns.forEach((col) => delete col.id);
   return model;
 }
+
 function ImportModelSource(payload) {
   let newCode = payload.source;
   newCode = newCode.replace(/\/\/.*[\r]\n/g, "");
@@ -1269,8 +1290,7 @@ function GuessAmisCols(columns) {
       return;
     }
     if (!node.type) {
-      console.log("undeinfed");
-      console.log(node);
+      console.log("GuessAmisCols type is undeinfed");
     }
     let column = {
       name: node.name,
