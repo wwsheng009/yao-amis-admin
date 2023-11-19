@@ -1,4 +1,4 @@
-//yao migrate -n system.auth.permission
+//yao migrate -n system.auth.permission --reset
 {
     "columns": [
         {
@@ -29,10 +29,10 @@
         },
         {
             "comment": "请求方式",
-            "default": "[]",
             "label": "请求方式",
             "name": "http_method",
-            "type": "json"
+            "type": "json",
+            "nullable": true
         },
         {
             "comment": "排序",
@@ -44,26 +44,29 @@
             "comment": "路由",
             "label": "路由",
             "name": "http_path",
-            "type": "json"
+            "type": "json",
+            "nullable": true
         },
         {
             "comment": "菜单",
             "label": "菜单",
             "name": "menus",
-            "type": "json"
+            "type": "json",
+            "nullable": true
         },
         {
             "comment": "模型",
             "label": "模型",
             "name": "models",
-            "type": "json"
+            "type": "json",
+            "nullable": true
         },
         {
             "comment": "模型操作",
-            "default": "[]",
             "label": "模型操作",
             "name": "model_method",
-            "type": "json"
+            "type": "json",
+            "nullable": true
         }
     ],
     "name": "权限",
