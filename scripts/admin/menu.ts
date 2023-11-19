@@ -132,10 +132,15 @@ function cleanUpRouteMenu(routes) {
 function getSoySuperUserMenu() {
   let routes = getSoyRoutesFromDB();
   if (routes.length === 0) {
-    saveSoyRoutesToDB();
-    // 导入本地开发的页面
-    saveLocalAmisPagesToDB();
-    routes = getSoyRoutesFromDB();
+    const routesSoy = Process("scripts.amis.site.MenuSoybean")["routes"];
+    const routesLocal = getAmisPagesAsRoute();
+    const localRoutes = [...routesSoy, ...routesLocal];
+
+    return cleanUpRouteMenu(localRoutes);
+    // saveSoyRoutesToDB();
+    // // 导入本地开发的页面
+    // saveLocalAmisPagesToDB();
+    // routes = getSoyRoutesFromDB();
   }
   // 转换成树结构
   routes = Process(`utils.arr.Tree`, routes, { parent: "parent", empty: 0 });

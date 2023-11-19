@@ -1,4 +1,4 @@
-//yao run script.system.db.cleanTable system.font
+//yao run scripts.system.db.cleanTable system.font
 function cleanTable(tableName) {
   const query = new Query("default");
   //use statement

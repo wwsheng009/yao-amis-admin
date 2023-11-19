@@ -43,7 +43,7 @@
       // /api/v1/file/user/file/upload
       "description": "用户文件上传",
       "label": "用户文件上传",
-      "path": "/user/upload",
+      "path": "/user/file/upload",
       "method": "POST",
       "process": "scripts.system.file.UploadUserFile",
       "in": [
@@ -111,7 +111,7 @@
       // /api/v1/file/user/file/delete
       "label": "删除文件",
       "description": "删除文件",
-      "path": "/user/delete",
+      "path": "/user/file/delete",
       "method": "GET",
       "process": "scripts.system.file.deleteFile",
       "in": [
@@ -172,7 +172,7 @@
       // /api/v1/file/user/folder/move
       "label": "移动目录",
       "description": "移动目录",
-      "path": "/move_folder",
+      "path": "/user/folder/move",
       "method": "GET",
       "process": "scripts.system.file.moveFolder",
       "in": [

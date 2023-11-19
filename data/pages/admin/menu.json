@@ -150,6 +150,7 @@
         "expand": "all"
       },
       "headerToolbar": [
+        "bulkActions",
         {
           "level": "primary",
           "type": "button",
@@ -348,9 +349,24 @@
             },
             "title": "新增"
           },
+          "align": "right",
           "label": "新增"
         },
-        "bulkActions"
+        {
+          "label": "清空并导入本地菜单",
+          "confirmText": "确定要重新导入本地菜单吗?",
+          "type": "button",
+          "level": "danger",
+          "actionType": "ajax",
+          "api": {
+            "data": {
+              "args": [],
+              "method": "resetAndImportMenu"
+            },
+            "method": "post",
+            "url": "/api/__yao/app/service/menu"
+          }
+        }
       ],
       "itemActions": [],
       "syncLocation": false,
