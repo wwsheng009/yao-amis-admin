@@ -2,7 +2,6 @@
   "name": "API元数据",
   "version": "1.0.0",
   "description": "元数据",
-  "group": "",
   "guard": "bearer-jwt",
   "paths": [
     {
@@ -11,8 +10,7 @@
       "description": "所有的API定义明细",
       "path": "/raw_list",
       "method": "GET",
-      "process": "widget.apis", //"",
-      "guard": "-",
+      "process": "widget.apis",
       "in": [
         ""
       ],
@@ -27,8 +25,7 @@
       "description": "所有的API定义明细",
       "path": "/tables",
       "method": "GET",
-      "process": "scripts.system.meta.tableApis", //"",
-      "guard": "-",
+      "process": "scripts.system.meta.tableApis",
       "in": [
         ""
       ],
@@ -43,8 +40,7 @@
       "description": "所有的API定义明细",
       "path": "/forms",
       "method": "GET",
-      "process": "scripts.system.meta.formApis", //"",
-      "guard": "-",
+      "process": "scripts.system.meta.formApis",
       "in": [
         ""
       ],
@@ -55,12 +51,11 @@
     },
     {
       //api/v1/system/meta/api/custom
-      "label": "自定义的APIAPI列表",
+      "label": "自定义的API列表",
       "description": "所有的自定义的API清单列表",
       "path": "/custom",
       "method": "GET",
-      "process": "scripts.system.meta.customApis", //"",
-      "guard": "-",
+      "process": "scripts.system.meta.customApis",
       "in": [
         ""
       ],
@@ -91,7 +86,6 @@
       "path": "/all",
       "method": "GET",
       "process": "scripts.system.meta.allApi",
-      "guard": "-",
       "in": [
         ""
       ],

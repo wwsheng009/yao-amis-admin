@@ -426,3 +426,22 @@ function cleanPath(path) {
   newPath = newPath.replace("/apis", "/api");
   return newPath;
 }
+
+// yao run scripts.system.meta.modelApiList
+function modelApiList(model) {
+  let allApi = Process("scripts.system.meta.allApi");
+  apilist = allApi.filter((api) => api.group == "/v1/system/model");
+  apilist.forEach((api) => {
+    api.fullpath = api.fullpath.replace(":model", model);
+    api.router = api.router.replace(":model", model);
+    api.path = api.path.replace(":model", model);
+  });
+  const tableApis = allApi.filter(
+    (api) => api.group == "/__yao/table" && api.url_params?.id === model
+  );
+  const formApis = allApi.filter(
+    (api) => api.group == "/__yao/form" && api.url_params?.id === model
+  );
+
+  return [...apilist, ...tableApis, ...formApis];
+}

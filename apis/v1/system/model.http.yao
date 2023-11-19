@@ -12,7 +12,6 @@
             "description": "预览表数据",
             "path": "/:model/preview",
             "method": "get",
-            "guard": "-",
             "process": "scripts.amis.data.model.PreViewtableData", //表数据预览，可以用于amis
             "in": [
                 "$param.model"
@@ -42,7 +41,7 @@
             }
         },
         {
-            //api/v1/system/model/admin.user/search?page=${page}&perPage=${perPage}&keywords=${keywords}
+            //api/v1/system/model/:model/search?page=${page}&perPage=${perPage}&keywords=${keywords}
             "label": "读取模型的表数据",
             "description": "读取模型的表数据",
             "path": "/:model/search",
@@ -60,6 +59,7 @@
             }
         },
         {
+            // /api/v1/system/model/:model/create
             "label": "创建表数据",
             "description": "创建表数据",
             "path": "/:model/create",
@@ -75,6 +75,7 @@
             }
         },
         {
+            // /api/v1/system/model/:model/batch_create
             "label": "批量创建表数据",
             "description": "批量创建表数据",
             "path": "/:model/batch_create",
@@ -90,6 +91,7 @@
             }
         },
         {
+            // /api/v1/system/model/:model/bulkUpdate/:ids
             "label": "批量更新表数据",
             "description": "批量更新表数据",
             "path": "/:model/bulkUpdate/:ids",
@@ -122,6 +124,7 @@
             }
         },
         {
+            // /api/v1/system/model/:model/update/:id
             "label": "更新表数据",
             "description": "更新表数据",
             "path": "/:model/update/:id",
@@ -138,6 +141,7 @@
             }
         },
         {
+            // /api/v1/system/model/:model/update/:id
             "label": "更新表数据-put",
             "description": "更新表数据-put",
             "path": "/:model/update/:id",

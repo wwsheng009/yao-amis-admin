@@ -10,7 +10,7 @@
         {
           "size": "md",
           "labelAlign": "right",
-          "name": "select",
+          "name": "model",
           "id": "u:fc6740e2cc60",
           "source": {
             "url": "/api/v1/system/meta/model/model_name_list",

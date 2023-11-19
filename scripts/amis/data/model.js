@@ -143,8 +143,13 @@ function selectOptions(model, querysIn, payload) {
   }
 
   let data = Process("yao.component.SelectOptions", query);
-  if (join) {
-    data.forEach((x) => (x.label = `${x.value}[${x.label}]`));
-  }
+  data.forEach((x) => {
+    let isNull = x.label == null;
+    x.label = x.label || x.value;
+    if (join && !isNull) {
+      x.label = `${x.value}[${x.label}]`;
+    }
+  });
+
   return data;
 }

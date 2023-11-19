@@ -1,3 +1,4 @@
+// site.js
 //pages Array<页面配置>具体的页面配置。
 //数据结构为数组，第一层为分组，一般只需要配置 label 集合，如果你不想分组，直接不配置，
 //真正的页面请在第二层开始配置，即第一层的 children 中
@@ -628,9 +629,9 @@ function Menu() {
   const editorPages = Process("scripts.admin.menu.getAmisEditorPages");
 
   let pages = Process("scripts.admin.menu.getAmisPagesFromDB");
-  // if (pages.length === 0) {
-  // let pages = Process("scripts.admin.menu.getAmisPages");
-  // }
+  if (pages.length === 0) {
+    pages = Process("scripts.admin.menu.getAmisPages");
+  }
 
   let siteMenu = {
     type: "app",
@@ -817,11 +818,6 @@ function getModelMenu() {
               url: "gpt",
             },
             {
-              label: "查看",
-              schemaApi: "/api/v1/amis/pages/model.create",
-              url: ":id",
-            },
-            {
               label: "修改",
               schemaApi: "/api/v1/amis/pages/model.create",
               url: "/amis/model/model.create/:id/",
@@ -861,6 +857,12 @@ function getModelMenu() {
               icon: "fas fa-list-ol",
               schemaApi: "/api/v1/amis/pages/api.list",
               url: "/api/list",
+            },
+            {
+              label: "模型Api测试",
+              icon: "fas fa-location-arrow ",
+              schemaApi: "/api/v1/amis/pages/api.model",
+              url: "/api/model",
             },
             {
               label: "API测试",

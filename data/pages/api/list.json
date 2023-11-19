@@ -121,6 +121,13 @@
           "type": "text"
         },
         {
+          "label": "组",
+          "name": "group",
+          "searchable": true,
+          "sortable": true,
+          "type": "text"
+        },
+        {
           "type": "text",
           "id": "u:3e6f96e7477b",
           "label": "名称",
