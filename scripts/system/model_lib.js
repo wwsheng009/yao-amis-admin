@@ -34,7 +34,6 @@ function MomoryModelList(attr) {
  */
 function FlatModelList(models, attr) {
   const list = [];
-  //   console.log(models);
 
   const getProperty = (object, path) => {
     const properties = path.split(".");

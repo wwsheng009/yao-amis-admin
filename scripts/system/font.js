@@ -5,9 +5,7 @@ function loadfont2() {
 
   const request = Process("http.get", source);
   const jsonData = Process("encoding.base64.Decode", request.data);
-  //   console.log(jsonData);
   const data = JSON.parse(jsonData);
-  //   console.log(data);
   let iconArray = [];
   for (const key in data) {
     if (Object.hasOwnProperty.call(data, key)) {

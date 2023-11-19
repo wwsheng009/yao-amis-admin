@@ -64,14 +64,14 @@ function CreateAfter(content) {
   // console.log("DataAfter:", content);
   const response = JSON.parse(content);
   const columns = response.columns || [];
-  console.log(columns);
+  // console.log(columns);
 
   if (columns.length > 0) {
     // Print data preview
     ssWrite(`\r\n| label | name | type | Searchable | Table | Form |\n`);
     ssWrite(`| ----- | ---- | ---- | ---------- | ----- | ---- |\n`);
     columns.forEach((item) => {
-      console.log(item);
+      // console.log(item);
       component = item.Component || {};
       table = component.table || {};
       form = component.form || {};
@@ -84,7 +84,7 @@ function CreateAfter(content) {
     return { data: response };
   }
 
-  console.log(content);
+  // console.log(content);
   throw new Exception("Error: data is empty.", 500);
 }
 
@@ -169,7 +169,7 @@ function Create(payload) {
   let id = payload.table.name;
   let ex = load(id);
   if (ex) {
-    console.log(ex, ex.message);
+    // console.log(ex, ex.message);
     throw new Exception(ex.message, 500);
   }
 

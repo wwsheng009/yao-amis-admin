@@ -227,7 +227,6 @@ function getAmisPagesAsRoute() {
   files = files.filter((x) => x.length > 5 && x.endsWith(".json"));
   files = files.map((f) => {
     f = f.replace(/\\/g, "/");
-    console.log(f);
     return f.substring(`/pages`.length);
   });
   const routes = convertFileListToSoyRoute(files);
