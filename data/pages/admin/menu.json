@@ -7,7 +7,7 @@
       "valueField": "icon",
       "labelField": "label",
       "label": "图标",
-      "source": "/api/v1/table/data/system.font/search",
+      "source": "/api/v1/system/model/system.font/search",
       "size": "lg",
       "pickerSchema": {
         "mode": "table",
@@ -75,7 +75,7 @@
       "valueField": "icon",
       "labelField": "label",
       "label": "Awsome图标",
-      "source": "/api/v1/table/data/system.font/search",
+      "source": "/api/v1/system/model/system.font/search",
       "size": "lg",
       "pickerSchema": {
         "mode": "cards",
@@ -141,7 +141,7 @@
           "type": "button",
           "id": "u:0ca1d58aedef",
           "actionType": "ajax",
-          "api": "delete:/api/v1/system/menu/delete/$ids",
+          "api": "delete:/api/v1/admin/menu/delete/$ids",
           "confirmText": "确定要删除？",
           "label": "批量删除"
         }
@@ -201,7 +201,7 @@
                   ]
                 },
                 {
-                  "source": "/api/v1/system/menu/find",
+                  "source": "/api/v1/admin/menu/find",
                   "type": "tree-select",
                   "valueField": "id",
                   "label": "上级菜单",
@@ -340,7 +340,7 @@
               "mode": "horizontal",
               "api": {
                 "method": "post",
-                "url": "/api/v1/system/menu/create",
+                "url": "/api/v1/admin/menu/create",
                 "data": {
                   "&": "$$",
                   "schema": "${schema.source}"
@@ -372,7 +372,7 @@
       "syncLocation": false,
       "api": {
         "method": "get",
-        "url": "/api/v1/system/menu/find"
+        "url": "/api/v1/admin/menu/find"
       },
       "columns": [
         {
@@ -439,7 +439,7 @@
               "dialog": {
                 "size": "lg",
                 "body": {
-                  "api": "/api/v1/system/menu/edit/${id}",
+                  "api": "/api/v1/admin/menu/edit/${id}",
                   "body": [
                     {
                       "type": "group",
@@ -483,7 +483,7 @@
                       ]
                     },
                     {
-                      "source": "/api/v1/system/menu/find",
+                      "source": "/api/v1/admin/menu/find",
                       "type": "tree-select",
                       "valueField": "id",
                       "label": "上级菜单",
@@ -633,7 +633,7 @@
               "actionType": "ajax",
               "api": {
                 "method": "delete",
-                "url": "/api/v1/system/menu/delete/${id}"
+                "url": "/api/v1/admin/menu/delete/${id}"
               },
               "class_name": "text-danger",
               "confirmText": "确定要删除？",

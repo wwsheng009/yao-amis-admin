@@ -13,7 +13,7 @@
 function UploadPublicFile(file: YaoFile) {
   const filePath = savePublicFile(file);
   return {
-    value: `/api/v1/file/download?name=${filePath}`,
+    value: `/api/v1/system/file/download?name=${filePath}`,
   };
 }
 
@@ -54,7 +54,7 @@ function getPublicFilePath(name: string) {
 function UploadUserFile(file: YaoFile, folder: string) {
   const filePath = saveUserFile(file, folder);
   return {
-    value: `/api/v1/file/user/file/download?name=${filePath}`,
+    value: `/api/v1/system/file/user/file/download?name=${filePath}`,
   };
 }
 
@@ -210,7 +210,7 @@ function getFileList(folder: string) {
         size: convertFileSize(bytes),
         name: fname,
         path: fpath,
-        url: `/api/v1/file/user/file/download?name=${fpath}`,
+        url: `/api/v1/system/file/user/file/download?name=${fpath}`,
         mime: mimeType,
         type: getFileTypeFromMimeType(mimeType),
       } as FileList);

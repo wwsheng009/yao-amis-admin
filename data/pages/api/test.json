@@ -14,7 +14,7 @@
           "label": "接口",
           "type": "input-text",
           "id": "u:4b0d0a154204",
-          "value": "/api/v1/system/account/get"
+          "value": "/api/v1/admin/account/get"
         },
         {
           "name": "method",

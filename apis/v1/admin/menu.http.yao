@@ -6,7 +6,7 @@
   "guard": "bearer-jwt",
   "paths": [
     {
-      // /api/v1/system/menu/find
+      // /api/v1/admin/menu/find
       "label": "菜单信息",
       "description": "获取系统配置菜单信息",
       "path": "/find",
@@ -22,7 +22,7 @@
       }
     },
     {
-      // /api/v1/system/menu/create
+      // /api/v1/admin/menu/create
       "label": "创建菜单节点",
       "description": "创建一个菜单节点",
       "path": "/create",
@@ -38,7 +38,7 @@
       }
     },
     {
-      // /api/v1/system/menu/edit/:id
+      // /api/v1/admin/menu/edit/:id
       "label": "更新菜单节点",
       "description": "更新一个菜单节点",
       "path": "/edit/:id",
@@ -55,7 +55,7 @@
       }
     },
     {
-      // /api/v1/system/menu/delete/:id
+      // /api/v1/admin/menu/delete/:id
       "label": "删除一个菜单节点",
       "description": "删除一个菜单节点",
       "path": "/delete/:id",

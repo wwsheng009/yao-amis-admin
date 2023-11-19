@@ -1,0 +1,24 @@
+{
+  "name": "元数据",
+  "version": "1.0.0",
+  "description": "元数据",
+  "group": "",
+  "guard": "bearer-jwt",
+  "paths": [
+    {
+      // /api/v1/system/meta/icon/reload
+      "label": "加载图标列表",
+      "description": "加载图标列表",
+      "path": "/reload",
+      "method": "GET",
+      "process": "scripts.system.font.loadfont",
+      "in": [
+        ""
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    }
+  ]
+}

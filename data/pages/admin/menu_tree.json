@@ -12,19 +12,19 @@
           "valueField": "id",
           "source": {
             "requestAdaptor": "",
-            "url": "/api/v1/system/menu/find",
+            "url": "/api/v1/admin/menu/find",
             "adaptor": "",
             "dataType": "json",
             "messages": {},
             "method": "get"
           },
           "type": "input-tree",
-          "addApi": "/api/v1/system/menu/create",
+          "addApi": "/api/v1/admin/menu/create",
           "enableNodePath": false,
           "label": "菜单编辑",
           "onEvent": {},
-          "deleteApi": "/api/v1/system/menu/delete/${id}",
-          "editApi": "/api/v1/system/menu/edit/${id}",
+          "deleteApi": "/api/v1/admin/menu/delete/${id}",
+          "editApi": "/api/v1/admin/menu/edit/${id}",
           "addControls": [
             {
               "required": true,

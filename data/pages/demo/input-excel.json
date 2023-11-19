@@ -1,7 +1,7 @@
 {
   "body": [
     {
-      "api": "/api/v1/excel/save",
+      "api": "/api/v1/demo/excel/save",
       "body": [
         {
           "label": "上传 Excel",
@@ -18,7 +18,7 @@
     {
       "type": "chart",
       "id": "u:a2e55fec1fd8",
-      "api": "/api/v1/excel/chart",
+      "api": "/api/v1/demo/excel/chart",
       "name": "my_chart"
     }
   ],

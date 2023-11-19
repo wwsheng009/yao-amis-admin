@@ -6,10 +6,13 @@
   "guard": "scripts.security.CheckAccessKey",
   "paths": [
     {
+      // /api/v1/demo/excel
       "path": "/save",
       "method": "post",
       "process": "scripts.amis.excel.importData",
-      "in": [":payload"],
+      "in": [
+        ":payload"
+      ],
       "out": {
         "status": 200,
         "type": "application/json"

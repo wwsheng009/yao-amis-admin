@@ -1,18 +1,32 @@
 {
-  "name": "部门信息",
+  "name": "账户信息",
   "version": "1.0.0",
-  "description": "部门信息",
+  "description": "账户信息",
   "group": "",
   "guard": "bearer-jwt",
   "paths": [
     {
-      // /api/v1/system/dept/find
-      "path": "/find",
+      // /api/v1/admin/account/get
+      "path": "/get",
       "method": "GET",
       "guard": "bearer-jwt",
-      "process": "scripts.system.dept.GetDeptNodes",
+      "process": "scripts.system.account.UserInfo",
+      "in": [],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "label": "更新用户的信息",
+      "description": "更新用户的信息",
+      "path": "/update",
+      "method": "POST",
+      "guard": "bearer-jwt",
+      "process": "scripts.amis.data.model.saveData",
       "in": [
-        ":query"
+        "admin.user",
+        ":payload"
       ],
       "out": {
         "status": 200,
@@ -20,10 +34,10 @@
       }
     },
     {
-      "path": "/add",
+      "path": "/change_password",
       "method": "POST",
       "guard": "bearer-jwt",
-      "process": "scripts.system.dept.CreateDeptNode",
+      "process": "scripts.system.account.change_password",
       "in": [
         ":payload"
       ],
@@ -33,26 +47,14 @@
       }
     },
     {
-      "path": "/edit/:id",
+      "label": "用户注册",
+      "description": "用户注册",
+      "path": "/register",
       "method": "POST",
-      "guard": "bearer-jwt",
-      "process": "scripts.system.dept.UpdateDeptNode",
+      "guard": "-",
+      "process": "scripts.system.account.register",
       "in": [
-        "$param.id",
         ":payload"
-      ],
-      "out": {
-        "status": 200,
-        "type": "application/json"
-      }
-    },
-    {
-      "path": "/delete/:id",
-      "method": "DELETE",
-      "guard": "bearer-jwt",
-      "process": "scripts.system.dept.DeleteDeptNode",
-      "in": [
-        "$param.id"
       ],
       "out": {
         "status": 200,

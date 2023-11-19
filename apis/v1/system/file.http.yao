@@ -5,7 +5,7 @@
   "guard": "scripts.security.CheckAccessKey",
   "paths": [
     {
-      // /api/v1/file/upload
+      // /api/v1/system/file/upload
       "description": "公共文件上传",
       "label": "公共文件上传",
       "path": "/upload",
@@ -21,7 +21,7 @@
       }
     },
     {
-      // /api/v1/file/download
+      // /api/v1/system/file/download
       "label": "下载公共文件",
       "description": "下载公共文件",
       "path": "/download",
@@ -40,7 +40,7 @@
       }
     },
     {
-      // /api/v1/file/user/file/upload
+      // /api/v1/system/file/user/file/upload
       "description": "用户文件上传",
       "label": "用户文件上传",
       "path": "/user/file/upload",
@@ -56,7 +56,7 @@
       }
     },
     {
-      // /api/v1/file/user/file/download
+      // /api/v1/system/file/user/file/download
       "label": "下载文件",
       "description": "下载，或是预览文件",
       "path": "/user/file/download",
@@ -74,7 +74,7 @@
       }
     },
     {
-      // /api/v1/file/user/download/attachement
+      // /api/v1/system/file/user/download/attachement
       "label": "通过api下载附件",
       "description": "通过api下载附件，带有attachement的 header",
       "path": "/user/download/attachement",
@@ -93,7 +93,7 @@
       }
     },
     {
-      // /api/v1/file/user/folder/list
+      // /api/v1/system/file/user/folder/list
       "label": "文件目录树结构",
       "description": "文件目录树结构",
       "path": "/user/folder/list",
@@ -108,7 +108,7 @@
       }
     },
     {
-      // /api/v1/file/user/file/delete
+      // /api/v1/system/file/user/file/delete
       "label": "删除文件",
       "description": "删除文件",
       "path": "/user/file/delete",
@@ -123,7 +123,7 @@
       }
     },
     {
-      // /api/v1/file/user/file/list
+      // /api/v1/system/file/user/file/list
       "label": "文件列表",
       "description": "文件列表",
       "path": "/user/file/list",
@@ -138,7 +138,7 @@
       }
     },
     {
-      // /api/v1/file/user/folder/create
+      // /api/v1/system/file/user/folder/create
       "label": "创建目录",
       "description": "创建目录",
       "path": "/user/folder/create",
@@ -154,7 +154,7 @@
       }
     },
     {
-      // /api/v1/file/user/folder/delete
+      // /api/v1/system/file/user/folder/delete
       "label": "删除目录",
       "description": "删除目录",
       "path": "/user/folder/delete",
@@ -169,7 +169,7 @@
       }
     },
     {
-      // /api/v1/file/user/folder/move
+      // /api/v1/system/file/user/folder/move
       "label": "移动目录",
       "description": "移动目录",
       "path": "/user/folder/move",

@@ -6,13 +6,13 @@
           "&": "$$"
         },
         "method": "post",
-        "url": "/api/v1/table/data/admin.user/search?page=${page}&perPage=${perPage}&orderBy=${orderBy}&orderDir=${orderDir}&__select=id,type,email,phone,role,status,created_at,updated_at"
+        "url": "/api/v1/system/model/admin.user/search?page=${page}&perPage=${perPage}&orderBy=${orderBy}&orderDir=${orderDir}&__select=id,type,email,phone,role,status,created_at,updated_at"
       },
       "autoFillHeight": true,
       "bulkActions": [
         {
           "actionType": "ajax",
-          "api": "delete:/api/v1/table/data/admin.user/delete/${ids|raw}",
+          "api": "delete:/api/v1/system/model/admin.user/delete/${ids|raw}",
           "confirmText": "你确定要批量删除选中行吗?",
           "label": "批量删除",
           "type": "button"
@@ -164,7 +164,7 @@
               "actionType": "dialog",
               "dialog": {
                 "body": {
-                  "api": "post:/api/v1/table/data/admin.user/bulkUpdate/$id",
+                  "api": "post:/api/v1/system/model/admin.user/bulkUpdate/$id",
                   "body": [
                     {
                       "isID": true,
@@ -230,7 +230,7 @@
                       "label": "角色",
                       "multiple": true,
                       "cascade": true,
-                      "source": "/api/v1/table/data/system.auth.role/select_options?__label=desc",
+                      "source": "/api/v1/system/model/system.auth.role/select_options?__label=desc",
                       "joinValues": false,
                       "extractValue": true
                     },
@@ -287,7 +287,7 @@
             },
             {
               "actionType": "ajax",
-              "api": "delete:/api/v1/table/data/admin.user/delete/$id",
+              "api": "delete:/api/v1/system/model/admin.user/delete/$id",
               "confirmText": "你确定要删除行${id}?",
               "icon": "fa fa-times text-danger",
               "tooltip": "删除",
@@ -449,7 +449,7 @@
           "align": "right",
           "dialog": {
             "body": {
-              "api": "post:/api/v1/table/data/admin.user/create",
+              "api": "post:/api/v1/system/model/admin.user/create",
               "body": [
                 {
                   "label": "类型",
@@ -509,7 +509,7 @@
                   "label": "角色",
                   "multiple": true,
                   "cascade": true,
-                  "source": "/api/v1/table/data/system.auth.role/select_options?__label=desc",
+                  "source": "/api/v1/system/model/system.auth.role/select_options?__label=desc",
                   "joinValues": false,
                   "extractValue": true
                 },
@@ -585,7 +585,7 @@
                   }
                 },
                 "method": "post",
-                "url": "/api/v1/table/data/admin.user/batch_create"
+                "url": "/api/v1/system/model/admin.user/batch_create"
               },
               "body": [
                 {

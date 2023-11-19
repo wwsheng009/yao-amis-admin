@@ -53,7 +53,7 @@
   "body": [
     {
       "schemaApi": {
-        "url": "/api/v1/table/schema/${table}/crud-all",
+        "url": "/api/v1/system/schema/${table}/crud-all",
         "method": "get"
       },
       "initFetchSchema": false,

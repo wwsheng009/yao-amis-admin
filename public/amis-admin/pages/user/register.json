@@ -186,7 +186,7 @@
                 "messages": {},
                 "method": "post",
                 "requestAdaptor": "",
-                "url": "/api/v1/system/account/register",
+                "url": "/api/v1/admin/account/register",
                 "data": {
                   "captcha": {
                     "code": "${code}",

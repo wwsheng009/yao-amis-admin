@@ -155,7 +155,7 @@ function updateFormColCommon(amisColumn, column, modelDsl) {
         ) {
           // found
           amisColumn.type = "select";
-          amisColumn.source = `/api/v1/table/data/${rel.model}/select_options`;
+          amisColumn.source = `/api/v1/system/model/${rel.model}/select_options`;
         }
       }
     }

@@ -134,7 +134,7 @@
       "itemActions": [],
       "api": {
         "method": "get",
-        "url": "/api/v1/table/data/system.font/search"
+        "url": "/api/v1/system/model/system.font/search"
       },
       "bulkActions": [],
       "headerToolbar": [
@@ -156,7 +156,7 @@
                 {
                   "options": {},
                   "api": {
-                    "url": "/api/v1/system/meta/reload_fonts",
+                    "url": "/api/v1/system/meta/icon/reload",
                     "method": "get"
                   },
                   "ignoreError": false,

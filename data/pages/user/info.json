@@ -1,10 +1,10 @@
 {
   "body": [
     {
-      "api": "post:/api/v1/system/account/update",
+      "api": "post:/api/v1/admin/account/update",
       "initApi": {
         "method": "get",
-        "url": "/api/v1/system/account/get"
+        "url": "/api/v1/admin/account/get"
       },
       "title": "表单",
       "visible": true,

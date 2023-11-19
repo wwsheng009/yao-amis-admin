@@ -741,13 +741,13 @@ function getSystemMenu() {
             {
               label: "标签管理",
               icon: "fas fa-tag",
-              schemaApi: "/api/v1/table/schema/blog.tag/crud-all",
+              schemaApi: "/api/v1/system/schema/blog.tag/crud-all",
               url: "blog.tag",
             },
             {
               label: "分类管理",
               icon: "fa far fa-flag",
-              schemaApi: "/api/v1/table/schema/blog.category/crud-all",
+              schemaApi: "/api/v1/system/schema/blog.category/crud-all",
               url: "blog.category",
             },
           ],

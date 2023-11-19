@@ -8,7 +8,7 @@
           "label": "批量删除",
           "actionType": "ajax",
           "confirmText": "确定要删除？",
-          "api": "delete:/api/v1/system/dept/delete/$ids",
+          "api": "delete:/api/v1/admin/dept/delete/$ids",
           "type": "button"
         }
       ],
@@ -27,7 +27,7 @@
               "type": "form",
               "api": {
                 "method": "post",
-                "url": "/api/v1/system/dept/add"
+                "url": "/api/v1/admin/dept/add"
               },
               "data": {
                 "status": true
@@ -44,7 +44,7 @@
                   "name": "parent",
                   "label": "上级部门",
                   "valueField": "id",
-                  "source": "/api/v1/system/dept/find"
+                  "source": "/api/v1/admin/dept/find"
                 },
                 {
                   "type": "switch",
@@ -79,7 +79,7 @@
           "name": "parent",
           "label": "上级部门",
           "valueField": "id",
-          "source": "/api/v1/system/dept/find",
+          "source": "/api/v1/admin/dept/find",
           "static": true
         },
         {
@@ -93,7 +93,7 @@
               "actionType": "dialog",
               "dialog": {
                 "body": {
-                  "api": "/api/v1/system/dept/edit/${id}",
+                  "api": "/api/v1/admin/dept/edit/${id}",
                   "body": [
                     {
                       "label": "部门",
@@ -106,7 +106,7 @@
                       "name": "parent",
                       "label": "上级部门",
                       "valueField": "id",
-                      "source": "/api/v1/system/dept/find"
+                      "source": "/api/v1/admin/dept/find"
                     },
                     {
                       "name": "status",
@@ -128,7 +128,7 @@
               "actionType": "ajax",
               "api": {
                 "method": "delete",
-                "url": "/api/v1/system/dept/delete/${id}"
+                "url": "/api/v1/admin/dept/delete/${id}"
               },
               "class_name": "text-danger",
               "confirmText": "确定要删除？",
@@ -158,7 +158,7 @@
                       "name": "parent",
                       "label": "上级部门",
                       "valueField": "id",
-                      "source": "/api/v1/system/dept/find",
+                      "source": "/api/v1/admin/dept/find",
                       "static": true
                     },
                     {
@@ -182,7 +182,7 @@
       ],
       "api": {
         "method": "get",
-        "url": "/api/v1/system/dept/find"
+        "url": "/api/v1/admin/dept/find"
       }
     }
   ],

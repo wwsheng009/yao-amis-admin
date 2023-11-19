@@ -1,7 +1,7 @@
 {
-  "name": "excel data",
+  "name": "model schema",
   "version": "1.0.0",
-  "description": "excel data",
+  "description": "model schema",
   "group": "",
   "guard": "bearer-jwt",
   "paths": [
@@ -16,13 +16,13 @@
       }
     },
     {
-      // api/v1/table/schema/:table/crud-all
+      // /api/v1/system/schema/:model/crud-all
       //动态直接生成的curd维护页面
-      "path": "/:table/crud-all",
+      "path": "/:model/crud-all",
       "method": "get",
       "process": "scripts.amis.curd.curdTemplate",
       "in": [
-        "$param.table"
+        "$param.model"
       ],
       "out": {
         "status": 200,
@@ -30,11 +30,11 @@
       }
     },
     {
-      "path": "/:table/crud-list",
+      "path": "/:model/crud-list",
       "method": "get",
       "process": "scripts.amis.schema.curdList",
       "in": [
-        "$param.table"
+        "$param.model"
       ],
       "out": {
         "status": 200,
@@ -42,11 +42,11 @@
       }
     },
     {
-      "path": "/:table/crud-new",
+      "path": "/:model/crud-new",
       "method": "get",
       "process": "scripts.amis.schema.curdNew",
       "in": [
-        "$param.table"
+        "$param.model"
       ],
       "out": {
         "status": 200,
@@ -54,11 +54,11 @@
       }
     },
     {
-      "path": "/:table/crud-view",
+      "path": "/:model/crud-view",
       "method": "get",
       "process": "scripts.amis.schema.curdView",
       "in": [
-        "$param.table"
+        "$param.model"
       ],
       "out": {
         "status": 200,
@@ -66,11 +66,11 @@
       }
     },
     {
-      "path": "/:table/crud-edit",
+      "path": "/:model/crud-edit",
       "method": "get",
       "process": "scripts.amis.schema.curdEdit",
       "in": [
-        "$param.table"
+        "$param.model"
       ],
       "out": {
         "status": 200,

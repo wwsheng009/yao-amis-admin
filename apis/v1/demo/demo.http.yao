@@ -6,6 +6,7 @@
   "guard": "scripts.security.CheckAccessKey",
   "paths": [
     {
+      // /api/v1/demo/demo
       "path": "/table/:table",
       "method": "get",
       "guard": "-",

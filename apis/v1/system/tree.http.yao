@@ -23,8 +23,8 @@
     },
     {
       // /api/v1/system/tree/:tree/create
-      "label": "创建菜单节点",
-      "description": "创建一个菜单节点",
+      "label": "创建树节点",
+      "description": "创建一个树节点",
       "path": "/:tree/create",
       "method": "POST",
       "guard": "bearer-jwt",
@@ -40,8 +40,8 @@
     },
     {
       // /api/v1/system/tree/:tree/edit/:id
-      "label": "更新菜单节点",
-      "description": "更新一个菜单节点",
+      "label": "更新树节点",
+      "description": "更新一个树节点",
       "path": "/:tree/edit/:id",
       "method": "POST",
       "guard": "bearer-jwt",
@@ -58,8 +58,8 @@
     },
     {
       // /api/v1/system/tree/:tree/delete/:id
-      "label": "删除一个菜单节点",
-      "description": "删除一个菜单节点",
+      "label": "删除一个树节点",
+      "description": "删除一个树节点",
       "path": "/:tree/delete/:id",
       "method": "DELETE",
       "guard": "bearer-jwt",
@@ -75,8 +75,8 @@
     },
     {
       // /api/v1/system/tree/:tree/delete/:id
-      "label": "删除一个菜单节点",
-      "description": "删除一个菜单节点",
+      "label": "删除一个树节点",
+      "description": "删除一个树节点",
       "path": "/:tree/delete/:id",
       "method": "post",
       "guard": "bearer-jwt",

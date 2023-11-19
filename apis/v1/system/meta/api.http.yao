@@ -1,29 +1,15 @@
 {
-  "name": "元数据",
+  "name": "API元数据",
   "version": "1.0.0",
   "description": "元数据",
   "group": "",
   "guard": "bearer-jwt",
   "paths": [
     {
-      "label": "字段列表",
-      "description": "所有的字段列表",
-      "path": "/model_field_list",
-      "method": "GET",
-      "process": "widget.fields", //"",
-      "in": [
-        ""
-      ],
-      "out": {
-        "status": 200,
-        "type": "application/json"
-      }
-    },
-    {
-      //api/v1/system/meta/raw_list
+      //api/v1/system/meta/api/raw_list
       "label": "API列表",
       "description": "所有的API定义明细",
-      "path": "/api/raw_list",
+      "path": "/raw_list",
       "method": "GET",
       "process": "widget.apis", //"",
       "guard": "-",
@@ -37,9 +23,9 @@
     },
     {
       //api/v1/system/meta/api/tables
-      "label": "API列表",
+      "label": "Table API列表",
       "description": "所有的API定义明细",
-      "path": "/api/tables",
+      "path": "/tables",
       "method": "GET",
       "process": "scripts.system.meta.tableApis", //"",
       "guard": "-",
@@ -53,9 +39,9 @@
     },
     {
       //api/v1/system/meta/api/forms
-      "label": "API列表",
+      "label": "Forms API列表",
       "description": "所有的API定义明细",
-      "path": "/api/forms",
+      "path": "/forms",
       "method": "GET",
       "process": "scripts.system.meta.formApis", //"",
       "guard": "-",
@@ -71,7 +57,7 @@
       //api/v1/system/meta/api/custom
       "label": "自定义的APIAPI列表",
       "description": "所有的自定义的API清单列表",
-      "path": "/api/custom",
+      "path": "/custom",
       "method": "GET",
       "process": "scripts.system.meta.customApis", //"",
       "guard": "-",
@@ -87,7 +73,7 @@
       // /api/v1/system/meta/api/save_apis
       "label": "api列表",
       "description": "保存api列表到数据库",
-      "path": "/api/save_apis",
+      "path": "/save_apis",
       "method": "GET",
       "process": "scripts.system.meta.saveApis",
       "in": [
@@ -102,9 +88,9 @@
       //api/v1/system/meta/api/all
       "label": "API列表",
       "description": "所有的API定义明细",
-      "path": "/api/all",
+      "path": "/all",
       "method": "GET",
-      "process": "scripts.system.meta.allApi", //"",
+      "process": "scripts.system.meta.allApi",
       "guard": "-",
       "in": [
         ""
@@ -118,7 +104,7 @@
       //api/v1/system/meta/api/all_with_page
       "label": "API清单-分页",
       "description": "API清单-分页",
-      "path": "/api/all_with_page",
+      "path": "/all_with_page",
       "method": "get",
       "process": "scripts.system.meta.ApiListPaginate",
       "in": [
@@ -136,7 +122,7 @@
       //api/v1/system/meta/api/all_with_page
       "label": "API清单-分页",
       "description": "API清单-分页",
-      "path": "/api/all_with_page",
+      "path": "/all_with_page",
       "method": "post",
       "process": "scripts.system.meta.ApiListPaginate",
       "in": [
@@ -144,21 +130,6 @@
         "$query.perPage",
         ":query",
         ":payload"
-      ],
-      "out": {
-        "status": 200,
-        "type": "application/json"
-      }
-    },
-    {
-      // /api/v1/system/meta/reload_fonts
-      "label": "加载图标列表",
-      "description": "加载图标列表",
-      "path": "/reload_fonts",
-      "method": "GET",
-      "process": "scripts.system.font.loadfont",
-      "in": [
-        ""
       ],
       "out": {
         "status": 200,

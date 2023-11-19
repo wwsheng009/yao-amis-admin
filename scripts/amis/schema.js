@@ -155,7 +155,7 @@ function curdList(table, columns) {
         api: {
           method: "get",
           url:
-            "/api/v1/table/data/" +
+            "/api/v1/system/model/" +
             table +
             "/search?page=${page}&perPage=${perPage}&keywords=${keywords}",
         },
@@ -190,7 +190,7 @@ function curdList(table, columns) {
               name: "sample-bulk-edit",
               body: {
                 type: "form",
-                api: "post:/api/v1/table/data/" + table + "/bulkUpdate/$ids",
+                api: "post:/api/v1/system/model/" + table + "/bulkUpdate/$ids",
                 controls: [
                   {
                     type: "text",
@@ -206,7 +206,7 @@ function curdList(table, columns) {
             type: "button",
             level: "danger",
             actionType: "ajax",
-            api: "delete:/api/v1/table/data/" + table + "/delete/$ids",
+            api: "delete:/api/v1/system/model/" + table + "/delete/$ids",
             confirmText: "确定要批量删除?",
           },
         ],
@@ -243,7 +243,7 @@ function curdList(table, columns) {
                     // level: "danger",
                     actionType: "ajax",
                     confirmText: "您确认要删除?",
-                    api: "post:/api/v1/table/data/" + table + "/delete/$id",
+                    api: "post:/api/v1/system/model/" + table + "/delete/$id",
                   },
                 ],
               },
@@ -290,7 +290,7 @@ function curdNew(table, columns) {
         redirect: `/crud/${table}/list`,
         mode: "horizontal",
         name: "sample-edit-form",
-        api: "/api/v1/table/data/" + table + "/create",
+        api: "/api/v1/system/model/" + table + "/create",
         controls: [...fields],
       },
     ],
@@ -320,7 +320,7 @@ function curdView(table) {
       {
         type: "form",
         mode: "horizontal",
-        initApi: "/api/v1/table/data/" + table + "/find/${params.id}",
+        initApi: "/api/v1/system/model/" + table + "/find/${params.id}",
         controls: [...fields],
       },
     ],
@@ -347,8 +347,8 @@ function curdEdit(table, columns) {
       {
         type: "form",
         mode: "horizontal",
-        initApi: "/api/v1/table/data/" + table + "/find/${params.id}",
-        api: "/api/v1/table/data/" + table + "/update/$id",
+        initApi: "/api/v1/system/model/" + table + "/find/${params.id}",
+        api: "/api/v1/system/model/" + table + "/update/$id",
         redirect: `/crud/${table}/list`,
         controls: [...fields],
       },
