@@ -825,8 +825,8 @@ function getModelApi(modelId) {
  */
 function getModelColumnsApi(modelId) {
   const model = ConvertModelToApiObject(getModelById(modelId));
-  if (model?.columns) {
-    model?.columns.forEach((x, idx) => {
+  if (Array.isArray(model?.columns) && model.columns.length) {
+    model?.columns?.forEach((x, idx) => {
       x.checked = true;
       x.index = idx;
     });
@@ -1205,29 +1205,16 @@ function ImportFromTable(payload) {
   return { message: "导入表结构成功" };
 }
 
-function guessType(value) {
+function guessJsonType(value) {
   if (!value) {
     return "string";
   }
-  const timestamp = Date.parse(value); // Parse the datetime string
-
-  if (!isNaN(timestamp)) {
-    const date = new Date(timestamp); // Create a new date object from the timestamp
-    if (
-      date.getHours() === 0 &&
-      date.getMinutes() === 0 &&
-      date.getSeconds() === 0
-    ) {
-      return "date";
-    } else {
-      return "datetime";
-    }
-  }
+  const isNumber = /^-?\d*\.?\d+$/.test(value);
 
   if (value === null) {
     return "string";
-  } else if (typeof value === "number") {
-    if (Number.isInteger(value)) {
+  } else if (isNumber) {
+    if (/^-?\d+$/.test(value)) {
       return "integer";
     } else if (!isNaN(value)) {
       return "float";
@@ -1235,6 +1222,20 @@ function guessType(value) {
   } else if (typeof value === "boolean") {
     return "boolean";
   } else if (typeof value === "string") {
+    const timestamp = Date.parse(value); // Parse the datetime string
+
+    if (!isNaN(timestamp)) {
+      const date = new Date(timestamp); // Create a new date object from the timestamp
+      if (
+        date.getHours() === 0 &&
+        date.getMinutes() === 0 &&
+        date.getSeconds() === 0
+      ) {
+        return "date";
+      } else {
+        return "datetime";
+      }
+    }
     return "string";
   } else if (Array.isArray(value)) {
     return "json";
@@ -1364,7 +1365,7 @@ function CheckAndGuessJson(payload) {
   for (const [name, value] of Object.entries(json)) {
     let column = {
       name,
-      type: guessType(value),
+      type: guessJsonType(value),
       label: name,
     };
     if (name.toLowerCase() == "id" && typeof value === "number") {

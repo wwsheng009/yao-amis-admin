@@ -1,5 +1,7 @@
 # yao-amis-admin
 
+[文档教程](https://wwsheng009.github.io/yao-docs/Admin-App/%E6%95%99%E7%A8%8B/1%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D.html)
+
 ## 演示地址：
 
 [demo](http://fun.wwsheng.cloud:5099/)

@@ -429,22 +429,51 @@ function AddMetaFields(model) {
   return model;
 }
 
-//转换表字段清单成amis的form schema
-function getFormFields(tableName, columnsIn, excludeFields) {
+/**
+ * 转换表字段清单成amis的form schema
+ * @param {string} tableName modelId
+ * @param {Array} columnsIn array of column
+ * @param {string} actionType 'create' 'view' 'update' 'filter'
+ * @param {Array} excludeFields
+ * @returns
+ */
+function getFormFields(tableName, columnsIn, actionType, excludeFields) {
   let model = getModelDefinition(tableName, columnsIn);
   const columns = model.columns;
 
+  const formType = actionType ? actionType.toLowerCase() : "view";
   let schemas = [];
+  let output = true;
   for (const column of columns) {
     let col = column2AmisFormItem(column);
     // if (col.isID) {
-    //   continue;
+    //   col.isID = undefined;
     // }
+    switch (formType) {
+      case "view":
+        if (col.isID) {
+          col.static = true;
+        }
+        break;
+      case "update":
+        if (col.isID) {
+          col.static = true;
+        }
+        break;
+      case "create":
+        if (col.isID) {
+          output = false;
+        }
+        break;
+      default:
+        break;
+    }
 
     col = updateFormColFromModel(col, column);
     col = updateFormColCommon(col, column, model);
-
-    schemas.push(col);
+    if (output) {
+      schemas.push(col);
+    }
   }
   if (Array.isArray(excludeFields)) {
     excludeFields.forEach((exclude) => {
@@ -666,6 +695,7 @@ function column2AmisFormItem(column) {
       // 自增长的类型不应该手工输入
       newColumn.type = "input-number"; //"input-number";
       newColumn.isID = true;
+      // newColumn.static = true;在过滤中也会用到，不能设置static
       // 自增不需要手动输入
       delete newColumn.required;
       break;

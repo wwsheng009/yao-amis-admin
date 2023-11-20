@@ -129,7 +129,7 @@ function getTableAmisViewFields(modelName, columns) {
 function getTableAmisFormFields(modelName, columns) {
   return {
     source: Process(
-      "scripts.amis.schema.generateFormFields",
+      "scripts.amis.schema.generateEditFormFields",
       modelName,
       columns
     ),

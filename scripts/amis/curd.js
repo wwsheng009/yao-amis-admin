@@ -15,7 +15,7 @@ function curdTemplate(modelId, columns) {
   let filterForm = getFilterFormFields(modelId, columns);
 
   let curdColumns = [...getModelFieldsWithQuick(modelId, columns)];
-  let newForm = getFormFields(modelId, columns, ["id"]);
+  let newForm = getFormFields(modelId, columns, "create", ["id"]);
   //批量导入数据
   let batchNewForm = [
     {
@@ -34,7 +34,7 @@ function curdTemplate(modelId, columns) {
     },
   ];
 
-  const updateForm = getFormFields(modelId, columns);
+  const updateForm = getFormFields(modelId, columns, "update");
   const viewForm = getFormViewFields(modelId, columns);
 
   return returnData(

@@ -5,9 +5,9 @@ const {
   getModelFieldsWithQuick,
 } = Require("amis.lib");
 
-// yao run scripts.amis.schema.generateFormFields admin.user
-function generateFormFields(tableName, columns) {
-  const fields = getFormFields(tableName, columns);
+// yao run scripts.amis.schema.generateEditFormFields admin.user
+function generateEditFormFields(tableName, columns) {
+  const fields = getFormFields(tableName, columns, "update");
   const schema = {
     type: "form",
     name: "yao-form",
@@ -92,7 +92,7 @@ function generateViewFields(tableName, columns) {
 
 function generateViewFieldsWithQuick(tableName, columns) {
   const fields = getModelFieldsWithQuick(tableName, columns);
-  const fieldsForm = getFormFields(tableName, columns);
+  const fieldsForm = getFormFields(tableName, columns, "create");
   const schema = {
     type: "page",
 
@@ -270,7 +270,7 @@ function curdList(table, columns) {
 
 //yao run scripts.amis.schema.curdNew
 function curdNew(table, columns) {
-  const fields = getFormFields(table, columns);
+  const fields = getFormFields(table, columns, "create");
   const schema = {
     type: "page",
     title: "新增",
@@ -330,7 +330,7 @@ function curdView(table) {
 }
 //编辑页面
 function curdEdit(table, columns) {
-  const fields = getFormFields(table, columns);
+  const fields = getFormFields(table, columns, "edit");
   const schema = {
     type: "page",
     title: "修改 ${id}",
