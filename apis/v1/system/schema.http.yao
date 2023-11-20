@@ -32,7 +32,7 @@
     {
       "path": "/:model/crud-list",
       "method": "get",
-      "process": "scripts.amis.schema.curdList",
+      "process": "scripts.amis.schema.curdListPage",
       "in": [
         "$param.model"
       ],
@@ -44,7 +44,7 @@
     {
       "path": "/:model/crud-new",
       "method": "get",
-      "process": "scripts.amis.schema.curdNew",
+      "process": "scripts.amis.schema.curdNewPage",
       "in": [
         "$param.model"
       ],
@@ -56,7 +56,7 @@
     {
       "path": "/:model/crud-view",
       "method": "get",
-      "process": "scripts.amis.schema.curdView",
+      "process": "scripts.amis.schema.curdViewPage",
       "in": [
         "$param.model"
       ],
@@ -68,9 +68,36 @@
     {
       "path": "/:model/crud-edit",
       "method": "get",
-      "process": "scripts.amis.schema.curdEdit",
+      "process": "scripts.amis.schema.curdEditPage",
       "in": [
         "$param.model"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/system/schema/:model/form-edit
+      "path": "/:model/form-edit",
+      "method": "get",
+      "process": "scripts.amis.schema.getFormViewBodySchema",
+      "in": [
+        "$param.model"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/system/schema/:model/table-view
+      "path": "/:model/table-view",
+      "method": "get",
+      "process": "scripts.amis.schema.getTableViewBodySchema",
+      "in": [
+        "$param.model",
+        "$query.table_name"
       ],
       "out": {
         "status": 200,

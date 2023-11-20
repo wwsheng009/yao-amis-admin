@@ -13,8 +13,10 @@ const { FindCachedModelById, MomoryModelList, ModelIDList } =
 
 //查找模型
 //yao run scripts.system.model.page
-function page(page, pagesize, querys, payload) {
-  let queryParam = queryToQueryParam("ddic.model", querys, payload);
+function page(page, pagesize, querysIn, queryParams, payload) {
+  let querys = mergeQueryObject(querysIn, payload);
+  const modelDsl = FindCachedModelById("ddic.model");
+  let queryParam = queryToQueryParam(modelDsl, querys, queryParams, payload);
   queryParam = queryParam || {};
   queryParam["select"] = [
     "id",

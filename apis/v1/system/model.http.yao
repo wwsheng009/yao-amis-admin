@@ -33,6 +33,7 @@
                 "$query.page",
                 "$query.perPage",
                 ":query",
+                ":query-param",
                 ":payload"
             ],
             "out": {
@@ -51,7 +52,8 @@
                 "$param.model",
                 "$query.page",
                 "$query.perPage",
-                ":query"
+                ":query",
+                ":query-param"
             ],
             "out": {
                 "status": 200,

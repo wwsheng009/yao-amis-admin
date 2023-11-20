@@ -4,7 +4,7 @@ const { queryToQueryParam, updateInputData, getArrayItem, mergeQueryObject } =
 
 //查找数据
 //yao run scripts.amis.data.table.Search
-function Search(table, pageIn, perPageIn, querysIn, payload) {
+function Search(table, pageIn, perPageIn, querysIn, queryParams, payload) {
   let querys = mergeQueryObject(querysIn, payload);
 
   let page = pageIn;
@@ -15,7 +15,7 @@ function Search(table, pageIn, perPageIn, querysIn, payload) {
   if (!perPage || perPage == null) {
     perPage = getArrayItem(querys, "perPage") || 10;
   }
-  const queryParam = queryToQueryParam(table, querys);
+  const queryParam = queryToQueryParam(table, querys, queryParams);
 
   let data = Process("yao.table.Search", table, queryParam, page, perPage);
   return {

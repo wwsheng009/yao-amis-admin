@@ -1,3 +1,4 @@
+const { FindCachedModelById } = Require("system.model_lib");
 // 推荐在循环对象属性的时候，使用for...in,
 // 在遍历数组的时候的时候使用for...of。
 // for...in循环出的是key，for...of循环出的是value
@@ -36,35 +37,38 @@ function mergeQueryObject(querysIn, payload) {
 
 /**
  * 转换URL查询对象成YAO的QueryParam对象
- * @param {string} model 模型名称
+ * @param {object} model 模型定义
  * @param {object} querys URL查询对象
- * @param {object} payload POST查询对象
+ * @param {object} queryParams yao解析的queryParams
  * @returns 返回Yao QueryParam
  */
-function queryToQueryParam(model, querysIn) {
-  if (!querysIn) {
+function queryToQueryParam(modelIn, querysIn, queryParams) {
+  let model = modelIn;
+  if (querysIn == null && queryParams == null) {
     return {};
   }
   let querys = querysIn;
   //查询条件
-  let queryParam = {};
+  let queryParam = queryParams || {};
   let orders = [];
   let wheres = [];
   //根据url参数信息，构造yao的查询条件
   let whereCount = 1;
 
-  const columnMap = Process("scripts.system.model.getModelColumnMap", model);
+  let columnMap = {};
+  if (typeof model === "string") {
+    model = FindCachedModelById(model);
+  }
+  model.columns?.forEach((col) => {
+    columnMap[col.name] = col;
+  });
 
   let select = [];
-  if (querys.hasOwnProperty("__select")) {
-    // select =
-    //   typeof querys["__select"] === "string"
-    //     ? [querys["__select"]]
-    //     : querys["__select"];
-    const joinedString = querys["__select"].join(",");
+  if (querys.hasOwnProperty("select")) {
+    const joinedString = querys["select"].join(",");
     const selectArray = joinedString.split(",");
     select = [...new Set(selectArray)];
-    delete querys["__select"];
+    delete querys["select"];
     select = select.filter((col) => columnMap.hasOwnProperty(col));
   }
 
@@ -186,6 +190,21 @@ function queryToQueryParam(model, querysIn) {
   return queryParam;
 }
 
+function getModelColumnMap(model) {
+  let modelDsl = model;
+  if (typeof model === "string") {
+    modelDsl = FindCachedModelById(model);
+  }
+
+  let columnMap = {};
+  modelDsl.columns?.forEach((col) => {
+    columnMap[col.name] = col;
+  });
+  if (Object.keys(columnMap).length == 0) {
+    throw new Exception("模型定义不正确，缺少字段定义", 500);
+  }
+  return columnMap;
+}
 /**
  * amis form控件会自动的把json数据作stringfly处理，需要在保存时反向操作
  * 拦截处理json格式的数据
@@ -197,18 +216,14 @@ function updateInputData(model, Data) {
   if (typeof Data !== "object" || Data === null || Data === undefined) {
     return Data;
   }
-  const columnMap = Process("scripts.system.model.getModelColumnMap", model);
+  const columnMap = getModelColumnMap(model);
 
-  if (!columnMap) {
-    throw new Exception("模型定义不存在：" + model, 500);
-  }
+  // let testData = Data;
 
-  let testData = Data;
-
-  if (Array.isArray(Data) && Data.length) {
-    testData = Data[0];
-  }
-  const columns = Object.keys(testData);
+  // if (Array.isArray(Data) && Data.length) {
+  //   testData = Data[0];
+  // }
+  // const columns = Object.keys(testData);
   // let jsonKeys = [];
   // for (const key of columns) {
   //   const modelCol = columnMap[key];
@@ -223,10 +238,13 @@ function updateInputData(model, Data) {
   const user_id = Process("session.get", "user_id");
 
   function updateLine(line) {
-    for (const key of columns) {
+    for (const key in columnMap) {
       const modelCol = columnMap[key];
       const type = modelCol.type.toLowerCase();
       const field = line[key];
+      if (!field) {
+        continue;
+      }
       if (type === "integer") {
         if (typeof field === "string" && field === "") {
           // tree-select控件清空时的值是字符串
@@ -244,6 +262,7 @@ function updateInputData(model, Data) {
         } catch (error) {}
       }
     }
+
     // 存在用户ID定义,但是前台没有明显输入
     if (hasUserId && line["user_id"] == null) {
       if (user_id != null) {

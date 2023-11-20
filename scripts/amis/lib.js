@@ -348,19 +348,6 @@ function getTableDefinition(tableName) {
   }
 }
 
-function getFormViewFields(tableName, columnsIn) {
-  // 模型定义
-  const model = getModelDefinition(tableName, columnsIn);
-  const columns = model.columns;
-  let schemas = [];
-  columns.forEach((column) => {
-    let col = column2AmisFormViewColumn(column);
-    col = updateFormColCommon(col, column, model);
-    delete col.displayOnly;
-    schemas.push(col);
-  });
-  return schemas;
-}
 /**
  * 读取一个表的所有字段列表
  * 注意：这个功能并不一定适用于官方版本的yao,在字段的处理器是有经过增强处理的
@@ -429,22 +416,117 @@ function AddMetaFields(model) {
   return model;
 }
 
+function getWithsUrl(modelId) {
+  const model = getModelDefinition(modelId);
+  if (model.relations) {
+    return `with=${Object.keys(model.relations).join(",")}`;
+  }
+}
+
+// yao run scripts.amis.lib.getFormViewFields
+function getFormViewFields(modelId, columnsIn) {
+  // 模型定义
+  const model = getModelDefinition(modelId, columnsIn);
+  const columns = model.columns;
+  let schemas = [];
+  columns.forEach((column) => {
+    let col = column2AmisFormViewColumn(column);
+    col = updateFormColCommon(col, column, model);
+    delete col.displayOnly;
+    schemas.push(col);
+  });
+  updateViewFormRelations(schemas, model, "view");
+  return schemas;
+}
+function updateViewFormRelations(schemas, model, actionType) {
+  const hasOnes = {};
+  const hasManys = {};
+  if (model.relations) {
+    for (const key in model.relations) {
+      if (Object.hasOwnProperty.call(model.relations, key)) {
+        const element = model.relations[key];
+        if (element.type === "hasOne") {
+          hasOnes[key] = element;
+        } else if (element.type === "hasMany") {
+          hasManys[key] = element;
+        }
+      }
+    }
+  }
+  for (const key in hasOnes) {
+    const element = hasOnes[key];
+    let fields = [];
+    if (actionType === "view") {
+      fields = getFormViewFields(element.model);
+    } else {
+      fields = getFormFields(element.model, actionType);
+    }
+    fields = fields.filter((col) => col.name !== element.key);
+    schemas.push({
+      type: "input-sub-form",
+      name: key,
+      label: key,
+      btnLabel: "明细",
+      form: {
+        // body: {
+        //   type: "service",
+        //   schemaApi: `get:/api/v1/system/schema/${element.model}/form-edit`,
+        // },
+        body: fields,
+      },
+    });
+  }
+  if (Object.keys(hasManys).length > 1) {
+    const tabs = {
+      label: "关联表",
+      type: "static-tabs",
+      swipeable: true,
+      tabs: [],
+    };
+    for (const key in hasManys) {
+      const element = hasManys[key];
+
+      let fields = getTableFields(element.model);
+      fields = fields.filter((col) => col.name !== element.key);
+      const tab = {
+        title: key,
+        body: {
+          columns: fields,
+          source: "${" + key + "}",
+          type: "table",
+        },
+      };
+      // const tab = {
+      //   title: key,
+      //   body: {
+      //     type: "service",
+      //     name: key,
+      //     schemaApi: `get:/api/v1/system/schema/${element.model}/table-view?table_name=${key}`,
+      //   },
+      // };
+      tabs.tabs.push(tab);
+    }
+    schemas.push(tabs);
+  }
+  return schemas;
+}
 /**
  * 转换表字段清单成amis的form schema
- * @param {string} tableName modelId
- * @param {Array} columnsIn array of column
+ * @param {string} modelId modelId
  * @param {string} actionType 'create' 'view' 'update' 'filter'
+ * @param {Array} columnsIn array of column
  * @param {Array} excludeFields
  * @returns
  */
-function getFormFields(tableName, columnsIn, actionType, excludeFields) {
-  let model = getModelDefinition(tableName, columnsIn);
+function getFormFields(modelId, actionType, columnsIn, excludeFields) {
+  let model = getModelDefinition(modelId, columnsIn);
   const columns = model.columns;
 
   const formType = actionType ? actionType.toLowerCase() : "view";
   let schemas = [];
-  let output = true;
+
   for (const column of columns) {
+    let output = true;
     let col = column2AmisFormItem(column);
     // if (col.isID) {
     //   col.isID = undefined;
@@ -480,6 +562,8 @@ function getFormFields(tableName, columnsIn, actionType, excludeFields) {
       schemas = schemas.filter((col) => col.name !== exclude);
     });
   }
+  updateViewFormRelations(schemas, model, actionType);
+
   return schemas;
 }
 
@@ -1217,4 +1301,5 @@ module.exports = {
   getModelFieldsWithQuick,
   getFilterFormFields,
   getFormFields,
+  getWithsUrl,
 };

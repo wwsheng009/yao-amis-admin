@@ -22,8 +22,8 @@ function GetNodes(model, querys) {
     fields.push(valueField);
   }
 
-  if (Array.isArray(querys?.__select) && querys.__select[0].length) {
-    selectFields = querys.__select[0];
+  if (Array.isArray(querys?.select) && querys.select[0].length) {
+    selectFields = querys.select[0];
     fields.push(...selectFields.split(","));
   }
 

@@ -6,7 +6,7 @@
           "&": "$$"
         },
         "method": "post",
-        "url": "/api/v1/system/model/admin.user/search?page=${page}&perPage=${perPage}&orderBy=${orderBy}&orderDir=${orderDir}&__select=id,type,email,phone,role,status,created_at,updated_at"
+        "url": "/api/v1/system/model/admin.user/search?page=${page}&perPage=${perPage}&orderBy=${orderBy}&orderDir=${orderDir}&select=id,type,email,phone,role,status,created_at,updated_at"
       },
       "autoFillHeight": true,
       "bulkActions": [

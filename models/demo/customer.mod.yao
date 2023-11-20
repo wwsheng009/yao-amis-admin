@@ -1,0 +1,26 @@
+{
+    "columns": [
+        {
+            "comment": "ID",
+            "label": "ID",
+            "name": "id",
+            "type": "id"
+        },
+        {
+            "comment": "名称",
+            "label": "名称",
+            "name": "name",
+            "type": "string"
+        },
+        {
+            "comment": "用户ID",
+            "label": "用户ID",
+            "name": "user_id",
+            "type": "integer"
+        }
+    ],
+    "name": "demo.customer",
+    "table": {
+        "name": "demo_customer"
+    }
+}

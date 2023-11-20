@@ -77,13 +77,13 @@ function getTable(table) {
 }
 function CRUDNewTemplate(modelName, columns) {
   return {
-    source: Process("scripts.amis.schema.curdNew", modelName, columns),
+    source: Process("scripts.amis.schema.curdNewPage", modelName, columns),
   };
 }
 
 function CRUDListTemplate(modelName, columns) {
   return {
-    source: Process("scripts.amis.schema.curdList", modelName, columns),
+    source: Process("scripts.amis.schema.curdListPage", modelName, columns),
   };
 }
 
@@ -144,7 +144,7 @@ function getTableAmisFormFields(modelName, columns) {
 function getTableAmisFormViewFields(modelName, columns) {
   return {
     source: Process(
-      "scripts.amis.schema.generateFormViewFields",
+      "scripts.amis.schema.formViewFieldsSchema",
       modelName,
       columns
     ),

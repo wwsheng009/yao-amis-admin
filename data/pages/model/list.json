@@ -159,7 +159,7 @@
       "id": "u:4862440567d8",
       "actionType": "link",
       "label": "新增",
-      "link": "/model/new",
+      "link": "/model/model.create",
       "primary": true,
       "type": "button"
     },

@@ -4,10 +4,11 @@ const {
   getFormViewFields,
   getModelFieldsWithQuick,
 } = Require("amis.lib");
+const { getFilterFormFields, excelMapping } = Require("amis.lib");
 
 // yao run scripts.amis.schema.generateEditFormFields admin.user
 function generateEditFormFields(tableName, columns) {
-  const fields = getFormFields(tableName, columns, "update");
+  const fields = getFormFields(tableName, "update", columns);
   const schema = {
     type: "form",
     name: "yao-form",
@@ -37,9 +38,25 @@ function generateEditFormFields(tableName, columns) {
   };
   return schema;
 }
+function getTableViewBodySchema(modelId, tableName) {
+  const fields = getTableFields(modelId);
 
-function generateFormViewFields(tableName, columns) {
-  const fields = getFormViewFields(tableName, columns);
+  return {
+    columns: fields,
+    source: "${" + tableName + "}",
+    type: "table",
+  };
+}
+
+function getFormViewBodySchema(modelId, columns) {
+  const fields = getFormViewFields(modelId, columns);
+
+  return fields;
+}
+
+// yao run scripts.amis.schema.formViewFieldsSchema
+function formViewFieldsSchema(modelId, columns) {
+  const fields = getFormViewFields(modelId, columns);
   const schema = {
     type: "form",
     name: "yao-form",
@@ -51,7 +68,7 @@ function generateFormViewFields(tableName, columns) {
     actions: [
       {
         type: "button",
-        label: "提交",
+        label: "确定",
         onEvent: {
           click: {
             actions: [
@@ -92,7 +109,7 @@ function generateViewFields(tableName, columns) {
 
 function generateViewFieldsWithQuick(tableName, columns) {
   const fields = getModelFieldsWithQuick(tableName, columns);
-  const fieldsForm = getFormFields(tableName, columns, "create");
+  const fieldsForm = getFormFields(tableName, "create", columns);
   const schema = {
     type: "page",
 
@@ -130,8 +147,8 @@ function generateViewFieldsWithQuick(tableName, columns) {
 //动态的生成数据库表的amis crud的处理页面
 //
 
-//yao run scripts.amis.schema.curdList
-function curdList(table, columns) {
+//yao run scripts.amis.schema.curdListPage
+function curdListPage(table, columns) {
   const fields = getTableFields(table, columns);
   const schema = {
     type: "page",
@@ -268,9 +285,9 @@ function curdList(table, columns) {
   // return Process("scripts.return.Success", schema, "数据已成功导入");
 }
 
-//yao run scripts.amis.schema.curdNew
-function curdNew(table, columns) {
-  const fields = getFormFields(table, columns, "create");
+//yao run scripts.amis.schema.curdNewPage
+function curdNewPage(table, columns) {
+  const fields = getFormFields(table, "create", columns);
   const schema = {
     type: "page",
     title: "新增",
@@ -299,7 +316,7 @@ function curdNew(table, columns) {
   // return Process("scripts.return.Success", schema, "数据已成功导入");
 }
 //查看页面
-function curdView(table) {
+function curdViewPage(table) {
   const fields = getFormViewFields(table);
   // fields.map((field) => (field.static = true));
   // fields.map((field) => (field.disabled = true));
@@ -329,8 +346,8 @@ function curdView(table) {
   // return Process("scripts.return.Success", schema, "数据已成功导入");
 }
 //编辑页面
-function curdEdit(table, columns) {
-  const fields = getFormFields(table, columns, "edit");
+function curdEditPage(table, columns) {
+  const fields = getFormFields(table, "update", columns);
   const schema = {
     type: "page",
     title: "修改 ${id}",

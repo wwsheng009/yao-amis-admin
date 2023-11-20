@@ -4,6 +4,7 @@ const {
   getFormViewFields,
   getModelFieldsWithQuick,
   excelMapping,
+  getWithsUrl,
 } = Require("amis.lib");
 
 //直接生成一个数据库表对应的amis crud单一页面的配置源码
@@ -15,7 +16,7 @@ function curdTemplate(modelId, columns) {
   let filterForm = getFilterFormFields(modelId, columns);
 
   let curdColumns = [...getModelFieldsWithQuick(modelId, columns)];
-  let newForm = getFormFields(modelId, columns, "create", ["id"]);
+  let newForm = getFormFields(modelId, "create", columns, ["id"]);
   //批量导入数据
   let batchNewForm = [
     {
@@ -34,30 +35,9 @@ function curdTemplate(modelId, columns) {
     },
   ];
 
-  const updateForm = getFormFields(modelId, columns, "update");
-  const viewForm = getFormViewFields(modelId, columns);
-
-  return returnData(
-    modelId,
-    filterForm,
-    curdColumns,
-    newForm,
-    batchNewForm,
-    updateForm,
-    viewForm,
-    columns
-  );
-}
-function returnData(
-  modelId,
-  filterForm,
-  curdColumns,
-  newForm,
-  batchNewForm,
-  updateForm,
-  viewForm,
-  columns
-) {
+  const updateFormSchema = getFormFields(modelId, "update", columns);
+  const viewFormSchema = getFormViewFields(modelId, columns);
+  const withUrl = getWithsUrl(modelId);
   const template = {
     body: [
       {
@@ -95,9 +75,7 @@ function returnData(
         primaryField: "id",
         api: {
           method: "post",
-          url:
-            `/api/v1/system/model/${modelId}` +
-            "/search?page=${page}&perPage=${perPage}&orderBy=${orderBy}&orderDir=${orderDir}",
+          url: `/api/v1/system/model/${modelId}` + `/search?${withUrl}`,
           data: {
             "&": "$$",
           },
@@ -120,7 +98,7 @@ function returnData(
                   size: "lg",
                   body: {
                     type: "form",
-                    body: viewForm,
+                    body: viewFormSchema,
                   },
                 },
               },
@@ -135,7 +113,7 @@ function returnData(
                   size: "lg",
                   body: {
                     api: `post:/api/v1/system/model/${modelId}/update/$id`,
-                    body: updateForm,
+                    body: updateFormSchema,
                     name: "update",
                     silentPolling: false,
                     trimValues: true,
@@ -254,6 +232,5 @@ function returnData(
     ],
     type: "page",
   };
-
   return template;
 }

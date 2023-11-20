@@ -1,11 +1,22 @@
 //使用models*类型的处理，这类处理器是直接对表数据的操作，相对tables*处理器，性能会更好
 const { DotName } = Require("amis.lib_tool");
-
+const { FindCachedModelById } = Require("system.model_lib");
 const { queryToQueryParam, updateInputData, getArrayItem, mergeQueryObject } =
   Require("amis.data.lib");
-//查找数据
-//yao run scripts.amis.data.model.Search
-function Search(model, pageIn, perPageIn, querysIn, payload) {
+
+/**
+ * 查找数据
+ * yao run scripts.amis.data.model.Search
+ * Model Data Search
+ * @param {string} model model id
+ * @param {number} pageIn page
+ * @param {number} perPageIn numbers per page
+ * @param {object} querysIn querys
+ * @param {object} queryParams queryparams
+ * @param {object} payload request payload
+ * @returns
+ */
+function Search(model, pageIn, perPageIn, querysIn, queryParams, payload) {
   let querys = mergeQueryObject(querysIn, payload);
 
   let page = pageIn;
@@ -17,10 +28,63 @@ function Search(model, pageIn, perPageIn, querysIn, payload) {
     perPage = getArrayItem(querys, "perPage") || 10;
   }
 
+  const modelDsl = FindCachedModelById(model);
+
   // 当是post请求是，payload生效
-  const queryParam = queryToQueryParam(model, querys);
+  const queryParam = queryToQueryParam(modelDsl, querys, queryParams);
   // console.log("queryParam>>>", queryParam, page, perPage);
+
+  let withs2 = {};
+  if (!modelDsl.relations || Object.keys(modelDsl.relations) == 0) {
+    // reset the withs
+    queryParam.withs = undefined;
+  } else {
+    const withs = queryParam.withs || {};
+    for (const key in withs) {
+      if (Object.hasOwnProperty.call(modelDsl.relations, key)) {
+        const w = modelDsl.relations[key];
+        // if (w != null && w.type === "hasMany") {
+        withs2[key] = w;
+        // }
+      }
+    }
+    // hasOne关系，如果数据不存在，yao会返回null对象,直接在脚本中处理
+    // 同时存在两个hasmany会有异常,使用下面的处理方法
+    // if (Object.keys(withs2).length > 1) {
+    //   Object.keys(withs2).forEach((w) => (queryParam.withs[w] = undefined));
+    // }
+    queryParam.withs = undefined;
+  }
+
   let data = Process(`models.${model}.Paginate`, queryParam, page, perPage);
+  if (Array.isArray(data.data) && data.data.length) {
+    if (Object.keys(withs2).length > 0) {
+      data.data.forEach((line) => {
+        for (const key in withs2) {
+          const element = withs2[key];
+          let query = {};
+          if (element.query) {
+            query = { ...element.query };
+          }
+          query.wheres = query.wheres || [];
+          query.wheres.push({
+            column: element.key,
+            value: line[element.foreign],
+          });
+          if (element.type === "hasMany") {
+            line[key] = Process(`models.${element.model}.Get`, query);
+          } else if (element.type === "hasOne") {
+            const [ele] = Process(`models.${element.model}.Get`, query);
+
+            if (ele != null) {
+              line[key] = ele;
+            }
+          }
+        }
+      });
+    }
+  }
+
   return {
     items: data.data,
     total: data.total,
@@ -42,11 +106,37 @@ function getData(model, id) {
 
 //保存记录
 //yao run scripts.amis.data.model.saveData
-function saveData(model, payload) {
-  payload = updateInputData(model, payload);
+function saveData(modelId, payload) {
+  const modelDsl = FindCachedModelById(modelId);
 
-  const id = Process(`models.${model}.Save`, payload);
+  payload = updateInputData(modelDsl, payload);
+
+  const hasOnes = {};
+  const hasManys = {};
+  if (modelDsl.relations) {
+    for (const key in modelDsl.relations) {
+      if (Object.hasOwnProperty.call(payload, key) && payload[key] != null) {
+        const element = modelDsl.relations[key];
+        if (element.type === "hasOne") {
+          hasOnes[key] = element;
+        } else if (element.type === "hasMany") {
+          hasManys[key] = element;
+        }
+      }
+    }
+  }
+
+  const id = Process(`models.${modelId}.Save`, payload);
   if (id) {
+    payload.id = id;
+    for (const key in hasOnes) {
+      const element = hasOnes[key];
+      // 设置外键
+      payload[key][element.key] = payload[element.foreign];
+      console.log("payload[key]:", payload[key]);
+      Process(`models.${element.model}.Save`, payload[key]);
+    }
+
     return { id: id, message: `记录${id}保存成功` };
   } else {
     return { message: `记录保存失败` };
