@@ -1,69 +1,30 @@
-/**
- * 文件管理
- * 文件管理分两部分，一部分是公共资源，没有权限控制，比如在博客中使用的图片文件，就不需要进行登录访问。
- * 第二部分是用户的个人资源，api访问需要登录认证，放在用户id目录下面。
- */
+const uploadDir = "/upload";
 
-/**
- * yao run scripts.system.file.UploadPublicFile
- * 这里的文件上传是保存在用户的id目录下
- * @param {*} file
- * @returns
- */
-function UploadPublicFile(file: YaoFile) {
-  const filePath = savePublicFile(file);
+function UploadFile(type: string, file: YaoFile, folder: string) {
+  const filePath = saveFile(type, file, folder);
   return {
-    value: `/api/v1/system/file/download?name=${filePath}`,
+    value: `/api/v1/fs/${type}/file/download?name=${filePath}`,
   };
 }
 
-function savePublicFile(file: YaoFile) {
-  const ext = file.name.split(".").pop();
-  // 使用时间戳，防止覆盖，但是同一个文件可能会上传多次
-  const timestamp = Date.now();
-
-  let folder = new Date().toISOString().slice(0, 10).replace(/-/g, "");
-  const filename = `/${folder}/${timestamp}.${ext}`;
-  const uploadFolder = `/upload/public/${folder}`;
-
-  const fileNameFull = `/upload/public/${filename}`;
-  // 只返回目录下的相对路径
-
-  let fs = new FS("system");
-  if (!fs.Exists(uploadFolder)) {
-    fs.MkdirAll(uploadFolder);
+function getFolder(type: string) {
+  let filePath = `${uploadDir}/public`;
+  switch (type) {
+    case "user":
+      let user_id = Process("session.get", "user_id");
+      if (!user_id) {
+        user_id = "1";
+      }
+      filePath = `${uploadDir}/${user_id}`;
+      break;
+    case "public":
+      filePath = `${uploadDir}/public`;
+      break;
+    default:
+      throw new Exception(`File Type ${type} is not support`, 500);
+    // break;
   }
-  fs.Move(file.tempFile, `${fileNameFull}`);
 
-  return filename;
-}
-
-// yao run scripts.system.file.getPublicFilePath
-function getPublicFilePath(name: string) {
-  const filePath = `/upload/public/${name}`;
-  return filePath;
-}
-
-/**
- * yao run scripts.system.file.Upload
- * 这里的文件上传是保存在用户的id目录下
- * @param {*} file
- * @param {*} folder folder to upload
- * @returns
- */
-function UploadUserFile(file: YaoFile, folder: string) {
-  const filePath = saveUserFile(file, folder);
-  return {
-    value: `/api/v1/system/file/user/file/download?name=${filePath}`,
-  };
-}
-
-function getUserFolder() {
-  let user_id = Process("session.get", "user_id");
-  if (!user_id) {
-    user_id = "1";
-  }
-  const filePath = `/upload/${user_id}`;
   if (!Process("fs.system.Exists", filePath)) {
     Process("fs.system.Mkdir", filePath);
   }
@@ -80,8 +41,6 @@ function queryEscape(str) {
   });
 }
 function getBasename(filename: string) {
-  console.log("getBasename1", filename);
-
   if (filename == null) {
     return "";
   }
@@ -95,48 +54,20 @@ function getBasename(filename: string) {
   // If no separator found, return the filename as it is
   return queryEscape(filename);
 }
-// yao run scripts.system.file.getUserFilePath
-function getUserFilePath(name: string) {
-  const filePath = `${getUserFolder()}/${name}`;
+// yao run scripts.fs.file.getFilePath
+function getFilePath(type: string, name: string) {
+  const filePath = `${getFolder(type)}/${name}`;
   return filePath;
 }
 
-//禁止使用
-// yao run scripts.system.file.Download '/20231115/微信图片_20220601141654.png'
-function Download_abandan(name: string) {
-  let user_id = Process("session.get", "user_id");
-  if (!user_id) {
-    user_id = "1";
-  }
-  name = normalizeFolder(name);
-  const filePath = `/upload/${user_id}/${name}`;
-
-  let fs = new FS("system");
-  if (!fs.Exists(filePath)) {
-    throw new Exception("文件不存在", 500);
-  }
-  // 这里会发生大量的字节数组转换，不要使用！！！！！！
-  const buf = fs.ReadFileBuffer(filePath);
-
-  const mimeType = Process("fs.system.MimeType", filePath);
-  return {
-    content: buf,
-    type: mimeType,
-  };
-}
-
-function saveUserFile(file: YaoFile, folder: string) {
-  // const ext = name.split(".").pop();
-  // const timestamp = Date.now();
-  // const currentDate = new Date().toISOString().slice(0, 10).replace(/-/g, "");
-
+function saveFile(type: string, file: YaoFile, folder: string) {
   if (folder == null || folder == "") {
     folder = new Date().toISOString().slice(0, 10).replace(/-/g, "");
   } else {
     // folder = folder.replace(".", "/");
   }
   folder = normalizeFolder(folder);
-  const uploadFolder = `${getUserFolder()}/${folder}`;
+  const uploadFolder = `${getFolder(type)}/${folder}`;
   const filePath = `/${uploadFolder}/${file.name}`;
 
   // 只返回用户的目录下的相对路径
@@ -152,14 +83,14 @@ function saveUserFile(file: YaoFile, folder: string) {
   // return fs.Abs(filePath2);
 }
 
-// yao run scripts.system.file.getFolderList
-function getFolderList(parent: string) {
+// yao run scripts.fs.file.getFolderList
+function getFolderList(type: string, parent: string) {
   // parent = normalizeFolder(parent);
 
   // const parentDir = parent.replace(/\./g, "/");
   const parentDir = normalizeFolder(parent);
 
-  const userDir = getUserFolder();
+  const userDir = getFolder(type);
 
   const uploadFolder =
     parentDir != "" ? `${userDir}/${parentDir}/` : `${userDir}/`;
@@ -184,14 +115,14 @@ function getFolderList(parent: string) {
   return list2;
   // return convertToNestedArray(list2);
 }
-// yao run scripts.system.file.getFileList '20231115'
-function getFileList(folder: string) {
+// yao run scripts.fs.file.getFileList '20231115'
+function getFileList(type: string, folder: string) {
   if (folder == null || folder == "") {
     throw new Exception("目录不正确", 500);
     // folder = folder.replace(".", "/");
   }
   folder = normalizeFolder(folder);
-  let userFolder = getUserFolder();
+  let userFolder = getFolder(type);
   const uploadFolder = `${userFolder}/${folder}/`;
 
   let list = Process("fs.system.ReadDir", uploadFolder);
@@ -210,7 +141,7 @@ function getFileList(folder: string) {
         size: convertFileSize(bytes),
         name: fname,
         path: fpath,
-        url: `/api/v1/system/file/user/file/download?name=${fpath}`,
+        url: `/api/v1/fs/${type}/file/download?name=${fpath}`,
         mime: mimeType,
         type: getFileTypeFromMimeType(mimeType),
       } as FileList);
@@ -258,7 +189,7 @@ function convertFileSize(fileSizeInBytes: number) {
 
   return `${fileSize.toFixed(2)} ${units[unitIndex]}`;
 }
-// yao run scripts.system.file.normalizeFolder "../"
+// yao run scripts.fs.file.normalizeFolder "../"
 function normalizeFolder(folder: string) {
   if (folder == null) {
     return "";
@@ -273,7 +204,7 @@ function normalizeFolder(folder: string) {
 
   return folder;
 }
-function createFolder(parent: string, folder: string) {
+function createFolder(type: string, parent: string, folder: string) {
   if (parent == null || typeof parent != "string") {
     parent = "";
   }
@@ -285,26 +216,26 @@ function createFolder(parent: string, folder: string) {
   if (folder == "") {
     throw new Exception("目录名不能为空", 500);
   }
-  const uploadFolder = `${getUserFolder()}/${parent}/${folder}`;
+  const uploadFolder = `${getFolder(type)}/${parent}/${folder}`;
   let fs = new FS("system");
   if (!fs.Exists(uploadFolder)) {
     fs.MkdirAll(uploadFolder);
   }
 }
-function deleteFolder(folder: string) {
+function deleteFolder(type: string, folder: string) {
   if (folder == null || folder == "") {
     throw new Exception("目录不正确", 500);
     // folder = folder.replace(/\./g, "/");
   }
   folder = normalizeFolder(folder);
 
-  const uploadFolder = `${getUserFolder()}/${folder}`;
+  const uploadFolder = `${getFolder(type)}/${folder}`;
   let fs = new FS("system");
   if (fs.Exists(uploadFolder)) {
     fs.RemoveAll(uploadFolder);
   }
 }
-function moveFolder(source: string, target: string) {
+function moveFolder(type: string, source: string, target: string) {
   if (source == null || source == "") {
     throw new Exception("源目录不能为空");
   }
@@ -318,8 +249,8 @@ function moveFolder(source: string, target: string) {
   // source = source.replace(".", "/");
   // target = target.replace(".", "/");
 
-  const sourceFolder = `${getUserFolder()}/${source}`;
-  const targetFolder = `${getUserFolder()}/${target}`;
+  const sourceFolder = `${getFolder(type)}/${source}`;
+  const targetFolder = `${getFolder(type)}/${target}`;
 
   let fs = new FS("system");
 

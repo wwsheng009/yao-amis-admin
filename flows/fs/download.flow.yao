@@ -4,11 +4,12 @@
     "description": "下载文件",
     "nodes": [
         {
-            "description": "获取公共文件下载地址",
+            "description": "获取类型下载地址",
             "name": "filename",
-            "process": "scripts.system.file.getPublicFilePath",
+            "process": "scripts.fs.file.getFilePath",
             "args": [
-                "{{$in.0}}"
+                "{{$in.0}}",
+                "{{$in.1}}"
             ]
         },
         {

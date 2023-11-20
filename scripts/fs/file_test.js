@@ -1,3 +1,27 @@
+//禁止使用
+// yao run scripts.fs.file.Download '/20231115/微信图片_20220601141654.png'
+function Download_abandan(name) {
+  let user_id = Process("session.get", "user_id");
+  if (!user_id) {
+    user_id = "1";
+  }
+  name = normalizeFolder(name);
+  const filePath = `${uploadDir}/${user_id}/${name}`;
+
+  let fs = new FS("system");
+  if (!fs.Exists(filePath)) {
+    throw new Exception("文件不存在", 500);
+  }
+  // 这里会发生大量的字节数组转换，不要使用！！！！！！
+  const buf = fs.ReadFileBuffer(filePath);
+
+  const mimeType = Process("fs.system.MimeType", filePath);
+  return {
+    content: buf,
+    type: mimeType,
+  };
+}
+
 function convertToNestedArray(folderList) {
   // Initialize the root object
   const root = {
@@ -60,7 +84,7 @@ function removeEmptyChildren(node) {
 const nestedArray = convertToNestedArray(folderList);
 // console.log(JSON.stringify(nestedArray, null, 2));
 
-// yao run scripts.system.file.normalizeFolder "../"
+// yao run scripts.file.user.normalizeFolder "../"
 function normalizeFolder(folder) {
   if (folder == null) {
     return "";

@@ -36,7 +36,7 @@
               "name": "img",
               "label": "图片",
               "required": false,
-              "receiver": "post:/api/v1/system/file/upload",
+              "receiver": "post:/api/v1/fs/public/file/upload",
               "maxSize": 2097152,
               "maxLength": 300
             },
@@ -209,7 +209,7 @@
                         "name": "img",
                         "label": "图片",
                         "required": false,
-                        "receiver": "post:/api/v1/system/file/upload",
+                        "receiver": "post:/api/v1/fs/public/file/upload",
                         "maxSize": 2097152,
                         "maxLength": 300
                       },
@@ -262,8 +262,8 @@
                     "name": "content",
                     "label": "ArticleContent",
                     "required": false,
-                    "receiver": "post:/api/v1/system/file/upload",
-                    "videoReceiver": "post:/api/v1/system/file/upload"
+                    "receiver": "post:/api/v1/fs/public/file/upload",
+                    "videoReceiver": "post:/api/v1/fs/public/file/upload"
                   },
                   {
                     "type": "input-text",
@@ -518,7 +518,7 @@
                     "name": "img",
                     "label": "图片",
                     "required": false,
-                    "receiver": "post:/api/v1/system/file/upload",
+                    "receiver": "post:/api/v1/fs/public/file/upload",
                     "maxSize": 2097152,
                     "maxLength": 300
                   },
@@ -573,8 +573,8 @@
                 "name": "content",
                 "label": "ArticleContent",
                 "required": true,
-                "receiver": "post:/api/v1/system/file/upload",
-                "videoReceiver": "post:/api/v1/system/file/upload"
+                "receiver": "post:/api/v1/fs/public/file/upload",
+                "videoReceiver": "post:/api/v1/fs/public/file/upload"
               },
               {
                 "type": "input-text",

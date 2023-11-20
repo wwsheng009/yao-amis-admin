@@ -6,17 +6,18 @@
         {
             "description": "文件名",
             "name": "basename",
-            "process": "scripts.system.file.getBasename",
+            "process": "scripts.fs.file.getBasename",
             "args": [
-                "{{$in.0}}"
+                "{{$in.1}}"
             ]
         },
         {
             "description": "获取用户文件下载地址",
             "name": "filename",
-            "process": "scripts.system.file.getUserFilePath",
+            "process": "scripts.fs.file.getFilePath",
             "args": [
-                "{{$in.0}}"
+                "{{$in.0}}",
+                "{{$in.1}}"
             ]
         },
         {

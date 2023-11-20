@@ -59,7 +59,7 @@
                       }
                     ],
                     "api": {
-                      "url": "/api/v1/system/file/user/folder/create?name=${root_folder}",
+                      "url": "/api/v1/fs/user/folder/create?name=${root_folder}",
                       "method": "get"
                     },
                     "dsType": "api",
@@ -92,7 +92,7 @@
         "messages": {},
         "method": "get",
         "requestAdaptor": "",
-        "url": "/api/v1/system/file/user/folder/create",
+        "url": "/api/v1/fs/user/folder/create",
         "adaptor": "",
         "data": {
           "folder": "${folder}",
@@ -107,7 +107,7 @@
       "source": {
         "method": "get",
         "requestAdaptor": "",
-        "url": "/api/v1/system/file/user/folder/list?parent=${value}",
+        "url": "/api/v1/fs/user/folder/list?parent=${value}",
         "adaptor": "",
         "messages": {}
       },
@@ -148,7 +148,7 @@
       "label": "",
       "enableNodePath": false,
       "editApi": {
-        "url": "/api/v1/system/file/user/folder/move",
+        "url": "/api/v1/fs/user/folder/move",
         "adaptor": "",
         "data": {
           "folder": "${folder}",
@@ -182,7 +182,7 @@
       "initiallyOpen": true,
       "deleteApi": {
         "method": "get",
-        "url": "/api/v1/system/file/user/folder/delete?folder=${folder}"
+        "url": "/api/v1/fs/user/folder/delete?folder=${folder}"
       },
       "editControls": [
         {
@@ -222,7 +222,7 @@
           "name": "file",
           "receiver": {
             "requestAdaptor": "",
-            "url": "/api/v1/system/file/user/file/upload",
+            "url": "/api/v1/fs/user/file/upload",
             "adaptor": "",
             "data": {
               "folder": "${folder}"
@@ -249,7 +249,7 @@
           "uploadType": "fileReceptor",
           "receiver": {
             "requestAdaptor": "",
-            "url": "/api/v1/system/file/user/file/upload",
+            "url": "/api/v1/fs/user/file/upload",
             "adaptor": "",
             "data": {
               "folder": "${folder}"
@@ -279,7 +279,7 @@
         "requestAdaptor": "",
         "sendOn": "this.folder",
         "trackExpression": "${file},${image},${folder}",
-        "url": "/api/v1/system/file/user/file/list?name=${folder}",
+        "url": "/api/v1/fs/user/file/list?name=${folder}",
         "adaptor": "",
         "messages": {}
       },
@@ -328,7 +328,7 @@
           "type": "operation",
           "buttons": [
             {
-              "url": "/api/v1/system/file/user/download/attachement?name=${path}",
+              "url": "/api/v1/fs/user/file/attachement?name=${path}",
               "actionType": "url",
               "className": "text-info",
               "id": "u:c345fb2a01fb",
@@ -338,14 +338,13 @@
             },
             {
               "className": "text-info",
-              "id": "u:bf0cef647696",
               "label": "下载-BLOB",
               "level": "link",
               "type": "button",
               "actionType": "download",
               "api": {
                 "responseType": "blob",
-                "url": "/api/v1/system/file/user/download/attachement?name=${path}",
+                "url": "/api/v1/fs/user/file/attachement?name=${path}",
                 "method": "get"
               }
             },
@@ -362,7 +361,7 @@
                 "method": "get",
                 "requestAdaptor": "",
                 "sendOn": "this.file_path",
-                "url": "/api/v1/system/file/user/file/delete?name=${path}"
+                "url": "/api/v1/fs/user/file/delete?name=${path}"
               },
               "className": "text-danger"
             }
