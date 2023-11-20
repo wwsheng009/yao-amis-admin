@@ -2,7 +2,7 @@ const {
   getFilterFormFields,
   getFormFields,
   getFormViewFields,
-  getTableFieldsWithQuick,
+  getModelFieldsWithQuick,
   excelMapping,
 } = Require("amis.lib");
 
@@ -11,11 +11,11 @@ const {
 //对格式有要求的，使用studio命令生成页面后再修改
 
 // yao run scripts.amis.curd.curdTemplate demo.table
-function curdTemplate(tabName, columns) {
-  let filterForm = getFilterFormFields(tabName, columns);
+function curdTemplate(modelId, columns) {
+  let filterForm = getFilterFormFields(modelId, columns);
 
-  let curdColumns = [...getTableFieldsWithQuick(tabName, columns)];
-  let newForm = getFormFields(tabName, columns, ["id"]);
+  let curdColumns = [...getModelFieldsWithQuick(modelId, columns)];
+  let newForm = getFormFields(modelId, columns, ["id"]);
   //批量导入数据
   let batchNewForm = [
     {
@@ -34,11 +34,11 @@ function curdTemplate(tabName, columns) {
     },
   ];
 
-  const updateForm = getFormFields(tabName, columns);
-  const viewForm = getFormViewFields(tabName, columns);
+  const updateForm = getFormFields(modelId, columns);
+  const viewForm = getFormViewFields(modelId, columns);
 
   return returnData(
-    tabName,
+    modelId,
     filterForm,
     curdColumns,
     newForm,
@@ -49,7 +49,7 @@ function curdTemplate(tabName, columns) {
   );
 }
 function returnData(
-  tableName,
+  modelId,
   filterForm,
   curdColumns,
   newForm,
@@ -63,9 +63,8 @@ function returnData(
       {
         filter: {
           silentPolling: false,
-          title: "",
           trimValues: true,
-          type: "",
+          title: "",
           actions: [
             {
               label: "清空",
@@ -88,7 +87,7 @@ function returnData(
           ],
           body: filterForm,
           mode: "inline",
-          name: "list",
+          name: "filter",
         },
         filterDefaultVisible: false,
         keepItemSelectionOnPageChange: true,
@@ -97,7 +96,7 @@ function returnData(
         api: {
           method: "post",
           url:
-            `/api/v1/system/model/${tableName}` +
+            `/api/v1/system/model/${modelId}` +
             "/search?page=${page}&perPage=${perPage}&orderBy=${orderBy}&orderDir=${orderDir}",
           data: {
             "&": "$$",
@@ -135,7 +134,7 @@ function returnData(
                   type: "dialog",
                   size: "lg",
                   body: {
-                    api: `post:/api/v1/system/model/${tableName}/update/$id`,
+                    api: `post:/api/v1/system/model/${modelId}/update/$id`,
                     body: updateForm,
                     name: "update",
                     silentPolling: false,
@@ -145,7 +144,7 @@ function returnData(
                 },
               },
               {
-                api: `delete:/api/v1/system/model/${tableName}/delete/$id`,
+                api: `delete:/api/v1/system/model/${modelId}/delete/$id`,
                 confirmText: "你确定要删除行${id}?",
                 icon: "fa fa-times text-danger",
                 tooltip: "删除",
@@ -184,7 +183,7 @@ function returnData(
             actionType: "dialog",
             dialog: {
               body: {
-                api: `post:/api/v1/system/model/${tableName}/create`,
+                api: `post:/api/v1/system/model/${modelId}/create`,
                 body: newForm,
                 name: "create",
                 silentPolling: false,
@@ -214,12 +213,12 @@ function returnData(
                   data: {
                     batch: {
                       "&": {
-                        $excel: excelMapping(tableName, columns),
+                        $excel: excelMapping(modelId, columns),
                       },
                     },
                   },
                   method: "post",
-                  url: `/api/v1/system/model/${tableName}/batch_create`,
+                  url: `/api/v1/system/model/${modelId}/batch_create`,
                 },
               },
             },
@@ -234,7 +233,7 @@ function returnData(
           {
             actionType: "ajax",
             api:
-              `delete:/api/v1/system/model/${tableName}` + "/delete/${ids|raw}",
+              `delete:/api/v1/system/model/${modelId}` + "/delete/${ids|raw}",
             confirmText: "你确定要批量删除选中行吗?",
             label: "批量删除",
             type: "button",
@@ -249,7 +248,7 @@ function returnData(
           "export-excel",
         ],
         quickSaveItemApi:
-          `post:/api/v1/system/model/${tableName}` + "/update/${id}",
+          `post:/api/v1/system/model/${modelId}` + "/update/${id}",
         syncLocation: false,
       },
     ],

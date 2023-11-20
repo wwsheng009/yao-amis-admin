@@ -469,6 +469,25 @@ function migrateModel(modelId, forceIn) {
 function deepCopyObject(obj) {
   return JSON.parse(JSON.stringify(obj));
 }
+// 转换列配置成yao的模型配置，才能适配数据库
+function convertColTypeToYao(col) {
+  switch (col.type?.toLowerCase()) {
+    case "image":
+    case "video":
+    case "images":
+    case "file":
+      col.type = "longText";
+      col.length = undefined;
+      break;
+    case "richtext":
+      col.type = "longText";
+      col.length = undefined;
+      break;
+    default:
+      break;
+  }
+  return col;
+}
 
 /**
  * 把模型定义加载到模型缓存中。
@@ -485,17 +504,7 @@ function loadModeltoMemory(modelDsl, migrate, force) {
 
   let modelYao = deepCopyObject(modelDsl);
   modelYao.columns.forEach((col) => {
-    switch (col.type) {
-      case "image":
-      case "video":
-      case "images":
-      case "file":
-        col.type = "longText";
-        col.length = undefined;
-        break;
-      default:
-        break;
-    }
+    col = convertColTypeToYao(col);
   });
   if (modelYao.table?.name && modelYao.ID && modelYao.columns?.length) {
     let fname = `${modelYao.ID}.mod.json`;
@@ -916,6 +925,7 @@ function Source(modelId) {
     delete col.model_id;
     delete col.element_id;
     delete col.model_identity;
+    col = convertColTypeToYao(col);
   });
   delete m.id;
   delete m.ID;

@@ -2,7 +2,7 @@ const {
   getFormFields,
   getTableFields,
   getFormViewFields,
-  getTableFieldsWithQuick,
+  getModelFieldsWithQuick,
 } = Require("amis.lib");
 
 // yao run scripts.amis.schema.generateFormFields admin.user
@@ -91,7 +91,7 @@ function generateViewFields(tableName, columns) {
 }
 
 function generateViewFieldsWithQuick(tableName, columns) {
-  const fields = getTableFieldsWithQuick(tableName, columns);
+  const fields = getModelFieldsWithQuick(tableName, columns);
   const fieldsForm = getFormFields(tableName, columns);
   const schema = {
     type: "page",

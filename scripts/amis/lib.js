@@ -475,10 +475,29 @@ function getFilterFormFields(tableName, columnsIn) {
     //筛选框不强制输入
     delete col.required;
 
-    if (col.type === "editor") {
-      continue;
+    let output = true;
+
+    switch (column.type?.toLowerCase()) {
+      case "editor":
+      case "richtext":
+      case "video":
+      case "file":
+      case "image":
+      case "json":
+      case "images":
+        output = false;
+        break;
     }
-    schemas.push(col);
+    switch (col.type?.toLowerCase()) {
+      case "editor":
+        output = false;
+        break;
+      default:
+        break;
+    }
+    if (output) {
+      schemas.push(col);
+    }
   }
 
   return schemas;
@@ -489,7 +508,7 @@ function getFilterFormFields(tableName, columnsIn) {
  * @param {string} tableName 数据库表名
  * @returns
  */
-function getTableFieldsWithQuick(tableName, columnsIn) {
+function getModelFieldsWithQuick(tableName, columnsIn) {
   let model = getModelDefinition(tableName, columnsIn);
   const columns = model?.columns || [];
   //yao的原始字段设置
@@ -517,8 +536,6 @@ function getTableFieldsWithQuick(tableName, columnsIn) {
     viewColumn.label = label;
 
     let fieldNew = {
-      searchable: true,
-      sortable: true,
       name: column.name,
       label: column.label,
       quickEdit: {
@@ -719,6 +736,11 @@ function column2AmisFormItem(column) {
       newColumn.receiver = "/api/v1/system/file/upload";
       newColumn.useChunk = false; //暂时关闭，分块还不知怎么处理
       break;
+    case "RICHTEXT":
+      newColumn.type = "input-rich-text";
+      newColumn.receiver = "/api/v1/system/file/upload";
+      newColumn.useChunk = false; //暂时关闭，分块还不知怎么处理
+      break;
     default:
       break;
   }
@@ -772,11 +794,16 @@ function column2AmisTableViewColumn(column) {
   switch (type) {
     case "STRING":
     case "CHAR":
+      newColumn.type = "text";
+      newColumn.searchable = true;
+      newColumn.sortable = true;
       break;
     case "TEXT":
     case "MEDIUMTEXT":
     case "LONGTEXT":
       newColumn.type = "textarea";
+      newColumn.searchable = true;
+      newColumn.sortable = true;
       break;
     case "JSON":
     case "JSONB":
@@ -787,43 +814,61 @@ function column2AmisTableViewColumn(column) {
     case "DATE":
       newColumn.type = "date";
       newColumn.format = "YYYY-MM-DD";
+      newColumn.searchable = true;
+      newColumn.sortable = true;
       break;
     case "DATETIME":
       newColumn.type = "date";
       newColumn.format = "YYYY-MM-DD HH:mm:ss";
+      newColumn.searchable = true;
+      newColumn.sortable = true;
       break;
     case "DATETIMETZ":
       newColumn.type = "date";
       newColumn.format = "YYYY-MM-DDTHH:mm:ssZ";
+      newColumn.searchable = true;
+      newColumn.sortable = true;
       break;
     case "TIME":
       newColumn.type = "date";
       newColumn.format = "HH:mm:ss";
+      newColumn.searchable = true;
+      newColumn.sortable = true;
       break;
     case "TIMETZ":
       newColumn.type = "date";
       newColumn.format = "HH:mm:ssZ";
+      newColumn.searchable = true;
+      newColumn.sortable = true;
       break;
     case "TIMESTAMP":
     case "TIMESTAMPTZ":
       newColumn.type = "date";
+      newColumn.searchable = true;
+      newColumn.sortable = true;
       break;
     case "TINYINTEGER":
     case "SMALLINTEGER":
     case "INTEGER":
     case "BIGINTEGE":
       newColumn.type = "number";
+      newColumn.searchable = true;
+      newColumn.sortable = true;
       break;
     case "UNSIGNEDTINYINTEGER":
     case "UNSIGNEDSMALLINTEGER":
     case "UNSIGNEDINTEGER":
       newColumn.type = "number";
       newColumn.min = 0;
+      newColumn.searchable = true;
+      newColumn.sortable = true;
       break;
     case "UNSIGNEDBIGINTEGER":
       newColumn.type = "number";
       newColumn.min = 0;
       newColumn.big = true;
+      newColumn.searchable = true;
+      newColumn.sortable = true;
       break;
     case "ID":
     case "TINYINCREMENTS":
@@ -831,10 +876,14 @@ function column2AmisTableViewColumn(column) {
     case "INCREMENTS":
       newColumn.type = "number"; //"input-number";
       displayOnly = true; //主键列只显示
+      newColumn.searchable = true;
+      newColumn.sortable = true;
       break;
     case "BIGINCREMENTS":
       newColumn.type = "number";
       newColumn.big = true;
+      newColumn.searchable = true;
+      newColumn.sortable = true;
       break;
     case "FLOAT":
     case "DOUBLE":
@@ -842,6 +891,8 @@ function column2AmisTableViewColumn(column) {
       newColumn.type = "number";
       newColumn.precision = column.precision;
       newColumn.step = column.scale && 0.1 ^ column.scale;
+      newColumn.searchable = true;
+      newColumn.sortable = true;
       break;
     case "UNSIGNEDFLOAT":
     case "UNSIGNEDDOUBLE":
@@ -850,6 +901,8 @@ function column2AmisTableViewColumn(column) {
       newColumn.precision = column.precision;
       newColumn.min = 0;
       newColumn.step = column.scale && 0.1 ^ column.scale;
+      newColumn.searchable = true;
+      newColumn.sortable = true;
       break;
     case "BOOLEAN":
       newColumn.type = "status";
@@ -857,17 +910,25 @@ function column2AmisTableViewColumn(column) {
         newColumn.trueValue = 1;
         newColumn.falseValue = 0;
       }
+      newColumn.searchable = true;
+      newColumn.sortable = true;
       break;
     case "UUID":
       newColumn.type = "uuid";
+      newColumn.searchable = true;
+      newColumn.sortable = true;
       break;
     case "ENUM":
       newColumn.type = "text";
+      newColumn.searchable = true;
+      newColumn.sortable = true;
       break;
     case "FILE":
       newColumn.type = "static-link";
       newColumn.href = "${" + `${column.name}` + "}";
       newColumn.body = "${" + `${column.name}` + "}";
+      newColumn.searchable = true;
+      newColumn.sortable = true;
       break;
     case "IMAGE":
       newColumn.type = "static-image";
@@ -877,6 +938,10 @@ function column2AmisTableViewColumn(column) {
       break;
     case "VIDEO":
       newColumn.type = "static-video";
+      break;
+    case "RICHTEXT":
+      newColumn.type = "html";
+      newColumn.toggled = false; //如果内容很多，显示会占用太多的空间
       break;
     default:
       break;
@@ -1036,6 +1101,10 @@ function column2AmisFormViewColumn(column) {
     case "VIDEO":
       newColumn.type = "static-video";
       break;
+    case "RICHTEXT":
+      newColumn.type = "input-rich-text";
+      newColumn.static = true;
+      break;
     default:
       break;
   }
@@ -1108,7 +1177,7 @@ module.exports = {
   getFormViewFields,
   excelMapping,
   getTableFields,
-  getTableFieldsWithQuick,
+  getModelFieldsWithQuick,
   getFilterFormFields,
   getFormFields,
 };

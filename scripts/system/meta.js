@@ -11,6 +11,10 @@ function GetColumnOptions2() {
       value: "text",
     },
     {
+      label: "富文本[richtext]",
+      value: "richtext",
+    },
+    {
       label: "JSON",
       value: "json",
     },
