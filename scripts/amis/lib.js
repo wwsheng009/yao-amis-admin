@@ -477,6 +477,9 @@ function getFilterFormFields(tableName, columnsIn) {
 
     let output = true;
 
+    if (column.crypt?.toUpperCase() === "PASSWORD") {
+      output = false;
+    }
     switch (column.type?.toLowerCase()) {
       case "editor":
       case "richtext":
@@ -756,7 +759,8 @@ function column2AmisFormItem(column) {
     }
   }
   //只是只一个猜测
-  if (name.includes("PASSWORD")) {
+
+  if (column.crypt?.toUpperCase() === "PASSWORD") {
     newColumn.type = "input-password";
   }
   if (name.includes("EMAIL")) {
@@ -953,8 +957,10 @@ function column2AmisTableViewColumn(column) {
   ) {
     newColumn.type = "status";
   }
-  if (name.includes("PASSWORD")) {
+  if (column.crypt?.toUpperCase() === "PASSWORD") {
     newColumn.type = "static-password";
+    newColumn.searchable = undefined;
+    newColumn.sortable = undefined;
   }
 
   return { newColumn, displayOnly };
@@ -1115,10 +1121,11 @@ function column2AmisFormViewColumn(column) {
   ) {
     newColumn.type = "static-status";
   }
-  if (name.includes("PASSWORD")) {
+  if (column.crypt?.toUpperCase() === "PASSWORD") {
     newColumn.type = "input-password";
     newColumn.static = true;
   }
+
   if (name.includes("EMAIL")) {
     newColumn.type = "input-email";
     newColumn.static = true;
