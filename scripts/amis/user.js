@@ -86,7 +86,6 @@ function Login(payload) {
   Process("session.set", "user", userPayload, timeout, sessionId);
   Process("session.set", "token", jwt.token, timeout, sessionId);
   Process("session.set", "user_id", user.id, timeout, sessionId);
-  console.log("user.id", user.id);
 
   // 设置权限缓存
   const userAuthObject = getUserAuthObjects(user.id);

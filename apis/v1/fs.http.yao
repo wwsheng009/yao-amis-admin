@@ -85,7 +85,8 @@
       "process": "scripts.fs.file.getFileList",
       "in": [
         "$param.type",
-        "$query.name"
+        "$query.name",
+        "$query.keywords"
       ],
       "out": {
         "status": 200,

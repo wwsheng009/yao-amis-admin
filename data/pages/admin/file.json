@@ -231,8 +231,7 @@
             "messages": {},
             "method": "post"
           },
-          "drag": false,
-          "label": "文件上传",
+          "drag": true,
           "proxy": true,
           "uploadType": "fileReceptor",
           "autoUpload": true,
@@ -257,6 +256,7 @@
             "messages": {},
             "method": "post"
           },
+          "visible": false,
           "autoUpload": true,
           "multiple": true,
           "accept": ".jpeg, .jpg, .png, .gif",
@@ -277,12 +277,19 @@
       "api": {
         "method": "get",
         "requestAdaptor": "",
-        "sendOn": "this.folder",
         "trackExpression": "${file},${image},${folder}",
-        "url": "/api/v1/fs/user/file/list?name=${folder}",
+        "url": "/api/v1/fs/user/file/list?name=${folder}&keywords=${keywords}",
         "adaptor": "",
         "messages": {}
       },
+      "headerToolbar": [
+        {
+          "type": "search-box",
+          "name": "keywords",
+          "align": "right",
+          "placeholder": "关键字检索"
+        }
+      ],
       "perPageAvailable": [10],
       "type": "crud",
       "bulkActions": [],

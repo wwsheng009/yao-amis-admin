@@ -118,16 +118,15 @@ function getFolderList(type: string, parent: string) {
   // return convertToNestedArray(list2);
 }
 // yao run scripts.fs.file.getFileList '20231115'
-function getFileList(type: string, folder: string) {
-  if (folder == null || folder == "") {
-    throw new Exception("目录不正确", 500);
-    // folder = folder.replace(".", "/");
+function getFileList(type: string, folder: string, keywords) {
+  if (folder == null) {
+    folder == "";
   }
   folder = normalizeFolder(folder);
   let userFolder = getFolder(type);
   const uploadFolder = `${userFolder}/${folder}/`;
 
-  let list = Process("fs.system.ReadDir", uploadFolder);
+  let list = Process("fs.system.ReadDir", uploadFolder, true);
   list = list.map((l) => l.replace(/\\/g, "/"));
 
   const list2 = [] as FileList[];
@@ -149,6 +148,11 @@ function getFileList(type: string, folder: string) {
       } as FileList);
     }
   });
+  if (keywords != null && keywords != "") {
+    return list2.filter((f) =>
+      f.name.toLowerCase().includes(keywords.toLowerCase())
+    );
+  }
   return list2;
 }
 
@@ -227,7 +231,6 @@ function createFolder(type: string, parent: string, folder: string) {
 function deleteFolder(type: string, folder: string) {
   if (folder == null || folder == "") {
     throw new Exception("目录不正确", 500);
-    // folder = folder.replace(/\./g, "/");
   }
   folder = normalizeFolder(folder);
 
