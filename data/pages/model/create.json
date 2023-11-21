@@ -180,7 +180,7 @@
                   "buttons": [
                     {
                       "type": "button",
-                      "label": "插入ID列",
+                      "label": "插入ID字段",
                       "level": "secondary",
                       "onEvent": {
                         "click": {
@@ -206,7 +206,7 @@
                     },
                     {
                       "type": "button",
-                      "label": "创建列定义",
+                      "label": "创建新字段",
                       "level": "primary",
                       "onEvent": {
                         "click": {
@@ -215,7 +215,7 @@
                               "actionType": "dialog",
                               "dialog": {
                                 "showErrorMsg": true,
-                                "title": "创建新记录",
+                                "title": "创建新字段",
                                 "type": "dialog",
                                 "body": [
                                   {
@@ -543,7 +543,7 @@
                                         "value": "json"
                                       },
                                       {
-                                        "label": "Amis列定义",
+                                        "label": "Amis字段定义",
                                         "value": "amis"
                                       }
                                     ]
@@ -1006,6 +1006,25 @@
                   "body": [
                     {
                       "type": "input-text",
+                      "name": "label",
+                      "label": "描述",
+                      "required": true,
+                      "default": "${_key}"
+                    },
+                    {
+                      "type": "select",
+                      "name": "type",
+                      "label": "关联类型",
+                      "options": ["hasMany", "hasOne"],
+                      "required": true
+                    }
+                  ]
+                },
+                {
+                  "type": "group",
+                  "body": [
+                    {
+                      "type": "input-text",
                       "name": "foreign",
                       "label": "当前模型的外键",
                       "required": true,
@@ -1043,13 +1062,6 @@
                         "trackExpression": "${model}",
                         "sendOn": "data.model"
                       }
-                    },
-                    {
-                      "type": "select",
-                      "name": "type",
-                      "label": "关联类型",
-                      "options": ["hasMany", "hasOne"],
-                      "required": true
                     }
                   ]
                 },

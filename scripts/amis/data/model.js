@@ -4,6 +4,8 @@ const { FindCachedModelById } = Require("system.model_lib");
 const { queryToQueryParam, updateInputData, getArrayItem, mergeQueryObject } =
   Require("amis.data.lib");
 
+const { RunTransaction } = Require("system.db_lib");
+
 /**
  * 查找数据
  * yao run scripts.amis.data.model.Search
@@ -126,21 +128,55 @@ function saveData(modelId, payload) {
     }
   }
 
-  const id = Process(`models.${modelId}.Save`, payload);
-  if (id) {
-    payload.id = id;
-    for (const key in hasOnes) {
-      const element = hasOnes[key];
-      // 设置外键
-      payload[key][element.key] = payload[element.foreign];
-      console.log("payload[key]:", payload[key]);
-      Process(`models.${element.model}.Save`, payload[key]);
-    }
+  const saveFun = function () {
+    const id = Process(`models.${modelId}.Save`, payload);
+    if (id) {
+      payload.id = id;
+      for (const key in hasOnes) {
+        const w = hasOnes[key];
+        // 设置外键
+        payload[key][w.key] = payload[w.foreign];
+        // console.log("payload[key]:", payload[key]);
+        Process(`models.${w.model}.Save`, payload[key]);
+      }
+      for (const key in hasManys) {
+        const w = hasManys[key];
+        const lines = Array.isArray(payload[key])
+          ? payload[key]
+          : [payload[key]];
+        // lines.forEach((line) => {
+        //   line[w.key] = payload[w.foreign];
+        // });
+        // 有删除？
+        const exist = Process(`models.${w.model}.Get`, {
+          select: ["id"],
+          wheres: [{ column: w.key, value: payload[w.foreign] }],
+        });
+        const idsNew = lines.map((l) => l.id);
+        const idsOld = exist.map((l) => l.id);
+        const idsDeleted = idsOld.filter((id) => !idsNew.includes(id));
+        // console.log(`idsnew`, idsNew);
+        // console.log(`idsOld`, idsOld);
+        // console.log(`idsDeleted`, idsDeleted);
 
-    return { id: id, message: `记录${id}保存成功` };
-  } else {
-    return { message: `记录保存失败` };
-  }
+        const share = {
+          [w.key]: payload[w.foreign],
+        };
+        // console.log(`share`, share);
+
+        Process(
+          `models.${w.model}.EachSaveAfterDelete`,
+          idsDeleted,
+          lines,
+          share
+        );
+      }
+      return { id: id, message: `记录${id}保存成功` };
+    } else {
+      return { message: `记录保存失败` };
+    }
+  };
+  return RunTransaction(saveFun);
 }
 
 //保存记录

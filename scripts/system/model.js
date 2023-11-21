@@ -6,6 +6,8 @@ const { DotName, UnderscoreName, IsMysql, IsSqlite, ClearFalsyKeys } =
   Require("amis.lib_tool");
 const { FileNameConvert } = Require("amis.lib_tool");
 
+const { RunTransaction } = Require("system.db_lib");
+
 const { queryToQueryParam, updateInputData } = Require("amis.data.lib");
 
 const { FindCachedModelById, MomoryModelList, ModelIDList } =
@@ -157,6 +159,13 @@ function CompleteModel(modelDsl) {
       }
     }
   });
+
+  if (modelDsl.relations != null) {
+    for (const r in modelDsl.relations) {
+      modelDsl.relations[r].label ||= r;
+    }
+  }
+
   return modelDsl;
 }
 function ConvertModelToTableLine(modelDsl) {
@@ -375,6 +384,7 @@ function ConvertModelColToTableLine(model, modelCol) {
 function UpdateRelationFromDsl(key, rel) {
   let data = rel;
   data.name = key;
+  data.label = rel.label || key;
   data.model = rel.model;
   //must do this in case xgen will dump
   // data.query = JSON.stringify(rel.query);
@@ -593,41 +603,6 @@ function ImportCachedModelById(modelId) {
     if (err?.code && err.message) {
       throw new Exception(err.message, err.code);
     }
-  }
-}
-
-function RunTransaction(fun, ...args) {
-  const t = new Query();
-  const ismysql = IsMysql();
-  if (ismysql) {
-    t.Run({
-      sql: {
-        stmt: "START TRANSACTION;",
-      },
-    });
-  }
-
-  try {
-    // var firstParam = Array.prototype.shift.call(arguments);
-    const ret = fun(...args);
-
-    if (ismysql) {
-      t.Run({
-        sql: {
-          stmt: "COMMIT;",
-        },
-      });
-    }
-    return ret;
-  } catch (error) {
-    if (ismysql) {
-      t.Run({
-        sql: {
-          stmt: "ROLLBACK;",
-        },
-      });
-    }
-    throw error;
   }
 }
 

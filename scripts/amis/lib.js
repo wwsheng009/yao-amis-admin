@@ -365,6 +365,7 @@ function getTableFields(tableName, columnsIn) {
     col = updateViewColFromModel(col, column, model);
 
     if (col.__ignore !== true) {
+      col.__ignore = undefined;
       schemas.push(col);
     }
   });
@@ -438,6 +439,7 @@ function getFormViewFields(modelId, columnsIn) {
   updateViewFormRelations(schemas, model, "view");
   return schemas;
 }
+
 function updateViewFormRelations(schemas, model, actionType) {
   const hasOnes = {};
   const hasManys = {};
@@ -485,16 +487,36 @@ function updateViewFormRelations(schemas, model, actionType) {
     };
     for (const key in hasManys) {
       const element = hasManys[key];
+      let fields = [];
+      let tableSchema = {};
+      if (actionType === "view") {
+        fields = getTableFields(element.model);
+        fields = fields.filter((col) => col.name !== element.key);
 
-      let fields = getTableFields(element.model);
-      fields = fields.filter((col) => col.name !== element.key);
-      const tab = {
-        title: key,
-        body: {
+        tableSchema = {
           columns: fields,
           source: "${" + key + "}",
           type: "table",
-        },
+        };
+      } else {
+        fields = getModelFieldsWithQuick(element.model);
+        fields = fields.filter((col) => col.name !== element.key);
+
+        tableSchema = {
+          columns: fields,
+          name: key,
+          source: "${" + key + "}",
+          copyable: true,
+          editable: true,
+          removable: true,
+          showIndex: true,
+          addable: true,
+          type: "input-table",
+        };
+      }
+      const tab = {
+        title: element.label || key,
+        body: tableSchema,
       };
       // const tab = {
       //   title: key,
@@ -621,11 +643,11 @@ function getFilterFormFields(tableName, columnsIn) {
 
 /**
  * 根据数据库表的定义生成amis crud页面中的列表字段定义，字段定义会带有快捷编辑功能。
- * @param {string} tableName 数据库表名
+ * @param {string} modelId 数据库表名
  * @returns
  */
-function getModelFieldsWithQuick(tableName, columnsIn) {
-  let model = getModelDefinition(tableName, columnsIn);
+function getModelFieldsWithQuick(modelId, columnsIn) {
+  let model = getModelDefinition(modelId, columnsIn);
   const columns = model?.columns || [];
   //yao的原始字段设置
   let newFields = [];
@@ -643,6 +665,7 @@ function getModelFieldsWithQuick(tableName, columnsIn) {
     }
     viewColumn = updateViewColFromModel(viewColumn, column, model);
     if (viewColumn.__ignore) {
+      viewColumn.__ignore = undefined;
       continue;
     }
 
