@@ -83,7 +83,7 @@
                 },
                 "dataType": "json",
                 "method": "post",
-                "url": "/api/__yao/login/admin"
+                "url": "/api/v1/amis/login"
               },
               "body": [
                 {

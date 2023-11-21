@@ -7,6 +7,7 @@ function samples(page, pagesize, keywords) {
   });
 }
 //表数据预览，可以用于amis curd控件的api接口测试
+// yao scripts.amis.mock.tableData
 function tableData(table) {
   let data = Process("yao.table.Get", table);
 

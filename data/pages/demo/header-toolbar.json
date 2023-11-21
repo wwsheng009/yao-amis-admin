@@ -90,7 +90,7 @@
           "wrapperBody": false,
           "body": [
             {
-              "label": "${cookie:username}",
+              "label": "${cookie:username || cookie:email}",
               "level": "default",
               "menuClassName": "min-w-full",
               "trigger": "hover",

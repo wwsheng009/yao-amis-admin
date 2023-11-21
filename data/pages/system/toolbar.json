@@ -7,16 +7,6 @@
       "className": "w-full"
     },
     {
-      "body": "页面编辑器",
-      "href": "/amis-editor",
-      "id": "u:a156b4d9b8de",
-      "type": "link",
-      "style": {
-        "text-wrap": "nowrap"
-      },
-      "className": "mr-4"
-    },
-    {
       "className": "",
       "fit": "cover",
       "style": {
@@ -34,7 +24,7 @@
     },
     {
       "icon": "fa fa-user",
-      "label": "${cookie:username}",
+      "label": "${cookie:username == 'null' ? cookie:email : cookie:username}",
       "level": "default",
       "menuClassName": "min-w-full",
       "className": "text-center",

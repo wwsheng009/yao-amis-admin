@@ -13,12 +13,14 @@ function getFolder(type: string) {
     case "user":
       let user_id = Process("session.get", "user_id");
       if (!user_id) {
-        user_id = "1";
+        throw new Exception("用户未登录");
       }
       filePath = `${uploadDir}/${user_id}`;
       break;
     case "public":
       filePath = `${uploadDir}/public`;
+    case "project":
+      filePath = `${uploadDir}/project`;
       break;
     default:
       throw new Exception(`File Type ${type} is not support`, 500);

@@ -1,7 +1,7 @@
 {
   "name": "::User Login",
   "action": {
-    "process": "scripts.user.Login",
+    "process": "scripts.amis.user.Login",
     "args": [
       ":payload"
     ]

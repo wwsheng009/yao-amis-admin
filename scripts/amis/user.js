@@ -1,3 +1,33 @@
+const { getUserAuthObjects } = Require("auth.lib");
+
+function getUserInfo(type, value) {
+  const supportTypes = {
+    email: "email",
+    mobile: "mobile",
+  };
+  if (!supportTypes[type]) {
+    throw new Exception(`Login type :${type} is not support`);
+  }
+
+  const [user] = Process("models.admin.user.get", {
+    select: [
+      "id",
+      "name",
+      "password",
+      "type",
+      "email",
+      "mobile",
+      "extra",
+      "status",
+    ],
+    wheres: [
+      { column: supportTypes[type], value: value },
+      { Column: "status", Value: "enabled" },
+    ],
+    limit: 1,
+  });
+  return user;
+}
 /**
  * 自定义一个用户登录的处理器,使用用户名密码登录，不需要验证码
  * yao run scripts.amis.user.Login
@@ -16,47 +46,19 @@ function Login(payload) {
     }
   }
 
-  let { username, password, userName } = payload;
+  let { password, email, mobile, userName } = payload;
 
-  username = username || userName;
-
-  const q = new Query();
-  const user = q.First({
-    // debug: true,
-    select: [
-      "id",
-      "name",
-      "password",
-      "type",
-      "email",
-      "mobile",
-      "extra",
-      "status",
-    ],
-    wheres: [
-      {
-        field: "name",
-        value: username,
-      },
-      { or: true, field: "email", value: username },
-    ],
-    from: "$admin.user",
-    limit: 1,
-  });
-  // 或是使用处理器
-  // const [user] = Process("models.admin.user.get", {
-  //   wheres: [
-  //     { column: "mobile", value: account },
-  //     { column: "status", value: "启用" },
-  //     { method: "orwhere", column: "email", value: account },
-  //   ],
-  //   limit: 1,
-  // });
-
-  if (!user) {
-    return Process("scripts.return.Error", "", "400", "用户不存在");
+  let user = null;
+  if (email != null) {
+    user = getUserInfo("email", email);
+  } else if (mobile != null) {
+    user = getUserInfo("mobile", email);
+  } else if (userName != null) {
+    user = getUserInfo("email", userName);
   }
-
+  if (!user) {
+    return Process("scripts.return.Error", "", 400, "用户不存在");
+  }
   try {
     const password_validate = Process(
       "utils.pwd.Verify",
@@ -64,10 +66,10 @@ function Login(payload) {
       user.password
     );
     if (password_validate !== true) {
-      return Process("scripts.return.Error", "", "400", "密码不正确");
+      return Process("scripts.return.Error", "", 400, "密码不正确");
     }
   } catch (error) {
-    return Process("scripts.return.Error", "", "400", "密码不正确");
+    return Process("scripts.return.Error", "", 400, "密码不正确");
   }
   const timeout = 60 * 60;
   const sessionId = Process("utils.str.UUID");
@@ -84,6 +86,17 @@ function Login(payload) {
   Process("session.set", "user", userPayload, timeout, sessionId);
   Process("session.set", "token", jwt.token, timeout, sessionId);
   Process("session.set", "user_id", user.id, timeout, sessionId);
+  console.log("user.id", user.id);
+
+  // 设置权限缓存
+  const userAuthObject = getUserAuthObjects(user.id);
+  Process(
+    "session.set",
+    "user_auth_objects",
+    userAuthObject,
+    timeout,
+    sessionId
+  );
 
   return Process("scripts.return.Success", {
     sid: sessionId,

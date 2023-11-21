@@ -1,8 +1,9 @@
 const { deleteObjectKey } = Require("system.lib");
 const { ClearFalsyKeys } = Require("amis.lib_tool");
 const { updateSoyRouteComponent } = Require("admin.menu_lib");
-const { filterTreeDataWithFunc, filterTreeDataById, collectTreeFields } =
-  Require("amis.data.tree");
+const { filterTreeDataWithFunc } = Require("amis.data.tree");
+
+const { getUserAuthMenuIds } = Require("auth.lib");
 /**
  * 处理用户的菜单
  * 功能一，读取本地数据库中的菜单配置,转换成soy-admin菜单
@@ -12,78 +13,11 @@ const { filterTreeDataWithFunc, filterTreeDataById, collectTreeFields } =
  * */
 
 /**
- * 获取用户的授权菜单列表id
- * @returns []
- */
-function getUserAuthMenuIds() {
-  let user_id = Process("session.get", "user_id");
-  if (!user_id) {
-    user_id = "1";
-  }
-  // get user roles
-  const user = Process("models.admin.user.find", user_id, {});
-  if (user == null) {
-    throw new Exception("用户不存在", 500);
-  }
-  if (user.role == null) {
-    throw new Exception("用户未配置角色", 500);
-  }
-  user.role = typeof user.role === "string" ? user.role.split(",") : user.role;
-
-  if (!Array.isArray(user.role)) {
-    // single role
-    user.role = [user.role];
-  }
-  // console.log("user.role", user.role);
-  const rolePemissions = user.role.reduce((acc, item) => {
-    const role = Process("models.system.auth.role.find", item, {});
-    let perms = role.permission;
-    if (role && role.status && perms != null) {
-      perms = typeof perms === "string" ? perms.split(",") : perms;
-      if (!Array.isArray(perms)) {
-        perms = [perms];
-      }
-      acc.push(...perms);
-    }
-    return acc;
-  }, []);
-
-  if (rolePemissions.length == 0) {
-    throw new Exception(`角色未配置权限`, 500);
-  }
-  // console.log("rolePemissions", rolePemissions);
-
-  // get user permissions
-
-  const permissions = Process("models.system.auth.permission.get", {});
-  if (permissions.length == 0) {
-    throw new Exception(`系统未配置权限`, 500);
-  }
-  const permissionsTree = Process(`utils.arr.Tree`, permissions, {
-    parent: "parent",
-    empty: 0,
-  });
-
-  const permissionFilter = filterTreeDataById(permissionsTree, rolePemissions);
-  // console.log("permissionFilter", permissionFilter);
-  if (permissionFilter.length == 0) {
-    throw new Exception(`角色未关联任何权限`, 500);
-  }
-  let menusIds = collectTreeFields(permissionFilter, "menus");
-
-  if (menusIds.length == 0) {
-    throw new Exception(`权限未配置菜单`, 500);
-  }
-
-  return menusIds;
-}
-/**
  * get user auth menus
  * yao run scripts.admin.menu.getUserAuthMenu
  */
 function getSoyAdminUserMenu() {
   let user = Process("session.get", "user");
-  // console.log("user>>>>>>>>>>", user);
   if (user?.type === "super") {
     return getSoySuperUserMenu();
   }
@@ -102,9 +36,9 @@ function getSoyAdminUserMenu() {
 }
 
 /**
- * yao run scripts.admin.menu.saveLoadAndSaveMenus
+ * yao run scripts.admin.menu.reLoadAndSaveMenus
  */
-function saveLoadAndSaveMenus() {
+function reLoadAndSaveMenus() {
   saveSoyRoutesToDB();
   // 导入本地开发的页面
   saveLocalAmisPagesToDB();
@@ -214,7 +148,7 @@ function saveLocalAmisPagesToDB() {
 function saveSoyRoutesToDB() {
   // 导入前端本身的菜单
   const menus = Process("scripts.amis.site.MenuSoybean")["routes"];
-  saveSoyMenusToDB(menus, "soy", true);
+  saveSoyMenusToDB(menus, "soy", false);
 }
 /**
  * 导入本地正在使用页面

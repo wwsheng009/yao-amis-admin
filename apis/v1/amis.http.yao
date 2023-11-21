@@ -72,6 +72,7 @@
       }
     },
     {
+      // /api/v1/amis/debug
       "label": "调试",
       "description": "调试会话信息",
       "path": "/debug",
@@ -140,7 +141,7 @@
       "description": "读取设置",
       "path": "/setting",
       "method": "GET",
-      "guard": "scripts.security.CheckToken",
+      "guard": "scripts.auth.token.Check",
       "process": "scripts.admin.user.readSetting",
       "in": [],
       "out": {

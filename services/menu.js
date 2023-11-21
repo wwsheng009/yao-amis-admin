@@ -1,4 +1,7 @@
-function resetAndImportMenu() {
+function resetMenu() {
   Process("scripts.system.db.cleanTable", "system_menu");
-  Process("scripts.admin.menu.saveLoadAndSaveMenus");
+}
+
+function importMenu() {
+  Process("scripts.admin.menu.reLoadAndSaveMenus");
 }

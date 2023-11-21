@@ -1,12 +1,12 @@
 /**
- * api guard,scripts.security.CheckAccessKey，检查身份验证
+ * api guard,scripts.auth.token.Check，检查身份验证
  * @param {string} path api path
  * @param {map} params api path params
  * @param {map} queries api queries in url query string
  * @param {object|string} payload json object or string
  * @param {map} headers request headers
  */
-function CheckAccessKey(path, params, queries, payload, headers) {
+function Check(path, params, queries, payload, headers) {
   const token = getToken(path, params, queries, payload, headers);
   if (!token) {
     error();

@@ -161,7 +161,6 @@
                       "type": "input-number",
                       "name": "order",
                       "label": "排序",
-                      "required": true,
                       "labelRemark": "升序排序",
                       "displayMode": "enhance",
                       "min": 0,
@@ -170,7 +169,6 @@
                     {
                       "type": "input-array",
                       "name": "http_path",
-                      "required": true,
                       "label": "路由",
                       "items": {
                         "type": "input-text",
@@ -180,7 +178,6 @@
                     {
                       "label": "菜单",
                       "name": "menus",
-                      "required": true,
                       "searchable": true,
                       "multiple": true,
                       "type": "tree-select",
@@ -194,7 +191,6 @@
                     {
                       "label": "模型",
                       "name": "models",
-                      "required": true,
                       "type": "select",
                       "multiple": true,
                       "joinValues": false,
@@ -207,20 +203,20 @@
                       "label": "操作方式",
                       "options": [
                         {
-                          "value": "读取",
-                          "label": "READ"
+                          "label": "读取",
+                          "value": "READ"
                         },
                         {
-                          "value": "修改",
-                          "label": "UPDATE"
+                          "label": "修改",
+                          "value": "UPDATE"
                         },
                         {
-                          "value": "创建",
-                          "label": "CREATE"
+                          "label": "创建",
+                          "value": "CREATE"
                         },
                         {
-                          "value": "删除",
-                          "label": "DELETE"
+                          "label": "删除",
+                          "value": "DELETE"
                         }
                       ],
                       "description": "不选则为ANY",
@@ -413,7 +409,6 @@
                   "type": "input-number",
                   "name": "order",
                   "label": "排序",
-                  "required": true,
                   "labelRemark": "升序排序",
                   "displayMode": "enhance",
                   "min": 0,
@@ -422,7 +417,6 @@
                 {
                   "type": "input-array",
                   "name": "http_path",
-                  "required": true,
                   "label": "路由",
                   "items": {
                     "type": "input-text",
@@ -432,7 +426,6 @@
                 {
                   "label": "菜单",
                   "name": "menus",
-                  "required": true,
                   "searchable": true,
                   "multiple": true,
                   "type": "tree-select",
@@ -446,7 +439,6 @@
                 {
                   "label": "模型",
                   "name": "models",
-                  "required": true,
                   "type": "select",
                   "multiple": true,
                   "joinValues": false,
@@ -459,20 +451,20 @@
                   "label": "操作方式",
                   "options": [
                     {
-                      "value": "读取",
-                      "label": "READ"
+                      "label": "读取",
+                      "value": "READ"
                     },
                     {
-                      "value": "修改",
-                      "label": "UPDATE"
+                      "label": "修改",
+                      "value": "UPDATE"
                     },
                     {
-                      "value": "创建",
-                      "label": "CREATE"
+                      "label": "创建",
+                      "value": "CREATE"
                     },
                     {
-                      "value": "删除",
-                      "label": "DELETE"
+                      "label": "删除",
+                      "value": "DELETE"
                     }
                   ],
                   "description": "不选则为ANY",
@@ -569,7 +561,6 @@
                       "name": "http_method",
                       "quickEdit": {
                         "language": "json",
-                        "required": true,
                         "saveImmediately": true,
                         "type": "editor"
                       },
@@ -581,9 +572,9 @@
                       "label": "排序",
                       "name": "order",
                       "quickEdit": {
-                        "required": true,
                         "saveImmediately": true,
-                        "type": "input-number"
+                        "type": "input-number",
+                        "default": 0
                       },
                       "searchable": true,
                       "sortable": true,
@@ -595,7 +586,6 @@
                       "name": "http_path",
                       "quickEdit": {
                         "language": "json",
-                        "required": true,
                         "saveImmediately": true,
                         "type": "editor"
                       },
@@ -609,7 +599,6 @@
                       "name": "menus",
                       "quickEdit": {
                         "language": "json",
-                        "required": true,
                         "saveImmediately": true,
                         "type": "editor"
                       },
@@ -623,7 +612,6 @@
                       "name": "models",
                       "quickEdit": {
                         "language": "json",
-                        "required": true,
                         "saveImmediately": true,
                         "type": "editor"
                       },
@@ -637,7 +625,6 @@
                       "name": "model_method",
                       "quickEdit": {
                         "language": "json",
-                        "required": true,
                         "saveImmediately": true,
                         "type": "editor"
                       },

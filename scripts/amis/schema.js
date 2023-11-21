@@ -1,6 +1,6 @@
 const {
   getFormFields,
-  getTableFields,
+  getModelFields,
   getFormViewFields,
   getModelFieldsWithQuick,
 } = Require("amis.lib");
@@ -39,7 +39,7 @@ function generateEditFormFields(tableName, columns) {
   return schema;
 }
 function getTableViewBodySchema(modelId, tableName) {
-  const fields = getTableFields(modelId);
+  const fields = getModelFields(modelId);
 
   return {
     columns: fields,
@@ -89,7 +89,7 @@ function formViewFieldsSchema(modelId, columns) {
 
 // yao run scripts.amis.schema.generateViewFields admin.user
 function generateViewFields(tableName, columns) {
-  const fields = getTableFields(tableName, columns);
+  const fields = getModelFields(tableName, columns);
 
   const schema = {
     type: "page",
@@ -149,7 +149,7 @@ function generateViewFieldsWithQuick(tableName, columns) {
 
 //yao run scripts.amis.schema.curdListPage
 function curdListPage(table, columns) {
-  const fields = getTableFields(table, columns);
+  const fields = getModelFields(table, columns);
   const schema = {
     type: "page",
     title: "列表",

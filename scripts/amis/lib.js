@@ -9,7 +9,7 @@
 //模型字段的详细定义查看https://yaoapps.com/doc/%E6%89%8B%E5%86%8C/Widgets/Model
 //todo检查模型定义来更新字段
 
-const { DotName, UnderscoreName, IsMysql } = Require("amis.lib_tool");
+const { DotName, IsMysql } = Require("amis.lib_tool");
 
 const Exception = Error;
 
@@ -37,16 +37,16 @@ const Exception = Error;
 // }
 /**
  * 读取已经加载在内存中的模型的定义
- * @param {string} modelName 模型名称
+ * @param {string} modelId 模型名称
  * @returns
  */
-function getModelDefinition(modelName, columnsIn) {
+function getModelDefinition(modelId, columnsIn) {
   let model = Process(
     "scripts.system.model.getModelById", //优先从数据库中加载，
-    DotName(modelName)
+    DotName(modelId)
   );
   if (!model) {
-    throw new Exception(`模型:${modelName}不存在`);
+    throw new Exception(`模型:${modelId}不存在`);
   }
   if (columnsIn != null && Array.isArray(columnsIn) && columnsIn.length > 0) {
     const columns = columnsIn.filter((col) => col.checked === true);
@@ -68,7 +68,6 @@ function getModelDefinition(modelName, columnsIn) {
 function updateMessage(text, col) {
   let newString = text.replace(/\{\{label\}\}/g, col.label);
   newString = newString.replace(/\{\{input\}\}/g, "${col.name}");
-
   return newString;
 }
 
@@ -82,11 +81,8 @@ function updateViewColFromModel(amisColumn, column, modelDsl) {
   if (column == null) {
     return amisColumn;
   }
-
   amisColumn.label = amisColumn.label || column.label || column.comment;
-
   if (modelDsl.option?.soft_deletes) {
-    //
     if (column.name == "deleted_at") {
       amisColumn.__ignore = true; //在表格里不需要输出
     }
@@ -351,11 +347,11 @@ function getTableDefinition(tableName) {
 /**
  * 读取一个表的所有字段列表
  * 注意：这个功能并不一定适用于官方版本的yao,在字段的处理器是有经过增强处理的
- * @param {string} tableName 数据库表或是模型名
+ * @param {string} modelId 数据库表或是模型名
  * @returns
  */
-function getTableFields(tableName, columnsIn) {
-  let model = getModelDefinition(tableName, columnsIn);
+function getModelFields(modelId, columnsIn) {
+  let model = getModelDefinition(modelId, columnsIn);
   const columns = model.columns;
   //从模型定义中获取数据
 
@@ -375,14 +371,14 @@ function getTableFields(tableName, columnsIn) {
 
 /**
  * 更新模型，增加元数据字段
- * @param {object} model 模型
+ * @param {object} modelDsl 模型
  * @returns
  */
-function AddMetaFields(model) {
-  if (model.option?.timestamps) {
-    let result = model.columns?.some((item) => item.name === "created_at");
+function AddMetaFields(modelDsl) {
+  if (modelDsl.option?.timestamps) {
+    let result = modelDsl.columns?.some((item) => item.name === "created_at");
     if (!result) {
-      model.columns.push({
+      modelDsl.columns.push({
         name: "created_at",
         label: "创建时间",
         static: true,
@@ -390,9 +386,9 @@ function AddMetaFields(model) {
         format: "YYYY-MM-DD HH:mm:ss",
       });
     }
-    result = model.columns?.some((item) => item.name === "updated_at");
+    result = modelDsl.columns?.some((item) => item.name === "updated_at");
     if (!result) {
-      model.columns.push({
+      modelDsl.columns.push({
         name: "updated_at",
         label: "更新时间",
         static: true,
@@ -401,10 +397,10 @@ function AddMetaFields(model) {
       });
     }
   }
-  if (model.option?.soft_deletes) {
-    const result = model.columns?.some((item) => item.name === "deleted_at");
+  if (modelDsl.option?.soft_deletes) {
+    const result = modelDsl.columns?.some((item) => item.name === "deleted_at");
     if (!result) {
-      model.columns.push({
+      modelDsl.columns.push({
         name: "deleted_at",
         label: "删除时间",
         static: true,
@@ -414,7 +410,7 @@ function AddMetaFields(model) {
     }
   }
 
-  return model;
+  return modelDsl;
 }
 
 function getWithsUrl(modelId) {
@@ -424,8 +420,14 @@ function getWithsUrl(modelId) {
   }
 }
 
-// yao run scripts.amis.lib.getFormViewFields
-function getFormViewFields(modelId, columnsIn) {
+/**
+ *  yao run scripts.amis.lib.getFormViewFields
+ * @param {*} modelId
+ * @param {*} columnsIn
+ * @param {*} noRelation 模型之间有可能是相互关联，设置成true,避免递归
+ * @returns
+ */
+function getFormViewFields(modelId, columnsIn, noRelation) {
   // 模型定义
   const model = getModelDefinition(modelId, columnsIn);
   const columns = model.columns;
@@ -436,11 +438,21 @@ function getFormViewFields(modelId, columnsIn) {
     delete col.displayOnly;
     schemas.push(col);
   });
-  updateViewFormRelations(schemas, model, "view");
+  // 避免递归
+  if (!noRelation) {
+    updateFormRelations(schemas, model, "view");
+  }
   return schemas;
 }
 
-function updateViewFormRelations(schemas, model, actionType) {
+/**
+ * 更新表单中的模型关联关系
+ * @param {Array} schemas form schema
+ * @param {object} model modelDsl object
+ * @param {string} actionType 'view' |'update'
+ * @returns
+ */
+function updateFormRelations(schemas, model, actionType) {
   const hasOnes = {};
   const hasManys = {};
   if (model.relations) {
@@ -459,9 +471,9 @@ function updateViewFormRelations(schemas, model, actionType) {
     const element = hasOnes[key];
     let fields = [];
     if (actionType === "view") {
-      fields = getFormViewFields(element.model);
+      fields = getFormViewFields(element.model, null, true);
     } else {
-      fields = getFormFields(element.model, actionType);
+      fields = getFormFields(element.model, actionType, null, null, true);
     }
     fields = fields.filter((col) => col.name !== element.key);
     schemas.push({
@@ -490,7 +502,7 @@ function updateViewFormRelations(schemas, model, actionType) {
       let fields = [];
       let tableSchema = {};
       if (actionType === "view") {
-        fields = getTableFields(element.model);
+        fields = getModelFields(element.model);
         fields = fields.filter((col) => col.name !== element.key);
 
         tableSchema = {
@@ -538,9 +550,16 @@ function updateViewFormRelations(schemas, model, actionType) {
  * @param {string} actionType 'create' 'view' 'update' 'filter'
  * @param {Array} columnsIn array of column
  * @param {Array} excludeFields
+ * @param {boolean}noRelation 模型之间有可能是相互关联，设置成true,避免递归
  * @returns
  */
-function getFormFields(modelId, actionType, columnsIn, excludeFields) {
+function getFormFields(
+  modelId,
+  actionType,
+  columnsIn,
+  excludeFields,
+  noRelation
+) {
   let model = getModelDefinition(modelId, columnsIn);
   const columns = model.columns;
 
@@ -584,17 +603,17 @@ function getFormFields(modelId, actionType, columnsIn, excludeFields) {
       schemas = schemas.filter((col) => col.name !== exclude);
     });
   }
-  updateViewFormRelations(schemas, model, actionType);
+  if (!noRelation) {
+    updateFormRelations(schemas, model, actionType);
+  }
 
   return schemas;
 }
 
 //转换表字段清单成amis的form filter
-function getFilterFormFields(tableName, columnsIn) {
+function getFilterFormFields(modelId, columnsIn) {
   //从数据库表中获取定义
-  // const schema = getTableSchema(tableName);
-  // const columns = schema.columns;
-  const model = getModelDefinition(tableName, columnsIn);
+  const model = getModelDefinition(modelId, columnsIn);
   const columns = model?.columns || [];
 
   let schemas = [];
@@ -1272,11 +1291,11 @@ function column2AmisFormViewColumn(column) {
 
 /**
  * 根据表的定义生成一个excel mapping定义，用户再根据自己的需要进行修改
- * @param {string} tableName 数据库表名
+ * @param {string} modelId 数据库表名
  * @returns 字段定义
  */
-function excelMapping(tableName, columnsIn) {
-  const model = getModelDefinition(tableName, columnsIn);
+function excelMapping(modelId, columnsIn) {
+  const model = getModelDefinition(modelId, columnsIn);
   const columns = model?.columns;
 
   // const schema = getTableSchema(tableName);
@@ -1320,7 +1339,7 @@ function excelMapping(tableName, columnsIn) {
 module.exports = {
   getFormViewFields,
   excelMapping,
-  getTableFields,
+  getModelFields,
   getModelFieldsWithQuick,
   getFilterFormFields,
   getFormFields,

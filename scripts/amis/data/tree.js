@@ -153,7 +153,7 @@ function getSubNodeItems(model, parentId) {
 function filterTreeDataWithFunc(dataArray, func) {
   return dataArray.reduce((acc, item) => {
     // Check if the current node or its children match the filter condition
-    console.log("item id=======>", item.id);
+    // console.log("item id=======>", item.id);
     const includesFilter =
       func(item) ||
       (item.children && filterTreeDataWithFunc(item.children, func).length > 0);
@@ -206,7 +206,7 @@ function collectTreeFields(data, field) {
   function traverse(obj) {
     if (obj != null && typeof obj === "object") {
       if (obj.hasOwnProperty(field)) {
-        fields.push(obj[field]);
+        obj[field] != null && fields.push(obj[field]);
       }
 
       for (const key in obj) {

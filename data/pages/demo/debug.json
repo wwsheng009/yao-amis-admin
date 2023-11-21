@@ -1,0 +1,7 @@
+{
+  "type": "page",
+  "body": {
+    "type": "service",
+    "schemaApi": "get:/api/v1/amis/debug"
+  }
+}

@@ -38,7 +38,8 @@
             "comment": "排序",
             "label": "排序",
             "name": "order",
-            "type": "integer"
+            "type": "integer",
+            "default": 0
         },
         {
             "comment": "路由",

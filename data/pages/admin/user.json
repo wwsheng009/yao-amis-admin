@@ -6,7 +6,7 @@
           "&": "$$"
         },
         "method": "post",
-        "url": "/api/v1/system/model/admin.user/search?page=${page}&perPage=${perPage}&orderBy=${orderBy}&orderDir=${orderDir}&select=id,type,email,phone,role,status,created_at,updated_at"
+        "url": "/api/v1/system/model/admin.user/search?select=id,type,email,phone,role,status,created_at,updated_at"
       },
       "autoFillHeight": true,
       "bulkActions": [
@@ -26,6 +26,13 @@
           "searchable": true,
           "sortable": true,
           "type": "number"
+        },
+        {
+          "label": "姓名",
+          "name": "name",
+          "searchable": true,
+          "sortable": true,
+          "type": "text"
         },
         {
           "label": "类型",
@@ -100,6 +107,12 @@
                       "type": "input-number"
                     },
                     {
+                      "label": "姓名",
+                      "name": "name",
+                      "static": true,
+                      "type": "input-text"
+                    },
+                    {
                       "label": "类型",
                       "name": "type",
                       "static": true,
@@ -167,10 +180,24 @@
                   "api": "post:/api/v1/system/model/admin.user/bulkUpdate/$id",
                   "body": [
                     {
-                      "isID": true,
                       "label": "ID",
                       "name": "id",
-                      "type": "input-number"
+                      "type": "input-number",
+                      "static": true
+                    },
+                    {
+                      "label": "姓名",
+                      "maxLength": 80,
+                      "name": "name",
+                      "type": "input-text",
+                      "validationErrors": {
+                        "maxLength": "姓名不能超过20个字",
+                        "minLength": "姓名至少需要2个字"
+                      },
+                      "validations": {
+                        "maxLength": 40,
+                        "minLength": 2
+                      }
                     },
                     {
                       "label": "类型",
@@ -292,11 +319,57 @@
               "icon": "fa fa-times text-danger",
               "tooltip": "删除",
               "type": "button"
+            },
+            {
+              "actionType": "dialog",
+              "dialog": {
+                "body": {
+                  "api": "post:/api/v1/system/model/admin.user/update/$id",
+                  "body": [
+                    {
+                      "label": "ID",
+                      "name": "id",
+                      "type": "input-number",
+                      "static": true
+                    },
+                    {
+                      "label": "登录密码",
+                      "maxLength": 256,
+                      "name": "password",
+                      "type": "input-password",
+                      "validationErrors": {
+                        "matchRegexp": "登录密码应该至少包含一个数字",
+                        "matchRegexp1": "登录密码应该至少包含一个大写字母",
+                        "matchRegexp2": "登录密码应该至少包含一个小写字母",
+                        "matchRegexp3": "登录密码应该至少包含一个符号",
+                        "maxLength": "登录密码应该由6-18位，大小写字母、数字和符号构成",
+                        "minLength": "登录密码应该由6-18位，大小写字母、数字和符号构成"
+                      },
+                      "validations": {
+                        "matchRegexp": "[0-9]+",
+                        "matchRegexp1": "[A-Z]+",
+                        "matchRegexp2": "[a-z]+",
+                        "matchRegexp3": "[@#$&*\\+]+",
+                        "maxLength": 18,
+                        "minLength": 6
+                      }
+                    }
+                  ],
+                  "silentPolling": false,
+                  "trimValues": true,
+                  "type": "form"
+                },
+                "size": "lg",
+                "title": "重置密码",
+                "type": "dialog"
+              },
+              "icon": "fas fa-key",
+              "tooltip": "重置密码",
+              "type": "button"
             }
           ],
           "label": "操作",
-          "type": "operation",
-          "width": 100
+          "type": "operation"
         }
       ],
       "filter": {
@@ -325,6 +398,20 @@
             "label": "ID",
             "name": "id",
             "type": "input-number"
+          },
+          {
+            "label": "姓名",
+            "maxLength": 80,
+            "name": "name",
+            "type": "input-text",
+            "validationErrors": {
+              "maxLength": "姓名不能超过20个字",
+              "minLength": "姓名至少需要2个字"
+            },
+            "validations": {
+              "maxLength": 40,
+              "minLength": 2
+            }
           },
           {
             "label": "类型",
@@ -451,6 +538,20 @@
             "body": {
               "api": "post:/api/v1/system/model/admin.user/create",
               "body": [
+                {
+                  "label": "姓名",
+                  "maxLength": 80,
+                  "name": "name",
+                  "type": "input-text",
+                  "validationErrors": {
+                    "maxLength": "姓名不能超过20个字",
+                    "minLength": "姓名至少需要2个字"
+                  },
+                  "validations": {
+                    "maxLength": 40,
+                    "minLength": 2
+                  }
+                },
                 {
                   "label": "类型",
                   "name": "type",
@@ -595,6 +696,26 @@
                 {
                   "addable": true,
                   "columns": [
+                    {
+                      "label": "姓名",
+                      "name": "name",
+                      "quickEdit": {
+                        "maxLength": 80,
+                        "saveImmediately": true,
+                        "type": "input-text",
+                        "validationErrors": {
+                          "maxLength": "姓名不能超过20个字",
+                          "minLength": "姓名至少需要2个字"
+                        },
+                        "validations": {
+                          "maxLength": 40,
+                          "minLength": 2
+                        }
+                      },
+                      "searchable": true,
+                      "sortable": true,
+                      "type": "text"
+                    },
                     {
                       "label": "类型",
                       "name": "type",

@@ -626,12 +626,41 @@ function MenuSoybean() {
 }
 // yao run scripts.amis.site.Menu
 function Menu() {
+  let user = Process("session.get", "user");
+  if (user?.type === "super") {
+    return getSuperUserMenu();
+  }
+  let pages = Process("scripts.admin.menu.getAmisPagesFromDB");
+
+  let siteMenu = {
+    type: "app",
+    brandName: "Yao应用",
+    pages: [
+      ...getHomeMenu(),
+      {
+        children: pages,
+      },
+      {
+        children: getSettingMenu(),
+      },
+    ],
+  };
+  return siteMenu;
+}
+
+function getSuperUserMenu() {
   const editorPages = Process("scripts.admin.menu.getAmisEditorPages");
 
-  let pages = Process("scripts.admin.menu.getAmisPagesFromDB");
-  if (pages.length === 0) {
+  let user = Process("session.get", "user");
+  if (user?.type === "super") {
     pages = Process("scripts.admin.menu.getAmisPages");
   }
+  // else {
+  //   let pages = Process("scripts.admin.menu.getAmisPagesFromDB");
+  //   if (pages.length === 0) {
+  //     pages = Process("scripts.admin.menu.getAmisPages");
+  //   }
+  // }
 
   let siteMenu = {
     type: "app",
@@ -646,7 +675,9 @@ function Menu() {
       {
         children: editorPages,
       },
-      ...getInfoMenu(),
+      {
+        children: getSettingMenu(),
+      },
     ],
   };
   return siteMenu;
@@ -680,12 +711,6 @@ function getSystemMenu() {
           url: "/system",
           icon: "fas fa-toolbox",
           children: [
-            {
-              label: "个人信息",
-              icon: "fas fa-info",
-              schemaApi: "/api/v1/amis/pages/user.info",
-              url: "user/info",
-            },
             {
               label: "菜单管理",
               icon: "fas fa-bars",
@@ -757,33 +782,37 @@ function getSystemMenu() {
     },
   ];
 }
-function getInfoMenu() {
+function getSettingMenu() {
   return [
     {
+      label: "设置",
+      icon: "fas fa-ellipsis-h",
       children: [
+        {
+          label: "个人信息",
+          icon: "fas fa-info",
+          schemaApi: "/api/v1/amis/pages/user.info",
+          url: "user/info",
+        },
         {
           label: "关于",
           icon: "fa fa-info",
           schemaApi: "/api/v1/amis/pages/system.about",
           url: "/about",
         },
-      ],
-    },
-    {
-      children: [
         {
           label: "退出",
           icon: "fas fa-outdent",
           schemaApi: "/api/v1/amis/pages/user.logout",
           url: "/logout",
         },
+        {
+          label: "404",
+          schemaApi: "/api/v1/amis/pages/system.404",
+          isDefaultPage: true,
+          visible: false,
+        },
       ],
-    },
-    {
-      label: "404",
-      schemaApi: "/api/v1/amis/pages/system.404",
-      isDefaultPage: true,
-      visible: false,
     },
   ];
 }

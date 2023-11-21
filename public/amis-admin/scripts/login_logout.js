@@ -117,15 +117,21 @@ var yao_amis = {
    * 注入全局变量，在系统登录时成功后会调用
    * payload,返回的报文值
    * response http请求响应
-   * return window.amisLogin(payload,response,api,context)
+   * return yao_amis.login(payload,response,api,context)
    */
   login(payload, response, api, context) {
     let data = payload;
+    if (data.data) {
+      data = data.data;
+    }
+    if ("msg" in data && "status" in data && data.status != 0) {
+      return data;
+    }
     if (response.status === 200 && payload) {
-      if (data.data) {
-        data = data.data;
-      }
       this.afterLogin(data);
+      if (this.reloadUrl) {
+        window.location.href = this.reloadUrl;
+      }
     }
     return {
       status: 0,

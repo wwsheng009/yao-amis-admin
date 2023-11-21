@@ -353,15 +353,30 @@
           "label": "新增"
         },
         {
-          "label": "清空并导入本地菜单",
-          "confirmText": "确定要重新导入本地菜单吗?",
+          "label": "清空并菜单",
+          "confirmText": "确定要清空菜单吗?",
           "type": "button",
           "level": "danger",
           "actionType": "ajax",
           "api": {
             "data": {
               "args": [],
-              "method": "resetAndImportMenu"
+              "method": "resetMenu"
+            },
+            "method": "post",
+            "url": "/api/__yao/app/service/menu"
+          }
+        },
+        {
+          "label": "导入本地菜单",
+          "confirmText": "确定要导入本地菜单吗?",
+          "type": "button",
+          "level": "primary",
+          "actionType": "ajax",
+          "api": {
+            "data": {
+              "args": [],
+              "method": "importMenu"
             },
             "method": "post",
             "url": "/api/__yao/app/service/menu"
