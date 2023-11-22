@@ -248,8 +248,7 @@
           }
         }
       ],
-      "actions": [],
-      "resetAfterSubmit": true
+      "actions": []
     },
     {
       "features": ["delete", "view"],
@@ -341,7 +340,7 @@
           "name": "name",
           "type": "text",
           "sortable": true,
-          "filterable": true
+          "searchable": true
         },
         {
           "name": "path",
@@ -376,8 +375,7 @@
           "name": "time",
           "type": "text",
           "label": "修改时间",
-          "sortable": true,
-          "filterable": true
+          "sortable": true
         },
         {
           "label": "操作",

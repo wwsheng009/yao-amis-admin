@@ -370,7 +370,7 @@ function FilterArrayWithQuery(list, querysIn, searchFields) {
   if (!Array.isArray(list) || list.length == 0) {
     return list;
   }
-  let querys = querysIn;
+  let querys = querysIn || {};
 
   let first = list[0];
 
@@ -378,37 +378,37 @@ function FilterArrayWithQuery(list, querysIn, searchFields) {
     return list;
   }
 
-  let AndMode = true;
-  if (typeof querys === "object") {
-    delete querys["page"];
-    delete querys["perPage"];
-    delete querys["orderDir"];
-    delete querys["orderBy"];
-    let keyword = getArrayItem(querys, "keywords");
+  delete querys["page"];
+  delete querys["perPage"];
+  delete querys["orderDir"];
+  delete querys["orderBy"];
 
-    if (keyword && !first["keywords"]) {
-      searchFields = searchFields || [];
-      if (!Array.isArray(searchFields)) {
-        searchFields = [];
-      }
-      for (const key in first) {
-        if (Object.hasOwnProperty.call(first, key)) {
-          if (keyword.includes("*")) {
-            querys[key] = [keyword];
-          } else {
-            querys[key] = [`*${keyword}*`];
-          }
-        }
-        // 排除不需要的字段，限制需要搜索的字段列表
-        if (searchFields.length && !searchFields.includes(key)) {
-          delete querys[key];
-        }
-      }
-      AndMode = false;
+
+
+  let keyword = getArrayItem(querys, "keywords");
+
+  const keywordQuery = {}
+  if (querys["keywords"] != null && !first["keywords"]) {
+    // 只有keywords
+    searchFields = searchFields || [];
+    if (!Array.isArray(searchFields)) {
+      searchFields = [];
     }
+    for (const key in first) {
+      if (Object.hasOwnProperty.call(first, key)) {
+        if (keyword.includes("*")) {
+          keywordQuery[key] = [keyword];
+        } else {
+          keywordQuery[key] = [`*${keyword}*`];
+        }
+      }
+      // 排除不需要的字段，限制需要搜索的字段列表
+      if (searchFields.length && !searchFields.includes(key)) {
+        delete keywordQuery[key];
+      }
+    }
+    delete querys["keywords"];
   }
-
-
 
   for (const key in querys) {
     if (!Object.hasOwnProperty.call(first, key)) {
@@ -420,38 +420,48 @@ function FilterArrayWithQuery(list, querysIn, searchFields) {
       delete querys[key];
       continue
     }
-
   }
 
-  const arr = list.filter((item) => {
-    for (let key in querys) {
-      let value = querys[key] + "";
-      if (Array.isArray(querys[key]) && querys[key].length) {
-        value = querys[key][0] + "";
-      }
-      if (value === undefined) continue;
-      if (value.includes("*")) {
-        const pattern = new RegExp(`^${value.replace(/\*/g, ".*")}`, "i");
-        if (AndMode) {
-          if (!pattern.test(item[key])) return false;
-        } else {
-          if (pattern.test(item[key])) return true;
+  function filterArray(queryObject, AndMode) {
+    const arr = list.filter((item) => {
+      for (let key in queryObject) {
+        let value = queryObject[key] + "";
+        if (Array.isArray(queryObject[key]) && queryObject[key].length) {
+          value = queryObject[key][0] + "";
         }
+        if (value === undefined) continue;
+        if (value.includes("*")) {
+          const pattern = new RegExp(`^${value.replace(/\*/g, ".*")}`, "i");
+          if (AndMode) {
+            if (!pattern.test(item[key])) return false;
+          } else {
+            if (pattern.test(item[key])) return true;
+          }
+        } else {
+          if (AndMode) {
+            if (item[key] + "" != value) return false;
+          } else {
+            if (item[key] + "" == value) return true;
+          }
+        }
+      }
+      if (AndMode) {
+        return true;
       } else {
-        if (AndMode) {
-          if (item[key] + "" != value) return false;
-        } else {
-          if (item[key] + "" == value) return true;
-        }
+        return false;
       }
-    }
-    if (AndMode) {
-      return true;
-    } else {
-      return false;
-    }
-  });
-  return arr;
+    });
+    return arr
+  }
+  // console.log("querys", querys)
+  if (Object.keys(querys).length > 0) {
+    list = filterArray(querys, true)
+  }
+  // console.log("keywordQuery", keywordQuery)
+  if (Object.keys(keywordQuery).length > 0) {
+    list = filterArray(keywordQuery, false)
+  }
+  return list;
 }
 
 // const {mergeQueryObject} = Require("amis.data.lib")
