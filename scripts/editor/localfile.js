@@ -265,7 +265,7 @@ function createCurdPage(table) {
 }
 
 /**
- * 加载设计的页面到数据库中后，才能使用以下的请求
+ * 保存并加载设计的页面到数据库中后，才能使用以下的请求
  * /api/__yao/widget/amis/crud-list/setting
  * yao studio run editor.loadPageToDB
  */
@@ -287,6 +287,7 @@ function loadPageToDB() {
       }
       //widget的保存需要文件后缀名。
       //如果没有后缀名，无法区分文件类型。
+      // fname是关键字段，并且有唯一性
       Process("widget.save", "amis", fname, page);
     }
   }

@@ -172,11 +172,11 @@ function updateFormColFromModel(amisColumn, modelColumn) {
 
   amisColumn.label = amisColumn.label || modelColumn.label;
 
-  const type = modelColumn.type.toUpperCase();
-  if (type == "JSON" || type == "JSONB") {
-    amisColumn.type = "editor";
-    amisColumn.language = "json";
-  }
+  // const type = modelColumn.type.toUpperCase();
+  // if (type == "JSON" || type == "JSONB") {
+  //   amisColumn.type = "editor";
+  //   amisColumn.language = "json";
+  // }
 
   if (modelColumn.validations && modelColumn.validations.length) {
     amisColumn.validations = amisColumn.validations || {};
@@ -568,7 +568,7 @@ function getFormFields(
 
   for (const column of columns) {
     let output = true;
-    let col = column2AmisFormItem(column);
+    let col = column2AmisFormEditColumn(column);
     // if (col.isID) {
     //   col.isID = undefined;
     // }
@@ -618,7 +618,7 @@ function getFilterFormFields(modelId, columnsIn) {
 
   let schemas = [];
   for (const column of columns) {
-    let col = column2AmisFormItem(column);
+    let col = column2AmisFormEditColumn(column);
     col = updateFormColFromModel(col, column);
     col = updateFormColCommon(col, column, model);
 
@@ -673,7 +673,7 @@ function getModelFieldsWithQuick(modelId, columnsIn) {
   for (const column of columns) {
     let { newColumn: viewColumn, displayOnly } =
       column2AmisTableViewColumn(column);
-    let formColumn = column2AmisFormItem(column);
+    let formColumn = column2AmisFormEditColumn(column);
     let label = column.label;
 
     formColumn = updateFormColFromModel(formColumn, column);
@@ -702,7 +702,6 @@ function getModelFieldsWithQuick(modelId, columnsIn) {
       },
       ...viewColumn,
     };
-    delete fieldNew.static;
     if (displayOnly) {
       fieldNew.quickEdit = false;
     }
@@ -724,7 +723,7 @@ function getModelFieldsWithQuick(modelId, columnsIn) {
  * @param {object} column 数据库表列定义
  * @returns amis form item 定义
  */
-function column2AmisFormItem(column) {
+function column2AmisFormEditColumn(column) {
   const name = column.name.toUpperCase();
   let newColumn = {};
   newColumn.name = column.name;
@@ -748,8 +747,8 @@ function column2AmisFormItem(column) {
   }
 
   newColumn.type = "input-text";
-  const type = column.type.toUpperCase();
-  switch (type) {
+  const columnType = column.type.toUpperCase();
+  switch (columnType) {
     case "STRING":
     case "CHAR":
       newColumn.type = "input-text";
@@ -905,7 +904,7 @@ function column2AmisFormItem(column) {
   }
   //布尔
   if (
-    type === "TINYINTEGER" &&
+    columnType === "TINYINTEGER" &&
     (column.default === 0 || column.default === 1)
   ) {
     newColumn.type = "switch";
@@ -921,8 +920,20 @@ function column2AmisFormItem(column) {
   }
   if (name.includes("EMAIL")) {
     newColumn.type = "input-email";
-    // newColumn.validations = newColumn.validations || {};
-    // newColumn.validations.isEmail = true;
+  }
+  if (column.check_model != null) {
+    if (column.check_model_multi) {
+      newColumn.multiple = true;
+    }
+    newColumn.type = "select";
+    newColumn.source = {
+      method: 'post',
+      url: `/api/v1/system/model/${column.check_model}/select_options`,
+      data: {
+        __label: newColumn.check_model_label || 'name',
+        __value: newColumn.check_model_value || 'id',
+      }
+    }
   }
   return newColumn;
 }
@@ -1118,7 +1129,22 @@ function column2AmisTableViewColumn(column) {
     newColumn.searchable = undefined;
     newColumn.sortable = undefined;
   }
-
+  if (column.check_model != null) {
+    if (column.check_model_multi) {
+      newColumn.multiple = true;
+    }
+    newColumn.type = "input-tag";
+    newColumn.static = true;
+    newColumn.source = {
+      cache: 2000,
+      method: 'post',
+      url: `/api/v1/system/model/${column.check_model}/select_options`,
+      data: {
+        __label: newColumn.check_model_label || 'name',
+        __value: newColumn.check_model_value || 'id',
+      }
+    }
+  }
   return { newColumn, displayOnly };
 }
 

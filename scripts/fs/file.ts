@@ -1,5 +1,14 @@
 const uploadDir = "/upload";
 
+function writeLog(file_name, file_name2, operation) {
+  let user_id = Process("session.get", "user_id");
+  Process("models.system.log.file.save", {
+    user_id,
+    file_name,
+    file_name2,
+    operation,
+  });
+}
 function UploadFile(type: string, file: YaoFile, folder: string) {
   const filePath = saveFile(type, file, folder);
   return {
@@ -32,10 +41,13 @@ function getFolder(type: string) {
   }
   return filePath;
 }
-function deleteFile(name: string) {
-  const fname = getUserFilePath(name);
+function deleteFile(type: string, name: string) {
+  const fname = getFilePath(type, name);
 
-  return Process("fs.system.Remove", fname);
+  Process("fs.system.Remove", fname);
+  writeLog(fname, "", "remove");
+
+  return;
 }
 function queryEscape(str) {
   return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
@@ -80,6 +92,8 @@ function saveFile(type: string, file: YaoFile, folder: string) {
     fs.MkdirAll(uploadFolder);
   }
   fs.Move(file.tempFile, `${filePath}`);
+
+  writeLog(filePath, "", "upload");
 
   return filePath2;
   // return fs.Abs(filePath2);
@@ -239,6 +253,7 @@ function deleteFolder(type: string, folder: string) {
   if (fs.Exists(uploadFolder)) {
     fs.RemoveAll(uploadFolder);
   }
+  writeLog(uploadFolder, "", "delete_folder");
 }
 function moveFolder(type: string, source: string, target: string) {
   if (source == null || source == "") {
@@ -266,6 +281,7 @@ function moveFolder(type: string, source: string, target: string) {
   if (fs.Exists(sourceFolder) && !fs.Exists(targetFolder)) {
     fs.Move(sourceFolder, targetFolder);
   }
+  writeLog(sourceFolder, targetFolder, "move_folder");
 }
 
 function convertToNestedArray(folderList: string[]): object[] {

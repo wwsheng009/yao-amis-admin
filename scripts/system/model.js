@@ -119,7 +119,7 @@ function CompleteModel(modelDsl) {
       if (col.option != null && typeof col.option === "string") {
         try {
           col.option = JSON.parse(col.option);
-        } catch (error) {}
+        } catch (error) { }
       }
       if (Array.isArray(col.option) && col.option.length > 0) {
         col.options = [];
@@ -411,6 +411,9 @@ function ConvertApiObjectToModel(modelDsl) {
       if (col.hasOwnProperty("is_index")) {
         col.index = col.is_index;
         delete col.is_index;
+      }
+      if (col.hasOwnProperty("__index")) {
+        delete col.__index;
       }
     });
   }

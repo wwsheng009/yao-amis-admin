@@ -157,6 +157,36 @@
       "nullable": true
     },
     {
+      "label": "检查模型",
+      "name": "check_model",
+      "type": "string",
+      "comment": "模型模型",
+      "nullable": true
+    },
+    {
+      "label": "检查模型标签字段",
+      "name": "check_model_label",
+      "type": "string",
+      "comment": "模型模型标签字段",
+      "default": "name",
+      "nullable": true
+    },
+    {
+      "label": "检查模型值字段",
+      "name": "check_model_value",
+      "type": "string",
+      "comment": "模型模型值字段",
+      "default": "id",
+      "nullable": true
+    },
+    {
+      "label": "检查模型是否多选",
+      "name": "check_model_multi",
+      "type": "boolean",
+      "comment": "检查模型是否多选",
+      "default": false
+    },
+    {
       "label": "生成器",
       "name": "generate",
       "type": "string",
@@ -198,127 +228,7 @@
       "model": "ddic.model",
       "key": "id",
       "foreign": "model_id"
-    },
-    "element": {
-      "type": "hasOne",
-      "model": "ddic.model.element",
-      "key": "id",
-      "foreign": "element_id"
     }
   },
-  "option": {},
-  "xgen": {
-    "list": {
-      "fields": {
-        "list": {
-          "数据类型": {
-            "edit": {
-              "type": "Select",
-              "props": {
-                "xProps": {
-                  "$remote": {
-                    "process": "yao.component.SelectOptions",
-                    "query": {
-                      "model": "ddic.model.column.type",
-                      "label": "name",
-                      "value": "type",
-                      "wheres": [
-                        {
-                          "column": "status",
-                          "op": "=",
-                          "value": "enabled"
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "table": {
-      "fields": {
-        "table": {
-          "数据类型": {
-            "edit": {
-              "type": "Select",
-              "props": {
-                "xProps": {
-                  "$remote": {
-                    "process": "yao.component.SelectOptions",
-                    "query": {
-                      "model": "ddic.model.column.type",
-                      "label": "name",
-                      "value": "type",
-                      "wheres": [
-                        {
-                          "column": "status",
-                          "op": "=",
-                          "value": "enabled"
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            },
-            "view": {
-              "type": "Tag",
-              "props": {
-                "xProps": {
-                  "$remote": {
-                    "process": "yao.component.SelectOptions",
-                    "query": {
-                      "model": "ddic.model.column.type",
-                      "label": "name",
-                      "value": "type",
-                      "wheres": [
-                        {
-                          "column": "status",
-                          "op": "=",
-                          "value": "enabled"
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "form": {
-      "fields": {
-        "form": {
-          "数据类型": {
-            "edit": {
-              "type": "Select",
-              "props": {
-                "xProps": {
-                  "$remote": {
-                    "process": "yao.component.SelectOptions",
-                    "query": {
-                      "model": "ddic.model.column.type",
-                      "label": "name",
-                      "value": "type",
-                      "wheres": [
-                        {
-                          "column": "status",
-                          "op": "=",
-                          "value": "enabled"
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+  "option": {}
 }

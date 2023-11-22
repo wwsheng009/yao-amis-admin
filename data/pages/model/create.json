@@ -330,6 +330,63 @@
                                         "type": "group"
                                       },
                                       {
+                                        "type": "group",
+                                        "body": [
+                                          {
+                                            "type": "select",
+                                            "label": "关联模型",
+                                            "name": "check_model",
+                                            "source": {
+                                              "method": "post",
+                                              "url": "/api/v1/system/model/ddic.model/select_options",
+                                              "data": {
+                                                "__label": "name",
+                                                "__value": "identity"
+                                              }
+                                            }
+                                          },
+                                          {
+                                            "multiple": false,
+                                            "type": "select",
+                                            "name": "check_model_value",
+                                            "label": "关联值字段",
+                                            "source": {
+                                              "method": "post",
+                                              "url": "/api/v1/system/model/ddic.model.column/select_options",
+                                              "data": {
+                                                "model_identity": "${check_model}",
+                                                "__value": "name",
+                                                "__label": "label"
+                                              },
+                                              "trackExpression": "${check_model}",
+                                              "sendOn": "data.check_model"
+                                            }
+                                          },
+                                          {
+                                            "multiple": false,
+                                            "type": "select",
+                                            "name": "check_model_label",
+                                            "label": "关联标签字段",
+                                            "source": {
+                                              "method": "post",
+                                              "url": "/api/v1/system/model/ddic.model.column/select_options",
+                                              "data": {
+                                                "model_identity": "${check_model}",
+                                                "__value": "name",
+                                                "__label": "label"
+                                              },
+                                              "trackExpression": "${check_model}",
+                                              "sendOn": "data.check_model"
+                                            }
+                                          },
+                                          {
+                                            "type": "switch",
+                                            "label": "是否多选",
+                                            "name": "check_model_multi"
+                                          }
+                                        ]
+                                      },
+                                      {
                                         "hiddenOn": "data.type != `string`",
                                         "id": "u:348d4522ca85",
                                         "label": "加密方式",
@@ -472,7 +529,6 @@
                         }
                       }
                     },
-
                     {
                       "label": "编辑Json",
                       "type": "button",
@@ -708,7 +764,7 @@
                                   "dialog": {
                                     "showErrorMsg": true,
                                     "title": "明细",
-                                    "type": "dialog",
+                                    "type": "form",
                                     "body": [
                                       {
                                         "body": [
@@ -807,6 +863,63 @@
                                             "hiddenOn": "data.type == `id`",
                                             "id": "u:0c1ce84792ef",
                                             "label": "长度"
+                                          },
+                                          {
+                                            "type": "group",
+                                            "body": [
+                                              {
+                                                "type": "select",
+                                                "label": "关联模型",
+                                                "name": "check_model",
+                                                "source": {
+                                                  "method": "post",
+                                                  "url": "/api/v1/system/model/ddic.model/select_options",
+                                                  "data": {
+                                                    "__label": "name",
+                                                    "__value": "identity"
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "multiple": false,
+                                                "type": "select",
+                                                "name": "check_model_value",
+                                                "label": "关联值字段",
+                                                "source": {
+                                                  "method": "post",
+                                                  "url": "/api/v1/system/model/ddic.model.column/select_options",
+                                                  "data": {
+                                                    "model_identity": "${check_model}",
+                                                    "__value": "name",
+                                                    "__label": "label"
+                                                  },
+                                                  "trackExpression": "${check_model}",
+                                                  "sendOn": "data.check_model"
+                                                }
+                                              },
+                                              {
+                                                "multiple": false,
+                                                "type": "select",
+                                                "name": "check_model_label",
+                                                "label": "关联标签字段",
+                                                "source": {
+                                                  "method": "post",
+                                                  "url": "/api/v1/system/model/ddic.model.column/select_options",
+                                                  "data": {
+                                                    "model_identity": "${check_model}",
+                                                    "__value": "name",
+                                                    "__label": "label"
+                                                  },
+                                                  "trackExpression": "${check_model}",
+                                                  "sendOn": "data.check_model"
+                                                }
+                                              },
+                                              {
+                                                "type": "switch",
+                                                "label": "是否多选",
+                                                "name": "check_model_multi"
+                                              }
+                                            ]
                                           },
                                           {
                                             "body": [
@@ -946,13 +1059,17 @@
                                       "confirm": {
                                         "actions": [
                                           {
+                                            "actionType": "custom",
+                                            "script": "const page = event.context.scoped.getComponentById('model_columns').state?.page;\n const idx = (page ? page - 1 : 0)  * event.context.scoped.getComponentById('model_columns').props?.perPage + event.data?.index;\n event.setData({...event.data,'__index':idx});\n"
+                                          },
+                                          {
                                             "groupType": "component",
                                             "actionType": "setValue",
                                             "args": {
                                               "value": {
                                                 "&": "$$"
                                               },
-                                              "index": "${index}"
+                                              "index": "${__index}"
                                             },
                                             "componentId": "model_columns"
                                           }

@@ -22,6 +22,46 @@
       }
     },
     {
+      // /api/v1/fs/public/file/download
+      "label": "下载公共文件",
+      "description": "下载，或是预览公共文件，不需要认证",
+      "path": "/public/file/download",
+      "method": "GET",
+      "guard": "-",
+      "process": "flows.fs.download",
+      "in": [
+        "public",
+        "$query.name"
+      ],
+      "out": {
+        "status": 200,
+        "body": "{{content}}",
+        "headers": {
+          "Content-Type": "{{type}}"
+        }
+      }
+    },
+    {
+      // /api/v1/fs/public/file/attachement
+      "label": "通过api下载附件",
+      "description": "通过api下载附件，带有attachement的 header",
+      "path": "/public/file/attachement",
+      "method": "GET",
+      "process": "flows.fs.attachment",
+      "in": [
+        "public",
+        "$query.name"
+      ],
+      "out": {
+        "status": 200,
+        "body": "{{content}}",
+        "headers": {
+          "Content-Type": "{{type}}",
+          "Content-Disposition": "attachment; filename*=utf-8''{{filename}}" //这里需要调整gou的bind函数的代码才能适配，要不然无法进行部分绑定
+        }
+      }
+    },
+    {
       // /api/v1/fs/:type/file/download
       "label": "下载文件",
       "description": "下载，或是预览文件",

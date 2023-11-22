@@ -183,14 +183,6 @@ function test1() {
       saved: false,
     },
     {
-      cached: true,
-      created: true,
-      label: "模型关联关系",
-      model: "ddic.model.relation",
-      name: "ddic_model_relation",
-      saved: false,
-    },
-    {
       cached: false,
       created: true,
       label: "ddic_table",
