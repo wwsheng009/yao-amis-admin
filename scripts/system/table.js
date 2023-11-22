@@ -4,14 +4,12 @@ const { FindCachedModelById, MomoryModelList, ModelIDList } =
 const { PaginateArrayWithQuery } = Require("amis.data.lib");
 
 /**
- * yao run scripts.system.table.TableListSearch  '1' '5' '::{"created":[false]}'
- * @param {number} page 当前分页
- * @param {number} pageSize 分页大小
+ * yao run scripts.system.table.TableListSearch  '::{"created":[false]}'
  * @param {object} querysIn url 查询条件，支持get查询
  * @param {object} payload payload 查询条件，支持post查询
  * @returns
  */
-function TableListSearch(page, pageSize, querysIn, payload) {
+function TableListSearch(querysIn, payload) {
   let list = TableList();
   const { items, total } = PaginateArrayWithQuery(
     list,

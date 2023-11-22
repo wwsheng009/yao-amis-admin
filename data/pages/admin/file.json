@@ -215,120 +215,169 @@
   "type": "page",
   "body": [
     {
+      "type": "form",
+      "id": "u:e7c4a9f53937",
+      "mode": "horizontal",
+      "dsType": "api",
+      "title": "",
+      "feat": "Insert",
+      "target": "file_list",
       "body": [
         {
-          "useChunk": false,
-          "btnLabel": "文件上传",
-          "name": "file",
-          "receiver": {
-            "requestAdaptor": "",
-            "url": "/api/v1/fs/user/file/upload",
-            "adaptor": "",
-            "data": {
-              "folder": "${folder}"
-            },
-            "dataType": "form-data",
-            "messages": {},
-            "method": "post"
-          },
-          "drag": true,
-          "proxy": true,
-          "uploadType": "fileReceptor",
-          "autoUpload": true,
-          "multiple": false,
-          "type": "input-file",
-          "accept": "",
-          "id": "u:ed4431f9629c"
-        },
-        {
-          "type": "input-image",
-          "hideUploadButton": false,
-          "imageClassName": "r w-full",
-          "proxy": true,
-          "uploadType": "fileReceptor",
-          "receiver": {
-            "requestAdaptor": "",
-            "url": "/api/v1/fs/user/file/upload",
-            "adaptor": "",
-            "data": {
-              "folder": "${folder}"
-            },
-            "messages": {},
-            "method": "post"
-          },
-          "visible": false,
-          "autoUpload": true,
-          "multiple": true,
-          "accept": ".jpeg, .jpg, .png, .gif",
+          "type": "input-text",
           "label": "",
-          "id": "u:4dab53d25ad7",
-          "limit": false,
-          "name": "image",
-          "editorState": "default"
+          "labelClassName": "hidden",
+          "name": "keywords",
+          "id": "u:718499654773",
+          "placeholder": "输入文件名",
+          "addOn": {
+            "type": "button",
+            "label": "搜索",
+            "onEvent": {
+              "click": {
+                "actions": [
+                  {
+                    "actionType": "submit",
+                    "componentId": "u:e7c4a9f53937"
+                  }
+                ]
+              }
+            },
+            "level": "primary",
+            "id": "u:793cfc1a934f"
+          }
         }
       ],
-      "id": "u:141a71ecae07",
-      "type": "group"
+      "actions": [],
+      "resetAfterSubmit": true
     },
     {
       "features": ["delete", "view"],
       "id": "u:c000b24f40a8",
       "syncLocation": false,
       "api": {
-        "method": "get",
-        "requestAdaptor": "",
+        "method": "post",
         "trackExpression": "${file},${image},${folder}",
-        "url": "/api/v1/fs/user/file/list?name=${folder}&keywords=${keywords}",
-        "adaptor": "",
-        "messages": {}
+        "url": "/api/v1/fs/user/file/search?folder=${folder}&keywords=${keywords}"
       },
       "headerToolbar": [
         {
-          "type": "search-box",
-          "name": "keywords",
-          "align": "right",
-          "placeholder": "关键字检索"
+          "type": "button",
+          "label": "上传文件",
+          "actionType": "dialog",
+          "level": "primary",
+          "icon": "fas fa-cloud-upload-alt",
+          "dialog": {
+            "title": "上传文件",
+            "body": [
+              {
+                "useChunk": false,
+                "btnLabel": "文件上传",
+                "name": "file",
+                "receiver": {
+                  "requestAdaptor": "",
+                  "url": "/api/v1/fs/user/file/upload",
+                  "adaptor": "",
+                  "data": {
+                    "folder": "${folder}"
+                  },
+                  "dataType": "form-data",
+                  "messages": {},
+                  "method": "post"
+                },
+                "drag": true,
+                "proxy": true,
+                "uploadType": "fileReceptor",
+                "autoUpload": true,
+                "multiple": false,
+                "type": "input-file",
+                "accept": "",
+                "id": "u:ed4431f9629c"
+              },
+              {
+                "type": "input-image",
+                "hideUploadButton": false,
+                "imageClassName": "r w-full",
+                "proxy": true,
+                "uploadType": "fileReceptor",
+                "receiver": {
+                  "requestAdaptor": "",
+                  "url": "/api/v1/fs/user/file/upload",
+                  "adaptor": "",
+                  "data": {
+                    "folder": "${folder}"
+                  },
+                  "messages": {},
+                  "method": "post"
+                },
+                "visible": false,
+                "autoUpload": true,
+                "multiple": true,
+                "accept": ".jpeg, .jpg, .png, .gif",
+                "label": "",
+                "id": "u:4dab53d25ad7",
+                "limit": false,
+                "name": "image",
+                "editorState": "default"
+              }
+            ]
+          }
         }
       ],
       "perPageAvailable": [10],
+      "name": "file_list",
       "type": "crud",
+      "perPage": 15,
       "bulkActions": [],
       "columns": [
+        {
+          "label": "序号",
+          "name": "index",
+          "type": "number"
+        },
         {
           "id": "u:c9edfda3cd3a",
           "label": "文件名",
           "name": "name",
-          "type": "text"
+          "type": "text",
+          "sortable": true,
+          "filterable": true
         },
         {
           "name": "path",
           "type": "text",
           "id": "u:c2da9234ea68",
-          "label": "路径"
-        },
-        {
-          "label": "图片预览",
-          "name": "url",
-          "type": "image",
-          "id": "u:a712d020f358"
+          "label": "路径",
+          "toggled": false
         },
         {
           "type": "text",
           "id": "u:aa1ba10a635b",
           "label": "大小",
-          "name": "size"
+          "name": "size",
+          "sortable": true
         },
         {
           "id": "u:aa1ba10a635b",
           "label": "MIME类型",
           "name": "mime",
-          "type": "text"
+          "type": "text",
+          "toggled": false
         },
         {
           "name": "type",
           "type": "text",
           "id": "u:aa1ba10a635b",
-          "label": "文件类型"
+          "label": "文件类型",
+          "sortable": true,
+          "filterable": true
+        },
+        {
+          "name": "time",
+          "type": "text",
+          "label": "修改时间",
+          "sortable": true,
+          "filterable": true
         },
         {
           "label": "操作",
@@ -345,6 +394,7 @@
             },
             {
               "className": "text-info",
+              "visible": false,
               "label": "下载-BLOB",
               "level": "link",
               "type": "button",

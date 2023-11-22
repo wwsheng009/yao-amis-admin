@@ -42,8 +42,6 @@
             "method": "get",
             "process": "scripts.system.table.TableListSearch",
             "in": [
-                "$query.page",
-                "$query.perPage",
                 ":query",
                 ":payload"
             ],

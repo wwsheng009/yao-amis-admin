@@ -102,8 +102,6 @@
       "method": "get",
       "process": "scripts.system.meta.ApiListPaginate",
       "in": [
-        "$query.page",
-        "$query.perPage",
         ":query",
         ":payload"
       ],
@@ -120,8 +118,6 @@
       "method": "post",
       "process": "scripts.system.meta.ApiListPaginate",
       "in": [
-        "$query.page",
-        "$query.perPage",
         ":query",
         ":payload"
       ],

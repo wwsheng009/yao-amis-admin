@@ -134,6 +134,24 @@
       }
     },
     {
+      // /api/v1/fs/:type/file/list
+      "label": "文件搜索",
+      "description": "文件搜索",
+      "path": "/:type/file/search",
+      "method": "POST",
+      "process": "scripts.fs.file.fileSearch",
+      "in": [
+        "$param.type",
+        "$query.folder",
+        ":query",
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
       // /api/v1/fs/:type/folder/list
       "label": "文件目录树结构",
       "description": "文件目录树结构",

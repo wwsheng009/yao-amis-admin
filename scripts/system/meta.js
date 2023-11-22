@@ -292,12 +292,10 @@ function saveApis() {
  * @param {object} payload query from payload
  * @returns
  */
-function ApiListPaginate(page, perPage, querysIn, payload) {
+function ApiListPaginate(querysIn, payload) {
   const list = allApi();
   const { items, total } = PaginateArrayWithQuery(
     list,
-    page,
-    perPage,
     querysIn,
     payload
   );

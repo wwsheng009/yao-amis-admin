@@ -259,7 +259,7 @@ function updateInputData(model, Data) {
       ) {
         try {
           line[key] = JSON.parse(field);
-        } catch (error) {}
+        } catch (error) { }
       }
     }
 
@@ -336,30 +336,25 @@ function getArrayItem(querys, key) {
 /**
  * 搜索数组，并进行分页返回数据
  * @param {Array} data 需要分页搜索数组
- * @param {number} page 第N页
- * @param {number} pageSize 每页的数量
  * @param {object} querysIn 查询条件,请求中的query对象，一般是{"key":[value]}
  * @param {object} payload 查询条件,请求中的query对象，一般是{"key":"value"}
+ * @param {Array} searchFields 使用keyword搜索时，限制模糊匹配的字段列表。
  * @returns 数组
  */
-function PaginateArrayWithQuery(data, pageIn, perPageIn, querysIn, payload) {
+function PaginateArrayWithQuery(data, querysIn, payload, searchFields) {
   const querys = mergeQueryObject(querysIn, payload);
 
   const orderBy = getArrayItem(querys, "orderBy");
   const orderDir = getArrayItem(querys, "orderDir");
 
-  let page = pageIn;
-  let perPage = perPageIn;
-  if (!page) {
-    page = getArrayItem(querys, "page") || 1;
-  }
-  if (!perPage) {
-    perPage = getArrayItem(querys, "perPage") || 10;
-  }
+  let page = getArrayItem(querys, "page") || 1;
+  let perPage = getArrayItem(querys, "perPage") || 10;
+
+
   // console.log(
   //   `querys:${querys},page:${page},perage:${perPage},orderBy${orderBy},orderDir:${orderDir}`
   // );
-  let list = FilterArrayWithQuery(data, querys);
+  let list = FilterArrayWithQuery(data, querys, searchFields);
   let count = list.length;
 
   // console.log(
@@ -371,7 +366,7 @@ function PaginateArrayWithQuery(data, pageIn, perPageIn, querysIn, payload) {
     total: count,
   };
 }
-function FilterArrayWithQuery(list, querysIn) {
+function FilterArrayWithQuery(list, querysIn, searchFields) {
   if (!Array.isArray(list) || list.length == 0) {
     return list;
   }
@@ -392,6 +387,10 @@ function FilterArrayWithQuery(list, querysIn) {
     let keyword = getArrayItem(querys, "keywords");
 
     if (keyword && !first["keywords"]) {
+      searchFields = searchFields || [];
+      if (!Array.isArray(searchFields)) {
+        searchFields = [];
+      }
       for (const key in first) {
         if (Object.hasOwnProperty.call(first, key)) {
           if (keyword.includes("*")) {
@@ -400,19 +399,28 @@ function FilterArrayWithQuery(list, querysIn) {
             querys[key] = [`*${keyword}*`];
           }
         }
+        // 排除不需要的字段，限制需要搜索的字段列表
+        if (searchFields.length && !searchFields.includes(key)) {
+          delete querys[key];
+        }
       }
       AndMode = false;
     }
   }
 
+
+
   for (const key in querys) {
     if (!Object.hasOwnProperty.call(first, key)) {
       delete querys[key];
+      continue
     }
     // 前端无法重置空值
     if (querys[key] + "" == "") {
       delete querys[key];
+      continue
     }
+
   }
 
   const arr = list.filter((item) => {

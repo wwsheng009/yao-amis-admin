@@ -1,3 +1,5 @@
+const { PaginateArrayWithQuery } = Require("amis.data.lib");
+
 const uploadDir = "/upload";
 
 function writeLog(file_name, file_name2, operation) {
@@ -54,7 +56,7 @@ function queryEscape(str) {
     return "%" + c.charCodeAt(0).toString(16);
   });
 }
-function getBasename(filename: string) {
+function getBasename(filename: string, noEscape) {
   if (filename == null) {
     return "";
   }
@@ -64,6 +66,9 @@ function getBasename(filename: string) {
   // If the separator is found, return the substring after it
   if (lastIndex !== -1) {
     filename = filename.substring(lastIndex + 1);
+  }
+  if (noEscape) {
+    return filename;
   }
   // If no separator found, return the filename as it is
   return queryEscape(filename);
@@ -131,6 +136,90 @@ function getFolderList(type: string, parent: string) {
   return list2;
   // return convertToNestedArray(list2);
 }
+
+function getTimeFormat(unixTime) {
+  const date = new Date(unixTime * 1000);
+
+  // Extract the various date and time components
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1; // Months are zero-based, so add 1
+  const day = date.getDate();
+  const hour = date.getHours();
+  const minute = date.getMinutes();
+  const second = date.getSeconds();
+
+  // Format the date and time as a string
+  const formattedDate = `${year}-${month.toString().padStart(2, "0")}-${day
+    .toString()
+    .padStart(2, "0")}`;
+  const formattedTime = `${hour.toString().padStart(2, "0")}:${minute
+    .toString()
+    .padStart(2, "0")}:${second.toString().padStart(2, "0")}`;
+
+  // Output the formatted date and time
+  // console.log(`Formatted Date: ${formattedDate}`);
+  // console.log(`Formatted Time: ${formattedTime}`);
+  return `${formattedDate} ${formattedTime}`;
+}
+
+/**
+ * 文件搜索，分页
+ * yao run scripts.fs.file.fileSearch
+ * @param type 类型，required
+ * @param parentFolder 目录,parent folder
+ * @param querysIn 查询条件
+ * @param payload 查询条件
+ * @returns
+ */
+function fileSearch(type: string, parentFolder: string, querysIn, payload) {
+  if (parentFolder == null) {
+    parentFolder == "";
+  }
+  parentFolder = normalizeFolder(parentFolder);
+  let userFolder = getFolder(type);
+  const uploadFolder = `${userFolder}/${parentFolder}/`;
+  let list = Process("fs.system.ReadDir", uploadFolder, true);
+  list = list.map((l) => l.replace(/\\/g, "/"));
+
+  const list2 = [] as FileList[];
+  let idx = 0;
+  list.forEach((f: string) => {
+    const isFile = Process("fs.system.IsFile", f);
+    if (isFile) {
+      const fpath = f.replace(userFolder, "");
+      const baseName = getBasename(f, true);
+      // const fname = f.replace(uploadFolder, "");
+      const mimeType = Process("fs.system.MimeType", f);
+      const bytes = Process("fs.system.Size", f);
+      const time = Process("fs.system.ModTime", f);
+      const date = getTimeFormat(time);
+
+      list2.push({
+        index: ++idx,
+        size: bytes,
+        name: baseName,
+        path: fpath,
+        url: `/api/v1/fs/${type}/file/download?name=${fpath}`,
+        mime: mimeType,
+        type: getFileTypeFromMimeType(mimeType),
+        time: date,
+      } as FileList);
+    }
+  });
+
+  delete querysIn.folder;
+  const { items, total } = PaginateArrayWithQuery(list2, querysIn, payload, [
+    "name",
+    "time",
+    "type",
+  ]);
+
+  items.forEach((item) => {
+    item.size = convertFileSize(item.size);
+  });
+
+  return { items: items, total: total };
+}
 // yao run scripts.fs.file.getFileList '20231115'
 function getFileList(type: string, folder: string, keywords) {
   if (folder == null) {
@@ -186,7 +275,11 @@ function getFileTypeFromMimeType(mimeType) {
     "application/vnd.openxmlformats-officedocument.presentationml.presentation":
       "MS PPT",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-      "MS WORD",
+      "MS Word",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+      "MS Excel",
+    "application/x-ole-storage": "MS Word",
+    "application/zip": "Zip",
     // Add more MIME types and their corresponding file types as needed
   };
 
@@ -336,12 +429,14 @@ function removeEmptyChildren(node) {
 }
 
 interface FileList {
+  index: number;
   name: string;
   path: string;
   url: string;
   size: string;
   mime: string;
   type: string;
+  time: string;
 }
 
 interface YaoFile {
