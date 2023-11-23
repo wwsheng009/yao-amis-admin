@@ -281,19 +281,15 @@
                     "receiver": {
                       "requestAdaptor": "",
                       "url": "/api/v1/fs/user/file/upload",
-                      "adaptor": "",
                       "data": {
                         "folder": "${folder}"
                       },
                       "dataType": "form-data",
-                      "messages": {},
                       "method": "post"
                     },
                     "drag": true,
-                    "proxy": true,
-                    "uploadType": "fileReceptor",
                     "autoUpload": true,
-                    "multiple": false,
+                    "multiple": true,
                     "type": "input-file",
                     "accept": "",
                     "id": "u:ed4431f9629c"
