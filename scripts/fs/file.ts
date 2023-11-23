@@ -270,6 +270,8 @@ function getFileTypeFromMimeType(mimeType) {
     "image/png": "Image",
     "image/gif": "Image",
     "video/mp4": "Video",
+    "audio/aac": "audio",
+    "audio/mpeg	": "audio",
     "text/plain": "Text Document",
     "application/msword": "MS WORD",
     "application/vnd.ms-excel": "MS EXCEL",
@@ -288,6 +290,14 @@ function getFileTypeFromMimeType(mimeType) {
   if (typeMap.hasOwnProperty(mainType)) {
     return typeMap[mainType];
   } else {
+    const partType = mainType.split("/")[0];
+    if (partType == "image") {
+      return "Image";
+    } else if (partType == "video") {
+      return "Video";
+    } else if (partType == "audio") {
+      return "Audio";
+    }
     return mimeType;
   }
 }

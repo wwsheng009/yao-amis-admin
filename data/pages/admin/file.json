@@ -485,6 +485,23 @@
               "visibleOn": "data.type === 'MS PPT'"
             },
             {
+              "className": "text-info",
+              "label": "预览",
+              "level": "link",
+              "type": "button",
+              "actionType": "dialog",
+              "dialog": {
+                "title": "",
+                "size": "lg",
+                "body": {
+                  "type": "office-viewer",
+                  "src": "${url}",
+                  "loading": true
+                }
+              },
+              "visibleOn": "data.type === 'MS Word'"
+            },
+            {
               "url": "/amis-admin/preview-word.html?file=/api/v1/fs/user/file/attachement?name=${path}&token=${cookie:token}",
               "actionType": "url",
               "className": "text-info",
@@ -497,7 +514,7 @@
             {
               "className": "text-info",
               "id": "u:c345fb2a01fb",
-              "label": "预览",
+              "label": "播放",
               "level": "link",
               "type": "button",
               "actionType": "dialog",
@@ -515,6 +532,24 @@
             },
             {
               "className": "text-info",
+              "label": "播放",
+              "level": "link",
+              "type": "button",
+              "actionType": "dialog",
+              "dialog": {
+                "bodyClassName": "p-0 m-0",
+                "title": "",
+                "size": "md",
+                "body": {
+                  "type": "video",
+                  "src": "${url}"
+                },
+                "actions": []
+              },
+              "visibleOn": "data.type === 'Video'"
+            },
+            {
+              "className": "text-info",
               "label": "预览",
               "level": "link",
               "type": "button",
@@ -523,11 +558,15 @@
                 "title": "",
                 "size": "md",
                 "body": {
-                  "type": "video",
-                  "src": "${url}"
-                }
+                  "type": "audio",
+                  "src": "${url}",
+                  "inline": false,
+                  "rates": [1.0, 1.5, 2.0],
+                  "controls": ["rates", "play", "time", "process", "volume"]
+                },
+                "actions": []
               },
-              "visibleOn": "data.type === 'Video'"
+              "visibleOn": "data.type == 'Audio'"
             }
           ]
         }
