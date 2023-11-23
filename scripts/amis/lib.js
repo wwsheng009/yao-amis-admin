@@ -517,6 +517,7 @@ function updateFormRelations(schemas, model, actionType) {
         fields = fields.filter((col) => col.name !== element.key);
 
         tableSchema = {
+          labelClassName: 'hidden',
           columns: fields,
           name: key,
           source: "${" + key + "}",
