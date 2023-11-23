@@ -185,7 +185,14 @@ function getAmisPagesAsRoute() {
 // yao run scripts.admin.menu.getAmisPage
 function getAmisPage(pageId: string) {
   let page = pageId.replace(".", "/") + ".json";
-  let str = Process("fs.system.ReadFile", "pages/" + page);
+
+  const fpath = "pages/" + page;
+  let isExist = Process("fs.system.exist", fpath);
+  if (!isExist) {
+    throw new Exception(`文件不存在：${fpath}`);
+  }
+
+  let str = Process("fs.system.ReadFile", fpath);
   let source = JSON.parse(str);
   if (source.type === "app") {
     return {
@@ -212,7 +219,13 @@ function getAmisEditorPageSource(pageId: string) {
 
   pageId = pageId.replace(/^amis_editor\./, "");
   let page = pageId.replace(".", "/") + ".json";
-  let str = Process("fs.system.ReadFile", dir + page);
+
+  const fpath = dir + page;
+  let isExist = Process("fs.system.exist", fpath);
+  if (!isExist) {
+    throw new Exception(`文件不存在：${fpath}`);
+  }
+  let str = Process("fs.system.ReadFile", fpath);
   let source = JSON.parse(str);
   if (source.type === "app") {
     return {
