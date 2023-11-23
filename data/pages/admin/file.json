@@ -511,7 +511,23 @@
                   "title": "${name}"
                 }
               },
-              "visibleOn": "data.type === 'IMAGE'"
+              "visibleOn": "data.type === 'Image'"
+            },
+            {
+              "className": "text-info",
+              "label": "预览",
+              "level": "link",
+              "type": "button",
+              "actionType": "dialog",
+              "dialog": {
+                "title": "",
+                "size": "md",
+                "body": {
+                  "type": "video",
+                  "src": "${url}"
+                }
+              },
+              "visibleOn": "data.type === 'Video'"
             }
           ]
         }

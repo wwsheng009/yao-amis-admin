@@ -266,9 +266,10 @@ function getFileTypeFromMimeType(mimeType) {
   // Map MIME types to human-readable file types
   const typeMap = {
     "application/pdf": "PDF",
-    "image/jpeg": "IMAGE",
-    "image/png": "IMAGE",
-    "image/gif": "IMAGE",
+    "image/jpeg": "Image",
+    "image/png": "Image",
+    "image/gif": "Image",
+    "video/mp4": "Video",
     "text/plain": "Text Document",
     "application/msword": "MS WORD",
     "application/vnd.ms-excel": "MS EXCEL",
