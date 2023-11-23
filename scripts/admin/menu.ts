@@ -165,6 +165,8 @@ function getAmisPagesAsRoute() {
   });
   const routes = convertFileListToSoyRoute(files);
 
+  updateSoyRoutePath("/api/v1/amis/pages/", routes, undefined);
+
   // 这里包装了一个顶层
   const rootRoutes = [
     {
@@ -176,7 +178,6 @@ function getAmisPagesAsRoute() {
       meta: { order: 2001, requiresAuth: true, title: "AMIS页面" },
     },
   ];
-  updateSoyRoutePath("/api/v1/amis/pages/", rootRoutes, undefined);
   updateSoyRouteComponent(rootRoutes);
 
   return rootRoutes;
@@ -273,9 +274,10 @@ function getAmisEditorPagesAsRoute() {
     });
     const routes = convertFileListToSoyRoute(files);
 
+    // 这里比较特殊，不要更新amis_editor节点
+    updateSoyRoutePath("/api/v1/amis/edit_pages/", routes, undefined);
     rootRoutes[0].children = routes[0]?.children || [];
   }
-  updateSoyRoutePath("/api/v1/amis/edit_pages/", rootRoutes, undefined);
   updateSoyRouteComponent(rootRoutes);
   return rootRoutes;
 }
