@@ -8,7 +8,7 @@ const { RunTransaction } = Require("system.db_lib");
 
 /**
  * 查找数据
- * yao run scripts.amis.data.model.Search
+ * yao run scripts.amis.data.model.dataSearch
  * Model Data Search
  * @param {string} model model id
  * @param {number} pageIn page
@@ -18,7 +18,7 @@ const { RunTransaction } = Require("system.db_lib");
  * @param {object} payload request payload
  * @returns
  */
-function Search(model, pageIn, perPageIn, querysIn, queryParams, payload) {
+function dataSearch(model, pageIn, perPageIn, querysIn, queryParams, payload) {
   let querys = mergeQueryObject(querysIn, payload);
 
   let page = pageIn;

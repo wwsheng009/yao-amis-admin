@@ -27,7 +27,7 @@
             "description": "读取模型的表数据",
             "path": "/:model/search",
             "method": "post",
-            "process": "scripts.amis.data.model.Search",
+            "process": "scripts.amis.data.model.dataSearch",
             "in": [
                 "$param.model",
                 "$query.page",
@@ -47,7 +47,7 @@
             "description": "读取模型的表数据",
             "path": "/:model/search",
             "method": "get",
-            "process": "scripts.amis.data.model.Search",
+            "process": "scripts.amis.data.model.dataSearch",
             "in": [
                 "$param.model",
                 "$query.page",

@@ -16,7 +16,7 @@
             "comment": "用户ID",
             "label": "用户ID",
             "name": "user_id",
-            "type": "string"
+            "type": "integer"
         }
     ],
     "name": "demo.vendor",
