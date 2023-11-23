@@ -514,7 +514,7 @@
             {
               "className": "text-info",
               "id": "u:c345fb2a01fb",
-              "label": "播放",
+              "label": "预览",
               "level": "link",
               "type": "button",
               "actionType": "dialog",
@@ -550,7 +550,7 @@
             },
             {
               "className": "text-info",
-              "label": "预览",
+              "label": "播放",
               "level": "link",
               "type": "button",
               "actionType": "dialog",
