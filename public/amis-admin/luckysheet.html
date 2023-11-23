@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/luckysheet@latest/dist/plugins/css/pluginsCss.css' />
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/luckysheet@latest/dist/plugins/plugins.css' />
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/luckysheet@latest/dist/css/luckysheet.css' />
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/luckysheet@latest/dist/assets/iconfont/iconfont.css' />
+    <script src="https://cdn.jsdelivr.net/npm/luckysheet@latest/dist/plugins/js/plugin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luckysheet@latest/dist/luckysheet.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luckyexcel/dist/luckyexcel.umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
+    <script src="./scripts/login_logout.js"></script>
+    <script src="./scripts/exportExcel.js"></script>
+
+    <script>
+        function getURLParameter(parameterName) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(parameterName);
+        }
+        function getType(val) {
+            return Object.prototype.toString.call(val).slice(8, -1)
+        }
+
+        function isFunction(val) {
+            return getType(val) === 'Function'
+        }
+        $(function () {
+            const fname = getURLParameter('name');
+            if (!fname) {
+                alert('Failed to get the sheet file')
+                return
+            }
+            const filename = fname.split('/').pop()
+            const type = getURLParameter('type');
+            if (!type) {
+                alert('Failed to get the file type')
+                return
+            }
+            const token = yao_amis.getToken();
+            const url = `/api/v1/fs/${type}/file/attachement?name=${fname}&token=${token}`
+            console.log(url)
+
+            LuckyExcel.transformExcelToLuckyByUrl(url, filename, (exportJson, luckysheetfile) => {
+                if (exportJson.sheets == null || exportJson.sheets.length == 0) {
+                    alert('Failed to read the content of the excel file, currently does not support xls files!')
+                    return
+                }
+                console.log('exportJson', exportJson)
+                isFunction(window?.luckysheet?.destroy) && window.luckysheet.destroy()
+                window.__currentFile = exportJson;
+                window.luckysheet.create({
+                    container: 'luckysheet', //luckysheet is the container id
+                    showinfobar: false,
+                    data: exportJson.sheets,
+                    title: exportJson.info.name,
+                    userInfo: exportJson.info.name.creator,
+                })
+            })
+        })
+    </script>
+
+
+</head>
+
+<body>
+    <div style="position: absolute; top: 0; display: none;">
+        <a href="#" id="myLink">下载修改后的文件</a>
+    </div>
+    <script>
+        const link = document.getElementById("myLink");
+
+        // Attach an onclick event listener
+        link.onclick = function (event) {
+            event.preventDefault(); // Prevents the default link behavior (e.g., navigating to another page)
+            downloadExcel();
+        };
+        const downloadExcel = () => {
+            exportExcel(luckysheet.getAllSheets(), '下载')
+        }
+    </script>
+
+    <div id="luckysheet"
+        style="margin:0px;padding:0px;position:absolute;width:100%;left: 0px;top: 0px;bottom: 0px;outline: none;">
+    </div>
+
+    <!-- <div id="luckysheet" style="margin:0px;padding:0px;position:absolute;width:100%;height:100%;left: 0px;top: 0px;"> -->
+    </div>
+
+</body>
+
+</html>

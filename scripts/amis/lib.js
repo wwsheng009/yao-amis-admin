@@ -469,6 +469,7 @@ function updateFormRelations(schemas, model, actionType) {
   }
   for (const key in hasOnes) {
     const element = hasOnes[key];
+    const label = element.label || key;
     let fields = [];
     if (actionType === "view") {
       fields = getFormViewFields(element.model, null, true);
@@ -479,7 +480,7 @@ function updateFormRelations(schemas, model, actionType) {
     schemas.push({
       type: "input-sub-form",
       name: key,
-      label: key,
+      label: label,
       btnLabel: "明细",
       form: {
         // body: {
@@ -499,6 +500,7 @@ function updateFormRelations(schemas, model, actionType) {
     };
     for (const key in hasManys) {
       const element = hasManys[key];
+      const label = element.label || key;
       let fields = [];
       let tableSchema = {};
       if (actionType === "view") {
@@ -527,7 +529,7 @@ function updateFormRelations(schemas, model, actionType) {
         };
       }
       const tab = {
-        title: element.label || key,
+        title: label,
         body: tableSchema,
       };
       // const tab = {

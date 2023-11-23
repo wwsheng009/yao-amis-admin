@@ -270,54 +270,61 @@
             "title": "上传文件",
             "body": [
               {
-                "useChunk": false,
-                "btnLabel": "文件上传",
-                "name": "file",
-                "receiver": {
-                  "requestAdaptor": "",
-                  "url": "/api/v1/fs/user/file/upload",
-                  "adaptor": "",
-                  "data": {
-                    "folder": "${folder}"
+                "type": "form",
+                "reload": "file_list",
+                "body": [
+                  {
+                    "useChunk": false,
+                    "labelClassName": "hidden",
+                    "btnLabel": "文件上传",
+                    "name": "file",
+                    "receiver": {
+                      "requestAdaptor": "",
+                      "url": "/api/v1/fs/user/file/upload",
+                      "adaptor": "",
+                      "data": {
+                        "folder": "${folder}"
+                      },
+                      "dataType": "form-data",
+                      "messages": {},
+                      "method": "post"
+                    },
+                    "drag": true,
+                    "proxy": true,
+                    "uploadType": "fileReceptor",
+                    "autoUpload": true,
+                    "multiple": false,
+                    "type": "input-file",
+                    "accept": "",
+                    "id": "u:ed4431f9629c"
                   },
-                  "dataType": "form-data",
-                  "messages": {},
-                  "method": "post"
-                },
-                "drag": true,
-                "proxy": true,
-                "uploadType": "fileReceptor",
-                "autoUpload": true,
-                "multiple": false,
-                "type": "input-file",
-                "accept": "",
-                "id": "u:ed4431f9629c"
-              },
-              {
-                "type": "input-image",
-                "hideUploadButton": false,
-                "imageClassName": "r w-full",
-                "proxy": true,
-                "uploadType": "fileReceptor",
-                "receiver": {
-                  "requestAdaptor": "",
-                  "url": "/api/v1/fs/user/file/upload",
-                  "adaptor": "",
-                  "data": {
-                    "folder": "${folder}"
-                  },
-                  "messages": {},
-                  "method": "post"
-                },
-                "visible": false,
-                "autoUpload": true,
-                "multiple": true,
-                "accept": ".jpeg, .jpg, .png, .gif",
-                "label": "",
-                "id": "u:4dab53d25ad7",
-                "limit": false,
-                "name": "image",
-                "editorState": "default"
+                  {
+                    "type": "input-image",
+                    "hideUploadButton": false,
+                    "imageClassName": "r w-full",
+                    "proxy": true,
+                    "uploadType": "fileReceptor",
+                    "receiver": {
+                      "requestAdaptor": "",
+                      "url": "/api/v1/fs/user/file/upload",
+                      "adaptor": "",
+                      "data": {
+                        "folder": "${folder}"
+                      },
+                      "messages": {},
+                      "method": "post"
+                    },
+                    "visible": false,
+                    "autoUpload": true,
+                    "multiple": true,
+                    "accept": ".jpeg, .jpg, .png, .gif",
+                    "label": "",
+                    "id": "u:4dab53d25ad7",
+                    "limit": false,
+                    "name": "image",
+                    "editorState": "default"
+                  }
+                ]
               }
             ]
           }
@@ -422,6 +429,72 @@
             }
           ],
           "id": "u:835d380a797c"
+        },
+        {
+          "label": "预览",
+          "type": "operation",
+          "buttons": [
+            {
+              "url": "/amis-admin/luckysheet.html?name=${path}&type=user",
+              "actionType": "url",
+              "className": "text-info",
+              "id": "u:c345fb2a01fb",
+              "label": "预览",
+              "level": "link",
+              "type": "button",
+              "visibleOn": "data.type === 'MS Excel'"
+            },
+            {
+              "url": "/amis-admin/preview-excel.html?file=/api/v1/fs/user/file/attachement?name=${path}&token=${cookie:token}",
+              "actionType": "url",
+              "className": "text-info",
+              "id": "u:c345fb2a01fb",
+              "label": "预览",
+              "level": "link",
+              "type": "button",
+              "visibleOn": "data.type === 'MS Excel'"
+            },
+            {
+              "url": "/pdfjs/web/viewer.html?file=/api/v1/fs/user/file/attachement?name=${path}&token=${cookie:token}",
+              "actionType": "url",
+              "className": "text-info",
+              "id": "u:c345fb2a01fb",
+              "label": "预览",
+              "level": "link",
+              "type": "button",
+              "visibleOn": "data.type === 'PDF'"
+            },
+            {
+              "url": "/amis-admin/preview-pdf.html?file=/api/v1/fs/user/file/attachement?name=${path}&token=${cookie:token}",
+              "actionType": "url",
+              "className": "text-info",
+              "id": "u:c345fb2a01fb",
+              "label": "预览",
+              "level": "link",
+              "type": "button",
+              "visibleOn": "data.type === 'PDF'"
+            },
+            {
+              "url": "/PPTX2HTML/index.html?file=/api/v1/fs/user/file/attachement?name=${path}&token=${cookie:token}",
+              "actionType": "url",
+              "className": "text-info",
+              "id": "u:c345fb2a01fb",
+              "label": "预览",
+              "level": "link",
+              "type": "button",
+              "visibleOn": "data.type === 'MS PPT'"
+            },
+            {
+              "url": "/amis-admin/preview-word.html?file=/api/v1/fs/user/file/attachement?name=${path}&token=${cookie:token}",
+              "actionType": "url",
+              "className": "text-info",
+              "id": "u:c345fb2a01fb",
+              "label": "预览",
+              "level": "link",
+              "type": "button",
+              "visibleOn": "data.type === 'MS Word'"
+            }
+          ]
         }
       ],
       "itemActions": [],

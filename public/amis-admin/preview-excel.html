@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@js-preview/excel@1.4.6/lib/index.umd.js"></script>
+    <script>
+        function getURLParameter(parameterName) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(parameterName);
+        }
+    </script>
+
+    <style>
+        body,
+        .main {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <style>
+        .main {
+            height: 100vh;
+        }
+
+        .vue-office-excel {
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container" class="main"></div>
+</body>
+<script>
+    const myExcelPreviewer = jsPreviewExcel.init(document.getElementById('container'));
+    const fname = getURLParameter('file');
+    if (!fname) {
+        alert('Failed to get the sheet file')
+    }
+    myExcelPreviewer.preview(fname).then(res => {
+        console.log('预览完成');
+    }).catch(e => {
+        console.log('预览失败', e);
+    })
+</script>
+
+</html>

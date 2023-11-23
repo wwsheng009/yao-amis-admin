@@ -11,5 +11,6 @@ amis.json
 public/soy-admin
 public/amis-editor
 public/amis
-
+public/pdfjs
 .env
+public/PPTX2HTML

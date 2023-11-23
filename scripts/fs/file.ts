@@ -265,20 +265,20 @@ function getFileTypeFromMimeType(mimeType) {
 
   // Map MIME types to human-readable file types
   const typeMap = {
-    "application/pdf": "PDF Document",
+    "application/pdf": "PDF",
     "image/jpeg": "JPEG Image",
     "image/png": "PNG Image",
     "image/gif": "GIF Image",
     "text/plain": "Text Document",
-    "application/msword": "MS Word Document",
-    "application/vnd.ms-excel": "MS Excel Spreadsheet",
+    "application/msword": "MS WORD",
+    "application/vnd.ms-excel": "MS EXCEL",
     "application/vnd.openxmlformats-officedocument.presentationml.presentation":
       "MS PPT",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
       "MS Word",
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
       "MS Excel",
-    "application/x-ole-storage": "MS Word",
+    "application/x-ole-storage": "MS WORD",
     "application/zip": "Zip",
     // Add more MIME types and their corresponding file types as needed
   };

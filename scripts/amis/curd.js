@@ -75,7 +75,7 @@ function curdTemplate(modelId, columns) {
         primaryField: "id",
         api: {
           method: "post",
-          url: `/api/v1/system/model/${modelId}` + `/search?${withUrl}`,
+          url: `/api/v1/system/model/${modelId}` + `/search${withUrl ? "?" + withUrl : ""}`,
           data: {
             "&": "$$",
           },
