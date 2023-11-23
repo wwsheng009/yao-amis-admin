@@ -187,7 +187,7 @@ function getAmisPage(pageId: string) {
   let page = pageId.replace(".", "/") + ".json";
 
   const fpath = "pages/" + page;
-  let isExist = Process("fs.system.exist", fpath);
+  let isExist = Process("fs.system.Exists", fpath);
   if (!isExist) {
     throw new Exception(`文件不存在：${fpath}`);
   }
@@ -221,7 +221,7 @@ function getAmisEditorPageSource(pageId: string) {
   let page = pageId.replace(".", "/") + ".json";
 
   const fpath = dir + page;
-  let isExist = Process("fs.system.exist", fpath);
+  let isExist = Process("fs.system.Exists", fpath);
   if (!isExist) {
     throw new Exception(`文件不存在：${fpath}`);
   }
