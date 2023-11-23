@@ -251,7 +251,6 @@
       "actions": []
     },
     {
-      "features": ["delete", "view"],
       "id": "u:c000b24f40a8",
       "syncLocation": false,
       "api": {
@@ -259,7 +258,30 @@
         "trackExpression": "${file},${image},${folder}",
         "url": "/api/v1/fs/user/file/search?folder=${folder}&keywords=${keywords}"
       },
+      "primaryField": "id",
+      "multiple": true,
+      "bulkActions": [
+        {
+          "level": "danger",
+          "label": "批量删除",
+          "actionType": "ajax",
+          "confirmText": "确定要删除？",
+          "api": {
+            "url": "/api/v1/fs/user/file/bulk_delete",
+            "method": "post",
+            "data": {
+              "items": {
+                "${items}": {
+                  "path": "${path}"
+                }
+              }
+            }
+          },
+          "type": "button"
+        }
+      ],
       "headerToolbar": [
+        "bulkActions",
         {
           "type": "button",
           "label": "上传文件",
@@ -326,15 +348,13 @@
           }
         }
       ],
-      "perPageAvailable": [10],
       "name": "file_list",
       "type": "crud",
       "perPage": 15,
-      "bulkActions": [],
       "columns": [
         {
           "label": "序号",
-          "name": "index",
+          "name": "id",
           "type": "number"
         },
         {
@@ -567,9 +587,6 @@
           ]
         }
       ],
-      "itemActions": [],
-      "messages": {},
-      "filterSettingSource": ["name", "path", "url", "type"],
       "initFetchOn": "this.folder"
     }
   ],

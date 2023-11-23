@@ -43,13 +43,22 @@ function getFolder(type: string) {
   }
   return filePath;
 }
+function batchDeleteFile(type: string, payload) {
+  const list = payload.items;
+  if (!Array.isArray(list)) {
+    throw new Exception("输入参数不正确");
+  }
+  list.forEach((item) => {
+    deleteFile(type, item.path);
+  });
+}
 function deleteFile(type: string, name: string) {
   const fname = getFilePath(type, name);
 
-  Process("fs.system.Remove", fname);
-  writeLog(fname, "", "remove");
+  const result = Process("fs.system.Remove", fname);
 
-  return;
+  // console.log("result", result);
+  writeLog(fname, "", "remove");
 }
 function queryEscape(str) {
   return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
@@ -195,7 +204,7 @@ function fileSearch(type: string, parentFolder: string, querysIn, payload) {
       const date = getTimeFormat(time);
 
       list2.push({
-        index: ++idx,
+        id: ++idx,
         size: bytes,
         name: baseName,
         path: fpath,
@@ -440,7 +449,7 @@ function removeEmptyChildren(node) {
 }
 
 interface FileList {
-  index: number;
+  id: number;
   name: string;
   path: string;
   url: string;

@@ -117,6 +117,22 @@
       }
     },
     {
+      // /api/v1/fs/:type/file/bulk_delete
+      "label": "批量删除文件",
+      "description": "批量删除文件",
+      "path": "/:type/file/bulk_delete",
+      "method": "POST",
+      "process": "scripts.fs.file.batchDeleteFile",
+      "in": [
+        "$param.type",
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
       // /api/v1/fs/:type/file/list
       "label": "文件列表",
       "description": "文件列表",
