@@ -71,7 +71,7 @@ function Login(payload) {
   } catch (error) {
     return Process("scripts.return.Error", "", 400, "密码不正确");
   }
-  const timeout = 60 * 60;
+  const timeout = 60 * 60 * 8;
   const sessionId = Process("utils.str.UUID");
   let userPayload = { ...user };
   delete userPayload.password;
