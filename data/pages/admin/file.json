@@ -493,6 +493,25 @@
               "level": "link",
               "type": "button",
               "visibleOn": "data.type === 'MS Word'"
+            },
+            {
+              "className": "text-info",
+              "id": "u:c345fb2a01fb",
+              "label": "预览",
+              "level": "link",
+              "type": "button",
+              "actionType": "dialog",
+              "dialog": {
+                "title": "",
+                "size": "md",
+                "body": {
+                  "type": "image",
+                  "imageMode": "original",
+                  "src": "${url}",
+                  "title": "${name}"
+                }
+              },
+              "visibleOn": "data.type === 'IMAGE'"
             }
           ]
         }
