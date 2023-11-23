@@ -39,7 +39,7 @@ function getFolder(type: string) {
   }
 
   if (!Process("fs.system.Exists", filePath)) {
-    Process("fs.system.Mkdir", filePath);
+    Process("fs.system.MkdirAll", filePath);
   }
   return filePath;
 }
