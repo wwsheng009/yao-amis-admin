@@ -13,8 +13,6 @@ function TableListSearch(querysIn, payload) {
   let list = TableList();
   const { items, total } = PaginateArrayWithQuery(
     list,
-    page,
-    pageSize,
     querysIn,
     payload
   );
