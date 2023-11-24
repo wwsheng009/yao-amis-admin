@@ -93,12 +93,126 @@ function dataSearch(model, pageIn, perPageIn, querysIn, queryParams, payload) {
   };
 }
 
+function makeFake(modelId) {
+  const modelDsl = FindCachedModelById(modelId);
+
+  const fakeData = {};
+  modelDsl.columns.forEach(column => {
+    const columnType = column.type.toUpperCase();
+    const key = column.name;
+    switch (columnType) {
+      case "STRING":
+      case "CHAR":
+        fakeData[key] = "dummy fake data"
+        break;
+      case "TEXT":
+      case "MEDIUMTEXT":
+      case "LONGTEXT":
+        fakeData[key] = "dummy fake data"
+        break;
+      case "JSON":
+      case "JSONB":
+        fakeData[key] = {
+          "dummy": "dummy"
+        }
+        break;
+      case "DATE":
+        fakeData[key] = "2023-11-24"
+        break;
+      case "DATETIME":
+        fakeData[key] = "2023-11-24 08:01:00"
+        break;
+      case "DATETIMETZ":
+        fakeData[key] = "2023-11-24T08:01:00Z"
+        break;
+      case "TIME":
+        fakeData[key] = "08:01:00"
+        break;
+      case "TIMETZ":
+        fakeData[key] = "08:01:00Z"
+        break;
+      case "TIMESTAMP":
+      case "TIMESTAMPTZ":
+        fakeData[key] = Date.now()
+        break;
+      case "TINYINTEGER":
+      case "SMALLINTEGER":
+      case "INTEGER":
+      case "BIGINTEGE":
+        fakeData[key] = 12331
+        break;
+      case "UNSIGNEDTINYINTEGER":
+      case "UNSIGNEDSMALLINTEGER":
+      case "UNSIGNEDINTEGER":
+        fakeData[key] = 12331
+        break;
+      case "UNSIGNEDBIGINTEGER":
+        fakeData[key] = 12331
+        break;
+      case "ID":
+      case "TINYINCREMENTS":
+      case "SMALLINCREMENTS":
+      case "INCREMENTS":
+        fakeData[key] = 1
+        break;
+      case "BIGINCREMENTS":
+        fakeData[key] = 1
+        break;
+      case "FLOAT":
+      case "DOUBLE":
+      case "DEMICAL":
+        fakeData[key] = 1.1
+        break;
+      case "UNSIGNEDFLOAT":
+      case "UNSIGNEDDOUBLE":
+      case "UNSIGNEDDECIMAL":
+        fakeData[key] = 1.1
+        break;
+      case "BOOLEAN":
+        fakeData[key] = true
+        break;
+      case "UUID":
+        function generateUUID() {
+          return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            const r = Math.random() * 16 | 0;
+            const v = c === 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+          });
+        }
+        fakeData[key] = generateUUID();
+        break;
+      case "ENUM":
+        fakeData[key] = "enum"
+        break;
+      case "FILE":
+        fakeData[key] = "https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png"
+        break;
+      case "IMAGE":
+        fakeData[key] = "https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png"
+        break;
+      case "IMAGES":
+        fakeData[key] = "https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png,https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png"
+        break;
+      case "VIDEO":
+        fakeData[key] = "https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png"
+        break;
+      case "RICHTEXT":
+        fakeData[key] = "<p></p>"
+        break;
+      default:
+        break;
+    }
+  })
+  return [fakeData]
+}
 //表数据预览，可以用于amis curd控件的api接口测试
-function PreViewtableData(table) {
-  let model_name = DotName(table);
+function PreViewtableData(modelId) {
+  let model_name = DotName(modelId);
   let data = Process(`models.${model_name}.Get`, { limit: 10 });
+  if (data.length === 0) {
+    return makeFake(modelId)
+  }
   return data;
-  // return Process("scripts.return.Success", data);
 }
 //根据id获取记录
 function getData(model, id) {
