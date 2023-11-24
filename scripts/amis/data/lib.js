@@ -1,4 +1,6 @@
 const { FindCachedModelById } = Require("system.model_lib");
+const { IsMysql } = Require("amis.lib_tool");
+
 // 推荐在循环对象属性的时候，使用for...in,
 // 在遍历数组的时候的时候使用for...of。
 // for...in循环出的是key，for...of循环出的是value
@@ -240,18 +242,60 @@ function updateInputData(model, Data) {
   function updateLine(line) {
     for (const key in columnMap) {
       const modelCol = columnMap[key];
-      const type = modelCol.type.toLowerCase();
-      const field = line[key];
-      if (!field) {
+      const type = modelCol.type.toUpperCase();
+      if (!Object.hasOwnProperty.call(line, key)) {
         continue;
       }
-      if (type === "integer") {
-        if (typeof field === "string" && field === "") {
-          // tree-select控件清空时的值是字符串
-          line[key] = null;
+      const field = line[key];
+      if (field == null) {
+        continue;
+      }
+      switch (type) {
+        case "TINYINTEGER":
+        case "SMALLINTEGER":
+        case "INTEGER":
+        case "BIGINTEGE":
+        case "UNSIGNEDTINYINTEGER":
+        case "UNSIGNEDSMALLINTEGER":
+        case "UNSIGNEDINTEGER":
+        case "UNSIGNEDBIGINTEGER":
+        case "ID":
+        case "TINYINCREMENTS":
+        case "SMALLINCREMENTS":
+        case "INCREMENTS":
+        case "BIGINCREMENTS":
+          if (typeof field === "string" && field === "") {
+            // tree-select控件清空时的值是字符串
+            line[key] = 0;
+          }
+          break;
+        case "FLOAT":
+        case "DOUBLE":
+        case "DEMICAL":
+        case "UNSIGNEDFLOAT":
+        case "UNSIGNEDDOUBLE":
+        case "UNSIGNEDDECIMAL":
+          if (typeof field === "string" && field === "") {
+            // tree-select控件清空时的值是字符串
+            line[key] = 0.0;
+          }
+          break;
+        case "BOOLEAN":
+          line[key] = 0
+          if (line[key]) {
+            line[key] = IsMysql() ? 1 : true;
+          } else {
+            line[key] = IsMysql() ? 0 : false;
+          }
+        default:
+          break;
+      }
+      if (type.includes("DATE") || type.includes("TIME")) {
+        if (field === "") {
+          line[key] = undefined;
         }
       } else if (
-        type === "json" &&
+        type === "JSON" &&
         field != null &&
         typeof field === "string" &&
         field.length > 0 &&
