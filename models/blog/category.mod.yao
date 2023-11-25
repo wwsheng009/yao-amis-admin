@@ -16,7 +16,15 @@
       "comment": "描述",
       "label": "描述",
       "name": "description",
-      "type": "string"
+      "type": "string",
+      "nullable": true
+    },
+    {
+      "comment": "上级",
+      "label": "上级",
+      "name": "parent",
+      "type": "integer",
+      "nullable": true
     },
     {
       "comment": "状态",
@@ -30,3 +38,4 @@
     "name": "blog_category"
   }
 }
+// yao migrate -n blog.category --reset

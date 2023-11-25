@@ -1,0 +1,27 @@
+{
+    "name": "amis的请求",
+    "version": "1.0.0",
+    "description": "amis集成请求",
+    "group": "",
+    "guard": "-",
+    "paths": [
+        {
+            // /api/v1/blog/reuest
+            "label": "MetaWeblog",
+            "description": "MetaWeblog Api",
+            "path": "/reuest",
+            "method": "POST",
+            "guard": "-",
+            "process": "scripts.blog.webblog.metaWeblog",
+            "in": [
+                ":query",
+                ":body"
+            ],
+            "out": {
+                "status": 200,
+                "body": "{{content}}",
+                "type": "text/xml"
+            }
+        }
+    ]
+}

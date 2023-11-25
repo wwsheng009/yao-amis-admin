@@ -761,8 +761,8 @@ function getSystemMenu() {
             {
               label: "文章管理",
               icon: "fa fa-file",
-              schemaApi: "/api/v1/amis/pages/blog.article",
-              url: "blog.article",
+              schemaApi: "/api/v1/amis/pages/blog.post",
+              url: "blog.post",
             },
             {
               label: "标签管理",

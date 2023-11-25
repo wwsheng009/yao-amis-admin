@@ -23,7 +23,8 @@
       "comment": "描述",
       "label": "描述",
       "name": "description",
-      "type": "string"
+      "type": "string",
+      "nullable": true,
     },
     {
       "comment": "状态",
@@ -36,7 +37,14 @@
       "comment": "内容",
       "label": "内容",
       "name": "content",
-      "type": "text"
+      "type": "longText"
+    },
+    {
+      "comment": "类型",
+      "label": "类型",
+      "name": "post_type",
+      "type": "string",
+      "default": "post"
     },
     {
       "comment": "来源",
@@ -46,9 +54,20 @@
       "type": "string"
     },
     {
+      "comment": "文件类型",
+      "label": "文件类型",
+      "name": "type",
+      "type": "enum",
+      "option": [
+        "html",
+        "md"
+      ],
+      "nullable": true
+    },
+    {
       "comment": "分类标识",
       "label": "分类标识",
-      "name": "category_id",
+      "name": "category",
       "type": "json",
       "nullable": true
     },
@@ -60,10 +79,25 @@
       "nullable": true
     },
     {
+      "comment": "关键字",
+      "label": "关键字",
+      "name": "keywords",
+      "type": "string",
+      "nullable": true
+    },
+    {
+      "comment": "WordPress Slug",
+      "label": "WordPress Slug",
+      "name": "wp_slug",
+      "type": "string",
+      "nullable": true
+    },
+    {
       "comment": "用户标识",
       "label": "用户标识",
       "name": "user_id",
-      "type": "integer"
+      "type": "integer",
+      "nullable": true
     }
   ],
   "name": "文章",
@@ -71,8 +105,8 @@
     "timestamps": true
   },
   "table": {
-    "name": "blog_article"
+    "name": "blog_post"
   }
 }
-// yao migrate -n blog.article --reset
+// yao migrate -n blog.post --reset
 // yao migrate -n system.api --reset

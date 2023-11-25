@@ -30,6 +30,7 @@ function getFolder(type: string) {
       break;
     case "public":
       filePath = `${uploadDir}/public`;
+      break;
     case "project":
       filePath = `${uploadDir}/project`;
       break;

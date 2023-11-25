@@ -281,7 +281,6 @@ function updateInputData(model, Data) {
           }
           break;
         case "BOOLEAN":
-          line[key] = 0
           if (line[key]) {
             line[key] = IsMysql() ? 1 : true;
           } else {
