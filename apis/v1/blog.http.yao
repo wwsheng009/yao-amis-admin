@@ -6,10 +6,10 @@
     "guard": "-",
     "paths": [
         {
-            // /api/v1/blog/reuest
+            // /api/v1/blog/request
             "label": "MetaWeblog",
             "description": "MetaWeblog Api",
-            "path": "/reuest",
+            "path": "/request",
             "method": "POST",
             "guard": "-",
             "process": "scripts.blog.webblog.metaWeblog",

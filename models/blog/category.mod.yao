@@ -30,7 +30,8 @@
       "comment": "状态",
       "label": "状态",
       "name": "status",
-      "type": "boolean"
+      "type": "boolean",
+      "default": true
     }
   ],
   "name": "博客分类",

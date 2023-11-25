@@ -1,7 +1,7 @@
 const convert = Require("blog.xml-js")
 // https://www.jsdelivr.com/package/npm/xml-js?path=dist
 
-// https://rpc.cnblogs.com/metaweblog/zhaoqingqing#metaWeblog.newPost
+// https://rpc.cnblogs.com/metaweblog/xxxxxx#metaWeblog.newPost
 
 // POST /xmlrpc.php?methodName=metaWeblog.newPost HTTP/1.1
 
@@ -131,7 +131,7 @@ function metaWeblog(query, body) {
  * 创建新的分类
  * @returns new id
  */
-function newCategory() {
+function newCategory(params) {
     let postId = params[0];
     if (postId == null || postId == "") {
         return getErrorMessage("更新时需要指定id")
@@ -144,7 +144,7 @@ function newCategory() {
     const id = Process("models.blog.category.save", {
         name: category.name,
         description: category.description,
-        parent: category.parent_id
+        parent: category.parent_id,
     })
 
     return convertJson2RpcXml(id)
@@ -211,11 +211,19 @@ function getPost(params) {
     }
 }
 
+/**
+ * 最近的文章列表
+ * @param {object} params 
+ * @returns 
+ */
 function getRecentPosts(params) {
+    // console.log("params", params)
+    const limit = params[3]//numberOfPosts
     const blogs = Process("models.blog.post.get", {
         wheres: [
             { column: 'user_id', value: params[1] }
-        ]
+        ],
+        limit: limit ? limit : 100
     })
 
     const blogs2 = blogs.map(b => {
@@ -284,7 +292,7 @@ function editPost(params) {
         post_type: post.post_type,
         updated_at: formatDate(post.dateCreated),
         source: post.source,
-        type: post.type,
+        type: post.type ? post.type : 'html',
         categories: post.category || [],
         user_id: params[1]
     };
@@ -303,7 +311,7 @@ function newPost(params) {
         post_type: post.post_type,
         created_at: formatDate(post.dateCreated),
         user_id: params[1],
-        type: post.type,
+        type: post.type ? post.type : 'html',
     };
     const postId = Process("models.blog.post.save", newArticle)
     return convertJson2RpcXml(postId + "")

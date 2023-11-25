@@ -258,13 +258,39 @@
                       }
                     ]
                   },
+
                   {
                     "type": "input-rich-text",
                     "name": "content",
-                    "label": "ArticleContent",
+                    "label": "内容",
                     "required": false,
                     "receiver": "post:/api/v1/fs/public/file/upload",
-                    "videoReceiver": "post:/api/v1/fs/public/file/upload"
+                    "videoReceiver": "post:/api/v1/fs/public/file/upload",
+                    "visibleOn": "data.type !== 'md'"
+                  },
+                  {
+                    "type": "editor",
+                    "name": "content",
+                    "language": "markdown",
+                    "label": "Markdown",
+                    "required": false,
+                    "visibleOn": "data.type == 'md'"
+                  },
+                  {
+                    "type": "static-button",
+                    "actionType": "dialog",
+                    "label": "预览",
+                    "dialog": {
+                      "size": "lg",
+                      "body": [
+                        {
+                          "type": "markdown",
+                          "name": "content"
+                        }
+                      ]
+                    },
+                    "required": false,
+                    "visibleOn": "data.type == 'md'"
                   },
                   {
                     "type": "input-text",
@@ -390,6 +416,7 @@
             }
           ]
         },
+
         {
           "type": "input-text",
           "name": "category__name",
@@ -500,6 +527,7 @@
           "type": "dialog",
           "body": {
             "type": "form",
+            "data": { "type": "" },
             "name": "create",
             "body": [
               {
@@ -571,12 +599,56 @@
                 ]
               },
               {
+                "type": "select",
+                "name": "type",
+                "label": "类型",
+                "required": false,
+                "joinValues": false,
+                "clearable": true,
+                "extractValue": true,
+                "options": [
+                  {
+                    "label": "Markdown",
+                    "value": "md"
+                  },
+                  {
+                    "label": "HTML",
+                    "value": "html"
+                  }
+                ]
+              },
+              {
                 "type": "input-rich-text",
                 "name": "content",
                 "label": "ArticleContent",
                 "required": true,
                 "receiver": "post:/api/v1/fs/public/file/upload",
-                "videoReceiver": "post:/api/v1/fs/public/file/upload"
+                "videoReceiver": "post:/api/v1/fs/public/file/upload",
+                "visibleOn": "data.type !== 'md'"
+              },
+              {
+                "type": "editor",
+                "name": "content",
+                "language": "markdown",
+                "label": "Markdown",
+                "required": false,
+                "visibleOn": "data.type == 'md'"
+              },
+              {
+                "type": "static-button",
+                "actionType": "dialog",
+                "label": "预览",
+                "dialog": {
+                  "size": "lg",
+                  "body": [
+                    {
+                      "type": "markdown",
+                      "name": "content"
+                    }
+                  ]
+                },
+                "required": false,
+                "visibleOn": "data.type == 'md'"
               },
               {
                 "type": "input-text",
