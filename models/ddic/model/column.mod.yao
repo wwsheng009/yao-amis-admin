@@ -168,7 +168,6 @@
       "name": "check_model_label",
       "type": "string",
       "comment": "模型模型标签字段",
-      "default": "name",
       "nullable": true
     },
     {
@@ -176,7 +175,6 @@
       "name": "check_model_value",
       "type": "string",
       "comment": "模型模型值字段",
-      "default": "id",
       "nullable": true
     },
     {

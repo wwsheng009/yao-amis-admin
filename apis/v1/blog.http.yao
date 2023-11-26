@@ -6,14 +6,15 @@
     "guard": "-",
     "paths": [
         {
-            // /api/v1/blog/request
+            // /api/v1/blog/web/:blog
             "label": "MetaWeblog",
             "description": "MetaWeblog Api",
-            "path": "/request",
+            "path": "/web/:blog",
             "method": "POST",
             "guard": "-",
-            "process": "scripts.blog.webblog.metaWeblog",
+            "process": "scripts.blog.web.metaWeblogHandler",
             "in": [
+                "$param.blog",
                 ":query",
                 ":body"
             ],

@@ -905,6 +905,10 @@ function Source(modelId) {
     delete col.model_id;
     delete col.element_id;
     delete col.model_identity;
+    delete col.check_model_label;
+    delete col.check_model_value;
+    delete col.check_model;
+
     col = convertColTypeToYao(col);
   });
   delete m.id;

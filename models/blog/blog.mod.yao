@@ -1,0 +1,32 @@
+{
+    "columns": [
+        {
+            "comment": "ID",
+            "label": "ID",
+            "name": "id",
+            "type": "id"
+        },
+        {
+            "comment": "博客名称",
+            "label": "博客名称",
+            "name": "name",
+            "type": "string"
+        },
+        {
+            "comment": "博客首页",
+            "label": "博客首页",
+            "name": "url",
+            "type": "string"
+        },
+        {
+            "comment": "用户ID",
+            "label": "用户ID",
+            "name": "user_id",
+            "type": "integer"
+        }
+    ],
+    "name": "博客",
+    "table": {
+        "name": "blog_blog"
+    }
+}
