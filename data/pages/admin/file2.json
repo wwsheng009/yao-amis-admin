@@ -1,0 +1,32 @@
+{
+  "type": "page",
+  "body": [
+    {
+      "actionType": "link",
+      "body": "用户文件管理",
+      "className": "",
+      "link": "/admin/file/user",
+      "type": "button"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "actionType": "link",
+      "body": "公共文件管理",
+      "className": "",
+      "link": "/admin/file/public",
+      "type": "button"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "actionType": "link",
+      "body": "项目文件管理",
+      "className": "",
+      "link": "/admin/file/project",
+      "type": "button"
+    }
+  ]
+}

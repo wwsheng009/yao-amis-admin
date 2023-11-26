@@ -98,7 +98,7 @@
                   "actionType": "link",
                   "label": "修改",
                   "level": "link",
-                  "link": "/amis/model/model.create/${id}/",
+                  "link": "/model/create/${id}/",
                   "type": "button",
                   "id": "u:60c2b54030ad"
                 },

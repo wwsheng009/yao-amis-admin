@@ -59,7 +59,7 @@
                       }
                     ],
                     "api": {
-                      "url": "/api/v1/fs/user/folder/create?name=${root_folder}",
+                      "url": "/api/v1/fs/${params.file_type}/folder/create?name=${root_folder}",
                       "method": "get"
                     },
                     "dsType": "api",
@@ -92,7 +92,7 @@
         "messages": {},
         "method": "get",
         "requestAdaptor": "",
-        "url": "/api/v1/fs/user/folder/create",
+        "url": "/api/v1/fs/${params.file_type}/folder/create",
         "adaptor": "",
         "data": {
           "folder": "${folder}",
@@ -107,7 +107,7 @@
       "source": {
         "method": "get",
         "requestAdaptor": "",
-        "url": "/api/v1/fs/user/folder/list?parent=${value}",
+        "url": "/api/v1/fs/${params.file_type}/folder/list?parent=${value}",
         "adaptor": "",
         "messages": {}
       },
@@ -144,11 +144,11 @@
         "title": "编辑选项"
       },
       "rootCreateTip": "创建目录",
-      "rootLabel": "用户根目录",
+      "rootLabel": "根目录",
       "label": "",
       "enableNodePath": false,
       "editApi": {
-        "url": "/api/v1/fs/user/folder/move",
+        "url": "/api/v1/fs/${params.file_type}/folder/move",
         "adaptor": "",
         "data": {
           "folder": "${folder}",
@@ -182,7 +182,7 @@
       "initiallyOpen": true,
       "deleteApi": {
         "method": "get",
-        "url": "/api/v1/fs/user/folder/delete?folder=${folder}"
+        "url": "/api/v1/fs/${params.file_type}/folder/delete?folder=${folder}"
       },
       "editControls": [
         {
@@ -256,7 +256,7 @@
       "api": {
         "method": "post",
         "trackExpression": "${file},${image},${folder}",
-        "url": "/api/v1/fs/user/file/search?folder=${folder}&keywords=${keywords}"
+        "url": "/api/v1/fs/${params.file_type}/file/search?folder=${folder}&keywords=${keywords}"
       },
       "primaryField": "id",
       "multiple": true,
@@ -267,7 +267,7 @@
           "actionType": "ajax",
           "confirmText": "确定要删除？",
           "api": {
-            "url": "/api/v1/fs/user/file/bulk_delete",
+            "url": "/api/v1/fs/${params.file_type}/file/bulk_delete",
             "method": "post",
             "data": {
               "items": {
@@ -302,7 +302,7 @@
                     "name": "file",
                     "receiver": {
                       "requestAdaptor": "",
-                      "url": "/api/v1/fs/user/file/upload",
+                      "url": "/api/v1/fs/${params.file_type}/file/upload",
                       "data": {
                         "folder": "${folder}"
                       },
@@ -324,7 +324,7 @@
                     "uploadType": "fileReceptor",
                     "receiver": {
                       "requestAdaptor": "",
-                      "url": "/api/v1/fs/user/file/upload",
+                      "url": "/api/v1/fs/${params.file_type}/file/upload",
                       "adaptor": "",
                       "data": {
                         "folder": "${folder}"
@@ -405,7 +405,7 @@
           "type": "operation",
           "buttons": [
             {
-              "url": "/api/v1/fs/user/file/attachement?name=${path}",
+              "url": "/api/v1/fs/${params.file_type}/file/attachement?name=${path}",
               "actionType": "url",
               "className": "text-info",
               "id": "u:c345fb2a01fb",
@@ -422,7 +422,7 @@
               "actionType": "download",
               "api": {
                 "responseType": "blob",
-                "url": "/api/v1/fs/user/file/attachement?name=${path}",
+                "url": "/api/v1/fs/${params.file_type}/file/attachement?name=${path}",
                 "method": "get"
               }
             },
@@ -439,7 +439,7 @@
                 "method": "get",
                 "requestAdaptor": "",
                 "sendOn": "this.file_path",
-                "url": "/api/v1/fs/user/file/delete?name=${path}"
+                "url": "/api/v1/fs/${params.file_type}/file/delete?name=${path}"
               },
               "className": "text-danger"
             }
@@ -461,7 +461,7 @@
               "visibleOn": "data.type === 'MS Excel'"
             },
             {
-              "url": "/amis-admin/preview-excel.html?file=/api/v1/fs/user/file/attachement?name=${path}&token=${cookie:token}",
+              "url": "/amis-admin/preview-excel.html?file=/api/v1/fs/${params.file_type}/file/attachement?name=${path}&token=${cookie:token}",
               "actionType": "url",
               "className": "text-info",
               "id": "u:c345fb2a01fb",
@@ -471,7 +471,7 @@
               "visibleOn": "data.type === 'MS Excel'"
             },
             {
-              "url": "/pdfjs/web/viewer.html?file=/api/v1/fs/user/file/attachement?name=${path}&token=${cookie:token}",
+              "url": "/pdfjs/web/viewer.html?file=/api/v1/fs/${params.file_type}/file/attachement?name=${path}&token=${cookie:token}",
               "actionType": "url",
               "className": "text-info",
               "id": "u:c345fb2a01fb",
@@ -481,7 +481,7 @@
               "visibleOn": "data.type === 'PDF'"
             },
             {
-              "url": "/amis-admin/preview-pdf.html?file=/api/v1/fs/user/file/attachement?name=${path}&token=${cookie:token}",
+              "url": "/amis-admin/preview-pdf.html?file=/api/v1/fs/${params.file_type}/file/attachement?name=${path}&token=${cookie:token}",
               "actionType": "url",
               "className": "text-info",
               "id": "u:c345fb2a01fb",
@@ -491,7 +491,7 @@
               "visibleOn": "data.type === 'PDF'"
             },
             {
-              "url": "/PPTX2HTML/index.html?file=/api/v1/fs/user/file/attachement?name=${path}&token=${cookie:token}",
+              "url": "/PPTX2HTML/index.html?file=/api/v1/fs/${params.file_type}/file/attachement?name=${path}&token=${cookie:token}",
               "actionType": "url",
               "className": "text-info",
               "id": "u:c345fb2a01fb",
@@ -518,7 +518,7 @@
               "visibleOn": "data.type === 'MS Word'"
             },
             {
-              "url": "/amis-admin/preview-word.html?file=/api/v1/fs/user/file/attachement?name=${path}&token=${cookie:token}",
+              "url": "/amis-admin/preview-word.html?file=/api/v1/fs/${params.file_type}/file/attachement?name=${path}&token=${cookie:token}",
               "actionType": "url",
               "className": "text-info",
               "id": "u:c345fb2a01fb",

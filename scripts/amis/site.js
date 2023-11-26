@@ -749,8 +749,13 @@ function getSystemMenu() {
               label: "文件管理",
               icon: "fa fa-file",
               schemaApi: "/api/v1/amis/pages/admin.file",
+              url: "/admin/file/:file_type",
+            }, {
+              label: "文件管理",
+              icon: "fa fa-file",
+              schemaApi: "/api/v1/amis/pages/admin.file2",
               url: "admin.file",
-            },
+            }
           ],
         },
         {
@@ -849,7 +854,7 @@ function getModelMenu() {
             {
               label: "修改",
               schemaApi: "/api/v1/amis/pages/model.create",
-              url: "/amis/model/model.create/:id/",
+              url: "/model/create/:id/",
             },
           ],
           icon: "fa fa-cube",
