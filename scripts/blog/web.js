@@ -330,18 +330,50 @@ function newPost(user_id, params) {
     return getRpcResponse(postId + "")
     // return getPostNewEditMessage(postId)
 }
+
+
+function getNormorFileName(fname) {
+    let filename = fname;
+    const info = {
+        fname: "",
+        ext: ""
+    }
+    if (!fname) {
+        info.fname = Process("utils.str.UUID").replaceAll("-", "");
+    } else {
+        filename = filename.replace(/\\/g, "/")
+        filename = filename.split('/').pop();
+        filename = filename.split("@")[0]
+        info.ext = filename.split(".").pop();
+        filename = filename.split('.').slice(0, -1).join('.');
+
+        const specialChars = /[`~!@#$%^&*()|+\=?;:'",<>\{\}\[\]\\\/]/gi;
+        // Remove special characters from the filename
+        info.fname = filename.replace(specialChars, '');
+    }
+    return info.fname + "." + info.ext;
+}
+
 function newMediaObject(params) {
+    // console.log("newMediaObject", params)
     const upLoadData = params[3]
-    const fname = upLoadData.name;
+    let filename = upLoadData.name;
     const type = upLoadData.type;
     const bits = upLoadData.bits;
     var fs = new FS("system")
     var folder = new Date().toISOString().slice(0, 10).replace(/-/g, "");
-    const filePath = `${folder}/${fname}`
+
+    filename = getNormorFileName(filename)
+
+    const filePath = `${folder}/${filename}`
+    // console.log("filename", filename)
+
     const newFileName = `/upload/public/${filePath}`
     fs.WriteFileBase64(newFileName, bits)
     const fnameEncode = encodeURIComponent(filePath)
     const fileApi = `/api/v1/fs/public/file/download?name=${fnameEncode}`
+    // console.log("fileApi", fileApi)
+
     return getRpcResponse({ url: fileApi })
     // return getUpdateFileMessage(fileApi)
 }
