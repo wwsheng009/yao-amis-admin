@@ -11,6 +11,7 @@
   "description": "::Amis Yao Admin",
   "version": "0.10.3",
   "setup": "studio.setup.run",
+  "startup": "scripts.startup.run",
   "adminRoot": "admin",
   "token": {
     "storage": "localStorage"

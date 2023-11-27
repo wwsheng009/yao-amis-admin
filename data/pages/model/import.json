@@ -43,6 +43,21 @@
           "actionType": "ajax"
         }
       ],
+      "headerToolbar": [
+        "bulkActions",
+        {
+          "api": {
+            "url": "/api/v1/system/meta/model/import_db_models_to_cache",
+            "method": "post"
+          },
+          "ignoreError": false,
+          "editorState": "default",
+          "label": "导入所有的数据库模型到缓存",
+          "confirmText": "确定需要导入所有的数据库模型吗",
+          "actionType": "ajax",
+          "type": "button"
+        }
+      ],
       "columns": [
         {
           "name": "name",
@@ -71,20 +86,22 @@
         {
           "name": "created",
           "type": "status",
-          "label": "数据库已创建"
+          "label": "数据库表已创建"
+        },
+        {
+          "id": "u:cc1dd9ddb24c",
+          "label": "模型已保存数据库",
+          "tooltip": "模型已保存数据库",
+          "name": "saved",
+          "type": "status"
         },
         {
           "name": "cached",
           "type": "status",
           "id": "u:f805d02eccc5",
-          "label": "是否已缓存"
+          "label": "Yao模型已缓存"
         },
-        {
-          "id": "u:cc1dd9ddb24c",
-          "label": "是否已保存",
-          "name": "saved",
-          "type": "status"
-        },
+
         {
           "buttons": [
             {

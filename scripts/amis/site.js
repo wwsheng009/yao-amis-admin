@@ -685,7 +685,6 @@ function getSuperUserMenu() {
 function getHomeMenu() {
   return [
     {
-      redirect: "/about",
       url: "/",
       label: "Home",
       schema: [
@@ -694,7 +693,7 @@ function getHomeMenu() {
           body: [
             {
               type: "tpl",
-              tpl: "xxxxxxxxxxxxxxx",
+              tpl: "欢迎使用管理平台",
             },
           ],
         },

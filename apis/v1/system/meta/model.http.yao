@@ -312,6 +312,21 @@
       }
     },
     {
+      //api/v1/system/meta/model/import_db_models_to_cache
+      "label": "导入所有的数据库模型到缓存",
+      "description": "导入所有的数据库模型到缓存",
+      "path": "/import_db_models_to_cache",
+      "method": "POST",
+      "process": "scripts.system.model.importDBModelsToCache",
+      "in": [
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
       //api/v1/system/meta/model/import_cached_batch
       "label": "批量导入本地缓存",
       "description": "批量导入本地缓存",

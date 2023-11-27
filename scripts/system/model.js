@@ -916,32 +916,36 @@ function Source(modelId) {
   return { source: m };
 }
 
-function CheckModel(model) {
+/**
+ * Check the model dsl
+ * @param {object} modelDsl model dsl
+ */
+function CheckModel(modelDsl) {
   let message = [];
 
-  if (!model.ID || !model.ID.length) {
+  if (!modelDsl.ID || !modelDsl.ID.length) {
     message.push(`模型标识不能为空`);
   }
-  if (!model.table?.name || !model.table?.name.length) {
+  if (!modelDsl.table?.name || !modelDsl.table?.name.length) {
     message.push(`数据库表名称不能为空`);
   }
-  if (model.id != null) {
-    let line = Process("models.ddic.model.Find", model.id, {});
+  if (modelDsl.id != null) {
+    let line = Process("models.ddic.model.Find", modelDsl.id, {});
     //  不存在会直接报错
-    if (model.ID && model.ID != line.identity) {
+    if (modelDsl.ID && modelDsl.ID != line.identity) {
       message.push(
-        `模型已经存在，但是模型标识[${model.ID}]与数据库表[${line.identity}]不一致`
+        `模型已经存在，但是模型标识[${modelDsl.ID}]与数据库表[${line.identity}]不一致`
       );
     }
-    if (model.table?.name && model.table.name != line.table_name) {
+    if (modelDsl.table?.name && modelDsl.table.name != line.table_name) {
       message.push(
-        `模型已经存在，但是表名称不一致，新表名${model.table?.name},已经存在${line.table_name}`
+        `模型已经存在，但是表名称不一致，新表名${modelDsl.table?.name},已经存在${line.table_name}`
       );
     }
   }
 
   //根据表名或是模型名称，检查是否已经存在同样ID的模型，防止误更更新
-  let tableName = model.table.name;
+  let tableName = modelDsl.table.name;
   const wheres = [];
   wheres.push({ column: "table_name", value: tableName });
   const [one] = Process("models.ddic.model.get", {
@@ -949,16 +953,16 @@ function CheckModel(model) {
     with: {},
   });
 
-  if (one?.id && model.id != null && one?.id != model.id) {
+  if (one?.id && modelDsl.id != null && one?.id != modelDsl.id) {
     message.push(
-      `存在同名的表[${tableName}]，但是id不同[${model.id}]=>${one.id}`
+      `存在同名的表[${tableName}]，但是id不同[${modelDsl.id}]=>${one.id}`
     );
   }
-  if (!Array.isArray(model.columns)) {
+  if (!Array.isArray(modelDsl.columns)) {
     message.push(`列定义应该是数组`);
   }
 
-  if (model.columns.length == 0) {
+  if (modelDsl.columns.length == 0) {
     message.push(`不存在列定义`);
   }
   if (message.length > 0) {
@@ -998,6 +1002,22 @@ function ImportModelSource(payload) {
   }
 
   return Process("scripts.return.Success", { id: id }, "导入成功");
+}
+
+/**
+ * 批量把所有的数据库的模型加载到缓存
+ * yao run scripts.system.model.importDBModelsToCache
+ */
+function importDBModelsToCache() {
+
+  const list = DatabaseModelList();
+
+  list.forEach(
+    m => {
+      const modelDsl = getModelFromDB(m.identity)
+
+      loadModeltoMemory(modelDsl)
+    })
 }
 
 /**
