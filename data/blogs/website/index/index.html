@@ -1,24 +1,18 @@
 <page>
   <section>
-    <h1>{{post.title}}</h1>
-
-    <div class="container mx-auto py-4">
-      <h2 class="text-2xl font-bold mb-4">Recent Posts</h2>
-
-      <ul class="space-y-2">
-        <li s:for="articles.data" s:for-item="article" s:for-index="idx">
-          <a href="{{ article.url }}" class="text-blue-500 hover:underline" target="_blank">
-            <div class="flex items-center">
-              <img s:if="article.img != ''" src="{{ article.img }}" alt="Post Thumbnail"
-                class="h-16 w-16 object-cover rounded mr-4">
-              <div>
-                <h3 class="text-xl font-semibold">{{ article.title }}</h3>
-                <p class="text-gray-600">{{ article.description }}</p>
-              </div>
-            </div>
-          </a>
-        </li>
-      </ul>
-    </div>
+    <h1 class="text-3xl font-bold mb-4">Yao Blog Post List</h1>
+    <ul class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <!-- Replace the code below with your actual post data -->
+      <li s:for="articles.data" s:for-item="article" s:for-index="idx">
+        <div class="bg-white shadow-md rounded-lg p-4">
+          <img s:if="article.img != ''" src="{{ article.img }}" alt="Post Image" class="object-cover rounded-md">
+          <a href="{{ article.url }}" target="_blank" class="text-xl text-blue-500 font-semibold mb-2">{{ article.title
+            }}</a>
+          <p class="text-gray-600 mb-4">{{ article.description }}</p>
+          <a href="{{ article.url }}" target="_blank" class="text-blue-500 font-semibold">Read More</a>
+        </div>
+      </li>
+      <!-- Repeat the above code for each post -->
+    </ul>
   </section><!-- JAVASCRIPTS -->
 </page>

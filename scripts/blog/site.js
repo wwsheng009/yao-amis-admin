@@ -11,7 +11,7 @@ function getPost(post_id) {
         ]
     })
     if (b != null) {
-        return { title: b.title, content: b.content }
+        return b
     } else {
         return { title: 'Not Found', content: `<div>Post Not Found</div>` }
     }
@@ -20,7 +20,13 @@ function getPost(post_id) {
 // yao run scripts.blog.site.getPostList
 function getPostList() {
     const list = Process("models.blog.post.get", {
-        select: ['title', 'id', 'post_type', 'img', 'description']
+        select: ['title', 'id', 'post_type', 'img', 'description'],
+        wheres: [
+            {
+                column: "status",
+                value: true
+            }
+        ]
     })
     list.forEach(item => {
         if (!item.img) {
