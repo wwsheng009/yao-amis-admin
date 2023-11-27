@@ -7,6 +7,10 @@ function getPost(post_id) {
             {
                 column: 'id',
                 value: post_id
+            },
+            {
+                column: 'status',
+                value: true
             }
         ]
     })
