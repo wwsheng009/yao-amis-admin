@@ -29,7 +29,7 @@
             {
               "body": [
                 {
-                  "tpl": "Amis-Yao Admin",
+                  "tpl": "${app.description}",
                   "type": "tpl",
                   "wrapperComponent": "h1",
                   "id": "u:984c8b793d59",
@@ -53,8 +53,7 @@
             {
               "redirect": "/amis-admin",
               "data": {
-                "username": "${cookie:email || `xiang@iqka.com`}",
-                "password": "A123456p+"
+                "username": "${cookie:email}"
               },
               "mode": "horizontal",
               "name": "login_form",
@@ -224,7 +223,7 @@
                       "style": {
                         "width": "100%"
                       },
-                      "tpl": "测试用户名：xiang@iqka.com <br/>密码：A123456p+",
+                      "tpl": "",
                       "type": "tpl",
                       "wrapperComponent": ""
                     }
@@ -237,7 +236,8 @@
                     "position": "static",
                     "textAlign": "center"
                   },
-                  "type": "container"
+                  "type": "container",
+                  "hide": true
                 }
               ],
               "id": "u:478b66087163"

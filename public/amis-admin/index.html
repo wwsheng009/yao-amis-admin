@@ -45,13 +45,12 @@
   <script>
     yao_amis.checkToken();
     (async function () {
+      const axios = amisRequire('axios')
+      window.axios = axios;//确保在fetcher的js文件中能引用到。或是把fetcher移动到这个文件
 
-
+      const appInfo = await axios.get("/api/__yao/app/setting")
       let amisEmbed = amisRequire('amis/embed');
       const match = amisRequire('path-to-regexp').match;
-      const axios = amisRequire('axios')
-
-      window.axios = axios;//确保在fetcher的js文件中能引用到。或是把fetcher移动到这个文件
 
       // 如果想用 browserHistory 请切换下这处代码, 其他不用变
       // const history = History.createBrowserHistory();
@@ -61,8 +60,8 @@
       const definitions = request.data.definitions
       const app = {
         type: 'app',
-        brandName: 'Yao-Amis',
-        logo: 'public/logo.png',
+        brandName: appInfo.data.name,
+        logo: appInfo.data.logo,
         header: {
           "schemaApi": "get:/api/v1/amis/pages/system.toolbar",
           "type": "service",
@@ -144,6 +143,7 @@
           location: history.location,
           locale: "zh-CN",
           data: {
+            // props 里的 data 属性来赋予 amis 顶层数据域的值
             // 全局数据，是受控的数据
           },
           context: {
