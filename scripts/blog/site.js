@@ -11,6 +11,9 @@ function getPost(post_id) {
         ]
     })
     if (b != null) {
+        if (b.img == null) {
+            b.img = ""
+        }
         return b
     } else {
         return { title: 'Not Found', content: `<div>Post Not Found</div>` }
