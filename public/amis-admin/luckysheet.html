@@ -29,28 +29,40 @@
         function isFunction(val) {
             return getType(val) === 'Function'
         }
+        function getQuery(url, name) {
+            // Find the index of '?' to get the start position of the query parameters
+            const queryStartIndex = url.indexOf('?');
+            if (queryStartIndex !== -1) {
+                // Extract the query string
+                const queryStr = url.slice(queryStartIndex + 1);
+                // Split the query string into individual parameters
+                const queryParams = queryStr.split('&');
+                // Iterate over each parameter to find the "name" parameter
+                for (const param of queryParams) {
+                    const [key, value] = param.split('=');
+
+                    if (key === name) {
+                        return decodeURIComponent(value);
+                        break;
+                    }
+                }
+            }
+        }
         $(function () {
-            const fname = getURLParameter('name');
-            if (!fname) {
+            let fnameUrl = getURLParameter('file');
+            if (!fnameUrl) {
                 alert('Failed to get the sheet file')
                 return
             }
+            fnameUrl = decodeURIComponent(fnameUrl)
+            const fname = getQuery(fnameUrl, 'name')
             const filename = fname.split('/').pop()
-            const type = getURLParameter('type');
-            if (!type) {
-                alert('Failed to get the file type')
-                return
-            }
-            const token = yao_amis.getToken();
-            const url = `/api/v1/fs/${type}/file/attachement?name=${fname}&token=${token}`
-            console.log(url)
 
-            LuckyExcel.transformExcelToLuckyByUrl(url, filename, (exportJson, luckysheetfile) => {
+            LuckyExcel.transformExcelToLuckyByUrl(fnameUrl, filename, (exportJson, luckysheetfile) => {
                 if (exportJson.sheets == null || exportJson.sheets.length == 0) {
                     alert('Failed to read the content of the excel file, currently does not support xls files!')
                     return
                 }
-                console.log('exportJson', exportJson)
                 isFunction(window?.luckysheet?.destroy) && window.luckysheet.destroy()
                 window.__currentFile = exportJson;
                 window.luckysheet.create({

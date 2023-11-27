@@ -451,7 +451,7 @@
           "type": "operation",
           "buttons": [
             {
-              "url": "/amis-admin/luckysheet.html?name=${path}&type=user",
+              "url": "/amis-admin/luckysheet.html?file=/api/v1/fs/${params.file_type}/file/attachement?name=${path}&token=${cookie:token}",
               "actionType": "url",
               "className": "text-info",
               "id": "u:c345fb2a01fb",

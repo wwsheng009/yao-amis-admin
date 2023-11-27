@@ -85,7 +85,7 @@ function getBasename(filename: string, noEscape) {
 }
 // yao run scripts.fs.file.getFilePath
 function getFilePath(type: string, name: string) {
-  const filePath = `${getFolder(type)}/${name}`;
+  const filePath = `${getFolder(type)}/${decodeURIComponent(name)}`;
   return filePath;
 }
 
@@ -209,7 +209,9 @@ function fileSearch(type: string, parentFolder: string, querysIn, payload) {
         size: bytes,
         name: baseName,
         path: fpath,
-        url: `/api/v1/fs/${type}/file/download?name=${fpath}`,
+        url: `/api/v1/fs/${type}/file/download?name=${encodeURIComponent(
+          fpath
+        )}`,
         mime: mimeType,
         type: getFileTypeFromMimeType(mimeType),
         time: date,
