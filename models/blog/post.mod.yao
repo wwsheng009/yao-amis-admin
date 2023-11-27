@@ -10,7 +10,8 @@
       "comment": "标题",
       "label": "标题",
       "name": "title",
-      "type": "string"
+      "type": "string",
+      "nullable": false
     },
     {
       "comment": "图片",
@@ -37,7 +38,8 @@
       "comment": "内容",
       "label": "内容",
       "name": "content",
-      "type": "longText"
+      "type": "longText",
+      "nullable": false
     },
     {
       "comment": "类型",
@@ -58,6 +60,7 @@
       "label": "文件类型",
       "name": "type",
       "type": "enum",
+      "default": "html",
       "option": [
         "html",
         "md"

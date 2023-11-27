@@ -620,7 +620,7 @@
               {
                 "type": "input-rich-text",
                 "name": "content",
-                "label": "ArticleContent",
+                "label": "内容",
                 "required": true,
                 "receiver": "post:/api/v1/fs/public/file/upload",
                 "videoReceiver": "post:/api/v1/fs/public/file/upload",
