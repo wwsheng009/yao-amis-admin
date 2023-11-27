@@ -492,7 +492,7 @@ function getAmisRoutesFromDB(): AmisAppPage[] {
       id: menu.id, //required
       parent: menu.parent, //required
       label: menu.title,
-      url: menu.url_type === 1 ? menu.url : undefined,
+      url: menu.url_type === 3 ? menu.url : undefined, //amis menu type
       icon: menu.icon,
       schemaApi: menu.schema_api,
       schema: menu.schema,
