@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth" dir="ltr">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>
+        Techwind - Tailwind CSS Multipurpose Landing &amp; Admin Dashboard
+        Template
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Tailwind CSS Saas &amp; Software Landing Page Template" />
+    <meta name="keywords"
+        content="agency, application, business, clean, creative, cryptocurrency, it solutions, modern, multipurpose, nft marketplace, portfolio, saas, software, tailwind css" />
+    <meta name="author" content="Shreethemes" />
+    <meta name="website" content="https://shreethemes.in" />
+    <meta name="email" content="support@shreethemes.in" />
+    <meta name="version" content="2.0.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+</head>
+
+<body>
+    <section>
+        <h1>{{post.title}}</h1>
+        <div>{{ post.content }}</div>
+    </section><!-- JAVASCRIPTS -->
+    <script>
+        function test() {
+            console.log("hello world");
+            console.log("hello world");
+        }
+        function changeInput() {
+            input.data = 12312;
+        }
+    </script>
+
+    <script name="data" type="json">
+    {
+        "$post": {
+            "process": "scripts.blog.site.getPost",
+            "args": ["$query.post_id"]
+        }
+    }
+    </script>
+</body>
+
+</html>

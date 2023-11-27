@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="en" class="dark scroll-smooth" dir="ltr"><head>
+  <meta charset="UTF-8"/>
+  <title>Home Page | {{ $global.title }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <meta name="description" content="Tailwind CSS Saas &amp; Software Landing Page Template"/>
+  <meta name="keywords" content="agency, application, business, clean, creative, cryptocurrency, it solutions, modern, multipurpose, nft marketplace, portfolio, saas, software, tailwind css"/>
+  <meta name="author" content="Shreethemes"/>
+  <meta name="website" content="https://shreethemes.in"/>
+  <meta name="email" content="support@shreethemes.in"/>
+  <meta name="version" content="2.0.0"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+  <!-- favicon -->
+
+  <!-- CSS -->
+  <link href="/blog/assets/libs/tiny-slider/tiny-slider.css" rel="stylesheet"/>
+
+  <!-- Main Css -->
+  <link href="/blog/assets/libs/@iconscout/unicons/css/line.css" type="text/css" rel="stylesheet"/>
+
+  <link href="/blog/assets/libs/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css"/>
+
+  <link rel="stylesheet" href="/blog/assets/css/tailwind.css"/>
+  <link rel="stylesheet" href="/blog/assets/libs/tiny-slider/tiny-slider.css"/>
+</head>
+
+<body>
+  <!-- Loader Start -->
+  <!-- <div id="preloader">
+            <div id="status">
+                <div class="spinner">
+                    <div class="double-bounce1"></div>
+                    <div class="double-bounce2"></div>
+                </div>
+            </div>
+        </div> -->
+  <!-- Loader End -->
+
+  <div class="font-nunito text-base text-black dark:text-white dark:bg-slate-900">
+    <section>
+    <div></div>
+    <h1>{{post.title}}</h1>
+    <div s:html="true">{{post.content}}</div>
+</section><!-- JAVASCRIPTS -->
+  </div>
+
+  <!-- JAVASCRIPTS -->
+  <script src="/blog/assets/libs/tiny-slider/min/tiny-slider.js"></script>
+  <script src="/blog/assets/libs/feather-icons/feather.min.js"></script>
+  <script src="/blog/assets/js/plugins.init.js"></script>
+  <script src="/blog/assets/js/app.js"></script>
+
+
+<script>
+function Hello() {
+  console.log("Hello World!");
+}
+
+function Index() {
+  return {
+    title: "Customers",
+    rows: [
+      { name: "John", age: 30, city: "New York" },
+      { name: "Mary", age: 20, city: "Paris" },
+      { name: "Peter", age: 40, city: "London" },
+    ],
+  };
+}
+
+</script>
+
+
+<script name="data" type="json">
+{
+  "$post": {
+    "process": "scripts.blog.site.getPost",
+    "args": ["$query.post_id"]
+  }
+ 
+}
+
+</script>
+
+</body></html>

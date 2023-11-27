@@ -24,7 +24,7 @@
       "label": "描述",
       "name": "description",
       "type": "string",
-      "nullable": true,
+      "nullable": true
     },
     {
       "comment": "状态",

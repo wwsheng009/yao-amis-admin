@@ -342,5 +342,34 @@ const blogs2 =
             "wp_slug": null
         }
     ]
-const xml1 = convertJson2RpcXml(blogs2)
-console.log(xml1)
+// const xml1 = convertJson2RpcXml(blogs2)
+// console.log(xml1)
+
+
+function getFileInfoFromName(fname) {
+    let filename = fname;
+    const info = {
+        fname: "",
+        ext: ""
+    }
+    if (!fname) {
+        info.fname = Process("utils.str.UUID").replaceAll("-", "");
+    } else {
+        filename = filename.replace(/\\/g, "/")
+        filename = filename.split('/').pop();
+        filename = filename.split("@")[0]
+        info.ext = filename.split(".").pop();
+        filename = filename.split('.').slice(0, -1).join('.');
+
+        const specialChars = /[`~!@#$%^&*()_|+\-=?;:'",<>\{\}\[\]\\\/]/gi;
+        // Remove special characters from the filename
+        info.fname = filename.replace(specialChars, '');
+    }
+    return info.fname + "." + info.ext;
+}
+
+const fname = getFileInfoFromName("/Open-Live-Writer/5b8202f293a2_700A/01f5e555ed113532f875a1325fac0a.jpg@1280w_1l_2o_100sh_2.jpg")
+const fname2 = getFileInfoFromName("01f5e555ed113532f875a1325fac0a.jpg@1280w_1l_2o_100sh_2.jpg")
+const fname3 = getFileInfoFromName("01f5e555ed113532f875a1325fac0a")
+const fname4 = getFileInfoFromName()
+

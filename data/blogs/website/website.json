@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "name": "Yao",
+  "description": "Tech Blue DEMO",
+  "screenshots": ["/img/1.png"],
+  "themes": [
+    { "label": "暗色主题", "value": "dark" },
+    { "label": "明亮主题", "value": "light" }
+  ]
+}

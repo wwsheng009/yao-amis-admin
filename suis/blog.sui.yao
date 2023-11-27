@@ -1,0 +1,15 @@
+{
+  "name": "blog",
+  "storage": {
+    "driver": "local",
+    "option": {
+      "root": "/blogs"
+    }
+  },
+  "public": {
+    "root": "/blog",
+    "remote": "/",
+    "index": "/index",
+    "matcher": ""
+  }
+}

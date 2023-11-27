@@ -1,0 +1,8 @@
+{
+  "name": "网页 DEMO",
+  "storage": {
+    "driver": "local",
+    "option": { "root": "/templates" }
+  },
+  "public": { "root": "/", "remote": "/", "index": "/index" }
+}

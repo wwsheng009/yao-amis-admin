@@ -1,0 +1,7 @@
+{
+  "$post": {
+    "process": "scripts.blog.site.getPost",
+    "args": ["$query.post_id"]
+  }
+ 
+}

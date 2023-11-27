@@ -12,5 +12,9 @@ public/soy-admin
 public/amis-editor
 public/amis
 public/pdfjs
+public/builder
+data/templates
+data/blogs/**/__*
+data/blogs/**/.tmp
 .env
 public/PPTX2HTML
