@@ -11,8 +11,7 @@ function getPost(post_id) {
         ]
     })
     if (b != null) {
-        // console.log(decodeURIComponent(b.content))
-        return { title: b.title, content: decodeURIComponent(b.content) }
+        return { title: b.title, content: b.content }
     } else {
         return { title: 'Not Found', content: `<div>Post Not Found</div>` }
     }
