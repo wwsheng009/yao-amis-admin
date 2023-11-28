@@ -75,9 +75,8 @@ function CreateAfter(content) {
       component = item.Component || {};
       table = component.table || {};
       form = component.form || {};
-      message = `| ${item.label} |  ${item.name} |  ${item.type} | ${
-        item.Searchable || ""
-      } | ${table.view || ""} ${table.edit || ""} | ${form.edit || ""} |\n`;
+      message = `| ${item.label} |  ${item.name} |  ${item.type} | ${item.Searchable || ""
+        } | ${table.view || ""} ${table.edit || ""} | ${form.edit || ""} |\n`;
       ssWrite(message);
     });
     ssWrite(`  \n\n`);
@@ -201,9 +200,17 @@ function validate(data) {
       throw new Exception("不能覆盖系统文件夹", 500);
     }
   });
-  if (!model_id.startsWith("demo.")) {
+  let need_prefix = false
+  if (model_id.split('.').length === 1) {
+    need_prefix = true
+  }
+  if (!model_id.includes(".")) {
+    need_prefix = true
+  }
+  if (need_prefix) {
     data.table.name = "demo." + data.table.name;
   }
+
   data.table.name = DotName(data.table.name);
   // @Todo: Validate the data structure
   // ...

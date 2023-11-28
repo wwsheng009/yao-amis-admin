@@ -1,0 +1,68 @@
+{
+  "table": {
+    "name": "email_server"
+  },
+  "option": {
+    "soft_deletes": true,
+    "timestamps": true
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID"
+    },
+    {
+      "type": "string",
+      "comment": "名称",
+      "label": "名称",
+      "length": 256,
+      "name": "name"
+    },
+    {
+      "type": "enum",
+      "comment": "类型",
+      "default": "stmp",
+      "label": "类型",
+      "option": [
+        "imap",
+        "stmp"
+      ],
+      "length": 256,
+      "name": "type"
+    },
+    {
+      "comment": "Host",
+      "label": "主机",
+      "type": "string",
+      "length": 256,
+      "name": "host",
+      "index": true
+    },
+    {
+      "label": "端口",
+      "name": "port",
+      "type": "integer",
+      "comment": "Port",
+      "index": true
+    },
+    {
+      "name": "username",
+      "type": "string",
+      "label": "用户名",
+      "comment": "Username",
+      "length": 256,
+      "index": true
+    },
+    {
+      "name": "password",
+      "label": "密码",
+      "length": 256,
+      "type": "string",
+      "comment": "Password"
+    }
+  ],
+  "name": "email.server",
+  "relations": {}
+}

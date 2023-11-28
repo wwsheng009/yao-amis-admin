@@ -4,7 +4,7 @@
 
 const { DotName, UnderscoreName, IsMysql, IsSqlite, ClearFalsyKeys } =
   Require("amis.lib_tool");
-const { FileNameConvert } = Require("amis.lib_tool");
+const { FileNameConvert, SlashName } = Require("amis.lib_tool");
 
 const { RunTransaction } = Require("system.db_lib");
 
@@ -218,6 +218,33 @@ function ConvertModelToTableLine(modelDsl) {
   });
   line.id = row?.id;
   return line;
+}
+
+/**
+ * Save the model dsl to local file
+ * @param {object} modelDsl 
+ * @returns 
+ */
+function SaveModelToLocal(modelDsl) {
+  const yaoEnv = Process("utils.env.Get", "YAO_ENV")
+  if (yaoEnv !== "development") {
+    return;
+  }
+
+  // hacked,don't do this in production envirement
+
+  __yao_data = { ROOT: true };
+  let model_id = modelDsl.ID;
+  if (!model_id) {
+    model_id = modelDsl.table?.name
+  }
+  let model = ConvertDBmodelToYaoModel(modelDsl);
+
+  let dsl = new FS("dsl");
+  model_id = SlashName(model_id);
+  dsl.WriteFile(`/models/${model_id}.mod.yao`, JSON.stringify(model));
+  __yao_data = { ROOT: false };
+
 }
 
 function SaveModelTableLine(payload, force) {
@@ -552,6 +579,7 @@ function saveModelApi(payload) {
   CheckModel(model);
 
   // 传入的是模型数据，转成表结构后再保存
+  SaveModelToLocal(model)
   const line = ConvertModelToTableLine(model);
   let id = SaveModelTableLine(line, model.option?.migrate_force);
 
@@ -582,6 +610,8 @@ function saveModelApi(payload) {
 function ImportCachedModelToDB(modelDsl) {
   let model = CompleteModel(modelDsl);
   CheckModel(model);
+
+  SaveModelToLocal(model)
 
   // 传入的是模型数据，转成表结构后再保存
   const line = ConvertModelToTableLine(model);
@@ -899,7 +929,20 @@ function Source(modelId) {
     },
   });
 
-  const m = ConvertTableLineToModel(model);
+  let m = ConvertTableLineToModel(model);
+
+  m = ConvertDBmodelToYaoModel(m);
+
+  return { source: m };
+}
+
+/**
+ * Db模型转换成yao模型
+ * @param {object} modelDsl 
+ * @returns 
+ */
+function ConvertDBmodelToYaoModel(modelDsl) {
+  const m = deepCopyObject(modelDsl)
   m.columns.forEach((col) => {
     delete col.id;
     delete col.model_id;
@@ -908,12 +951,12 @@ function Source(modelId) {
     delete col.check_model_label;
     delete col.check_model_value;
     delete col.check_model;
-
+    delete col.options;
     col = convertColTypeToYao(col);
   });
   delete m.id;
   delete m.ID;
-  return { source: m };
+  return m;
 }
 
 /**
@@ -985,6 +1028,7 @@ function ImportModelSource(payload) {
   model = CompleteModel(model);
   CheckModel(model);
   model = removeModelColumnIds(model);
+  SaveModelToLocal(model)
   // 传入的是模型数据，转成表结构后再保存
   const line = ConvertModelToTableLine(model);
   const id = SaveModelTableLine(line);
@@ -1085,6 +1129,8 @@ function ImportTableAction(payload) {
   CheckModel(model);
   model = removeModelColumnIds(model);
 
+
+  SaveModelToLocal(model)
   // 传入的是模型数据，转成表结构后再保存
   const line = ConvertModelToTableLine(model);
   let id = SaveModelTableLine(line);
@@ -1155,6 +1201,7 @@ function ImportFromNeo(payload) {
   model = CompleteModel(model);
   CheckModel(model);
 
+  SaveModelToLocal(model)
   // 传入的是模型数据，转成表结构后再保存
   const line = ConvertModelToTableLine(model);
   let id = SaveModelTableLine(line);

@@ -15,7 +15,7 @@ actions:
   - name: Redirect to the generated page
     type: "Common.historyPush"
     payload:
-      pathname: "/iframe?src=%2Famis-admin%2F%2523%2Fmodel%2F[[$ExecCommand.result.name]]" #注意地址要两次编码才能在iframe中使用
+      pathname: "/iframe?src=%252Famis-admin%252F%2523%252Fmodel%252Fmodel.create%252F[[$ExecCommand.result.name]]" #注意地址要两次编码才能在iframe中使用
       # pathname: "/amis-admin/%23/model/[[$ExecCommand.result.name]]"
       # public: true
       refetch: true
