@@ -84,7 +84,7 @@ function getUserAuthApiCache() {
   }
   return {
     http_path: authObjects.http_path,
-    http_method: auths.http_method
+    http_method: authObjects.http_method
   }
 }
 
@@ -104,8 +104,8 @@ function getUserAuthModelCache() {
   }
   // return getUserAuthFolder();
   return {
-    models: authObjects.auths.models,
-    model_method: auths.model_method
+    models: authObjects.models,
+    model_method: authObjects.model_method
   }
 
 }
@@ -140,8 +140,8 @@ function getUserAuthFolderCache() {
   }
   // return getUserAuthFolder();
   return {
-    folders: authObjects.auths.folders,
-    folder_method: auths.folder_method
+    folders: authObjects.folders,
+    folder_method: authObjects.folder_method
   }
 }
 /**
