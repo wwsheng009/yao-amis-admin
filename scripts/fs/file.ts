@@ -1,6 +1,8 @@
 const { PaginateArrayWithQuery } = Require("amis.data.lib");
 const { getUserAuthFolderCache, isSuperUser } = Require("auth.lib");
 const uploadDir = "/upload";
+const userDir = "/user";
+const publicDir = "/public";
 
 type Folder = {
   label: string;
@@ -112,7 +114,7 @@ function filterUserAuthFolderList(type: string, folderList: string[]) {
  */
 function targetOperationAuthCheck(
   type: string,
-  target: string,
+  targetIn: string,
   operation: "CREATE" | "DELETE" | "READ" | "UPDATE"
 ) {
   if (type === "user" || type === "public") {
@@ -137,7 +139,7 @@ function targetOperationAuthCheck(
   ) {
     throw new Exception(`操作:${operation} 未授权`);
   }
-
+  const target = targetIn.replace(/[\\/]+/g, "/");
   if (folders == null || folders.length == 0) {
     throw new Exception(`目录:${target} 未授权`);
   }
@@ -166,10 +168,10 @@ function getPermissionFolderTree() {
   const rootFolder = uploadDir;
 
   let list: string[] = Process("fs.system.ReadDir", rootFolder);
-  list = list.map((l) => l.replace(/\\/g, "/"));
+  list = list.map((l) => l.replace(/[\\/]+/g, "/"));
   // ignore the list
-  list = list.filter((d) => !d.startsWith(`${uploadDir}/users`));
-  list = list.filter((d) => !d.startsWith(`${uploadDir}/public`));
+  list = list.filter((d) => !d.startsWith(`${uploadDir}${userDir}`));
+  list = list.filter((d) => !d.startsWith(`${uploadDir}${publicDir}`));
 
   let all = [] as string[];
   list.forEach((f) => {
@@ -224,10 +226,10 @@ function getFolder(type: string) {
       if (!user_id) {
         throw new Exception("用户未登录");
       }
-      filePath = `${uploadDir}/users/${user_id}`;
+      filePath = `${uploadDir}${userDir}/${user_id}`;
       break;
     case "public":
-      filePath = `${uploadDir}/public`;
+      filePath = `${uploadDir}${publicDir}`;
       break;
     case "project":
       filePath = `${uploadDir}/project`;
@@ -336,7 +338,7 @@ function getFolderList(type: string, parent: string) {
     return [];
   }
   let list = Process("fs.system.ReadDir", uploadFolder);
-  list = list.map((l: string) => l.replace(/\\/g, "/"));
+  list = list.map((l: string) => l.replace(/[\\/]+/g, "/"));
   let list2 = list.filter((dir: string) => Process("fs.system.isDir", dir));
 
   list2 = filterUserAuthFolderList(type, list2);
@@ -400,7 +402,7 @@ function fileSearch(type: string, parentFolder: string, querysIn, payload) {
   let userFolder = getFolder(type);
   const uploadFolder = `${userFolder}/${parentFolder}/`;
   let list = Process("fs.system.ReadDir", uploadFolder, true);
-  list = list.map((l: string) => l.replace(/\\/g, "/"));
+  list = list.map((l: string) => l.replace(/[\\/]+/g, "/"));
   list = filterUserAuthFolderList(type, list);
 
   const list2 = [] as FileList[];
@@ -454,7 +456,7 @@ function getFileList(type: string, folder: string, keywords) {
   const uploadFolder = `${userFolder}/${folder}/`;
 
   let list = Process("fs.system.ReadDir", uploadFolder, true);
-  list = list.map((l) => l.replace(/\\/g, "/"));
+  list = list.map((l: string) => l.replace(/[\\/]+/g, "/"));
 
   const list2 = [] as FileList[];
   list.forEach((f: string) => {
