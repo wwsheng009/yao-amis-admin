@@ -191,7 +191,7 @@ function filterTreeDataById(data, filterIds) {
 }
 
 /**
- *
+ * 收集树结构对象中指定字段的的值。比如在权限对象中的菜单列表。
  * @param {object} data
  * @param {*} field
  * @returns
@@ -231,6 +231,62 @@ function flatAndRemoveDuplicate(array) {
   return uniqueArray;
 }
 
+/**
+ * traverse a tree object,combine the key2 of the object to key1 of the object
+ * 
+ * @param {object} data 
+ * @param {string} key 
+ * @param {string} key2 
+ * @param {string} defaultKey the key2 may be empty,use the default key instead
+ * @returns  
+ */
+function collectAndCombineData(data, key, key2, defaultKey) {
+  if (data == null) {
+    return [];
+  }
+  let collectedData = {};
+
+  function traverse(obj) {
+    if (Array.isArray(obj)) {
+      obj.forEach((l) => traverse(l));
+      return
+    }
+
+    if (obj.hasOwnProperty(key) && Array.isArray(obj[key]) && obj[key].length > 0) {
+      for (const o of obj[key]) {
+        // 使用数组中的行项目作key
+        let old = collectedData[o];
+
+        let arrOld = []
+        if (old != null) {
+          arrOld = Array.isArray(old) ? old : [old];
+        }
+        let arryNew = Array.isArray(obj[key2]) ? obj[key2] : [obj[key2]];
+        collectedData[o] = [...new Set([...arrOld, ...arryNew].flat())];
+      }
+    } else if (defaultKey) {
+      let old = collectedData[defaultKey];
+      let arrOld = []
+      if (old != null) {
+        arrOld = Array.isArray(old) ? old : [old];
+      }
+      let arryNew = Array.isArray(obj[key2]) ? obj[key2] : [obj[key2]];
+      collectedData[defaultKey] = [...new Set([...arrOld, ...arryNew].flat())];
+    }
+
+    // 子节点信息
+    if (Array.isArray(obj.children)) {
+      for (const iterator of obj.children) {
+        traverse(iterator);
+      }
+    }
+
+  }
+
+  traverse(data);
+  return collectedData;
+}
+
 module.exports = {
   GetNodeItems,
   GetNodes,
@@ -241,4 +297,5 @@ module.exports = {
   filterTreeDataById,
   collectTreeFields,
   flatAndRemoveDuplicate,
+  collectAndCombineData
 };

@@ -40,26 +40,26 @@ function buildTree(folders: string[]) {
   return root.children;
 }
 
-function checkUserCanReadAuth(type: string) {
-  if (type === "user" || type === "public") {
-    return true;
-  }
-  // 超级用户没有限制
-  if (isSuperUser()) {
-    return true;
-  }
-  let authObjects = getUserAuthFolderCache();
-  const folder_method = authObjects.folder_method;
+// function checkUserCanReadAuth(type: string) {
+//   if (type === "user" || type === "public") {
+//     return true;
+//   }
+//   // 超级用户没有限制
+//   if (isSuperUser()) {
+//     return true;
+//   }
+//   let authObjects = getUserAuthFolderCache();
+//   const folder_method = authObjects.folder_method;
 
-  if (
-    folder_method == null ||
-    folder_method.length == 0 ||
-    folder_method.includes("READ")
-  ) {
-    return true;
-  }
-  return false;
-}
+//   if (
+//     folder_method == null ||
+//     folder_method.length == 0 ||
+//     folder_method.includes("READ")
+//   ) {
+//     return true;
+//   }
+//   return false;
+// }
 
 function filterUserAuthFolderList(type: string, folderList: string[]) {
   if (type === "user" || type === "public") {
@@ -71,20 +71,18 @@ function filterUserAuthFolderList(type: string, folderList: string[]) {
   }
 
   let authObjects = getUserAuthFolderCache();
-  const folder_method = authObjects.folder_method;
+  const folder_method = authObjects.method_with_folder;
+  console.log("folder_method", folder_method);
   // 未授权
-  if (
-    Array.isArray(folder_method) &&
-    folder_method.length > 0 &&
-    !folder_method.includes("READ")
-  ) {
+  if (folder_method["ANY"].length == 0 && folder_method["READ"].length == 0) {
     return [];
   }
 
+  const foldersAuth = folder_method["ANY"].concat(folder_method["READ"]);
+  // console.log("foldersAuth", folder_method);
+
   // 权限里没有配置前缀，传入的目录一般是全路径。
-  const folders: string[] = authObjects.folders.map(
-    (f: string) => `${uploadDir}${f}`
-  );
+  const folders: string[] = foldersAuth.map((f: string) => `${uploadDir}${f}`);
 
   // 比如用户授权了/project/project1/project2,
   // 那么/project/project1/也是应该可以访问的
@@ -126,27 +124,34 @@ function targetOperationAuthCheck(
   }
   let authObjects = getUserAuthFolderCache();
   // const folders: string[] = authObjects.folders;
-  const folders: string[] = authObjects.folders.map(
-    (f: string) => `${uploadDir}${f}`
-  );
-  const folder_method = authObjects.folder_method;
 
-  // console.log("folder_method", folder_method);
-  if (
-    Array.isArray(folder_method) &&
-    folder_method.length > 0 &&
-    !folder_method.includes(operation)
-  ) {
-    throw new Exception(`操作:${operation} 未授权`);
-  }
+  const foldersAuth = authObjects.method_with_folder["ANY"].concat(
+    authObjects.method_with_folder[operation] || []
+  );
+
+  const folders: string[] = foldersAuth.map((f: string) => `${uploadDir}${f}`);
+  // const folder_method = authObjects.folder_method;
+
+  // // console.log("folder_method", folder_method);
+  // if (
+  //   Array.isArray(folder_method) &&
+  //   folder_method.length > 0 &&
+  //   !folder_method.includes(operation)
+  // ) {
+  //   throw new Exception(`操作:${operation} 未授权`);
+  // }
   const target = targetIn.replace(/[\\/]+/g, "/");
-  if (folders == null || folders.length == 0) {
-    throw new Exception(`目录:${target} 未授权`);
-  }
+
+  // if (folders == null || folders.length == 0) {
+  //   throw new Exception(
+  //     `目录:${target.substring(uploadDir.length)} 操作:${operation} 未授权`
+  //   );
+  // }
   // 目标文件需要在授权的目录清单中
   // console.log("folders", folders);
   // console.log("target", target);
-  const found = folders.some((f1) => {
+  let found = false;
+  found = folders.some((f1) => {
     // 权限目录长于需要检查的目录,说明不是授权的子目录
     if (f1.length > target.length) {
       return false;
@@ -157,7 +162,9 @@ function targetOperationAuthCheck(
   });
 
   if (!found) {
-    throw new Exception(`目录:${target.substring(uploadDir.length)} 未授权`);
+    throw new Exception(
+      `目录:${target.substring(uploadDir.length)} 操作:${operation} 未授权`
+    );
   }
 }
 /**
@@ -324,9 +331,9 @@ function saveFile(type: string, file: YaoFile, folder: string) {
  */
 function getFolderList(type: string, parent: string) {
   //没有读取授权
-  if (!checkUserCanReadAuth(type)) {
-    return { items: [], total: 0 };
-  }
+  // if (!checkUserCanReadAuth(type)) {
+  //   return { items: [], total: 0 };
+  // }
   const parentDir = normalizeFolder(parent);
 
   const userDir = getFolder(type);
@@ -391,9 +398,9 @@ function getTimeFormat(unixTime) {
  */
 function fileSearch(type: string, parentFolder: string, querysIn, payload) {
   //没有读取授权
-  if (!checkUserCanReadAuth(type)) {
-    return { items: [], total: 0 };
-  }
+  // if (!checkUserCanReadAuth(type)) {
+  //   return { items: [], total: 0 };
+  // }
   if (parentFolder == null) {
     parentFolder == "";
   }

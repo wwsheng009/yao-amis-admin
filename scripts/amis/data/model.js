@@ -247,11 +247,14 @@ function saveData(modelId, payload) {
     if (id) {
       payload.id = id;
       for (const key in hasOnes) {
-        const w = hasOnes[key];
-        // 设置外键
-        payload[key][w.key] = payload[w.foreign];
-        // console.log("payload[key]:", payload[key]);
-        Process(`models.${w.model}.Save`, payload[key]);
+        // it maybe not a object
+        if (payload[key] !== null && typeof payload[key] === 'object') {
+          const w = hasOnes[key];
+          // 设置外键
+          payload[key][w.key] = payload[w.foreign];
+          Process(`models.${w.model}.Save`, payload[key]);
+        }
+
       }
       for (const key in hasManys) {
         const w = hasManys[key];

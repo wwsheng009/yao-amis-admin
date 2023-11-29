@@ -24,9 +24,9 @@ function check(path, params, queries, payload, headers) {
   }
   let authObjects = getUserAuthApiCache();
   if (
-    authObjects.http_path == null ||
-    authObjects.http_path.length == 0 ||
-    !authObjects.http_path.includes(path)
+    authObjects.api_list == null ||
+    authObjects.api_list.length == 0 ||
+    !authObjects.api_list.includes(path)
   ) {
     throw new Exception(`api:${path} not authorized`);
   }
