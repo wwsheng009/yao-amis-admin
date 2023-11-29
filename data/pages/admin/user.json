@@ -719,10 +719,30 @@
                     {
                       "label": "类型",
                       "name": "type",
-                      "quickEdit": false,
-                      "searchable": true,
-                      "sortable": true,
-                      "type": "select"
+                      "options": [
+                        {
+                          "label": "super",
+                          "value": "super"
+                        },
+                        {
+                          "label": "admin",
+                          "value": "admin"
+                        },
+                        {
+                          "label": "staff",
+                          "value": "staff"
+                        },
+                        {
+                          "label": "user",
+                          "value": "user"
+                        },
+                        {
+                          "label": "robot",
+                          "value": "robot"
+                        }
+                      ],
+                      "type": "select",
+                      "value": "user"
                     },
                     {
                       "label": "邮箱",
