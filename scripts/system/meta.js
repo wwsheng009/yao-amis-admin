@@ -394,9 +394,9 @@ function apiDefinitionList(apisList) {
   }
   var list = [];
 
-  const traval = function (api) {
+  const traverse = function (api) {
     if (api.children) {
-      traval(api.children);
+      traverse(api.children);
       // api.children.forEach((line) => {
       //   var subLine = apiDefinitionList(line);
       //   list = list.concat(subLine);
@@ -427,13 +427,13 @@ function apiDefinitionList(apisList) {
       }
     } else if (Array.isArray(api)) {
       api.forEach((line) => {
-        traval(line);
-        // var subLine = traval(line);
+        traverse(line);
+        // var subLine = traverse(line);
         // list = list.concat(subLine);
       });
     }
   };
-  traval(apisList);
+  traverse(apisList);
 
   return list;
 }

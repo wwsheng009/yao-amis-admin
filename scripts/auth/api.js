@@ -1,4 +1,4 @@
-const { getUserAuthApi } = Require("auth.lib");
+const { getUserAuthApiCache, isSuperUser } = Require("auth.lib");
 
 /**
  * 检查api的访问权限，使用方法：在api guard中输入：scripts.auth.api.check
@@ -19,14 +19,10 @@ function check(path, params, queries, payload, headers) {
 
   // console.log("headers", headers);
 
-  let user = Process("session.get", "user");
-  if (user?.type === "super") {
+  if (isSuperUser()) {
     return;
   }
-  let authObjects = Process("session.get", "user_auth_objects");
-  if (authObjects == null || !authObjects) {
-    authObjects = getUserAuthApi();
-  }
+  let authObjects = getUserAuthApiCache();
   if (
     authObjects.http_path == null ||
     authObjects.http_path.length == 0 ||

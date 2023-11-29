@@ -11,9 +11,7 @@
           "hideRoot": true,
           "valueField": "id",
           "source": {
-            "requestAdaptor": "",
             "url": "/api/v1/admin/menu/find",
-            "adaptor": "",
             "dataType": "json",
             "messages": {},
             "method": "get"

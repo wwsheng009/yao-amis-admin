@@ -1,5 +1,10 @@
 const { filterTreeDataById, collectTreeFields } = Require("amis.data.tree");
 
+/**
+ * 获取用户的权限信息
+ * @param {number} userId user id
+ * @returns 
+ */
 function getUserPermission(userId) {
   let user_id = userId;
   if (!user_id) {
@@ -72,6 +77,17 @@ function getUserAuthMenuIds() {
   return getUserAuthObjectIds("menus");
 }
 
+function getUserAuthApiCache() {
+  let authObjects = Process("session.get", "user_auth_objects");
+  if (authObjects == null || !authObjects) {
+    authObjects = getUserAuthApi();
+  }
+  return {
+    http_path: authObjects.http_path,
+    http_method: auths.http_method
+  }
+}
+
 // yao run scripts.auth.lib.getUserAuthApi
 function getUserAuthApi() {
   const permissions = getUserPermission();
@@ -81,6 +97,18 @@ function getUserAuthApi() {
   return auths;
 }
 
+function getUserAuthModelCache() {
+  let authObjects = Process("session.get", "user_auth_objects");
+  if (authObjects == null || !authObjects) {
+    return getUserAuthModel();
+  }
+  // return getUserAuthFolder();
+  return {
+    models: authObjects.auths.models,
+    model_method: auths.model_method
+  }
+
+}
 function getUserAuthModel() {
   const permissions = getUserPermission();
   let auths = {};
@@ -88,6 +116,51 @@ function getUserAuthModel() {
   auths.model_method = collectTreeFields(permissions, "http_method");
   return auths;
 }
+
+/**
+ * 是否超级用户
+ * @returns
+ */
+function isSuperUser() {
+  let user = Process("session.get", "user");
+  // 超级用户没有限制
+  if (user?.type === "super") {
+    return true;
+  }
+  return false
+}
+/**
+ * 从缓存中读取用户的目录授权
+ * @returns 
+ */
+function getUserAuthFolderCache() {
+  let authObjects = Process("session.get", "user_auth_objects");
+  if (authObjects == null || !authObjects) {
+    return getUserAuthFolder();
+  }
+  // return getUserAuthFolder();
+  return {
+    folders: authObjects.auths.folders,
+    folder_method: auths.folder_method
+  }
+}
+/**
+ * 用户授权目录与操作
+ * @returns 
+ */
+function getUserAuthFolder() {
+  const permissions = getUserPermission();
+  let auths = {};
+  auths.folders = collectTreeFields(permissions, "folders");
+  auths.folder_method = collectTreeFields(permissions, "folder_method");
+  return auths;
+}
+/**
+ * 根据用户ID获取用户的权限对象列表
+ * 在用户登录时会把用户的权限对象列表加入缓存中。
+ * @param {number} userId user id
+ * @returns 
+ */
 function getUserAuthObjects(userId) {
   const permissions = getUserPermission(userId);
   let auths = {};
@@ -96,6 +169,8 @@ function getUserAuthObjects(userId) {
   auths.http_path = collectTreeFields(permissions, "http_path");
   auths.http_method = collectTreeFields(permissions, "http_method");
   auths.menus = collectTreeFields(permissions, "menus");
+  auths.folders = collectTreeFields(permissions, "folders");
+  auths.folder_method = collectTreeFields(permissions, "folder_method");
   return auths;
 }
 
@@ -104,4 +179,9 @@ module.exports = {
   getUserAuthApi,
   getUserAuthModel,
   getUserAuthObjects,
+  getUserAuthFolder,
+  getUserAuthFolderCache,
+  isSuperUser,
+  getUserAuthModelCache,
+  getUserAuthApiCache
 };

@@ -622,8 +622,9 @@ function ImportCachedModelToDB(modelDsl) {
   let model = CompleteModel(modelDsl);
   CheckModel(model);
 
-  SaveModelToLocal(model)
-
+  // 导入缓存不要保存本地模型
+  // SaveModelToLocal(model)
+  // console.log("ImportCachedModelToDB", model)
   // 传入的是模型数据，转成表结构后再保存
   const line = ConvertModelToTableLine(model);
   return SaveModelTableLine(line, true);
@@ -1390,13 +1391,13 @@ function guessAmisType(typeIn) {
 }
 function GuessAmisCols(columns) {
   let cols = [];
-  function traval(node) {
+  function traverse(node) {
     if (Array.isArray(node)) {
-      node.forEach((x) => traval(x));
+      node.forEach((x) => traverse(x));
       return;
     }
     if (Array.isArray(node.body)) {
-      node.body.forEach((x) => traval(x));
+      node.body.forEach((x) => traverse(x));
       return;
     }
     if (!node.type) {
@@ -1420,7 +1421,7 @@ function GuessAmisCols(columns) {
 
     cols.push(column);
   }
-  traval(columns);
+  traverse(columns);
   return {
     columns: cols,
     status: "ok",

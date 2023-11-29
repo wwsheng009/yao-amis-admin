@@ -1,8 +1,201 @@
 const { PaginateArrayWithQuery } = Require("amis.data.lib");
-
+const { getUserAuthFolderCache, isSuperUser } = Require("auth.lib");
 const uploadDir = "/upload";
 
-function writeLog(file_name, file_name2, operation) {
+type Folder = {
+  label: string;
+  value: string;
+  children: Folder[];
+};
+
+function buildTree(folders: string[]) {
+  const root: Folder = { label: "", children: [], value: "" };
+
+  for (const folder of folders) {
+    let currentLevel = root;
+    const path = folder.split("/").filter(Boolean);
+
+    for (const folderName of path) {
+      let existingFolder = currentLevel.children.find(
+        (child) => child.label === folderName
+      );
+
+      if (!existingFolder) {
+        const folderPath = `${currentLevel.value}/${folderName}`;
+        const newFolder = {
+          label: folderName,
+          value: folderPath,
+          children: [],
+        };
+        currentLevel.children.push(newFolder);
+        existingFolder = newFolder;
+      }
+
+      currentLevel = existingFolder;
+    }
+  }
+
+  return root.children;
+}
+
+function checkUserCanReadAuth(type: string) {
+  if (type === "user" || type === "public") {
+    return true;
+  }
+  // 超级用户没有限制
+  if (isSuperUser()) {
+    return true;
+  }
+  let authObjects = getUserAuthFolderCache();
+  const folder_method = authObjects.folder_method;
+
+  if (
+    folder_method == null ||
+    folder_method.length == 0 ||
+    folder_method.includes("READ")
+  ) {
+    return true;
+  }
+  return false;
+}
+
+function filterUserAuthFolderList(type: string, folderList: string[]) {
+  if (type === "user" || type === "public") {
+    return folderList;
+  }
+  // 超级用户没有限制
+  if (isSuperUser()) {
+    return folderList;
+  }
+
+  let authObjects = getUserAuthFolderCache();
+  const folder_method = authObjects.folder_method;
+  // 未授权
+  if (
+    Array.isArray(folder_method) &&
+    folder_method.length > 0 &&
+    !folder_method.includes("READ")
+  ) {
+    return [];
+  }
+
+  // 权限里没有配置前缀，传入的目录一般是全路径。
+  const folders: string[] = authObjects.folders.map(
+    (f: string) => `${uploadDir}${f}`
+  );
+
+  // 比如用户授权了/project/project1/project2,
+  // 那么/project/project1/也是应该可以访问的
+  // 目录/project/project1/project2/project3 也可以访问
+  // 但是目录/project/project3/无法访问
+  // console.log("folders>>>1", folders);
+
+  // console.log("folderList>>>1", folderList);
+  folderList = folderList.filter((f) =>
+    folders.some((f1) => {
+      // 权限目录长于需要检查的目录
+      if (f1.length > f.length) {
+        return f1.startsWith(f);
+      } else {
+        return f.startsWith(f1);
+      }
+    })
+  );
+  // console.log("folderList>>>2", folderList);
+
+  return folderList;
+}
+/**
+ * 权限检查
+ * @param target 需要操作的目录
+ * @param operation 权限操作
+ */
+function targetOperationAuthCheck(
+  type: string,
+  target: string,
+  operation: "CREATE" | "DELETE" | "READ" | "UPDATE"
+) {
+  if (type === "user" || type === "public") {
+    return;
+  }
+  // 超级用户没有限制
+  if (isSuperUser()) {
+    return;
+  }
+  let authObjects = getUserAuthFolderCache();
+  // const folders: string[] = authObjects.folders;
+  const folders: string[] = authObjects.folders.map(
+    (f: string) => `${uploadDir}${f}`
+  );
+  const folder_method = authObjects.folder_method;
+
+  // console.log("folder_method", folder_method);
+  if (
+    Array.isArray(folder_method) &&
+    folder_method.length > 0 &&
+    !folder_method.includes(operation)
+  ) {
+    throw new Exception(`操作:${operation} 未授权`);
+  }
+
+  if (folders == null || folders.length == 0) {
+    throw new Exception(`目录:${target} 未授权`);
+  }
+  // 目标文件需要在授权的目录清单中
+  // console.log("folders", folders);
+  // console.log("target", target);
+  const found = folders.some((f1) => {
+    // 权限目录长于需要检查的目录,说明不是授权的子目录
+    if (f1.length > target.length) {
+      return false;
+    } else {
+      // 目标目录的路径包含的授权的目录
+      return target.startsWith(f1);
+    }
+  });
+
+  if (!found) {
+    throw new Exception(`目录:${target.substring(uploadDir.length)} 未授权`);
+  }
+}
+/**
+ * 获取需要授权的目录的结构列表
+ * yao run scripts.fs.file.getPermissionFolderTree
+ */
+function getPermissionFolderTree() {
+  const rootFolder = uploadDir;
+
+  let list: string[] = Process("fs.system.ReadDir", rootFolder);
+  list = list.map((l) => l.replace(/\\/g, "/"));
+  // ignore the list
+  list = list.filter((d) => !d.startsWith(`${uploadDir}/users`));
+  list = list.filter((d) => !d.startsWith(`${uploadDir}/public`));
+
+  let all = [] as string[];
+  list.forEach((f) => {
+    let sublist = Process("fs.system.ReadDir", f, true);
+    all = all.concat(sublist);
+  });
+  // 避免过多的文件层次
+  all = all.filter((f) => f.split("/").length <= 10);
+  // only the folder
+  all = all.filter((f) => Process("fs.system.IsDir", f));
+  // remove the prefix
+  all = all.map((f) => f.substring(rootFolder.length));
+  // return all;
+  return buildTree(all);
+}
+/**
+ * write the file operation log
+ * @param file_name source file
+ * @param file_name2 dest file
+ * @param operation
+ */
+function writeLog(
+  file_name: string,
+  file_name2: string,
+  operation: "remove" | "upload" | "delete_folder" | "move_folder"
+) {
   let user_id = Process("session.get", "user_id");
   Process("models.system.log.file.save", {
     user_id,
@@ -18,6 +211,11 @@ function UploadFile(type: string, file: YaoFile, folder: string) {
   };
 }
 
+/**
+ * 根据操作获取不同的目录
+ * @param type operation type
+ * @returns
+ */
 function getFolder(type: string) {
   let filePath = `${uploadDir}/public`;
   switch (type) {
@@ -26,7 +224,7 @@ function getFolder(type: string) {
       if (!user_id) {
         throw new Exception("用户未登录");
       }
-      filePath = `${uploadDir}/${user_id}`;
+      filePath = `${uploadDir}/users/${user_id}`;
       break;
     case "public":
       filePath = `${uploadDir}/public`;
@@ -35,7 +233,7 @@ function getFolder(type: string) {
       filePath = `${uploadDir}/project`;
       break;
     default:
-      throw new Exception(`File Type ${type} is not support`, 500);
+      throw new Exception(`文件类型：${type} 未支持`, 500);
     // break;
   }
 
@@ -56,16 +254,16 @@ function batchDeleteFile(type: string, payload) {
 function deleteFile(type: string, name: string) {
   const fname = getFilePath(type, name);
 
+  targetOperationAuthCheck(type, fname, "DELETE");
   const result = Process("fs.system.Remove", fname);
-
-  // console.log("result", result);
   writeLog(fname, "", "remove");
 }
-function queryEscape(str) {
+function queryEscape(str: string) {
   return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
     return "%" + c.charCodeAt(0).toString(16);
   });
 }
+
 function getBasename(filename: string, noEscape) {
   if (filename == null) {
     return "";
@@ -99,6 +297,7 @@ function saveFile(type: string, file: YaoFile, folder: string) {
   const uploadFolder = `${getFolder(type)}/${folder}`;
   const filePath = `/${uploadFolder}/${file.name}`;
 
+  targetOperationAuthCheck(type, filePath, "CREATE");
   // 只返回用户的目录下的相对路径
   const filePath2 = `/${folder}/${file.name}`;
 
@@ -114,11 +313,18 @@ function saveFile(type: string, file: YaoFile, folder: string) {
   // return fs.Abs(filePath2);
 }
 
-// yao run scripts.fs.file.getFolderList
+/**
+ * 根据类型类型获取文件夹列表
+ * yao run scripts.fs.file.getFolderList
+ * @param type operation type
+ * @param parent parent folder
+ * @returns
+ */
 function getFolderList(type: string, parent: string) {
-  // parent = normalizeFolder(parent);
-
-  // const parentDir = parent.replace(/\./g, "/");
+  //没有读取授权
+  if (!checkUserCanReadAuth(type)) {
+    return { items: [], total: 0 };
+  }
   const parentDir = normalizeFolder(parent);
 
   const userDir = getFolder(type);
@@ -132,10 +338,10 @@ function getFolderList(type: string, parent: string) {
   let list = Process("fs.system.ReadDir", uploadFolder);
   list = list.map((l: string) => l.replace(/\\/g, "/"));
   let list2 = list.filter((dir: string) => Process("fs.system.isDir", dir));
-  // console.log("list2:", list2);
+
+  list2 = filterUserAuthFolderList(type, list2);
   list2 = list2.map((dir: string) => {
     const d = dir.replace(uploadFolder, "");
-
     return {
       label: d,
       value: parent != "" ? parent + "/" + d : d,
@@ -182,14 +388,20 @@ function getTimeFormat(unixTime) {
  * @returns
  */
 function fileSearch(type: string, parentFolder: string, querysIn, payload) {
+  //没有读取授权
+  if (!checkUserCanReadAuth(type)) {
+    return { items: [], total: 0 };
+  }
   if (parentFolder == null) {
     parentFolder == "";
   }
+
   parentFolder = normalizeFolder(parentFolder);
   let userFolder = getFolder(type);
   const uploadFolder = `${userFolder}/${parentFolder}/`;
   let list = Process("fs.system.ReadDir", uploadFolder, true);
-  list = list.map((l) => l.replace(/\\/g, "/"));
+  list = list.map((l: string) => l.replace(/\\/g, "/"));
+  list = filterUserAuthFolderList(type, list);
 
   const list2 = [] as FileList[];
   let idx = 0;
@@ -353,6 +565,7 @@ function createFolder(type: string, parent: string, folder: string) {
     throw new Exception("目录名不能为空", 500);
   }
   const uploadFolder = `${getFolder(type)}/${parent}/${folder}`;
+  targetOperationAuthCheck(type, uploadFolder, "CREATE");
   let fs = new FS("system");
   if (!fs.Exists(uploadFolder)) {
     fs.MkdirAll(uploadFolder);
@@ -364,12 +577,15 @@ function deleteFolder(type: string, folder: string) {
   }
   folder = normalizeFolder(folder);
 
-  const uploadFolder = `${getFolder(type)}/${folder}`;
+  const targetFolder = `${getFolder(type)}/${folder}`;
+
+  targetOperationAuthCheck(type, targetFolder, "DELETE");
+
   let fs = new FS("system");
-  if (fs.Exists(uploadFolder)) {
-    fs.RemoveAll(uploadFolder);
+  if (fs.Exists(targetFolder)) {
+    fs.RemoveAll(targetFolder);
   }
-  writeLog(uploadFolder, "", "delete_folder");
+  writeLog(targetFolder, "", "delete_folder");
 }
 function moveFolder(type: string, source: string, target: string) {
   if (source == null || source == "") {
@@ -388,6 +604,7 @@ function moveFolder(type: string, source: string, target: string) {
   const sourceFolder = `${getFolder(type)}/${source}`;
   const targetFolder = `${getFolder(type)}/${target}`;
 
+  targetOperationAuthCheck(type, targetFolder, "UPDATE");
   let fs = new FS("system");
 
   let targetParent = targetFolder.split("/").slice(0, -1).join("/");

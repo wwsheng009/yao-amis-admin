@@ -453,9 +453,9 @@ function saveTreeMenusToDB(
   source: "amis" | "soy" | undefined,
   deleteFlag: boolean
 ) {
-  function traval(route: Route | Route[], parentId: number) {
+  function traverse(route: Route | Route[], parentId: number) {
     if (Array.isArray(route)) {
-      route.forEach((r) => traval(r, 0));
+      route.forEach((r) => traverse(r, 0));
       return;
     }
     if (deleteFlag) {
@@ -512,11 +512,11 @@ function saveTreeMenusToDB(
     // console.log("id==>", id, menu);
     if (Array.isArray(route.children)) {
       route.children.forEach((element) => {
-        traval(element, id);
+        traverse(element, id);
       });
     }
   }
-  traval(menus, 0);
+  traverse(menus, 0);
 }
 
 /**

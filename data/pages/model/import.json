@@ -191,9 +191,7 @@
                       },
                       "messages": {},
                       "method": "post",
-                      "requestAdaptor": "",
-                      "url": "/api/__yao/app/service/schema",
-                      "adaptor": ""
+                      "url": "/api/__yao/app/service/schema"
                     },
                     "bulkActions": [],
                     "columns": [

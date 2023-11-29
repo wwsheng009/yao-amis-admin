@@ -232,6 +232,19 @@
         "status": 200,
         "type": "application/json"
       }
+    },
+    {
+      // /api/v1/fs/file/permission_tree
+      "label": "文件列表-权限配置",
+      "description": "文件列表-权限配置",
+      "path": "/file/permission_tree",
+      "method": "GET",
+      "process": "scripts.fs.file.getPermissionFolderTree",
+      "in": [],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
     }
   ]
 }

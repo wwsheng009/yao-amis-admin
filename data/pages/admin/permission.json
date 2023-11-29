@@ -224,18 +224,60 @@
                       "extractValue": true
                     },
                     {
-                      "format": "YYYY-MM-DD HH:mm:ss",
-                      "label": "创建时间",
-                      "name": "created_at",
-                      "type": "static-datetime",
-                      "visibleOn": "!!this.created_at"
+                      "label": "文件目录",
+                      "name": "folders",
+                      "searchable": true,
+                      "multiple": true,
+                      "type": "tree-select",
+                      "autoCheckChildren": false,
+                      "joinValues": false,
+                      "extractValue": true,
+                      "source": "/api/v1/fs/file/permission_tree"
                     },
                     {
-                      "format": "YYYY-MM-DD HH:mm:ss",
-                      "label": "更新时间",
-                      "name": "updated_at",
-                      "type": "static-datetime",
-                      "visibleOn": "!!this.updated_at"
+                      "type": "checkboxes",
+                      "name": "folder_method",
+                      "label": "目录操作",
+                      "options": [
+                        {
+                          "label": "读取",
+                          "value": "READ"
+                        },
+                        {
+                          "label": "修改",
+                          "value": "UPDATE"
+                        },
+                        {
+                          "label": "创建",
+                          "value": "CREATE"
+                        },
+                        {
+                          "label": "删除",
+                          "value": "DELETE"
+                        }
+                      ],
+                      "description": "不选则为ANY",
+                      "joinValues": false,
+                      "extractValue": true
+                    },
+                    {
+                      "type": "group",
+                      "body": [
+                        {
+                          "format": "YYYY-MM-DD HH:mm:ss",
+                          "label": "创建时间",
+                          "name": "created_at",
+                          "type": "static-datetime",
+                          "visibleOn": "!!this.created_at"
+                        },
+                        {
+                          "format": "YYYY-MM-DD HH:mm:ss",
+                          "label": "更新时间",
+                          "name": "updated_at",
+                          "type": "static-datetime",
+                          "visibleOn": "!!this.updated_at"
+                        }
+                      ]
                     }
                   ],
                   "name": "update",
@@ -448,7 +490,44 @@
                 {
                   "type": "checkboxes",
                   "name": "model_method",
-                  "label": "操作方式",
+                  "label": "模型操作",
+                  "options": [
+                    {
+                      "label": "读取",
+                      "value": "READ"
+                    },
+                    {
+                      "label": "修改",
+                      "value": "UPDATE"
+                    },
+                    {
+                      "label": "创建",
+                      "value": "CREATE"
+                    },
+                    {
+                      "label": "删除",
+                      "value": "DELETE"
+                    }
+                  ],
+                  "description": "不选则为ANY",
+                  "joinValues": false,
+                  "extractValue": true
+                },
+                {
+                  "label": "文件目录",
+                  "name": "folders",
+                  "searchable": true,
+                  "multiple": true,
+                  "type": "tree-select",
+                  "autoCheckChildren": false,
+                  "joinValues": false,
+                  "extractValue": true,
+                  "source": "/api/v1/fs/file/permission_tree"
+                },
+                {
+                  "type": "checkboxes",
+                  "name": "folder_method",
+                  "label": "目录操作",
                   "options": [
                     {
                       "label": "读取",
@@ -477,8 +556,7 @@
               "type": "form"
             },
             "size": "lg",
-            "title": "新增",
-            "type": "dialog"
+            "title": "新增"
           },
           "icon": "fa fa-plus pull-left",
           "label": "新增",
@@ -486,6 +564,7 @@
           "type": "button"
         },
         {
+          "visible": false,
           "actionType": "dialog",
           "dialog": {
             "body": {
@@ -623,6 +702,32 @@
                       "label": "模型操作",
                       "levelExpand": 0,
                       "name": "model_method",
+                      "quickEdit": {
+                        "language": "json",
+                        "saveImmediately": true,
+                        "type": "editor"
+                      },
+                      "searchable": true,
+                      "sortable": true,
+                      "type": "json"
+                    },
+                    {
+                      "label": "目录",
+                      "levelExpand": 0,
+                      "name": "folders",
+                      "quickEdit": {
+                        "language": "json",
+                        "saveImmediately": true,
+                        "type": "editor"
+                      },
+                      "searchable": true,
+                      "sortable": true,
+                      "type": "json"
+                    },
+                    {
+                      "label": "目录操作",
+                      "levelExpand": 0,
+                      "name": "folder_method",
                       "quickEdit": {
                         "language": "json",
                         "saveImmediately": true,
