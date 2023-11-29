@@ -91,9 +91,7 @@
       "addApi": {
         "messages": {},
         "method": "get",
-        "requestAdaptor": "",
         "url": "/api/v1/fs/${params.file_type}/folder/create",
-        "adaptor": "",
         "data": {
           "folder": "${folder}",
           "name": "${new_folder}"
@@ -106,9 +104,7 @@
       "showIcon": true,
       "source": {
         "method": "get",
-        "requestAdaptor": "",
         "url": "/api/v1/fs/${params.file_type}/folder/list?parent=${value}",
-        "adaptor": "",
         "messages": {}
       },
       "addDialog": {
@@ -155,8 +151,7 @@
           "name": "${new_folder}"
         },
         "messages": {},
-        "method": "get",
-        "requestAdaptor": ""
+        "method": "get"
       },
       "creatable": true,
       "multiple": false,
@@ -301,7 +296,6 @@
                     "btnLabel": "文件上传",
                     "name": "file",
                     "receiver": {
-                      "requestAdaptor": "",
                       "url": "/api/v1/fs/${params.file_type}/file/upload",
                       "data": {
                         "folder": "${folder}"
@@ -323,13 +317,10 @@
                     "proxy": true,
                     "uploadType": "fileReceptor",
                     "receiver": {
-                      "requestAdaptor": "",
                       "url": "/api/v1/fs/${params.file_type}/file/upload",
-                      "adaptor": "",
                       "data": {
                         "folder": "${folder}"
                       },
-                      "messages": {},
                       "method": "post"
                     },
                     "visible": false,
@@ -434,10 +425,7 @@
               "type": "button",
               "actionType": "ajax",
               "api": {
-                "adaptor": "",
-                "messages": {},
                 "method": "get",
-                "requestAdaptor": "",
                 "sendOn": "this.file_path",
                 "url": "/api/v1/fs/${params.file_type}/file/delete?name=${path}"
               },

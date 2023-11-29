@@ -58,12 +58,10 @@
         }
       ],
       "api": {
-        "adaptor": "",
         "messages": {
           "saveSuccess": "保存成功"
         },
         "method": "post",
-        "requestAdaptor": "",
         "url": "/api/v1/system/meta/model/save"
       },
       "body": [

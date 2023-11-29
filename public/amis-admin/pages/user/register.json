@@ -146,8 +146,7 @@
                           "api": {
                             "url": "/api/v1/amis/captcha?type=digit",
                             "messages": {},
-                            "method": "get",
-                            "requestAdaptor": ""
+                            "method": "get"
                           },
                           "body": [
                             {
@@ -185,7 +184,6 @@
                 "dataType": "json",
                 "messages": {},
                 "method": "post",
-                "requestAdaptor": "",
                 "url": "/api/v1/admin/account/register",
                 "data": {
                   "captcha": {

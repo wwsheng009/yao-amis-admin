@@ -108,7 +108,6 @@
                 "dataType": "json",
                 "messages": {},
                 "method": "post",
-                "requestAdaptor": "",
                 "url": "/api/__yao/login/admin"
               },
               "body": [
@@ -167,14 +166,11 @@
                       "id": "u:ba0cc1228748",
                       "type": "service",
                       "api": {
-                        "requestAdaptor": "",
                         "url": "/api/v1/amis/captcha?type=audio",
-                        "messages": {},
                         "method": "get"
                       }
                     },
                     {
-                      "editorState": "default",
                       "label": "刷新",
                       "onEvent": {
                         "click": {

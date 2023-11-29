@@ -9,10 +9,7 @@
       },
       "api": {
         "method": "get",
-        "requestAdaptor": "",
-        "url": "/api/v1/demo/demo/samples?page=${page}&perPage=${perPage}&keywords=${keywords}",
-        "messages": {},
-        "adaptor": ""
+        "url": "/api/v1/demo/demo/samples?page=${page}&perPage=${perPage}&keywords=${keywords}"
       },
       "bodyClassName": "panel-default",
       "columnsTogglable": "auto",

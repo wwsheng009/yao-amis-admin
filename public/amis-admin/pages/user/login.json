@@ -145,7 +145,6 @@
                           "api": {
                             "messages": {},
                             "method": "get",
-                            "requestAdaptor": "",
                             "url": "/api/v1/amis/captcha?type=digit"
                           },
                           "body": [
