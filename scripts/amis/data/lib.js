@@ -286,6 +286,14 @@ function updateInputData(model, Data) {
           } else {
             line[key] = IsMysql() ? 0 : false;
           }
+          break
+        case "STRING":
+        case "TEXT":
+        case "LONGTEXT":
+          if (typeof field !== "string") {
+            line[key] = line[key] + ""
+          }
+          break
         default:
           break;
       }

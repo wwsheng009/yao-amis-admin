@@ -1332,16 +1332,27 @@ function excelMapping(modelId, columnsIn) {
   let obj = {};
   columns.forEach((column) => {
     const type = column.type.toUpperCase();
+    let ignore = false
     switch (type) {
       // 自增长的不要
       case "ID":
       case "TINYINCREMENTS":
       case "SMALLINCREMENTS":
       case "INCREMENTS":
+        ignore = true
         break;
       default:
-        obj[column.name] = "${" + column.name + "}";
         break;
+    }
+    if (column.name === 'deleted_at' && model.option.soft_deletes) {
+      ignore = true
+    } else if (column.name === 'created_at' && model.option?.timestamps) {
+      ignore = true
+    } else if (column.name === 'updated_at' && model.option?.timestamps) {
+      ignore = true
+    }
+    if (!ignore) {
+      obj[column.name] = "${" + column.name + "}";
     }
   });
   return obj;
