@@ -1,7 +1,15 @@
 const { getUserAuthApi } = Require("auth.lib");
-// yao run scripts.auth.api.getList
 
-// scripts.auth.api.check
+/**
+ * 检查api的访问权限，使用方法：在api guard中输入：scripts.auth.api.check
+ * 用户的api权限需要通过分配权限，分配角色，在用户重新登录后就会生效
+ * @param {string} path 
+ * @param {object} params 
+ * @param {object} queries
+ * @param {object} payload 
+ * @param {object} headers 
+ * @returns 
+ */
 function check(path, params, queries, payload, headers) {
   // console.log("path", path);
   // console.log("params", params);

@@ -1,5 +1,8 @@
 /**
  * Yao模型管理
+ * 模型的增删改查
+ * 模型导入
+ * 模型导出
  */
 
 const { DotName, UnderscoreName, IsMysql, IsSqlite, ClearFalsyKeys } =
@@ -8,14 +11,24 @@ const { FileNameConvert, SlashName } = Require("amis.lib_tool");
 
 const { RunTransaction } = Require("system.db_lib");
 
-const { queryToQueryParam, updateInputData } = Require("amis.data.lib");
+const { queryToQueryParam, updateInputData, mergeQueryObject } = Require("amis.data.lib");
 
 const { FindCachedModelById, MomoryModelList, ModelIDList } =
   Require("system.model_lib");
 
-//查找模型
-//yao run scripts.system.model.page
-function page(page, pagesize, querysIn, queryParams, payload) {
+/**
+ * yao run scripts.system.model.page
+ * 模型定义列表分页查询，结果在列表中显示。
+ * @param {number} page 
+ * @param {number} pagesize 
+ * @param {object} querysIn 
+ * @param {object} queryParams 
+ * @param {object} payload 
+ * @returns 
+ */
+function page(pageIn, pagesizeIn, querysIn, queryParams, payload) {
+  const page = pageIn || 1;
+  const pagesize = pagesizeIn || 10;
   let querys = mergeQueryObject(querysIn, payload);
   const modelDsl = FindCachedModelById("ddic.model");
   let queryParam = queryToQueryParam(modelDsl, querys, queryParams, payload);
@@ -23,6 +36,7 @@ function page(page, pagesize, querysIn, queryParams, payload) {
   queryParam["select"] = [
     "id",
     "name",
+    "identity",
     "comment",
     "table_name",
     "table_comment",
@@ -34,8 +48,11 @@ function page(page, pagesize, querysIn, queryParams, payload) {
   };
 }
 
-//读取所有的模型id的列表
-//yao run scripts.system.model.DatabaseModelList
+/**
+ * 读取所有的模型id的列表
+ * yao run scripts.system.model.DatabaseModelList
+ * @returns array
+ */
 function DatabaseModelList() {
   let list = Process("models.ddic.model.get", {
     select: ["identity", "name", "comment"],
@@ -48,7 +65,11 @@ function DatabaseModelList() {
   return list;
 }
 
-//完成模型的定义
+/**
+ * 补全模型的定义
+ * @param {object} modelDsl 
+ * @returns object
+ */
 function CompleteModel(modelDsl) {
   modelDsl = modelDsl || {};
   modelDsl.table = modelDsl.table || {};
@@ -145,9 +166,6 @@ function CompleteModel(modelDsl) {
     }
 
     if (col.type.toLowerCase() == "json" && col.default != null) {
-      // console.log(
-      //   `checking json default value for field ${col.name},default:${col.default}`
-      // );
       if (!typeof col.default == "Object") {
         try {
           col.default = JSON.parse(col.default);
@@ -168,6 +186,11 @@ function CompleteModel(modelDsl) {
 
   return modelDsl;
 }
+/**
+ * 转换模型定义成数据库表
+ * @param {object} modelDsl 模型定义
+ * @returns 
+ */
 function ConvertModelToTableLine(modelDsl) {
   let line = {};
   line.id = modelDsl.id;
@@ -238,6 +261,10 @@ function SaveModelToLocal(modelDsl) {
   if (!model_id) {
     model_id = modelDsl.table?.name
   }
+  if (!model_id) {
+    console.log(`模型不完成，不保存成文件`)
+    return
+  }
   let model = ConvertDBmodelToYaoModel(modelDsl);
 
   let dsl = new FS("dsl");
@@ -281,7 +308,14 @@ function isAscOrder(arr) {
   }
   return true;
 }
-//保存ddic.model.column
+
+/**
+ * 保存ddic.model.column
+ * @param {string} modelId 
+ * @param {object} payload 
+ * @param {boolean} force 强制保存
+ * @returns 
+ */
 function SaveColumns(modelId, payload, force) {
   if (modelId == null) {
     throw new Exception("无法保存columns,缺少模型主键！");
@@ -335,43 +369,21 @@ function SaveColumns(modelId, payload, force) {
   }
 }
 
-//删除ddic.model.column == model_id
-function DeleteModelolumns(id) {
+
+/**
+ * 删除模型的列定义，删除ddic.model.column == model_id
+ * @param {string} modelId 
+ * @returns 
+ */
+function DeleteModelolumns(modelId) {
   const err = Process("models.ddic.model.column.DeleteWhere", {
-    wheres: [{ column: "model_id", value: id }],
+    wheres: [{ column: "model_id", value: modelId }],
   });
   if (err?.message) {
     throw new Exception(err.message, err.code);
   }
   //remembe to return the id in array format
-  return [id];
-}
-
-//多对一表数据查找
-function AfterFind(payload) {
-  const t = new Query();
-  payload["columns"] = t.Get({
-    from: "ddic_model_column",
-    wheres: [{ column: "model_id", op: "=", value: payload.id }],
-    select: [
-      "id",
-      "model_id",
-      "name",
-      "label",
-      "index",
-      "unique",
-      "element_id",
-      "type",
-      "length",
-      "precision",
-      "scale",
-      "nullable",
-      "crypt",
-      "default",
-      "comment",
-    ],
-  });
-  return payload;
+  return [modelId];
 }
 
 function ConvertModelColToTableLine(model, modelCol) {
@@ -398,13 +410,6 @@ function ConvertModelColToTableLine(model, modelCol) {
     }
   });
 
-  // if (Array.isArray(col.option)) {
-  //   col.options = col.options || [];
-
-  //   col.options = col.option?.map((item) => {
-  //     return { label: item, value: item };
-  //   });
-  // }
   return col;
 }
 
@@ -413,8 +418,6 @@ function UpdateRelationFromDsl(key, rel) {
   data.name = key;
   data.label = rel.label || key;
   data.model = rel.model;
-  //must do this in case xgen will dump
-  // data.query = JSON.stringify(rel.query);
   data.query = rel.query;
   return data;
 }
@@ -512,6 +515,11 @@ function deepCopyObject(obj) {
   return JSON.parse(JSON.stringify(obj));
 }
 // 转换列配置成yao的模型配置，才能适配数据库
+/**
+ * column 类型定义
+ * @param {object} col 
+ * @returns 
+ */
 function convertColTypeToYao(col) {
   switch (col.type?.toLowerCase()) {
     case "image":
@@ -525,6 +533,9 @@ function convertColTypeToYao(col) {
       col.type = "longText";
       col.length = undefined;
       break;
+    case "url":
+      col.type = "string";
+      break
     default:
       break;
   }
@@ -649,9 +660,16 @@ function DeleteModelMetaByIdBatch(modelId) {
   const ids = models.split(",");
   ids.forEach((id) => DeleteModelMetaById(id));
 }
+/**
+ * 根据模型id删除模型定义
+ * @param {string} modelId model id
+ * @returns 
+ */
 function DeleteModelMetaById(modelId) {
   // 检查是否存在，不存在会报错
   Process("models.ddic.model.Find", modelId, {});
+
+  DeleteModelLocalFile(modelId)
 
   const deleteFun = function (modelId) {
     // 先删除列定义
@@ -668,6 +686,26 @@ function DeleteModelMetaById(modelId) {
     }
   };
   return RunTransaction(deleteFun, modelId);
+}
+
+/**
+ * 删除本地模型定义文件
+ * @param {string} modelId model id
+ * @returns 
+ */
+function DeleteModelLocalFile(modelId) {
+  const yaoEnv = Process("utils.env.Get", "YAO_ENV")
+  if (yaoEnv !== "development") {
+    return;
+  }
+  __yao_data = { ROOT: true };
+  let dsl = new FS("dsl");
+  let model_id = SlashName(modelId);
+  const fname = `/models/${model_id}.mod.yao`;
+  if (dsl.Exists(fname)) {
+    dsl.Remove(fname);
+  }
+  __yao_data = { ROOT: false };
 }
 
 /**
@@ -960,7 +998,7 @@ function ConvertDBmodelToYaoModel(modelDsl) {
 }
 
 /**
- * Check the model dsl
+ * 检查模型定义的完整性，Check the model dsl
  * @param {object} modelDsl model dsl
  */
 function CheckModel(modelDsl) {
@@ -1012,14 +1050,24 @@ function CheckModel(modelDsl) {
     throw message.join("\n");
   }
 }
-function removeModelColumnIds(model) {
-  if (!Array.isArray(model.columns) || !model.columns.length) {
-    return model;
+/**
+ * 移除模型类定义中的id字段，在一些使用场景中需要全新插入，需要先移除所有的id
+ * @param {object} modelDsl model dsl
+ * @returns 
+ */
+function removeModelColumnIds(modelDsl) {
+  if (!Array.isArray(modelDsl.columns) || !modelDsl.columns.length) {
+    return modelDsl;
   }
-  model.columns.forEach((col) => delete col.id);
-  return model;
+  modelDsl.columns.forEach((col) => delete col.id);
+  return modelDsl;
 }
 
+/**
+ * 从源代码导入模型定义
+ * @param {object} payload 外部传的源代码
+ * @returns 
+ */
 function ImportModelSource(payload) {
   let newCode = payload.source;
   newCode = newCode.replace(/\/\/.*[\r]\n/g, "");

@@ -372,45 +372,6 @@
       "extra": {
         "sex": "男"
       }
-    },
-    {
-      "name": "员工",
-      "type": "staff",
-      "email": "staff@iqka.com",
-      "mobile": null,
-      "password": "S123456p+",
-      "key": null,
-      "secret": null,
-      "status": "enabled",
-      "extra": {
-        "sex": "女"
-      }
-    },
-    {
-      "name": "用户",
-      "type": "user",
-      "email": null,
-      "mobile": "13900001111",
-      "password": "U123456p+",
-      "key": null,
-      "secret": null,
-      "status": "enabled",
-      "extra": {
-        "sex": "女"
-      }
-    },
-    {
-      "name": "机器人",
-      "type": "robot",
-      "email": null,
-      "mobile": null,
-      "password": null,
-      "key": "3845196072",
-      "secret": "wBeYjL7FjbcvpAdBrxtDFfjydsoPKhRN",
-      "status": "enabled",
-      "extra": {
-        "sex": "女"
-      }
     }
   ],
   "option": {

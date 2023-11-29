@@ -9,10 +9,7 @@
       },
       "api": {
         "method": "get",
-        "requestAdaptor": "",
-        "url": "/api/v1/system/model/ddic.model/search?page=${page}&perPage=${perPage}&keywords=${keywords}",
-        "messages": {},
-        "adaptor": ""
+        "url": "/api/v1/system/model/ddic.model/search?page=${page}&perPage=${perPage}&keywords=${keywords}"
       },
       "bodyClassName": "panel-default",
       "columnsTogglable": "auto",
@@ -151,8 +148,7 @@
       "footerToolbar": ["statistics", "switch-per-page", "pagination"]
     }
   ],
-  "name": "page-demo",
-  "remark": null,
+  "name": "model-list",
   "title": "列表",
   "toolbar": [
     {
@@ -214,8 +210,7 @@
           ]
         }
       },
-      "id": "u:40c005c0a0f1",
-      "editorState": "default"
+      "id": "u:40c005c0a0f1"
     },
     {
       "type": "button",
