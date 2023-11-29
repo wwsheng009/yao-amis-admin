@@ -6,22 +6,25 @@ const { FileNameConvert } = Require("amis.lib_tool");
 
 //1 防止误操作，在特定的目录下使用editor的创建与编辑，创建好后再手动复制到正式的目录pages
 //2 编辑器的功能比较简单，目录结构不支持嵌套的目录结构
-const pagesWorking = "/amis_editor/";
-const pagesFolder = "/pages/";
+const WorkingPagesLocation = "/amis_editor";
+const PagesLocation = "/pages";
 
 function getUserDir() {
   let user_id = Process("session.get", "user_id");
   if (!user_id) {
     user_id = "1";
   }
-  let dir = `${pagesWorking}/${user_id}/`;
+  let dir = `${WorkingPagesLocation}/${user_id}/`;
   dir = dir.replaceAll("//", "/");
   Mkdir(dir);
   return dir;
 }
 // 读取所有的page列表
-function getPages() {
-  dir = getUserDir();
+function getPages(dirIn) {
+  let dir = dirIn
+  if (dir == null) {
+    dir = getUserDir();
+  }
   const fs = FS("system");
   let files = fs.ReadDir(dir, true); // recursive
   files = files
@@ -44,10 +47,10 @@ function getPages() {
         let filename = file.replace(/\.json$/, "");
         result[filename] = page;
       } else {
-        console.log("invalid amis file format:", dir + file);
+        console.log(`invalid amis file format:${dir + file}`,);
       }
     } catch (error) {
-      console.log("error when parse json:", dir + file);
+      console.log(`error when parse json:${dir + file}`);
     }
   });
 
@@ -56,7 +59,7 @@ function getPages() {
 
 // yao studio run editor.saveFileRecord 1, "xxx/test.json"
 function saveFileRecord(user_id, file_name) {
-  console.log(`saveFileRecord userid:${user_id},filename:${file_name}`);
+  console.log(`保存文件:${file_name},by userid:${user_id}`);
 
   if (!user_id || !file_name) {
     return;
@@ -78,7 +81,7 @@ function saveFileRecord(user_id, file_name) {
 }
 // yao studio run editor.deleteFileRecord 1, "/public/amis-admin/pages_working/1/测试.json"
 function deleteFileRecord(user_id, file_name) {
-  console.log(`deleteFileRecord userid:${user_id},filename:${file_name}`);
+  console.log(`删除文件:${file_name},by user_id:${user_id}`);
   if (!user_id || !file_name) {
     return;
   }
@@ -202,7 +205,7 @@ function WriteFile(filename, data) {
   }
   const res = fs.WriteFile(filename, JSON.stringify(data, null, 2));
   if (res?.code && res?.message) {
-    console.log(`保存配置文件失败【${res.code},${res.message}】：${filename}`);
+    console.log(`保存配置文件失败: ${filename},${res.message}`);
   } else {
     console.log(`保存配置文件成功：${filename}`);
   }
@@ -254,7 +257,7 @@ function createCurdPage(table) {
   const page = Process("scripts.amis.curd.curdTemplate", table);
 
   const fs = FS("system");
-  const fname = pagesWorking + table + "_amis_page.json";
+  const fname = WorkingPagesLocation + table + "_amis_page.json";
   if (!page.type) {
     //empty page
     return;
@@ -270,7 +273,7 @@ function createCurdPage(table) {
  * yao studio run editor.loadPageToDB
  */
 function loadPageToDB() {
-  const pages = getPages(pagesFolder);
+  const pages = getPages(PagesLocation);
   for (const key in pages) {
     const page = pages[key];
     let fname = key;

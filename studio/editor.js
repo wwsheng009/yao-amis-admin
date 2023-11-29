@@ -15,7 +15,8 @@ function getUserDir() {
     user_id = "1";
   }
   let dir = `${pagesWorking}/${user_id}/`;
-  dir = dir.replaceAll("//", "/");
+  dir = dir.replaceAll("\\", "/");
+  dir = dir.replaceAll("/", "/");
   Mkdir(dir);
   return dir;
 }
@@ -56,10 +57,10 @@ function getPages(dir) {
         let filename = file.replace(/\.json$/, "");
         result[filename] = page;
       } else {
-        console.log("invalid amis file format:", dir + file);
+        console.log(`AMIS文件格式不正确:${dir + file}`);
       }
     } catch (error) {
-      console.log("error when parse json:", dir + file);
+      console.log(`error when parse json:${dir + file}`);
     }
   });
 

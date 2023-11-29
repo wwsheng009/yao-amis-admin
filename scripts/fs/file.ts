@@ -130,7 +130,7 @@ function getFolderList(type: string, parent: string) {
     return [];
   }
   let list = Process("fs.system.ReadDir", uploadFolder);
-  list = list.map((l) => l.replace(/\\/g, "/"));
+  list = list.map((l: string) => l.replace(/\\/g, "/"));
   let list2 = list.filter((dir: string) => Process("fs.system.isDir", dir));
   // console.log("list2:", list2);
   list2 = list2.map((dir: string) => {

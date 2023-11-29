@@ -1,50 +1,4 @@
 // site.js
-//pages Array<页面配置>具体的页面配置。
-//数据结构为数组，第一层为分组，一般只需要配置 label 集合，如果你不想分组，直接不配置，
-//真正的页面请在第二层开始配置，即第一层的 children 中
-//yao run scripts.amis.site.UserEditorPages
-// function UserEditorPages() {
-//   let user_id = Process("session.get", "user_id");
-//   if (!user_id) {
-//     user_id = "1";
-//   }
-
-// const data = Process("models.system.file.get", {
-//   wheres: [{ column: "user_id", value: user_id }],
-// });
-
-//   let menus = [];
-//   menus = data.map((line, idx) => {
-//     let fname = line.file_name;
-//     if (fname.startsWith("/public")) {
-//       fname = fname.substring("/public".length);
-//     }
-
-//     let label = fname
-//       .replace(/^.*[\\/]/, "")
-//       .split(".")
-//       .slice(0, -1)
-//       .join(".");
-
-//     return {
-//       label: label,
-//       schemaApi: "get:" + fname,
-//       url: "page" + idx,
-//     };
-//   });
-
-//   let group = {
-//     label: "开发页面",
-//     icon: "fas fa-edit",
-//     children: menus,
-//     url: "/dev",
-//   };
-//   //   if (menus.length) {
-//   //     return group;
-//   //   }
-//   return group;
-// }
-
 // scripts.amis.site.MenuSoybean
 function MenuSoybean() {
   const menus = [
@@ -624,13 +578,18 @@ function MenuSoybean() {
     home: "dashboard_analysis",
   };
 }
-// yao run scripts.amis.site.Menu
+
+/**
+ * 普通用户的菜单列表，根据会话中的用户信息进行过滤
+ * yao run scripts.amis.site.Menu
+ * @returns 
+ */
 function Menu() {
   let user = Process("session.get", "user");
   if (user?.type === "super") {
     return getSuperUserMenu();
   }
-  let pages = Process("scripts.admin.menu.getAmisPagesFromDB");
+  let pages = Process("scripts.admin.menu.getAmisPageRoutesFromDB");
 
   let siteMenu = {
     type: "app",
@@ -648,6 +607,10 @@ function Menu() {
   return siteMenu;
 }
 
+/**
+ * 超级管理员的菜单列表，直接从文件系统读取，而不是数据库
+ * @returns 
+ */
 function getSuperUserMenu() {
   const editorPages = Process("scripts.admin.menu.getAmisEditorPages");
 
@@ -656,7 +619,7 @@ function getSuperUserMenu() {
     pages = Process("scripts.admin.menu.getAmisPages");
   }
   // else {
-  //   let pages = Process("scripts.admin.menu.getAmisPagesFromDB");
+  //   let pages = Process("scripts.admin.menu.getAmisPageRoutesFromDB");
   //   if (pages.length === 0) {
   //     pages = Process("scripts.admin.menu.getAmisPages");
   //   }

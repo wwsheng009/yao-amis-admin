@@ -12,6 +12,9 @@ const { getUserAuthMenuIds } = Require("auth.lib");
  *
  * */
 
+const PagesLocation = "/pages";
+const WorkingPagesLocation = "/amis_editor";
+
 /**
  * get user auth menus
  * yao run scripts.admin.menu.getUserAuthMenu
@@ -37,11 +40,12 @@ function getSoyAdminUserMenu() {
 
 /**
  * yao run scripts.admin.menu.reLoadAndSaveMenus
+ * 重新加载菜单列表
  */
 function reLoadAndSaveMenus() {
   saveSoyRoutesToDB();
   // 导入本地开发的页面
-  saveLocalAmisPagesToDB();
+  saveLocalAmisSoyRoutesToDB();
 }
 
 function cleanUpRouteMenu(routes) {
@@ -60,32 +64,33 @@ function cleanUpRouteMenu(routes) {
 }
 /**
  * 转换SoyAdmin用户菜单
- * yao run scripts.admin.menu.getSoyAdminUserMenu
+ * 超级管理员的菜单列表，如果数据库中没有，直接读取系统默认的设置
+ * yao run scripts.admin.menu.getSoySuperUserMenu
  * @returns 用户菜单
  */
 function getSoySuperUserMenu() {
   let routes = getSoyRoutesFromDB();
   if (routes.length === 0) {
     const routesSoy = Process("scripts.amis.site.MenuSoybean")["routes"];
-    const routesLocal = getAmisPagesAsRoute();
+    const routesLocal = getAmisLocalPageAsSoyRoutes();
     const localRoutes = [...routesSoy, ...routesLocal];
 
     return cleanUpRouteMenu(localRoutes);
-    // saveSoyRoutesToDB();
-    // // 导入本地开发的页面
-    // saveLocalAmisPagesToDB();
-    // routes = getSoyRoutesFromDB();
   }
   // 转换成树结构
   routes = Process(`utils.arr.Tree`, routes, { parent: "parent", empty: 0 });
 
   // 导入正在编辑的页面
-  const editor_routes = Process("scripts.admin.menu.getAmisEditorPagesAsRoute");
+  const editor_routes = Process("scripts.admin.menu.getAmisEditorSoyRoute");
   routes = routes.concat(editor_routes);
 
   return cleanUpRouteMenu(routes);
 }
 
+/**
+ * 读取数据库中所有的菜单配置列表
+ * @returns []Route
+ */
 function getSoyRoutesFromDB() {
   // 优先从数据库读取菜单
   let menus: system_menu[] = Process("models.system.menu.get", {});
@@ -97,13 +102,13 @@ function getSoyRoutesFromDB() {
       name: menu.name || "amis_" + menu.id,
       path: menu.url || "",
       redirect: menu.redirect,
-
       component: menu.component ? menu.component : "amis",
       meta: {
         title: menu.title || menu.name || "" + menu.id,
         icon: menu.icon,
         order: menu.rank,
         requiresAuth: menu.requires_auth,
+        source: menu.source, //提供后续的导入支持
       },
       children: [],
     };
@@ -134,34 +139,64 @@ function getSoyRoutesFromDB() {
 }
 
 /**
- * 保存本地的页面到数据库
- * yao run scripts.admin.menu.saveLocalAmisPagesToDB
+ * 导出数据库中的菜单，由于导入本地菜单时的描述信息没有，可以编辑好菜单后导出成文件
+ * yao run scripts.admin.menu.exportMenus
  */
-function saveLocalAmisPagesToDB() {
-  const routes = getAmisPagesAsRoute();
-  saveSoyMenusToDB(routes, "amis", false);
+function exportMenus(pathIn: string | undefined) {
+  const folder = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+
+  const path = pathIn || `/upload/public/system_menus_${folder}.json`;
+
+  let routes = getSoyRoutesFromDB();
+  routes = Process(`utils.arr.Tree`, routes, { parent: "parent", empty: 0 });
+  const json = JSON.stringify(routes, null, 2);
+  Process("fs.system.writefile", path, json);
+
+  return `Menu Saved to ${path}`;
+}
+
+/**
+ * 导入菜单
+ * yao run scripts.admin.menu.importMenus
+ * @param pathIn import menu path
+ */
+function importMenus(pathIn: string | undefined) {
+  const folder = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+  const path = pathIn || `/upload/public/system_menus_${folder}.json`;
+  const json = Process("fs.system.readfile", path);
+  const routes = JSON.parse(json);
+  saveTreeMenusToDB(routes, undefined, false);
+}
+
+/**
+ * 保存本地的页面到数据库
+ * yao run scripts.admin.menu.saveLocalAmisSoyRoutesToDB
+ */
+function saveLocalAmisSoyRoutesToDB() {
+  const routes = getAmisLocalPageAsSoyRoutes();
+  saveTreeMenusToDB(routes, "amis", false);
 }
 /**
- * yao run scripts.admin.menu.saveSoyRoutesToDB
  * 将Soyadmin的系统菜单作转换并导入到数据库
+ * yao run scripts.admin.menu.saveSoyRoutesToDB
  */
 function saveSoyRoutesToDB() {
   // 导入前端本身的菜单
-  const menus = Process("scripts.amis.site.MenuSoybean")["routes"];
-  saveSoyMenusToDB(menus, "soy", false);
+  const routes = Process("scripts.amis.site.MenuSoybean")["routes"];
+  saveTreeMenusToDB(routes, "soy", false);
 }
 /**
- * 导入本地正在使用页面
- * yao run scripts.admin.menu.getAmisPagesAsRoute
+ * 获取文件系统中的页面，根据文件目录结构转换成Soy菜单结构
+ * yao run scripts.admin.menu.getAmisLocalPageAsSoyRoutes
  * @returns []
  */
-function getAmisPagesAsRoute() {
+function getAmisLocalPageAsSoyRoutes() {
   const fs = new FS("system");
-  let files: string[] = fs.ReadDir("/pages", true); // recursive
+  let files: string[] = fs.ReadDir(PagesLocation, true); // recursive
   files = files.filter((x) => x.length > 5 && x.endsWith(".json"));
   files = files.map((f) => {
     f = f.replace(/\\/g, "/");
-    return f.substring(`/pages`.length);
+    return f.substring(PagesLocation.length);
   });
   const routes = convertFileListToSoyRoute(files);
 
@@ -183,11 +218,16 @@ function getAmisPagesAsRoute() {
   return rootRoutes;
 }
 
-// yao run scripts.admin.menu.getAmisPage
-function getAmisPage(pageId: string) {
+/**
+ *根据页面ID，获取Amis的页面源代码
+ * yao run scripts.admin.menu.getAmisPageSchema
+ * @param pageId
+ * @returns
+ */
+function getAmisPageSchema(pageId: string) {
   let page = pageId.replace(".", "/") + ".json";
 
-  const fpath = "pages/" + page;
+  const fpath = PagesLocation + "/" + page;
   let isExist = Process("fs.system.Exists", fpath);
   if (!isExist) {
     throw new Exception(`文件不存在：${fpath}`);
@@ -211,10 +251,8 @@ function getAmisPage(pageId: string) {
  * @returns
  */
 function getAmisEditorPageSource(pageId: string) {
-  const pagesWorking = "/amis_editor/";
-
   let user_id = Process("session.get", "user_id");
-  let dir = `${pagesWorking}/${user_id}/`;
+  let dir = `${WorkingPagesLocation}/${user_id}/`;
   dir = dir.replace(/\\/g, "/");
   dir = dir.replace(/\/\//g, "/");
 
@@ -237,15 +275,14 @@ function getAmisEditorPageSource(pageId: string) {
   return JSON.parse(str);
 }
 
-// yao run scripts.admin.menu.getAmisEditorPagesAsRoute
-function getAmisEditorPagesAsRoute() {
-  const pagesWorking = "/amis_editor/";
+// yao run scripts.admin.menu.getAmisEditorSoyRoute
+function getAmisEditorSoyRoute() {
   let user_id = Process("session.get", "user_id");
   if (!user_id) {
     // return [];
     user_id = "1";
   }
-  let dir = `${pagesWorking}/${user_id}/`;
+  let dir = `${WorkingPagesLocation}/${user_id}/`;
   dir = dir.replace(/\\/g, "/");
   dir = dir.replace(/\/\//g, "/");
 
@@ -366,9 +403,9 @@ function removeEmptyChildren(node: Route) {
 
 /**
  * 更新路由中的api与路径
- * @param {string} api api prefix
- * @param {object|[]object} route 路由
- * @param {object|undefined} parent 上级节点
+ * @param api api prefix
+ * @param route 路由
+ * @param parent 上级节点
  * @returns
  */
 function updateSoyRoutePath(
@@ -407,13 +444,13 @@ function updateSoyRoutePath(
 
 /**
  * 保存菜单到数据库
- * @param {[]Route|[]Route} menus 菜单
- * @param {string} source 来源 soy|amis
- * @param {boolean} deleteFlag 是否删除
+ * @param menus 菜单，树形结构
+ * @param source 来源 soy|amis
+ * @param deleteFlag 是否删除
  */
-function saveSoyMenusToDB(
+function saveTreeMenusToDB(
   menus: Route[],
-  source: "amis" | "soy",
+  source: "amis" | "soy" | undefined,
   deleteFlag: boolean
 ) {
   function traval(route: Route | Route[], parentId: number) {
@@ -434,8 +471,13 @@ function saveSoyMenusToDB(
 
     route.meta = route.meta || {};
 
-    let menu: system_menu = { name: route.name, title: "", source: source };
+    let menu: system_menu = {
+      name: route.name,
+      title: "",
+      source: route.meta.source || source,
+    };
 
+    // 根据路由的名称进行判断，如果已经存在，进行更新
     if (route.name) {
       let [menudb] = Process("models.system.menu.get", {
         wheres: [
@@ -478,11 +520,11 @@ function saveSoyMenusToDB(
 }
 
 /**
+ * 从数据库读取Amis app页面的菜单，不适用于soy管理页面
  * yao run scripts.admin.menu.getAmisRoutesFromDB
  * @returns
  */
 function getAmisRoutesFromDB(): AmisAppPage[] {
-  // 优先从数据库读取菜单
   let menus: system_menu[] = Process("models.system.menu.get", {
     wheres: [{ column: "source", value: "amis" }],
   });
@@ -509,10 +551,11 @@ function getAmisRoutesFromDB(): AmisAppPage[] {
 }
 
 /**
- * yao run scripts.admin.menu.getAmisPagesFromDB
+ * 从数据库中读取Aims App的用户菜单配置，超级管理员可以访问所有的菜单列表
+ * yao run scripts.admin.menu.getAmisPageRoutesFromDB
  * @returns amis page
  */
-function getAmisPagesFromDB(): AmisAppPage[] {
+function getAmisPageRoutesFromDB(): AmisAppPage[] {
   let routes = getAmisRoutesFromDB();
   // 转换成树结构
   routes = Process(`utils.arr.Tree`, routes, { parent: "parent", empty: 0 });
@@ -566,14 +609,14 @@ function convertSoyRoutesToAmisPages(routes: Route[]): AmisAppPage[] {
 
 // yao run scripts.admin.menu.getAmisEditorPages
 function getAmisEditorPages(): AmisAppPage[] {
-  let routes = getAmisEditorPagesAsRoute();
+  let routes = getAmisEditorSoyRoute();
   let amsiRoutes = convertSoyRoutesToAmisPages(routes);
   amsiRoutes = ClearFalsyKeys(amsiRoutes);
   return amsiRoutes;
 }
 // yao run scripts.admin.menu.getAmisPages
 function getAmisPages(): AmisAppPage[] {
-  let routes = getAmisPagesAsRoute();
+  let routes = getAmisLocalPageAsSoyRoutes();
   let amsiRoutes = convertSoyRoutesToAmisPages(routes);
   amsiRoutes = ClearFalsyKeys(amsiRoutes);
   return amsiRoutes;
@@ -731,6 +774,8 @@ interface RouteMeta {
   affix?: boolean;
   /** Schema Api */
   schemaApi?: string;
+  /**source soy|amis*/
+  source?: string;
 }
 
 /**

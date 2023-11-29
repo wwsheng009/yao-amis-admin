@@ -353,7 +353,7 @@
           "label": "新增"
         },
         {
-          "label": "清空并菜单",
+          "label": "清空菜单",
           "confirmText": "确定要清空菜单吗?",
           "type": "button",
           "level": "danger",

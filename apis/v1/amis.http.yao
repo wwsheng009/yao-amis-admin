@@ -105,12 +105,12 @@
     },
     {
       // /api/v1/amis/pages/:page
-      "label": "测试页面",
-      "description": "测试页面",
+      "label": "获取页面Schema",
+      "description": "获取页面Schema",
       "path": "/pages/:page",
       "method": "GET",
       "guard": "bearer-jwt",
-      "process": "scripts.admin.menu.getAmisPage",
+      "process": "scripts.admin.menu.getAmisPageSchema",
       "in": [
         "$param.page"
       ],
