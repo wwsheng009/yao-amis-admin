@@ -491,7 +491,7 @@ function updateFormRelations(schemas, model, actionType) {
       },
     });
   }
-  if (Object.keys(hasManys).length > 1) {
+  if (Object.keys(hasManys).length >= 1) {
     const tabs = {
       label: "关联表",
       type: "static-tabs",
