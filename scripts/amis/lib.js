@@ -491,59 +491,68 @@ function updateFormRelations(schemas, model, actionType) {
       },
     });
   }
-  if (Object.keys(hasManys).length > 1) {
+
+  let tabList = [];
+  for (const key in hasManys) {
+    const element = hasManys[key];
+    const label = element.label || key;
+    let fields = [];
+    let tableSchema = {};
+    if (actionType === "view") {
+      fields = getModelFields(element.model);
+      fields = fields.filter((col) => col.name !== element.key);
+
+      tableSchema = {
+        columns: fields,
+        source: "${" + key + "}",
+        type: "table",
+      };
+    } else {
+      fields = getModelFieldsWithQuick(element.model);
+      fields = fields.filter((col) => col.name !== element.key);
+
+      tableSchema = {
+        labelClassName: 'hidden',
+        columns: fields,
+        name: key,
+        source: "${" + key + "}",
+        copyable: true,
+        editable: true,
+        removable: true,
+        showIndex: true,
+        addable: true,
+        type: "input-table",
+      };
+    }
+    const tab = {
+      title: label,
+      body: tableSchema,
+    };
+    tabList.push(tab)
+
+  }
+  // console.log("tabList", tabList)
+  // 多个就使用页签显示，一个就直接显示表格
+  if (tabList.length > 1) {
     const tabs = {
       label: "关联表",
       type: "static-tabs",
       swipeable: true,
       tabs: [],
     };
-    for (const key in hasManys) {
-      const element = hasManys[key];
-      const label = element.label || key;
-      let fields = [];
-      let tableSchema = {};
-      if (actionType === "view") {
-        fields = getModelFields(element.model);
-        fields = fields.filter((col) => col.name !== element.key);
 
-        tableSchema = {
-          columns: fields,
-          source: "${" + key + "}",
-          type: "table",
-        };
-      } else {
-        fields = getModelFieldsWithQuick(element.model);
-        fields = fields.filter((col) => col.name !== element.key);
-
-        tableSchema = {
-          labelClassName: 'hidden',
-          columns: fields,
-          name: key,
-          source: "${" + key + "}",
-          copyable: true,
-          editable: true,
-          removable: true,
-          showIndex: true,
-          addable: true,
-          type: "input-table",
-        };
-      }
-      const tab = {
-        title: label,
-        body: tableSchema,
-      };
-      // const tab = {
-      //   title: key,
-      //   body: {
-      //     type: "service",
-      //     name: key,
-      //     schemaApi: `get:/api/v1/system/schema/${element.model}/table-view?table_name=${key}`,
-      //   },
-      // };
+    for (const tab of tabList) {
       tabs.tabs.push(tab);
     }
     schemas.push(tabs);
+  } else if (tabList.length == 1) {
+    const table = tabList[0].body
+    delete table.labelClassName
+    table.label = tabList[0].title;
+    if (actionType === "view") {
+      table.type = "static-table"
+    }
+    schemas.push(table);
   }
   return schemas;
 }

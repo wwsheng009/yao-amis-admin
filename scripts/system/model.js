@@ -993,6 +993,9 @@ function ConvertDBmodelToYaoModel(modelDsl) {
     delete col.options;
     col = convertColTypeToYao(col);
   });
+  if (m.option) {
+    delete m.option.migrate_force
+  }
   delete m.id;
   delete m.ID;
   return m;
