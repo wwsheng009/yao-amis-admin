@@ -6,29 +6,9 @@
           "type": "button-toolbar",
           "buttons": [
             {
-              "label": "提交",
-              "type": "submit"
-            },
-            {
-              "label": "保留按钮",
-              "onEvent": {
-                "click": {
-                  "actions": [
-                    {
-                      "componentId": "u:078ef73682f4",
-                      "data": {
-                        "method": "getTableAmisViewFieldsWithQuick",
-                        "table": "${table}"
-                      },
-                      "dataMergeMode": "override",
-                      "expression": "${table}",
-                      "actionType": "reload"
-                    }
-                  ]
-                }
-              },
-              "type": "button",
-              "id": "u:d9002a354548"
+              "label": "生成代码",
+              "type": "submit",
+              "level": "primary"
             }
           ],
           "id": "u:91e32a13d252"
@@ -644,8 +624,24 @@
       "type": "form",
       "actions": [
         {
+          "type": "button",
+          "actionType": "dialog",
+          "level": "light",
+          "label": "预览",
+          "dialog": {
+            "size": "lg",
+            "body": [
+              {
+                "type": "amis",
+                "name": "source"
+              }
+            ]
+          }
+        },
+        {
           "id": "u:a0e8e92c8ff2",
-          "label": "复制",
+          "label": "复制源码",
+          "level": "primary",
           "onEvent": {
             "click": {
               "actions": [
