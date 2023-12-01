@@ -1,0 +1,91 @@
+{
+  "name": "odata services",
+  "version": "1.0.0",
+  "description": "odata services",
+  "group": "",
+  "guard": "-",
+  "paths": [
+    {
+      // api/v1/odata/
+      "name": "入口",
+      "description": "get请求入口",
+      "path": "/*path",
+      "method": "GET",
+      "guard": "scripts.auth.basic.Check",
+      "process": "scripts.odata.v4.getData",
+      "in": [
+        "$param.path",
+        ":query",
+        ":headers",
+        ":host",
+        ":path",
+        ":schema",
+        ":fullpath"
+      ],
+      "out": {
+        "status": 200,
+        "Body": "{{data}}",
+        "Headers": {
+          "Content-Type": "{{type}}",
+          "odata-version": "4.0"
+        }
+      }
+    },
+    {
+      // api/v1/odata/
+      "name": "入口",
+      "description": "post请求入口",
+      "path": "/*path",
+      "method": "POST",
+      "guard": "scripts.auth.basic.Check",
+      "process": "scripts.odata.v4.postData",
+      "in": [
+        "$param.path",
+        ":query",
+        ":headers",
+        ":host",
+        ":path",
+        ":schema",
+        ":fullpath",
+        ":payload",
+        ":multi-parts"
+      ],
+      "out": {
+        "status": 200,
+        "Headers": {
+          "Content-Type": "multipart/mixed;boundary=batch_foobarbaz",
+          "odata-version": "4.0"
+        }
+      }
+    },
+    // {
+    //   // api/v1/odata/
+    //   "name": "入口",
+    //   "description": "OPTIONS请求入口,跨域请求",
+    //   "path": "/*path",
+    //   "method": "OPTIONS",
+    //   "guard": "cross-origin",
+    //   "process": "scripts.odata.head",
+    //   "in": [],
+    //   "out": {
+    //     "status": 200
+    //   }
+    // },
+    // {
+    //   // api/v1/odata/
+    //   "name": "入口",
+    //   "description": "head请求入口",
+    //   "path": "/",
+    //   "method": "HEAD",
+    //   "guard": "cross-origin",
+    //   "process": "scripts.odata.head",
+    //   "in": [],
+    //   "out": {
+    //     "status": 200,
+    //     "Headers": {
+    //       "X-CSRF-Token": "123123"
+    //     }
+    //   }
+    // }
+  ]
+}
