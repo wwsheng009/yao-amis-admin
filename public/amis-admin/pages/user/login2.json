@@ -43,7 +43,7 @@
                 {
                   "label": "用户名",
                   "type": "input-email",
-                  "name": "username",
+                  "name": "email",
                   "id": "u:31e63ad3f078",
                   "labelWidth": "25%",
                   "required": true

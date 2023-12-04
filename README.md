@@ -50,7 +50,7 @@ amis 的前端页面可以通过 json 配置文件生成,我们可以在 yao 后
 - Amis 页面编辑器[amis-editor-yao](https://github.com/wwsheng009/amis-editor-yao)
 - 在 Vscode 中编写博客插件[yao-blog-vscode](https://github.com/wwsheng009/yao-blog-vscode)
 - 邮件客户端插件[yao-plugin-email](https://github.com/wwsheng009/yao-plugin-email)
-- 系统性能数据收集插件[yao-plugin-email](https://github.com/wwsheng009/yao-plugin-psutil)
+- 系统性能数据收集插件[yao-plugin-psutil](https://github.com/wwsheng009/yao-plugin-psutil)
 - Yao-python 插件开发示例[yao-plugin-python](https://github.com/wwsheng009/yao-plugin-python)
 - Yao-Rust 插件开发示例[yao-plugin-rust](https://github.com/wwsheng009/yao-plugin-rust)
 - Yao-Json-schema[yao-app-ts-types](https://github.com/wwsheng009/yao-app-ts-types)
