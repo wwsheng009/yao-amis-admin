@@ -1,0 +1,24 @@
+{
+    "name": "命令执行",
+    "version": "1.0.0",
+    "description": "命令执行，需要使用插件才能使用，https://github.com/wwsheng009/yao-plugin-command",
+    "group": "",
+    "guard": "bearer-jwt",
+    "paths": [
+        {
+            // /api/app/v1/cmd/execute
+            "label": "命令执行",
+            "description": "命令执行",
+            "path": "/execute",
+            "method": "post",
+            "process": "scripts.app.cmd.execute",
+            "in": [
+                ":payload"
+            ],
+            "out": {
+                "status": 200,
+                "type": "application/json"
+            }
+        }
+    ]
+}

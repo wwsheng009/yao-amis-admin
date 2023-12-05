@@ -1,0 +1,42 @@
+{
+  "option": {
+    "soft_deletes": false,
+    "timestamps": false,
+    "read_only": false
+  },
+  "columns": [
+    {
+      "name": "id",
+      "type": "id",
+      "comment": "ID",
+      "label": "ID"
+    },
+    {
+      "type": "string",
+      "comment": "名称",
+      "label": "名称",
+      "name": "name"
+    },
+    {
+      "name": "cmd",
+      "comment": "命令工具",
+      "option": [
+        "sh",
+        "cmd"
+      ],
+      "type": "enum",
+      "label": "命令工具"
+    },
+    {
+      "name": "source",
+      "label": "脚本源代码",
+      "type": "longText",
+      "comment": "脚本源代码"
+    }
+  ],
+  "name": "命令脚本",
+  "table": {
+    "name": "app_cmd_script"
+  },
+  "relations": {}
+}

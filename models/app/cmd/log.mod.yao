@@ -1,0 +1,70 @@
+{
+  "option": {
+    "timestamps": true
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "id",
+      "comment": "ID"
+    },
+    {
+      "name": "host",
+      "type": "string",
+      "comment": "主机",
+      "label": "主机"
+    },
+    {
+      "name": "port",
+      "type": "integer",
+      "comment": "端口",
+      "label": "端口"
+    },
+    {
+      "label": "命令",
+      "name": "cmd",
+      "nullable": true,
+      "type": "string",
+      "comment": "命令"
+    },
+    {
+      "type": "text",
+      "comment": "脚本",
+      "label": "脚本",
+      "name": "script"
+    },
+    {
+      "type": "text",
+      "comment": "输出",
+      "label": "输出",
+      "name": "output",
+      "nullable": true
+    },
+    {
+      "name": "msg",
+      "nullable": true,
+      "type": "text",
+      "comment": "消息",
+      "label": "消息"
+    },
+    {
+      "label": "用户标识",
+      "name": "user_id",
+      "nullable": true,
+      "type": "integer",
+      "comment": "用户标识"
+    },
+    {
+      "type": "string",
+      "label": "用户名",
+      "nullable": true,
+      "name": "user_name"
+    }
+  ],
+  "name": "命令执行日志",
+  "table": {
+    "name": "app_cmd_log"
+  },
+  "relations": {}
+}

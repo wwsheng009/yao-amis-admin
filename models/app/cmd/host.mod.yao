@@ -1,0 +1,70 @@
+{
+  "name": "执行命令的主机",
+  "table": {
+    "name": "app_cmd_host"
+  },
+  "option": {
+    "soft_deletes": false,
+    "timestamps": false,
+    "read_only": false
+  },
+  "columns": [
+    {
+      "name": "id",
+      "label": "ID",
+      "type": "id",
+      "comment": "ID"
+    },
+    {
+      "label": "名称",
+      "name": "name",
+      "type": "string",
+      "comment": "名称"
+    },
+    {
+      "name": "host",
+      "label": "主机",
+      "type": "string",
+      "comment": "主机"
+    },
+    {
+      "comment": "端口",
+      "type": "integer",
+      "default": "22",
+      "label": "端口",
+      "name": "port"
+    },
+    {
+      "label": "主机类型",
+      "name": "host_type",
+      "option": [
+        "windows",
+        "linux"
+      ],
+      "comment": "主机类型",
+      "type": "enum"
+    },
+    {
+      "label": "是否远程",
+      "name": "is_remote",
+      "nullable": true,
+      "type": "boolean",
+      "comment": "是否远程"
+    },
+    {
+      "name": "username",
+      "nullable": true,
+      "type": "string",
+      "comment": "用户名",
+      "label": "用户名"
+    },
+    {
+      "nullable": true,
+      "type": "string",
+      "comment": "密码",
+      "label": "密码",
+      "name": "password"
+    }
+  ],
+  "relations": {}
+}
