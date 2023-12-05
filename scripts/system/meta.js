@@ -1,80 +1,8 @@
 const { PaginateArrayWithQuery } = Require("amis.data.lib");
 
+const { GetColumnTypeList } = Require("system.col_type")
 function GetColumnOptions2() {
-  return [
-    {
-      label: "字符串string",
-      value: "string",
-    },
-    {
-      label: "文本[text]",
-      value: "text",
-    },
-    {
-      label: "富文本[richtext]",
-      value: "richtext",
-    },
-    {
-      label: "JSON",
-      value: "json",
-    },
-    {
-      label: "日期[date]",
-      value: "date",
-    },
-    {
-      label: "日期时间[datetime]",
-      value: "datetime",
-    },
-    {
-      label: "时间[time]",
-      value: "time",
-    },
-    {
-      label: "自增[id]",
-      value: "id",
-    },
-    {
-      label: "整型[integer]",
-      value: "integer",
-    },
-    {
-      label: "浮点数[float]",
-      value: "float",
-    },
-    {
-      label: "双精度[double]",
-      value: "double",
-    },
-    {
-      label: "小数[decimal]",
-      value: "decimal",
-    },
-    {
-      label: "布尔型[boolean]",
-      value: "boolean",
-    },
-    {
-      label: "枚举型[enum]",
-      value: "enum",
-    },
-    {
-      label: "图片[image]",
-      value: "image",
-    },
-    {
-      label: "图片集[images]",
-      value: "images",
-    },
-    {
-      label: "视频[video]",
-      value: "video",
-    },
-    {
-      label: "文件[file]",
-      value: "file",
-    },
-  ];
+  return GetColumnTypeList();
 }
 
 //scripts.system.meta.GetColumnOptions
@@ -294,11 +222,7 @@ function saveApis() {
  */
 function ApiListPaginate(querysIn, payload) {
   const list = allApi();
-  const { items, total } = PaginateArrayWithQuery(
-    list,
-    querysIn,
-    payload
-  );
+  const { items, total } = PaginateArrayWithQuery(list, querysIn, payload);
 
   return { items: items, total: total };
 }
