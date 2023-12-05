@@ -937,13 +937,14 @@ function column2AmisFormEditColumn(column) {
     if (column.check_model_multi) {
       newColumn.multiple = true;
     }
+    const labelField = column.check_model_label || 'name';
     newColumn.type = "select";
     newColumn.source = {
       method: 'post',
       url: `/api/v1/system/model/${column.check_model}/select_options`,
       data: {
-        __label: newColumn.check_model_label || 'name',
-        __value: newColumn.check_model_value || 'id',
+        __label: labelField,
+        __value: column.check_model_value || 'id',
       }
     }
   }
@@ -958,9 +959,9 @@ function column2AmisFormEditColumn(column) {
  */
 function column2AmisTableViewColumn(column) {
   // 只读字段的处理有两种方式，一种是使用static-类控件，
-  // 另外一种是使用input-控件再加上static属性进行组合控制
+  // 不要使用input-控件再加上static属性进行组合控制，会使用quickEdit失效
   // 哪种更好需要测试后才知道
-  const name = column.name.toUpperCase();
+  // const name = column.name.toUpperCase();
   let displayOnly = false;
   let newColumn = {};
   newColumn.name = column.name;
@@ -1142,20 +1143,21 @@ function column2AmisTableViewColumn(column) {
     newColumn.sortable = undefined;
   }
   if (column.check_model != null) {
-    if (column.check_model_multi) {
-      newColumn.multiple = true;
-    }
-    newColumn.type = "input-tag";
-    newColumn.static = true;
-    newColumn.source = {
-      cache: 2000,
-      method: 'post',
-      url: `/api/v1/system/model/${column.check_model}/select_options`,
-      data: {
-        __label: newColumn.check_model_label || 'name',
-        __value: newColumn.check_model_value || 'id',
-      }
-    }
+    // if (column.check_model_multi) {
+    //   newColumn.multiple = true;
+    // }
+    newColumn.type = "tag";
+    // 这里不要使用input-tag + static=true的组合，会使用quickEdit控件失效
+    // 如果是纯显示，可以使用input-tag + static=true的组合来显示标签的值，而不是value字段
+    // newColumn.source = {
+    //   cache: 2000,
+    //   method: 'post',
+    //   url: `/api/v1/system/model/${column.check_model}/select_options`,
+    //   data: {
+    //     __label: newColumn.check_model_label || 'name',
+    //     __value: newColumn.check_model_value || 'id',
+    //   }
+    // }
   }
   return { newColumn, displayOnly };
 }
