@@ -77,19 +77,31 @@ function getTable(table) {
 }
 function CRUDNewTemplate(modelName, columns) {
   return {
-    source: Process("scripts.amis.schema.curdNewPage", modelName, columns),
+    __code_source: Process(
+      "scripts.amis.schema.curdNewPage",
+      modelName,
+      columns
+    ),
   };
 }
 
 function CRUDListTemplate(modelName, columns) {
   return {
-    source: Process("scripts.amis.schema.curdListPage", modelName, columns),
+    __code_source: Process(
+      "scripts.amis.schema.curdListPage",
+      modelName,
+      columns
+    ),
   };
 }
 
 function CRUDAllTemplate(modelName, columns) {
   return {
-    source: Process("scripts.amis.curd.curdTemplate", modelName, columns),
+    __code_source: Process(
+      "scripts.amis.curd.curdTemplate",
+      modelName,
+      columns
+    ),
   };
 }
 
@@ -100,7 +112,7 @@ function CRUDAllTemplate(modelName, columns) {
  */
 function getTSType(modelName, columns) {
   return {
-    source: Process(
+    __code_source: Process(
       "scripts.system.tstype.createModelType",
       modelName,
       columns
@@ -114,7 +126,7 @@ function getTSType(modelName, columns) {
  */
 function getTableAmisViewFields(modelName, columns) {
   return {
-    source: Process(
+    __code_source: Process(
       "scripts.amis.schema.generateViewFields",
       modelName,
       columns
@@ -128,7 +140,7 @@ function getTableAmisViewFields(modelName, columns) {
  */
 function getTableAmisFormFields(modelName, columns) {
   return {
-    source: Process(
+    __code_source: Process(
       "scripts.amis.schema.generateEditFormFields",
       modelName,
       columns
@@ -143,7 +155,7 @@ function getTableAmisFormFields(modelName, columns) {
  */
 function getTableAmisFormViewFields(modelName, columns) {
   return {
-    source: Process(
+    __code_source: Process(
       "scripts.amis.schema.formViewFieldsSchema",
       modelName,
       columns
@@ -158,7 +170,7 @@ function getTableAmisFormViewFields(modelName, columns) {
  */
 function getTableAmisViewFieldsWithQuick(modelName, columns) {
   return {
-    source: Process(
+    __code_source: Process(
       "scripts.amis.schema.generateViewFieldsWithQuick",
       modelName,
       columns

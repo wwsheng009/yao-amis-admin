@@ -633,7 +633,7 @@
             "body": [
               {
                 "type": "amis",
-                "name": "source"
+                "name": "__code_source"
               }
             ]
           }
@@ -648,7 +648,7 @@
                 {
                   "actionType": "copy",
                   "args": {
-                    "content": "${ENCODEJSON(${source})}",
+                    "content": "${ENCODEJSON(${__code_source})}",
                     "copyFormat": "text/plain"
                   }
                 }
@@ -663,7 +663,7 @@
           "id": "u:eee45c3226cc",
           "language": "json",
           "labelClassName": "hidden",
-          "name": "source",
+          "name": "__code_source",
           "type": "editor"
         }
       ],
