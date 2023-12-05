@@ -960,8 +960,33 @@ function getModelColumnMap(modelId) {
   }
   return columnMap;
 }
+/**
+ * get the model source in json format
+ * yao run scripts.system.model.ExportModelToYaoSource
+ * @param {string} modelId 
+ * @returns 
+ */
+function ExportModelSource(modelId) {
+  const model = Process("models.ddic.model.Find", modelId, {
+    withs: {
+      columns: { withs: { element: {} } },
+    },
+  });
 
-function Source(modelId) {
+  let m = ConvertTableLineToModel(model);
+
+  // m = ConvertDBmodelToYaoModel(m);
+
+  return { source: m };
+}
+
+/**
+ * get the model source in yao format
+ * yao run scripts.system.model.ExportModelYaoSource
+ * @param {string} modelId 
+ * @returns 
+ */
+function ExportModelYaoSource(modelId) {
   const model = Process("models.ddic.model.Find", modelId, {
     withs: {
       columns: { withs: { element: {} } },
@@ -1072,7 +1097,7 @@ function removeModelColumnIds(modelDsl) {
  * @param {object} payload 外部传的源代码
  * @returns 
  */
-function ImportModelSource(payload) {
+function ImportModelFromSource(payload) {
   let newCode = payload.source;
   newCode = newCode.replace(/\/\/.*[\r]\n/g, "");
   let model = JSON.parse(newCode);

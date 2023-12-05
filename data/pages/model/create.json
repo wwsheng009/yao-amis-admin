@@ -33,6 +33,30 @@
           "type": "submit",
           "id": "u:f962cfe8b5fc"
         },
+
+        {
+          "actionType": "dialog",
+          "dialog": {
+            "body": {
+              "api": "/api/v1/system/meta/model/source_yao_model/${header.id}",
+              "body": {
+                "language": "json",
+                "name": "source",
+                "static": true,
+                "type": "editor",
+                "value": "{}"
+              },
+              "type": "service"
+            },
+            "title": "Yao模型定义",
+            "size": "lg"
+          },
+          "label": "Yao模型定义",
+          "level": "info",
+          "type": "button",
+          "visibleOn": "this.header && !!this.header.id",
+          "id": "u:27013c1a44fa"
+        },
         {
           "actionType": "dialog",
           "dialog": {
@@ -47,10 +71,10 @@
               },
               "type": "service"
             },
-            "title": "模型源代码",
+            "title": "模型定义",
             "size": "lg"
           },
-          "label": "查看代码",
+          "label": "模型定义",
           "level": "info",
           "type": "button",
           "visibleOn": "this.header && !!this.header.id",

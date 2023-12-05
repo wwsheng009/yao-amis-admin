@@ -207,12 +207,27 @@
       }
     },
     {
+      //api/v1/system/meta/model/source_yao_model/:id
+      "label": "模型源码",
+      "description": "模型源码",
+      "path": "/source_yao_model/:id",
+      "method": "GET",
+      "process": "scripts.system.model.ExportModelYaoSource",
+      "in": [
+        "$param.id"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
       //api/v1/system/meta/model/source/:id
       "label": "模型源码",
       "description": "模型源码",
       "path": "/source/:id",
       "method": "GET",
-      "process": "scripts.system.model.Source",
+      "process": "scripts.system.model.ExportModelSource",
       "in": [
         "$param.id"
       ],
@@ -227,7 +242,7 @@
       "description": "导入模型源码",
       "path": "/import_source",
       "method": "POST",
-      "process": "scripts.system.model.ImportModelSource",
+      "process": "scripts.system.model.ImportModelFromSource",
       "in": [
         ":payload"
       ],
