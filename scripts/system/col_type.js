@@ -166,7 +166,7 @@ function column2AmisTableViewColumn(column) {
     case "TEXT":
     case "MEDIUMTEXT":
     case "LONGTEXT":
-      newColumn.type = "textarea";
+      newColumn.type = "text";
       newColumn.searchable = true;
       newColumn.sortable = true;
       break;
@@ -309,14 +309,17 @@ function column2AmisTableViewColumn(column) {
       newColumn.toggled = false; //如果内容很多，显示会占用太多的空间
       break;
     case "CODE":
-      newColumn.type = "code";
-      newColumn.language = column.language || "html";
+      newColumn.type = "text";
+      break;
     case "URL":
-      newColumn.type = "href";
+      newColumn.type = "link";
+      break;
     case "PHONE":
       newColumn.type = "text";
+      break;
     case "EMAIL":
       newColumn.type = "text";
+      break;
     default:
       break;
   }
@@ -383,7 +386,8 @@ function column2AmisFormViewColumn(column) {
     case "TEXT":
     case "MEDIUMTEXT":
     case "LONGTEXT":
-      newColumn.type = "static-textarea";
+      newColumn.type = "textarea";
+      newColumn.static = true;
       break;
     case "JSON":
     case "JSONB":
@@ -530,9 +534,9 @@ function column2AmisFormViewColumn(column) {
   if (column.crypt?.toUpperCase() === "PASSWORD") {
     newColumn.type = "static-password";
   }
-  if (name.includes("EMAIL")) {
-    newColumn.type = "static-text";
-  }
+  // if (name.includes("EMAIL")) {
+  //   newColumn.type = "static-text";
+  // }
   return newColumn;
 }
 
