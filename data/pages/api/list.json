@@ -69,6 +69,11 @@
             "type": "input-text"
           },
           {
+            "label": "分组",
+            "name": "group",
+            "type": "input-text"
+          },
+          {
             "label": "名称",
             "name": "name",
             "type": "input-text"
@@ -436,7 +441,6 @@
           },
           "type": "button",
           "align": "right",
-          "editorState": "default",
           "id": "u:f32e3ecbcb67",
           "label": "保存API列表到数据库",
           "level": "info"

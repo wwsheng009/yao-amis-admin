@@ -1,0 +1,168 @@
+{
+    "name": "系统信息",
+    "version": "1.0.0",
+    "description": "系统信息，需要使用插件才能使用，https://github.com/wwsheng009/yao-plugin-psutil",
+    "group": "",
+    "guard": "bearer-jwt",
+    "paths": [
+        {
+            // /api/app/v1/system/mem
+            "label": "系统内存信息",
+            "description": "系统内存信息",
+            "path": "/mem",
+            "method": "get",
+            "process": "plugins.psutil.mem",
+            "out": {
+                "status": 200,
+                "type": "application/json"
+            }
+        },
+        {
+            // /api/app/v1/system/mem2
+            "label": "系统内存信息",
+            "description": "系统内存信息",
+            "path": "/mem2",
+            "method": "get",
+            "process": "plugins.psutil.mem2",
+            "out": {
+                "status": 200,
+                "type": "application/json"
+            }
+        },
+        {
+            // /api/app/v1/system/disk
+            "label": "系统硬盘信息",
+            "description": "系统硬盘信息",
+            "path": "/disk",
+            "method": "get",
+            "process": "plugins.psutil.disk",
+            "in": [
+                "$query.all"
+            ],
+            "out": {
+                "status": 200,
+                "type": "application/json"
+            }
+        },
+        {
+            // /api/app/v1/system/cpu
+            "label": "系统信息-CPU",
+            "description": "系统信息-CPU",
+            "path": "/cpu",
+            "method": "get",
+            "process": "plugins.psutil.cpu",
+            "out": {
+                "status": 200,
+                "type": "application/json"
+            }
+        },
+        {
+            // /api/app/v1/system/docker
+            "label": "系统信息-docker",
+            "description": "系统信息-docker",
+            "path": "/docker",
+            "method": "get",
+            "process": "plugins.psutil.docker",
+            "out": {
+                "status": 200,
+                "type": "application/json"
+            }
+        },
+        {
+            // /api/app/v1/system/docker
+            "label": "系统信息-host",
+            "description": "系统信息-host",
+            "path": "/host",
+            "method": "get",
+            "process": "plugins.psutil.host",
+            "out": {
+                "status": 200,
+                "type": "application/json"
+            }
+        },
+        {
+            // /api/app/v1/system/docker
+            "label": "系统信息-load",
+            "description": "系统信息-load",
+            "path": "/load",
+            "method": "get",
+            "process": "plugins.psutil.load",
+            "out": {
+                "status": 200,
+                "type": "application/json"
+            }
+        },
+        {
+            // /api/app/v1/system/dashboard
+            "label": "系统信息-dashboard",
+            "description": "系统信息-dashboard",
+            "path": "/dashboard",
+            "method": "get",
+            "process": "plugins.psutil.dashboard",
+            "out": {
+                "status": 200,
+                "type": "application/json"
+            }
+        },
+        {
+            // /api/app/v1/system/net
+            "label": "系统信息-net",
+            "description": "系统信息-net",
+            "path": "/net",
+            "method": "get",
+            "process": "plugins.psutil.net",
+            "out": {
+                "status": 200,
+                "type": "application/json"
+            }
+        },
+        {
+            // /api/app/v1/system/net2
+            "label": "系统信息-net2",
+            "description": "系统信息-net2",
+            "path": "/net2",
+            "method": "get",
+            "process": "plugins.psutil.net2",
+            "out": {
+                "status": 200,
+                "type": "application/json"
+            }
+        },
+        {
+            // /api/app/v1/system/process
+            "label": "系统信息-process",
+            "description": "系统信息-process",
+            "path": "/process",
+            "method": "get",
+            "process": "plugins.psutil.process",
+            "out": {
+                "status": 200,
+                "type": "application/json"
+            }
+        },
+        {
+            // /api/app/v1/system/ssh_session
+            "label": "系统信息-ssh_session",
+            "description": "系统信息-ssh_session",
+            "path": "/ssh_session",
+            "method": "get",
+            "process": "plugins.psutil.ssh_session",
+            "out": {
+                "status": 200,
+                "type": "application/json"
+            }
+        },
+        {
+            // /api/app/v1/system/winservices
+            "label": "系统信息-winservices",
+            "description": "系统信息-winservices",
+            "path": "/winservices",
+            "method": "get",
+            "process": "plugins.psutil.winservices",
+            "out": {
+                "status": 200,
+                "type": "application/json"
+            }
+        }
+    ]
+}
