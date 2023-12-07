@@ -7,8 +7,8 @@ const {
 const { getFilterFormFields, excelMapping } = Require("amis.lib");
 
 // yao run scripts.amis.schema.generateEditFormFields admin.user
-function generateEditFormFields(tableName, columns) {
-  const fields = getFormFields(tableName, "update", columns);
+function generateEditFormFields(modelId, columns) {
+  const fields = getFormFields(modelId, "update", columns);
   const schema = {
     type: "form",
     name: "yao-form",
@@ -88,8 +88,8 @@ function formViewFieldsSchema(modelId, columns) {
 }
 
 // yao run scripts.amis.schema.generateViewFields admin.user
-function generateViewFields(tableName, columns) {
-  const fields = getModelFields(tableName, columns);
+function generateViewFields(modelId, columns) {
+  const fields = getModelFields(modelId, columns);
 
   const schema = {
     type: "page",
@@ -107,9 +107,9 @@ function generateViewFields(tableName, columns) {
   return schema;
 }
 
-function generateViewFieldsWithQuick(tableName, columns) {
-  const fields = getModelFieldsWithQuick(tableName, columns);
-  const fieldsForm = getFormFields(tableName, "create", columns);
+function generateViewFieldsWithQuick(modelId, columns) {
+  const fields = getModelFieldsWithQuick(modelId, columns);
+  const fieldsForm = getFormFields(modelId, "create", columns);
   const schema = {
     type: "page",
 

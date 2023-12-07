@@ -49,40 +49,14 @@
             {
               "name": "method",
               "required": true,
-              "options": [
-                {
-                  "label": "增删改查-所有",
-                  "value": "CRUDAllTemplate"
+              "source": {
+                "data": {
+                  "args": [],
+                  "method": "getCodeGenerationList"
                 },
-                {
-                  "label": "增删改查-查看",
-                  "value": "CRUDListTemplate"
-                },
-                {
-                  "label": "增删改查-创建",
-                  "value": "CRUDNewTemplate"
-                },
-                {
-                  "label": "列表视图-字段列表",
-                  "value": "getTableAmisViewFields"
-                },
-                {
-                  "label": "表单查看-字段列表",
-                  "value": "getTableAmisFormViewFields"
-                },
-                {
-                  "label": "表单修改-字段列表",
-                  "value": "getTableAmisFormFields"
-                },
-                {
-                  "label": "表单修改-带快速-字段列表",
-                  "value": "getTableAmisViewFieldsWithQuick"
-                },
-                {
-                  "label": "TypeScript类型定义",
-                  "value": "getTSType"
-                }
-              ],
+                "method": "post",
+                "url": "/api/__yao/app/service/schema"
+              },
               "type": "select",
               "label": "模板"
             }
