@@ -35,7 +35,7 @@ function loadfont() {
   //"https://github.com/FortAwesome/Font-Awesome/blob/master/metadata/icons.json";
 
   const source =
-    "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/metadata/icons.json";
+    "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/metadata/icons.json";
   const request = Process("http.get", source);
   const jsonData = Process("encoding.base64.Decode", request.data);
   const data = JSON.parse(jsonData);

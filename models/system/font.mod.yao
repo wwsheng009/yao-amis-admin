@@ -58,6 +58,7 @@
       "label": "标签文本", //url
       "name": "tag_text",
       "type": "string",
+      "length": 500,
       "comment": "标签",
       "nullable": true
     },
@@ -74,5 +75,5 @@
     "timestamps": true
   }
 }
-// yao migrate system.font --reset
+// yao migrate -n system.font  --reset
 // 
