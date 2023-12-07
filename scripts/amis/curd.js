@@ -17,14 +17,21 @@ function curdTemplate(modelId, columns) {
 
   let curdColumns = [...getModelFieldsWithQuick(modelId, columns)];
   let newForm = getFormFields(modelId, "create", columns, ["id"]);
+
+  const cols = curdColumns.filter((col) => col.quickEdit !== false);
+  const tplHtml = "Excel字段列表：" + cols.map((col) => col.name).join("|");
   //批量导入数据
   let batchNewForm = [
+    {
+      type: "tpl",
+      tpl: tplHtml,
+    },
     {
       name: "excel",
       type: "input-excel",
     },
     {
-      columns: [...curdColumns.filter((col) => col.quickEdit !== false)],
+      columns: cols,
       copyable: true,
       editable: true,
       name: "excel",
@@ -75,7 +82,9 @@ function curdTemplate(modelId, columns) {
         primaryField: "id",
         api: {
           method: "post",
-          url: `/api/v1/system/model/${modelId}` + `/search${withUrl ? "?" + withUrl : ""}`,
+          url:
+            `/api/v1/system/model/${modelId}` +
+            `/search${withUrl ? "?" + withUrl : ""}`,
           data: {
             "&": "$$",
           },

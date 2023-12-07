@@ -37,7 +37,7 @@
           },
           "source": {
             "method": "get",
-            "url": "/api/v1/system/model/app.cmd.host/select_options?__label=host"
+            "url": "/api/v1/system/model/app.cmd.host/select_options"
           },
           "type": "select",
           "id": "u:633e5563fc2b",

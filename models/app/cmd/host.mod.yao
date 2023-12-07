@@ -1,47 +1,38 @@
 {
-  "name": "执行命令的主机",
-  "table": {
-    "name": "app_cmd_host"
-  },
-  "option": {
-    "soft_deletes": false,
-    "timestamps": false,
-    "read_only": false
-  },
   "columns": [
     {
       "name": "id",
-      "label": "ID",
       "type": "id",
-      "comment": "ID"
+      "comment": "ID",
+      "label": "ID"
     },
     {
+      "type": "string",
+      "comment": "名称",
       "label": "名称",
-      "name": "name",
-      "type": "string",
-      "comment": "名称"
+      "name": "name"
     },
     {
-      "name": "host",
+      "comment": "主机",
       "label": "主机",
-      "type": "string",
-      "comment": "主机"
+      "name": "host",
+      "type": "string"
     },
     {
-      "comment": "端口",
+      "name": "port",
       "type": "integer",
+      "comment": "端口",
       "default": "22",
-      "label": "端口",
-      "name": "port"
+      "label": "端口"
     },
     {
+      "comment": "主机类型",
       "label": "主机类型",
       "name": "host_type",
       "option": [
         "windows",
         "linux"
       ],
-      "comment": "主机类型",
       "type": "enum"
     },
     {
@@ -52,19 +43,35 @@
       "comment": "是否远程"
     },
     {
-      "name": "username",
       "nullable": true,
       "type": "string",
       "comment": "用户名",
-      "label": "用户名"
+      "label": "用户名",
+      "name": "username"
     },
     {
+      "label": "密码",
+      "name": "password",
       "nullable": true,
       "type": "string",
-      "comment": "密码",
-      "label": "密码",
-      "name": "password"
+      "comment": "密码"
+    },
+    {
+      "comment": "密钥",
+      "label": "密钥",
+      "name": "ssh_key",
+      "nullable": true,
+      "type": "text"
     }
   ],
+  "name": "app.cmd.host",
+  "table": {
+    "name": "app_cmd_host"
+  },
+  "option": {
+    "soft_deletes": false,
+    "timestamps": false,
+    "read_only": false
+  },
   "relations": {}
 }

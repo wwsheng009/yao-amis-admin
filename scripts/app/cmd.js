@@ -8,7 +8,7 @@ function execute(payload) {
   const hostInfo = Process("models.app.cmd.host.find", hostId, {});
 
   // save the script
-  Process("models.app.cmd.script.save", payload);
+  // Process("models.app.cmd.script.save", payload);
   //   console.log("hostInfo", hostInfo);
 
   if (!hostInfo.is_remote) {
@@ -31,15 +31,33 @@ function execute(payload) {
   } else {
     let script = payload.source.replace(/^\s*\r/gm, "");
     script = script.replace(/\r/g, ";");
-    // console.log("script:", script);
-    const result = Process(
-      `plugins.command.remote`,
-      hostInfo.host,
-      hostInfo.port + "",
-      hostInfo.username,
-      hostInfo.password,
-      script
-    );
+
+    let result = null;
+
+    if (hostInfo.ssh_key) {
+      // 使用ssh_key使用也需要用户名
+      // console.log("hostInfo.username", hostInfo.username);
+      // console.log("hostInfo.ssh_key", hostInfo.ssh_key);
+      result = Process(
+        `plugins.command.remote_key`,
+        hostInfo.host,
+        hostInfo.port + "",
+        hostInfo.username,
+        hostInfo.ssh_key,
+        script
+      );
+    } else {
+      // console.log("script:", script);
+      result = Process(
+        `plugins.command.remote`,
+        hostInfo.host,
+        hostInfo.port + "",
+        hostInfo.username,
+        hostInfo.password,
+        script
+      );
+    }
+
     // console.log("remote excute result", result);
     write_log({
       host: hostInfo.host,
