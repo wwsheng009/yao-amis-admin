@@ -4,16 +4,16 @@
   },
   "columns": [
     {
+      "comment": "ID",
       "label": "ID",
       "name": "id",
-      "type": "id",
-      "comment": "ID"
+      "type": "id"
     },
     {
-      "name": "host",
       "type": "string",
       "comment": "主机",
-      "label": "主机"
+      "label": "主机",
+      "name": "host"
     },
     {
       "name": "port",
@@ -22,23 +22,23 @@
       "label": "端口"
     },
     {
+      "comment": "命令",
       "label": "命令",
       "name": "cmd",
       "nullable": true,
-      "type": "string",
-      "comment": "命令"
+      "type": "string"
     },
     {
-      "type": "text",
       "comment": "脚本",
+      "name": "script",
       "label": "脚本",
-      "name": "script"
+      "type": "longText"
     },
     {
-      "type": "text",
       "comment": "输出",
-      "label": "输出",
       "name": "output",
+      "label": "输出",
+      "type": "longText",
       "nullable": true
     },
     {
@@ -56,10 +56,11 @@
       "comment": "用户标识"
     },
     {
-      "type": "string",
-      "label": "用户名",
+      "name": "user_name",
       "nullable": true,
-      "name": "user_name"
+      "type": "string",
+      "comment": "用户名",
+      "label": "用户名"
     }
   ],
   "name": "命令执行日志",

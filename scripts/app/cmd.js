@@ -6,10 +6,15 @@ function execute(payload) {
   //   console.log("payload", payload);
   const hostId = payload.host;
   const hostInfo = Process("models.app.cmd.host.find", hostId, {});
+
+  // save the script
+  Process("models.app.cmd.script.save", payload);
   //   console.log("hostInfo", hostInfo);
 
   if (!hostInfo.is_remote) {
-    const result = Process(`plugins.command.${payload.cmd}`, payload.source);
+    let script = payload.source.replace(/^\s*\r/gm, "");
+    script = script.replace(/\r/g, ";");
+    const result = Process(`plugins.command.${payload.cmd}`, script);
     // console.log("result", result);
     write_log({
       host: hostInfo.host,
@@ -24,13 +29,16 @@ function execute(payload) {
     }
     return result;
   } else {
+    let script = payload.source.replace(/^\s*\r/gm, "");
+    script = script.replace(/\r/g, ";");
+    // console.log("script:", script);
     const result = Process(
       `plugins.command.remote`,
       hostInfo.host,
       hostInfo.port + "",
       hostInfo.username,
       hostInfo.password,
-      payload.source
+      script
     );
     // console.log("remote excute result", result);
     write_log({

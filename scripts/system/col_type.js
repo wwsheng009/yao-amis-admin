@@ -365,7 +365,7 @@ function column2AmisFormViewColumn(column) {
   // 只读字段的处理有两种方式，一种是使用static-类控件，
   // 另外一种是使用input-控件再加上static属性进行组合控制
   // 哪种更好需要测试后才知道
-  const name = column.name.toUpperCase();
+  // const name = column.name.toUpperCase();
   let newColumn = {};
   newColumn.name = column.name;
   newColumn.label = column.label;

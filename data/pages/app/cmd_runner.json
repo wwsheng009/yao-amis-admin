@@ -1,0 +1,148 @@
+{
+  "editorState": "default",
+  "id": "u:f30b51992cb8",
+  "pullRefresh": {
+    "disabled": true
+  },
+  "regions": ["body"],
+  "title": "cmd_runner",
+  "type": "page",
+  "asideResizor": false,
+  "body": [
+    {
+      "type": "form",
+      "actions": [],
+      "feat": "Insert",
+      "mode": "horizontal",
+      "name": "host",
+      "body": [
+        {
+          "name": "host",
+          "onEvent": {
+            "change": {
+              "actions": [
+                {
+                  "actionType": "setValue",
+                  "args": {
+                    "value": {
+                      "host": "${host}"
+                    }
+                  },
+                  "componentId": "u:a5a93db0af23",
+                  "ignoreError": false
+                }
+              ],
+              "weight": 0
+            }
+          },
+          "source": {
+            "method": "get",
+            "url": "/api/v1/system/model/app.cmd.host/select_options?__label=host"
+          },
+          "type": "select",
+          "id": "u:633e5563fc2b",
+          "label": "主机",
+          "multiple": false
+        },
+        {
+          "multiple": false,
+          "name": "script_id",
+          "onEvent": {
+            "change": {
+              "actions": [
+                {
+                  "args": {
+                    "value": {
+                      "id": "${script_id}"
+                    }
+                  },
+                  "componentId": "u:a5a93db0af23",
+                  "ignoreError": false,
+                  "actionType": "setValue"
+                },
+                {
+                  "ignoreError": false,
+                  "actionType": "reload",
+                  "componentId": "u:a5a93db0af23"
+                }
+              ],
+              "weight": 0
+            }
+          },
+          "source": {
+            "method": "get",
+            "url": "/api/v1/system/model/app.cmd.script/select_options"
+          },
+          "type": "select",
+          "id": "u:3bf8060a98c9",
+          "label": "脚本"
+        }
+      ],
+      "dsType": "api",
+      "id": "u:b2783d29850b",
+      "resetAfterSubmit": true,
+      "title": ""
+    },
+    {
+      "title": "",
+      "api": {
+        "adaptor": "",
+        "messages": {},
+        "method": "post",
+        "requestAdaptor": "",
+        "url": "/api/app/v1/cmd/execute"
+      },
+      "feat": "Edit",
+      "mode": "horizontal",
+      "initApi": {
+        "sendOn": "this.host != null",
+        "url": "/api/v1/system/model/app.cmd.script/find/${id}",
+        "adaptor": "",
+        "messages": {},
+        "method": "get",
+        "requestAdaptor": ""
+      },
+      "actions": [
+        {
+          "type": "submit",
+          "id": "u:3e33f6ad01de",
+          "label": "运行",
+          "primary": true
+        }
+      ],
+      "body": [
+        {
+          "id": "u:33d4fefcf4ae",
+          "label": "命令工具",
+          "name": "cmd",
+          "type": "input-text"
+        },
+        {
+          "type": "input-text",
+          "id": "u:69fbce840809",
+          "label": "脚本名称",
+          "name": "name"
+        },
+        {
+          "type": "editor",
+          "id": "u:c33b1cb3f344",
+          "label": "脚本源代码",
+          "language": "shell",
+          "name": "source"
+        },
+        {
+          "name": "output",
+          "type": "editor",
+          "id": "u:16561522caec",
+          "label": "结果",
+          "language": "shell"
+        }
+      ],
+      "dsType": "api",
+      "id": "u:a5a93db0af23",
+      "type": "form",
+      "name": "script",
+      "resetAfterSubmit": false
+    }
+  ]
+}
