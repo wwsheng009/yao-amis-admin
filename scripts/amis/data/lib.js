@@ -222,7 +222,6 @@ function queryToQueryParam(modelIn, querysIn, queryParams) {
       }
     }
   }
-  console.log("wheres", wheres);
   if (wheres.length) {
     queryParam["wheres"] = wheres;
   }
