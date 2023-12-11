@@ -958,12 +958,25 @@ function getModelById(modelId) {
  * @returns 返回模型的columns定义
  */
 function getModelColumnMap(modelId) {
-  const modelData = FindCachedModelById(modelId);
+  const modelDsl = FindCachedModelById(modelId);
   let columnMap = {};
-  if (modelData && modelData.columns) {
-    modelData.columns.forEach((col) => {
+  if (modelDsl && modelDsl.columns) {
+    modelDsl.columns.forEach((col) => {
       columnMap[col.name] = col;
     });
+  }
+  // fillup the miss col
+  if (modelDsl.option?.soft_deletes) {
+    columnMap["deleted_at"] = {
+      type: "datetime",
+    };
+  } else if (modelDsl.option?.timestamps) {
+    columnMap["updated_at"] = {
+      type: "datetime",
+    };
+    columnMap["created_at"] = {
+      type: "datetime",
+    };
   }
   return columnMap;
 }

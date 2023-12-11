@@ -1,5 +1,6 @@
 const { FindCachedModelById } = Require("system.model_lib");
 const { IsMysql } = Require("amis.lib_tool");
+const { isDateTimeType } = Require("system.col_type");
 
 // 推荐在循环对象属性的时候，使用for...in,
 // 在遍历数组的时候的时候使用for...of。
@@ -64,6 +65,19 @@ function queryToQueryParam(modelIn, querysIn, queryParams) {
   model.columns?.forEach((col) => {
     columnMap[col.name] = col;
   });
+  // fillup the miss col
+  if (model.option?.soft_deletes) {
+    columnMap["deleted_at"] = {
+      type: "datetime",
+    };
+  } else if (model.option?.timestamps) {
+    columnMap["updated_at"] = {
+      type: "datetime",
+    };
+    columnMap["created_at"] = {
+      type: "datetime",
+    };
+  }
 
   let select = [];
   if (querys.hasOwnProperty("select")) {
@@ -101,6 +115,12 @@ function queryToQueryParam(modelIn, querysIn, queryParams) {
     if (!columnMap.hasOwnProperty(key)) {
       continue;
     }
+    const column = columnMap[key];
+    if (column == null) {
+      continue;
+    }
+    const isDateTime = isDateTimeType(column);
+
     const conditions = querys[key]; //查询都是一个数组
 
     for (const condition of conditions) {
@@ -108,6 +128,29 @@ function queryToQueryParam(modelIn, querysIn, queryParams) {
         //前端无法清空搜索值
         continue;
       }
+      // 时间范围查询
+      if (isDateTime && condition.includes(",")) {
+        const conds = condition.split(",");
+        if (conds.length === 2) {
+          const low = conds[0];
+          const high = conds[1];
+          wheres.push({
+            column: key,
+            value: low,
+            method: "where",
+            op: "ge", //>=
+          });
+          wheres.push({
+            column: key,
+            value: high,
+            method: "where",
+            op: "le", //<=
+          });
+          whereCount += 2;
+          continue;
+        }
+      }
+
       let param = {};
       //*xx* 转换成数据库的%%
       if (typeof condition === "string" && condition.includes("*")) {
@@ -179,6 +222,7 @@ function queryToQueryParam(modelIn, querysIn, queryParams) {
       }
     }
   }
+  console.log("wheres", wheres);
   if (wheres.length) {
     queryParam["wheres"] = wheres;
   }
@@ -286,14 +330,14 @@ function updateInputData(model, Data) {
           } else {
             line[key] = IsMysql() ? 0 : false;
           }
-          break
+          break;
         case "STRING":
         case "TEXT":
         case "LONGTEXT":
           if (typeof field !== "string") {
-            line[key] = line[key] + ""
+            line[key] = line[key] + "";
           }
-          break
+          break;
         default:
           break;
       }
@@ -310,7 +354,7 @@ function updateInputData(model, Data) {
       ) {
         try {
           line[key] = JSON.parse(field);
-        } catch (error) { }
+        } catch (error) {}
       }
     }
 
@@ -401,7 +445,6 @@ function PaginateArrayWithQuery(data, querysIn, payload, searchFields) {
   let page = getArrayItem(querys, "page") || 1;
   let perPage = getArrayItem(querys, "perPage") || 10;
 
-
   // console.log(
   //   `querys:${querys},page:${page},perage:${perPage},orderBy${orderBy},orderDir:${orderDir}`
   // );
@@ -434,11 +477,9 @@ function FilterArrayWithQuery(list, querysIn, searchFields) {
   delete querys["orderDir"];
   delete querys["orderBy"];
 
-
-
   let keyword = getArrayItem(querys, "keywords");
 
-  const keywordQuery = {}
+  const keywordQuery = {};
   if (querys["keywords"] != null && !first["keywords"]) {
     // 只有keywords
     searchFields = searchFields || [];
@@ -464,12 +505,12 @@ function FilterArrayWithQuery(list, querysIn, searchFields) {
   for (const key in querys) {
     if (!Object.hasOwnProperty.call(first, key)) {
       delete querys[key];
-      continue
+      continue;
     }
     // 前端无法重置空值
     if (querys[key] + "" == "") {
       delete querys[key];
-      continue
+      continue;
     }
   }
 
@@ -502,15 +543,15 @@ function FilterArrayWithQuery(list, querysIn, searchFields) {
         return false;
       }
     });
-    return arr
+    return arr;
   }
   // console.log("querys", querys)
   if (Object.keys(querys).length > 0) {
-    list = filterArray(querys, true)
+    list = filterArray(querys, true);
   }
   // console.log("keywordQuery", keywordQuery)
   if (Object.keys(keywordQuery).length > 0) {
-    list = filterArray(keywordQuery, false)
+    list = filterArray(keywordQuery, false);
   }
   return list;
 }

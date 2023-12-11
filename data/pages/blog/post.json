@@ -419,14 +419,14 @@
 
         {
           "type": "input-text",
-          "name": "category__name",
-          "label": "CategoryName",
+          "name": "category",
+          "label": "分类",
           "clearable": true,
           "clearValueOnEmpty": true
         },
         {
           "type": "input-datetime-range",
-          "name": "created_time",
+          "name": "created_at",
           "label": "创建时间",
           "ranges": "today,yesterday,7daysago,prevweek,thismonth,prevmonth,prevquarter",
           "format": "YYYY-MM-DD HH:mm:ss"
@@ -437,39 +437,25 @@
           "label": "描述",
           "clearable": true,
           "clearValueOnEmpty": true
-        },
-        {
-          "type": "input-text",
-          "name": "category",
-          "label": "分类",
-          "clearable": true,
-          "clearValueOnEmpty": true
-        },
-        {
-          "type": "input-text",
-          "name": "category2",
-          "label": "分类名称",
-          "clearable": true,
-          "clearValueOnEmpty": true
         }
       ],
       "actions": [
         {
           "type": "button",
           "actionType": "clear-and-submit",
-          "label": "Clear",
+          "label": "清除",
           "level": "default"
         },
         {
           "type": "button",
           "actionType": "reset-and-submit",
-          "label": "Reset",
+          "label": "重置",
           "level": "default"
         },
         {
           "type": "button",
           "actionType": "submit",
-          "label": "Search",
+          "label": "搜索",
           "level": "primary"
         }
       ],

@@ -539,7 +539,20 @@ function column2AmisFormViewColumn(column) {
   // }
   return newColumn;
 }
-
+function isDateTimeType(column) {
+  const columnType = column.type?.toUpperCase();
+  switch (columnType) {
+    case "DATE":
+    case "DATETIME":
+    case "DATETIMETZ":
+    case "TIME":
+    case "TIMETZ":
+    case "TIMESTAMP":
+    case "TIMESTAMPTZ":
+      return true;
+  }
+  return false;
+}
 /**
  * 转换一个数据库表的列定义成amis form item定义，主要用于数据编辑
  * @param {object} column 数据库表列定义
@@ -786,4 +799,5 @@ module.exports = {
   column2AmisFormViewColumn,
   column2AmisTableViewColumn,
   column2AmisFormEditColumn,
+  isDateTimeType,
 };
