@@ -1,0 +1,21 @@
+{
+    "name": "系统信息",
+    "version": "1.0.0",
+    "description": "系统信息，需要使用插件才能使用，https://github.com/wwsheng009/yao-plugin-psutil",
+    "group": "",
+    "guard": "bearer-jwt",
+    "paths": [
+        {
+            // /api/app/v1/monitor/cpu_percentage
+            "label": "CPU-percentage",
+            "description": "CPU-percentage",
+            "path": "/cpu_percentage",
+            "method": "get",
+            "process": "scripts.app.monitor.getCpuInfo",
+            "out": {
+                "status": 200,
+                "type": "application/json"
+            }
+        }
+    ]
+}
