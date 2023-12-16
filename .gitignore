@@ -18,3 +18,5 @@ data/blogs/**/__*
 data/blogs/**/.tmp
 .env
 public/PPTX2HTML
+public/yao-builder
+app.yao

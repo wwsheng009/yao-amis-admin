@@ -1,0 +1,34 @@
+{
+  "name": "::Amis Yao Application",
+  "menu": {
+    "process": "scripts.system.menu.xgenMenu",
+    "args": [
+      "demo"
+    ]
+  },
+  "xgen": "1.0",
+  "short": "::Amis-Yao",
+  "description": "::Amis Yao Admin",
+  "version": "0.10.3",
+  "setup": "studio.setup.run",
+  "startup": "scripts.startup.run",
+  "adminRoot": "admin",
+  "token": {
+    "storage": "sessionStorage"
+  },
+  "moapi": {
+    "secret": "sk-",
+    "mirrors": [
+      "api.openai.com"
+    ]
+  },
+  "optional": {
+    "hideNotification": true,
+    "hideSetting": false,
+    "remoteCache": false,
+    "neo": {
+      "api": "/neo",
+      "studio": false
+    }
+  }
+}

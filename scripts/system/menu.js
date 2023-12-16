@@ -87,6 +87,15 @@ function xgenMenu() {
         id: 1,
         name: "AMIS管理",
       },
+      {
+        parent: null,
+        path: "/iframe?src=/yao/builder/?page=blog/website/index",
+        visible_menu: 0,
+        blocks: 0,
+        icon: "icon-activity",
+        id: 1,
+        name: "builder",
+      },
       ...nodes,
     ],
     setting: [

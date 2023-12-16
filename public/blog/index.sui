@@ -1,14 +1,18 @@
-<!DOCTYPE html><html lang="en" class="dark scroll-smooth" dir="ltr"><head>
-  <meta charset="UTF-8"/>
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth" dir="ltr">
+
+<head>
+  <meta charset="UTF-8" />
   <title>Home Page | {{ $global.title }}</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-  <meta name="description" content="Tailwind CSS Saas &amp; Software Landing Page Template"/>
-  <meta name="keywords" content="agency, application, business, clean, creative, cryptocurrency, it solutions, modern, multipurpose, nft marketplace, portfolio, saas, software, tailwind css"/>
-  <meta name="author" content="Shreethemes"/>
-  <meta name="website" content="https://shreethemes.in"/>
-  <meta name="email" content="support@shreethemes.in"/>
-  <meta name="version" content="2.0.0"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="Tailwind CSS Saas &amp; Software Landing Page Template" />
+  <meta name="keywords"
+    content="agency, application, business, clean, creative, cryptocurrency, it solutions, modern, multipurpose, nft marketplace, portfolio, saas, software, tailwind css" />
+  <meta name="author" content="Shreethemes" />
+  <meta name="website" content="https://shreethemes.in" />
+  <meta name="email" content="support@shreethemes.in" />
+  <meta name="version" content="2.0.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
   <!-- favicon -->
 
@@ -20,7 +24,7 @@
 
   <!-- <link href="/blog/assets/libs/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css" /> -->
 
-  <link rel="stylesheet" href="/blog/assets/css/tailwind.css"/>
+  <link rel="stylesheet" href="/blog/assets/css/tailwind.css" />
   <!-- <link rel="stylesheet" href="/blog/assets/libs/tiny-slider/tiny-slider.css" /> -->
 </head>
 
@@ -37,24 +41,20 @@
   <!-- Loader End -->
 
   <div class="container mx-auto p-4">
-    <page>
-  <section>
     <h1 class="text-3xl font-bold mb-4">Yao Blog Post List</h1>
     <ul class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       <!-- Replace the code below with your actual post data -->
       <li s:for="articles.data" s:for-item="article" s:for-index="idx">
         <div class="bg-white shadow-md rounded-lg p-4">
-          <img s:if="article.img != &#39;&#39;" src="{{ article.img }}" alt="Post Image" class="object-cover rounded-md"/>
+          <img s:if="article.img != &#39;&#39;" src="{{ article.img }}" alt="Post Image"
+            class="object-cover rounded-md" />
           <a href="{{ article.url }}" target="_blank" class="text-xl text-blue-500 font-semibold mb-2">{{ article.title
             }}</a>
           <p class="text-gray-600 mb-4">{{ article.description }}</p>
           <a href="{{ article.url }}" target="_blank" class="text-blue-500 font-semibold">Read More</a>
         </div>
-      </li>
-      <!-- Repeat the above code for each post -->
+      </li><!-- Repeat the above code for each post -->
     </ul>
-  </section><!-- JAVASCRIPTS -->
-</page>
   </div>
 
   <!-- JAVASCRIPTS -->
@@ -64,26 +64,26 @@
   <script src="/blog/assets/js/app.js"></script>
 
 
-<script>
-function Hello() {
-  console.log("Hello World!");
-}
+  <script>
+    function Hello() {
+      console.log("Hello World!");
+    }
 
-function Index() {
-  return {
-    title: "Customers",
-    rows: [
-      { name: "John", age: 30, city: "New York" },
-      { name: "Mary", age: 20, city: "Paris" },
-      { name: "Peter", age: 40, city: "London" },
-    ],
-  };
-}
+    function Index() {
+      return {
+        title: "Customers",
+        rows: [
+          { name: "John", age: 30, city: "New York" },
+          { name: "Mary", age: 20, city: "Paris" },
+          { name: "Peter", age: 40, city: "London" },
+        ],
+      };
+    }
 
-</script>
+  </script>
 
 
-<script name="data" type="json">
+  <script name="data" type="json">
 {
   "$articles": "scripts.blog.site.getPostList"
 }
@@ -92,11 +92,13 @@ function Index() {
 
 
 
-<script name="global" type="json">
+  <script name="global" type="json">
 {
   "title": "Blog Title"
 }
 
 </script>
 
-</body></html>
+</body>
+
+</html>
