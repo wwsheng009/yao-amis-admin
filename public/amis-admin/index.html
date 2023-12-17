@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="https://unpkg.com/amis@latest/sdk/iconfont.css" />
   <script src="https://unpkg.com/amis@latest/sdk/sdk.js"></script>
   <!-- <script src="https://unpkg.com/vue@2"></script> -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script src="history.js"></script>
   <style>
     html,
@@ -37,7 +38,8 @@
   </style>
   <script type="text/javascript" src="./scripts/login_logout.js"></script>
   <script type="text/javascript" src="./scripts/fetcher.js"></script>
-  <script type="text/javascript" src="./scripts/amis_rules.js"></script>
+  <script type="text/javascript" src="./scripts/custom_component.js"></script>
+  <script type="text/javascript" src="./scripts/amis_extension.js"></script>
 </head>
 
 <body>
@@ -151,6 +153,7 @@
             // 可以用来放一下全局配置等。比如 API_HOST, 这样页面配置里面可以通过 ${API_HOST} 来获取到。
             //API_HOST: ''
             STUDIO_HOST: 'http://localhost:5077',
+            SSE_ENDPOINT: '/api/chat-process'
           }
         },
         {

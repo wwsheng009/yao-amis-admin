@@ -1,3 +1,5 @@
+//amis 扩展
+
 let amisLib = amisRequire("amis");
 
 amisLib.addRule(
@@ -15,3 +17,18 @@ amisLib.addRule(
   // 出错时的报错信息
   "输入值不能等于id"
 );
+
+//注册自定义组件
+amisLib.Renderer({
+  test: /(^|\/)my-custom/,
+})(CustomComponent);
+
+//注册自定义组件
+amisLib.Renderer({
+  test: /(^|\/)my-vue-custom/,
+})(CustomVueComponent);
+
+//注册自定义组件
+amisLib.Renderer({
+  test: /(^|\/)my-sse-vue/,
+})(CustomSSEComponent);
