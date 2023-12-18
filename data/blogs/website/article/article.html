@@ -8,7 +8,7 @@
                 <p class="text-gray-600">Created By:{{post.user_id}}</p>
             </div>
             <p class="text-gray-600 mb-4">{{post.description}}</p>
-            <p class="mb-4" s:html=true>{{post.content}}</p>
+            <p class="mb-4" s:raw=true>{{post.content}}</p>
             <a href="/blog/index.sui" class="text-blue-500 font-semibold">Back to Post List</a>
         </div>
     </div>
