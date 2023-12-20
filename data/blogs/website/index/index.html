@@ -1,16 +1,16 @@
-  <section>
-    <h1 class="text-3xl font-bold mb-4">Yao Blog Post List</h1>
-    <ul class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      <!-- Replace the code below with your actual post data -->
-      <li s:for="articles.data" s:for-item="article" s:for-index="idx">
-        <div class="bg-white shadow-md rounded-lg p-4">
-          <img s:if="article.img != ''" src="{{ article.img }}" alt="Post Image" class="object-cover rounded-md">
-          <a href="{{ article.url }}" target="_blank" class="text-xl text-blue-500 font-semibold mb-2">{{ article.title
-            }}</a>
-          <p class="text-gray-600 mb-4">{{ article.description }}</p>
-          <a href="{{ article.url }}" target="_blank" class="text-blue-500 font-semibold">Read More</a>
-        </div>
-      </li>
-      <!-- Repeat the above code for each post -->
-    </ul>
-  </section><!-- JAVASCRIPTS -->
+<section aigc-enabled="true">
+  <h1 class="text-3xl font-bold mb-4">Yao Blog Post List</h1>
+  <ul class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <!-- Replace the code below with your actual post data -->
+    <li s:for="articles.data" s:for-item="article" s:for-index="idx">
+      <div class="bg-white shadow-md rounded-lg p-4">
+        <img s:if="article.img != ''" src="{{ article.img }}" alt="Post Image" class="object-cover rounded-md">
+        <a href="{{ article.url }}" target="_blank" class="text-xl text-blue-500 font-semibold mb-2">{{ article.title
+          }}</a>
+        <p class="text-gray-600 mb-4">{{ article.description }}</p>
+        <a href="{{ article.url }}" target="_blank" class="text-blue-500 font-semibold">Read More</a>
+      </div>
+    </li>
+    <!-- Repeat the above code for each post -->
+  </ul>
+</section><!-- JAVASCRIPTS -->

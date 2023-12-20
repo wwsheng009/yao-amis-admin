@@ -1,0 +1,75 @@
+{
+  "categories": [
+    {
+      "id": "Layout",
+      "label": "Layout",
+      "blocks": [{ "id": "ColumnsTwo", "width": 6, "keywords": ["test"] }]
+    },
+    {
+      "id": "Basic",
+      "label": "Basic",
+      "blocks": [
+        {
+          "id": "Hero",
+          "label": "Hero",
+          "width": 12,
+          "height": 100,
+          "keywords": ["test"]
+        },
+        {
+          "id": "Section",
+          "label": "Section",
+          "width": 6,
+          "keywords": ["test"]
+        },
+        { "id": "Table", "label": "Table", "width": 6, "keywords": ["test"] }
+      ]
+    }
+  ],
+  "locals": {
+    "zh-CN": {
+      "Layout": "布局",
+      "Columns Two": "两列",
+      "Basic": "基础",
+      "Hero": "首屏",
+      "Section": "区块",
+      "Table": "表格",
+      "test": "测试",
+      "Padding": "内边距",
+      "Padding left": "左内边距",
+      "Padding right": "右内边距",
+      "Padding top": "上内边距",
+      "Padding bottom": "下内边距"
+    },
+
+    "zh-TW": {
+      "Layout": "布局",
+      "Columns Two": "兩列",
+      "Basic": "基礎",
+      "Hero": "首屏",
+      "Section": "區塊",
+      "Table": "表格",
+      "test": "测试",
+      "Padding": "內邊距",
+      "Padding left": "左內邊距",
+      "Padding right": "右內邊距",
+      "Padding top": "上內邊距",
+      "Padding bottom": "下內邊距"
+    },
+
+    "zh-HK": {
+      "Layout": "布局",
+      "Columns Two": "兩列",
+      "Basic": "基礎",
+      "Hero": "首屏",
+      "Section": "區塊",
+      "Table": "表格",
+      "test": "测试",
+      "Padding": "內邊距",
+      "Padding left": "左內邊距",
+      "Padding right": "右內邊距",
+      "Padding top": "上內邊距",
+      "Padding bottom": "下內邊距"
+    }
+  }
+}

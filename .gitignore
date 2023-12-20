@@ -1,6 +1,4 @@
 logs
-# public/amis-editor
-public/amis-admin/*.tar.gz
 .trash
 *.db
 *.session
@@ -12,11 +10,8 @@ public/soy-admin
 public/amis-editor
 public/amis
 public/pdfjs
-public/builder
 data/templates
-data/blogs/**/__*
 data/blogs/**/.tmp
 .env
 public/PPTX2HTML
-public/yao-builder
 app.yao
