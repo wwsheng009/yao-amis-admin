@@ -1,5 +1,9 @@
 name: Build and push docker images
 on:
+  workflow_run:
+    workflows: ["Release"]
+    types:
+      - completed
   workflow_dispatch:
     inputs:
       tags:
@@ -8,7 +12,6 @@ on:
     branches: [main]
     paths:
       - "app.sample.json"
-      - ".github/workflows/docker.yml"
 env:
   IMAGE_ORG: wwsheng009
   IMAGE_NAME: ${{ github.event.repository.name }}
