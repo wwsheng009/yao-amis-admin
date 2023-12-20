@@ -15,6 +15,7 @@ RUN mkdir -p /data/app && curl -fsSL "https://github.com/wwsheng009/yao-amis-adm
     chmod +x /data/init.sh && \
     chmod +x /usr/local/bin/yao && \
     cp /data/docker.env /data/.env && \
+    cp /data/app.sample.yao /data/app.yao && \
     mkdir -p /data/db
 
 USER root
