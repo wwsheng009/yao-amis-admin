@@ -9,57 +9,43 @@
   <meta name="email" content="support@shreethemes.in"/>
   <meta name="version" content="2.0.0"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  
 
   <!-- favicon -->
 
   <!-- CSS -->
-  <!-- <link href="/blog/assets/libs/tiny-slider/tiny-slider.css" rel="stylesheet" /> -->
 
   <!-- Main Css -->
-  <!-- <link href="/blog/assets/libs/@iconscout/unicons/css/line.css" type="text/css" rel="stylesheet" /> -->
 
-  <!-- <link href="/blog/assets/libs/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css" /> -->
-
-  <link rel="stylesheet" href="/blog/assets/css/tailwind.css"/>
-  <!-- <link rel="stylesheet" href="/blog/assets/libs/tiny-slider/tiny-slider.css" /> -->
+  <link rel="stylesheet" href="/blog/assets/css/tailwind.min.css"/>
 </head>
 
 <body>
-  <!-- Loader Start -->
-  <!-- <div id="preloader">
-            <div id="status">
-                <div class="spinner">
-                    <div class="double-bounce1"></div>
-                    <div class="double-bounce2"></div>
-                </div>
-            </div>
-        </div> -->
-  <!-- Loader End -->
 
   <div class="container mx-auto p-4">
-      <section>
-    <h1 class="text-3xl font-bold mb-4">Yao Blog Post List</h1>
-    <ul class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      <!-- Replace the code below with your actual post data -->
-      <li s:for="articles.data" s:for-item="article" s:for-index="idx">
-        <div class="bg-white shadow-md rounded-lg p-4">
-          <img s:if="article.img != &#39;&#39;" src="{{ article.img }}" alt="Post Image" class="object-cover rounded-md"/>
-          <a href="{{ article.url }}" target="_blank" class="text-xl text-blue-500 font-semibold mb-2">{{ article.title
-            }}</a>
-          <p class="text-gray-600 mb-4">{{ article.description }}</p>
-          <a href="{{ article.url }}" target="_blank" class="text-blue-500 font-semibold">Read More</a>
-        </div>
-      </li>
-      <!-- Repeat the above code for each post -->
-    </ul>
-  </section><!-- JAVASCRIPTS -->
+    <section aigc-enabled="true">
+  <h1 class="text-3xl font-bold mb-4">Yao Blog Post List</h1>
+  <ul class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <!-- Replace the code below with your actual post data -->
+    <li s:for="articles.data" s:for-item="article" s:for-index="idx">
+      <div class="bg-white shadow-md rounded-lg p-4">
+        <img s:if="article.img != &#39;&#39;" src="{{ article.img }}" alt="Post Image" class="object-cover rounded-md"/>
+        <a href="{{ article.url }}" target="_blank" class="text-xl text-blue-500 font-semibold mb-2">{{ article.title
+          }}</a>
+        <p class="text-gray-600 mb-4">{{ article.description }}</p>
+        <a href="{{ article.url }}" target="_blank" class="text-blue-500 font-semibold">Read More</a>
+      </div>
+    </li>
+    <!-- Repeat the above code for each post -->
+  </ul>
+</section><!-- JAVASCRIPTS -->
   </div>
 
   <!-- JAVASCRIPTS -->
-  <!-- <script src="/blog/assets/libs/tiny-slider/min/tiny-slider.js"></script>   
-  <script src="/blog/assets/libs/feather-icons/feather.min.js"></script>
-  <script src="/blog/assets/js/plugins.init.js"></script>-->
-  <script src="/blog/assets/js/app.js"></script>
+
 
 
 <script>
