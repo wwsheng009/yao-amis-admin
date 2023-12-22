@@ -8,9 +8,9 @@ WORKDIR /data
 #COPY yao /usr/local/bin/yao cp /data/docker.env /data/.env && \
 #RUN apk add git
 RUN addgroup -S -g 1000 yao && adduser -S -G yao -u 999 yao
-RUN mkdir -p /data/app && curl -fsSL "https://github.com/wwsheng009/yao-amis-admin/releases/download/yao-amis-admin-${VERSION}/yao-amis-admin-${VERSION}.zip" > /data/app/latest.zip && \
-    unzip /data/app/latest.zip && rm /data/app/latest.zip && \
-    rm -rf /data/app/.git && \
+RUN mkdir -p /data && curl -fsSL "https://github.com/wwsheng009/yao-amis-admin/releases/download/yao-amis-admin-${VERSION}/yao-amis-admin-${VERSION}.zip" > /data/latest.zip && \
+    unzip /data/latest.zip && rm /data/latest.zip && \
+    rm -rf /data/.git && \
     chown -R yao:yao /data && \
     chmod +x /data/init.sh && \
     chmod +x /usr/local/bin/yao && \
@@ -18,16 +18,16 @@ RUN mkdir -p /data/app && curl -fsSL "https://github.com/wwsheng009/yao-amis-adm
     cp /data/app.sample.yao /data/app.yao && \
     mkdir -p /data/db
 
-RUN mkdir -p /data/app/public/amis-editor && \
-    curl -fsSL "https://github.com/wwsheng009/amis-editor-yao/releases/download/1.0.0/amis-editor-1.0.0.zip" > /data/app/public/amis-editor/latest.zip && \
-    unzip /data/app/public/amis-editor/latest.zip && \
-    rm /data/app/public/amis-editor/latest.zip
+RUN mkdir -p data/public/amis-editor && \
+    curl -fsSL "https://github.com/wwsheng009/amis-editor-yao/releases/download/1.0.0/amis-editor-1.0.0.zip" > data/public/amis-editor/latest.zip && \
+    unzip data/public/amis-editor/latest.zip -d data/public/amis-editor/ && \
+    rm data/public/amis-editor/latest.zip
 
-RUN mkdir -p /data/app/public/soy-admin && \
-    curl -fsSL "https://github.com/wwsheng009/soybean-admin-amis-yao/releases/download/0.10.4/soy-yao-admin-0.10.4.zip" > /data/app/public/soy-admin/latest.zip && \
-    unzip /data/app/public/soy-admin/latest.zip && \
-    rm /data/app/public/soy-admin/latest.zip
-
+RUN mkdir -p data/public/soy-admin && \
+    curl -fsSL "https://github.com/wwsheng009/soybean-admin-amis-yao/releases/download/0.10.4/soy-yao-admin-0.10.4.zip" > data/public/soy-admin/latest.zip && \
+    unzip data/public/soy-admin/latest.zip -d data/public/soy-admin/ && \
+    rm data/public/soy-admin/latest.zip
+    
 USER root
 VOLUME [ "/data" ]
 WORKDIR /data
