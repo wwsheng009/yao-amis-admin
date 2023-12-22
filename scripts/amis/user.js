@@ -114,7 +114,7 @@ function Info() {
   return {
     userId: user_id,
     userName: user.name,
-    userRole: "admin",
+    userRole: user.type || "user",
   };
 }
 
@@ -123,18 +123,12 @@ function userVerify(userName, password) {
   user = getUserInfo("email", userName);
 
   if (!user) {
-    return { message: "用户不存在", code: 500 }
+    return { message: "用户不存在", code: 500 };
   }
   try {
-    Process(
-      "utils.pwd.Verify",
-      password,
-      user.password
-    );
+    Process("utils.pwd.Verify", password, user.password);
   } catch (error) {
-    return { message: "密码不正确", code: 500 }
+    return { message: "密码不正确", code: 500 };
   }
-  return { message: "验证通过", code: 200, user_id: user.id }
+  return { message: "验证通过", code: 200, user_id: user.id };
 }
-
-
