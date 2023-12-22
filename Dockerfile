@@ -18,16 +18,16 @@ RUN mkdir -p /data && curl -fsSL "https://github.com/wwsheng009/yao-amis-admin/r
     cp /data/app.sample.yao /data/app.yao && \
     mkdir -p /data/db
 
-RUN mkdir -p data/public/amis-editor && \
-    curl -fsSL "https://github.com/wwsheng009/amis-editor-yao/releases/download/1.0.0/amis-editor-1.0.0.zip" > data/public/amis-editor/latest.zip && \
-    unzip data/public/amis-editor/latest.zip -d data/public/amis-editor/ && \
-    rm data/public/amis-editor/latest.zip
+RUN mkdir -p /data/public/amis-editor && \
+    curl -fsSL "https://github.com/wwsheng009/amis-editor-yao/releases/download/1.0.0/amis-editor-1.0.0.zip" > /data/public/amis-editor/latest.zip && \
+    unzip /data/public/amis-editor/latest.zip -d /data/public/amis-editor/ && \
+    rm /data/public/amis-editor/latest.zip
 
-RUN mkdir -p data/public/soy-admin && \
-    curl -fsSL "https://github.com/wwsheng009/soybean-admin-amis-yao/releases/download/0.10.4/soy-yao-admin-0.10.4.zip" > data/public/soy-admin/latest.zip && \
-    unzip data/public/soy-admin/latest.zip -d data/public/soy-admin/ && \
-    rm data/public/soy-admin/latest.zip
-    
+RUN mkdir -p /data/public/soy-admin && \
+    curl -fsSL "https://github.com/wwsheng009/soybean-admin-amis-yao/releases/download/0.10.4/soy-yao-admin-0.10.4.zip" > /data/public/soy-admin/latest.zip && \
+    unzip /data/public/soy-admin/latest.zip -d /data/public/soy-admin/ && \
+    rm /data/public/soy-admin/latest.zip
+
 USER root
 VOLUME [ "/data" ]
 WORKDIR /data
