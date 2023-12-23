@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*Your Custom CSS Goes here*/
+
+h1 {
+    @apply text-4xl tracking-tighter mb-3 text-center lg:text-7xl;
+}
+
+h3 {
+    @apply text-2xl font-bold mb-3;
+}
+
+/* Syntax Highlighting*/
+
+body :not(pre)>code[class*="language-"],
+body pre[class*="language-"] {
+    @apply bg-gray-800;
+}
+
+.navbar-toggle {
+    @apply ml-auto block lg:hidden px-2 focus:outline-none
+}
+
+.navbar-toggle.open {
+    @apply transition transform
+}
+
+.nav-menu {
+    @apply w-full flex-grow lg:flex lg:items-center lg:w-auto text-center hidden
+}
+
+.nav-menu.open {
+    @apply block
+}
+
+.logo_wrap {
+    border-radius: 12px;
+}
+
+.logo_wrap .logo {
+    max-width: 30px
+}

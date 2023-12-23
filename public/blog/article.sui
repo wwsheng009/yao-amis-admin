@@ -20,7 +20,7 @@
 
   <!-- Main Css -->
 
-  <link rel="stylesheet" href="/blog/assets/css/tailwind.min.css"/>
+  <link rel="stylesheet" href="\blog\assets/css/tailwind.min.css"/>
 </head>
 
 <body>

@@ -1,0 +1,22 @@
+{
+  "name": "yao_website",
+  "version": "1.0.0",
+  "description": "yao website template ",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "yao",
+    "blog",
+    "tailwindcss"
+  ],
+  "author": "vincentwwsheng@gmail.com",
+  "license": "MIT",
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  }
+}

@@ -1,0 +1,24 @@
+<div class="container mx-auto lg:h-screen flex flex-col justify-center items-center">
+
+
+    <h1>
+        欢迎来到
+        <strong class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
+            {{title}}
+        </strong>
+    </h1>
+
+    <p>
+        Yao Amis-admin，强大灵活的数据管理平台
+    </p>
+
+    <div s:if="quicklinks.links != null"
+        class="w-full max-w-2xl grid grid-cols-1 lg:grid-cols-2 gap-4 my-8 px-4 lg:mx-0">
+        <a s:for="quicklinks.links" s:for-item="item" s:for-index="idx" href="{{item.url}}" target="{{item.target}}"
+            class="p-5 border rounded border-gray-200 hover:border-purple-400">
+            <h3>{{item.title}}
+                →</h3>
+            <p>{{item.desc}}</p>
+        </a>
+    </div>
+</div>

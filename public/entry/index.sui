@@ -1,0 +1,169 @@
+<!DOCTYPE html><html lang="en" class="dark scroll-smooth" dir="ltr"><head>
+  <meta charset="UTF-8"/>
+  <title>
+    Yao Bench
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <meta name="description" content="Tailwind CSS Saas &amp; Software Landing Page Template"/>
+  <meta name="keywords" content="yao, saas, software, tailwind css"/>
+  <meta name="author" content="Shreethemes"/>
+  <meta name="website" content="https://shreethemes.in"/>
+  <meta name="email" content="support@shreethemes.in"/>
+  <meta name="version" content="2.0.0"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  
+
+  <!-- favicon -->
+
+  <!-- CSS -->
+
+  <!-- Main Css -->
+
+  <link rel="stylesheet" href="\entry\assets/css/out.css"/>
+</head>
+
+<body>
+  
+
+<div class="{{ path == &#39;/runtime/index&#39; ? &#39;lg:fixed&#39; :&#39;&#39; }} w-full" s:ns="__page_navbar_0" s:ready="__page_navbar_0()">
+    <nav class="flex items-center justify-center lg:justify-between flex-wrap p-6 lg:px-0 container mx-auto">
+        <!--Logo etc-->
+        <div class="flex items-center">
+            <div class="logo_wrap absolute flex justify_center align_center bg_white"><img class="logo" src="/api/__yao/app/icons/app.png" alt="logo"/></div>
+        </div>
+
+        <!--Toggle button (hidden on large screens)-->
+        <button id="isToggle" onclick="toggleMenu()" type="button" class="navbar-toggle" aria-label="Menu">
+            <svg class="h-6 w-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path id="icon-hide" class="hidden" fill-rule="evenodd" clip-rule="evenodd" d="M18.278 16.864a1 1 0 0 1-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 0 1-1.414-1.414l4.828-4.829-4.828-4.828a1 1 0 0 1 1.414-1.414l4.829 4.828 4.828-4.828a1 1 0 1 1 1.414 1.414l-4.828 4.829 4.828 4.828z"></path>
+                <path id="icon-show" class="" fill-rule="evenodd" d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"></path>
+            </svg>
+        </button>
+
+        <!--Menu-->
+        <div id="nav-menu" class="nav-menu hidden" x-show.transition="true">
+
+            <ul s:if="navigation.items != null" class="pt-6 lg:pt-0 list-reset lg:flex justify-end flex-1 items-center">
+                <li s:for="navigation.items" s:for-item="item" s:for-index="idx" class="nav__item mr-3">
+                    <a onclick="showMenu(false)" class="text-ml inline-block text-gray-500 no-underline hover:text-indigo-500 py-2 px-4" href="{{ item.url }}">{{ item.text }}</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+
+
+
+<div class="container mx-auto lg:h-screen flex flex-col justify-center items-center" s:ns="__page_content_1" s:ready="__page_content_1()">
+
+
+    <h1>
+        欢迎来到
+        <strong class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
+            {{title}}
+        </strong>
+    </h1>
+
+    <p>
+        Yao Amis-admin，强大灵活的数据管理平台
+    </p>
+
+    <div s:if="quicklinks.links != null" class="w-full max-w-2xl grid grid-cols-1 lg:grid-cols-2 gap-4 my-8 px-4 lg:mx-0">
+        <a s:for="quicklinks.links" s:for-item="item" s:for-index="idx" href="{{item.url}}" target="{{item.target}}" class="p-5 border rounded border-gray-200 hover:border-purple-400">
+            <h3>{{item.title}}
+                →</h3>
+            <p>{{item.desc}}</p>
+        </a>
+    </div>
+</div>
+
+
+
+
+<footer class="{{ path == &#39;/runtime/index&#39; ? &#39;lg:fixed&#39; :&#39;&#39; }} bottom-0 text-center w-full py-4" s:ns="__page_footer_2" s:ready="__page_footer_2()">
+    <small class="text-gray-500">Copyright ©
+        {{settings.name}}
+        2023. Made with ❤ by
+        <a href="{{settings.url}}" target="_blank" class="underline">{{settings.author}}</a>
+        •
+        <a href="https://github.com/wwsheng009/yao-amis-admin" class="underline" target="_blank" rel="noopener">View on
+            Github</a>
+    </small>
+</footer>
+
+
+  <!-- JAVASCRIPTS -->
+  <script src="\entry\assets/js/app.js"></script>
+
+
+
+
+<script name="data" type="json">
+{
+  "path": "$url.path",
+  "settings": {
+    "name": "Yao amis admin",
+    "url": "https://www.baidu.com",
+    "author": "wwsheng009"
+  },
+  "title": "Yao-Amis-Admin",
+  "navigation": {
+    "items": [
+      {
+        "text": "Soy Admin",
+        "url": "/soy-admin"
+      },
+      {
+        "text": "Amis admin",
+        "url": "/amis-admin"
+      },
+      {
+        "text": "Amis editor",
+        "url": "/amis-editor"
+      },
+      {
+        "text": "Xgen admin",
+        "url": "/admin/login/admin"
+      }
+    ]
+  },
+  "quicklinks": {
+    "links": [
+      {
+        "title": "Amis-Admin",
+        "url": "/amis-admin",
+        "desc": "使用Amis作为前端构建的管理后台",
+        "target": "_self"
+      },
+      {
+        "title": "Soy-Admin",
+        "url": "/soy-admin",
+        "desc": "使用Soybean框架作为前端构建的管理后台",
+        "target": "_self"
+      },
+      {
+        "title": "Xgen admin",
+        "url": "/admin/login/admin",
+        "desc": "Yao 内置管理端",
+        "target": "_self"
+      },
+      {
+        "title": "Amis-Editor",
+        "url": "/amis-editor",
+        "desc": "Amis页面编辑器",
+        "target": "_self"
+      },
+      {
+        "title": "Docs",
+        "url": "https://wwsheng009.github.io/yao-docs",
+        "desc": "项目使用文档",
+        "target": "_blank"
+      }
+    ]
+  }
+}
+
+</script>
+
+</body></html>

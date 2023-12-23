@@ -3,7 +3,7 @@
   "storage": {
     "driver": "local",
     "option": {
-      "root": "/blogs"
+      "root": "/suis/blog"
     }
   },
   "public": {

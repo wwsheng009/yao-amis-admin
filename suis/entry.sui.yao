@@ -1,0 +1,15 @@
+{
+    "name": "entry",
+    "storage": {
+        "driver": "local", //存储方式
+        "option": {
+            "root": "/suis/entry" //模板位置
+        }
+    },
+    "public": {
+        "root": "/entry", //访问路由
+        "remote": "/",
+        "index": "/index", //前端访问入口地址
+        "matcher": ""
+    }
+}
