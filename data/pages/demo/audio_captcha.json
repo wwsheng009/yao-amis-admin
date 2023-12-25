@@ -207,7 +207,6 @@
                   },
                   "body": [
                     {
-                      "value": "http://www.baidu.com/",
                       "body": "注册新账号",
                       "className": "",
                       "href": "/amis-admin/register.html",
