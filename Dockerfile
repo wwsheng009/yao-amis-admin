@@ -1,9 +1,10 @@
 #docker build --platform linux/amd64 --tag demo-project .
 #docker run -d --restart unless-stopped --name demo-project -p 5099:5099 demo-project
-ARG VERSION
+
 ARG ARCH
 FROM wwsheng009/yao-${ARCH}:latest
 
+ARG VERSION
 WORKDIR /data
 
 #COPY yao /usr/local/bin/yao cp /data/docker.env /data/.env && \
