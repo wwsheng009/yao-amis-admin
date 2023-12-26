@@ -10,7 +10,7 @@
       "path": "/find",
       "method": "GET",
       "guard": "bearer-jwt",
-      "process": "scripts.system.dept.GetDeptNodes",
+      "process": "scripts.admin.dept.GetDeptNodes",
       "in": [
         ":query"
       ],
@@ -23,7 +23,7 @@
       "path": "/add",
       "method": "POST",
       "guard": "bearer-jwt",
-      "process": "scripts.system.dept.CreateDeptNode",
+      "process": "scripts.admin.dept.CreateDeptNode",
       "in": [
         ":payload"
       ],
@@ -36,7 +36,7 @@
       "path": "/edit/:id",
       "method": "POST",
       "guard": "bearer-jwt",
-      "process": "scripts.system.dept.UpdateDeptNode",
+      "process": "scripts.admin.dept.UpdateDeptNode",
       "in": [
         "$param.id",
         ":payload"
@@ -50,7 +50,7 @@
       "path": "/delete/:id",
       "method": "DELETE",
       "guard": "bearer-jwt",
-      "process": "scripts.system.dept.DeleteDeptNode",
+      "process": "scripts.admin.dept.DeleteDeptNode",
       "in": [
         "$param.id"
       ],

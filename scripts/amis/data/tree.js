@@ -83,8 +83,7 @@ function UpdateNode(model, id, newNode) {
   // console.log("newNode", newNode);
   return Process(`models.${model}.save`, newNode);
 }
-//
-// 删除根节点 yao run scripts.system.dept.DeleteDeptNode 3
+
 // 删除节点与及所有的子节点
 function DeleteNode(model, ids) {
   // 需要处理子节点
@@ -104,7 +103,6 @@ function DeleteNode(model, ids) {
   });
 }
 
-// yao run scripts.system.dept.getItem 1
 // 根据特定的id获取树节点以及所有的子节点
 function GetNodeItems(model, id) {
   let item = Process(`models.${model}.find`, id, null);
@@ -121,7 +119,6 @@ function GetNodeItems(model, id) {
 
 /**
  * 读取一个所有根节点
- * yao run scripts.system.dept.getSubNodeItems 1
  * @param {integer} parentId,父节点部门id
  * @returns 所有的部门节点列表
  */
@@ -233,12 +230,12 @@ function flatAndRemoveDuplicate(array) {
 
 /**
  * traverse a tree object,combine the key2 of the object to key1 of the object
- * 
- * @param {object} data 
- * @param {string} key 
- * @param {string} key2 
+ *
+ * @param {object} data
+ * @param {string} key
+ * @param {string} key2
  * @param {string} defaultKey the key2 may be empty,use the default key instead
- * @returns  
+ * @returns
  */
 function collectAndCombineData(data, key, key2, defaultKey) {
   if (data == null) {
@@ -249,15 +246,19 @@ function collectAndCombineData(data, key, key2, defaultKey) {
   function traverse(obj) {
     if (Array.isArray(obj)) {
       obj.forEach((l) => traverse(l));
-      return
+      return;
     }
 
-    if (obj.hasOwnProperty(key) && Array.isArray(obj[key]) && obj[key].length > 0) {
+    if (
+      obj.hasOwnProperty(key) &&
+      Array.isArray(obj[key]) &&
+      obj[key].length > 0
+    ) {
       for (const o of obj[key]) {
         // 使用数组中的行项目作key
         let old = collectedData[o];
 
-        let arrOld = []
+        let arrOld = [];
         if (old != null) {
           arrOld = Array.isArray(old) ? old : [old];
         }
@@ -266,7 +267,7 @@ function collectAndCombineData(data, key, key2, defaultKey) {
       }
     } else if (defaultKey) {
       let old = collectedData[defaultKey];
-      let arrOld = []
+      let arrOld = [];
       if (old != null) {
         arrOld = Array.isArray(old) ? old : [old];
       }
@@ -280,7 +281,6 @@ function collectAndCombineData(data, key, key2, defaultKey) {
         traverse(iterator);
       }
     }
-
   }
 
   traverse(data);
@@ -297,5 +297,5 @@ module.exports = {
   filterTreeDataById,
   collectTreeFields,
   flatAndRemoveDuplicate,
-  collectAndCombineData
+  collectAndCombineData,
 };

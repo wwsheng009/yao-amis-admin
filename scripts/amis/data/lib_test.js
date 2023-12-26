@@ -269,9 +269,9 @@ function test1() {
     {
       cached: true,
       created: true,
-      label: "system_dept",
-      model: "system.dept",
-      name: "system_dept",
+      label: "admin_dept",
+      model: "admin.dept",
+      name: "admin_dept",
       saved: false,
     },
     {

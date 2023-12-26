@@ -766,7 +766,6 @@ const models = [
               values: null,
             },
           },
-
         ],
       },
       {
@@ -1681,7 +1680,7 @@ const models = [
         name: "dept.mod.json",
         data: {
           DSL: "models/system/dept.mod.json",
-          ID: "system.dept",
+          ID: "admin.dept",
           columns: [
             {
               label: "编号",
@@ -1731,7 +1730,7 @@ const models = [
           },
           relations: null,
           table: {
-            name: "system_dept",
+            name: "admin_dept",
             collation: "",
             charset: "",
             primarykeys: null,

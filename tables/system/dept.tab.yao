@@ -1,4 +1,8 @@
 {
   "name": "部门管理",
-  "action": { "bind": { "model": "system.dept" } }
+  "action": {
+    "bind": {
+      "model": "admin.dept"
+    }
+  }
 }
