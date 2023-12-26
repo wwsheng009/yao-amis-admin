@@ -1,10 +1,11 @@
-const { filterTreeDataById, collectTreeFields, collectAndCombineData } = Require("amis.data.tree");
+const { filterTreeDataById, collectTreeFields, collectAndCombineData } =
+  Require("amis.data.tree");
 
 /**
  * 获取用户的权限信息
  * yao run scripts.auth.lib.getUserPermission '5'
  * @param {number} userId user id
- * @returns 
+ * @returns
  */
 function getUserPermission(userId) {
   let user_id = userId;
@@ -32,7 +33,7 @@ function getUserPermission(userId) {
     user.role = [user.role];
   }
   const rolePemissions = user.role.reduce((acc, item) => {
-    const role = Process("models.system.auth.role.find", item, {});
+    const role = Process("models.admin.auth.role.find", item, {});
     let perms = role.permission;
     if (role && role.status && perms != null) {
       perms = typeof perms === "string" ? perms.split(",") : perms;
@@ -48,7 +49,7 @@ function getUserPermission(userId) {
     return;
     // throw new Exception(`角色未配置权限`, 500);
   }
-  const permissions = Process("models.system.auth.permission.get", {});
+  const permissions = Process("models.admin.auth.permission.get", {});
   if (permissions.length == 0) {
     return;
     // throw new Exception(`系统未配置权限`, 500);
@@ -84,32 +85,40 @@ function getUserAuthApiCache() {
   if (authObjects == null || !authObjects) {
     authObjects = getUserAuthApi();
   }
-  return authObjects.api
-
+  return authObjects.api;
 }
 
 // yao run scripts.auth.lib.getUserAuthApi
 function getUserAuthApi() {
   const permissions = getUserPermission();
-  const api_auth = {}
+  const api_auth = {};
   api_auth.api_list = collectTreeFields(permissions, "http_path");
   //map objects => {'API1':['GET','POST']}
-  api_auth.api_with_method = collectAndCombineData(permissions, "http_path", "http_method")
+  api_auth.api_with_method = collectAndCombineData(
+    permissions,
+    "http_path",
+    "http_method"
+  );
   //map objects = > {'GET':['API1','API2']}
-  api_auth.method_with_api = collectAndCombineData(permissions, "http_method", "http_path", 'ANY')
-  fillApiOpertion(api_auth.method_with_api)
+  api_auth.method_with_api = collectAndCombineData(
+    permissions,
+    "http_method",
+    "http_path",
+    "ANY"
+  );
+  fillApiOpertion(api_auth.method_with_api);
   return api_auth;
 }
 
 function fillApiOpertion(methdMap) {
-  methdMap["GET"] ||= []
-  methdMap["POST"] ||= []
-  methdMap["PUT"] ||= []
-  methdMap["DELETE"] ||= []
-  methdMap["PATCH"] ||= []
-  methdMap["OPTIONS"] ||= []
-  methdMap["HEAD"] ||= []
-  methdMap["ANY"] ||= []
+  methdMap["GET"] ||= [];
+  methdMap["POST"] ||= [];
+  methdMap["PUT"] ||= [];
+  methdMap["DELETE"] ||= [];
+  methdMap["PATCH"] ||= [];
+  methdMap["OPTIONS"] ||= [];
+  methdMap["HEAD"] ||= [];
+  methdMap["ANY"] ||= [];
 }
 
 function getUserAuthModelCache() {
@@ -117,8 +126,7 @@ function getUserAuthModelCache() {
   if (authObjects == null || !authObjects) {
     return getUserAuthModel();
   }
-  return authObjects.model
-
+  return authObjects.model;
 }
 function getUserAuthModel() {
   const permissions = getUserPermission();
@@ -126,18 +134,27 @@ function getUserAuthModel() {
 
   model_auth.model_list = collectTreeFields(permissions, "models");
   //map objects => {'folder':['READ','UPDATE']}
-  model_auth.model_with_method = collectAndCombineData(permissions, "models", "model_method")
+  model_auth.model_with_method = collectAndCombineData(
+    permissions,
+    "models",
+    "model_method"
+  );
   //map objects = > {'READ':['fmod','folder1']}
-  model_auth.method_with_model = collectAndCombineData(permissions, "model_method", "models", 'ANY')
-  fillModelOpertion(model_auth.method_with_model)
+  model_auth.method_with_model = collectAndCombineData(
+    permissions,
+    "model_method",
+    "models",
+    "ANY"
+  );
+  fillModelOpertion(model_auth.method_with_model);
   return model_auth;
 }
 function fillModelOpertion(methdMap) {
-  methdMap["ANY"] ||= []
-  methdMap["CREATE"] ||= []
-  methdMap["UPDATE"] ||= []
-  methdMap["DELETE"] ||= []
-  methdMap["READ"] ||= []
+  methdMap["ANY"] ||= [];
+  methdMap["CREATE"] ||= [];
+  methdMap["UPDATE"] ||= [];
+  methdMap["DELETE"] ||= [];
+  methdMap["READ"] ||= [];
 }
 /**
  * 是否超级用户
@@ -149,11 +166,11 @@ function isSuperUser() {
   if (user?.type === "super") {
     return true;
   }
-  return false
+  return false;
 }
 /**
  * 从缓存中读取用户的目录授权
- * @returns 
+ * @returns
  */
 function getUserAuthFolderCache() {
   // return getUserAuthFolder();
@@ -161,36 +178,45 @@ function getUserAuthFolderCache() {
   if (authObjects == null || !authObjects) {
     return getUserAuthFolder();
   }
-  return authObjects.folder
+  return authObjects.folder;
 }
 /**
  * 用户授权目录与操作
- * @returns 
+ * @returns
  */
 function getUserAuthFolder() {
   const permissions = getUserPermission();
-  const folder_auth = {}
+  const folder_auth = {};
   folder_auth.folder_list = collectTreeFields(permissions, "folders");
   //map objects => {'folder':['READ','UPDATE']}
-  folder_auth.folder_with_method = collectAndCombineData(permissions, "folders", "folder_method")
+  folder_auth.folder_with_method = collectAndCombineData(
+    permissions,
+    "folders",
+    "folder_method"
+  );
   //map objects = > {'READ':['folder','folder1']}
-  folder_auth.method_with_folder = collectAndCombineData(permissions, "folder_method", "folders", 'ANY')
-  fillFolderOpertion(folder_auth.method_with_folder)
+  folder_auth.method_with_folder = collectAndCombineData(
+    permissions,
+    "folder_method",
+    "folders",
+    "ANY"
+  );
+  fillFolderOpertion(folder_auth.method_with_folder);
 
   return folder_auth;
 }
 function fillFolderOpertion(methdMap) {
-  methdMap["ANY"] ||= []
-  methdMap["CREATE"] ||= []
-  methdMap["UPDATE"] ||= []
-  methdMap["DELETE"] ||= []
-  methdMap["READ"] ||= []
+  methdMap["ANY"] ||= [];
+  methdMap["CREATE"] ||= [];
+  methdMap["UPDATE"] ||= [];
+  methdMap["DELETE"] ||= [];
+  methdMap["READ"] ||= [];
 }
 /**
  * 根据用户ID获取用户的权限对象列表
  * 在用户登录时会把用户的权限对象列表加入缓存中。
  * @param {number} userId user id
- * @returns 
+ * @returns
  */
 function getUserAuthObjects(userId) {
   const permissions = getUserPermission(userId);
@@ -198,27 +224,54 @@ function getUserAuthObjects(userId) {
 
   model_auth.model_list = collectTreeFields(permissions, "models");
   //map objects => {'MODEL':['READ','UPDATE']}
-  model_auth.model_with_method = collectAndCombineData(permissions, "models", "model_method")
+  model_auth.model_with_method = collectAndCombineData(
+    permissions,
+    "models",
+    "model_method"
+  );
   //map objects = > {'READ':['MODEL1','MODEL2']}
-  model_auth.method_with_model = collectAndCombineData(permissions, "model_method", "models", 'ANY')
-  fillModelOpertion(model_auth.method_with_model)
+  model_auth.method_with_model = collectAndCombineData(
+    permissions,
+    "model_method",
+    "models",
+    "ANY"
+  );
+  fillModelOpertion(model_auth.method_with_model);
 
-  const api_auth = {}
+  const api_auth = {};
   api_auth.api_list = collectTreeFields(permissions, "http_path");
   //map objects => {'API1':['GET','POST']}
-  api_auth.api_with_method = collectAndCombineData(permissions, "http_path", "http_method")
+  api_auth.api_with_method = collectAndCombineData(
+    permissions,
+    "http_path",
+    "http_method"
+  );
   //map objects = > {'GET':['API1','API2']}
-  api_auth.method_with_api = collectAndCombineData(permissions, "http_method", "http_path", 'ANY')
-  fillApiOpertion(api_auth.method_with_api)
+  api_auth.method_with_api = collectAndCombineData(
+    permissions,
+    "http_method",
+    "http_path",
+    "ANY"
+  );
+  fillApiOpertion(api_auth.method_with_api);
 
-  const folder_auth = {}
+  const folder_auth = {};
   folder_auth.folder_list = collectTreeFields(permissions, "folders");
   //map objects => {'folder':['READ','UPDATE']}
-  folder_auth.folder_with_method = collectAndCombineData(permissions, "folders", "folder_method")
+  folder_auth.folder_with_method = collectAndCombineData(
+    permissions,
+    "folders",
+    "folder_method"
+  );
   //map objects = > {'READ':['folder','folder1']}
-  folder_auth.method_with_folder = collectAndCombineData(permissions, "folder_method", "folders", 'ANY')
+  folder_auth.method_with_folder = collectAndCombineData(
+    permissions,
+    "folder_method",
+    "folders",
+    "ANY"
+  );
 
-  fillFolderOpertion(folder_auth.method_with_folder)
+  fillFolderOpertion(folder_auth.method_with_folder);
 
   const menus = collectTreeFields(permissions, "menus");
 
@@ -234,5 +287,5 @@ module.exports = {
   getUserAuthFolderCache,
   isSuperUser,
   getUserAuthModelCache,
-  getUserAuthApiCache
+  getUserAuthApiCache,
 };

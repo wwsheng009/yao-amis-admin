@@ -1,9 +1,9 @@
-//yao migrate -n system.menu --reset
+//yao migrate -n admin.menu --reset
 //
 {
   "name": "菜单",
   "table": {
-    "name": "system_menu",
+    "name": "admin_menu",
     "comment": "菜单表",
     "engine": "InnoDB"
   },
@@ -169,7 +169,7 @@
   "relations": {
     "children": {
       "type": "hasMany",
-      "model": "system.menu",
+      "model": "admin.menu",
       "key": "id",
       "foreign": "parent",
       "query": {
@@ -184,4 +184,4 @@
     "soft_deletes": false
   }
 }
-// yao migrate -n system.menu --reset
+// yao migrate -n admin.menu --reset

@@ -1,5 +1,5 @@
 //系统角色
-//yao migrate -n system.auth.role --reset
+//yao migrate -n admin.auth.role --reset
 {
   "columns": [
     {
@@ -40,7 +40,7 @@
     "timestamps": true
   },
   "table": {
-    "name": "system_auth_role",
+    "name": "admin_auth_role",
     "comment": "角色"
   }
 }

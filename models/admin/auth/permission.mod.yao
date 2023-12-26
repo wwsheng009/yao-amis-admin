@@ -88,24 +88,17 @@
         "timestamps": true
     },
     "relations": {
-        "objects": {
-            "foreign": "id",
-            "key": "permission_id",
-            "model": "system.auth.object",
-            "name": "objects",
-            "type": "hasMany"
-        },
         "parent": {
             "foreign": "parent_id",
             "key": "id",
-            "model": "system.auth.permission",
+            "model": "admin.auth.permission",
             "name": "parent",
             "type": "hasOne"
         }
     },
     "table": {
         "comment": "权限",
-        "name": "system_auth_permission"
+        "name": "admin_auth_permission"
     }
 }
-//yao migrate -n system.auth.permission --reset
+//yao migrate -n admin.auth.permission --reset

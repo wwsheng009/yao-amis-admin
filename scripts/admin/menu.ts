@@ -93,9 +93,9 @@ function getSoySuperUserMenu() {
  */
 function getSoyRoutesFromDB() {
   // 优先从数据库读取菜单
-  let menus: system_menu[] = Process("models.system.menu.get", {});
+  let menus: admin_menu[] = Process("models.admin.menu.get", {});
 
-  let menus2: Route[] = menus.map((menu: system_menu) => {
+  let menus2: Route[] = menus.map((menu: admin_menu) => {
     let r: Route = {
       id: menu.id, //required
       parent: menu.parent, //required
@@ -459,7 +459,7 @@ function saveTreeMenusToDB(
       return;
     }
     if (deleteFlag) {
-      Process("models.system.menu.deletewhere", {
+      Process("models.admin.menu.deletewhere", {
         wheres: [
           {
             column: "name",
@@ -471,7 +471,7 @@ function saveTreeMenusToDB(
 
     route.meta = route.meta || {};
 
-    let menu: system_menu = {
+    let menu: admin_menu = {
       name: route.name,
       title: "",
       source: route.meta.source || source,
@@ -479,7 +479,7 @@ function saveTreeMenusToDB(
 
     // 根据路由的名称进行判断，如果已经存在，进行更新
     if (route.name) {
-      let [menudb] = Process("models.system.menu.get", {
+      let [menudb] = Process("models.admin.menu.get", {
         wheres: [
           {
             column: "name",
@@ -508,7 +508,7 @@ function saveTreeMenusToDB(
 
     menu.parent = parentId; //reset parent
 
-    let id = Process("models.system.menu.save", menu);
+    let id = Process("models.admin.menu.save", menu);
     // console.log("id==>", id, menu);
     if (Array.isArray(route.children)) {
       route.children.forEach((element) => {
@@ -525,11 +525,11 @@ function saveTreeMenusToDB(
  * @returns
  */
 function getAmisRoutesFromDB(): AmisAppPage[] {
-  let menus: system_menu[] = Process("models.system.menu.get", {
+  let menus: admin_menu[] = Process("models.admin.menu.get", {
     wheres: [{ column: "source", value: "amis" }],
   });
 
-  let menus2: AmisAppPage[] = menus.map((menu: system_menu) => {
+  let menus2: AmisAppPage[] = menus.map((menu: admin_menu) => {
     let route: AmisAppPage = {
       id: menu.id, //required
       parent: menu.parent, //required
@@ -779,11 +779,11 @@ interface RouteMeta {
 }
 
 /**
- * Model=> system.menu (菜单表)
+ * Model=> admin.menu (菜单表)
  *
- * Table=> system_menu (菜单表)
+ * Table=> admin_menu (菜单表)
  */
-interface system_menu {
+interface admin_menu {
   /**ID */
   id?: number;
   /**父级 */
@@ -827,6 +827,6 @@ interface system_menu {
   requires_auth?: boolean;
   /**来源 */
   source: string;
-  /** Relation: children=> system.menu */
-  children?: system_menu[];
+  /** Relation: children=> admin.menu */
+  children?: admin_menu[];
 }

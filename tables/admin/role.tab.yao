@@ -2,7 +2,7 @@
   "name": "系统菜单",
   "action": {
     "bind": {
-      "model": "system.auth.role"
+      "model": "admin.auth.role"
     }
   }
 }

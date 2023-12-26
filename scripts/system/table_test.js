@@ -1820,7 +1820,7 @@ const models = [
         name: "menu.mod.json",
         data: {
           DSL: "models/system/menu.mod.json",
-          ID: "system.menu",
+          ID: "admin.menu",
           columns: [
             {
               name: "id",
@@ -1959,7 +1959,7 @@ const models = [
             children: {
               type: "hasMany",
               key: "id",
-              model: "system.menu",
+              model: "admin.menu",
               foreign: "parent",
               query: {
                 select: [
@@ -1979,7 +1979,7 @@ const models = [
             },
           },
           table: {
-            name: "system_menu",
+            name: "admin_menu",
             comment: "菜单表",
             engine: "InnoDB",
             collation: "",
@@ -2039,7 +2039,7 @@ const models = [
         name: "role.mod.json",
         data: {
           DSL: "models/system/role.mod.json",
-          ID: "system.auth.role",
+          ID: "admin.auth.role",
           columns: [
             {
               label: "编号",

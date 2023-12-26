@@ -2,8 +2,8 @@
 
 /**
  * 读取并转换一个树结构模型
- * yao run scripts.amis.data.tree.GetNodes system.menu
- * yao run scripts.amis.data.tree.GetNodes system.menu '::{"__label":["title"]}'
+ * yao run scripts.amis.data.tree.GetNodes admin.menu
+ * yao run scripts.amis.data.tree.GetNodes admin.menu '::{"__label":["title"]}'
  * @param {string} model 模型名称
  * @returns
  */

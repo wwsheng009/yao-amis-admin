@@ -3,50 +3,50 @@ const { GetNodeItems, GetNodes, UpdateNode, DeleteNode, CreateNode } =
 
 // 菜单处理
 /**
- * yao run scripts.system.menu.GetMenuNodes
+ * yao run scripts.admin.menu_node.GetMenuNodes
  * @returns
  */
 function GetMenuNodes() {
-  return GetNodes("system.menu");
+  return GetNodes("admin.menu");
 }
 
 /**
  * amis input-tree增加一个节点
- * yao run scripts.system.menu.CreateMenuNode
+ * yao run scripts.admin.menu_node.CreateMenuNode
  * @param idx 增加的节点路径
  * @param parent 父节点
  * @param node 当前节点数据
  * @returns
  */
 function CreateMenuNode({ idx, parent, ...node }) {
-  return CreateNode("system.menu", { idx, parent, ...node });
+  return CreateNode("admin.menu", { idx, parent, ...node });
 }
 /**
  * 编辑更新一个菜单项
- * yao run scripts.system.menu.UpdateMenuNode
+ * yao run scripts.admin.menu_node.UpdateMenuNode
  * @param {integer} id 菜单节点ID
  * @param {*} menuNode 菜单节点，没有携带id信息
  * @returns
  */
 function UpdateMenuNode(id, menuNode) {
-  return UpdateNode("system.menu", id, menuNode);
+  return UpdateNode("admin.menu", id, menuNode);
 }
 //
-// 删除根节点 yao run scripts.system.menu.DeleteMenuNode 3
+// 删除根节点 yao run scripts.admin.menu_node.DeleteMenuNode 3
 // 删除节点与及所有的子节点
 function DeleteMenuNode(ids) {
-  return DeleteNode("system.menu", ids);
+  return DeleteNode("admin.menu", ids);
 }
 
-// yao run scripts.system.menu.GetMenuNodeItems 1
+// yao run scripts.admin.menu_node.GetMenuNodeItems 1
 // 根据特定的id获取菜单节点以及所有的子节点
 function GetMenuNodeItems(id) {
-  return GetNodeItems("system.menu", id);
+  return GetNodeItems("admin.menu", id);
 }
 
 /**
  * 生成xgen的菜单
- * yao run scripts.system.menu.xgenMenu
+ * yao run scripts.admin.menu_node.xgenMenu
  */
 function xgenMenu() {
   const tabs = Process("scripts.system.meta.getTableListFromApis");

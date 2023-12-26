@@ -12,7 +12,7 @@
       "path": "/find",
       "method": "GET",
       "guard": "bearer-jwt",
-      "process": "scripts.system.menu.GetMenuNodes",
+      "process": "scripts.admin.menu_node.GetMenuNodes",
       "in": [
         ":query"
       ],
@@ -28,7 +28,7 @@
       "path": "/create",
       "method": "POST",
       "guard": "bearer-jwt",
-      "process": "scripts.system.menu.CreateMenuNode",
+      "process": "scripts.admin.menu_node.CreateMenuNode",
       "in": [
         ":payload"
       ],
@@ -44,7 +44,7 @@
       "path": "/edit/:id",
       "method": "POST",
       "guard": "bearer-jwt",
-      "process": "scripts.system.menu.UpdateMenuNode",
+      "process": "scripts.admin.menu_node.UpdateMenuNode",
       "in": [
         "$param.id",
         ":payload"
@@ -61,7 +61,7 @@
       "path": "/delete/:id",
       "method": "DELETE",
       "guard": "bearer-jwt",
-      "process": "scripts.system.menu.DeleteMenuNode",
+      "process": "scripts.admin.menu_node.DeleteMenuNode",
       "in": [
         "$param.id"
       ],

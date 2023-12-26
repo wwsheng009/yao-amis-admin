@@ -21,7 +21,7 @@ function getUserDir() {
 }
 // 读取所有的page列表
 function getPages(dirIn) {
-  let dir = dirIn
+  let dir = dirIn;
   if (dir == null) {
     dir = getUserDir();
   }
@@ -47,7 +47,7 @@ function getPages(dirIn) {
         let filename = file.replace(/\.json$/, "");
         result[filename] = page;
       } else {
-        console.log(`invalid amis file format:${dir + file}`,);
+        console.log(`invalid amis file format:${dir + file}`);
       }
     } catch (error) {
       console.log(`error when parse json:${dir + file}`);
@@ -248,11 +248,11 @@ function Mkdir(name) {
   }
 }
 
-//    yao studio run editor.createCurdPage system.auth.role
+//    yao studio run editor.createCurdPage admin.auth.role
 //    curl -X POST http://127.0.0.1:5077/service/editor \
 //    -H 'Content-Type: application/json' \
 //    -H 'Authorization: Bearer <Studio JWT>' \
-//    -d '{ "args":["system.menu"],"method":"createCurdPage"}'
+//    -d '{ "args":["admin.menu"],"method":"createCurdPage"}'
 function createCurdPage(table) {
   const page = Process("scripts.amis.curd.curdTemplate", table);
 

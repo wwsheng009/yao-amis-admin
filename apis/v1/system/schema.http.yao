@@ -8,7 +8,7 @@
     {
       "path": "/crud-menu",
       "method": "get",
-      "process": "scripts.system.menu.main",
+      "process": "scripts.admin.menu.main",
       "in": [],
       "out": {
         "status": 200,

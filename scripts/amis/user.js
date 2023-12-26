@@ -100,7 +100,7 @@ function Login(payload) {
   return Process("scripts.return.Success", {
     sid: sessionId,
     user: userPayload,
-    menus: Process("scripts.system.menu.xgenMenu"),
+    menus: Process("scripts.admin.menu_node.xgenMenu"),
     token: jwt.token,
     expires_at: jwt.expires_at,
   });

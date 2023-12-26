@@ -1,7 +1,7 @@
 {
   "name": "::Amis Yao Application",
   "menu": {
-    "process": "scripts.system.menu.xgenMenu",
+    "process": "scripts.admin.menu_node.xgenMenu",
     "args": [
       "demo"
     ]

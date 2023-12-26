@@ -866,7 +866,7 @@ function getModelFromDB(modelId) {
  * 模型有可能会保存在两个位置，一个是在数据库里，根据数据库ID,
  * 读取已经加载在内存中的模型的定义，受限里yao的程序解析
  * 数据库中的信息会比内存的信息更加丰富，可以自由扩展
- * yao run scripts.system.model.getModelApi system.auth.role
+ * yao run scripts.system.model.getModelApi admin.auth.role
  * @param {string/number} modelId
  * @returns
  */
@@ -952,7 +952,7 @@ function getModelById(modelId) {
 // }
 
 /**
- * yao run scripts.system.model.getModelColumnMap system.auth.role
+ * yao run scripts.system.model.getModelColumnMap admin.auth.role
  * 返回模型的columns定义
  * @param {string} modelId 模型ID
  * @returns 返回模型的columns定义

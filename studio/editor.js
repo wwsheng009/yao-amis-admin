@@ -22,7 +22,7 @@ function getUserDir() {
 }
 // 读取所有的page列表
 // yao studio run editor.getPages
-//    yao studio run editor.createCurdPage system.auth.role
+//    yao studio run editor.createCurdPage admin.auth.role
 //    curl -X POST http://127.0.0.1:5077/service/editor \
 //    -H 'Content-Type: application/json' \
 //    -H 'Authorization: Bearer <Studio JWT>' \
@@ -262,11 +262,11 @@ function Mkdir(name) {
   }
 }
 
-//    yao studio run editor.createCurdPage system.auth.role
+//    yao studio run editor.createCurdPage admin.auth.role
 //    curl -X POST http://127.0.0.1:5077/service/editor \
 //    -H 'Content-Type: application/json' \
 //    -H 'Authorization: Bearer <Studio JWT>' \
-//    -d '{ "args":["system.menu"],"method":"createCurdPage"}'
+//    -d '{ "args":["admin.menu"],"method":"createCurdPage"}'
 function createCurdPage(table) {
   const page = Process("scripts.amis.curd.curdTemplate", table);
 
