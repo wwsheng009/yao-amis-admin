@@ -7,12 +7,14 @@
 使用容器运行，已打包编辑器与 soy-admin
 
 ```sh
-docker run -d -p 5099:5099 wwsheng009/yao-amis-admin:1.0.0-amd64
+docker run -d -p 5099:5099 wwsheng009/yao-amis-admin-amd64:latest
 ```
+
+用户名：xiang@iqka.com 密码：A123456p+
 
 ## 演示地址：
 
-[demo](http://fun.wwsheng.cloud:5299/)
+[demo](http://fun.wwsheng.cloud:5299/),用户名：xiang@iqka.com 密码：A123456p+
 
 ![entry](doc/entry_index.png)
 ![model_create](doc/model_create.png)

@@ -98,6 +98,14 @@ function getDBType() {
 function IsMysql() {
   return /mysql/i.test(getDBType());
 }
+/**
+ * 判断是否是postgres数据库
+ * @returns boolean
+ */
+function IsPg() {
+  return /postgres/i.test(getDBType());
+}
+
 function IsSqlite() {
   return /sqlite/i.test(getDBType());
 }
@@ -162,6 +170,7 @@ module.exports = {
   SlashName,
   FileNameConvert,
   IsMysql,
+  IsPg,
   IsSqlite,
   ClearFalsyKeys,
   RemoveOjbectEmptyKey,

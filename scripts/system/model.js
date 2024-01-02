@@ -830,6 +830,19 @@ function ConvertTableLineToModel(line) {
   return model;
 }
 
+function checkType(value) {
+  if (typeof value === "number") {
+    return "number";
+  } else if (typeof value === "string") {
+    if (!isNaN(value) && value.trim() !== "") {
+      return "number";
+    } else {
+      return "string";
+    }
+  } else {
+    return "other";
+  }
+}
 /**
  * 从数据库中加载Yao模型,返回一个Yao模型定义
  * yao run scripts.system.model.getModelFromDB
@@ -839,16 +852,19 @@ function ConvertTableLineToModel(line) {
 function getModelFromDB(modelId) {
   //数字ID可能是数据库数据
 
+  let wheres = [];
+  if (checkType(modelId) === "number") {
+    wheres.push({
+      method: "where",
+      column: "id",
+      value: modelId,
+    });
+  } else {
+    wheres.push({ column: "identity", value: modelId });
+  }
   //根据id在数据库表中查找
   const [line] = Process("models.ddic.model.get", {
-    wheres: [
-      { column: "identity", value: modelId },
-      {
-        method: "orwhere",
-        column: "id",
-        value: modelId,
-      },
-    ],
+    wheres: wheres,
     withs: {
       columns: {},
     },
