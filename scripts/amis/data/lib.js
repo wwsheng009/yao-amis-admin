@@ -263,33 +263,27 @@ function updateInputData(model, Data) {
   }
   const columnMap = getModelColumnMap(model);
 
-  // let testData = Data;
-
-  // if (Array.isArray(Data) && Data.length) {
-  //   testData = Data[0];
-  // }
-  // const columns = Object.keys(testData);
-  // let jsonKeys = [];
-  // for (const key of columns) {
-  //   const modelCol = columnMap[key];
-  //   if (modelCol) {
-  //     const ty = modelCol.type.toLowerCase();
-  //     if (ty === "json") {
-  //       jsonKeys.push(key);
-  //     }
-  //   }
-  // }
   const hasUserId = columnMap["user_id"] !== null; // columns.some(col=>col.name = 'user_id')
   const user_id = Process("session.get", "user_id");
 
   function updateLine(line) {
+    if (typeof line !== "object") {
+      return;
+    }
     for (const key in columnMap) {
       const modelCol = columnMap[key];
       const type = modelCol.type.toUpperCase();
+      const field = line[key];
+      if (type == "UUID" && modelCol.primary == true && !field) {
+        // 自动生成uuid
+        line[key] = Process("utils.str.UUID");
+        continue;
+      }
+
       if (!Object.hasOwnProperty.call(line, key)) {
         continue;
       }
-      const field = line[key];
+
       if (field == null) {
         continue;
       }
