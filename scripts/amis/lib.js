@@ -17,31 +17,10 @@ const {
 } = Require("system.col_type");
 const Exception = Error;
 
-// /**
-//  * 获得默认连接中的数据表的列定义
-//  * @param {数据库表名} tableName string
-//  * @returns object
-//  */
-// function getTableSchema(tableName) {
-//   const schema = Process("schemas.default.TableGet", UnderscoreName(tableName));
-//   return schema;
-// }
-
-// function ColumnArrayToMap(columns) {
-//   if (!Array.isArray(columns)) {
-//     return {};
-//   }
-//   let columMap = {};
-//   if (Array.isArray(columns)) {
-//     for (const column of columns) {
-//       columMap[column.name] = column;
-//     }
-//   }
-//   columMap;
-// }
 /**
- * 读取已经加载在内存中的模型的定义
+ * 读取已经加载在内存中的模型的定义,并根据传入列的类型定义更新模型定义
  * @param {string} modelId 模型名称
+ * @param {Array} columnsIn 字段列表字义，从前端传入
  * @returns
  */
 function getModelDefinition(modelId, columnsIn) {
@@ -52,7 +31,7 @@ function getModelDefinition(modelId, columnsIn) {
   if (!model) {
     throw new Exception(`模型:${modelId}不存在`);
   }
-  if (columnsIn != null && Array.isArray(columnsIn) && columnsIn.length > 0) {
+  if (Array.isArray(columnsIn) && columnsIn.length > 0) {
     const columns = columnsIn.filter((col) => col.checked === true);
     model.columns = columns.length > 0 ? columns : model.columns || [];
   } else {
@@ -64,24 +43,12 @@ function getModelDefinition(modelId, columnsIn) {
 }
 
 /**
- * 根据模型字段的定义信息更新检验报错文本
- * @param {string} text 报错文本
- * @param {object} col 模型字段定义
- * @returns 新文本
- */
-function updateMessage(text, col) {
-  let newString = text.replace(/\{\{label\}\}/g, col.label);
-  newString = newString.replace(/\{\{input\}\}/g, "${col.name}");
-  return newString;
-}
-
-/**
  * 根据模型数据更新查看页面的配置
  * @param {object} amisColumn amis字段定义
  * @param {object} column yao模型字体定义
  * @returns amis字段定义
  */
-function updateViewColFromModel(amisColumn, column, modelDsl) {
+function updateAmisViewColFromModel(amisColumn, column, modelDsl) {
   if (column == null) {
     return amisColumn;
   }
@@ -110,7 +77,7 @@ function updateViewColFromModel(amisColumn, column, modelDsl) {
  * @param {object} modelDsl 系统模型定义
  * @returns amis字段定义
  */
-function updateFormColCommon(amisColumn, column, modelDsl) {
+function updateAmisFormColCommon(amisColumn, column, modelDsl) {
   if (column == null) {
     return amisColumn;
   }
@@ -163,30 +130,37 @@ function updateFormColCommon(amisColumn, column, modelDsl) {
 
   return amisColumn;
 }
+
+/**
+ * 根据模型字段的定义信息更新检验报错文本
+ * @param {string} text 报错文本
+ * @param {object} col 模型字段定义
+ * @returns 新文本
+ */
+function updateValidationMessage(text, col) {
+  let newString = text.replace(/\{\{label\}\}/g, col.label);
+  newString = newString.replace(/\{\{input\}\}/g, "${col.name}");
+  return newString;
+}
+
 /**
  * 根据yao模型的字段定义更新amisForm模型定义
  * @param {object} amisColumn amis字段定义
- * @param {object} modelColumn yao模型字体定义
+ * @param {object} yaoColumn yao模型字段定义
  * @returns 返回更新后的amis字段定义
  */
-function updateFormColFromModel(amisColumn, modelColumn) {
-  if (modelColumn == null) {
+function updateAmisFormColFromModel(amisColumn, yaoColumn) {
+  if (yaoColumn == null) {
     return amisColumn;
   }
 
-  amisColumn.label = amisColumn.label || modelColumn.label;
+  amisColumn.label = amisColumn.label || yaoColumn.label;
 
-  // const type = modelColumn.type.toUpperCase();
-  // if (type == "JSON" || type == "JSONB") {
-  //   amisColumn.type = "editor";
-  //   amisColumn.language = "json";
-  // }
-
-  if (modelColumn.validations && modelColumn.validations.length) {
+  if (yaoColumn.validations && yaoColumn.validations.length) {
     amisColumn.validations = amisColumn.validations || {};
     amisColumn.validationErrors = amisColumn.validationErrors || {};
     let regexCount = 0;
-    for (const validation of modelColumn.validations) {
+    for (const validation of yaoColumn.validations) {
       let isCheck = false;
       let validationKey = "";
 
@@ -260,9 +234,9 @@ function updateFormColFromModel(amisColumn, modelColumn) {
           break;
       }
       if (isCheck === true) {
-        amisColumn.validationErrors[validationKey] = updateMessage(
+        amisColumn.validationErrors[validationKey] = updateValidationMessage(
           validation.message,
-          modelColumn
+          yaoColumn
         );
       }
     }
@@ -276,85 +250,86 @@ function updateFormColFromModel(amisColumn, modelColumn) {
   return amisColumn;
 }
 
-function getFormDefinition(tableName) {
-  return {};
-  try {
-    //模型对应的table定义可能不存在
-    const setting = Process("yao.form.Setting", tableName);
-    const columns = (setting.form && setting.form.sections[0].columns) || [];
-    const fields = (setting.fields && setting.fields.form) || {};
-    let fieldsNew = {};
-    columns.forEach((column) => {
-      let key = "";
-      let field = fields[column.name];
+// function getFormDefinition(tableName) {
+//   return {};
+//   try {
+//     //模型对应的table定义可能不存在
+//     const setting = Process("yao.form.Setting", tableName);
+//     const columns = (setting.form && setting.form.sections[0].columns) || [];
+//     const fields = (setting.fields && setting.fields.form) || {};
+//     let fieldsNew = {};
+//     columns.forEach((column) => {
+//       let key = "";
+//       let field = fields[column.name];
 
-      if (field) {
-        if (field.bind) {
-          key = field.bind;
-        } else if (field.view && field.view.bind) {
-          key = field.view.bind;
-        } else if (field.edit && field.edit.bind) {
-          key = field.edit.bind;
-        }
-      }
-      if (key && key.length) {
-        fieldsNew[key] = { ...field };
-        fieldsNew[key] = {} || fieldsNew[key];
-        fieldsNew[key].label = column.name;
-        fieldsNew[key].name = key;
-        fieldsNew[key].width = column.width;
-        // console.log("fieldsNew:", key, fieldsNew[key]);
-      }
-    });
-    return fieldsNew;
-  } catch (error) {
-    return {};
-  }
-}
+//       if (field) {
+//         if (field.bind) {
+//           key = field.bind;
+//         } else if (field.view && field.view.bind) {
+//           key = field.view.bind;
+//         } else if (field.edit && field.edit.bind) {
+//           key = field.edit.bind;
+//         }
+//       }
+//       if (key && key.length) {
+//         fieldsNew[key] = { ...field };
+//         fieldsNew[key] = {} || fieldsNew[key];
+//         fieldsNew[key].label = column.name;
+//         fieldsNew[key].name = key;
+//         fieldsNew[key].width = column.width;
+//         // console.log("fieldsNew:", key, fieldsNew[key]);
+//       }
+//     });
+//     return fieldsNew;
+//   } catch (error) {
+//     return {};
+//   }
+// }
 
-function getTableDefinition(tableName) {
-  return {};
-  try {
-    //模型对应的table定义可能不存在
-    const setting = Process("yao.table.Setting", tableName);
-    const columns = (setting.table && setting.table.columns) || [];
-    const fields = (setting.fields && setting.fields.table) || {};
-    let fieldsNew = {};
-    columns.forEach((column) => {
-      let key = "";
-      let field = fields[column.name];
+// function getTableDefinition(tableName) {
+//   return {};
+//   try {
+//     //模型对应的table定义可能不存在
+//     const setting = Process("yao.table.Setting", tableName);
+//     const columns = (setting.table && setting.table.columns) || [];
+//     const fields = (setting.fields && setting.fields.table) || {};
+//     let fieldsNew = {};
+//     columns.forEach((column) => {
+//       let key = "";
+//       let field = fields[column.name];
 
-      if (field) {
-        if (field.bind) {
-          key = field.bind;
-        } else if (field.view && field.view.bind) {
-          key = field.view.bind;
-        } else if (field.edit && field.edit.bind) {
-          key = field.edit.bind;
-        }
-      }
-      if (key && key.length) {
-        fieldsNew[key] = { ...field };
-        fieldsNew[key] = {} || fieldsNew[key];
-        fieldsNew[key].label = column.name;
-        fieldsNew[key].name = key;
-        fieldsNew[key].width = column.width;
-        // console.log("fieldsNew:", key, fieldsNew[key]);
-      }
-    });
-    return fieldsNew;
-  } catch (error) {
-    return {};
-  }
-}
+//       if (field) {
+//         if (field.bind) {
+//           key = field.bind;
+//         } else if (field.view && field.view.bind) {
+//           key = field.view.bind;
+//         } else if (field.edit && field.edit.bind) {
+//           key = field.edit.bind;
+//         }
+//       }
+//       if (key && key.length) {
+//         fieldsNew[key] = { ...field };
+//         fieldsNew[key] = {} || fieldsNew[key];
+//         fieldsNew[key].label = column.name;
+//         fieldsNew[key].name = key;
+//         fieldsNew[key].width = column.width;
+//         // console.log("fieldsNew:", key, fieldsNew[key]);
+//       }
+//     });
+//     return fieldsNew;
+//   } catch (error) {
+//     return {};
+//   }
+// }
 
 /**
  * 读取一个表的所有字段列表
  * 注意：这个功能并不一定适用于官方版本的yao,在字段的处理器是有经过增强处理的
  * @param {string} modelId 数据库表或是模型名
+ * @param {Array} columnsIn 传入的模型字段列表字义,可以从前端界面上传入
  * @returns
  */
-function getModelFields(modelId, columnsIn) {
+function getModelFieldsForAmis(modelId, columnsIn) {
   let model = getModelDefinition(modelId, columnsIn);
   const columns = model.columns;
   //从模型定义中获取数据
@@ -362,7 +337,7 @@ function getModelFields(modelId, columnsIn) {
   let schemas = [];
   columns.forEach((column) => {
     let { newColumn: col } = column2AmisTableViewColumn(column);
-    col = updateViewColFromModel(col, column, model);
+    col = updateAmisViewColFromModel(col, column, model);
 
     if (col.__ignore !== true) {
       col.__ignore = undefined;
@@ -438,7 +413,7 @@ function getFormViewFields(modelId, columnsIn, noRelation) {
   let schemas = [];
   columns.forEach((column) => {
     let col = column2AmisFormViewColumn(column);
-    col = updateFormColCommon(col, column, model);
+    col = updateAmisFormColCommon(col, column, model);
     delete col.displayOnly;
     schemas.push(col);
   });
@@ -503,7 +478,7 @@ function updateFormRelations(schemas, model, actionType) {
     let fields = [];
     let tableSchema = {};
     if (actionType === "view") {
-      fields = getModelFields(element.model);
+      fields = getModelFieldsForAmis(element.model);
       fields = fields.filter((col) => col.name !== element.key);
 
       tableSchema = {
@@ -607,8 +582,8 @@ function getFormFields(
         break;
     }
 
-    col = updateFormColFromModel(col, column);
-    col = updateFormColCommon(col, column, model);
+    col = updateAmisFormColFromModel(col, column);
+    col = updateAmisFormColCommon(col, column, model);
     if (output) {
       schemas.push(col);
     }
@@ -634,8 +609,8 @@ function getFilterFormFields(modelId, columnsIn) {
   let schemas = [];
   for (const column of columns) {
     let col = column2AmisFormEditColumn(column);
-    col = updateFormColFromModel(col, column);
-    col = updateFormColCommon(col, column, model);
+    col = updateAmisFormColFromModel(col, column);
+    col = updateAmisFormColCommon(col, column, model);
 
     if (col.isID) {
       col.type = "input-number";
@@ -691,13 +666,13 @@ function getModelFieldsWithQuick(modelId, columnsIn) {
     let formColumn = column2AmisFormEditColumn(column);
     let label = column.label;
 
-    formColumn = updateFormColFromModel(formColumn, column);
-    formColumn = updateFormColCommon(formColumn, column, model);
+    formColumn = updateAmisFormColFromModel(formColumn, column);
+    formColumn = updateAmisFormColCommon(formColumn, column, model);
     if (formColumn.isID) {
       formColumn.quickEdit = false;
       delete formColumn.isID;
     }
-    viewColumn = updateViewColFromModel(viewColumn, column, model);
+    viewColumn = updateAmisViewColFromModel(viewColumn, column, model);
     if (viewColumn.__ignore) {
       viewColumn.__ignore = undefined;
       continue;
@@ -795,9 +770,10 @@ function excelMapping(modelId, columnsIn) {
 module.exports = {
   getFormViewFields,
   excelMapping,
-  getModelFields,
+  getModelFieldsForAmis,
   getModelFieldsWithQuick,
   getFilterFormFields,
   getFormFields,
   getWithsUrl,
+  getModelDefinition,
 };

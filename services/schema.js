@@ -29,12 +29,24 @@ function getCodeGenerationList() {
       value: "getTableAmisViewFieldsWithQuick",
     },
     {
-      label: "Xgen表格定义",
+      label: "Xgen表格定义-简单",
       value: "getXgenTable",
     },
     {
-      label: "Xgen表单定义",
+      label: "Xgen表格定义-完整",
+      value: "getXgenTableFull",
+    },
+    {
+      label: "Xgen表单定义-简单",
       value: "getXgenForm",
+    },
+    {
+      label: "Xgen表单定义-完整-查看",
+      value: "getXgenFormFullView",
+    },
+    {
+      label: "Xgen表单定义-完整-编辑",
+      value: "getXgenFormFullEdit",
     },
     {
       label: "TypeScript类型定义",
@@ -191,7 +203,24 @@ function getXgenTable(modelId, columns) {
     __code_source: Process(
       "scripts.xgen.schema.generateTableView",
       modelId,
-      columns
+      columns,
+      true
+    ),
+  };
+}
+/**
+ * 根据模型信息生成xgen表定义
+ * @param {string} modelId
+ * @param {Array} columns
+ * @returns
+ */
+function getXgenTableFull(modelId, columns) {
+  return {
+    __code_source: Process(
+      "scripts.xgen.schema.generateTableView",
+      modelId,
+      columns,
+      false
     ),
   };
 }
@@ -207,7 +236,43 @@ function getXgenForm(modelId, columns) {
     __code_source: Process(
       "scripts.xgen.schema.generateFormView",
       modelId,
-      columns
+      columns,
+      true
+    ),
+  };
+}
+
+/**
+ * 根据模型信息生成xgen表单定义
+ * @param {string} modelId
+ * @param {Array} columns
+ * @returns
+ */
+function getXgenFormFullView(modelId, columns) {
+  return {
+    __code_source: Process(
+      "scripts.xgen.schema.generateFormView",
+      modelId,
+      columns,
+      false,
+      "view"
+    ),
+  };
+}
+/**
+ * 根据模型信息生成xgen表单定义
+ * @param {string} modelId
+ * @param {Array} columns
+ * @returns
+ */
+function getXgenFormFullEdit(modelId, columns) {
+  return {
+    __code_source: Process(
+      "scripts.xgen.schema.generateFormView",
+      modelId,
+      columns,
+      false,
+      "edit"
     ),
   };
 }
