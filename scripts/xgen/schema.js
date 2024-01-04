@@ -351,6 +351,7 @@ function GetDBTypeMap() {
     char: "Input",
     text: "TextArea",
     mediumText: "TextArea",
+    richtext: "TextArea",
     longText: "TextArea",
     date: "DatePicker",
     datetime: "DatePicker",
@@ -371,6 +372,10 @@ function GetDBTypeMap() {
     float: "InputNumber",
     boolean: "Input",
     enum: "Select",
+    color: "ColorPicker",
+    phone: "Input",
+    url: "Input",
+    code: "CodeEditor",
   };
 }
 /**
@@ -492,7 +497,7 @@ function TableColumnCast(column, modelDsl) {
         },
       },
     };
-  } else if (/color/i.test(column.name)) {
+  } else if (column.type == "color" || /color/i.test(column.name)) {
     component.edit.type = "ColorPicker";
     width = 80;
   } else if (column.crypt === "PASSWORD") {
@@ -636,7 +641,7 @@ function IsFile(column, component, modelDsl) {
   ) {
     return component;
   }
-  const { viewType, fileType } = GetFileType(column.name);
+  const { viewType, fileType } = GetFileType(column);
   if (fileType === "unknown") {
     return component;
   }
@@ -645,13 +650,13 @@ function IsFile(column, component, modelDsl) {
     bind: name,
     view: {
       type: viewType,
-      compute: "scripts.file.upload.View",
+      compute: "scripts.xgen.file.upload.View",
       props: {},
     },
     edit: {
       type: "Upload",
       compute: {
-        process: "scripts.file.upload.Edit",
+        process: "scripts.xgen.file.upload.Edit",
         args: ["$C(row)", name, modelDsl.table.name],
       },
       props: {
@@ -686,7 +691,9 @@ const imageNamePattern = [
 const videoNamePattern = ["video", "_video", "video_"];
 const fileNamePattern = ["file", "_file", "file_"];
 
-function GetFileType(name) {
+function GetFileType(column) {
+  const name = column.name;
+
   let viewType = "A";
   let fileType = "unknown";
   const patterns = [
@@ -694,19 +701,32 @@ function GetFileType(name) {
     ...videoNamePattern,
     ...fileNamePattern,
   ];
-  for (const pattern of patterns) {
-    if (name.includes(pattern)) {
-      if (imageNamePattern.includes(pattern)) {
-        viewType = "Image";
-        fileType = "image";
-      } else if (videoNamePattern.includes(pattern)) {
-        viewType = "Image";
-        fileType = "video";
-      } else {
-        viewType = "A";
-        fileType = "file";
+
+  if (column.type == "image" || column.type == "images") {
+    viewType = "Image";
+    fileType = "image";
+  } else if (column.type == "video") {
+    viewType = "Image";
+    fileType = "video";
+  } else if (column.type == "file") {
+    viewType = "A";
+    fileType = "file";
+  }
+  if (fileType == "unknown") {
+    for (const pattern of patterns) {
+      if (name.includes(pattern)) {
+        if (imageNamePattern.includes(pattern)) {
+          viewType = "Image";
+          fileType = "image";
+        } else if (videoNamePattern.includes(pattern)) {
+          viewType = "Image";
+          fileType = "video";
+        } else {
+          viewType = "A";
+          fileType = "file";
+        }
+        break;
       }
-      break;
     }
   }
   return {
@@ -1225,7 +1245,7 @@ function AddTabColumn(formTemplate, column) {
 }
 /**
  *根据模型定义生成Form定义
- * yao studio run model.column.form.Cast
+ * yao run scripts.xgen.schema.FormColumnCast
  * @param column 模型列定义
  * @param modelDsl 模型定义
  * @param type 类型
@@ -1315,7 +1335,7 @@ function FormColumnCast(column, modelDsl) {
         },
       },
     };
-  } else if (/color/i.test(column.name)) {
+  } else if (column.type == "color" || /color/i.test(column.name)) {
     component.edit.type = "ColorPicker";
   } else if (column.crypt === "PASSWORD") {
     component.edit.type = "Password";
@@ -1344,7 +1364,7 @@ function FormColumnCast(column, modelDsl) {
   }
   if (component.edit?.type === "CodeEditor") {
     component.view = component.view || {};
-    component.view.compute = "scripts.ddic.compute.json.View";
+    component.view.compute = "scripts.xgen.compute.json.View";
   }
   res.fields.push({
     name: title,
@@ -1366,7 +1386,7 @@ function IsFormFile(column, component, modelDsl) {
   ) {
     return component;
   }
-  const { viewType, fileType } = GetFileType(column.name);
+  const { viewType, fileType } = GetFileType(column);
   if (fileType === "unknown") {
     return component;
   }
@@ -1376,13 +1396,13 @@ function IsFormFile(column, component, modelDsl) {
     bind: name,
     view: {
       type: viewType,
-      compute: "scripts.file.upload.View",
+      compute: "scripts.xgen.file.upload.View",
       props: {},
     },
     edit: {
       type: "Upload",
       compute: {
-        process: "scripts.file.upload.Edit",
+        process: "scripts.xgen.file.upload.Edit",
         args: ["$C(row)", name, modelDsl.table.name],
       },
       props: {

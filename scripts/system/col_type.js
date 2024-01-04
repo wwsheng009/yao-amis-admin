@@ -4,7 +4,7 @@ const { IsMysql } = Require("amis.lib_tool");
 // 集中管理类型字段类型转换处理
 
 /**
- * column 类型定义
+ * column 类型定义,把meta字段类型转换成yao模型字段类型
  * @param {object} col
  * @returns
  */
@@ -32,6 +32,8 @@ function convertColTypeToYao(col) {
       col.type = "string";
       break;
     case "email":
+      col.type = "string";
+    case "color":
       col.type = "string";
     default:
       break;
@@ -100,6 +102,10 @@ function GetColumnTypeList() {
     {
       label: "邮箱",
       value: "email",
+    },
+    {
+      label: "颜色",
+      value: "color",
     },
     {
       label: "自增ID",
@@ -320,6 +326,8 @@ function column2AmisTableViewColumn(column) {
     case "EMAIL":
       newColumn.type = "text";
       break;
+    case "COLOR":
+      newColumn.type = "color";
     default:
       break;
   }
@@ -504,6 +512,9 @@ function column2AmisFormViewColumn(column) {
       break;
     case "EMAIL":
       newColumn.type = "static-text";
+      break;
+    case "COLOR":
+      newColumn.type = "static-color";
       break;
     default:
       break;
@@ -753,6 +764,8 @@ function column2AmisFormEditColumn(column) {
       newColumn.validations = newColumn.validations || {};
       newColumn.validations["isEmail"] = true;
       break;
+    case "COLOR":
+      newColumn.type = "input-color";
     default:
       break;
   }
