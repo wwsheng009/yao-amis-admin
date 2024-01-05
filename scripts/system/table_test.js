@@ -2171,15 +2171,8 @@ function MomoryModelList(attr) {
   traverse(models);
   return list;
 }
-// const data = MomoryModelList();
-
-// const data = MomoryModelList("ID,name,table.name,table.comment");
-// console.log(data);
-// console.log(MomoryModelList("name,ID"));
 
 function FindCachedModelById(id) {
-  //   const models = Process("widget.models");
-
   const traverse = (node, id) => {
     if (node.children) {
       return traverse(node.children, id);

@@ -619,6 +619,7 @@
       "body": [
         {
           "type": "tabs",
+          "tabsMode": "chrome",
           "source": "${__code_sources}",
           "tabs": [
             {

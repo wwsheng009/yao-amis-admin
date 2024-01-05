@@ -57,7 +57,7 @@ function SlashName(pathname) {
   str = str.replace(/\\/g, "/");
   // 不应把下划线作转换
   // str = str.replace(/_/g, "/");
-  // str = str.replace(/-/g, "/");
+  str = str.replace(/-/g, "/");
   str = str.replace(/\./g, "/");
   str = str.replace(/\/\//g, "/");
   let newStr = str.replace(/^\/+|\/+$/g, "");

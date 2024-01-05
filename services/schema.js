@@ -291,13 +291,7 @@ function getXgenTableFull(modelId, columns) {
     false
   );
   return {
-    __code_sources: [
-      {
-        language: "json",
-        title: `${template.name}.tab.yao`,
-        __code_source: template,
-      },
-    ],
+    __code_sources: template,
   };
 }
 

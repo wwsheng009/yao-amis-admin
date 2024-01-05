@@ -17,7 +17,14 @@ function generateTableView(modelId, columns, simple) {
   }
   const modelDsl = getModelDefinition(modelId, columns);
 
-  return getXgenTableSchema(modelDsl);
+  let tableDsl = getXgenTableSchema(modelDsl);
+  return [
+    {
+      language: "json",
+      title: `${modelId}.tab.yao`,
+      __code_source: tableDsl,
+    },
+  ];
 }
 
 /**
@@ -1151,7 +1158,7 @@ function relationTable(formDsl, modelDsl) {
       width: 24,
     });
   }
-  return [wrapForm(formDsl)];
+  return [wrapForm(formDsl, modelDsl)];
 }
 /**
  * yao studio run model.relation.List
@@ -1196,10 +1203,10 @@ function relationList(formDsl, modelDsl) {
     });
   }
   if (RelList.length === 0) {
-    return [wrapForm(formDsl)];
+    return [wrapForm(formDsl, modelDsl)];
   }
-  const tabName = modelDsl.table.name;
-  let funtionName = SlashName(tabName);
+  const tabName = modelDsl.ID;
+  let funtionName = modelDsl.ID;
   let modelName = DotName(tabName);
   let listDslList = RelList.map((rel) => CreateListFile(rel));
   //function templates
@@ -1230,7 +1237,7 @@ function relationList(formDsl, modelDsl) {
     );
   }
 
-  return [wrapForm(formDsl), ...listDslList, ...scripts];
+  return [wrapForm(formDsl, modelDsl), ...listDslList, ...scripts];
 }
 
 function WriteScript(
@@ -1243,40 +1250,39 @@ function WriteScript(
   AfterFind
 ) {
   // let sc = new FS("script");
-  let scripts = `
-function Save(payload) {
-//先保存主表，获取id后再保存从表
-${StartTrans()}
-let res = null
-try {
-  res = Process('models.${modelName}.Save', payload);
-  if (res.code && res.code > 300) {
-    throw new Exception(res.message, res.code);
-  }
-  SaveRelations(res, payload);
-} catch (error) {
-  console.log("Mode ${modelName} Save Failed,Payload:",payload)
-  ${Rollback()}
-  if(error.message && error.code){
-    console.log("error:",error.code,error.message)
-    throw new Exception(error.message,error.code)
-  }else{
-    console.log("system error:",error)
-    throw error
-  }
-}
-${Commit()}
-return res
+  let scripts = `function Save(payload) {
+  //先保存主表，获取id后再保存从表
+    ${StartTrans()}
+    let res = null
+    try {
+      res = Process('models.${modelName}.Save', payload);
+      if (res.code && res.code > 300) {
+        throw new Exception(res.message, res.code);
+      }
+      SaveRelations(res, payload);
+    } catch (error) {
+      console.log("Mode ${modelName} Save Failed,Payload:",payload)
+      ${Rollback()}
+      if(error.message && error.code){
+        console.log("error:",error.code,error.message)
+        throw new Exception(error.message,error.code)
+      }else{
+        console.log("system error:",error)
+        throw error
+      }
+    }
+    ${Commit()}
+    return res
 }
 //保存关联表数据
 function SaveRelations(id, payload) {
-${saveDataCodes.join("\n\t")}
-return id;
+  ${saveDataCodes.join("\n\t")}
+  return id;
 }
 
 //删除关联表数据
 function BeforeDelete(id){
-${deleteDataCodes.join("\n\t")}
+  ${deleteDataCodes.join("\n")}
 }
 
 ${saveDataFunctionList.join("\n")}
@@ -1285,8 +1291,6 @@ ${deleteDataFuntionList.join("\n")}
 
 ${AfterFind}
 `;
-  // sc.WriteFile(`/${functionName}.js`, scripts);
-  // Studio("model.file.WriteScript", `/${functionName}.js`, scripts);
   return {
     language: "js",
     title: `${functionName}.js`,
@@ -1297,37 +1301,37 @@ function StartTrans() {
   const ismysql = IsMysql();
   return ismysql
     ? `
-const t = new Query();
-  t.Run({
-    sql: {
-    stmt: "START TRANSACTION;",
-  },
-});
-`
+    const t = new Query();
+      t.Run({
+        sql: {
+        stmt: "START TRANSACTION;",
+      },
+    });
+    `
     : "";
 }
 function Commit() {
   const ismysql = IsMysql();
   return ismysql
     ? `
-t.Run({
-  sql: {
-    stmt: 'COMMIT;',
-  },
-});
-`
+    t.Run({
+      sql: {
+        stmt: 'COMMIT;',
+      },
+    });
+    `
     : "";
 }
 function Rollback() {
   const ismysql = IsMysql();
   return ismysql
     ? `
-t.Run({
-  sql: {
-    stmt: 'ROLLBACK;',
-  },
-});
-`
+        t.Run({
+          sql: {
+            stmt: 'ROLLBACK;',
+          },
+        });
+        `
     : "";
 }
 function CreateAfterFind(relations) {
@@ -1364,33 +1368,32 @@ function CreateAfterFind(relations) {
       op: "=",
       value: ">>>payload.id<<<",
     });
-    let str = `payload["${rel}"]= t.Get(
-    ${JSON.stringify(query)},
-);`.replace(/">>>payload.id<<<"/g, "payload.id");
+    let str = `   payload["${rel}"]= t.Get(
+      ${JSON.stringify(query, null, 2)},
+    );`.replace(/">>>payload.id<<<"/g, "payload.id");
     templates.push(str);
   }
   return `
-    //多对一表数据查找
-    function AfterFind(payload){
+//多对一表数据查找
+function AfterFind(payload){
     const t = new Query();
     ${templates.join("\n")}
     return payload;
-    }
-    `;
+}
+`;
 }
 
 function CreateDataDeleteCode(rel) {
   return `
-    //删除${rel.model} == ${rel.key}
-    function Delete_${rel.name}(id){
+//删除${rel.model} == ${rel.key}
+function Delete_${rel.name}(id){
     let rows = Process('models.${rel.model}.DeleteWhere', {
       wheres: [{ column: '${rel.key}', value: id }],
     });
     
     //remembe to return the id in array format
     return [id];
-    }
-    `;
+}`;
 }
 /**
  * 生成数据保存代码
@@ -1398,9 +1401,8 @@ function CreateDataDeleteCode(rel) {
  * @returns 代码模板
  */
 function CreateDataSaveCode(rel) {
-  return `
-    //保存${rel.model}
-    function Save_${rel.name}(id,payload){
+  return `//保存${rel.model}
+function Save_${rel.name}(id,payload){
     const items = payload.${rel.name} || {};
     const deletes = items.delete || [];
     const data = items.data || items || [];
@@ -1426,13 +1428,12 @@ function CreateDataSaveCode(rel) {
         return id;
       }
     }
-    }
-    `;
+}`;
 }
-function wrapForm(formDsl) {
+function wrapForm(formDsl, modelDsl) {
   return {
     language: "json",
-    title: `${formDsl.name}.form.yao`,
+    title: `${modelDsl.ID}.form.yao`,
     __code_source: formDsl,
   };
 }
@@ -1450,12 +1451,11 @@ function CreateListFile(rel) {
     (col) => col.name !== excludeField
   );
   let listDsl = toList(modelDsl); //这里有studio js读取操作
-  let tableName = SlashName(modelDsl.table.name);
   // let listFileName = tableName + ".list.json";
   // Studio("model.file.MoveAndWrite", "lists", listFileName, listDsl);
   return {
     language: "json",
-    title: tableName,
+    title: `${modelDsl.ID}.list.yao`,
     __code_source: listDsl,
   };
 }
