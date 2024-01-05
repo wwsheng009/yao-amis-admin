@@ -7,8 +7,27 @@
           "buttons": [
             {
               "label": "生成代码",
-              "type": "submit",
-              "level": "primary"
+              "type": "button",
+              "level": "primary",
+              "onEvent": {
+                "click": {
+                  "actions": [
+                    {
+                      "actionType": "setValue",
+                      "args": {
+                        "value": {
+                          "__code_source": ""
+                        }
+                      },
+                      "componentId": "u:078ef73682f4"
+                    },
+                    {
+                      "actionType": "submit",
+                      "componentId": "u:7dd5fae7836f"
+                    }
+                  ]
+                }
+              }
             }
           ],
           "id": "u:91e32a13d252"
@@ -596,51 +615,103 @@
     {
       "title": "",
       "type": "form",
-      "actions": [
+      "actions": [],
+      "body": [
         {
-          "type": "button",
-          "actionType": "dialog",
-          "level": "light",
-          "label": "预览",
-          "dialog": {
-            "size": "lg",
-            "body": [
-              {
-                "type": "amis",
-                "name": "__code_source"
-              }
-            ]
-          }
-        },
-        {
-          "id": "u:a0e8e92c8ff2",
-          "label": "复制源码",
-          "level": "primary",
-          "onEvent": {
-            "click": {
-              "actions": [
+          "type": "tabs",
+          "source": "${__code_sources}",
+          "tabs": [
+            {
+              "title": "${title}",
+              "body": [
                 {
-                  "actionType": "copy",
-                  "args": {
-                    "content": "${ENCODEJSON(${__code_source})}",
-                    "copyFormat": "text/plain"
-                  }
+                  "type": "button-toolbar",
+
+                  "buttons": [
+                    {
+                      "type": "button",
+                      "actionType": "dialog",
+                      "level": "light",
+                      "label": "预览",
+                      "visibleOn": "${can_preview}",
+                      "dialog": {
+                        "size": "lg",
+                        "body": [
+                          {
+                            "type": "amis",
+                            "name": "__code_source"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "id": "u:a0e8e92c8ff2",
+                      "label": "复制源码",
+                      "level": "primary",
+                      "onEvent": {
+                        "click": {
+                          "actions": [
+                            {
+                              "actionType": "copy",
+                              "args": {
+                                "content": "${ENCODEJSON(${__code_source})}",
+                                "copyFormat": "text/plain"
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      "type": "button"
+                    }
+                  ]
                 }
               ]
             }
-          },
-          "type": "button"
-        }
-      ],
-      "body": [
+          ],
+          "onEvent": {
+            "change": {
+              "actions": [
+                {
+                  "actionType": "custom",
+                  "script": "event.setData({...event.data,'__code_source':event.data.__code_sources[event.data.value -1]['__code_source']});"
+                },
+                {
+                  "actionType": "setValue",
+                  "args": {
+                    "value": "${__code_source}"
+                  },
+                  "componentId": "code_editor"
+                }
+              ]
+            }
+          }
+        },
         {
-          "id": "u:eee45c3226cc",
-          "language": "json",
           "labelClassName": "hidden",
+          "language": "${language || 'json'}",
           "name": "__code_source",
+          "id": "code_editor",
           "type": "editor"
         }
       ],
+      "onEvent": {
+        "inited": {
+          "actions": [
+            {
+              "actionType": "custom",
+              "script": "event.setData({...event.data,'__code_source':event.data.__code_sources[0]['__code_source']});"
+            },
+            {
+              "actionType": "setValue",
+              "args": {
+                "value": "${__code_source}"
+              },
+              "componentId": "code_editor"
+            }
+          ],
+          "weight": 0
+        }
+      },
       "id": "u:078ef73682f4",
       "initApi": {
         "data": {

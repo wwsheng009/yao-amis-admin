@@ -28,10 +28,17 @@ function generateTableView(modelId, columns, simple) {
  */
 function generateFormView(modelId, columns, simple, type) {
   if (simple) {
-    return {
-      name: modelId,
-      action: { bind: { model: modelId } },
-    };
+    return [
+      {
+        language: "json",
+        title: "表单查看",
+        can_preview: true,
+        __code_source: {
+          name: modelId,
+          action: { bind: { model: modelId } },
+        },
+      },
+    ];
   }
 
   const modelDsl = getModelDefinition(modelId, columns);
@@ -159,6 +166,13 @@ function getXgenTableSchema(modelDsl) {
   return tableTemplate;
 }
 
+function getXgenFormCodes(modelDsl, type = "view") {}
+/**
+ * create xgen form schema code from model dsl
+ * @param {object} modelDsl model dsl
+ * @param {string} type 'view' | 'edit'
+ * @returns
+ */
 function getXgenFormSchema(modelDsl, type = "view") {
   // const copiedObject = JSON.parse(JSON.stringify(modelDsl.columns));
   let columns = modelDsl.columns || [];
@@ -300,11 +314,10 @@ function getXgenFormSchema(modelDsl, type = "view") {
   formTemplate.action.bind.option.withs = GetWiths(modelDsl);
   formTemplate = updateReference(formTemplate, modelDsl);
   if (type === "view") {
-    formTemplate = relationTable(formTemplate, modelDsl);
+    return relationTable(formTemplate, modelDsl);
   } else {
-    formTemplate = relationList(formTemplate, modelDsl);
+    return relationList(formTemplate, modelDsl);
   }
-  return formTemplate;
 }
 
 //  *  yao studio run model.relation.GetWiths
@@ -1138,7 +1151,7 @@ function relationTable(formDsl, modelDsl) {
       width: 24,
     });
   }
-  return formDsl;
+  return [wrapForm(formDsl)];
 }
 /**
  * yao studio run model.relation.List
@@ -1183,36 +1196,430 @@ function relationList(formDsl, modelDsl) {
     });
   }
   if (RelList.length === 0) {
-    return formDsl;
+    return [wrapForm(formDsl)];
   }
   const tabName = modelDsl.table.name;
-  // let funtionName = SlashName(tabName);
+  let funtionName = SlashName(tabName);
   let modelName = DotName(tabName);
-  RelList.forEach((rel) => CreateListFile(rel));
+  let listDslList = RelList.map((rel) => CreateListFile(rel));
   //function templates
-  // const saveDataFunList = RelList.map((rel) => CreateDataSaveCode(rel));
-  // const deleteDataFunList = RelList.map((rel) => CreateDataDeleteCode(rel));
-  // const AfterFind = CreateAfterFind(relations);
+  const saveDataFunList = RelList.map((rel) => CreateDataSaveCode(rel));
+  const deleteDataFunList = RelList.map((rel) => CreateDataDeleteCode(rel));
+  const AfterFind = CreateAfterFind(relations);
   // //called code list
-  // const saveDataCodes = RelList.map((rel) => `Save_${rel.name}(id,payload);`);
-  // const deleteDataCodes = RelList.map((rel) => `Delete_${rel.name}(id);`);
+  const saveDataCodes = RelList.map((rel) => `Save_${rel.name}(id,payload);`);
+  const deleteDataCodes = RelList.map((rel) => `Delete_${rel.name}(id);`);
+
+  let scripts = [];
   if (RelList.length) {
     formDsl.action.save = {
       process: `scripts.${modelName}.Save`,
     };
     formDsl.action["before:delete"] = `scripts.${modelName}.BeforeDelete`;
     formDsl.action["after:find"] = `scripts.${modelName}.AfterFind`;
-    // WriteScript(
-    //   funtionName,
-    //   modelName,
-    //   saveDataCodes,
-    //   deleteDataCodes,
-    //   saveDataFunList,
-    //   deleteDataFunList,
-    //   AfterFind
-    // );
+    scripts.push(
+      WriteScript(
+        funtionName,
+        modelName,
+        saveDataCodes,
+        deleteDataCodes,
+        saveDataFunList,
+        deleteDataFunList,
+        AfterFind
+      )
+    );
   }
-  return formDsl;
+
+  return [wrapForm(formDsl), ...listDslList, ...scripts];
+}
+
+function WriteScript(
+  functionName,
+  modelName,
+  saveDataCodes,
+  deleteDataCodes,
+  saveDataFunctionList,
+  deleteDataFuntionList,
+  AfterFind
+) {
+  // let sc = new FS("script");
+  let scripts = `
+function Save(payload) {
+//先保存主表，获取id后再保存从表
+${StartTrans()}
+let res = null
+try {
+  res = Process('models.${modelName}.Save', payload);
+  if (res.code && res.code > 300) {
+    throw new Exception(res.message, res.code);
+  }
+  SaveRelations(res, payload);
+} catch (error) {
+  console.log("Mode ${modelName} Save Failed,Payload:",payload)
+  ${Rollback()}
+  if(error.message && error.code){
+    console.log("error:",error.code,error.message)
+    throw new Exception(error.message,error.code)
+  }else{
+    console.log("system error:",error)
+    throw error
+  }
+}
+${Commit()}
+return res
+}
+//保存关联表数据
+function SaveRelations(id, payload) {
+${saveDataCodes.join("\n\t")}
+return id;
+}
+
+//删除关联表数据
+function BeforeDelete(id){
+${deleteDataCodes.join("\n\t")}
+}
+
+${saveDataFunctionList.join("\n")}
+
+${deleteDataFuntionList.join("\n")}
+
+${AfterFind}
+`;
+  // sc.WriteFile(`/${functionName}.js`, scripts);
+  // Studio("model.file.WriteScript", `/${functionName}.js`, scripts);
+  return {
+    language: "js",
+    title: `${functionName}.js`,
+    __code_source: scripts,
+  };
+}
+function StartTrans() {
+  const ismysql = IsMysql();
+  return ismysql
+    ? `
+const t = new Query();
+  t.Run({
+    sql: {
+    stmt: "START TRANSACTION;",
+  },
+});
+`
+    : "";
+}
+function Commit() {
+  const ismysql = IsMysql();
+  return ismysql
+    ? `
+t.Run({
+  sql: {
+    stmt: 'COMMIT;',
+  },
+});
+`
+    : "";
+}
+function Rollback() {
+  const ismysql = IsMysql();
+  return ismysql
+    ? `
+t.Run({
+  sql: {
+    stmt: 'ROLLBACK;',
+  },
+});
+`
+    : "";
+}
+function CreateAfterFind(relations) {
+  let templates = [];
+
+  for (const rel in relations) {
+    const element = relations[rel];
+    if (element.type !== "hasMany") {
+      continue;
+    }
+    const model = getModelDefinition(element.model);
+    if (!model) {
+      console.log(`模型${element.model}不存在！`);
+      continue;
+    }
+    let query = {};
+    if (element.query) {
+      query = element.query;
+    } else {
+    }
+    if (!query.from) {
+      query.from = model.table.name;
+    }
+    // if (!query.limit) {
+    //   query.limit = 100;
+    // }
+    query.wheres = query.wheres || [];
+    if (!query.select) {
+      query.select = [];
+      model.columns.forEach((col) => query.select.push(col.name));
+    }
+    query.wheres.push({
+      field: element.key,
+      op: "=",
+      value: ">>>payload.id<<<",
+    });
+    let str = `payload["${rel}"]= t.Get(
+    ${JSON.stringify(query)},
+);`.replace(/">>>payload.id<<<"/g, "payload.id");
+    templates.push(str);
+  }
+  return `
+    //多对一表数据查找
+    function AfterFind(payload){
+    const t = new Query();
+    ${templates.join("\n")}
+    return payload;
+    }
+    `;
+}
+
+function CreateDataDeleteCode(rel) {
+  return `
+    //删除${rel.model} == ${rel.key}
+    function Delete_${rel.name}(id){
+    let rows = Process('models.${rel.model}.DeleteWhere', {
+      wheres: [{ column: '${rel.key}', value: id }],
+    });
+    
+    //remembe to return the id in array format
+    return [id];
+    }
+    `;
+}
+/**
+ * 生成数据保存代码
+ * @param rel 关联关系
+ * @returns 代码模板
+ */
+function CreateDataSaveCode(rel) {
+  return `
+    //保存${rel.model}
+    function Save_${rel.name}(id,payload){
+    const items = payload.${rel.name} || {};
+    const deletes = items.delete || [];
+    const data = items.data || items || [];
+    if (data.length > 0 || deletes.length > 0) {
+      // 忽略实际数据 ( 通过 record 计算获取)
+      for (const i in data) {
+        if (typeof data[i].id === 'string' && data[i].id.startsWith('_')) {
+          //新增项目，在前端会生成唯一字符串,
+          //由于后台使用的自增长ID，不需要生成的唯一字符串，由数据库生成索引
+          delete data[i].id;
+        }
+      }
+    
+      // 保存物品清单
+      var res = Process('models.${rel.model}.EachSaveAfterDelete', deletes, data, {
+        ${rel.key}: id,
+      });
+      if (res.code && res.code > 300) {
+        console.log('${rel.model}:AfterSave Error:', res);
+        //console.log(items)
+        throw new Exception(res.message,res.code)
+      }else{
+        return id;
+      }
+    }
+    }
+    `;
+}
+function wrapForm(formDsl) {
+  return {
+    language: "json",
+    title: `${formDsl.name}.form.yao`,
+    __code_source: formDsl,
+  };
+}
+/**创建列表，并不需要所有的模型都创建列表 */
+function CreateListFile(rel) {
+  const modelName = rel.model;
+  const excludeField = rel.key;
+  let modelDsl = getModelDefinition(modelName);
+  if (!modelDsl) {
+    console.log(`Model ${modelName} not exist`);
+    return;
+  }
+  //在列表显示中不需要显示外键
+  modelDsl.columns = modelDsl.columns.filter(
+    (col) => col.name !== excludeField
+  );
+  let listDsl = toList(modelDsl); //这里有studio js读取操作
+  let tableName = SlashName(modelDsl.table.name);
+  // let listFileName = tableName + ".list.json";
+  // Studio("model.file.MoveAndWrite", "lists", listFileName, listDsl);
+  return {
+    language: "json",
+    title: tableName,
+    __code_source: listDsl,
+  };
+}
+
+function toList(modelDsl) {
+  // const copiedObject = JSON.parse(JSON.stringify(modelDsl.columns));
+  let columns = modelDsl.columns || [];
+  const table_dot_name = DotName(modelDsl.table.name);
+  let listTemplate = {
+    name: modelDsl.name || "列表",
+    action: {
+      bind: {
+        table: table_dot_name,
+      },
+    },
+    layout: {
+      list: {
+        columns: [],
+      },
+    },
+    fields: {
+      list: {},
+    },
+  };
+  //并不知道谁会调用列表，
+  //不要显示外部关联ID
+  // columns = columns.filter((col) => !/_id$/i.test(col.name));
+  columns = MakeColumnOrder(columns);
+  columns.forEach((column) => {
+    let form = CastListColumn(column, modelDsl);
+    if (form) {
+      form.layout.forEach((tc) => {
+        listTemplate.layout.list.columns.push(tc);
+      });
+      form.fields.forEach((c) => {
+        listTemplate.fields.list[c.name] = c.component;
+      });
+    }
+  });
+  // listTemplate.action.bind.option.withs = Studio("model.relation.GetWiths", modelDsl);
+  // listTemplate = mergeListTemplateFromModel(listTemplate, modelDsl);
+  return listTemplate;
+}
+
+/**
+ *根据模型定义生成Form定义
+ * yao studio run model.column.list.Cast
+ * @param column 模型列定义
+ * @param modelDsl 模型定义
+ * @param type 类型
+ * @returns
+ */
+function CastListColumn(column, modelDsl) {
+  const types = GetDBTypeMap();
+  const ismysql = IsMysql();
+  const title = column.label || column.name;
+  const name = column.name;
+  if (!name) {
+    //log.Error("castFormColumn: missing name");
+    return false;
+  }
+  if (!title) {
+    // log.Error("castFormColumn: missing title");
+    return false;
+  }
+  // 不展示隐藏列
+  const hidden = HiddenFields(false);
+  if (hidden.indexOf(name) != -1) {
+    return false;
+  }
+  let res = {
+    layout: [],
+    fields: [],
+  };
+  let component = {
+    bind: name,
+    edit: {
+      type: "Input",
+      props: {},
+    },
+  };
+  let width = 6;
+  const bind = name;
+  if (column.type == "json") {
+    component = {
+      bind: bind,
+      edit: {
+        type: "TextArea",
+      },
+    };
+  } else if (column.type == "enum") {
+    component = {
+      bind: bind,
+      edit: {
+        props: {
+          options: Enum(column["option"]),
+          placeholder: "请选择" + title,
+        },
+        type: "Select",
+      },
+    };
+  } else if (
+    column.type === "boolean" ||
+    (column.type === "tinyInteger" &&
+      ismysql &&
+      (column.default === 0 || column.default === 1))
+  ) {
+    let checkedValue = true;
+    let unCheckedValue = false;
+    if (ismysql) {
+      checkedValue = 1;
+      unCheckedValue = 0;
+    }
+    component = {
+      bind: bind,
+      edit: {
+        type: "RadioGroup",
+        props: {
+          options: [
+            {
+              label: "是",
+              value: checkedValue,
+            },
+            {
+              label: "否",
+              value: unCheckedValue,
+            },
+          ],
+        },
+      },
+    };
+  } else if (column.type == "color" || /color/i.test(column.name)) {
+    component.edit.type = "ColorPicker";
+  } else if (column.crypt === "PASSWORD") {
+    component.edit.type = "Password";
+    component.view = component.view || {};
+    component.view.compute = "Hide";
+  } else {
+    if (column.type in types) {
+      component.edit.type = types[column.type];
+    }
+  }
+  if (["TextArea"].includes(types[column.type]) || column.type === "json") {
+    width = 24;
+  }
+  component = IsFormFile(column, component, modelDsl);
+  component = EditSelect(column, modelDsl, component);
+  if (component.is_upload) {
+    width = 24;
+  }
+  delete component.is_upload;
+  component = EditPropes(component, column);
+  // component = updateListCompFromModelXgen(component, column, modelDsl);
+  if (!component.edit?.props?.ddic_hide) {
+    res.layout.push({
+      name: title,
+      width: width,
+    });
+  }
+  res.fields.push({
+    name: title,
+    component: component,
+  });
+  return res;
 }
 /**
  * yao studio run model.column.form.AddTabColumn
@@ -1442,7 +1849,7 @@ function EditSelect(column, modelDsl, component) {
               $remote: {
                 process: "yao.component.SelectOptions",
                 query: {
-                  model: Studio("model.file.DotName", relation[rel].model),
+                  model: DotName(relation[rel].model),
                   label: field,
                   value: "id",
                 },

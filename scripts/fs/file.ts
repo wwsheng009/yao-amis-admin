@@ -213,6 +213,13 @@ function writeLog(
     operation,
   });
 }
+/**
+ *
+ * @param type 用户操作类型，'user'/'public'/'project'
+ * @param file file meta info
+ * @param folder target folder
+ * @returns
+ */
 function UploadFile(type: string, file: YaoFile, folder: string) {
   const filePath = saveFile(type, file, folder);
   return {

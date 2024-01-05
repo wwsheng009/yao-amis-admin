@@ -290,6 +290,12 @@ function SaveModelToLocal(modelDsl) {
     return;
   }
 
+  // 控制是否需要保存到本地
+  const saveFlag = Process("utils.env.Get", "SAVE_MODEL_FILE_TO_LOCAL");
+  if (saveFlag !== "true") {
+    return;
+  }
+
   // hacked,don't do this in production envirement
 
   __yao_data = { ROOT: true };

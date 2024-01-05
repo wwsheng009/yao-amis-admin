@@ -99,23 +99,52 @@ function getTable(table) {
 }
 function CRUDNewTemplate(modelId, columns) {
   return {
-    __code_source: Process("scripts.amis.schema.curdNewPage", modelId, columns),
+    __code_sources: [
+      {
+        language: "json",
+        title: "增删改查-创建",
+        can_preview: true,
+        __code_source: Process(
+          "scripts.amis.schema.curdNewPage",
+          modelId,
+          columns
+        ),
+      },
+    ],
   };
 }
 
 function CRUDListTemplate(modelId, columns) {
   return {
-    __code_source: Process(
-      "scripts.amis.schema.curdListPage",
-      modelId,
-      columns
-    ),
+    __code_sources: [
+      {
+        language: "json",
+        title: "增删改查-列表",
+        can_preview: true,
+        __code_source: Process(
+          "scripts.amis.schema.curdListPage",
+          modelId,
+          columns
+        ),
+      },
+    ],
   };
 }
 
 function CRUDAllTemplate(modelId, columns) {
   return {
-    __code_source: Process("scripts.amis.curd.curdTemplate", modelId, columns),
+    __code_sources: [
+      {
+        language: "json",
+        title: "增删改查-所有功能",
+        can_preview: true,
+        __code_source: Process(
+          "scripts.amis.curd.curdTemplate",
+          modelId,
+          columns
+        ),
+      },
+    ],
   };
 }
 
@@ -126,11 +155,17 @@ function CRUDAllTemplate(modelId, columns) {
  */
 function getTSType(modelId, columns) {
   return {
-    __code_source: Process(
-      "scripts.system.tstype.createModelType",
-      modelId,
-      columns
-    ),
+    __code_sources: [
+      {
+        language: "typescript",
+        title: "Ts类型",
+        __code_source: Process(
+          "scripts.system.tstype.createModelType",
+          modelId,
+          columns
+        ),
+      },
+    ],
   };
 }
 /**
@@ -140,11 +175,18 @@ function getTSType(modelId, columns) {
  */
 function getTableAmisViewFields(modelId, columns) {
   return {
-    __code_source: Process(
-      "scripts.amis.schema.generateViewFields",
-      modelId,
-      columns
-    ),
+    __code_sources: [
+      {
+        language: "json",
+        title: "表单查看",
+        can_preview: true,
+        __code_source: Process(
+          "scripts.amis.schema.generateViewFields",
+          modelId,
+          columns
+        ),
+      },
+    ],
   };
 }
 /**
@@ -154,11 +196,18 @@ function getTableAmisViewFields(modelId, columns) {
  */
 function getTableAmisFormFields(modelId, columns) {
   return {
-    __code_source: Process(
-      "scripts.amis.schema.generateEditFormFields",
-      modelId,
-      columns
-    ),
+    __code_sources: [
+      {
+        language: "json",
+        title: "表单编辑",
+        can_preview: true,
+        __code_source: Process(
+          "scripts.amis.schema.generateEditFormFields",
+          modelId,
+          columns
+        ),
+      },
+    ],
   };
 }
 
@@ -169,11 +218,18 @@ function getTableAmisFormFields(modelId, columns) {
  */
 function getTableAmisFormViewFields(modelId, columns) {
   return {
-    __code_source: Process(
-      "scripts.amis.schema.formViewFieldsSchema",
-      modelId,
-      columns
-    ),
+    __code_sources: [
+      {
+        language: "json",
+        title: "表单查看",
+        can_preview: true,
+        __code_source: Process(
+          "scripts.amis.schema.formViewFieldsSchema",
+          modelId,
+          columns
+        ),
+      },
+    ],
   };
 }
 
@@ -184,11 +240,18 @@ function getTableAmisFormViewFields(modelId, columns) {
  */
 function getTableAmisViewFieldsWithQuick(modelId, columns) {
   return {
-    __code_source: Process(
-      "scripts.amis.schema.generateViewFieldsWithQuick",
-      modelId,
-      columns
-    ),
+    __code_sources: [
+      {
+        language: "json",
+        title: "列表查看-带快速编辑",
+        can_preview: true,
+        __code_source: Process(
+          "scripts.amis.schema.generateViewFieldsWithQuick",
+          modelId,
+          columns
+        ),
+      },
+    ],
   };
 }
 
@@ -200,12 +263,18 @@ function getTableAmisViewFieldsWithQuick(modelId, columns) {
  */
 function getXgenTable(modelId, columns) {
   return {
-    __code_source: Process(
-      "scripts.xgen.schema.generateTableView",
-      modelId,
-      columns,
-      true
-    ),
+    __code_sources: [
+      {
+        language: "json",
+        title: "列表查看-带快速编辑",
+        __code_source: Process(
+          "scripts.xgen.schema.generateTableView",
+          modelId,
+          columns,
+          true
+        ),
+      },
+    ],
   };
 }
 /**
@@ -215,13 +284,20 @@ function getXgenTable(modelId, columns) {
  * @returns
  */
 function getXgenTableFull(modelId, columns) {
+  let template = Process(
+    "scripts.xgen.schema.generateTableView",
+    modelId,
+    columns,
+    false
+  );
   return {
-    __code_source: Process(
-      "scripts.xgen.schema.generateTableView",
-      modelId,
-      columns,
-      false
-    ),
+    __code_sources: [
+      {
+        language: "json",
+        title: `${template.name}.tab.yao`,
+        __code_source: template,
+      },
+    ],
   };
 }
 
@@ -233,12 +309,18 @@ function getXgenTableFull(modelId, columns) {
  */
 function getXgenForm(modelId, columns) {
   return {
-    __code_source: Process(
-      "scripts.xgen.schema.generateFormView",
-      modelId,
-      columns,
-      true
-    ),
+    __code_sources: [
+      {
+        language: "json",
+        title: "xgen-表单查看",
+        __code_source: Process(
+          "scripts.xgen.schema.generateFormView",
+          modelId,
+          columns,
+          true
+        ),
+      },
+    ],
   };
 }
 
@@ -250,7 +332,7 @@ function getXgenForm(modelId, columns) {
  */
 function getXgenFormFullView(modelId, columns) {
   return {
-    __code_source: Process(
+    __code_sources: Process(
       "scripts.xgen.schema.generateFormView",
       modelId,
       columns,
@@ -267,7 +349,7 @@ function getXgenFormFullView(modelId, columns) {
  */
 function getXgenFormFullEdit(modelId, columns) {
   return {
-    __code_source: Process(
+    __code_sources: Process(
       "scripts.xgen.schema.generateFormView",
       modelId,
       columns,
