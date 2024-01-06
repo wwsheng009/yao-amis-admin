@@ -16,12 +16,12 @@ function generateMenuConfig(modelId, columns) {
       title: `${modelId}菜单配置`,
       __code_source: {
         icon: "icon-file-text",
-        name: modelId,
+        name: name,
         parent: null,
         path: `/x/Table/${modelId}`,
         children: [
           { name: `${name}列表`, path: `/x/Table/${modelId}` },
-          { name: `${name}表单`, path: `/x/Form/${modelId}` },
+          { name: `创建${name}`, path: `/x/Form/${modelId}/0/edit` },
         ],
       },
     },
@@ -1124,7 +1124,7 @@ function relationTable(formDsl, modelDsl) {
       width: 24,
     });
   }
-  return [wrapForm(formDsl, modelDsl)];
+  return [wrapForm(formDsl, modelDsl, "view")];
 }
 /**
  * yao studio run model.relation.List
@@ -1169,7 +1169,7 @@ function relationList(formDsl, modelDsl) {
     });
   }
   if (RelList.length === 0) {
-    return [wrapForm(formDsl, modelDsl, "view")];
+    return [wrapForm(formDsl, modelDsl, "edit")];
   }
   const tabName = modelDsl.ID;
   let funtionName = modelDsl.ID;
@@ -1203,7 +1203,7 @@ function relationList(formDsl, modelDsl) {
     );
   }
 
-  return [wrapForm(formDsl, modelDsl, "view"), ...listDslList, ...scripts];
+  return [wrapForm(formDsl, modelDsl, "edit"), ...listDslList, ...scripts];
 }
 
 function WriteScript(
