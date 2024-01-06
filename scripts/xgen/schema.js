@@ -85,6 +85,8 @@ function generateFormView(modelId, columns, simple, type) {
 }
 
 function getXgenTableSchema(modelDsl) {
+  let modelName = DotName(modelDsl.ID);
+
   // const copiedObject = JSON.parse(JSON.stringify(modelDsl.columns));
   let columns = modelDsl.columns || [];
   const table_dot_name = DotName(modelDsl.table.name);
@@ -201,6 +203,19 @@ function getXgenTableSchema(modelDsl) {
       });
     }
   });
+  const relations = modelDsl.relations || {};
+  let RelList = [];
+  for (const rel in relations) {
+    RelList.push({
+      name: rel,
+      model: relations[rel].model,
+      key: relations[rel].key,
+    });
+  }
+  if (RelList.length > 0) {
+    tableTemplate.action["before:delete"] = `scripts.${modelName}.BeforeDelete`;
+    tableTemplate.action["after:find"] = `scripts.${modelName}.AfterFind`;
+  }
   tableTemplate.action.bind.option.withs = GetWiths(modelDsl);
   return tableTemplate;
 }
@@ -1093,22 +1108,28 @@ function MergeObject(target, source) {
  * 把hasMany变成表单中的Table
  */
 function relationTable(formDsl, modelDsl) {
+  const modelName = DotName(modelDsl.ID);
   const relations = modelDsl.relations || {};
+  let RelList = [];
   for (const rel in relations) {
     // console.log(`translate.translate:${i}`);
-    if (relations[rel].type != "hasMany") {
-      continue;
-    }
+    // if (relations[rel].type != "hasMany") {
+    //   continue;
+    // }
+    RelList.push({
+      name: rel,
+      model: relations[rel].model,
+      key: relations[rel].key,
+    });
     let label = relations[rel].label;
     if (!label) {
       label = rel;
-      // label = "列表" + Studio("model.translate.translate", rel);
     }
     if (!label) {
       label = rel;
     }
     formDsl.fields.form[label] = {
-      bind: "id",
+      bind: rel,
       edit: {
         type: "Table",
         props: {
@@ -1124,6 +1145,13 @@ function relationTable(formDsl, modelDsl) {
       width: 24,
     });
   }
+  if (RelList.length) {
+    formDsl.action.save = {
+      process: `scripts.${modelName}.Save`,
+    };
+    formDsl.action["before:delete"] = `scripts.${modelName}.BeforeDelete`;
+    formDsl.action["after:find"] = `scripts.${modelName}.AfterFind`;
+  }
   return [wrapForm(formDsl, modelDsl, "view")];
 }
 /**
@@ -1133,12 +1161,10 @@ function relationTable(formDsl, modelDsl) {
 function relationList(formDsl, modelDsl) {
   const relations = modelDsl.relations || {};
   let RelList = [];
-  // let tabs: YaoForm.SectionDSL[] = [];
   for (const rel in relations) {
-    // console.log(`translate.translate:${i}`);
-    if (relations[rel].type != "hasMany") {
-      continue;
-    }
+    // if (relations[rel].type != "hasMany") {
+    //   continue;
+    // }
     RelList.push({
       name: rel,
       model: relations[rel].model,
