@@ -2,18 +2,50 @@ const { getModelDefinition } = Require("amis.lib");
 const { DotName, IsMysql, SlashName } = Require("amis.lib_tool");
 
 /**
+ * yao run scripts.xgen.schema.generateMenuConfig 'admin.user'
+ * @param {string} modelId
+ * @param {Array} columns
+ */
+function generateMenuConfig(modelId, columns) {
+  const modelDsl = getModelDefinition(modelId, columns);
+
+  const name = modelDsl.name || modelId;
+  return [
+    {
+      language: "json",
+      title: `${modelId}菜单配置`,
+      __code_source: {
+        icon: "icon-file-text",
+        name: modelId,
+        parent: null,
+        path: `/x/Table/${modelId}`,
+        children: [
+          { name: `${name}列表`, path: `/x/Table/${modelId}` },
+          { name: `${name}表单`, path: `/x/Form/${modelId}` },
+        ],
+      },
+    },
+  ];
+}
+/**
  * generate xgen table views
  * yao run scripts.xgen.schema.generateTableView 'admin.user'
  * @param {string} modelId
  * @param {Array} columns
- * @param {boolean} simple 简单模式
+ * @param {string} simple 简单模式
  */
 function generateTableView(modelId, columns, simple) {
-  if (simple) {
-    return {
-      name: modelId,
-      action: { bind: { model: modelId } },
-    };
+  if (simple == "simple") {
+    return [
+      {
+        language: "json",
+        title: `${modelId}.tab.yao`,
+        __code_source: {
+          name: modelId,
+          action: { bind: { model: modelId } },
+        },
+      },
+    ];
   }
   const modelDsl = getModelDefinition(modelId, columns);
 
@@ -31,10 +63,10 @@ function generateTableView(modelId, columns, simple) {
  * generate xgen form views
  * @param {string} modelId
  * @param {Array} columns
- * @param {boolean} simple 简单模式
+ * @param {string} simple 简单模式
  */
 function generateFormView(modelId, columns, simple, type) {
-  if (simple) {
+  if (simple == "simple") {
     return [
       {
         language: "json",
@@ -173,7 +205,6 @@ function getXgenTableSchema(modelDsl) {
   return tableTemplate;
 }
 
-function getXgenFormCodes(modelDsl, type = "view") {}
 /**
  * create xgen form schema code from model dsl
  * @param {object} modelDsl model dsl
@@ -195,27 +226,6 @@ function getXgenFormSchema(modelDsl, type = "view") {
           name: "Fullscreen",
           type: "Form.fullscreen",
           payload: {},
-        },
-      ],
-    },
-    {
-      title: "重新生成代码",
-      icon: "icon-layers",
-      showWhenAdd: true,
-      showWhenView: true,
-      action: [
-        {
-          name: "StudioModel",
-          type: "Studio.model.cmd",
-          payload: { method: "CreateOne", args: [table_dot_name] },
-        },
-        {
-          name: "Confirm",
-          type: "Common.confirm",
-          payload: {
-            title: "提示",
-            content: "处理完成",
-          },
         },
       ],
     },
@@ -370,6 +380,7 @@ function GetDBTypeMap() {
     string: "Input",
     char: "Input",
     text: "TextArea",
+    vector: "TextArea",
     mediumText: "TextArea",
     richtext: "TextArea",
     longText: "TextArea",
@@ -517,7 +528,7 @@ function TableColumnCast(column, modelDsl) {
         },
       },
     };
-  } else if (column.type == "color" || /color/i.test(column.name)) {
+  } else if (column.type == "color") {
     component.edit.type = "ColorPicker";
     width = 80;
   } else if (column.crypt === "PASSWORD") {
@@ -617,20 +628,10 @@ function HiddenFields(isTable) {
   let hidden = [];
   if (isTable) {
     // Table页面不展示的字段列表
-    hidden = ["del", "delete", "deleted", "deleted_at", "pwd", "deleted"];
+    hidden = ["deleted_at", "pwd", "deleted"];
   } else {
     // Form页面不展示的字段列表
-    hidden = [
-      "del",
-      "delete",
-      "deleted",
-      "deleted_at",
-      "created_at",
-      "updated_at",
-      "id",
-      "ID",
-      "update_time",
-    ];
+    hidden = ["deleted_at", "created_at", "updated_at", "id", "ID"];
   }
   return hidden;
 }
@@ -650,14 +651,24 @@ function Enum(option) {
 
 /**
  * 判断是否文件显示组件
- * yao studio run model.column.file.IsFile
  * @param column 模型列定义
  * @param component 更新的组件
  * @returns
  */
 function IsFile(column, component, modelDsl) {
   if (
-    !["text", "json", "string", "logngtext", "mediumText"].includes(column.type)
+    ![
+      // "text",
+      // "json",
+      // "string",
+      // "logngtext",
+      // "mediumText",
+      "image",
+      "images",
+      "audio",
+      "video",
+      "file",
+    ].includes(column.type)
   ) {
     return component;
   }
@@ -690,37 +701,9 @@ function IsFile(column, component, modelDsl) {
   };
   return component;
 }
-const imageNamePattern = [
-  "img",
-  "image",
-  "_pic",
-  "pic_",
-  "picture",
-  "oss",
-  "photo",
-  "icon",
-  "avatar",
-  "Img",
-  "logo",
-  "cover",
-  "url",
-  "gallery",
-  "pic",
-];
-
-const videoNamePattern = ["video", "_video", "video_"];
-const fileNamePattern = ["file", "_file", "file_"];
-
 function GetFileType(column) {
-  const name = column.name;
-
   let viewType = "A";
   let fileType = "unknown";
-  const patterns = [
-    ...imageNamePattern,
-    ...videoNamePattern,
-    ...fileNamePattern,
-  ];
 
   if (column.type == "image" || column.type == "images") {
     viewType = "Image";
@@ -731,23 +714,6 @@ function GetFileType(column) {
   } else if (column.type == "file") {
     viewType = "A";
     fileType = "file";
-  }
-  if (fileType == "unknown") {
-    for (const pattern of patterns) {
-      if (name.includes(pattern)) {
-        if (imageNamePattern.includes(pattern)) {
-          viewType = "Image";
-          fileType = "image";
-        } else if (videoNamePattern.includes(pattern)) {
-          viewType = "Image";
-          fileType = "video";
-        } else {
-          viewType = "A";
-          fileType = "file";
-        }
-        break;
-      }
-    }
   }
   return {
     viewType,
@@ -1203,7 +1169,7 @@ function relationList(formDsl, modelDsl) {
     });
   }
   if (RelList.length === 0) {
-    return [wrapForm(formDsl, modelDsl)];
+    return [wrapForm(formDsl, modelDsl, "view")];
   }
   const tabName = modelDsl.ID;
   let funtionName = modelDsl.ID;
@@ -1237,7 +1203,7 @@ function relationList(formDsl, modelDsl) {
     );
   }
 
-  return [wrapForm(formDsl, modelDsl), ...listDslList, ...scripts];
+  return [wrapForm(formDsl, modelDsl, "view"), ...listDslList, ...scripts];
 }
 
 function WriteScript(
@@ -1430,10 +1396,10 @@ function Save_${rel.name}(id,payload){
     }
 }`;
 }
-function wrapForm(formDsl, modelDsl) {
+function wrapForm(formDsl, modelDsl, type) {
   return {
     language: "json",
-    title: `${modelDsl.ID}.form.yao`,
+    title: `${modelDsl.ID}${type == "view" ? "_view" : ""}.form.yao`,
     __code_source: formDsl,
   };
 }
@@ -1587,7 +1553,7 @@ function CastListColumn(column, modelDsl) {
         },
       },
     };
-  } else if (column.type == "color" || /color/i.test(column.name)) {
+  } else if (column.type == "color") {
     component.edit.type = "ColorPicker";
   } else if (column.crypt === "PASSWORD") {
     component.edit.type = "Password";
@@ -1742,7 +1708,7 @@ function FormColumnCast(column, modelDsl) {
         },
       },
     };
-  } else if (column.type == "color" || /color/i.test(column.name)) {
+  } else if (column.type == "color") {
     component.edit.type = "ColorPicker";
   } else if (column.crypt === "PASSWORD") {
     component.edit.type = "Password";
@@ -1780,7 +1746,6 @@ function FormColumnCast(column, modelDsl) {
   return res;
 }
 /**
- * yao studio run model.column.file.IsFormFile
  * 根据图片组件更新组件类型,可上传
  * @param column 模型中的字段定义
  * @param component 数据库字段定义
@@ -1788,9 +1753,7 @@ function FormColumnCast(column, modelDsl) {
  * @returns
  */
 function IsFormFile(column, component, modelDsl) {
-  if (
-    !["text", "json", "string", "logngtext", "mediumText"].includes(column.type)
-  ) {
+  if (!["video", "image", "file", "audio"].includes(column.type)) {
     return component;
   }
   const { viewType, fileType } = GetFileType(column);

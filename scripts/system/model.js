@@ -120,6 +120,8 @@ function CompleteModel(modelDsl) {
       if (col[key] !== null && col[key] !== undefined) {
         if (col[key] === true || col[key] > 0) {
           col[key] = true;
+        } else {
+          col[key] = false;
         }
       }
     });
@@ -132,6 +134,7 @@ function CompleteModel(modelDsl) {
       !type.includes("FLOAT")
     ) {
       delete col.scale;
+      delete col.precision;
     }
 
     if (Array.isArray(col.options) && col.options.length > 0) {
@@ -804,6 +807,17 @@ function ConvertTableLineToModel(line) {
 
       // delete col.element_id;
     }
+    // 非浮点类型不需要scale属性。
+    let type = colNew.type?.toUpperCase();
+    if (
+      type &&
+      !type.includes("DOUBLE") &&
+      !type.includes("DEMICAL") &&
+      !type.includes("FLOAT")
+    ) {
+      delete colNew.scale;
+      delete colNew.precision;
+    }
 
     if (col.default != null && col.type == "boolean") {
       if (col.default > 0 || col.default?.toLowerCase() == "true") {
@@ -1142,7 +1156,8 @@ function removeModelColumnIds(modelDsl) {
  */
 function ImportModelFromSource(payload) {
   let newCode = payload.source;
-  newCode = newCode.replace(/\/\/.*[\r]\n/g, "");
+  newCode = newCode.replace(/\/\/.*$/gm, "");
+  newCode = newCode.replace(/\/\*.*?\*\//gs, "");
   let model = JSON.parse(newCode);
 
   model = CompleteModel(model);

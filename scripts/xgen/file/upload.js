@@ -1,4 +1,3 @@
-// import { Process } from "yao-node-client";
 /**
  * 转换图片显示格式
  *
@@ -7,27 +6,29 @@
  * @returns string[] 数组格式的图片地址
  */
 function View(data) {
-    if (!data || !data.length) {
-        return null;
-    }
-    let isArray = true;
-    try {
-        isArray = Array.isArray(JSON.parse(data));
-    }
-    catch (error) {
-        isArray = false;
-    }
-    let array = Array.isArray(data)
-        ? data
-        : isArray
-            ? JSON.parse(data)
-            : data.includes(",")
-                ? data.split(",")
-                : [data];
-    if (!array || array.length == 0) {
-        return null;
-    }
-    return array;
+  if (!data || !data.length) {
+    return null;
+  }
+  if (!Array.isArray(data)) {
+    return data.split(",");
+  }
+  //   let isArray = true;
+  //   try {
+  //     isArray = Array.isArray(JSON.parse(data));
+  //   } catch (error) {
+  //     isArray = false;
+  //   }
+  //   let array = Array.isArray(data)
+  //     ? data
+  //     : isArray
+  //     ? JSON.parse(data)
+  //     : data.includes(",")
+  //     ? data.split(",")
+  //     : [data];
+  //   if (!array || array.length == 0) {
+  //     return null;
+  //   }
+  //   return array;
 }
 /**
  * scripts.file.upload.Edit
@@ -39,11 +40,14 @@ function View(data) {
  * @returns 处理后的图片地址
  */
 function Edit(row, name, model_name) {
-    const table = Process("schemas.default.TableGet", model_name);
-    const column = table.columns.find((col) => col.name === name);
-    if (!column || column.type === "json") {
-        return row[name];
-    }
-    //非json的格式化成json
-    return JSON.stringify(row[name]);
+  if (Array.isArray(row[name])) {
+    return row[name].join(",");
+  }
+  //   const table = Process("schemas.default.TableGet", model_name);
+  //   const column = table.columns.find((col) => col.name === name);
+  //   if (!column || column.type === "json") {
+  //     return row[name];
+  //   }
+  //   //非json的格式化成json
+  //   return JSON.stringify(row[name]);
 }

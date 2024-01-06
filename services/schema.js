@@ -1,32 +1,36 @@
 function getCodeGenerationList() {
   return [
     {
-      label: "增删改查-所有",
+      label: "Amis增删改查-页面",
       value: "CRUDAllTemplate",
     },
     {
-      label: "增删改查-查看",
+      label: "Amis增删改查-查看",
       value: "CRUDListTemplate",
     },
     {
-      label: "增删改查-创建",
+      label: "Amis增删改查-创建",
       value: "CRUDNewTemplate",
     },
     {
-      label: "列表视图-字段列表",
+      label: "Amis列表视图-字段列表",
       value: "getTableAmisViewFields",
     },
     {
-      label: "表单查看-字段列表",
+      label: "Amis表单查看-字段列表",
       value: "getTableAmisFormViewFields",
     },
     {
-      label: "表单修改-字段列表",
+      label: "Amis表单修改-字段列表",
       value: "getTableAmisFormFields",
     },
     {
-      label: "表单修改-带快速-字段列表",
+      label: "Amis表单修改-带快速-字段列表",
       value: "getTableAmisViewFieldsWithQuick",
+    },
+    {
+      label: "Xgen所有对象",
+      value: "getXgenObjects",
     },
     {
       label: "Xgen表格定义-简单",
@@ -262,19 +266,14 @@ function getTableAmisViewFieldsWithQuick(modelId, columns) {
  * @returns
  */
 function getXgenTable(modelId, columns) {
+  let template = Process(
+    "scripts.xgen.schema.generateTableView",
+    modelId,
+    columns,
+    "simple"
+  );
   return {
-    __code_sources: [
-      {
-        language: "json",
-        title: "列表查看-带快速编辑",
-        __code_source: Process(
-          "scripts.xgen.schema.generateTableView",
-          modelId,
-          columns,
-          true
-        ),
-      },
-    ],
+    __code_sources: template,
   };
 }
 /**
@@ -288,7 +287,7 @@ function getXgenTableFull(modelId, columns) {
     "scripts.xgen.schema.generateTableView",
     modelId,
     columns,
-    false
+    "full"
   );
   return {
     __code_sources: template,
@@ -311,7 +310,7 @@ function getXgenForm(modelId, columns) {
           "scripts.xgen.schema.generateFormView",
           modelId,
           columns,
-          true
+          "simple"
         ),
       },
     ],
@@ -330,7 +329,7 @@ function getXgenFormFullView(modelId, columns) {
       "scripts.xgen.schema.generateFormView",
       modelId,
       columns,
-      false,
+      "full",
       "view"
     ),
   };
@@ -347,8 +346,54 @@ function getXgenFormFullEdit(modelId, columns) {
       "scripts.xgen.schema.generateFormView",
       modelId,
       columns,
-      false,
+      "full",
       "edit"
     ),
+  };
+}
+
+/**
+ * 生成xgen所有的对应列表
+ * @param {string} modelId 模型标识
+ * @param {Array} columns 列定义
+ * @returns
+ */
+function getXgenObjects(modelId, columns) {
+  const formFullviews = Process(
+    "scripts.xgen.schema.generateFormView",
+    modelId,
+    columns,
+    "full",
+    "view"
+  );
+
+  const formFulledits = Process(
+    "scripts.xgen.schema.generateFormView",
+    modelId,
+    columns,
+    "full",
+    "edit"
+  );
+
+  const tableFullViews = Process(
+    "scripts.xgen.schema.generateTableView",
+    modelId,
+    columns,
+    "full"
+  );
+
+  const menus = Process(
+    "scripts.xgen.schema.generateMenuConfig",
+    modelId,
+    columns
+  );
+
+  return {
+    __code_sources: [
+      ...tableFullViews,
+      ...formFullviews,
+      ...formFulledits,
+      ...menus,
+    ],
   };
 }

@@ -195,7 +195,7 @@
                           {
                             "actionType": "link",
                             "args": {
-                              "link": "${`/model/` + result.data.id}"
+                              "link": "${`/model/create/` + result.data.id + `/`}"
                             }
                           }
                         ],
