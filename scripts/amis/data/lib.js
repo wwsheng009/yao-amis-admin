@@ -301,9 +301,13 @@ function updateInputData(model, Data) {
         case "SMALLINCREMENTS":
         case "INCREMENTS":
         case "BIGINCREMENTS":
-          if (typeof field === "string" && field === "") {
-            // tree-select控件清空时的值是字符串
-            line[key] = 0;
+          if (typeof field === "string" ) {
+            if (field === "") {
+              // tree-select控件清空时的值是字符串
+              line[key] = 0;
+            }else{
+              line[key] = Number(line[key]);
+            }
           }
           break;
         case "FLOAT":
@@ -312,9 +316,13 @@ function updateInputData(model, Data) {
         case "UNSIGNEDFLOAT":
         case "UNSIGNEDDOUBLE":
         case "UNSIGNEDDECIMAL":
-          if (typeof field === "string" && field === "") {
-            // tree-select控件清空时的值是字符串
-            line[key] = 0.0;
+          if (typeof field === "string" ) {
+            if (field === "") {
+              // tree-select控件清空时的值是字符串
+              line[key] = 0.0;
+            }else{
+              line[key] = Number(line[key]);
+            }
           }
           break;
         case "BOOLEAN":

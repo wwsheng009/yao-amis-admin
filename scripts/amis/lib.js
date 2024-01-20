@@ -166,29 +166,31 @@ function updateAmisFormColFromModel(amisColumn, yaoColumn) {
 
       switch (validation.method) {
         case "typeof":
-          switch (validation.args[0]) {
-            case "integer":
-              validationKey = "isInt";
-              amisColumn.validations[validationKey] = true;
-              isCheck = true;
-              break;
-            case "number":
-              validationKey = "isNumeric";
-              amisColumn.validations[validationKey] = true;
-              isCheck = true;
-              break;
-            case "float":
-              validationKey = "isFloat";
-              amisColumn.validations[validationKey] = true;
-              isCheck = true;
-              break;
-            //时间用控件类型来控制
-            // case "datetime":
-            //   amisColumn.validations["isFloat"] = true;
-            //   break;
-            // case "string, integer, float, number, datetime, timestamp,bool":
-            default:
-              break;
+          if (Array.isArray(validation.args) && validation.args.length) {
+            switch (validation.args[0]) {
+              case "integer":
+                validationKey = "isInt";
+                amisColumn.validations[validationKey] = true;
+                isCheck = true;
+                break;
+              case "number":
+                validationKey = "isNumeric";
+                amisColumn.validations[validationKey] = true;
+                isCheck = true;
+                break;
+              case "float":
+                validationKey = "isFloat";
+                amisColumn.validations[validationKey] = true;
+                isCheck = true;
+                break;
+              //时间用控件类型来控制
+              // case "datetime":
+              //   amisColumn.validations["isFloat"] = true;
+              //   break;
+              // case "string, integer, float, number, datetime, timestamp,bool":
+              default:
+                break;
+            }
           }
           break;
         case "mobile":
@@ -202,33 +204,43 @@ function updateAmisFormColFromModel(amisColumn, yaoColumn) {
           isCheck = true;
           break;
         case "min":
-          validationKey = "minimum";
-          amisColumn.validations[validationKey] = validation.args[0];
-          isCheck = true;
+          if (Array.isArray(validation.args) && validation.args.length) {
+            validationKey = "minimum";
+            amisColumn.validations[validationKey] = validation.args[0];
+            isCheck = true;
+          }
           break;
         case "max":
-          validationKey = "maximum";
-          amisColumn.validations[validationKey] = validation.args[0];
-          isCheck = true;
+          if (Array.isArray(validation.args) && validation.args.length) {
+            validationKey = "maximum";
+            amisColumn.validations[validationKey] = validation.args[0];
+            isCheck = true;
+          }
           break;
         case "minLength":
-          validationKey = "minLength";
-          amisColumn.validations[validationKey] = validation.args[0];
-          isCheck = true;
+          if (Array.isArray(validation.args) && validation.args.length) {
+            validationKey = "minLength";
+            amisColumn.validations[validationKey] = validation.args[0];
+            isCheck = true;
+          }
           break;
         case "maxLength":
-          validationKey = "maxLength";
-          amisColumn.validations[validationKey] = validation.args[0];
-          isCheck = true;
+          if (Array.isArray(validation.args) && validation.args.length) {
+            validationKey = "maxLength";
+            amisColumn.validations[validationKey] = validation.args[0];
+            isCheck = true;
+          }
           break;
         case "pattern":
-          validationKey = "matchRegexp";
-          if (regexCount > 0) {
-            validationKey = `matchRegexp${regexCount}`;
+          if (Array.isArray(validation.args) && validation.args.length) {
+            validationKey = "matchRegexp";
+            if (regexCount > 0) {
+              validationKey = `matchRegexp${regexCount}`;
+            }
+            amisColumn.validations[validationKey] = validation?.args[0] || "";
+            regexCount += 1;
+            isCheck = true;
           }
-          amisColumn.validations[validationKey] = validation.args[0];
-          regexCount += 1;
-          isCheck = true;
           break;
         default:
           break;
