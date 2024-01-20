@@ -8,7 +8,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "app.sample.json"
+      - "app.sample.yao"
 env:
   VERSION: 1.0.0
 
@@ -21,7 +21,7 @@ jobs:
 
       - name: Get Version
         run: |
-          VERSION=$(cat app.sample.json |grep version |awk -F : '{print $2}' | sed 's/"//g' | sed 's/,//g' | sed 's/ //g')
+          VERSION=$(cat app.sample.yao |grep version |awk -F : '{print $2}' | sed 's/"//g' | sed 's/,//g' | sed 's/ //g')
           if [ -z "$VERSION" ]; then 
             VERSION=1.0.0
           fi
