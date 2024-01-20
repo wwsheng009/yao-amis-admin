@@ -63,12 +63,12 @@ function xgenMenu() {
   });
   let nodes = [];
   if (menuTab.length) {
-    let first = menuTab[0]
+    let first = tabs[0];//use tabs,not the menutab
     let node = {
       parent: null,
       visible_menu: 0,
       blocks: 1,
-      path: `/x/Table/${first.name}`,
+      path: `/x/Table/${first}`,
       icon: "icon-activity",
       id: 1000,
       name: "表数据",

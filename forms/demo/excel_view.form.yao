@@ -1,0 +1,142 @@
+{
+    "action": {
+      "bind": {
+        "model": "demo.excel",
+        "option": {
+          "withs": {}
+        }
+      }
+    },
+    "fields": {
+      "form": {
+        "number": {
+          "bind": "number",
+          "edit": {
+            "props": {
+              "itemProps": {
+                "rules": [
+                  {
+                    "required": true,
+                    "type": "integer"
+                  }
+                ],
+                "tooltip": "number"
+              }
+            },
+            "type": "InputNumber"
+          }
+        },
+        "时间": {
+          "bind": "time",
+          "edit": {
+            "props": {
+              "itemProps": {
+                "rules": [
+                  {
+                    "required": true,
+                    "type": "date"
+                  }
+                ],
+                "tooltip": "时间"
+              }
+            },
+            "type": "DatePicker"
+          }
+        }
+      }
+    },
+    "layout": {
+      "actions": [
+        {
+          "action": [
+            {
+              "name": "Fullscreen",
+              "payload": {},
+              "type": "Form.fullscreen"
+            }
+          ],
+          "icon": "icon-maximize-2",
+          "showWhenAdd": true,
+          "showWhenView": true,
+          "title": "切换全屏"
+        },
+        {
+          "action": [
+            {
+              "name": "CloseModal",
+              "payload": {},
+              "type": "Common.closeModal"
+            }
+          ],
+          "icon": "icon-arrow-left",
+          "showWhenAdd": true,
+          "showWhenView": true,
+          "title": "返回"
+        },
+        {
+          "action": [
+            {
+              "name": "Submit",
+              "payload": {},
+              "type": "Form.submit"
+            },
+            {
+              "name": "Back",
+              "payload": {},
+              "type": "Common.closeModal"
+            }
+          ],
+          "icon": "icon-check",
+          "showWhenAdd": true,
+          "style": "primary",
+          "title": "保存"
+        },
+        {
+          "action": [
+            {
+              "name": "Confirm",
+              "payload": {
+                "content": "确认删除，删除后数据无法恢复？",
+                "title": "提示"
+              },
+              "type": "Common.confirm"
+            },
+            {
+              "name": "Delete",
+              "payload": {
+                "model": "demo.excel"
+              },
+              "type": "Form.delete"
+            },
+            {
+              "name": "Back",
+              "payload": {},
+              "type": "Common.closeModal"
+            }
+          ],
+          "icon": "icon-trash-2",
+          "style": "danger",
+          "title": "Delete"
+        }
+      ],
+      "form": {
+        "props": {},
+        "sections": [
+          {
+            "columns": [
+              {
+                "name": "number",
+                "width": 8
+              },
+              {
+                "name": "时间",
+                "width": 8
+              }
+            ]
+          }
+        ]
+      },
+      "primary": "id"
+    },
+    "name": "demo.excel"
+  }

@@ -1,0 +1,285 @@
+{
+  "action": {
+    "bind": {
+      "model": "admin.user",
+      "option": {
+        "withs": {}
+      }
+    }
+  },
+  "fields": {
+    "form": {
+      "姓名": {
+        "bind": "name",
+        "edit": {
+          "props": {
+            "itemProps": {
+              "rules": [
+                {
+                  "max": 40,
+                  "min": 2,
+                  "type": "string"
+                }
+              ],
+              "tooltip": "姓名"
+            }
+          },
+          "type": "Input"
+        }
+      },
+      "手机号": {
+        "bind": "mobile",
+        "edit": {
+          "props": {
+            "itemProps": {
+              "tooltip": "手机号"
+            }
+          },
+          "type": "Input"
+        }
+      },
+      "状态": {
+        "bind": "status",
+        "edit": {
+          "props": {
+            "itemProps": {
+              "initialValue": "enabled",
+              "rules": [
+                {
+                  "enum": [
+                    "enabled",
+                    "disabled"
+                  ],
+                  "type": "enum"
+                }
+              ],
+              "tooltip": "用户状态 enabled 有效, disabled 无效"
+            },
+            "options": [
+              {
+                "label": "::enabled",
+                "value": "enabled"
+              },
+              {
+                "label": "::disabled",
+                "value": "disabled"
+              }
+            ],
+            "placeholder": "请选择状态"
+          },
+          "type": "Select"
+        }
+      },
+      "登录密码": {
+        "bind": "password",
+        "edit": {
+          "props": {
+            "itemProps": {
+              "rules": [
+                {
+                  "message": "{{label}}应该至少包含一个数字",
+                  "pattern": "[0-9]+"
+                },
+                {
+                  "message": "{{label}}应该至少包含一个大写字母",
+                  "pattern": "[A-Z]+"
+                },
+                {
+                  "message": "{{label}}应该至少包含一个小写字母",
+                  "pattern": "[a-z]+"
+                },
+                {
+                  "message": "{{label}}应该至少包含一个符号",
+                  "pattern": "[@#$&*\\+]+"
+                },
+                {
+                  "max": 18,
+                  "min": 6,
+                  "type": "string"
+                }
+              ],
+              "tooltip": "登录密码"
+            }
+          },
+          "type": "Password"
+        },
+        "view": {
+          "compute": "Hide"
+        }
+      },
+      "类型": {
+        "bind": "type",
+        "edit": {
+          "props": {
+            "itemProps": {
+              "initialValue": "user",
+              "rules": [
+                {
+                  "enum": [
+                    "super",
+                    "admin",
+                    "staff",
+                    "user",
+                    "robot"
+                  ],
+                  "type": "enum"
+                }
+              ],
+              "tooltip": "账号类型 super 超级管理员,admin 管理员, staff 员工, user 用户, robot 机器人"
+            },
+            "options": [
+              {
+                "label": "::super",
+                "value": "super"
+              },
+              {
+                "label": "::admin",
+                "value": "admin"
+              },
+              {
+                "label": "::staff",
+                "value": "staff"
+              },
+              {
+                "label": "::user",
+                "value": "user"
+              },
+              {
+                "label": "::robot",
+                "value": "robot"
+              }
+            ],
+            "placeholder": "请选择类型"
+          },
+          "type": "Select"
+        }
+      },
+      "邮箱": {
+        "bind": "email",
+        "edit": {
+          "props": {
+            "itemProps": {
+              "rules": [
+                {
+                  "type": "string"
+                }
+              ],
+              "tooltip": "邮箱"
+            }
+          },
+          "type": "Input"
+        }
+      }
+    }
+  },
+  "layout": {
+    "actions": [
+      {
+        "action": [
+          {
+            "name": "Fullscreen",
+            "payload": {},
+            "type": "Form.fullscreen"
+          }
+        ],
+        "icon": "icon-maximize-2",
+        "showWhenAdd": true,
+        "showWhenView": true,
+        "title": "切换全屏"
+      },
+      {
+        "action": [
+          {
+            "name": "CloseModal",
+            "payload": {},
+            "type": "Common.closeModal"
+          }
+        ],
+        "icon": "icon-arrow-left",
+        "showWhenAdd": true,
+        "showWhenView": true,
+        "title": "返回"
+      },
+      {
+        "action": [
+          {
+            "name": "Submit",
+            "payload": {},
+            "type": "Form.submit"
+          },
+          {
+            "name": "Back",
+            "payload": {},
+            "type": "Common.closeModal"
+          }
+        ],
+        "icon": "icon-check",
+        "showWhenAdd": true,
+        "style": "primary",
+        "title": "保存"
+      },
+      {
+        "action": [
+          {
+            "name": "Confirm",
+            "payload": {
+              "content": "确认删除，删除后数据无法恢复？",
+              "title": "提示"
+            },
+            "type": "Common.confirm"
+          },
+          {
+            "name": "Delete",
+            "payload": {
+              "model": "admin.user"
+            },
+            "type": "Form.delete"
+          },
+          {
+            "name": "Back",
+            "payload": {},
+            "type": "Common.closeModal"
+          }
+        ],
+        "icon": "icon-trash-2",
+        "style": "danger",
+        "title": "Delete"
+      }
+    ],
+    "form": {
+      "props": {},
+      "sections": [
+        {
+          "columns": [
+            {
+              "name": "类型",
+              "width": 8
+            },
+            {
+              "name": "邮箱",
+              "width": 8
+            },
+            {
+              "name": "手机号",
+              "width": 8
+            },
+            {
+              "name": "登录密码",
+              "width": 8
+            },
+            {
+              "name": "姓名",
+              "width": 8
+            },
+            {
+              "name": "状态",
+              "width": 8
+            }
+          ]
+        }
+      ]
+    },
+    "primary": "id"
+  },
+  "name": "用户表"
+}
