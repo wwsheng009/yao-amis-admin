@@ -9,7 +9,7 @@
   "xgen": "1.0",
   "short": "::Amis-Yao",
   "description": "::Amis Yao Admin",
-  "version": "0.10.3",
+  "version": "0.10.4",
   "setup": "studio.setup.run",
   "startup": "scripts.startup.run",
   "adminRoot": "admin",
