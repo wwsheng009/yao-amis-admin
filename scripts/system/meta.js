@@ -227,6 +227,11 @@ function ApiListPaginate(querysIn, payload) {
   return { items: items, total: total };
 }
 
+/**
+ * get all the api from the yao internel apis
+ * yao run scripts.system.meta.allApi
+ * @returns 
+ */
 function allApi() {
   const apisList = Process("widget.apis");
   let apis = apiDefinitionList(apisList);
@@ -237,13 +242,18 @@ function allApi() {
   return apis;
 }
 
+/**
+ * get all the api list related to yao forms
+ * yao run scripts.system.meta.formApis
+ * @returns 
+ */
 function formApis() {
   const apisList = Process("widget.apis");
 
   return apiDefinitionList(apisList.filter((x) => x.name == "forms"));
 }
 /**
- *
+ * get all the yao talbe api list
  * @returns 所有的自定义的API清单列表
  */
 function customApis() {
@@ -256,8 +266,11 @@ function tableApis() {
   return apiDefinitionList(apisList.filter((x) => x.name == "tables"));
 }
 
-//从api接口中解析出table列表
-//yao run scripts.system.meta.getTableListFromApis
+/**
+ * 从api接口中解析出table列表
+ * yao run scripts.system.meta.getTableListFromApis
+ * @returns 
+ */
 function getTableListFromApis() {
   const apis = tableApis();
 
@@ -281,7 +294,11 @@ function getTableListFromApis() {
   return api2s;
 }
 
-//yao run scripts.system.meta.getFormListFromApis
+/**
+ * 从api接口中解析出form列表
+ * yao run scripts.system.meta.getFormListFromApis
+ * @returns 
+ */
 function getFormListFromApis() {
   const apis = formApis();
 
@@ -361,7 +378,12 @@ function apiDefinitionList(apisList) {
 
   return list;
 }
-//清理下导出的数据
+
+/**
+ * 清理下导出的数据
+ * @param {string} path 
+ * @returns 
+ */
 function cleanPath(path) {
   let newPath = path.replace(/\/\//g, "/");
   newPath = newPath.replace(/\\/g, "/");
@@ -369,7 +391,12 @@ function cleanPath(path) {
   return newPath;
 }
 
-// yao run scripts.system.meta.modelApiList
+/**
+ * 根据model获取model相关的api列表
+ * yao run scripts.system.meta.modelApiList admin.user
+ * @param {string} model 
+ * @returns 
+ */
 function modelApiList(model) {
   let allApi = Process("scripts.system.meta.allApi");
   apilist = allApi.filter((api) => api.group == "/v1/system/model");

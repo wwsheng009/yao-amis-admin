@@ -1,4 +1,4 @@
-// yao run scripts.system.font.loadfont
+// yao run scripts.system.font.loadfont2
 function loadfont2() {
   const source =
     "https://raw.githubusercontent.com/TOMIVERGARA/vscode-fontawesome-gallery/dev/webviews/data/fontawesome-5/metadata/categories.json";
@@ -28,8 +28,14 @@ function loadfont2() {
   Process("models.system.font.insert", columns, values);
   return { message: "加载成功" };
 }
-// yao migrate system.font --reset
-// yao run scripts.system.font.loadfont
+
+/**
+ * yao migrate system.font --reset
+ * yao run scripts.system.font.loadfont
+ * 
+ * load the awesome font infomation from github file
+ * @returns 
+ */
 function loadfont() {
   //
   //"https://github.com/FortAwesome/Font-Awesome/blob/master/metadata/icons.json";
