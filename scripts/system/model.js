@@ -1159,7 +1159,6 @@ function ImportModelFromSource(payload) {
   newCode = newCode.replace(/\/\/.*$/gm, "");
   newCode = newCode.replace(/\/\*.*?\*\//gs, "");
   let model = JSON.parse(newCode);
-
   model = CompleteModel(model);
   CheckModel(model);
   model = removeModelColumnIds(model);

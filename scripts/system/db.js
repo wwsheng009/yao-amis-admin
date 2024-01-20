@@ -1,7 +1,8 @@
 
 /**
- * yao run scripts.system.db.cleanTable system.font
  * clean the table content directly,use it carefully
+ * 
+ * yao run scripts.system.db.cleanTable system.font
  * @param {string} tableName 
  * @returns 
  */

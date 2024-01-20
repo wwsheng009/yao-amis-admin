@@ -84,31 +84,42 @@ function UpdateNode(model, id, newNode) {
   return Process(`models.${model}.save`, newNode);
 }
 
-// 删除节点与及所有的子节点
-function DeleteNode(model, ids) {
+
+/**
+ * 删除节点与及所有的子节点
+ * @param {string} modelId 
+ * @param {string} ids 
+ */
+function DeleteNode(modelId, ids) {
   // 需要处理子节点
   let subItems = [];
   let myArray = ids.split(",");
   myArray &&
     myArray.forEach((id) => {
-      let item = Process(`models.${model}.find`, id, null);
+      let item = Process(`models.${modelId}.find`, id, null);
       if (item && item.id) {
-        subItems = subItems.concat(getSubNodeItems(model, item.id));
+        subItems = subItems.concat(getSubNodeItems(modelId, item.id));
         subItems.push(item); //删除自己
       }
     });
 
   subItems.forEach((item) => {
-    Process(`models.${model}.delete`, item.id);
+    Process(`models.${modelId}.delete`, item.id);
   });
 }
 
-// 根据特定的id获取树节点以及所有的子节点
-function GetNodeItems(model, id) {
-  let item = Process(`models.${model}.find`, id, null);
+
+/**
+ * 根据特定的id获取树节点以及所有的子节点
+ * @param {string} modelId 
+ * @param {string|number} id 
+ * @returns 
+ */
+function GetNodeItems(modelId, id) {
+  let item = Process(`models.${modelId}.find`, id, null);
   let items = [];
   if (item?.id) {
-    let subItems = getSubNodeItems(model, item.id);
+    let subItems = getSubNodeItems(modelId, item.id);
 
     subItems.push(item);
     items = items.concat(subItems);
@@ -122,8 +133,8 @@ function GetNodeItems(model, id) {
  * @param {integer} parentId,父节点部门id
  * @returns 所有的部门节点列表
  */
-function getSubNodeItems(model, parentId) {
-  let subNodes = Process(`models.${model}.get`, {
+function getSubNodeItems(modelId, parentId) {
+  let subNodes = Process(`models.${modelId}.get`, {
     wheres: [
       {
         column: "parent",
@@ -135,7 +146,7 @@ function getSubNodeItems(model, parentId) {
 
   subNodes.map((node) => {
     subItems.push(node);
-    subItems = subItems.concat(getSubNodeItems(model, node.id));
+    subItems = subItems.concat(getSubNodeItems(modelId, node.id));
   });
 
   return subItems;
@@ -218,7 +229,11 @@ function collectTreeFields(data, field) {
 
   return fieldsUniq;
 }
-
+/**
+ * 将多维数组转换为一维数组，并删除重复项。
+ * @param {Array} array 
+ * @returns 
+ */
 function flatAndRemoveDuplicate(array) {
   // 将多维数组转换为一维数组
   const flatArray = array.flat();

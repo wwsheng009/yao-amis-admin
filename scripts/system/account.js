@@ -1,5 +1,8 @@
 /**
+ * 
+ * 
  * yao run scripts.system.account.UserInfo
+ * 
  * @returns 当前登录用户的信息
  */
 function UserInfo(id) {
@@ -112,7 +115,11 @@ function change_password({ current, new_password, confirm }) {
   Process("models.admin.user.save", user);
 }
 
-//新用户注册
+/**
+ * 新用户注册
+ * @param {object} payload 
+ * @returns 
+ */
 function register(payload) {
   let { captcha, password, email, confirm, name } = payload;
 

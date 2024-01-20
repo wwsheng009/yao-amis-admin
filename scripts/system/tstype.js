@@ -4,6 +4,7 @@ const { DotName, UnderscoreName, SlashName } = Require("amis.lib_tool");
 
 /**
  * 生成模型对应的ts类型定义。
+ * 
  * yao run scripts.system.tstype.createModelType admin.user
  * @param {string} modelId 模型id
  */
@@ -21,6 +22,7 @@ function createModelType(modelId, columnsIn) {
 }
 /**
  * 生成模型对应的ts类型定义
+ * 
  * yao run scripts.system.tstype.createTSTypes admin.user
  * @param {object|Array} modelsIn 模型对象或是列表
  * @returns string
