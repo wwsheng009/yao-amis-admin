@@ -119,22 +119,24 @@ function ClearFalsyKeys(target) {
   }
   for (let key in target) {
     const value = target[key];
-    if (!value && value !== false) {
-      // Fix 3: Check for all falsy values
+    if (value === undefined || value === null) {
       continue;
     }
     if (Array.isArray(value)) {
       const newArray = value.map((item) => ClearFalsyKeys(item));
-      result[key] = newArray.filter((item) => Boolean(item)); // remove falsy values from array
+      result[key] = newArray.filter((item) => item !==undefined && item !== null ); // remove falsy values from array
 
       if (value.length == 0) {
         delete result[key];
       }
     } else if (typeof value === "object") {
-      result[key] = ClearFalsyKeys(value); //Fix 4: Assign the returned value to result
-      // 空对象不输出
-      if (Object.keys(result[key]).length == 0) {
-        delete result[key];
+      let obj = ClearFalsyKeys(value); //Fix 4: Assign the returned value to result
+      if (obj !== undefined && obj != null) {
+        result[key] = obj
+        // 空对象不输出
+        if (typeof result[key] === 'object'  && Object.keys(result[key]).length == 0) {
+          delete result[key];
+        }
       }
     } else {
       result[key] = value;
