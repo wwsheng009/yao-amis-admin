@@ -57,6 +57,11 @@ function getModelsEntityset2() {
   };
 }
 
+/**
+ * 转换嵌套的对象结构成扁平的列表结构
+ * @param {object} modelData 
+ * @returns 
+ */
 function modelDefinitionList(modelData) {
   var list = [];
 

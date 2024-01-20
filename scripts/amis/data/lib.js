@@ -1,4 +1,4 @@
-const { FindCachedModelById } = Require("system.model_lib");
+const { FindAndLoadYaoModelById } = Require("system.model_lib");
 const { IsMysql } = Require("amis.lib_tool");
 const { isDateTimeType } = Require("system.col_type");
 
@@ -60,7 +60,7 @@ function queryToQueryParam(modelIn, querysIn, queryParams) {
 
   let columnMap = {};
   if (typeof model === "string") {
-    model = FindCachedModelById(model);
+    model = FindAndLoadYaoModelById(model);
   }
   model.columns?.forEach((col) => {
     columnMap[col.name] = col;
@@ -235,10 +235,11 @@ function queryToQueryParam(modelIn, querysIn, queryParams) {
   return queryParam;
 }
 
-function getModelColumnMap(model) {
+function getYaoModelColumnMap(model) {
+
   let modelDsl = model;
   if (typeof model === "string") {
-    modelDsl = FindCachedModelById(model);
+    modelDsl = FindAndLoadYaoModelById(model);
   }
 
   let columnMap = {};
@@ -261,17 +262,17 @@ function updateInputData(model, Data) {
   if (typeof Data !== "object" || Data === null || Data === undefined) {
     return Data;
   }
-  const columnMap = getModelColumnMap(model);
+  const yaoColMap = getYaoModelColumnMap(model);
 
-  const hasUserId = columnMap["user_id"] !== null; // columns.some(col=>col.name = 'user_id')
+  const hasUserId = yaoColMap["user_id"] !== null; // columns.some(col=>col.name = 'user_id')
   const user_id = Process("session.get", "user_id");
 
   function updateLine(line) {
     if (typeof line !== "object") {
       return;
     }
-    for (const key in columnMap) {
-      const modelCol = columnMap[key];
+    for (const key in yaoColMap) {
+      const modelCol = yaoColMap[key];
       const type = modelCol.type.toUpperCase();
       const field = line[key];
       if (type == "UUID" && modelCol.primary == true && !field) {
@@ -279,7 +280,6 @@ function updateInputData(model, Data) {
         line[key] = Process("utils.str.UUID");
         continue;
       }
-
       if (!Object.hasOwnProperty.call(line, key)) {
         continue;
       }
@@ -312,7 +312,7 @@ function updateInputData(model, Data) {
           break;
         case "FLOAT":
         case "DOUBLE":
-        case "DEMICAL":
+        case "DECIMAL":
         case "UNSIGNEDFLOAT":
         case "UNSIGNEDDOUBLE":
         case "UNSIGNEDDECIMAL":

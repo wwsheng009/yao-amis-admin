@@ -1,3 +1,7 @@
+const { getModelFromDB, loadModeltoMemory } = Require("system.model_db");
+
+
+
 //读取所有的模型id的列表
 //缺少一个name属性，所有只能读取到id列表
 //yao run scripts.system.model.ModelIDList
@@ -103,9 +107,9 @@ function FlatModelList(models, attr) {
  * yao run scripts.system.model_lib.FindCachedModelById
  * @param {Array} models 模型缓存，保存了所有的模型定义
  * @param {number/string} id 模型标识
- * @returns
+ * @returns object | null
  */
-function FindCachedModelById(id) {
+function FindCachedModelById(modelId) {
   const models = Process("widget.models");
 
   const traverse = (node, id) => {
@@ -124,8 +128,64 @@ function FindCachedModelById(id) {
       }
     }
   };
-  return traverse(models, id);
+
+  return traverse(models, modelId);
 }
+
+/**
+ * 优先从缓存中加载模型，如果不存在，从数据库中加载并转换成yao模型
+ * @param {string} modelId 
+ */
+function FindAndLoadYaoModelById(modelId) {
+  let modelDsl = FindCachedModelById(modelId)
+  if (modelDsl == null) {
+    let modelDsl = getModelFromDB(modelId);
+
+    if (modelDsl != null) {
+      // 加载到内存中。
+      let err = loadModeltoMemory(modelDsl, false);
+      if (err?.code && err?.Message) {
+        throw Error(err?.Message + err?.code);
+      }
+      modelDsl = FindCachedModelById(modelId)
+    }
+  }
+
+  if (!modelDsl) {
+    throw new Exception(`模型${modelId}定义不存在，未加载？`, 500);
+  }
+  return modelDsl
+}
+
+
+/**
+ * 加载模型标识，优先从数据库中加载，找不到再在缓存中加载
+ * 数据库的模型信息会更多
+ * 
+ * yao run scripts.system.model.getDBModelById
+ * @param {string} modelId 模型标识
+ * @returns
+ */
+function FindAndLoadDBModelById(modelId) {
+  if (!modelId) {
+    throw new Exception(`缺少模型标识`)
+  }
+  let modelDsl = getModelFromDB(modelId);
+  let modelDsl2 = FindCachedModelById(modelId);
+
+  if (modelDsl != null && modelDsl2 == null) {
+    loadModeltoMemory(modelDsl, false);
+  }
+  if (modelDsl == null && modelDsl2 != null) {
+    modelDsl = modelDsl2
+  }
+  if (modelDsl == null) {
+    throw new Exception(`模型：${modelId}不存在`)
+  }
+  return modelDsl;
+}
+
+
 
 /**
  * 解析内存中的模型数据
@@ -152,32 +212,14 @@ function modelIdListFromMemory(modelData) {
   return idList;
 }
 
-function modelDefinitionList(modelData) {
-  var list = [];
-
-  if (modelData.children) {
-    modelData.children.forEach((line) => {
-      var subLine = modelDefinitionList(line);
-      list = list.concat(subLine);
-    });
-  } else if (modelData.data) {
-    if (modelData.data) {
-      list.push(modelData.data);
-    }
-  } else if (Array.isArray(modelData)) {
-    modelData.forEach((line) => {
-      var subLine = modelDefinitionList(line);
-      list = list.concat(subLine);
-    });
-  }
-  return list;
-}
 
 //yao run调试前先注释
 module.exports = {
   FlatModelList,
   FindCachedModelById,
+  FindAndLoadYaoModelById,
   CachedModelList,
   MomoryModelList,
   ModelIDList,
+  FindAndLoadDBModelById
 };

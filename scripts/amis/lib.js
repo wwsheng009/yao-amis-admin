@@ -25,7 +25,7 @@ const Exception = Error;
  */
 function getModelDefinition(modelId, columnsIn) {
   let model = Process(
-    "scripts.system.model.getModelById", //优先从数据库中加载，
+    "scripts.system.model.getDBModelById", //优先从数据库中加载，
     DotName(modelId)
   );
   if (!model) {

@@ -2172,7 +2172,7 @@ function MomoryModelList(attr) {
   return list;
 }
 
-function FindCachedModelById(id) {
+function FindAndLoadYaoModelById(id) {
   const traverse = (node, id) => {
     if (node.children) {
       return traverse(node.children, id);
@@ -2192,5 +2192,5 @@ function FindCachedModelById(id) {
   return traverse(models, id);
 }
 
-const data = FindCachedModelById("system.api");
+const data = FindAndLoadYaoModelById("system.api");
 console.log(data);

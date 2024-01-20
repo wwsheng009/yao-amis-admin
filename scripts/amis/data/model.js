@@ -1,6 +1,6 @@
 //使用models*类型的处理，这类处理器是直接对表数据的操作，相对tables*处理器，性能会更好
 const { DotName } = Require("amis.lib_tool");
-const { FindCachedModelById } = Require("system.model_lib");
+const { FindAndLoadYaoModelById } = Require("system.model_lib");
 const { queryToQueryParam, updateInputData, getArrayItem, mergeQueryObject } =
   Require("amis.data.lib");
 
@@ -30,7 +30,7 @@ function dataSearch(model, pageIn, perPageIn, querysIn, queryParams, payload) {
     perPage = getArrayItem(querys, "perPage") || 10;
   }
 
-  const modelDsl = FindCachedModelById(model);
+  const modelDsl = FindAndLoadYaoModelById(model);
 
   // 当是post请求是，payload生效
   const queryParam = queryToQueryParam(modelDsl, querys, queryParams);
@@ -93,7 +93,7 @@ function dataSearch(model, pageIn, perPageIn, querysIn, queryParams, payload) {
 }
 
 function makeFake(modelId) {
-  const modelDsl = FindCachedModelById(modelId);
+  const modelDsl = FindAndLoadYaoModelById(modelId);
 
   const fakeData = {};
   modelDsl.columns.forEach((column) => {
@@ -229,7 +229,7 @@ function getData(model, id) {
 //保存记录
 //yao run scripts.amis.data.model.saveData
 function saveData(modelId, payload) {
-  const modelDsl = FindCachedModelById(modelId);
+  const modelDsl = FindAndLoadYaoModelById(modelId);
 
   payload = updateInputData(modelDsl, payload);
 

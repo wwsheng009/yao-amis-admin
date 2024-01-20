@@ -1,4 +1,4 @@
-const { FindCachedModelById, MomoryModelList, ModelIDList } =
+const { FindAndLoadYaoModelById, MomoryModelList, ModelIDList } =
   Require("system.model_lib");
 
 const { PaginateArrayWithQuery } = Require("amis.data.lib");

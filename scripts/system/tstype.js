@@ -9,7 +9,7 @@ const { DotName, UnderscoreName, SlashName } = Require("amis.lib_tool");
  * @param {string} modelId 模型id
  */
 function createModelType(modelId, columnsIn) {
-  const model = Process("scripts.system.model.getModelById", modelId);
+  const model = Process("scripts.system.model.getDBModelById", modelId);
 
   if (columnsIn != null && Array.isArray(columnsIn) && columnsIn.length > 0) {
     const columns = columnsIn.filter((col) => col.checked === true);
