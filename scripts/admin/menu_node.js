@@ -63,11 +63,12 @@ function xgenMenu() {
   });
   let nodes = [];
   if (menuTab.length) {
+    let first = menuTab[0]
     let node = {
       parent: null,
       visible_menu: 0,
       blocks: 1,
-      path: `/x/Table/${menuTab[0].name}`,
+      path: `/x/Table/${first.name}`,
       icon: "icon-activity",
       id: 1000,
       name: "表数据",
