@@ -169,14 +169,6 @@ function test1() {
     {
       cached: true,
       created: true,
-      label: "模型数据类型",
-      model: "ddic.model.column.type",
-      name: "ddic_model_column_type",
-      saved: false,
-    },
-    {
-      cached: true,
-      created: true,
       label: "数据元素",
       model: "ddic.model.element",
       name: "ddic_model_element",
