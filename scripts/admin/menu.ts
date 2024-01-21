@@ -4,6 +4,10 @@ const { updateSoyRouteComponent } = Require("admin.menu_lib");
 const { filterTreeDataWithFunc } = Require("amis.data.tree");
 
 const { getUserAuthMenuIds } = Require("auth.lib");
+
+function Process(process:string,...args:any[]):any
+
+
 /**
  * 处理用户的菜单
  * 功能一，读取本地数据库中的菜单配置,转换成soy-admin菜单
@@ -11,6 +15,7 @@ const { getUserAuthMenuIds } = Require("auth.lib");
  * 功能三，读取本地文件目录/data/amis_editor,转换成soy-admin菜单
  *
  * */
+
 
 const PagesLocation = "/pages";
 const WorkingPagesLocation = "/amis_editor";
@@ -450,7 +455,7 @@ function updateSoyRoutePath(
  */
 function saveTreeMenusToDB(
   menus: Route[],
-  source: "amis" | "soy" | undefined,
+  source: "amis" | "soy" | undefined = "amis",
   deleteFlag: boolean
 ) {
   function traverse(route: Route | Route[], parentId: number) {

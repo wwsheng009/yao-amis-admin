@@ -1,7 +1,7 @@
 {
-    "name": "amis的请求",
+    "name": "Meta Web Blog",
     "version": "1.0.0",
-    "description": "amis集成请求",
+    "description": "Api for the meta web blog",
     "group": "",
     "guard": "-",
     "paths": [

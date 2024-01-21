@@ -25,6 +25,14 @@
             "type": "integer"
         }
     ],
+    "relations":{
+        "user":{
+            "type": "hasOne",
+            "model": "admin.user",
+            "key": "id",
+            "foreign": "user_id",
+        }
+    },
     "name": "博客",
     "table": {
         "name": "blog_blog"

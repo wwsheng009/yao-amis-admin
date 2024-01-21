@@ -726,6 +726,12 @@ function getSystemMenu() {
           icon: "fas fa-blog",
           children: [
             {
+              label: "博客管理",
+              icon: "fas fa-blog",
+              schemaApi: "/api/v1/system/schema/blog.blog/crud-all",
+              url: "blog.blog",
+            },
+            {
               label: "文章管理",
               icon: "fa fa-file",
               schemaApi: "/api/v1/amis/pages/blog.post",

@@ -1,15 +1,17 @@
 const convert = Require("blog.xml-js")
+
+// 这里实现了metaweblog的api服务器，可以使用第三方的博客编辑工具把笔记内容推送到系统里。
+// 实现的功能：
+// 博客内容写表blog.post中
+// 博客中的附件，图片自动保存到文件系统，同时返回访问地址，按metablog的协议，会自动的更新文章中的地址引用
+
 // https://www.jsdelivr.com/package/npm/xml-js?path=dist
-
 // https://rpc.cnblogs.com/metaweblog/xxxxxx#metaWeblog.newPost
-
-// POST /xmlrpc.php?methodName=metaWeblog.newPost HTTP/1.1
-
 // https://www.cnblogs.com/mq0036/p/12766789.html
 
 /**
  * handler the blog request
- * @param {string} blog blog name
+ * @param {string} blog blog name,you can create multi blog in the system.
  * @param {object} query 
  * @param {object} body payload xmlrpc message
  * @returns xml message
@@ -17,27 +19,23 @@ const convert = Require("blog.xml-js")
 function metaWeblogHandler(blog, query, body) {
 
     // http://localhost:5099/api/v1/blog/reuest
+    // 接口协议可以参考cnblog的系统
     // https://rpc.cnblogs.com/metaweblog/wwsheng009
 
-    // console.log("query", query)
     let method = ""
-    if (query.methodName && query.methodName[0]) {
+    if (Array.isArray(query.methodName) && query.methodName.length) {
         method = query.methodName[0]
     }
     let bodyData = null
     if (body) {
         const options = { compact: true, };
         const jsObject = convert.xml2js(body, options)
-        // console.log('jsObject', jsObject)
         bodyData = convertData(jsObject)
-        // console.log('bodyData', bodyData)
         method = bodyData.methodCall.methodName;
     }
     if (!method) {
         throw new Exception("错误的请求")
     }
-    console.log(`接口请求方法：${method}`,)
-
     const params = bodyData.methodCall.params;
 
     let userNamePos = 1;
@@ -81,12 +79,6 @@ function metaWeblogHandler(blog, query, body) {
         default:
             break;
     }
-
-
-    // console.log(query)
-    // console.log(body)
-    // console.log('bodyData:', bodyData)
-
     return getErrorMessage("方法不支持:" + method)
 }
 /**
@@ -113,7 +105,8 @@ function newCategory(params) {
 
 }
 /**
- *  用户博客列表
+ * 获取用户博客列表
+ * 
  * yao run scripts.blog.webblog.getUsersBlogs 1 'myblog'
  * @returns Array
  */
@@ -150,6 +143,7 @@ function getUsersBlogs(user_id, blog, params) {
 }
 /**
  * 获取选定的博客文章
+ * 
  * yao run scripts.blog.webblog.getPost '::["1","13"]'
  * @param {object} params 
  * @returns 
@@ -200,6 +194,7 @@ function getPost(user_id, params) {
 
 /**
  * 最近的文章列表
+ * 
  * yao run scripts.blog.webblog.getRecentPosts 1 '::[0,1,2,"1"]'
  * @param {object} params 
  * @returns 
@@ -238,7 +233,13 @@ function getRecentPosts(user_id, params) {
     })
     return getRpcResponse(blogs2)
 }
-// yao run scripts.blog.webblog.getCategories
+// 
+/**
+ * Get the blog category list
+ * 
+ * yao run scripts.blog.webblog.getCategories
+ * @returns 
+ */
 function getCategories() {
     const categories = Process("models.blog.category.get", {})
     const categories2 = categories.map(c => { return { description: c.description || c.name, categoryid: c.id, title: c.name } })
