@@ -37,7 +37,7 @@
       "path": "/change_password",
       "method": "POST",
       "guard": "bearer-jwt",
-      "process": "scripts.system.account.change_password",
+      "process": "scripts.system.account.changeOwnassword",
       "in": [
         ":payload"
       ],

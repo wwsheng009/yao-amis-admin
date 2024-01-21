@@ -76,8 +76,12 @@ function UserList() {
   return list;
 }
 
-//已登录用户修改自己的密码
-function change_password({ current, new_password, confirm }) {
+/**
+ * 已登录用户修改自己的密码
+ * @param {object} form
+ * @returns 
+ */
+function changeOwnassword({ current, new_password, confirm }) {
   const user_id = Process("session.get", "user_id");
   if (!user_id) {
     return Process("scripts.return.Error", "", 400, "用户不存在");

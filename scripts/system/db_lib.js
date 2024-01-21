@@ -1,5 +1,13 @@
 const { IsMysql, IsPg } = Require("amis.lib_tool");
 
+/**
+ * Run db transaction
+ * 
+ * support mysql/postgres/sqlite
+ * @param {Function} fun 
+ * @param  {...any} args 
+ * @returns 
+ */
 function RunTransaction(fun, ...args) {
   const t = new Query();
   const ismysql = IsMysql();

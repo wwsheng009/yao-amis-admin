@@ -19,6 +19,9 @@ const Exception = Error;
 
 /**
  * 读取已经加载在内存中的模型的定义,并根据传入列的类型定义更新模型定义
+ * 
+ * 如果传入第二个参数，模型的字段定义使用此参数，
+ * 此功能一般用于前端传入用户选择或是修改过的字段定义
  * @param {string} modelId 模型名称
  * @param {Array} columnsIn 字段列表字义，从前端传入
  * @returns
@@ -45,7 +48,8 @@ function getModelDefinition(modelId, columnsIn) {
 /**
  * 根据模型数据更新查看页面的配置
  * @param {object} amisColumn amis字段定义
- * @param {object} column yao模型字体定义
+ * @param {object} column yao模型字段定义
+ * @param {object} modelDsl yao模型定义
  * @returns amis字段定义
  */
 function updateAmisViewColFromModel(amisColumn, column, modelDsl) {
@@ -71,10 +75,10 @@ function updateAmisViewColFromModel(amisColumn, column, modelDsl) {
 }
 
 /**
- * 根据模型数据更新查看页面的配置
+ * 根据模型信息更新查看页面的配置
  * @param {object} amisColumn amis字段定义
- * @param {object} column 系统模型列定义
- * @param {object} modelDsl 系统模型定义
+ * @param {object} column yao模型字段定义
+ * @param {object} modelDsl yao模型定义
  * @returns amis字段定义
  */
 function updateAmisFormColCommon(amisColumn, column, modelDsl) {
@@ -262,78 +266,6 @@ function updateAmisFormColFromModel(amisColumn, yaoColumn) {
   return amisColumn;
 }
 
-// function getFormDefinition(tableName) {
-//   return {};
-//   try {
-//     //模型对应的table定义可能不存在
-//     const setting = Process("yao.form.Setting", tableName);
-//     const columns = (setting.form && setting.form.sections[0].columns) || [];
-//     const fields = (setting.fields && setting.fields.form) || {};
-//     let fieldsNew = {};
-//     columns.forEach((column) => {
-//       let key = "";
-//       let field = fields[column.name];
-
-//       if (field) {
-//         if (field.bind) {
-//           key = field.bind;
-//         } else if (field.view && field.view.bind) {
-//           key = field.view.bind;
-//         } else if (field.edit && field.edit.bind) {
-//           key = field.edit.bind;
-//         }
-//       }
-//       if (key && key.length) {
-//         fieldsNew[key] = { ...field };
-//         fieldsNew[key] = {} || fieldsNew[key];
-//         fieldsNew[key].label = column.name;
-//         fieldsNew[key].name = key;
-//         fieldsNew[key].width = column.width;
-//         // console.log("fieldsNew:", key, fieldsNew[key]);
-//       }
-//     });
-//     return fieldsNew;
-//   } catch (error) {
-//     return {};
-//   }
-// }
-
-// function getTableDefinition(tableName) {
-//   return {};
-//   try {
-//     //模型对应的table定义可能不存在
-//     const setting = Process("yao.table.Setting", tableName);
-//     const columns = (setting.table && setting.table.columns) || [];
-//     const fields = (setting.fields && setting.fields.table) || {};
-//     let fieldsNew = {};
-//     columns.forEach((column) => {
-//       let key = "";
-//       let field = fields[column.name];
-
-//       if (field) {
-//         if (field.bind) {
-//           key = field.bind;
-//         } else if (field.view && field.view.bind) {
-//           key = field.view.bind;
-//         } else if (field.edit && field.edit.bind) {
-//           key = field.edit.bind;
-//         }
-//       }
-//       if (key && key.length) {
-//         fieldsNew[key] = { ...field };
-//         fieldsNew[key] = {} || fieldsNew[key];
-//         fieldsNew[key].label = column.name;
-//         fieldsNew[key].name = key;
-//         fieldsNew[key].width = column.width;
-//         // console.log("fieldsNew:", key, fieldsNew[key]);
-//       }
-//     });
-//     return fieldsNew;
-//   } catch (error) {
-//     return {};
-//   }
-// }
-
 /**
  * 读取一个表的所有字段列表
  * 注意：这个功能并不一定适用于官方版本的yao,在字段的处理器是有经过增强处理的
@@ -361,9 +293,11 @@ function getModelFieldsForAmis(modelId, columnsIn) {
 }
 
 /**
- * 更新模型，增加元数据字段
- * @param {object} modelDsl 模型
- * @returns
+ * 更新模型，增加元数据字段如果它们不存在，
+ * 
+ * 字段包含：创建时间，更新时间，删除时间字段。
+ * @param {object} modelDsl yao模型定义
+ * @returns 新的模型定义
  */
 function AddMetaFields(modelDsl) {
   if (modelDsl.option?.timestamps) {
@@ -404,6 +338,11 @@ function AddMetaFields(modelDsl) {
   return modelDsl;
 }
 
+/**
+ * 获取模型的关联查询的定义withUrl定义
+ * @param {string} modelId 模型标识
+ * @returns 
+ */
 function getWithsUrl(modelId) {
   const model = getModelDefinition(modelId);
   if (model.relations) {

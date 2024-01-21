@@ -2,6 +2,8 @@ const { getModelDefinition } = Require("amis.lib");
 const { DotName, IsMysql, SlashName } = Require("amis.lib_tool");
 
 /**
+ * Generate the menu items for xgen
+ * 
  * yao run scripts.xgen.schema.generateMenuConfig 'admin.user'
  * @param {string} modelId
  * @param {Array} columns
@@ -387,6 +389,7 @@ function MakeColumnOrder(columns) {
 
 /**
  * 数据库类型与控件类型对应字段
+ * 
  * yao studio run model.column.component.GetDBTypeMap
  * @returns
  */
