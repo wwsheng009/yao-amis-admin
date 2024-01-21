@@ -4,6 +4,7 @@
 ARG ARCH
 FROM wwsheng009/yao-${ARCH}:latest
 
+ARG ARCH
 ARG VERSION
 WORKDIR /data
 
