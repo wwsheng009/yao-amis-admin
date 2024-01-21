@@ -1,3 +1,7 @@
+//使用命令插件调用操作系统的功能，引功能需要command插件的支持
+//命令插件支持调用本地系统的命令，或是通过ssh在远程服务器上执行命令
+//https://github.com/wwsheng009/yao-amis-admin
+
 /**
  * yao run scripts.app.cmd.execute
  * @param {object} payload
@@ -7,16 +11,12 @@ function execute(payload) {
   const hostId = payload.host;
   const hostInfo = Process("models.app.cmd.host.find", hostId, {});
 
-  // save the script
-  // Process("models.app.cmd.script.save", payload);
-  //   console.log("hostInfo", hostInfo);
-
   if (!hostInfo.is_remote) {
     let script = payload.source.replace(/^\s*\r/gm, "");
     script = script.replace(/\r/g, ";");
     const result = Process(`plugins.command.${payload.cmd}`, script);
     // console.log("result", result);
-    write_log({
+    writeCommandlog({
       host: hostInfo.host,
       port: hostInfo.port,
       cmd: payload.cmd,
@@ -36,8 +36,6 @@ function execute(payload) {
 
     if (hostInfo.ssh_key) {
       // 使用ssh_key使用也需要用户名
-      // console.log("hostInfo.username", hostInfo.username);
-      // console.log("hostInfo.ssh_key", hostInfo.ssh_key);
       result = Process(
         `plugins.command.remote_key`,
         hostInfo.host,
@@ -47,7 +45,6 @@ function execute(payload) {
         script
       );
     } else {
-      // console.log("script:", script);
       result = Process(
         `plugins.command.remote`,
         hostInfo.host,
@@ -58,8 +55,7 @@ function execute(payload) {
       );
     }
 
-    // console.log("remote excute result", result);
-    write_log({
+    writeCommandlog({
       host: hostInfo.host,
       port: hostInfo.port,
       script: payload.source,
@@ -72,8 +68,12 @@ function execute(payload) {
     return result;
   }
 }
-
-function write_log(data) {
+/**
+ * write the command excute log into database
+ * 
+ * @param {object} data 
+ */
+function writeCommandlog(data) {
   let user_id = Process("session.get", "user_id");
   let user = Process("session.get", "user");
   data.user_id = user_id;

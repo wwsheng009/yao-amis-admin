@@ -1,5 +1,12 @@
-// yao run scripts.app.monitor.getCpuInfo
+// 使用进程插件获取操作系统的信息
+// 需要插件的支持
+// https://github.com/wwsheng009/yao-plugin-psutil
 
+/**
+ * 获取主机cpu的信息
+ * yao run scripts.app.monitor.getCpuInfo
+ * @returns 
+ */
 function getCpuInfo() {
   const dashboard = Process("plugins.psutil.dashboard");
   const cpuData = dashboard.system.currentInfo.cpuPercent;

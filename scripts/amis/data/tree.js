@@ -244,7 +244,7 @@ function flatAndRemoveDuplicate(array) {
 }
 
 /**
- * traverse a tree object,combine the key2 of the object to key1 of the object
+ * traverse a tree object,combine the key2 of the object to key of the object
  *
  * @param {object} data
  * @param {string} key

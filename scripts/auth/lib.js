@@ -3,6 +3,7 @@ const { filterTreeDataById, collectTreeFields, collectAndCombineData } =
 
 /**
  * 获取用户的权限信息
+ * 
  * yao run scripts.auth.lib.getUserPermission '5'
  * @param {number} userId user id
  * @returns
@@ -61,9 +62,6 @@ function getUserPermission(userId) {
 
   // 返回的结构是一个嵌套的树结构
   const permissionFilter = filterTreeDataById(permissionsTree, rolePemissions);
-  //   if (permissionFilter.length == 0) {
-  //     throw new Exception(`角色未关联任何权限`, 500);
-  //   }
   return permissionFilter;
 }
 /**
@@ -79,7 +77,12 @@ function getUserAuthObjectIds(objkey) {
 function getUserAuthMenuIds() {
   return getUserAuthObjectIds("menus");
 }
-
+/**
+ * get the user auth objects from session
+ * 
+ * the auth objects are set when use login
+ * @returns 
+ */
 function getUserAuthApiCache() {
   let authObjects = Process("session.get", "user_auth_objects");
   if (authObjects == null || !authObjects) {
@@ -88,7 +91,13 @@ function getUserAuthApiCache() {
   return authObjects.api;
 }
 
-// yao run scripts.auth.lib.getUserAuthApi
+
+/**
+ * get user authorized api object from session
+ * 
+ * yao run scripts.auth.lib.getUserAuthApi
+ * @returns 
+ */
 function getUserAuthApi() {
   const permissions = getUserPermission();
   const api_auth = {};
@@ -106,11 +115,15 @@ function getUserAuthApi() {
     "http_path",
     "ANY"
   );
-  fillApiOpertion(api_auth.method_with_api);
+
+  api_auth.method_with_api = fillApiOpertion(api_auth.method_with_api);
   return api_auth;
 }
 
 function fillApiOpertion(methdMap) {
+  if (typeof methdMap != 'object') {
+    return methdMap
+  }
   methdMap["GET"] ||= [];
   methdMap["POST"] ||= [];
   methdMap["PUT"] ||= [];
@@ -119,6 +132,7 @@ function fillApiOpertion(methdMap) {
   methdMap["OPTIONS"] ||= [];
   methdMap["HEAD"] ||= [];
   methdMap["ANY"] ||= [];
+  return methdMap;
 }
 
 function getUserAuthModelCache() {
@@ -146,15 +160,20 @@ function getUserAuthModel() {
     "models",
     "ANY"
   );
-  fillModelOpertion(model_auth.method_with_model);
+  
+  model_auth.method_with_model = fillModelOpertion(model_auth.method_with_model);
   return model_auth;
 }
 function fillModelOpertion(methdMap) {
+  if (typeof methdMap != 'object') {
+    return methdMap
+  }
   methdMap["ANY"] ||= [];
   methdMap["CREATE"] ||= [];
   methdMap["UPDATE"] ||= [];
   methdMap["DELETE"] ||= [];
   methdMap["READ"] ||= [];
+  return methdMap
 }
 /**
  * 是否超级用户
@@ -201,16 +220,21 @@ function getUserAuthFolder() {
     "folders",
     "ANY"
   );
-  fillFolderOpertion(folder_auth.method_with_folder);
+
+  folder_auth.method_with_folder = fillFolderOpertion(folder_auth.method_with_folder);
 
   return folder_auth;
 }
 function fillFolderOpertion(methdMap) {
+  if (typeof methdMap != 'object') {
+    return methdMap
+  }
   methdMap["ANY"] ||= [];
   methdMap["CREATE"] ||= [];
   methdMap["UPDATE"] ||= [];
   methdMap["DELETE"] ||= [];
   methdMap["READ"] ||= [];
+  return methdMap
 }
 /**
  * 根据用户ID获取用户的权限对象列表
