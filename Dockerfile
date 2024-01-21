@@ -30,7 +30,7 @@ RUN mkdir -p /data/public/soy-admin && \
     unzip /data/public/soy-admin/latest.zip -d /data/public/soy-admin/ && \
     rm /data/public/soy-admin/latest.zip
 
-RUN  curl -fsSL "https://github.com/wwsheng009/yao-plugin-command/releases/download/command-linux-plugin/command-linux-${ARCH}.so" > /plugins/command.so
+RUN curl -fsSL "https://github.com/wwsheng009/yao-plugin-command/releases/download/command-linux-plugin/command-linux-${ARCH}.so" > /plugins/command.so
 
 
 USER root
