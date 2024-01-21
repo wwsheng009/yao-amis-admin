@@ -32,11 +32,11 @@ RUN mkdir -p /data/public/soy-admin && \
     rm /data/public/soy-admin/latest.zip
 
 RUN mkdir -p /data/plugins && \
-    curl -fsSL "https://github.com/wwsheng009/yao-plugin-command/releases/download/command-linux-plugin/command-linux-${ARCH}.so" > /data/plugins/command.so && \
+    curl -fsSL "https://github.com/wwsheng009/yao-plugin-command/releases/download/command-linux-plugin/command-linux-${ARCH}.so" -o /data/plugins/command.so && \
     chmod +x /data/plugins/command.so
 
 RUN mkdir -p /data/plugins && \
-    curl -fsSL "https://github.com/wwsheng009/yao-plugin-psutil/releases/download/psutil-linux-plugin/psutil-linux-${ARCH}.so" > /data/plugins/psutil.so && \
+    curl -fsSL "https://github.com/wwsheng009/yao-plugin-psutil/releases/download/psutil-linux-plugin/psutil-linux-${ARCH}.so" -o /data/plugins/psutil.so && \
     chmod +x /data/plugins/psutil.so
 
 USER root
