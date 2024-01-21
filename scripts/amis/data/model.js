@@ -345,26 +345,28 @@ function dummy() {
 
 /**
  * 可以直接读取表，也可以读取在模型model.selectOptions中定义的条件，如果没有表中没有定义，使用模型读取。
+ * 
  * yao run scripts.amis.data.model.selectOptions ddic.model
+ * 
  * yao run scripts.amis.data.model.selectOptions model_list
- * @param {string} model model id
+ * @param {string} modelId model id
  * @param {object} querys querys
  */
-function selectOptions(model, querysIn, payload) {
-  if (!model) {
+function selectOptions(modelId, querysIn, payload) {
+  if (!modelId) {
     throw new Exception("需要指定模型");
   }
   let querys = mergeQueryObject(querysIn, payload);
   const [row] = Process("models.ddic.selectoption.get", {
-    wheres: [{ column: "name", value: model }],
+    wheres: [{ column: "name", value: modelId }],
     limit: 1,
   });
 
-  let query = { model: model };
+  let query = { model: modelId };
   let wheres = undefined;
   let join = false;
   if (row != null) {
-    query.model = row.model;
+    query.model = row.model_id;
     query.value = row.value_field;
     query.label = row.label_field;
     if (row.wheres) {

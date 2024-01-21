@@ -824,6 +824,24 @@ function getModelMenu() {
               schemaApi: "/api/v1/amis/pages/model.create",
               url: "/model/create/:id/",
             },
+            {
+              label: "模型关联Api",
+              icon: "fas fa-location-arrow ",
+              schemaApi: "/api/v1/amis/pages/api.model",
+              url: "apilist",
+            },
+            {
+              label: "代码生成",
+              icon: "fas fa-code",
+              schemaApi: "/api/v1/amis/pages/studio.code",
+              url: "code_generate",
+            },
+            {
+              label: "搜索帮助维护",
+              icon: "fab fa-hire-a-helper",
+              schemaApi: "/api/v1/system/schema/ddic.selectoption/crud-all",
+              url: "selectoption",
+            }
           ],
           icon: "fa fa-cube",
           label: "模型维护",
@@ -859,12 +877,6 @@ function getModelMenu() {
               icon: "fas fa-list-ol",
               schemaApi: "/api/v1/amis/pages/api.list",
               url: "/api/list",
-            },
-            {
-              label: "模型Api测试",
-              icon: "fas fa-location-arrow ",
-              schemaApi: "/api/v1/amis/pages/api.model",
-              url: "/api/model",
             },
             {
               label: "API测试",

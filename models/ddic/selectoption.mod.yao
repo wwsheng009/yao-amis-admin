@@ -18,7 +18,7 @@
         {
             "comment": "模型",
             "label": "模型",
-            "name": "model",
+            "name": "model_id",
             "type": "string",
             "unique": true
         },
@@ -65,5 +65,18 @@
     },
     "table": {
         "name": "ddic_selectoption"
+    },
+    "relations":{
+        "model":{
+            "type": "hasOne",
+            "model": "ddic.model",
+            "key": "identity",
+            "foreign": "model_id",
+            "query": {
+              "select": []
+            }
+        }
     }
 }
+
+// yao migrate -n ddic.selectoption --reset
