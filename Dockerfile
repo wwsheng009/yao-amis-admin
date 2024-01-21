@@ -34,6 +34,9 @@ RUN mkdir -p /data/public/soy-admin && \
 RUN mkdir -p /data/plugins && \
     curl -fsSL "https://github.com/wwsheng009/yao-plugin-command/releases/download/command-linux-plugin/command-linux-${ARCH}.so" > /data/plugins/command.so
 
+RUN mkdir -p /data/plugins && \
+    curl -fsSL "https://github.com/wwsheng009/yao-plugin-psutil/releases/download/psutil-linux-plugin/psutil-linux-${ARCH}.so" > /data/plugins/psutil.so
+
 
 USER root
 VOLUME [ "/data" ]
