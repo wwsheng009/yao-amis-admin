@@ -1,7 +1,7 @@
 name: Build and push docker images
 on:
   workflow_run:
-    workflows: ["Release"]
+    workflows: ["Packed and release Yao Application"]
     types:
       - completed
   workflow_dispatch:
