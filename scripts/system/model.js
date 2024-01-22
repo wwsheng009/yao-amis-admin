@@ -6,7 +6,7 @@
  */
 const { getModelFromDB, loadModeltoMemory,
   ConvertTableLineToModel, deepCopyObject, migrateModel
-   } = Require("system.model_db");
+} = Require("system.model_db");
 
 const { DotName, UnderscoreName, IsMysql, ClearFalsyKeys } =
   Require("amis.lib_tool");
@@ -18,7 +18,7 @@ const { RunTransaction } = Require("system.db_lib");
 const { queryToQueryParam, updateInputData, mergeQueryObject } =
   Require("amis.data.lib");
 
-const { FindAndLoadYaoModelById, FindCachedModelById,MomoryModelList, ModelIDList,FindAndLoadDBModelById } =
+const { FindAndLoadYaoModelById, FindCachedModelById, MomoryModelList, ModelIDList, FindAndLoadDBModelById } =
   Require("system.model_lib");
 
 const { convertColTypeToYao } = Require("system.col_type");
@@ -453,6 +453,8 @@ function ConvertModelColToTableLine(model, modelCol) {
     if (col[key] !== null && col[key] !== undefined) {
       if (col[key] === true || col[key] > 0) {
         col[key] = ismysql ? 1 : true;
+      } else {
+        col[key] = ismysql ? 0 : false;
       }
     }
   });
@@ -995,8 +997,11 @@ function ImportTableAction(payload) {
   model = removeModelColumnIds(model);
 
   SaveModelToLocal(model);
+
+  let dbModel = deepCopyObject(model)
+  dbModel = guessModelColumnsType(dbModel)
   // 传入的是模型数据，转成表结构后再保存
-  const line = ConvertModelToTableLine(model);
+  const line = ConvertModelToTableLine(dbModel);
   let id = SaveModelTableLine(line);
 
   if (id) {
@@ -1008,6 +1013,52 @@ function ImportTableAction(payload) {
     return Process("scripts.return.ErrorMessage", 403, "保存模型失败");
   }
   // }
+}
+
+function isTextColumn(column) {
+  const ty = column.type.toLowerCase();
+  if (ty === "string" || ty.includes("text")
+    || ty === "json") {
+    return true
+  }
+  return false
+}
+/**
+ * guess the column type from the name or the comment
+ * @param {object} modelDsl 
+ * @returns 
+ */
+function guessModelColumnsType(modelDsl) {
+  modelDsl.columns.forEach((column) => {
+    const comment = column.comment ? column.comment.toLowerCase() : "";
+    const colName = column.name ? column.name.toLowerCase() : "";
+    const colType = column.type ? column.type.toLowerCase() : "";
+
+    if (isTextColumn(column)) {
+      if (comment.includes("json")) {
+        column.type = "json"
+      }
+
+      if (colName.includes("pic") || colName.includes("image") || colName.includes("img") || comment.includes("图片")) {
+        column.type = "image"
+      } else if (colName.includes("pics") || colName.includes("images") || colName.includes("imgs") || comment.includes("图片集")) {
+        column.type = "images"
+      }
+      // else if (colName.includes("date") || comment.includes("日期")) {
+      //   column.type = "date"
+      // } else if (colName.includes("time") || comment.includes("时间")) {
+      //   column.type = "time"
+      // }
+    } else {
+      if (colType === 'integer' || colType === 'tinyinteger' || colType === 'tinyint') {
+        if (colName.includes("status") || comment.includes("状态")) {
+          column.type = "boolean"
+        }
+      }
+    }
+  })
+  return modelDsl
+
 }
 /**
  * 从数据库读取模型并加载到内存中。
@@ -1103,7 +1154,7 @@ function ImportFromCachedBatch(payload) {
   });
   return { message: "批量导入本地缓存完成" };
 }
-function ImportFromTable(payload) {
+function ImportTableStruct(payload) {
   // console.log(payload);
   if (!payload) {
     return Process("scripts.return.ErrorMessage", 500, "数据不正确");
@@ -1301,20 +1352,25 @@ function CheckAndGuessJson(payload) {
  * @returns
  */
 function ImportFromTableBatch(payload) {
+  console.log("ImportFromTableBatch", payload)
+
   let items = payload.items;
   if (!Array.isArray(items)) {
     return { message: "传入数据不正确" };
   }
 
-  items.forEach((item) => {
+  for (const item of items) {
+
     const model = CheckImportModelLine(item.model, item.name);
 
     if (model != null) {
+
       return {
+        code: 503,
         message: `模型:${item.model}，表:${item.name} 已经存在，禁止导入`,
       };
     }
     ImportTableAction(item);
-  });
+  };
   return { message: "批量导入表结构成功" };
 }

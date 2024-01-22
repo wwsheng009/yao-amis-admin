@@ -302,7 +302,7 @@
       "description": "导入表定义",
       "path": "/import_table",
       "method": "POST",
-      "process": "scripts.system.model.ImportFromTable",
+      "process": "scripts.system.model.ImportTableStruct",
       "in": [
         ":payload"
       ],
