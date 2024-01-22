@@ -103,6 +103,8 @@ function ConvertTableLineToModel(line) {
             if (col.hasOwnProperty(key)) {
                 if (col[key] === true || col[key] > 0) {
                     col[key] = true;
+                }else{
+                    col[key] = false;
                 }
             }
         });

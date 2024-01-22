@@ -498,7 +498,8 @@ function column2AmisFormViewColumn(column) {
       newColumn.type = "static-video";
       break;
     case "RICHTEXT":
-      newColumn.type = "static-rich-text";
+      newColumn.type = "input-rich-text";
+      newColumn.static = true;
       break;
     case "CODE":
       newColumn.type = "static-code";

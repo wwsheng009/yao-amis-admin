@@ -1,7 +1,7 @@
 //使用models*类型的处理，这类处理器是直接对表数据的操作，相对tables*处理器，性能会更好
 const { DotName } = Require("amis.lib_tool");
 const { FindAndLoadYaoModelById } = Require("system.model_lib");
-const { queryToQueryParam, updateInputData, getArrayItem, mergeQueryObject } =
+const { queryToQueryParam, updateInputData,updateOutputData, getArrayItem, mergeQueryObject } =
   Require("amis.data.lib");
 
 const { RunTransaction } = Require("system.db_lib");
@@ -10,7 +10,7 @@ const { RunTransaction } = Require("system.db_lib");
  * 查找数据
  * yao run scripts.amis.data.model.dataSearch
  * Model Data Search
- * @param {string} model model id
+ * @param {string} modelId model id
  * @param {number} pageIn page
  * @param {number} perPageIn numbers per page
  * @param {object} querysIn querys
@@ -18,7 +18,7 @@ const { RunTransaction } = Require("system.db_lib");
  * @param {object} payload request payload
  * @returns
  */
-function dataSearch(model, pageIn, perPageIn, querysIn, queryParams, payload) {
+function dataSearch(modelId, pageIn, perPageIn, querysIn, queryParams, payload) {
   let querys = mergeQueryObject(querysIn, payload);
 
   let page = pageIn;
@@ -30,7 +30,7 @@ function dataSearch(model, pageIn, perPageIn, querysIn, queryParams, payload) {
     perPage = getArrayItem(querys, "perPage") || 10;
   }
 
-  const modelDsl = FindAndLoadYaoModelById(model);
+  const modelDsl = FindAndLoadYaoModelById(modelId);
 
   // 当是post请求是，payload生效
   const queryParam = queryToQueryParam(modelDsl, querys, queryParams);
@@ -57,8 +57,11 @@ function dataSearch(model, pageIn, perPageIn, querysIn, queryParams, payload) {
     queryParam.withs = undefined;
   }
 
-  let data = Process(`models.${model}.Paginate`, queryParam, page, perPage);
+  let data = Process(`models.${modelId}.Paginate`, queryParam, page, perPage);
   if (Array.isArray(data.data) && data.data.length) {
+
+    data.data = updateOutputData(modelId,data.data)
+
     if (Object.keys(withs2).length > 0) {
       data.data.forEach((line) => {
         for (const key in withs2) {

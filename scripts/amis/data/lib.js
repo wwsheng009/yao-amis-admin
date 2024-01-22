@@ -1,4 +1,4 @@
-const { FindAndLoadYaoModelById } = Require("system.model_lib");
+const { FindAndLoadYaoModelById, FindAndLoadDBModelById } = Require("system.model_lib");
 const { IsMysql } = Require("amis.lib_tool");
 const { isDateTimeType } = Require("system.col_type");
 
@@ -234,7 +234,22 @@ function queryToQueryParam(modelIn, querysIn, queryParams) {
 
   return queryParam;
 }
+function getDbModelColumnMap(model) {
 
+  let modelDsl = model;
+  if (typeof model === "string") {
+    modelDsl = FindAndLoadDBModelById(model);
+  }
+
+  let columnMap = {};
+  modelDsl.columns?.forEach((col) => {
+    columnMap[col.name] = col;
+  });
+  if (Object.keys(columnMap).length == 0) {
+    throw new Exception("模型定义不正确，缺少字段定义", 500);
+  }
+  return columnMap;
+}
 function getYaoModelColumnMap(model) {
 
   let modelDsl = model;
@@ -251,6 +266,56 @@ function getYaoModelColumnMap(model) {
   }
   return columnMap;
 }
+
+function updateOutputData(model, Data) {
+  if (Array.isArray(Data)) {
+    let modelDsl = model;
+    if (typeof modelDsl === 'string') {
+      // 如果使用yao model定义，无法获取用户定义的类型，比如json类型的数据就可能有多种含义。
+      modelDsl = FindAndLoadDBModelById(model)
+    }
+    const dbColmap = getDbModelColumnMap(modelDsl);
+
+    Data = Data.map(line => updateOutputDataLine(dbColmap, line))
+    return Data
+  }
+  return Data
+}
+/**
+ * update the data line before output
+ * @param {object} dbColMap 
+ * @param {object} line 
+ * @returns 
+ */
+function updateOutputDataLine(dbColMap, line) {
+  if (typeof line !== "object") {
+    return line;
+  }
+  for (const key in dbColMap) {
+    const modelCol = dbColMap[key];
+    const colType = modelCol.type.toUpperCase();
+    const field = line[key];
+
+    switch (colType) {
+      // 如果数据库中使用的是json的字符串，作一次转换
+      // 在amis编辑保存后会自动的转换成","拼接的字符串
+      case "IMAGES":
+        if (typeof field === 'string' && field.length > 2 && field[0] === "[" && field[field.length - 1] === "]") {
+          try {
+            let array = JSON.parse(field);
+            if (Array.isArray(array)) {
+              line[key] = array;
+            }
+          } catch (error) {
+            // Handle error if required
+          }
+        }
+        break;
+    }
+  }
+  return line
+}
+
 /**
  * amis form控件会自动的把json数据作stringfly处理，需要在保存时反向操作
  * 拦截处理json格式的数据
@@ -273,9 +338,9 @@ function updateInputData(model, Data) {
     }
     for (const key in yaoColMap) {
       const modelCol = yaoColMap[key];
-      const type = modelCol.type.toUpperCase();
+      const colType = modelCol.type.toUpperCase();
       const field = line[key];
-      if (type == "UUID" && modelCol.primary == true && !field) {
+      if (colType == "UUID" && modelCol.primary == true && !field) {
         // 自动生成uuid
         line[key] = Process("utils.str.UUID");
         continue;
@@ -287,7 +352,7 @@ function updateInputData(model, Data) {
       if (field == null) {
         continue;
       }
-      switch (type) {
+      switch (colType) {
         case "TINYINTEGER":
         case "SMALLINTEGER":
         case "INTEGER":
@@ -301,11 +366,11 @@ function updateInputData(model, Data) {
         case "SMALLINCREMENTS":
         case "INCREMENTS":
         case "BIGINCREMENTS":
-          if (typeof field === "string" ) {
+          if (typeof field === "string") {
             if (field === "") {
               // tree-select控件清空时的值是字符串
               line[key] = 0;
-            }else{
+            } else {
               line[key] = Number(line[key]);
             }
           }
@@ -316,11 +381,11 @@ function updateInputData(model, Data) {
         case "UNSIGNEDFLOAT":
         case "UNSIGNEDDOUBLE":
         case "UNSIGNEDDECIMAL":
-          if (typeof field === "string" ) {
+          if (typeof field === "string") {
             if (field === "") {
               // tree-select控件清空时的值是字符串
               line[key] = 0.0;
-            }else{
+            } else {
               line[key] = Number(line[key]);
             }
           }
@@ -342,12 +407,12 @@ function updateInputData(model, Data) {
         default:
           break;
       }
-      if (type.includes("DATE") || type.includes("TIME")) {
+      if (colType.includes("DATE") || colType.includes("TIME")) {
         if (field === "") {
           line[key] = undefined;
         }
       } else if (
-        type === "JSON" &&
+        colType === "JSON" &&
         field != null &&
         typeof field === "string" &&
         field.length > 0 &&
@@ -355,7 +420,7 @@ function updateInputData(model, Data) {
       ) {
         try {
           line[key] = JSON.parse(field);
-        } catch (error) {}
+        } catch (error) { }
       }
     }
 
@@ -561,6 +626,7 @@ function FilterArrayWithQuery(list, querysIn, searchFields) {
 module.exports = {
   mergeQueryObject,
   updateInputData,
+  updateOutputData,
   queryToQueryParam,
   paginateArray,
   PaginateArrayWithQuery,
