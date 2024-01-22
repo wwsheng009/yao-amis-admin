@@ -1,4 +1,4 @@
-#docker build --platform linux/amd64 --tag demo-project .
+#docker build --build-arg ARCH=amd64 --build-arg VERSION=0.10.5 --tag demo-project .
 #docker run -d --restart unless-stopped --name demo-project -p 5099:5099 demo-project
 
 ARG ARCH
@@ -8,8 +8,7 @@ ARG ARCH
 ARG VERSION
 WORKDIR /data
 
-#COPY yao /usr/local/bin/yao cp /data/docker.env /data/.env && \
-#RUN apk add git
+
 RUN addgroup -S -g 1000 yao && adduser -S -G yao -u 999 yao
 RUN mkdir -p /data && curl -fsSL "https://github.com/wwsheng009/yao-amis-admin/releases/download/yao-amis-admin-${VERSION}/yao-amis-admin-${VERSION}.zip" > /data/latest.zip && \
     unzip /data/latest.zip && rm /data/latest.zip && \
@@ -17,10 +16,22 @@ RUN mkdir -p /data && curl -fsSL "https://github.com/wwsheng009/yao-amis-admin/r
     chown -R yao:yao /data && \
     chmod +x /data/init.sh && \
     chmod +x /usr/local/bin/yao && \
-    cp /data/docker.env /data/.env && \
     cp /data/app.sample.yao /data/app.yao && \
     mkdir -p /data/plugins && \
     mkdir -p /data/db
+
+# RUN mkdir -p /data
+
+# ADD . /data
+
+# RUN rm -rf /data/.git && \
+#     rm -rf /data/.env* && \
+#     rm -rf /data/Dockerfile* && \
+#     chown -R yao:yao /data && \
+#     chmod +x /data/init.sh && \
+#     chmod +x /usr/local/bin/yao && \
+#     mkdir -p /data/plugins && \
+#     mkdir -p /data/db
 
 RUN mkdir -p /data/public/amis-editor && \
     curl -fsSL "https://github.com/wwsheng009/amis-editor-yao/releases/download/1.0.0/amis-editor-1.0.0.zip" > /data/public/amis-editor/latest.zip && \

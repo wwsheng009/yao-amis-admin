@@ -1,2 +1,2 @@
 #!/bin/bash
-yao migrate && /usr/local/bin/yao start
+/usr/local/bin/yao start
