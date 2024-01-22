@@ -300,11 +300,15 @@ function updateOutputDataLine(dbColMap, line) {
       // 如果数据库中使用的是json的字符串，作一次转换
       // 在amis编辑保存后会自动的转换成","拼接的字符串
       case "IMAGES":
-        if (typeof field === 'string' && field.length > 2 && field[0] === "[" && field[field.length - 1] === "]") {
+        if (typeof field === 'string' && field.length >= 2 && field[0] === "[" && field[field.length - 1] === "]") {
           try {
             let array = JSON.parse(field);
             if (Array.isArray(array)) {
-              line[key] = array;
+              if (array.length > 0) {
+                line[key] = array;
+              }else{
+                line[key] = null;
+              }
             }
           } catch (error) {
             // Handle error if required
