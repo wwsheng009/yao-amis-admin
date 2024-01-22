@@ -29,7 +29,7 @@
       "label": "状态",
       "name": "status",
       "type": "boolean",
-      "default": 1,
+      "default": true,
       "comment": "状态"
     }
   ],
