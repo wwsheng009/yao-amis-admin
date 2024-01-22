@@ -19,6 +19,7 @@ RUN mkdir -p /data && curl -fsSL "https://github.com/wwsheng009/yao-amis-admin/r
     chmod +x /usr/local/bin/yao && \
     cp /data/docker.env /data/.env && \
     cp /data/app.sample.yao /data/app.yao && \
+    mkdir -p /data/plugins && \
     mkdir -p /data/db
 
 RUN mkdir -p /data/public/amis-editor && \
@@ -31,13 +32,14 @@ RUN mkdir -p /data/public/soy-admin && \
     unzip /data/public/soy-admin/latest.zip -d /data/public/soy-admin/ && \
     rm /data/public/soy-admin/latest.zip
 
-RUN mkdir -p /data/plugins && \
-    curl -fsSL "https://github.com/wwsheng009/yao-plugin-command/releases/download/command-linux-plugin/command-linux-${ARCH}.so" -o /data/plugins/command.so && \
+RUN curl -fsSL "https://github.com/wwsheng009/yao-plugin-command/releases/download/command-linux-plugin/command-linux-${ARCH}.so" -o /data/plugins/command.so && \
     chmod +x /data/plugins/command.so
 
-RUN mkdir -p /data/plugins && \
-    curl -fsSL "https://github.com/wwsheng009/yao-plugin-psutil/releases/download/psutil-linux-plugin/psutil-linux-${ARCH}.so" -o /data/plugins/psutil.so && \
+RUN curl -fsSL "https://github.com/wwsheng009/yao-plugin-psutil/releases/download/psutil-linux-plugin/psutil-linux-${ARCH}.so" -o /data/plugins/psutil.so && \
     chmod +x /data/plugins/psutil.so
+
+RUN curl -fsSL "https://github.com/wwsheng009/yao-plugin-email/releases/download/email-linux-plugin/email-linux-${ARCH}.so" -o /data/plugins/email.so && \
+    chmod +x /data/plugins/email.so
 
 USER root
 VOLUME [ "/data" ]
