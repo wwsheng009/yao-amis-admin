@@ -16,3 +16,5 @@ data/blogs/**/.tmp
 public/PPTX2HTML
 app.yao
 node_modules
+*.so
+*.dll
