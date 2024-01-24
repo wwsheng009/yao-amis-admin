@@ -122,7 +122,7 @@ function CompleteModel(modelDsl) {
     // 传换成bool类型
     ["index", "nullable", "unique", "primary"].forEach((key) => {
       if (col[key] !== null && col[key] !== undefined) {
-        if (col[key] === true || col[key] > 0) {
+        if (col[key] !== false && col[key] > 0) {
           col[key] = true;
         } else {
           col[key] = false;
@@ -451,7 +451,7 @@ function ConvertModelColToTableLine(model, modelCol) {
   let ismysql = IsMysql();
   ["index", "nullable", "unique", "primary"].forEach((key) => {
     if (col[key] !== null && col[key] !== undefined) {
-      if (col[key] === true || col[key] > 0) {
+      if (col[key] !== false && col[key] > 0) {
         col[key] = ismysql ? 1 : true;
       } else {
         col[key] = ismysql ? 0 : false;

@@ -460,7 +460,9 @@
                                       {
                                         "name": "options",
                                         "type": "combo",
-                                        "value": [{}],
+                                        "value": [
+                                          {}
+                                        ],
                                         "hiddenOn": "data.type != `enum`",
                                         "items": [
                                           {
@@ -627,24 +629,7 @@
               "body": [
                 {
                   "type": "button-toolbar",
-
                   "buttons": [
-                    {
-                      "type": "button",
-                      "actionType": "dialog",
-                      "level": "light",
-                      "label": "预览",
-                      "visibleOn": "${can_preview}",
-                      "dialog": {
-                        "size": "lg",
-                        "body": [
-                          {
-                            "type": "amis",
-                            "name": "__code_source"
-                          }
-                        ]
-                      }
-                    },
                     {
                       "id": "u:a0e8e92c8ff2",
                       "label": "复制源码",
@@ -663,6 +648,26 @@
                         }
                       },
                       "type": "button"
+                    },
+                    {
+                      "type": "button",
+                      "actionType": "dialog",
+                      "level": "light",
+                      "label": "预览",
+                      "visibleOn": "${can_preview}",
+                      "dialog": {
+                        "size": "lg",
+                        "body": [
+                          {
+                            "type": "amis",
+                            "name": "__code_source"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "tpl",
+                      "tpl": "${title}"
                     }
                   ]
                 }
@@ -716,7 +721,10 @@
       "id": "u:078ef73682f4",
       "initApi": {
         "data": {
-          "args": ["${model_id}", "${columns}"],
+          "args": [
+            "${model_id}",
+            "${columns}"
+          ],
           "method": "${method}"
         },
         "method": "post",
@@ -730,7 +738,9 @@
   "pullRefresh": {
     "disabled": true
   },
-  "regions": ["body"],
+  "regions": [
+    "body"
+  ],
   "title": "studio",
   "type": "page"
 }

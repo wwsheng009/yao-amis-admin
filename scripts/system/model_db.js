@@ -101,7 +101,7 @@ function ConvertTableLineToModel(line) {
     line.columns?.forEach((col) => {
         ["index", "nullable", "unique", "primary"].forEach((key) => {
             if (col.hasOwnProperty(key)) {
-                if (col[key] === true || col[key] > 0) {
+                if (col[key] !== false && col[key] > 0) {
                     col[key] = true;
                 }else{
                     col[key] = false;
