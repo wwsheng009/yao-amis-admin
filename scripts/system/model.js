@@ -814,6 +814,7 @@ function ConvertDBmodelToYaoModel(modelDsl) {
     delete col.model_identity;
     delete col.check_model_label;
     delete col.check_model_value;
+    delete col.check_model_multi;
     delete col.check_model;
     delete col.options;
     delete col.language;

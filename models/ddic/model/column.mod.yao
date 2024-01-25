@@ -30,9 +30,7 @@
       "type": "string",
       "validations": [
         {
-          "args": [
-            "^[a-zA-Z_][a-zA-Z0-9_]*$"
-          ],
+          "args": ["^[a-zA-Z_][a-zA-Z0-9_]*$"],
           "message": "只允许数字与字母，下划线，划线",
           "method": "pattern"
         }
@@ -129,10 +127,7 @@
     },
     {
       "nullable": true,
-      "option": [
-        "PASSWORD",
-        "AES"
-      ],
+      "option": ["PASSWORD", "AES"],
       "label": "加密方式",
       "name": "crypt",
       "type": "enum",
@@ -154,30 +149,30 @@
     },
     {
       "name": "check_model",
-      "label": "检查模型",
-      "comment": "模型模型",
+      "label": "关联模型",
+      "comment": "关联模型",
       "nullable": true,
       "type": "string"
     },
     {
       "name": "check_model_label",
-      "comment": "模型模型标签字段",
-      "label": "检查模型标签字段",
+      "comment": "关联模型标签字段",
+      "label": "关联模型标签字段",
       "nullable": true,
       "type": "string"
     },
     {
       "nullable": true,
-      "comment": "模型模型值字段",
-      "label": "检查模型值字段",
+      "comment": "关联模型值字段",
+      "label": "关联模型值字段",
       "name": "check_model_value",
       "type": "string"
     },
     {
-      "label": "检查模型是否多选",
+      "label": "关联模型是否多选",
       "name": "check_model_multi",
       "type": "boolean",
-      "comment": "检查模型是否多选",
+      "comment": "关联模型是否多选",
       "default": false
     },
     {
