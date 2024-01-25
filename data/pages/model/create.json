@@ -403,7 +403,7 @@
                                           },
                                           {
                                             "type": "switch",
-                                            "label": "关联模型是否多选",
+                                            "label": "关联模型多选",
                                             "name": "check_model_multi"
                                           }
                                         ]
@@ -986,7 +986,7 @@
                                               },
                                               {
                                                 "type": "switch",
-                                                "label": "关联模型是否多选",
+                                                "label": "关联模型多选",
                                                 "name": "check_model_multi"
                                               }
                                             ]
