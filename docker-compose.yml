@@ -4,7 +4,12 @@ services:
   pgvector:
     image: ankane/pgvector
     environment:
-      POSTGRES_PASSWORD: 123456
+    - POSTGRES_PASSWORD=123456
+    - POSTGRES_USER=postgres
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
     ports:
       - "5432:5432"
     volumes:
