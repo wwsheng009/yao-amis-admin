@@ -766,8 +766,7 @@
                         "method": "get",
                         "url": "/api/v1/system/meta/model/col_type_options2",
                         "cache": 2000
-                      },
-                      "width": 200
+                      }
                     },
                     {
                       "type": "input-text",
@@ -777,7 +776,8 @@
                         "name": "label",
                         "required": true,
                         "type": "input-text"
-                      }
+                      },
+                      "width": 200
                     },
                     {
                       "type": "switch",
