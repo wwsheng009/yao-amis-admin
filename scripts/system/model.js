@@ -819,12 +819,19 @@ function ConvertDBmodelToYaoModel(modelDsl) {
     delete col.options;
     delete col.language;
     col = convertColTypeToYao(col);
+
+    ["index", "nullable", "primary", "unique"].forEach((item) => {
+      if (item in col && col[item] === false) {
+        delete col[item];
+      }
+    });
   });
   if (m.option) {
     delete m.option.migrate_force;
   }
   delete m.id;
   delete m.ID;
+
   return m;
 }
 
