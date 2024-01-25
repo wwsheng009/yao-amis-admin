@@ -4,8 +4,12 @@
  * 模型导入
  * 模型导出
  */
-const { getModelFromDB, loadModeltoMemory,
-  ConvertTableLineToModel, deepCopyObject, migrateModel
+const {
+  getModelFromDB,
+  loadModeltoMemory,
+  ConvertTableLineToModel,
+  deepCopyObject,
+  migrateModel,
 } = Require("system.model_db");
 
 const { DotName, UnderscoreName, IsMysql, ClearFalsyKeys } =
@@ -18,8 +22,13 @@ const { RunTransaction } = Require("system.db_lib");
 const { queryToQueryParam, updateInputData, mergeQueryObject } =
   Require("amis.data.lib");
 
-const { FindAndLoadYaoModelById, FindCachedModelById, MomoryModelList, ModelIDList, FindAndLoadDBModelById } =
-  Require("system.model_lib");
+const {
+  FindAndLoadYaoModelById,
+  FindCachedModelById,
+  MomoryModelList,
+  ModelIDList,
+  FindAndLoadDBModelById,
+} = Require("system.model_lib");
 
 const { convertColTypeToYao } = Require("system.col_type");
 
@@ -150,7 +159,7 @@ function CompleteModel(modelDsl) {
       if (col.option != null && typeof col.option === "string") {
         try {
           col.option = JSON.parse(col.option);
-        } catch (error) { }
+        } catch (error) {}
       }
       if (Array.isArray(col.option) && col.option.length > 0) {
         col.options = [];
@@ -373,39 +382,41 @@ function SaveColumns(modelId, payload, force) {
   if (!cols.length) {
     return;
   }
-  let needDelete = force;
+  // let needDelete = force;
 
-  let hasOneColId = false;
-  //检查记录中至少有一个主键。如果都没有ID，说明是新记录
-  cols.forEach((col) => {
-    if (col.id != null) {
-      hasOneColId = true;
-    }
-  });
-  //一个主键都没有，新对象
-  if (hasOneColId === false) {
-    needDelete = true;
-  }
-  // 排序有变化
-  if (!needDelete) {
-    if (!isAscOrder(cols)) {
-      // console.log("排序有变化", cols);
-      needDelete = true;
-    }
-  }
-  if (!needDelete) {
-    // 如果导入的列的数量比数据库中的少，需要先删除。
-    const columns = Process("models.ddic.model.column.get", {
-      wheres: [{ column: "model_id", value: modelId }],
-    });
-    if (columns.length > cols.length) {
-      needDelete = true;
-    }
-  }
-  if (needDelete) {
-    cols.forEach((col) => delete col.id);
-    DeleteModelolumns(modelId);
-  }
+  // let hasOneColId = false;
+  // //检查记录中至少有一个主键。如果都没有ID，说明是新记录
+  // cols.forEach((col) => {
+  //   if (col.id != null) {
+  //     hasOneColId = true;
+  //   }
+  // });
+  // //一个主键都没有，新对象
+  // if (hasOneColId === false) {
+  //   needDelete = true;
+  // }
+  // // 排序有变化
+  // if (!needDelete) {
+  //   if (!isAscOrder(cols)) {
+  //     // console.log("排序有变化", cols);
+  //     needDelete = true;
+  //   }
+  // }
+  // if (!needDelete) {
+  //   // 如果导入的列的数量比数据库中的少，需要先删除。
+  //   const columns = Process("models.ddic.model.column.get", {
+  //     wheres: [{ column: "model_id", value: modelId }],
+  //   });
+  //   if (columns.length > cols.length) {
+  //     needDelete = true;
+  //   }
+  // }
+  // let needDelete = true;
+  // if (needDelete) {
+  // cols.forEach((col) => delete col.id);
+  DeleteModelolumns(modelId);
+  cols.forEach((col, idx) => (col.id = modelId * 10000 + idx));
+  // }
   // 保存列清单
   var res = Process("models.ddic.model.column.EachSave", cols, {
     model_id: modelId,
@@ -655,8 +666,6 @@ function DeleteModelLocalFile(modelId) {
   __yao_data = { ROOT: false };
 }
 
-
-
 /**
  * 根据模型ID获取模型定义
  * 模型有可能会保存在两个位置，一个是在数据库里，根据数据库ID,
@@ -698,7 +707,7 @@ function getModelColumnsApi(modelId) {
  * @returns
  */
 function getDBModelById(modelId) {
-  return FindAndLoadDBModelById(modelId)
+  return FindAndLoadDBModelById(modelId);
 }
 
 // function getYaoModel(modelId) {
@@ -998,8 +1007,8 @@ function ImportTableAction(payload) {
 
   SaveModelToLocal(model);
 
-  let dbModel = deepCopyObject(model)
-  dbModel = guessModelColumnsType(dbModel)
+  let dbModel = deepCopyObject(model);
+  dbModel = guessModelColumnsType(dbModel);
   // 传入的是模型数据，转成表结构后再保存
   const line = ConvertModelToTableLine(dbModel);
   let id = SaveModelTableLine(line);
@@ -1017,16 +1026,15 @@ function ImportTableAction(payload) {
 
 function isTextColumn(column) {
   const ty = column.type.toLowerCase();
-  if (ty === "string" || ty.includes("text")
-    || ty === "json") {
-    return true
+  if (ty === "string" || ty.includes("text") || ty === "json") {
+    return true;
   }
-  return false
+  return false;
 }
 /**
  * guess the column type from the name or the comment
- * @param {object} modelDsl 
- * @returns 
+ * @param {object} modelDsl
+ * @returns
  */
 function guessModelColumnsType(modelDsl) {
   modelDsl.columns.forEach((column) => {
@@ -1036,13 +1044,23 @@ function guessModelColumnsType(modelDsl) {
 
     if (isTextColumn(column)) {
       if (comment.includes("json")) {
-        column.type = "json"
+        column.type = "json";
       }
 
-      if (colName.includes("pic") || colName.includes("image") || colName.includes("img") || comment.includes("图片")) {
-        column.type = "image"
-      } else if (colName.includes("pics") || colName.includes("images") || colName.includes("imgs") || comment.includes("图片集")) {
-        column.type = "images"
+      if (
+        colName.includes("pic") ||
+        colName.includes("image") ||
+        colName.includes("img") ||
+        comment.includes("图片")
+      ) {
+        column.type = "image";
+      } else if (
+        colName.includes("pics") ||
+        colName.includes("images") ||
+        colName.includes("imgs") ||
+        comment.includes("图片集")
+      ) {
+        column.type = "images";
       }
       // else if (colName.includes("date") || comment.includes("日期")) {
       //   column.type = "date"
@@ -1050,15 +1068,18 @@ function guessModelColumnsType(modelDsl) {
       //   column.type = "time"
       // }
     } else {
-      if (colType === 'integer' || colType === 'tinyinteger' || colType === 'tinyint') {
+      if (
+        colType === "integer" ||
+        colType === "tinyinteger" ||
+        colType === "tinyint"
+      ) {
         if (colName.includes("status") || comment.includes("状态")) {
-          column.type = "boolean"
+          column.type = "boolean";
         }
       }
     }
-  })
-  return modelDsl
-
+  });
+  return modelDsl;
 }
 /**
  * 从数据库读取模型并加载到内存中。
@@ -1226,7 +1247,7 @@ function getLastPart(str) {
 }
 function guessAmisType(typeIn) {
   if (!typeIn) {
-    return "unkown:" + typeIn;
+    return "string";
   }
   let type = typeIn.toLowerCase();
   type = getLastPart(type);
@@ -1253,7 +1274,7 @@ function guessAmisType(typeIn) {
     default:
       break;
   }
-  return "amis:" + typeIn;
+  return "string";
 }
 function GuessAmisCols(columns) {
   let cols = [];
@@ -1266,9 +1287,7 @@ function GuessAmisCols(columns) {
       node.body.forEach((x) => traverse(x));
       return;
     }
-    if (!node.type) {
-      console.log("GuessAmisCols type is undeinfed");
-    }
+
     let column = {
       name: node.name,
       type: guessAmisType(node.type),
@@ -1283,7 +1302,6 @@ function GuessAmisCols(columns) {
     if (column.type == "enum") {
       column.options = node.options;
     }
-    // console.log("column:==========>", column);
 
     cols.push(column);
   }
@@ -1352,7 +1370,7 @@ function CheckAndGuessJson(payload) {
  * @returns
  */
 function ImportFromTableBatch(payload) {
-  console.log("ImportFromTableBatch", payload)
+  console.log("ImportFromTableBatch", payload);
 
   let items = payload.items;
   if (!Array.isArray(items)) {
@@ -1360,17 +1378,15 @@ function ImportFromTableBatch(payload) {
   }
 
   for (const item of items) {
-
     const model = CheckImportModelLine(item.model, item.name);
 
     if (model != null) {
-
       return {
         code: 503,
         message: `模型:${item.model}，表:${item.name} 已经存在，禁止导入`,
       };
     }
     ImportTableAction(item);
-  };
+  }
   return { message: "批量导入表结构成功" };
 }
