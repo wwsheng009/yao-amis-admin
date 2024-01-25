@@ -1,5 +1,5 @@
-#docker build --build-arg ARCH=amd64 --build-arg VERSION=0.10.5 --tag demo-project .
-#docker run -d --restart unless-stopped --name demo-project -p 5099:5099 demo-project
+#docker build --build-arg ARCH=amd64 --build-arg VERSION=0.10.5 --tag yao-amis-admin-dev .
+#docker run -d --restart unless-stopped --name yao-amis-admin-dev -p 5099:5099 yao-amis-admin-dev
 
 ARG ARCH
 FROM wwsheng009/yao-${ARCH}:latest
