@@ -289,7 +289,7 @@ function ConvertModelToTableLine(modelDsl) {
 
   const [row] = Process("models.ddic.model.get", {
     wheres: wheres,
-    with: {},
+    withs: {},
   });
   line.id = row?.id;
   return line;
@@ -869,7 +869,7 @@ function CheckModel(modelDsl) {
   wheres.push({ column: "table_name", value: tableName });
   const [one] = Process("models.ddic.model.get", {
     wheres: wheres,
-    with: {},
+    withs: {},
   });
 
   if (one?.id && modelDsl.id != null && one?.id != modelDsl.id) {
@@ -1127,7 +1127,7 @@ function CheckImportModelLine(modelId, tableName) {
 
   let [data] = Process("models.ddic.model.get", {
     wheres: wheres,
-    with: {},
+    withs: {},
   });
   return data;
   // return data.filter((line) => !line.read_only)[0];

@@ -161,7 +161,10 @@ function column2AmisTableViewColumn(column) {
   //   }
   // }
   newColumn.type = "text";
-  const type = column.type.toUpperCase();
+  let type = column.type.toUpperCase();
+  if (column.primary === true) {
+    type = "ID";
+  }
   switch (type) {
     case "STRING":
     case "CHAR":
@@ -384,8 +387,11 @@ function column2AmisFormViewColumn(column) {
   //     newColumn.required = true;
   //   }
   // }
-  const type = column.type.toUpperCase();
+  let type = column.type.toUpperCase();
   newColumn.type = "static-text";
+  if (column.primary === true) {
+    type = "ID";
+  }
   switch (type) {
     case "STRING":
     case "CHAR":
@@ -594,7 +600,11 @@ function column2AmisFormEditColumn(column) {
   }
 
   newColumn.type = "input-text";
-  const columnType = column.type.toUpperCase();
+
+  let columnType = column.type.toUpperCase();
+  if (column.primary === true) {
+    columnType = "ID";
+  }
   switch (columnType) {
     case "STRING":
     case "CHAR":

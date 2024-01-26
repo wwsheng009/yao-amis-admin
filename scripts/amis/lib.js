@@ -19,7 +19,7 @@ const Exception = Error;
 
 /**
  * 读取已经加载在内存中的模型的定义,并根据传入列的类型定义更新模型定义
- * 
+ *
  * 如果传入第二个参数，模型的字段定义使用此参数，
  * 此功能一般用于前端传入用户选择或是修改过的字段定义
  * @param {string} modelId 模型名称
@@ -294,7 +294,7 @@ function getModelFieldsForAmis(modelId, columnsIn) {
 
 /**
  * 更新模型，增加元数据字段如果它们不存在，
- * 
+ *
  * 字段包含：创建时间，更新时间，删除时间字段。
  * @param {object} modelDsl yao模型定义
  * @returns 新的模型定义
@@ -341,7 +341,7 @@ function AddMetaFields(modelDsl) {
 /**
  * 获取模型的关联查询的定义withUrl定义
  * @param {string} modelId 模型标识
- * @returns 
+ * @returns
  */
 function getWithsUrl(modelId) {
   const model = getModelDefinition(modelId);
@@ -673,7 +673,10 @@ function excelMapping(modelId, columnsIn) {
   // const columns = schema.columns;
   let obj = {};
   columns.forEach((column) => {
-    const type = column.type.toUpperCase();
+    let type = column.type.toUpperCase();
+    if (column.primary === true) {
+      type = "ID";
+    }
     let ignore = false;
     switch (type) {
       // 自增长的不要
