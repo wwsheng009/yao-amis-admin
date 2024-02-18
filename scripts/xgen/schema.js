@@ -1454,7 +1454,11 @@ function CreateListFile(rel) {
     __code_source: listDsl,
   };
 }
-
+/**
+ * conver the model dsl to list config file
+ * @param {object} modelDsl 
+ * @returns string
+ */
 function toList(modelDsl) {
   // const copiedObject = JSON.parse(JSON.stringify(modelDsl.columns));
   let columns = modelDsl.columns || [];
@@ -1463,7 +1467,7 @@ function toList(modelDsl) {
     name: modelDsl.name || "列表",
     action: {
       bind: {
-        table: table_dot_name,
+        model: table_dot_name,
       },
     },
     layout: {
