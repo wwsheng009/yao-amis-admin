@@ -1165,9 +1165,10 @@ function relationList(formDsl, modelDsl) {
   const relations = modelDsl.relations || {};
   let RelList = [];
   for (const rel in relations) {
-    // if (relations[rel].type != "hasMany") {
-    //   continue;
-    // }
+    // 只有1对多的关系才需要创建List文件
+    if (relations[rel].type != "hasMany") {
+      continue;
+    }
     RelList.push({
       name: rel,
       model: relations[rel].model,
@@ -1432,7 +1433,7 @@ function wrapForm(formDsl, modelDsl, type) {
     __code_source: formDsl,
   };
 }
-/**创建列表，并不需要所有的模型都创建列表 */
+/**创建列表，并不是所有的模型都创建列表，只有hasMany的关系才需要*/
 function CreateListFile(rel) {
   const modelName = rel.model;
   const excludeField = rel.key;
