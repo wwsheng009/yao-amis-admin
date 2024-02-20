@@ -147,8 +147,6 @@ var yao_amis = {
       "studio" + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT; ; path=/";
 
     localStorage.removeItem("xgen:token");
-    localStorage.removeItem("xgen:token");
-    sessionStorage.removeItem("xgen:token");
     sessionStorage.removeItem("xgen:token");
     if (toLogin) {
       window.location.href = loginUrl;
