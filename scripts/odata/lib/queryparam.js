@@ -227,11 +227,20 @@ function ConvertUrlToQsl(oUrl) {
     if (query["$filter"] && query["$filter"].length) {
       let filter = query["$filter"][0].trim();
 
-      const condition = splitByKeys(filter, ["and", "or"]).filter(
-        (item) => item !== "and" && item !== "or"
-      );
+      const condition = splitByKeys(filter, ["and", "or"]);
+      // const condition = splitByKeys(filter, ["and", "or"]).filter(
+      //   (item) => item !== "and" && item !== "or"
+      // );
       let wheres = [];
       for (const item of condition) {
+        if (item == "and") {
+          continue;
+        }
+        if (item == "or") {
+          if (wheres.length > 0) {
+            wheres[wheres.length - 1].method = "orwhere"
+          }
+        }
         // parse "indexof(title,'X1ML') gt 0"
         const conditionArr = splitByKeys(item, OPERATORS_KEYS);
         if (conditionArr.length === 0) {
