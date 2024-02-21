@@ -142,7 +142,7 @@ function getDataFromRequest(oRequest, basePath) {
     return {
       type: "application/json;charset=utf-8",
       status: 200,
-      data: data,
+      data: { total: data },
     };
   } else {
     const data1 = q.Get(oQsl.qsl);
