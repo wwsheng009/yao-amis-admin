@@ -127,7 +127,15 @@ function getData(sPathIn, oQueryIn, headers, host, path, schema, fullpath) {
   oRequest.URL = {};
   oRequest.URL.path = sPathIn;
   oRequest.URL.query = oQuery;
-  return getDataFromRequest(oRequest, basePath);
+  try {
+    return getDataFromRequest(oRequest, basePath);
+  } catch (e) {
+    return {
+      type: "application/json;charset=utf-8",
+      status: e.code,
+      data: { message:e.message },
+    };
+  }
 }
 
 function getDataFromRequest(oRequest, basePath) {
@@ -157,7 +165,7 @@ function getDataFromRequest(oRequest, basePath) {
       data: { total: total },
     };
   } else {
-    if (oQsl.qsl.limit) {
+    if (!oQsl.qsl?.limit) {
       oQsl.qsl.limit = 100000;
     }
     // const data1 = q.Get(oQsl.qsl);

@@ -20,7 +20,7 @@ const convertToOperator = (odataOperator) => {
       operator = "<=";
       break;
     default:
-      throw new Error(
+      throw new Exception(
         'Invalid operator code, expected one of ["==", "!=", ">", ">=", "<", "<="].'
       );
   }
@@ -77,7 +77,7 @@ const year = (query, fnKey, odataOperator, value) => {
       query.where(key).lt(end);
       break;
     default:
-      throw new Error(
+      throw new Exception(
         'Invalid operator code, expected one of ["==", "!=", ">", ">=", "<", "<="].'
       );
   }

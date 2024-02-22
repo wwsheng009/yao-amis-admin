@@ -33,7 +33,7 @@ class XmlWriter {
         return XmlWriter.visitFunctionImport(node, name);
 
       default:
-        throw new Error(`Type ${type} is not supported`);
+        throw new Exception(`Type ${type} is not supported`);
     }
   }
 

@@ -42,7 +42,7 @@ function getHeaderParameterValue(sHeaderValue, sParameterName) {
 //     iMultiPartTypeIndex = sContentType.trim().indexOf("multipart/mixed");
 
 //   if (iMultiPartTypeIndex !== 0 || !sBatchBoundary) {
-//     throw new Error(
+//     throw new Exception(
 //       'Invalid $batch response header "Content-Type": ' + sContentType
 //     );
 //   }
@@ -191,7 +191,7 @@ function getHeaderParameterValue(sHeaderValue, sParameterName) {
 //       if (sHeaderName.toLowerCase() === "content-type") {
 //         sCharset = getHeaderParameterValue(sHeaderValue, "charset");
 //         if (sCharset && sCharset.toLowerCase() !== "utf-8") {
-//           throw new Error('Unsupported "Content-Type" charset: ' + sCharset);
+//           throw new Exception('Unsupported "Content-Type" charset: ' + sCharset);
 //         }
 //       }
 //     }
@@ -263,7 +263,7 @@ function decodePartsRequest(headers, parts) {
       if (sHeaderName.toLowerCase() === "content-type") {
         sCharset = getHeaderParameterValue(sHeaderValue, "charset");
         if (sCharset && sCharset.toLowerCase() !== "utf-8") {
-          throw new Error('Unsupported "Content-Type" charset: ' + sCharset);
+          throw new Exception('Unsupported "Content-Type" charset: ' + sCharset);
         }
       }
     }

@@ -91,7 +91,7 @@ function ConvertUrlToQsl(oUrl) {
 
   const paths = pathParam.split("/");
   if (paths.length === 0) {
-    throw new Exception("401", "不正确的请求");
+    throw new Exception("不正确的请求",401);
   }
   let part1 = "";
   let part2 = "";
@@ -239,7 +239,7 @@ function ConvertUrlToQsl(oUrl) {
           conditionArr.push(item);
         }
         if (conditionArr.length !== 3 && conditionArr.length !== 1) {
-          throw new Exception("404", `Syntax error at '${item}'.`);
+          throw new Exception(`语法错误 '${item}'.`,404);
         }
 
         let key = conditionArr[0];
@@ -252,7 +252,7 @@ function ConvertUrlToQsl(oUrl) {
           const result = validator.formatValue(value);
           if (result.err) {
             // return reject(result.err);
-            throw new Exception("404", result.err);
+            throw new Exception(result.err,404);
           }
           val = result.val;
         }
@@ -263,7 +263,7 @@ function ConvertUrlToQsl(oUrl) {
           functions[functionKey](query, key, odataOperator, val);
         } else {
           if (conditionArr.length === 1) {
-            throw new Exception("404", `Syntax error at '${item}'.`);
+            throw new Exception(`语法错误 '${item}'.`,404);
           }
           if (value === "null") {
             switch (odataOperator) {
@@ -328,7 +328,7 @@ function ConvertUrlToQsl(oUrl) {
               });
               break;
             default:
-              throw new Exception("404", `Incorrect operator at '${item}'.`);
+              throw new Exception(`Incorrect operator at '${item}'.`,404);
           }
         }
       }
