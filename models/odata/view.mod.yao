@@ -25,7 +25,8 @@
       "comment": "长描述",
       "label": "长描述",
       "name": "description",
-      "type": "text"
+      "type": "text",
+      "nullable":true
     },
     {
       "comment": "关联模型",
