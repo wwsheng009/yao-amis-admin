@@ -90,7 +90,7 @@
         "messages": {},
         "method": "post",
         "requestAdaptor": "",
-        "url": "/api/app/v1/cmd/execute"
+        "url": "/api/v1/app/cmd/execute"
       },
       "feat": "Edit",
       "mode": "horizontal",

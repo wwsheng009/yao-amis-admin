@@ -6,7 +6,7 @@
     "guard": "bearer-jwt",
     "paths": [
         {
-            // /api/app/v1/monitor/cpu_percentage
+            // /api/v1/app/monitor/cpu_percentage
             "label": "CPU-percentage",
             "description": "CPU-percentage",
             "path": "/cpu_percentage",

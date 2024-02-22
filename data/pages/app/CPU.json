@@ -8,7 +8,7 @@
       "dataFilter": "",
       "api": {
         "method": "get",
-        "url": "/api/app/v1/monitor/cpu_percentage"
+        "url": "/api/v1/app/monitor/cpu_percentage"
       },
       "trackExpression": "",
       "type": "chart",

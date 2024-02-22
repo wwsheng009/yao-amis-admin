@@ -6,7 +6,7 @@
     "guard": "bearer-jwt",
     "paths": [
         {
-            // /api/app/v1/cmd/execute
+            // /api/v1/app/cmd/execute
             "label": "命令执行",
             "description": "命令执行",
             "path": "/execute",
