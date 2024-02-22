@@ -1,20 +1,21 @@
-const { getModelNameList, getModels, getModel } = Require("odata.lib.model");
+const { getModelNameList, getOdataViewList, getModels, getModel } =
+  Require("odata.lib.model");
 const { Metadata, getEdmType } = Require("odata.lib.meta");
 const { XmlWriter } = Require("odata.lib.xml");
 
 /**
  * 获取模型列表
- * @param {string} base 
- * @returns 
+ * @param {string} base
+ * @returns
  */
 function getEntryMetaDataXml(base) {
   // https://services.odata.org/V2/OData/OData.svc/
-  const nameList = getModelNameList();
+  const viewList = getOdataViewList();
 
   let data = [];
-  nameList.forEach((name) => {
-    data.push(`<collection href="${name}">
-        <atom:title>${name}</atom:title>
+  viewList.forEach((view) => {
+    data.push(`<collection href="${view.name}">
+        <atom:title>${view.label}</atom:title>
     </collection>`);
   });
   return `<?xml version="1.0" encoding="utf-8" standalone="yes"?>
@@ -28,7 +29,7 @@ function getEntryMetaDataXml(base) {
 
 /**
  * 获取所有模型的元数据信息
- * @returns 
+ * @returns
  */
 function getMetaDataXml2() {
   const models = getModels();
@@ -42,10 +43,10 @@ function getMetaDataXml2() {
 
 /**
  * 转换json数据成xml定义
- * @param {object} json 
- * @param {string} sModelName 
- * @param {string} sBaseUrl 
- * @returns 
+ * @param {object} json
+ * @param {string} sModelName
+ * @param {string} sBaseUrl
+ * @returns
  */
 function convertJsonToXml(json, sModelName, sBaseUrl) {
   const entrys = convertEntrys(json, sModelName, sBaseUrl);
@@ -62,10 +63,10 @@ function convertJsonToXml(json, sModelName, sBaseUrl) {
 }
 /**
  * 转换JSON数据，
- * @param {Array} json 
- * @param {string} sModelName 
- * @param {string} sBaseUrl 
- * @returns 
+ * @param {Array} json
+ * @param {string} sModelName
+ * @param {string} sBaseUrl
+ * @returns
  */
 function convertEntrys(json, sModelName, sBaseUrl) {
   const model = getModel(sModelName);
@@ -130,5 +131,4 @@ module.exports = {
   getEntryMetaDataXml,
   getMetaDataXml2,
   convertJsonToXml,
-
 };

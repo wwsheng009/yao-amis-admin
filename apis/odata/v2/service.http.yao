@@ -14,7 +14,7 @@
       "description": "get请求入口",
       "path": "/*path",
       "method": "GET",
-      "guard": "scripts.auth.basic.Check",
+      // "guard": "scripts.auth.basic.Check",
       "process": "scripts.odata.v2.getData",
       "in": [
         "$param.path",

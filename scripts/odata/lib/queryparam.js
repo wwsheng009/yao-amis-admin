@@ -139,36 +139,27 @@ function ConvertUrlToQsl(oUrl) {
   if (query["$count"]) {
     count = query["$count"];
   }
+  let viewName = entitySet;
+  let modelDsl = getModel(viewName);
+  if (modelDsl.table?.name) {
+    viewName = modelDsl.table?.name;
+  }
   if (count) {
     // 不能直接使用count(*)
     // Unknown column '*' in 'field list'
     // queryParams["select"] = [":count(*) as count"];
     //todo 还需要根据模型获取表名
-    let tableName = entitySet;
-    let model = getModel(tableName);
-    if (model && model.table?.name) {
-      tableName = model.table?.name;
-    }
+
     return {
       isCount: true,
       entitySet,
+      model: modelDsl,
       qsl: {
-        sql: {
-          stmt: `select count(*) as total from ${tableName}`,
-        },
+        // sql: {
+        //   stmt: `select count(*) as total from ${viewName}`,
+        // },
       },
     };
-    // const q = new Query();
-    // let data = q.Get({
-    //   sql: {
-    //     stmt: `select count(*) as total from ${tableName}`,
-    //   },
-    // })[0]["total"];
-    // return {
-    //   type: "application/json;charset=utf-8",
-    //   status: 200,
-    //   data: data,
-    // };
   }
 
   //check the id.
@@ -238,7 +229,7 @@ function ConvertUrlToQsl(oUrl) {
         }
         if (item == "or") {
           if (wheres.length > 0) {
-            wheres[wheres.length - 1].method = "orwhere"
+            wheres[wheres.length - 1].method = "orwhere";
           }
         }
         // parse "indexof(title,'X1ML') gt 0"
@@ -354,11 +345,17 @@ function ConvertUrlToQsl(oUrl) {
     ];
   }
 
-  queryDsl["from"] = `$${entitySet}`;
+  queryDsl["from"] = viewName;
   if (!queryDsl["select"]) {
     queryDsl["select"] = [];
   }
-  return { qsl: queryDsl, format, entitySet, id };
+  return {
+    qsl: queryDsl,
+    format,
+    entitySet,
+    id,
+    model: modelDsl,
+  };
 }
 
 // getData("/service/$metadata", query);

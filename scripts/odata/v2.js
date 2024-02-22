@@ -4,7 +4,6 @@ const { getEntryMetaDataXml, getMetaDataXml2, convertJsonToXml } =
 const { ConvertUrlToQsl } = Require("odata.lib.queryparam");
 const { decodePartsRequest } = Require("odata.lib.decodebatch");
 
-
 function postData(
   pathIn,
   queryIn,
@@ -72,10 +71,10 @@ function getMetaFullPath(fullpath, schema, host) {
 
 /**
  * odata请求的形式一般是 /xx_table/$format=xx
- * @param {string} fullpath 
+ * @param {string} fullpath
  * @param {string} schema http| https
- * @param {string} host 
- * @returns 
+ * @param {string} host
+ * @returns
  */
 function getBasePath(fullpath, schema, host) {
   let rootpath = fullpath.split("/").slice(0, -1).join("/");
@@ -134,18 +133,40 @@ function getData(sPathIn, oQueryIn, headers, host, path, schema, fullpath) {
 function getDataFromRequest(oRequest, basePath) {
   const metaFullPath = basePath + "$metadata";
   const oQsl = ConvertUrlToQsl(oRequest);
-  // console.log("oQsl:", oQsl);
 
   const q = new Query();
+
+  // 计算数量
   if (oQsl.isCount) {
-    let data = q.Get(oQsl.qsl)[0]["total"];
+    let total = 0;
+    // console.log("oQsl.model?.table_id",oQsl.model?.table_id)
+    if (oQsl.model?.table_id) {
+      total = Process("yao.table.search", oQsl.model.table_id,{}, 1, 1)?.total;
+    } else if (oQsl.model?.model_id) {
+      total = Process(
+        `models.${oQsl.model.model_id}.Paginate`,
+        {},
+        1,
+        1
+      )?.total;
+    }
+    // let data = q.Get(oQsl.qsl)[0]["total"];
     return {
       type: "application/json;charset=utf-8",
       status: 200,
-      data: { total: data },
+      data: { total: total },
     };
   } else {
-    const data1 = q.Get(oQsl.qsl);
+    if (oQsl.qsl.limit) {
+      oQsl.qsl.limit = 100000;
+    }
+    // const data1 = q.Get(oQsl.qsl);
+    let data1 = null;
+    if (oQsl.model?.table_id) {
+      data1 = Process("yao.table.get", oQsl.model.table_id, oQsl.qsl);
+    } else {
+      data1 = q.Get(oQsl.qsl);
+    }
 
     if (oQsl.format == "json") {
       let data = {
