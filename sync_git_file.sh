@@ -34,11 +34,20 @@ git status --porcelain | while read -r status file; do
     if [[ "$status" =~ ^[AM\?]+ ]]; then
         # Create the directory structure in the destination
         mkdir -p "$DESTINATION_FOLDER/$(dirname "$file")"
-        # Copy the file to the destination, preserving the structure
-        if cp "$file" "$DESTINATION_FOLDER/$file"; then
-            echo "Copied: $file"
+        # Check if the source item is a directory, and if so, use the -r option
+        if [ -d "$file" ]; then
+            if cp -r "$file" "$DESTINATION_FOLDER/$(dirname "$file")"; then
+                echo "Copied directory: $file"
+            else
+                echo "Failed to copy directory: $file"
+            fi
         else
-            echo "Failed to copy: $file"
+            # If it's not a directory, copy the file normally
+            if cp "$file" "$DESTINATION_FOLDER/$file"; then
+                echo "Copied: $file"
+            else
+                echo "Failed to copy: $file"
+            fi
         fi
     fi
 done
