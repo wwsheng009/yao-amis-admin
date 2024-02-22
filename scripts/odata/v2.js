@@ -106,7 +106,6 @@ function getData(sPathIn, oQueryIn, headers, host, path, schema, fullpath) {
   }
   let basePath = getBasePath(fullpath, schema, host);
 
-
   // 不是请求元数据，而是/$，请求模型列表
   if (pathParam == "$" || pathParam == "") {
     return {
@@ -133,7 +132,7 @@ function getData(sPathIn, oQueryIn, headers, host, path, schema, fullpath) {
     return {
       type: "application/json;charset=utf-8",
       status: e.code,
-      data: { message:e.message },
+      data: { message: e.message },
     };
   }
 }
@@ -142,14 +141,14 @@ function getDataFromRequest(oRequest, basePath) {
   const metaFullPath = basePath + "$metadata";
   const oQsl = ConvertUrlToQsl(oRequest);
 
-  const q = new Query();
+  // const q = new Query();
 
   // 计算数量
   if (oQsl.isCount) {
     let total = 0;
     // console.log("oQsl.model?.table_id",oQsl.model?.table_id)
     if (oQsl.model?.table_id) {
-      total = Process("yao.table.search", oQsl.model.table_id,{}, 1, 1)?.total;
+      total = Process("yao.table.search", oQsl.model.table_id, {}, 1, 1)?.total;
     } else if (oQsl.model?.model_id) {
       total = Process(
         `models.${oQsl.model.model_id}.Paginate`,
@@ -173,7 +172,8 @@ function getDataFromRequest(oRequest, basePath) {
     if (oQsl.model?.table_id) {
       data1 = Process("yao.table.get", oQsl.model.table_id, oQsl.qsl);
     } else {
-      data1 = q.Get(oQsl.qsl);
+      // data1 = q.Get(oQsl.qsl);
+      data1 = Process(`models.${oQsl.model.model_id}.get`, oQsl.qsl);
     }
 
     if (oQsl.format == "json") {

@@ -44,19 +44,19 @@ function getMetaDataXml2() {
 /**
  * 转换json数据成xml定义
  * @param {object} json
- * @param {string} sModelName
+ * @param {string} viewId
  * @param {string} sBaseUrl
  * @returns
  */
-function convertJsonToXml(json, sModelName, sBaseUrl) {
-  const entrys = convertEntrys(json, sModelName, sBaseUrl);
+function convertJsonToXml(json, viewId, sBaseUrl) {
+  const entrys = convertEntrys(json, viewId, sBaseUrl);
 
   const xml = `<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <feed xml:base="${sBaseUrl}" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://www.w3.org/2005/Atom">
-    <title type="text">${sModelName}</title>
-    <id>${sBaseUrl}${sModelName}</id>
+    <title type="text">${viewId}</title>
+    <id>${sBaseUrl}${viewId}</id>
     <updated>2023-09-07T04:58:35Z</updated>
-    <link rel="self" title="${sModelName}" href="${sModelName}" />
+    <link rel="self" title="${viewId}" href="${viewId}" />
     ${entrys.join("")}
 </feed>`;
   return xml;
@@ -64,12 +64,12 @@ function convertJsonToXml(json, sModelName, sBaseUrl) {
 /**
  * 转换JSON数据，
  * @param {Array} json
- * @param {string} sModelName
+ * @param {string} viewId
  * @param {string} sBaseUrl
  * @returns
  */
-function convertEntrys(json, sModelName, sBaseUrl) {
-  const model = getModel(sModelName);
+function convertEntrys(json, viewId, sBaseUrl) {
+  const model = getModel(viewId);
 
   const entrys = [];
   for (const item of json) {
@@ -89,11 +89,13 @@ function convertEntrys(json, sModelName, sBaseUrl) {
               `;
       }
     });
+    colXmlstr = colXmlstr.trimEnd(`
+    `)
 
     entrys.push(`<entry>
-      <id>${sBaseUrl}${sModelName}(${item.id})</id>
-      <link rel="edit" title="${sModelName}" href="${sModelName}(${item.id})" />
-      <category term="OdataService.${sModelName}" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+      <id>${sBaseUrl}${viewId}(${item.id})</id>
+      <link rel="edit" title="${viewId}" href="${viewId}(${item.id})" />
+      <category term="OdataService.${viewId}" scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
       <content type="application/xml">
           <m:properties>
               ${colXmlstr}

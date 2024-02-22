@@ -269,16 +269,25 @@ function ConvertUrlToQsl(oUrl) {
             switch (odataOperator) {
               case "eq":
                 wheres.push({
-                  field: key,
-                  op: "is",
-                  value: "null",
+                  column: key,
+                  op: "null"
                 });
+
+                // wheres.push({
+                //   field: key,
+                //   op: "is",
+                //   value: "null",
+                // });
               case "ne":
                 wheres.push({
-                  field: key,
-                  op: "is",
-                  value: "not null",
+                  column: key,
+                  op: "notnull"
                 });
+                // wheres.push({
+                //   field: key,
+                //   op: "is",
+                //   value: "not null",
+                // });
               default:
                 break;
             }
@@ -287,45 +296,75 @@ function ConvertUrlToQsl(oUrl) {
           switch (odataOperator) {
             case "eq":
               wheres.push({
-                field: key,
-                op: "=",
+                column: key,
+                op: "eq",
                 value: val,
               });
+              // wheres.push({
+              //   field: key,
+              //   op: "=",
+              //   value: val,
+              // });
               break;
             case "ne":
               wheres.push({
-                field: key,
-                op: "<>",
+                column: key,
+                op: "ne",
                 value: val,
               });
+              // wheres.push({
+              //   field: key,
+              //   op: "<>",
+              //   value: val,
+              // });
               break;
             case "gt":
               wheres.push({
-                field: key,
-                op: ">",
+                column: key,
+                op: "gt",
                 value: val,
               });
+              // wheres.push({
+              //   field: key,
+              //   op: ">",
+              //   value: val,
+              // });
               break;
             case "ge":
               wheres.push({
-                field: key,
-                op: ">=",
+                column: key,
+                op: "ge",
                 value: val,
               });
+              // wheres.push({
+              //   field: key,
+              //   op: ">=",
+              //   value: val,
+              // });
               break;
             case "lt":
               wheres.push({
-                field: key,
-                op: "<",
+                column: key,
+                op: "lt",
                 value: val,
               });
+              // wheres.push({
+              //   field: key,
+              //   op: "<",
+              //   value: val,
+              // });
               break;
             case "le":
               wheres.push({
-                field: key,
-                op: "<=",
+                column: key,
+                op: "le",
                 value: val,
               });
+              // wheres.push({
+              //   field: key,
+              //   op: "<=",
+              //   value: val,
+              // });
               break;
             default:
               throw new Exception(`Incorrect operator at '${item}'.`,404);
