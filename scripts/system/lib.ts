@@ -115,3 +115,9 @@ export function areObjectsEqual(
   // Objects are considered equal
   return true;
 }
+
+module.exports = {
+  MergeObject,
+  deleteObjectKey,
+  areObjectsEqual
+}
