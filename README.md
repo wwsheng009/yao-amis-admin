@@ -14,7 +14,7 @@ docker run -d -p 5099:5099 wwsheng009/yao-amis-admin-amd64:latest
 
 ## 演示地址：
 
-[demo](http://fun.wwsheng.cloud:5099/),用户名：xiang@iqka.com 密码：A123456p+
+[demo](http://fun.wwsheng.online:5099/),用户名：xiang@iqka.com 密码：A123456p+
 
 ![entry](doc/entry_index.png)
 ![model_create](doc/model_create.png)
