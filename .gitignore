@@ -18,3 +18,4 @@ app.yao
 node_modules
 *.so
 *.dll
+public/yao

@@ -40,7 +40,7 @@
 
     (async function () {
       let amis = amisRequire('amis/embed');
-      const axios = amisRequire('axios')
+      const axios = amisRequire('axios').default || amisRequire('axios');
       // 在yao.app中设置token的保存位置
       const appInfo = await axios.get("/api/__yao/app/setting")
       const token_storage_type = appInfo.data.token?.storage || 'sessionStorage'

@@ -32,7 +32,7 @@
   <script type="text/javascript">
     (async function () {
       let amis = amisRequire('amis/embed');
-      const axios = amisRequire('axios')
+      const axios = amisRequire('axios').default || amisRequire('axios');
       const appInfo = await axios.get("/api/__yao/app/setting")
       const configJson = await axios.get("pages/user/login2.json")
       // 通过替换下面这个配置来生成不同页面

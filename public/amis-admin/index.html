@@ -47,7 +47,7 @@
   <script>
     yao_amis.checkToken();
     (async function () {
-      const axios = amisRequire('axios')
+      const axios = amisRequire('axios').default || amisRequire('axios');
       window.axios = axios;//确保在fetcher的js文件中能引用到。或是把fetcher移动到这个文件
 
       const appInfo = await axios.get("/api/__yao/app/setting")

@@ -679,7 +679,7 @@
               "actions": [
                 {
                   "actionType": "custom",
-                  "script": "event.setData({...event.data,'__code_source':event.data.__code_sources[event.data.value -1]['__code_source']});"
+                  "script": "event.data.__code_sources && event.setData({...event.data,'__code_source':event.data.__code_sources[event.data.value -1]['__code_source']});"
                 },
                 {
                   "actionType": "setValue",
@@ -705,7 +705,7 @@
           "actions": [
             {
               "actionType": "custom",
-              "script": "event.setData({...event.data,'__code_source':event.data.__code_sources[0]['__code_source']});"
+              "script": "event.data.__code_sources && event.data && event.setData({...event.data,'__code_source':event.data.__code_sources[0]['__code_source']});"
             },
             {
               "actionType": "setValue",
