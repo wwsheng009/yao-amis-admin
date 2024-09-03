@@ -1,6 +1,26 @@
 # Yao-amis-admin
 
-[文档教程](https://wwsheng009.github.io/yao-docs/Admin-App/%E6%95%99%E7%A8%8B/1%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D.html)
+## 介绍
+
+本项目的目标是快速开发管理后台项目。
+
+- 使用 Yao项目 作为项目后端的执行引擎。yao引擎提供了丰富的后台功能，但是上手会比较费力，需要手动编写很多的json配置文件。这个项目降低了yao的上手难度，快速的搭建一个数据管理后台。这个平台的使用步骤如下：
+    * 系统安装，这个项目已提供了打包好的容器影像。
+    * 创建模型，模型是驱动api，后台页面的基础。使用这个平台的第一步是创建业务模型，模型创建可以使用图形化的界面进行操作。
+    * 数据维护，当创建好模型后，就可以维护数据，平台会根据模型配置动态生成数据维护界面。
+    * 定制开发，当熟悉这个平台或是Yao开发引擎后，可以进行自定义的开发您的API，后台处理接口，增强处理数据插件等等，也可以使用新的前台处理界面，所有一切都可以扩展。
+
+- 使用 amis-sdk 作为项目前端的解决方案，快速的使用 json 配置出 crud 界面。amis 框架是一个前端低代码解决方案，可以通过 json 文件配置出页面,包含表单、表格、图表等丰富组件，amis 可以通过前端图形化配置出页面,同时也支持通过代码配置，管理后台 99%的页面都是使用 amis-json 标准配置。
+
+- 使用 Amis 编辑器作表单配置工具。
+
+- 使用 soybean-admin 作为自定义开发前端的解决方案，把amis-sdk嵌入到页签里。
+
+利用 amis 的前端优势与 yao 的后端优势,我们可以开发出一个页面可随意定制的前后端分离的中后台管理系统。
+
+
+[更详细的说明与教程](https://wwsheng009.github.io/yao-docs/Admin-App/%E6%95%99%E7%A8%8B/1%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D.html)
+
 
 ## 安装
 
@@ -9,29 +29,18 @@
 ```sh
 docker run -d -p 5099:5099 wwsheng009/yao-amis-admin-amd64:latest
 ```
+在浏览器里访问地址：http://localhost:5099/，
+进行初始化安装，选择数据库的类型并输入数据库的相关信息后确定安装。
 
-用户名：xiang@iqka.com 密码：A123456p+
+管理员用户名：xiang@iqka.com 密码：A123456p+
 
 ## 演示地址：
 
-[demo](http://fun.wwsheng.online:5099/),用户名：xiang@iqka.com 密码：A123456p+
+演示地址：[demo](http://fun.wwsheng.online:5099/)，用户名：xiang@iqka.com 密码：A123456p+
 
 ![entry](doc/entry_index.png)
 ![model_create](doc/model_create.png)
 
-## 项目介绍
-
-本项目的目标是快速开发管理后台项目。
-
-- 使用 Yao 作为项目后端的执行引擎。
-
-- 使用 amis-sdk 作为项目前端的解决方案，快速的使用 json 配置出 crud 界面。amis 框架是一个前端低代码解决方案，可以通过 json 文件配置出页面,包含表单、表格、图表等丰富组件，amis 可以通过前端图形化配置出页面,同时也支持通过代码配置，管理后台 99%的页面都是使用 amis-json 标准配置。
-
-- 使用 Amis 编辑器作表单配置工具。
-
-- 使用 soybean-admin 作为自定义开发前端的解决方案。
-
-利用 amis 的前端优势与 yao 的后端优势,我们可以开发出一个页面可随意定制的前后端分离的中后台管理系统。
 
 ## 特性列表
 
@@ -157,6 +166,13 @@ YAO_ALLOW_FROM="localhost"。
 # 如果多个地址，使用|进行分隔
 YAO_ALLOW_FROM="localhost|localhost:5099"。
 ```
+## 项目结构说明
+
+yao引擎内置了js脚本解析功能，专门用于数据处理，所有的js脚本文件保存在目录/scripts/下。
+
+amis相关的页面配置目录保存在目录/data/pages目录下。
+
+其它的目录请参考Yao引擎的文档说明。
 
 ## 参考
 
