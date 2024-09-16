@@ -1,4 +1,4 @@
-const convert = Require("blog.xml-js")
+const convert = Require("./xml-js.js") 
 
 // 这里实现了metaweblog的api服务器，可以使用第三方的博客编辑工具把笔记内容推送到系统里。
 // 实现的功能：
@@ -86,7 +86,7 @@ function metaWeblogHandler(blog, query, body) {
  * @returns new id
  */
 function newCategory(params) {
-    let postId = params[0];
+    const postId = params[0];
     if (postId == null || postId == "") {
         return getErrorMessage("更新时需要指定id")
     }
@@ -149,7 +149,7 @@ function getUsersBlogs(user_id, blog, params) {
  * @returns 
  */
 function getPost(user_id, params) {
-    let postId = params[0];
+    const postId = params[0];
     const user_Id = user_id
     if (postId == null || postId == "") {
         return getErrorMessage("更新时需要指定id")
@@ -247,7 +247,7 @@ function getCategories() {
 }
 function deletePost(user_id, params) {
     // console.log("deletePost>>>>>>>>>:", params)
-    let postId = params[1];
+    const postId = params[1];
 
     if (postId == null || postId == "") {
         return getErrorMessage("删除时需要指定id")
@@ -361,8 +361,8 @@ function newMediaObject(params) {
     let filename = upLoadData.name;
     const type = upLoadData.type;
     const bits = upLoadData.bits;
-    var fs = new FS("system")
-    var folder = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+    const fs = new FS("system")
+    const folder = new Date().toISOString().slice(0, 10).replace(/-/g, "");
 
     filename = getNormorFileName(filename)
 
@@ -398,7 +398,7 @@ function unicodeToUtf8(unicodeString) {
     return utf8String;
 }
 
-function getErrorMessage(message, code) {
+function getErrorMessage(message, code=500) {
 
     return {
         "content": `<?xml version="1.0" encoding="utf-8"?>
@@ -488,7 +488,7 @@ function convertJs2xml(data) {
         return '';
     }
     if (Array.isArray(data)) {
-        let str = `<value><array><data>${data.map(line => convertJs2xml(line)).join('')}</data></array></value>`
+        const str = `<value><array><data>${data.map(line => convertJs2xml(line)).join('')}</data></array></value>`
         return str
     }
     // convert struct
@@ -503,13 +503,13 @@ function convertJs2xml(data) {
                 if (element == null) {
                     continue;
                 }
-                let valueStr = convertJs2xml(element)
+                const valueStr = convertJs2xml(element)
                 template += `<member><name>${key}</name>${valueStr}</member>`
             }
         }
         return `<value><struct>${template}</struct></value>`
     } else {
-        if (type === '"datetime.iso8601"') {
+        if (type === "datetime.iso8601") {
             data = formatDateIso(data)
         }
         return `<value><${type}>${data}</${type}></value>`

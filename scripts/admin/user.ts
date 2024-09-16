@@ -1,16 +1,17 @@
 // const { User, admin_user } = Require("admin.types.user");
+import {Process} from "@yao/yao"
 
 // scripts.admin.user.saveSetting
 function saveSetting(payload) {
   console.log("scripts.admin.user.saveSetting");
-  let user_id = Process("session.get", "user_id");
+  const user_id = Process("session.get", "user_id");
 
   let setting = payload.system_theme_setting;
   if (typeof setting === "string") {
     try {
       setting = JSON.parse(setting);
-    } catch (error) {
-      console.log("failed to parse the setting");
+    } catch (err) {
+      console.log("failed to parse the setting" + err);
     }
   }
   const [theme_setting] = Process("models.admin.theme.setting.Get", {
@@ -50,7 +51,7 @@ function readSetting() {
     tabIcon: true,
   };
 
-  let user_id = Process("session.get", "user_id");
+  const user_id = Process("session.get", "user_id");
   if (user_id) {
     const [row] = Process("models.admin.theme.setting.Get", {
       wheres: [{ column: "user_id", value: user_id }],
@@ -116,7 +117,7 @@ function readSetting() {
 function userList() {
   const userlist: admin_user[] = Process("models.admin.user.get", {});
 
-  let user: User[] = userlist.map((user: admin_user) => {
+  const user: User[] = userlist.map((user: admin_user) => {
     return {
       id: user.id,
       userName: user.name,

@@ -93,7 +93,7 @@ export function areObjectsEqual(
   }
 
   // Iterate over the keys and compare the values
-  for (let key of keys1) {
+  for (const key of keys1) {
     // Check if the current key exists in both objects
     if (!obj2.hasOwnProperty(key)) {
       return false;
@@ -116,8 +116,8 @@ export function areObjectsEqual(
   return true;
 }
 
-module.exports = {
-  MergeObject,
-  deleteObjectKey,
-  areObjectsEqual
-}
+// module.exports = {
+//   MergeObject,
+//   deleteObjectKey,
+//   areObjectsEqual
+// }

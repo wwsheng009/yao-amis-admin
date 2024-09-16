@@ -1,11 +1,12 @@
-const { deleteObjectKey } = Require("system.lib");
-const { ClearFalsyKeys } = Require("amis.lib_tool");
-const { updateSoyRouteComponent } = Require("admin.menu_lib");
-const { filterTreeDataWithFunc } = Require("amis.data.tree");
+import { deleteObjectKey } from "@scripts/system/lib";
+import { ClearFalsyKeys } from "@scripts/amis/lib_tool";
+import { updateSoyRouteComponent } from "@scripts/admin/menu_lib";
+import { filterTreeDataWithFunc } from "@scripts/amis/data/tree";
 
-const { getUserAuthMenuIds } = Require("auth.lib");
+import { getUserAuthMenuIds } from "@scripts/auth/lib";
 
-function Process(process:string,...args:any[]):any
+import {Process,Exception,FS} from "@yao/yao"
+
 
 
 /**
@@ -25,7 +26,7 @@ const WorkingPagesLocation = "/amis_editor";
  * yao run scripts.admin.menu.getUserAuthMenu
  */
 function getSoyAdminUserMenu() {
-  let user = Process("session.get", "user");
+  const user = Process("session.get", "user");
   if (user?.type === "super") {
     return getSoySuperUserMenu();
   }
@@ -98,10 +99,10 @@ function getSoySuperUserMenu() {
  */
 function getSoyRoutesFromDB() {
   // 优先从数据库读取菜单
-  let menus: admin_menu[] = Process("models.admin.menu.get", {});
+  const menus: admin_menu[] = Process("models.admin.menu.get", {});
 
-  let menus2: Route[] = menus.map((menu: admin_menu) => {
-    let r: Route = {
+  const menus2: Route[] = menus.map((menu: admin_menu) => {
+    const r: Route = {
       id: menu.id, //required
       parent: menu.parent, //required
       name: menu.name || "amis_" + menu.id,
@@ -230,16 +231,16 @@ function getAmisLocalPageAsSoyRoutes() {
  * @returns
  */
 function getAmisPageSchema(pageId: string) {
-  let page = pageId.replace(".", "/") + ".json";
+  const page = pageId.replace(".", "/") + ".json";
 
   const fpath = PagesLocation + "/" + page;
-  let isExist = Process("fs.system.Exists", fpath);
+  const isExist = Process("fs.system.Exists", fpath);
   if (!isExist) {
     throw new Exception(`文件不存在：${fpath}`);
   }
 
-  let str = Process("fs.system.ReadFile", fpath);
-  let source = JSON.parse(str);
+  const str = Process("fs.system.ReadFile", fpath);
+  const source = JSON.parse(str);
   if (source.type === "app") {
     return {
       type: "tpl",
@@ -256,21 +257,21 @@ function getAmisPageSchema(pageId: string) {
  * @returns
  */
 function getAmisEditorPageSource(pageId: string) {
-  let user_id = Process("session.get", "user_id");
+  const user_id = Process("session.get", "user_id");
   let dir = `${WorkingPagesLocation}/${user_id}/`;
   dir = dir.replace(/\\/g, "/");
   dir = dir.replace(/\/\//g, "/");
 
   pageId = pageId.replace(/^amis_editor\./, "");
-  let page = pageId.replace(".", "/") + ".json";
+  const page = pageId.replace(".", "/") + ".json";
 
   const fpath = dir + page;
-  let isExist = Process("fs.system.Exists", fpath);
+  const isExist = Process("fs.system.Exists", fpath);
   if (!isExist) {
     throw new Exception(`文件不存在：${fpath}`);
   }
-  let str = Process("fs.system.ReadFile", fpath);
-  let source = JSON.parse(str);
+  const str = Process("fs.system.ReadFile", fpath);
+  const source = JSON.parse(str);
   if (source.type === "app") {
     return {
       type: "tpl",
@@ -309,7 +310,7 @@ function getAmisEditorSoyRoute() {
   if (fs.Exists(dir)) {
     files = fs.ReadDir(dir, true); // recursive
     files = files.filter((x) => x.length > 5 && x.endsWith(".json"));
-    let regex = new RegExp(`^${dir}`, "i");
+    const regex = new RegExp(`^${dir}`, "i");
     files = files.map((f) => {
       f = f.replace(/\\/g, "/");
       return f.replace(regex, "/amis_editor/");
@@ -436,7 +437,7 @@ function updateSoyRoutePath(
   }
   route.path = route.path.replace(/\/\//g, "/");
 
-  route.name = route.path.replace(/[\./-]/g, "_");
+  route.name = route.path.replace(/[./-]/g, "_");
   if (route.name.startsWith("_")) {
     route.name = route.name.substring(1);
   }
@@ -474,7 +475,7 @@ function saveTreeMenusToDB(
       });
     }
 
-    route.meta = route.meta || {};
+    route.meta = route.meta || {title:""};
 
     let menu: admin_menu = {
       name: route.name,
@@ -484,7 +485,7 @@ function saveTreeMenusToDB(
 
     // 根据路由的名称进行判断，如果已经存在，进行更新
     if (route.name) {
-      let [menudb] = Process("models.admin.menu.get", {
+      const [menudb] = Process("models.admin.menu.get", {
         wheres: [
           {
             column: "name",
@@ -513,7 +514,7 @@ function saveTreeMenusToDB(
 
     menu.parent = parentId; //reset parent
 
-    let id = Process("models.admin.menu.save", menu);
+    const id = Process("models.admin.menu.save", menu);
     // console.log("id==>", id, menu);
     if (Array.isArray(route.children)) {
       route.children.forEach((element) => {
@@ -530,12 +531,12 @@ function saveTreeMenusToDB(
  * @returns
  */
 function getAmisRoutesFromDB(): AmisAppPage[] {
-  let menus: admin_menu[] = Process("models.admin.menu.get", {
+  const menus: admin_menu[] = Process("models.admin.menu.get", {
     wheres: [{ column: "source", value: "amis" }],
   });
 
-  let menus2: AmisAppPage[] = menus.map((menu: admin_menu) => {
-    let route: AmisAppPage = {
+  const menus2: AmisAppPage[] = menus.map((menu: admin_menu) => {
+    const route: AmisAppPage = {
       id: menu.id, //required
       parent: menu.parent, //required
       label: menu.title,
@@ -564,7 +565,7 @@ function getAmisPageRoutesFromDB(): AmisAppPage[] {
   let routes = getAmisRoutesFromDB();
   // 转换成树结构
   routes = Process(`utils.arr.Tree`, routes, { parent: "parent", empty: 0 });
-  let user = Process("session.get", "user");
+  const user = Process("session.get", "user");
   if (user?.type !== "super") {
     const menusIds = getUserAuthMenuIds();
     routes = filterTreeDataWithFunc(routes, (item) => {
@@ -588,7 +589,7 @@ function convertSoyRoutesToAmisPages(routes: Route[]): AmisAppPage[] {
       return;
     }
 
-    let route: AmisAppPage = {
+    const route: AmisAppPage = {
       label: r.meta?.title || r.name,
       url: r.path,
       icon: r.meta.icon,
@@ -614,14 +615,14 @@ function convertSoyRoutesToAmisPages(routes: Route[]): AmisAppPage[] {
 
 // yao run scripts.admin.menu.getAmisEditorPages
 function getAmisEditorPages(): AmisAppPage[] {
-  let routes = getAmisEditorSoyRoute();
+  const routes = getAmisEditorSoyRoute();
   let amsiRoutes = convertSoyRoutesToAmisPages(routes);
   amsiRoutes = ClearFalsyKeys(amsiRoutes);
   return amsiRoutes;
 }
 // yao run scripts.admin.menu.getAmisPages
 function getAmisPages(): AmisAppPage[] {
-  let routes = getAmisLocalPageAsSoyRoutes();
+  const routes = getAmisLocalPageAsSoyRoutes();
   let amsiRoutes = convertSoyRoutesToAmisPages(routes);
   amsiRoutes = ClearFalsyKeys(amsiRoutes);
   return amsiRoutes;

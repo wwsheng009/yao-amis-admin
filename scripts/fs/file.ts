@@ -1,5 +1,7 @@
-const { PaginateArrayWithQuery } = Require("amis.data.lib");
-const { getUserAuthFolderCache, isSuperUser } = Require("auth.lib");
+import { Exception,FS,Process} from "@yao/yao";
+
+import { PaginateArrayWithQuery } from "@scripts/amis/data/lib";
+import { getUserAuthFolderCache, isSuperUser } from "@scripts/auth/lib";
 const uploadDir = "/upload";
 const userDir = "/user";
 const publicDir = "/public";
@@ -70,7 +72,7 @@ function filterUserAuthFolderList(type: string, folderList: string[]) {
     return folderList;
   }
 
-  let authObjects = getUserAuthFolderCache();
+  const authObjects = getUserAuthFolderCache();
   const folder_method = authObjects.method_with_folder;
   console.log("folder_method", folder_method);
   // 未授权
@@ -122,7 +124,7 @@ function targetOperationAuthCheck(
   if (isSuperUser()) {
     return;
   }
-  let authObjects = getUserAuthFolderCache();
+  const authObjects = getUserAuthFolderCache();
   // const folders: string[] = authObjects.folders;
 
   const foldersAuth = authObjects.method_with_folder["ANY"].concat(
@@ -163,7 +165,7 @@ function targetOperationAuthCheck(
 
   if (!found) {
     throw new Exception(
-      `目录:${target.substring(uploadDir.length)} 操作:${operation} 未授权`
+      `目录:${target.substring(uploadDir.length)} 操作:${operation} 未授权`,403
     );
   }
 }
@@ -182,7 +184,7 @@ function getPermissionFolderTree() {
 
   let all = [] as string[];
   list.forEach((f) => {
-    let sublist = Process("fs.system.ReadDir", f, true);
+    const sublist = Process("fs.system.ReadDir", f, true);
     all = all.concat(sublist);
   });
   // 避免过多的文件层次
@@ -205,7 +207,7 @@ function writeLog(
   file_name2: string,
   operation: "remove" | "upload" | "delete_folder" | "move_folder"
 ) {
-  let user_id = Process("session.get", "user_id");
+  const user_id = Process("session.get", "user_id");
   Process("models.system.log.file.save", {
     user_id,
     file_name,
@@ -236,7 +238,7 @@ function getFolder(type: string) {
   let filePath = `${uploadDir}/public`;
   switch (type) {
     case "user":
-      let user_id = Process("session.get", "user_id");
+      const user_id = Process("session.get", "user_id");
       if (!user_id) {
         throw new Exception("用户未登录");
       }
@@ -317,7 +319,7 @@ function saveFile(type: string, file: YaoFile, folder: string) {
   // 只返回用户的目录下的相对路径
   const filePath2 = `/${folder}/${file.name}`;
 
-  let fs = new FS("system");
+  const fs = new FS("system");
   if (!fs.Exists(uploadFolder)) {
     fs.MkdirAll(uploadFolder);
   }
@@ -413,7 +415,7 @@ function fileSearch(type: string, parentFolder: string, querysIn, payload) {
   }
 
   parentFolder = normalizeFolder(parentFolder);
-  let userFolder = getFolder(type);
+  const userFolder = getFolder(type);
   const uploadFolder = `${userFolder}/${parentFolder}/`;
   let list = Process("fs.system.ReadDir", uploadFolder, true);
   list = list.map((l: string) => l.replace(/[\\/]+/g, "/"));
@@ -466,7 +468,7 @@ function getFileList(type: string, folder: string, keywords) {
     folder == "";
   }
   folder = normalizeFolder(folder);
-  let userFolder = getFolder(type);
+  const userFolder = getFolder(type);
   const uploadFolder = `${userFolder}/${folder}/`;
 
   let list = Process("fs.system.ReadDir", uploadFolder, true);
@@ -582,7 +584,7 @@ function createFolder(type: string, parent: string, folder: string) {
   }
   const uploadFolder = `${getFolder(type)}/${parent}/${folder}`;
   targetOperationAuthCheck(type, uploadFolder, "CREATE");
-  let fs = new FS("system");
+  const fs = new FS("system");
   if (!fs.Exists(uploadFolder)) {
     fs.MkdirAll(uploadFolder);
   }
@@ -597,7 +599,7 @@ function deleteFolder(type: string, folder: string) {
 
   targetOperationAuthCheck(type, targetFolder, "DELETE");
 
-  let fs = new FS("system");
+  const fs = new FS("system");
   if (fs.Exists(targetFolder)) {
     fs.RemoveAll(targetFolder);
   }
@@ -621,9 +623,9 @@ function moveFolder(type: string, source: string, target: string) {
   const targetFolder = `${getFolder(type)}/${target}`;
 
   targetOperationAuthCheck(type, targetFolder, "UPDATE");
-  let fs = new FS("system");
+  const fs = new FS("system");
 
-  let targetParent = targetFolder.split("/").slice(0, -1).join("/");
+  const targetParent = targetFolder.split("/").slice(0, -1).join("/");
   if (!fs.Exists(targetParent)) {
     fs.MkdirAll(targetParent);
   }

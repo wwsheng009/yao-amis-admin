@@ -161,7 +161,8 @@ function deletePage(file) {
 // yao studio run editor.loadSinglePageToDB site.json
 function loadSinglePageToDB(fname) {
   const dir = getUserDir();
-  dataString = fs.ReadFile(dir + fname);
+  const fs = new FS("dsl");
+  const dataString = fs.ReadFile(dir + fname);
   const page = JSON.parse(dataString);
   if (page.type && page.type !== "app") {
     // let filename = fname.replace(/\.json$/, "");

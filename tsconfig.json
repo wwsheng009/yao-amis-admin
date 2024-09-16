@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "target": "ES2022",
+    "paths": {
+      "@yao/*": ["./scripts/__types/*"],
+      "@lib/*": ["./scripts/ts/lib/*"],
+      "@scripts/*": ["./scripts/*"]
+    },
+    "lib": ["ESNEXT", "DOM"],
+    "outDir": "dist",
+    "skipLibCheck": true,
+    "sourceMap": true
+  }
+}

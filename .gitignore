@@ -19,3 +19,4 @@ node_modules
 *.so
 *.dll
 public/yao
+pnpm-lock.yaml

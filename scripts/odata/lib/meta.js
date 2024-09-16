@@ -300,7 +300,7 @@ class Metadata {
       ...entityTypes,
       $EntityContainer: "OdataService",
       ["OdataService"]: {
-        // eslint-disable-line no-useless-computed-key
+         
         $Kind: "EntityContainer",
         ...entitySets,
       },

@@ -27,7 +27,7 @@ function getModelList() {
     if (model) {
       model.model_id = v.model_id;
       const m = { ...model }; //copy object
-      if (!!v.table_id) {
+      if (v.table_id) {
         model.table_id = v.table_id;
         const model_cols = getTableColumns(v.table_id);
         m.columns = m.columns.filter((column) => {
