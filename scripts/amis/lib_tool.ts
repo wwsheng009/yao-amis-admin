@@ -125,7 +125,9 @@ export function ClearFalsyKeys(target) {
     }
     if (Array.isArray(value)) {
       const newArray = value.map((item) => ClearFalsyKeys(item));
-      result[key] = newArray.filter((item) => item !== undefined && item !== null); // remove falsy values from array
+      result[key] = newArray.filter(
+        (item) => item !== undefined && item !== null,
+      ); // remove falsy values from array
 
       if (value.length == 0) {
         delete result[key];
@@ -135,7 +137,10 @@ export function ClearFalsyKeys(target) {
       if (obj !== undefined && obj != null) {
         result[key] = obj;
         // 空对象不输出
-        if (typeof result[key] === 'object' && Object.keys(result[key]).length == 0) {
+        if (
+          typeof result[key] === 'object' &&
+          Object.keys(result[key]).length == 0
+        ) {
           delete result[key];
         }
       }

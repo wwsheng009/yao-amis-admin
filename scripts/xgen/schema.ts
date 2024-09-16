@@ -377,8 +377,8 @@ function MakeColumnOrder(columns) {
   const columnsAfter = [];
   columns.forEach((column) => {
     if (
-      ['TextArea'].includes(typeMapping[column.type])
-      || column.type === 'json'
+      ['TextArea'].includes(typeMapping[column.type]) ||
+      column.type === 'json'
     ) {
       columnsAfter.push(column);
     } else {
@@ -524,10 +524,10 @@ function TableColumnCast(column, modelDsl) {
       },
     };
   } else if (
-    column.type === 'boolean'
-    || (column.type === 'tinyInteger'
-      && ismysql
-      && (column.default === 0 || column.default === 1))
+    column.type === 'boolean' ||
+    (column.type === 'tinyInteger' &&
+      ismysql &&
+      (column.default === 0 || column.default === 1))
   ) {
     let checkedValue = true as any;
     let unCheckedValue = false as any;
@@ -630,8 +630,8 @@ function updateViewSwitchPropes(component, column) {
   }
   if (column.default != null) {
     const ismysql = IsMysql();
-    const defaultValue
-      = ismysql && type === 'Switch' ? (column.default ? 1 : 0) : column.default;
+    const defaultValue =
+      ismysql && type === 'Switch' ? (column.default ? 1 : 0) : column.default;
     component.view.props['defaultValue'] = defaultValue;
     component.view.props['value'] = defaultValue;
   }
@@ -756,8 +756,8 @@ function RelationSelect(column, modelDsl, component) {
   const relation = modelDsl.relations || {};
   for (const rel in relation) {
     if (
-      relation[rel].type == 'hasOne'
-      && column.name == relation[rel]['foreign']
+      relation[rel].type == 'hasOne' &&
+      column.name == relation[rel]['foreign']
     ) {
       const dotName = DotName(relation[rel].model);
       const field = remoteSelect(rel, relation[rel]);
@@ -843,9 +843,9 @@ function Speculation(columns) {
 function GetTarget(target, columns) {
   const columnNames = columns.map((col) => col.name);
   return (
-    columnNames.find((name) => name === target)
-    ?? columnNames.find((name) => name.includes(target))
-    ?? false
+    columnNames.find((name) => name === target) ??
+    columnNames.find((name) => name.includes(target)) ??
+    false
   );
 }
 /**
@@ -878,8 +878,8 @@ function EditPropes(component, column) {
       ...component.edit.props.itemProps,
       rules: [
         ...(component.edit.props.itemProps?.rules || []),
-        ...(rules.length === 1
-          && component.edit.props.itemProps?.rules?.length === 1
+        ...(rules.length === 1 &&
+        component.edit.props.itemProps?.rules?.length === 1
           ? [Object.assign(component.edit.props.itemProps.rules[0], rules[0])]
           : rules),
       ],
@@ -887,14 +887,14 @@ function EditPropes(component, column) {
   }
   // 默认值
   if (
-    column.default != null
-    && column.default != 'TlVMTA=='
-    && component.edit.type !== 'Upload'
+    column.default != null &&
+    column.default != 'TlVMTA==' &&
+    component.edit.type !== 'Upload'
   ) {
     component.edit.props.itemProps = component.edit.props.itemProps || {};
     const ismysql = IsMysql();
-    const defaultValue
-      = ismysql && column.type === 'boolean'
+    const defaultValue =
+      ismysql && column.type === 'boolean'
         ? column.default
           ? 1
           : 0
@@ -962,12 +962,12 @@ function GetRules(column, component) {
   // rule.max = column.length;
   // }
   if (
-    !/^id$/i.test(dbColumnType)
-    && (unique
-      || (!nullable
-        && (columnDefault === null
-          || columnDefault === undefined
-          || columnDefault === 'TlVMTA==')))
+    !/^id$/i.test(dbColumnType) &&
+    (unique ||
+      (!nullable &&
+        (columnDefault === null ||
+          columnDefault === undefined ||
+          columnDefault === 'TlVMTA==')))
   ) {
     rule.required = true;
   }
@@ -1009,8 +1009,8 @@ function GetRules(column, component) {
   }
   // 控件值跟数据库有关,不能使用boolean类型验证
   if (
-    antdType === 'boolean'
-    && ['RadioGroup', 'Switch', 'Select'].includes(component.edit.type)
+    antdType === 'boolean' &&
+    ['RadioGroup', 'Switch', 'Select'].includes(component.edit.type)
   ) {
     delete rule.type;
   }
@@ -1078,22 +1078,22 @@ function updateReference(formTemplate, modelDsl) {
  */
 function MergeObject(target, source) {
   if (
-    target === null
-    || target === undefined
-    || typeof target !== 'object'
-    || source === null // mybe undefined
-    || source === undefined
-    || typeof source !== 'object'
+    target === null ||
+    target === undefined ||
+    typeof target !== 'object' ||
+    source === null || // mybe undefined
+    source === undefined ||
+    typeof source !== 'object'
   ) {
     return target;
   }
   for (const [key, value] of Object.entries(source)) {
     if (Object.prototype.hasOwnProperty.call(source, key)) {
       if (
-        target[key]
-        && typeof target[key] === 'object'
-        && typeof value === 'object'
-        && !Array.isArray(value)
+        target[key] &&
+        typeof target[key] === 'object' &&
+        typeof value === 'object' &&
+        !Array.isArray(value)
       ) {
         MergeObject(target[key], value);
       } else if (Array.isArray(target[key]) && Array.isArray(value)) {
@@ -1347,7 +1347,6 @@ function CreateAfterFind(relations) {
     let query = {} as any;
     if (element.query) {
       query = element.query;
-    } else {
     }
     if (!query.from) {
       query.from = model.table.name;
@@ -1559,10 +1558,10 @@ function CastListColumn(column, modelDsl) {
       },
     };
   } else if (
-    column.type === 'boolean'
-    || (column.type === 'tinyInteger'
-      && ismysql
-      && (column.default === 0 || column.default === 1))
+    column.type === 'boolean' ||
+    (column.type === 'tinyInteger' &&
+      ismysql &&
+      (column.default === 0 || column.default === 1))
   ) {
     let checkedValue = true as any;
     let unCheckedValue = false as any;
@@ -1714,10 +1713,10 @@ function FormColumnCast(column, modelDsl) {
       },
     };
   } else if (
-    column.type === 'boolean'
-    || (column.type === 'tinyInteger'
-      && ismysql
-      && (column.default === 0 || column.default === 1))
+    column.type === 'boolean' ||
+    (column.type === 'tinyInteger' &&
+      ismysql &&
+      (column.default === 0 || column.default === 1))
   ) {
     let checkedValue = true as any;
     let unCheckedValue = false as any;
@@ -1834,8 +1833,8 @@ function EditSelect(column, modelDsl, component) {
   const relation = modelDsl.relations || {};
   for (const rel in relation) {
     if (
-      relation[rel].type === 'hasOne'
-      && column.name == relation[rel]['foreign']
+      relation[rel].type === 'hasOne' &&
+      column.name == relation[rel]['foreign']
     ) {
       const field = remoteSelect(rel, relation[rel]);
       const component = {

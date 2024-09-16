@@ -295,11 +295,11 @@ function loadPageToDB() {
     if (page.type && page.type !== 'app') {
       let compKey = key.toUpperCase();
       if (
-        !compKey.endsWith('.JSON')
-        && !compKey.endsWith('.JSONC')
-        && !compKey.endsWith('.YAO')
-        && !compKey.endsWith('.YAM')
-        && !compKey.endsWith('.YAML')
+        !compKey.endsWith('.JSON') &&
+        !compKey.endsWith('.JSONC') &&
+        !compKey.endsWith('.YAO') &&
+        !compKey.endsWith('.YAM') &&
+        !compKey.endsWith('.YAML')
       ) {
         fname += '.json';
       }

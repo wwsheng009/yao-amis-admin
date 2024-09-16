@@ -1,4 +1,4 @@
-import { Process, Exception } from '@yao/yao';
+import { Process } from '@yao/yao';
 
 function dumpSession() {
   const sess = Process('session.dump');
