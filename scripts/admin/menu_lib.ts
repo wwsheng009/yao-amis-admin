@@ -5,7 +5,7 @@
  * @param parent 上级路由节点
  * @returns 路由表
  */
-export function updateSoyRouteComponent(node, parent) {
+export function updateSoyRouteComponent(node, parent?) {
   // 没有子节点，可能是最后的节点或是第一个节点
   if (Array.isArray(node)) {
     node.forEach((n) => updateSoyRouteComponent(n, parent));

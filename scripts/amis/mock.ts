@@ -30,7 +30,7 @@ function newSample(payload) {
   Process('yao.table.Save', 'demo.table', payload);
 }
 // 删除记录，支持单条或是批量
-function deleteSample(ids) {
+function deleteSample(ids: string) {
   const myArray = ids.split(',');
 
   myArray.forEach((id) => {
@@ -38,7 +38,7 @@ function deleteSample(ids) {
   });
 }
 // 批量更新数据
-function bulkUpdateSample(ids, payload) {
+function bulkUpdateSample(ids: string, payload) {
   const myArray = ids.split(',');
 
   myArray.forEach((id) => {

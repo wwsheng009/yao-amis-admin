@@ -1,3 +1,4 @@
+import { Process } from '@yao/yao';
 /**
  * 在应用启动时自动加载模型，这个特性需要修改版的yao才支持，非官方功能
  *
