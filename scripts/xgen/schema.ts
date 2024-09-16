@@ -1,10 +1,10 @@
-import { getModelDefinition } from "@scripts/amis/lib";
-import { DotName, IsMysql, SlashName } from "@scripts/amis/lib_tool";
+import { getModelDefinition } from '@scripts/amis/lib';
+import { DotName, IsMysql, SlashName } from '@scripts/amis/lib_tool';
 import { Exception, Process, log } from '@yao/yao';
 
 /**
  * Generate the menu items for xgen
- * 
+ *
  * yao run scripts.xgen.schema.generateMenuConfig 'admin.user'
  * @param {string} modelId
  * @param {Array} columns
@@ -15,10 +15,10 @@ function generateMenuConfig(modelId, columns) {
   const name = modelDsl.name || modelId;
   return [
     {
-      language: "json",
+      language: 'json',
       title: `${modelId}菜单配置`,
       __code_source: {
-        icon: "icon-file-text",
+        icon: 'icon-file-text',
         name: name,
         parent: null,
         path: `/x/Table/${modelId}`,
@@ -38,10 +38,10 @@ function generateMenuConfig(modelId, columns) {
  * @param {string} simple 简单模式
  */
 function generateTableView(modelId, columns, simple) {
-  if (simple == "simple") {
+  if (simple == 'simple') {
     return [
       {
-        language: "json",
+        language: 'json',
         title: `${modelId}.tab.yao`,
         __code_source: {
           name: modelId,
@@ -55,7 +55,7 @@ function generateTableView(modelId, columns, simple) {
   const tableDsl = getXgenTableSchema(modelDsl);
   return [
     {
-      language: "json",
+      language: 'json',
       title: `${modelId}.tab.yao`,
       __code_source: tableDsl,
     },
@@ -69,11 +69,11 @@ function generateTableView(modelId, columns, simple) {
  * @param {string} simple 简单模式
  */
 function generateFormView(modelId, columns, simple, type) {
-  if (simple == "simple") {
+  if (simple == 'simple') {
     return [
       {
-        language: "json",
-        title: "表单查看",
+        language: 'json',
+        title: '表单查看',
         can_preview: true,
         __code_source: {
           name: modelId,
@@ -94,7 +94,7 @@ function getXgenTableSchema(modelDsl) {
   let columns = modelDsl.columns || [];
   const table_dot_name = DotName(modelDsl.table.name);
   const tableTemplate = {
-    name: modelDsl.name || "表格",
+    name: modelDsl.name || '表格',
     action: {
       bind: {
         model: table_dot_name,
@@ -102,21 +102,21 @@ function getXgenTableSchema(modelDsl) {
       },
     },
     layout: {
-      primary: "id",
+      primary: 'id',
       header: { preset: {}, actions: [] },
       filter: {
         columns: [],
         actions: [
           {
-            title: "添加",
-            icon: "icon-plus",
+            title: '添加',
+            icon: 'icon-plus',
             width: 3,
             action: [
               {
-                name: "OpenModal",
-                type: "Common.openModal",
+                name: 'OpenModal',
+                type: 'Common.openModal',
                 payload: {
-                  Form: { type: "edit", model: table_dot_name },
+                  Form: { type: 'edit', model: table_dot_name },
                 },
               },
             ],
@@ -129,31 +129,31 @@ function getXgenTableSchema(modelDsl) {
           fold: false,
           actions: [
             {
-              title: "查看",
-              icon: "icon-eye",
+              title: '查看',
+              icon: 'icon-eye',
               action: [
                 {
                   payload: {
                     Form: {
-                      model: table_dot_name + "_view",
-                      type: "view",
+                      model: table_dot_name + '_view',
+                      type: 'view',
                     },
                   },
-                  name: "OpenModal",
-                  type: "Common.openModal",
+                  name: 'OpenModal',
+                  type: 'Common.openModal',
                 },
               ],
             },
             {
-              title: "编辑",
-              icon: "icon-edit-2",
+              title: '编辑',
+              icon: 'icon-edit-2',
               action: [
                 {
-                  name: "OpenModal",
-                  type: "Common.openModal",
+                  name: 'OpenModal',
+                  type: 'Common.openModal',
                   payload: {
                     Form: {
-                      type: "edit",
+                      type: 'edit',
                       model: table_dot_name,
                     },
                   },
@@ -161,20 +161,20 @@ function getXgenTableSchema(modelDsl) {
               ],
             },
             {
-              title: "删除",
-              icon: "icon-trash-2",
+              title: '删除',
+              icon: 'icon-trash-2',
               action: [
                 {
-                  name: "Confirm",
-                  type: "Common.confirm",
+                  name: 'Confirm',
+                  type: 'Common.confirm',
                   payload: {
-                    title: "确认删除",
-                    content: "删除后不可撤销！",
+                    title: '确认删除',
+                    content: '删除后不可撤销！',
                   },
                 },
                 {
-                  name: "Delete",
-                  type: "Table.delete",
+                  name: 'Delete',
+                  type: 'Table.delete',
                   payload: {
                     model: table_dot_name,
                   },
@@ -216,8 +216,8 @@ function getXgenTableSchema(modelDsl) {
     });
   }
   if (RelList.length > 0) {
-    tableTemplate.action["before:delete"] = `scripts.${modelName}.BeforeDelete`;
-    tableTemplate.action["after:find"] = `scripts.${modelName}.AfterFind`;
+    tableTemplate.action['before:delete'] = `scripts.${modelName}.BeforeDelete`;
+    tableTemplate.action['after:find'] = `scripts.${modelName}.AfterFind`;
   }
   tableTemplate.action.bind.option.withs = GetWiths(modelDsl);
   return tableTemplate;
@@ -229,85 +229,85 @@ function getXgenTableSchema(modelDsl) {
  * @param {string} type 'view' | 'edit'
  * @returns
  */
-function getXgenFormSchema(modelDsl, type = "view") {
+function getXgenFormSchema(modelDsl, type = 'view') {
   // const copiedObject = JSON.parse(JSON.stringify(modelDsl.columns));
   let columns = modelDsl.columns || [];
   const table_dot_name = DotName(modelDsl.table.name);
   const actions = [
     {
-      title: "切换全屏",
-      icon: "icon-maximize-2",
+      title: '切换全屏',
+      icon: 'icon-maximize-2',
       showWhenAdd: true,
       showWhenView: true,
       action: [
         {
-          name: "Fullscreen",
-          type: "Form.fullscreen",
+          name: 'Fullscreen',
+          type: 'Form.fullscreen',
           payload: {},
         },
       ],
     },
     {
-      title: "返回",
-      icon: "icon-arrow-left",
+      title: '返回',
+      icon: 'icon-arrow-left',
       showWhenAdd: true,
       showWhenView: true,
       action: [
         {
-          name: "CloseModal",
-          type: "Common.closeModal",
+          name: 'CloseModal',
+          type: 'Common.closeModal',
           payload: {},
         },
       ],
     },
     {
-      title: "保存",
-      icon: "icon-check",
-      style: "primary",
+      title: '保存',
+      icon: 'icon-check',
+      style: 'primary',
       showWhenAdd: true,
       action: [
         {
-          name: "Submit",
-          type: "Form.submit",
+          name: 'Submit',
+          type: 'Form.submit',
           payload: {},
         },
         {
-          name: "Back",
-          type: "Common.closeModal",
+          name: 'Back',
+          type: 'Common.closeModal',
           payload: {},
         },
       ],
     },
     {
-      icon: "icon-trash-2",
-      style: "danger",
-      title: "Delete",
+      icon: 'icon-trash-2',
+      style: 'danger',
+      title: 'Delete',
       action: [
         {
-          name: "Confirm",
-          type: "Common.confirm",
+          name: 'Confirm',
+          type: 'Common.confirm',
           payload: {
-            title: "提示",
-            content: "确认删除，删除后数据无法恢复？",
+            title: '提示',
+            content: '确认删除，删除后数据无法恢复？',
           },
         },
         {
-          name: "Delete",
+          name: 'Delete',
           payload: {
             model: table_dot_name,
           },
-          type: "Form.delete",
+          type: 'Form.delete',
         },
         {
-          name: "Back",
-          type: "Common.closeModal",
+          name: 'Back',
+          type: 'Common.closeModal',
           payload: {},
         },
       ],
     },
   ];
   let formTemplate = {
-    name: modelDsl.name || "表单",
+    name: modelDsl.name || '表单',
     action: {
       bind: {
         model: table_dot_name,
@@ -315,7 +315,7 @@ function getXgenFormSchema(modelDsl, type = "view") {
       },
     },
     layout: {
-      primary: "id",
+      primary: 'id',
       actions,
       form: {
         props: {},
@@ -348,7 +348,7 @@ function getXgenFormSchema(modelDsl, type = "view") {
   });
   formTemplate.action.bind.option.withs = GetWiths(modelDsl);
   formTemplate = updateReference(formTemplate, modelDsl);
-  if (type === "view") {
+  if (type === 'view') {
     return relationTable(formTemplate, modelDsl);
   } else {
     return relationList(formTemplate, modelDsl);
@@ -373,12 +373,12 @@ function GetWiths(modelDsl) {
 function MakeColumnOrder(columns) {
   const typeMapping = GetDBTypeMap();
   const columnsBefore = [];
-  //json或是textarea控件放在最后
+  // json或是textarea控件放在最后
   const columnsAfter = [];
   columns.forEach((column) => {
     if (
-      ["TextArea"].includes(typeMapping[column.type]) ||
-      column.type === "json"
+      ['TextArea'].includes(typeMapping[column.type])
+      || column.type === 'json'
     ) {
       columnsAfter.push(column);
     } else {
@@ -390,42 +390,42 @@ function MakeColumnOrder(columns) {
 
 /**
  * 数据库类型与控件类型对应字段
- * 
+ *
  * yao studio run model.column.component.GetDBTypeMap
  * @returns
  */
 function GetDBTypeMap() {
   return {
-    string: "Input",
-    char: "Input",
-    text: "TextArea",
-    vector: "TextArea",
-    mediumText: "TextArea",
-    richtext: "TextArea",
-    longText: "TextArea",
-    date: "DatePicker",
-    datetime: "DatePicker",
-    datetimeTz: "DatePicker",
-    time: "DatePicker",
-    timeTz: "DatePicker",
-    timestamp: "DatePicker",
-    timestampTz: "DatePicker",
-    tinyInteger: "InputNumber",
-    tinyIncrements: "InputNumber",
-    unsignedTinyInteger: "InputNumber",
-    smallInteger: "InputNumber",
-    unsignedSmallInteger: "InputNumber",
-    integer: "InputNumber",
-    bigInteger: "InputNumber",
-    decimal: "InputNumber",
-    unsignedDecimal: "InputNumber",
-    float: "InputNumber",
-    boolean: "Input",
-    enum: "Select",
-    color: "ColorPicker",
-    phone: "Input",
-    url: "Input",
-    code: "CodeEditor",
+    string: 'Input',
+    char: 'Input',
+    text: 'TextArea',
+    vector: 'TextArea',
+    mediumText: 'TextArea',
+    richtext: 'TextArea',
+    longText: 'TextArea',
+    date: 'DatePicker',
+    datetime: 'DatePicker',
+    datetimeTz: 'DatePicker',
+    time: 'DatePicker',
+    timeTz: 'DatePicker',
+    timestamp: 'DatePicker',
+    timestampTz: 'DatePicker',
+    tinyInteger: 'InputNumber',
+    tinyIncrements: 'InputNumber',
+    unsignedTinyInteger: 'InputNumber',
+    smallInteger: 'InputNumber',
+    unsignedSmallInteger: 'InputNumber',
+    integer: 'InputNumber',
+    bigInteger: 'InputNumber',
+    decimal: 'InputNumber',
+    unsignedDecimal: 'InputNumber',
+    float: 'InputNumber',
+    boolean: 'Input',
+    enum: 'Select',
+    color: 'ColorPicker',
+    phone: 'Input',
+    url: 'Input',
+    code: 'CodeEditor',
   };
 }
 /**
@@ -433,7 +433,7 @@ function GetDBTypeMap() {
  * @returns
  */
 function FilterFields() {
-  return ["name", "title"];
+  return ['name', 'title'];
 }
 /**
  * yao run studio model.column.table.Cast
@@ -455,12 +455,12 @@ function TableColumnCast(column, modelDsl) {
   const typeMapping = GetDBTypeMap();
   if (!name) {
     // console.log("castTableColumn: missing name");
-    log.Error("castTableColumn: missing name");
+    log.Error('castTableColumn: missing name');
     return false;
   }
   if (!title) {
     // console.log("castTableColumn: missing title");
-    log.Error("castTableColumn: missing title");
+    log.Error('castTableColumn: missing title');
     return false;
   }
   const res = {
@@ -477,9 +477,9 @@ function TableColumnCast(column, modelDsl) {
   let component = {
     is_select: false,
     bind: name,
-    view: { type: "Text", props: {} },
+    view: { type: 'Text', props: {} },
     edit: {
-      type: "Input",
+      type: 'Input',
       bind: bind,
       props: {},
     },
@@ -489,45 +489,45 @@ function TableColumnCast(column, modelDsl) {
     width = 250;
   }
   // 如果是json的,去看看是不是图片文件
-  if (column.type === "json") {
-    //可以再优化下
+  if (column.type === 'json') {
+    // 可以再优化下
     component = {
       bind: bind,
       view: {
         props: {},
         // compute: "scripts.ddic.compute.json.View",
-        type: "Tooltip",
+        type: 'Tooltip',
       },
       edit: {
         // compute: "scripts.ddic.compute.json.Edit",
         props: {},
-        type: "TextArea",
+        type: 'TextArea',
       },
     };
     // log.Error("castTableColumn: Type %s does not support", column.type);
-  } else if (column.type === "enum") {
+  } else if (column.type === 'enum') {
     component = {
       bind: bind,
       edit: {
         props: {
-          options: Enum(column["option"]),
-          placeholder: "请选择" + title,
+          options: Enum(column['option']),
+          placeholder: '请选择' + title,
         },
-        type: "Select",
+        type: 'Select',
       },
       view: {
         props: {
-          options: Enum(column["option"]),
-          placeholder: "请选择" + title,
+          options: Enum(column['option']),
+          placeholder: '请选择' + title,
         },
-        type: "Tag",
+        type: 'Tag',
       },
     };
   } else if (
-    column.type === "boolean" ||
-    (column.type === "tinyInteger" &&
-      ismysql &&
-      (column.default === 0 || column.default === 1))
+    column.type === 'boolean'
+    || (column.type === 'tinyInteger'
+      && ismysql
+      && (column.default === 0 || column.default === 1))
   ) {
     let checkedValue = true as any;
     let unCheckedValue = false as any;
@@ -538,22 +538,22 @@ function TableColumnCast(column, modelDsl) {
     component = {
       bind: bind,
       view: {
-        type: "Switch",
+        type: 'Switch',
         props: {
-          checkedChildren: "是",
+          checkedChildren: '是',
           checkedValue: checkedValue,
-          unCheckedChildren: "否",
+          unCheckedChildren: '否',
           unCheckedValue: unCheckedValue,
         },
       },
     };
-  } else if (column.type == "color") {
-    component.edit.type = "ColorPicker";
+  } else if (column.type == 'color') {
+    component.edit.type = 'ColorPicker';
     width = 80;
-  } else if (column.crypt === "PASSWORD") {
+  } else if (column.crypt === 'PASSWORD') {
     component.view = component.view || {};
-    component.view.compute = "Hide";
-    component.edit.type = "Password";
+    component.view.compute = 'Hide';
+    component.edit.type = 'Password';
     width = 180;
   } else {
     if (column.type in typeMapping) {
@@ -561,11 +561,11 @@ function TableColumnCast(column, modelDsl) {
     }
   }
   component = IsFile(column, component, modelDsl);
-  //检查是否下拉框显示
+  // 检查是否下拉框显示
   component = RelationSelect(column, modelDsl, component);
   // 如果是下拉的,则增加查询条件
   if (component.is_select) {
-    const where_bind = "where." + name + ".in";
+    const where_bind = 'where.' + name + '.in';
     res.fields.filter.push({
       name: title,
       component: {
@@ -580,11 +580,11 @@ function TableColumnCast(column, modelDsl) {
         res.fields.filter.push({
           name: title,
           component: {
-            bind: "where." + name + ".match",
+            bind: 'where.' + name + '.match',
             edit: {
-              type: "Input",
-              compute: "Trim",
-              props: { placeholder: "请输入" + title },
+              type: 'Input',
+              compute: 'Trim',
+              props: { placeholder: '请输入' + title },
             },
           },
         });
@@ -594,7 +594,7 @@ function TableColumnCast(column, modelDsl) {
 
   component = EditPropes(component, column);
   component = updateViewSwitchPropes(component, column);
-  if (column.type !== "json" && !component.view?.props?.ddic_hide) {
+  if (column.type !== 'json' && !component.view?.props?.ddic_hide) {
     res.layout.table.columns.push({
       name: title,
       width: width,
@@ -616,7 +616,7 @@ function updateViewSwitchPropes(component, column) {
   if (!component || !component?.view) {
     return component;
   }
-  if (column.type !== "Switch") {
+  if (column.type !== 'Switch') {
     return component;
   }
   component.view.props = component.view.props || {};
@@ -625,15 +625,15 @@ function updateViewSwitchPropes(component, column) {
     component.view.props.itemProps = { rules: [{ required: true }] };
   }
   if (column.comment) {
-    component.view.props["itemProps"] = component.edit.props["itemProps"] || {};
-    component.view.props["itemProps"]["tooltip"] = column.comment;
+    component.view.props['itemProps'] = component.edit.props['itemProps'] || {};
+    component.view.props['itemProps']['tooltip'] = column.comment;
   }
   if (column.default != null) {
     const ismysql = IsMysql();
-    const defaultValue =
-      ismysql && type === "Switch" ? (column.default ? 1 : 0) : column.default;
-    component.view.props["defaultValue"] = defaultValue;
-    component.view.props["value"] = defaultValue;
+    const defaultValue
+      = ismysql && type === 'Switch' ? (column.default ? 1 : 0) : column.default;
+    component.view.props['defaultValue'] = defaultValue;
+    component.view.props['value'] = defaultValue;
   }
   return component;
 }
@@ -647,10 +647,10 @@ function HiddenFields(isTable) {
   let hidden = [];
   if (isTable) {
     // Table页面不展示的字段列表
-    hidden = ["deleted_at", "pwd", "deleted"];
+    hidden = ['deleted_at', 'pwd', 'deleted'];
   } else {
     // Form页面不展示的字段列表
-    hidden = ["deleted_at", "created_at", "updated_at", "id", "ID"];
+    hidden = ['deleted_at', 'created_at', 'updated_at', 'id', 'ID'];
   }
   return hidden;
 }
@@ -663,7 +663,7 @@ function HiddenFields(isTable) {
 function Enum(option) {
   const res = [];
   for (const i in option) {
-    res.push({ label: "::" + option[i], value: option[i] });
+    res.push({ label: '::' + option[i], value: option[i] });
   }
   return res;
 }
@@ -682,17 +682,17 @@ function IsFile(column, component, modelDsl) {
       // "string",
       // "logngtext",
       // "mediumText",
-      "image",
-      "images",
-      "audio",
-      "video",
-      "file",
+      'image',
+      'images',
+      'audio',
+      'video',
+      'file',
     ].includes(column.type)
   ) {
     return component;
   }
   const { viewType, fileType } = GetFileType(column);
-  if (fileType === "unknown") {
+  if (fileType === 'unknown') {
     return component;
   }
   const name = column.name;
@@ -700,20 +700,20 @@ function IsFile(column, component, modelDsl) {
     bind: name,
     view: {
       type: viewType,
-      compute: "scripts.xgen.file.upload.View",
+      compute: 'scripts.xgen.file.upload.View',
       props: {},
     },
     edit: {
-      type: "Upload",
+      type: 'Upload',
       compute: {
-        process: "scripts.xgen.file.upload.Edit",
-        args: ["$C(row)", name, modelDsl.table.name],
+        process: 'scripts.xgen.file.upload.Edit',
+        args: ['$C(row)', name, modelDsl.table.name],
       },
       props: {
         maxCount: 100,
         filetype: fileType,
         $api: {
-          process: "fs.system.Upload",
+          process: 'fs.system.Upload',
         },
       },
     },
@@ -721,18 +721,18 @@ function IsFile(column, component, modelDsl) {
   return component;
 }
 function GetFileType(column) {
-  let viewType = "A";
-  let fileType = "unknown";
+  let viewType = 'A';
+  let fileType = 'unknown';
 
-  if (column.type == "image" || column.type == "images") {
-    viewType = "Image";
-    fileType = "image";
-  } else if (column.type == "video") {
-    viewType = "Image";
-    fileType = "video";
-  } else if (column.type == "file") {
-    viewType = "A";
-    fileType = "file";
+  if (column.type == 'image' || column.type == 'images') {
+    viewType = 'Image';
+    fileType = 'image';
+  } else if (column.type == 'video') {
+    viewType = 'Image';
+    fileType = 'video';
+  } else if (column.type == 'file') {
+    viewType = 'A';
+    fileType = 'file';
   }
   return {
     viewType,
@@ -756,8 +756,8 @@ function RelationSelect(column, modelDsl, component) {
   const relation = modelDsl.relations || {};
   for (const rel in relation) {
     if (
-      relation[rel].type == "hasOne" &&
-      column.name == relation[rel]["foreign"]
+      relation[rel].type == 'hasOne'
+      && column.name == relation[rel]['foreign']
     ) {
       const dotName = DotName(relation[rel].model);
       const field = remoteSelect(rel, relation[rel]);
@@ -766,15 +766,15 @@ function RelationSelect(column, modelDsl, component) {
         // bind: i + "." + field,
         bind,
         view: {
-          type: "Tag",
+          type: 'Tag',
           props: {
             xProps: {
               $remote: {
-                process: "yao.component.SelectOptions",
+                process: 'yao.component.SelectOptions',
                 query: {
                   model: dotName,
                   label: field,
-                  value: "id",
+                  value: 'id',
                 },
               },
             },
@@ -782,15 +782,15 @@ function RelationSelect(column, modelDsl, component) {
           },
         },
         edit: {
-          type: "Select",
+          type: 'Select',
           props: {
             xProps: {
               $remote: {
-                process: "yao.component.SelectOptions",
+                process: 'yao.component.SelectOptions',
                 query: {
                   model: dotName,
                   label: field,
-                  value: "id",
+                  value: 'id',
                 },
               },
             },
@@ -812,17 +812,17 @@ function RelationSelect(column, modelDsl, component) {
  * @returns
  */
 function remoteSelect(relation_name, releation) {
-  //首先从关联关系的模型中找到模型
+  // 首先从关联关系的模型中找到模型
   let model = getModelDefinition(releation.model);
   if (!model) {
-    model = Process("schemas.default.TableGet", relation_name);
+    model = Process('schemas.default.TableGet', relation_name);
   }
   const columns = model.columns;
   let res = Speculation(columns);
   if (!res) {
     res = Other(columns);
   }
-  //CreateScripts(relation_name, res, relation);
+  // CreateScripts(relation_name, res, relation);
   return res;
 }
 /**
@@ -831,7 +831,7 @@ function remoteSelect(relation_name, releation) {
  * @returns
  */
 function Speculation(columns) {
-  const target = ["name", "title"];
+  const target = ['name', 'title'];
   for (const t of target) {
     const res = GetTarget(t, columns);
     if (res) {
@@ -843,9 +843,9 @@ function Speculation(columns) {
 function GetTarget(target, columns) {
   const columnNames = columns.map((col) => col.name);
   return (
-    columnNames.find((name) => name === target) ??
-    columnNames.find((name) => name.includes(target)) ??
-    false
+    columnNames.find((name) => name === target)
+    ?? columnNames.find((name) => name.includes(target))
+    ?? false
   );
 }
 /**
@@ -854,8 +854,8 @@ function GetTarget(target, columns) {
  * @returns
  */
 function Other(columns) {
-  const stringColumn = columns.find((col) => col.type === "string");
-  return stringColumn?.name ?? "id";
+  const stringColumn = columns.find((col) => col.type === 'string');
+  return stringColumn?.name ?? 'id';
 }
 /**
  * yao run studio model.column.component.EditPropes
@@ -878,8 +878,8 @@ function EditPropes(component, column) {
       ...component.edit.props.itemProps,
       rules: [
         ...(component.edit.props.itemProps?.rules || []),
-        ...(rules.length === 1 &&
-        component.edit.props.itemProps?.rules?.length === 1
+        ...(rules.length === 1
+          && component.edit.props.itemProps?.rules?.length === 1
           ? [Object.assign(component.edit.props.itemProps.rules[0], rules[0])]
           : rules),
       ],
@@ -887,14 +887,14 @@ function EditPropes(component, column) {
   }
   // 默认值
   if (
-    column.default != null &&
-    column.default != "TlVMTA==" &&
-    component.edit.type !== "Upload"
+    column.default != null
+    && column.default != 'TlVMTA=='
+    && component.edit.type !== 'Upload'
   ) {
     component.edit.props.itemProps = component.edit.props.itemProps || {};
     const ismysql = IsMysql();
-    const defaultValue =
-      ismysql && column.type === "boolean"
+    const defaultValue
+      = ismysql && column.type === 'boolean'
         ? column.default
           ? 1
           : 0
@@ -905,12 +905,12 @@ function EditPropes(component, column) {
 }
 function GetRules(column, component) {
   const validationTypeMap = {
-    string: "string",
-    integer: "integer",
-    float: "float",
-    number: "number",
-    datetime: "date",
-    bool: "number",
+    string: 'string',
+    integer: 'integer',
+    float: 'float',
+    number: 'number',
+    datetime: 'date',
+    bool: 'number',
   };
   const dbTypeToAntd = {
     // string: "string",有可能是json
@@ -918,26 +918,26 @@ function GetRules(column, component) {
     // text: "string",
     // mediumText: "string",
     // longText: "string",
-    date: "date",
-    datetime: "date",
-    datetimeTz: "date",
-    time: "date",
-    timeTz: "date",
-    timestamp: "date",
-    timestampTz: "date",
-    tinyInteger: "integer",
-    tinyIncrements: "integer",
-    unsignedTinyInteger: "integer",
-    smallInteger: "integer",
-    unsignedSmallInteger: "integer",
-    integer: "integer",
-    bigInteger: "integer",
+    date: 'date',
+    datetime: 'date',
+    datetimeTz: 'date',
+    time: 'date',
+    timeTz: 'date',
+    timestamp: 'date',
+    timestampTz: 'date',
+    tinyInteger: 'integer',
+    tinyIncrements: 'integer',
+    unsignedTinyInteger: 'integer',
+    smallInteger: 'integer',
+    unsignedSmallInteger: 'integer',
+    integer: 'integer',
+    bigInteger: 'integer',
     // decimal: "number", 过于严格
     // unsignedDecimal: "number",
     // float: "number",
-    boolean: "boolean",
-    enum: "enum",
-    image: "array",
+    boolean: 'boolean',
+    enum: 'enum',
+    image: 'array',
   };
   const rules = [];
   const rule = {} as any;
@@ -950,7 +950,7 @@ function GetRules(column, component) {
   } = column;
   const antdType = dbTypeToAntd[dbColumnType];
   if (dbColumnType in dbTypeToAntd) {
-    if (antdType === "enum") {
+    if (antdType === 'enum') {
       rule.type = antdType;
       rule.enum = column.option;
     } else if (antdType !== null && antdType !== undefined) {
@@ -958,16 +958,16 @@ function GetRules(column, component) {
     }
   }
   // if (column.length) {
-  //MAX Length
+  // MAX Length
   // rule.max = column.length;
   // }
   if (
-    !/^id$/i.test(dbColumnType) &&
-    (unique ||
-      (!nullable &&
-        (columnDefault === null ||
-          columnDefault === undefined ||
-          columnDefault === "TlVMTA==")))
+    !/^id$/i.test(dbColumnType)
+    && (unique
+      || (!nullable
+        && (columnDefault === null
+          || columnDefault === undefined
+          || columnDefault === 'TlVMTA==')))
   ) {
     rule.required = true;
   }
@@ -975,26 +975,26 @@ function GetRules(column, component) {
   if (validations && validations.length) {
     validations.forEach((validation) => {
       switch (validation.method) {
-        case "typeof":
+        case 'typeof':
           rule.type = validation.args.find((arg) => validationTypeMap[arg]);
           break;
-        case "maxLength":
+        case 'maxLength':
           if (validation.args && validation.args.length) {
             rule.max = validation.args[0];
           }
           break;
-        case "minLength":
+        case 'minLength':
           if (validation.args && validation.args.length) {
             rule.min = validation.args[0];
           }
           break;
-        case "enum":
+        case 'enum':
           if (validation.args && validation.args.length) {
-            rule.type = "enum";
+            rule.type = 'enum';
             rule.enum = validation.args;
           }
           break;
-        case "pattern":
+        case 'pattern':
           if (validation.args && validation.args.length) {
             rules.push({
               pattern: validation.args[0],
@@ -1007,10 +1007,10 @@ function GetRules(column, component) {
       }
     });
   }
-  //控件值跟数据库有关,不能使用boolean类型验证
+  // 控件值跟数据库有关,不能使用boolean类型验证
   if (
-    antdType === "boolean" &&
-    ["RadioGroup", "Switch", "Select"].includes(component.edit.type)
+    antdType === 'boolean'
+    && ['RadioGroup', 'Switch', 'Select'].includes(component.edit.type)
   ) {
     delete rule.type;
   }
@@ -1022,8 +1022,8 @@ function GetRules(column, component) {
   return rules;
 }
 function updateReference(formTemplate, modelDsl) {
-  const hasCount = Object.values(modelDsl.relations || { type: "" }).filter(
-    (rel) => rel.type === "hasOne"
+  const hasCount = Object.values(modelDsl.relations || { type: '' }).filter(
+    (rel) => rel.type === 'hasOne',
   ).length;
   if (hasCount === 0) {
     return formTemplate; // no need to modify the form if there are no 'hasOne' relations
@@ -1039,13 +1039,13 @@ function updateReference(formTemplate, modelDsl) {
   });
   const referenceContent = [];
   for (const rel in modelDsl.relations || {}) {
-    if (modelDsl.relations[rel].type === "hasOne") {
+    if (modelDsl.relations[rel].type === 'hasOne') {
       referenceContent.push({
         name: modelDsl.relations[rel].label || rel,
         payload: {
           Form: {
-            type: "view",
-            model: modelDsl.relations[rel].model + "_view",
+            type: 'view',
+            model: modelDsl.relations[rel].model + '_view',
             id: `{{${modelDsl.relations[rel].foreign}}}`,
           },
         },
@@ -1058,7 +1058,7 @@ function updateReference(formTemplate, modelDsl) {
       defaultOpen: false,
       payload: {
         Form: {
-          type: "view",
+          type: 'view',
           model: referenceContent[0].payload.Form.model,
           id: `${referenceContent[0].payload.Form.id}`,
         },
@@ -1078,22 +1078,22 @@ function updateReference(formTemplate, modelDsl) {
  */
 function MergeObject(target, source) {
   if (
-    target === null ||
-    target === undefined ||
-    typeof target !== "object" ||
-    source === null || //mybe undefined
-    source === undefined ||
-    typeof source !== "object"
+    target === null
+    || target === undefined
+    || typeof target !== 'object'
+    || source === null // mybe undefined
+    || source === undefined
+    || typeof source !== 'object'
   ) {
     return target;
   }
   for (const [key, value] of Object.entries(source)) {
     if (Object.prototype.hasOwnProperty.call(source, key)) {
       if (
-        target[key] &&
-        typeof target[key] === "object" &&
-        typeof value === "object" &&
-        !Array.isArray(value)
+        target[key]
+        && typeof target[key] === 'object'
+        && typeof value === 'object'
+        && !Array.isArray(value)
       ) {
         MergeObject(target[key], value);
       } else if (Array.isArray(target[key]) && Array.isArray(value)) {
@@ -1135,11 +1135,11 @@ function relationTable(formDsl, modelDsl) {
     formDsl.fields.form[label] = {
       bind: rel,
       edit: {
-        type: "Table",
+        type: 'Table',
         props: {
           model: relations[rel].model,
           query: {
-            [`where.${relations[rel].key}.eq`]: "{{id}}",
+            [`where.${relations[rel].key}.eq`]: '{{id}}',
           },
         },
       },
@@ -1153,10 +1153,10 @@ function relationTable(formDsl, modelDsl) {
     formDsl.action.save = {
       process: `scripts.${modelName}.Save`,
     };
-    formDsl.action["before:delete"] = `scripts.${modelName}.BeforeDelete`;
-    formDsl.action["after:find"] = `scripts.${modelName}.AfterFind`;
+    formDsl.action['before:delete'] = `scripts.${modelName}.BeforeDelete`;
+    formDsl.action['after:find'] = `scripts.${modelName}.AfterFind`;
   }
-  return [wrapForm(formDsl, modelDsl, "view")];
+  return [wrapForm(formDsl, modelDsl, 'view')];
 }
 /**
  * yao studio run model.relation.List
@@ -1167,7 +1167,7 @@ function relationList(formDsl, modelDsl) {
   const RelList = [];
   for (const rel in relations) {
     // 只有1对多的关系才需要创建List文件
-    if (relations[rel].type != "hasMany") {
+    if (relations[rel].type != 'hasMany') {
       continue;
     }
     RelList.push({
@@ -1175,7 +1175,7 @@ function relationList(formDsl, modelDsl) {
       model: relations[rel].model,
       key: relations[rel].key,
     });
-    //创建控件
+    // 创建控件
     let label = relations[rel].label;
     if (!label) {
       label = rel;
@@ -1187,7 +1187,7 @@ function relationList(formDsl, modelDsl) {
     formDsl.fields.form[label] = {
       bind: rel,
       edit: {
-        type: "List",
+        type: 'List',
         props: {
           name: relations[rel].model,
           showLabel: true,
@@ -1200,13 +1200,13 @@ function relationList(formDsl, modelDsl) {
     });
   }
   if (RelList.length === 0) {
-    return [wrapForm(formDsl, modelDsl, "edit")];
+    return [wrapForm(formDsl, modelDsl, 'edit')];
   }
   const tabName = modelDsl.ID;
   const funtionName = modelDsl.ID;
   const modelName = DotName(tabName);
   const listDslList = RelList.map((rel) => CreateListFile(rel));
-  //function templates
+  // function templates
   const saveDataFunList = RelList.map((rel) => CreateDataSaveCode(rel));
   const deleteDataFunList = RelList.map((rel) => CreateDataDeleteCode(rel));
   const AfterFind = CreateAfterFind(relations);
@@ -1219,8 +1219,8 @@ function relationList(formDsl, modelDsl) {
     formDsl.action.save = {
       process: `scripts.${modelName}.Save`,
     };
-    formDsl.action["before:delete"] = `scripts.${modelName}.BeforeDelete`;
-    formDsl.action["after:find"] = `scripts.${modelName}.AfterFind`;
+    formDsl.action['before:delete'] = `scripts.${modelName}.BeforeDelete`;
+    formDsl.action['after:find'] = `scripts.${modelName}.AfterFind`;
     scripts.push(
       WriteScript(
         funtionName,
@@ -1229,12 +1229,12 @@ function relationList(formDsl, modelDsl) {
         deleteDataCodes,
         saveDataFunList,
         deleteDataFunList,
-        AfterFind
-      )
+        AfterFind,
+      ),
     );
   }
 
-  return [wrapForm(formDsl, modelDsl, "edit"), ...listDslList, ...scripts];
+  return [wrapForm(formDsl, modelDsl, 'edit'), ...listDslList, ...scripts];
 }
 
 function WriteScript(
@@ -1244,7 +1244,7 @@ function WriteScript(
   deleteDataCodes,
   saveDataFunctionList,
   deleteDataFuntionList,
-  AfterFind
+  AfterFind,
 ) {
   // let sc = new FS("script");
   const scripts = `function Save(payload) {
@@ -1273,23 +1273,23 @@ function WriteScript(
 }
 //保存关联表数据
 function SaveRelations(id, payload) {
-  ${saveDataCodes.join("\n\t")}
+  ${saveDataCodes.join('\n\t')}
   return id;
 }
 
 //删除关联表数据
 function BeforeDelete(id){
-  ${deleteDataCodes.join("\n")}
+  ${deleteDataCodes.join('\n')}
 }
 
-${saveDataFunctionList.join("\n")}
+${saveDataFunctionList.join('\n')}
 
-${deleteDataFuntionList.join("\n")}
+${deleteDataFuntionList.join('\n')}
 
 ${AfterFind}
 `;
   return {
-    language: "js",
+    language: 'js',
     title: `${functionName}.js`,
     __code_source: scripts,
   };
@@ -1305,7 +1305,7 @@ function StartTrans() {
       },
     });
     `
-    : "";
+    : '';
 }
 function Commit() {
   const ismysql = IsMysql();
@@ -1317,7 +1317,7 @@ function Commit() {
       },
     });
     `
-    : "";
+    : '';
 }
 function Rollback() {
   const ismysql = IsMysql();
@@ -1329,14 +1329,14 @@ function Rollback() {
           },
         });
         `
-    : "";
+    : '';
 }
 function CreateAfterFind(relations) {
   const templates = [];
 
   for (const rel in relations) {
     const element = relations[rel];
-    if (element.type !== "hasMany") {
+    if (element.type !== 'hasMany') {
       continue;
     }
     const model = getModelDefinition(element.model);
@@ -1362,19 +1362,19 @@ function CreateAfterFind(relations) {
     }
     query.wheres.push({
       field: element.key,
-      op: "=",
-      value: ">>>payload.id<<<",
+      op: '=',
+      value: '>>>payload.id<<<',
     });
     const str = `   payload["${rel}"]= t.Get(
       ${JSON.stringify(query, null, 2)},
-    );`.replace(/">>>payload.id<<<"/g, "payload.id");
+    );`.replace(/">>>payload.id<<<"/g, 'payload.id');
     templates.push(str);
   }
   return `
 //多对一表数据查找
 function AfterFind(payload){
     const t = new Query();
-    ${templates.join("\n")}
+    ${templates.join('\n')}
     return payload;
 }
 `;
@@ -1429,12 +1429,12 @@ function Save_${rel.name}(id,payload){
 }
 function wrapForm(formDsl, modelDsl, type) {
   return {
-    language: "json",
-    title: `${modelDsl.ID}${type == "view" ? "_view" : ""}.form.yao`,
+    language: 'json',
+    title: `${modelDsl.ID}${type == 'view' ? '_view' : ''}.form.yao`,
     __code_source: formDsl,
   };
 }
-/**创建列表，并不是所有的模型都创建列表，只有hasMany的关系才需要*/
+/** 创建列表，并不是所有的模型都创建列表，只有hasMany的关系才需要 */
 function CreateListFile(rel) {
   const modelName = rel.model;
   const excludeField = rel.key;
@@ -1443,22 +1443,22 @@ function CreateListFile(rel) {
     console.log(`Model ${modelName} not exist`);
     return;
   }
-  //在列表显示中不需要显示外键
+  // 在列表显示中不需要显示外键
   modelDsl.columns = modelDsl.columns.filter(
-    (col) => col.name !== excludeField
+    (col) => col.name !== excludeField,
   );
-  const listDsl = toList(modelDsl); //这里有studio js读取操作
+  const listDsl = toList(modelDsl); // 这里有studio js读取操作
   // let listFileName = tableName + ".list.json";
   // Studio("model.file.MoveAndWrite", "lists", listFileName, listDsl);
   return {
-    language: "json",
+    language: 'json',
     title: `${modelDsl.ID}.list.yao`,
     __code_source: listDsl,
   };
 }
 /**
  * conver the model dsl to list config file
- * @param {object} modelDsl 
+ * @param {object} modelDsl
  * @returns string
  */
 function toList(modelDsl) {
@@ -1466,7 +1466,7 @@ function toList(modelDsl) {
   let columns = modelDsl.columns || [];
   const table_dot_name = DotName(modelDsl.table.name);
   const listTemplate = {
-    name: modelDsl.name || "列表",
+    name: modelDsl.name || '列表',
     action: {
       bind: {
         model: table_dot_name,
@@ -1481,8 +1481,8 @@ function toList(modelDsl) {
       list: {},
     },
   };
-  //并不知道谁会调用列表，
-  //不要显示外部关联ID
+  // 并不知道谁会调用列表，
+  // 不要显示外部关联ID
   // columns = columns.filter((col) => !/_id$/i.test(col.name));
   columns = MakeColumnOrder(columns);
   columns.forEach((column) => {
@@ -1515,7 +1515,7 @@ function CastListColumn(column, modelDsl) {
   const title = column.label || column.name;
   const name = column.name;
   if (!name) {
-    //log.Error("castFormColumn: missing name");
+    // log.Error("castFormColumn: missing name");
     return false;
   }
   if (!title) {
@@ -1534,35 +1534,35 @@ function CastListColumn(column, modelDsl) {
   let component = {
     bind: name,
     edit: {
-      type: "Input",
+      type: 'Input',
       props: {},
     },
   } as any;
   let width = 6;
   const bind = name;
-  if (column.type == "json") {
+  if (column.type == 'json') {
     component = {
       bind: bind,
       edit: {
-        type: "TextArea",
+        type: 'TextArea',
       },
     };
-  } else if (column.type == "enum") {
+  } else if (column.type == 'enum') {
     component = {
       bind: bind,
       edit: {
         props: {
-          options: Enum(column["option"]),
-          placeholder: "请选择" + title,
+          options: Enum(column['option']),
+          placeholder: '请选择' + title,
         },
-        type: "Select",
+        type: 'Select',
       },
     };
   } else if (
-    column.type === "boolean" ||
-    (column.type === "tinyInteger" &&
-      ismysql &&
-      (column.default === 0 || column.default === 1))
+    column.type === 'boolean'
+    || (column.type === 'tinyInteger'
+      && ismysql
+      && (column.default === 0 || column.default === 1))
   ) {
     let checkedValue = true as any;
     let unCheckedValue = false as any;
@@ -1573,33 +1573,33 @@ function CastListColumn(column, modelDsl) {
     component = {
       bind: bind,
       edit: {
-        type: "RadioGroup",
+        type: 'RadioGroup',
         props: {
           options: [
             {
-              label: "是",
+              label: '是',
               value: checkedValue,
             },
             {
-              label: "否",
+              label: '否',
               value: unCheckedValue,
             },
           ],
         },
       },
     };
-  } else if (column.type == "color") {
-    component.edit.type = "ColorPicker";
-  } else if (column.crypt === "PASSWORD") {
-    component.edit.type = "Password";
+  } else if (column.type == 'color') {
+    component.edit.type = 'ColorPicker';
+  } else if (column.crypt === 'PASSWORD') {
+    component.edit.type = 'Password';
     component.view = component.view || {};
-    component.view.compute = "Hide";
+    component.view.compute = 'Hide';
   } else {
     if (column.type in types) {
       component.edit.type = types[column.type];
     }
   }
-  if (["TextArea"].includes(types[column.type]) || column.type === "json") {
+  if (['TextArea'].includes(types[column.type]) || column.type === 'json') {
     width = 24;
   }
   component = IsFormFile(column, component, modelDsl);
@@ -1630,7 +1630,7 @@ function CastListColumn(column, modelDsl) {
  */
 function AddTabColumn(formTemplate, column) {
   const section = formTemplate.layout.form.sections.find((sec) =>
-    sec.columns?.find((col) => col.tabs != null)
+    sec.columns?.find((col) => col.tabs != null),
   );
   if (section) {
     const col = section.columns.find((col) => col.tabs != null);
@@ -1642,7 +1642,7 @@ function AddTabColumn(formTemplate, column) {
     formTemplate.layout.form.sections.push({
       columns: [
         {
-          name: "列表",
+          name: '列表',
           tabs: [{ title: column.name, columns: [column] }],
           width: 24,
         },
@@ -1665,7 +1665,7 @@ function FormColumnCast(column, modelDsl) {
   const title = column.label || column.name;
   const name = column.name;
   if (!name) {
-    //log.Error("castFormColumn: missing name");
+    // log.Error("castFormColumn: missing name");
     return false;
   }
   if (!title) {
@@ -1684,40 +1684,40 @@ function FormColumnCast(column, modelDsl) {
   let component = {
     bind: name,
     edit: {
-      type: "Input",
+      type: 'Input',
       props: {},
     },
   } as any;
   let width = 8;
   const bind = name;
-  if (column.type == "json") {
+  if (column.type == 'json') {
     component = {
       bind: bind,
       edit: {
         // compute: "scripts.ddic.compute.json.Edit",
         props: {
-          language: "json",
+          language: 'json',
           height: 200,
         },
-        type: "CodeEditor",
+        type: 'CodeEditor',
       },
     };
-  } else if (column.type == "enum") {
+  } else if (column.type == 'enum') {
     component = {
       bind: bind,
       edit: {
         props: {
-          options: Enum(column["option"]),
-          placeholder: "请选择" + title,
+          options: Enum(column['option']),
+          placeholder: '请选择' + title,
         },
-        type: "Select",
+        type: 'Select',
       },
     };
   } else if (
-    column.type === "boolean" ||
-    (column.type === "tinyInteger" &&
-      ismysql &&
-      (column.default === 0 || column.default === 1))
+    column.type === 'boolean'
+    || (column.type === 'tinyInteger'
+      && ismysql
+      && (column.default === 0 || column.default === 1))
   ) {
     let checkedValue = true as any;
     let unCheckedValue = false as any;
@@ -1728,33 +1728,33 @@ function FormColumnCast(column, modelDsl) {
     component = {
       bind: bind,
       edit: {
-        type: "RadioGroup",
+        type: 'RadioGroup',
         props: {
           options: [
             {
-              label: "是",
+              label: '是',
               value: checkedValue,
             },
             {
-              label: "否",
+              label: '否',
               value: unCheckedValue,
             },
           ],
         },
       },
     };
-  } else if (column.type == "color") {
-    component.edit.type = "ColorPicker";
-  } else if (column.crypt === "PASSWORD") {
-    component.edit.type = "Password";
+  } else if (column.type == 'color') {
+    component.edit.type = 'ColorPicker';
+  } else if (column.crypt === 'PASSWORD') {
+    component.edit.type = 'Password';
     component.view = component.view || {};
-    component.view.compute = "Hide";
+    component.view.compute = 'Hide';
   } else {
     if (column.type in types) {
       component.edit.type = types[column.type];
     }
   }
-  if (["TextArea"].includes(types[column.type]) || column.type === "json") {
+  if (['TextArea'].includes(types[column.type]) || column.type === 'json') {
     width = 24;
   }
   component = IsFormFile(column, component, modelDsl);
@@ -1770,9 +1770,9 @@ function FormColumnCast(column, modelDsl) {
       width: width,
     });
   }
-  if (component.edit?.type === "CodeEditor") {
+  if (component.edit?.type === 'CodeEditor') {
     component.view = component.view || {};
-    component.view.compute = "scripts.xgen.compute.json.View";
+    component.view.compute = 'scripts.xgen.compute.json.View';
   }
   res.fields.push({
     name: title,
@@ -1788,11 +1788,11 @@ function FormColumnCast(column, modelDsl) {
  * @returns
  */
 function IsFormFile(column, component, modelDsl) {
-  if (!["video", "image", "file", "audio"].includes(column.type)) {
+  if (!['video', 'image', 'file', 'audio'].includes(column.type)) {
     return component;
   }
   const { viewType, fileType } = GetFileType(column);
-  if (fileType === "unknown") {
+  if (fileType === 'unknown') {
     return component;
   }
   const name = column.name;
@@ -1801,19 +1801,19 @@ function IsFormFile(column, component, modelDsl) {
     bind: name,
     view: {
       type: viewType,
-      compute: "scripts.xgen.file.upload.View",
+      compute: 'scripts.xgen.file.upload.View',
       props: {},
     },
     edit: {
-      type: "Upload",
+      type: 'Upload',
       compute: {
-        process: "scripts.xgen.file.upload.Edit",
-        args: ["$C(row)", name, modelDsl.table.name],
+        process: 'scripts.xgen.file.upload.Edit',
+        args: ['$C(row)', name, modelDsl.table.name],
       },
       props: {
         maxCount: 100,
         filetype: fileType,
-        $api: { process: "fs.system.Upload" },
+        $api: { process: 'fs.system.Upload' },
       },
     },
   };
@@ -1834,22 +1834,22 @@ function EditSelect(column, modelDsl, component) {
   const relation = modelDsl.relations || {};
   for (const rel in relation) {
     if (
-      relation[rel].type === "hasOne" &&
-      column.name == relation[rel]["foreign"]
+      relation[rel].type === 'hasOne'
+      && column.name == relation[rel]['foreign']
     ) {
       const field = remoteSelect(rel, relation[rel]);
       const component = {
         bind: bind,
         edit: {
-          type: "Select",
+          type: 'Select',
           props: {
             xProps: {
               $remote: {
-                process: "yao.component.SelectOptions",
+                process: 'yao.component.SelectOptions',
                 query: {
                   model: DotName(relation[rel].model),
                   label: field,
-                  value: "id",
+                  value: 'id',
                 },
               },
             },

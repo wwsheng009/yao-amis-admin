@@ -1,7 +1,7 @@
 function resetMenu() {
-  Process("scripts.system.db.cleanTable", "admin_menu");
+  Process('scripts.system.db.cleanTable', 'admin_menu');
 }
 
 function importMenu() {
-  Process("scripts.admin.menu.reLoadAndSaveMenus");
+  Process('scripts.admin.menu.reLoadAndSaveMenus');
 }

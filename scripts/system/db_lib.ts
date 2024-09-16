@@ -1,13 +1,13 @@
-import { IsMysql, IsPg } from "@scripts/amis/lib_tool";
-import {Process,Query} from '@yao/yao'
+import { IsMysql, IsPg } from '@scripts/amis/lib_tool';
+import { Process, Query } from '@yao/yao';
 
 /**
  * Run db transaction
- * 
+ *
  * support mysql/postgres/sqlite
- * @param {Function} fun 
- * @param  {...any} args 
- * @returns 
+ * @param {Function} fun
+ * @param  {...any} args
+ * @returns
  */
 export function RunTransaction(fun, ...args) {
   const t = new Query();
@@ -16,13 +16,13 @@ export function RunTransaction(fun, ...args) {
   if (ismysql) {
     t.Run({
       sql: {
-        stmt: "START TRANSACTION;",
+        stmt: 'START TRANSACTION;',
       },
     });
   } else if (ispg) {
     t.Run({
       sql: {
-        stmt: "BEGIN;",
+        stmt: 'BEGIN;',
       },
     });
   }
@@ -33,7 +33,7 @@ export function RunTransaction(fun, ...args) {
     if (ismysql || ispg) {
       t.Run({
         sql: {
-          stmt: "COMMIT;",
+          stmt: 'COMMIT;',
         },
       });
     }
@@ -42,7 +42,7 @@ export function RunTransaction(fun, ...args) {
     if (ismysql || ispg) {
       t.Run({
         sql: {
-          stmt: "ROLLBACK;",
+          stmt: 'ROLLBACK;',
         },
       });
     }

@@ -2,10 +2,10 @@ import {
   FindAndLoadYaoModelById,
   MomoryModelList,
   ModelIDList,
-} from "@scripts/system/model_lib";
+} from '@scripts/system/model_lib';
 
-import { PaginateArrayWithQuery } from "@scripts/amis/data/lib";
-import {Process,Exception} from "@yao/yao"
+import { PaginateArrayWithQuery } from '@scripts/amis/data/lib';
+import { Process, Exception } from '@yao/yao';
 
 /**
  * yao run scripts.system.table.TableListSearch  '::{"created":[false]}'
@@ -34,7 +34,7 @@ function TableListUniq(query?) {
         acc[curr.name] = curr;
       }
       return acc;
-    }, {})
+    }, {}),
   ) as any;
 
   if (query && query.name) {
@@ -60,9 +60,9 @@ function TableNameList() {
  * yao run scripts.system.table.TableList
  */
 function TableList() {
-  let dbTables = Process("schemas.default.Tables") || [];
+  let dbTables = Process('schemas.default.Tables') || [];
   const cachedModels = MomoryModelList() || [];
-  const SavedModels = Process("models.ddic.model.get", {}) || [];
+  const SavedModels = Process('models.ddic.model.get', {}) || [];
 
   cachedModels.forEach((x) => x.table?.name && dbTables.push(x.table.name));
   SavedModels.forEach((x) => x.table_name && dbTables.push(x.table_name));
@@ -76,7 +76,7 @@ function TableList() {
     const cacheds = cachedModels.filter((m) => m.table?.name === tab);
 
     const cached = Array.isArray(cacheds) && cacheds.length;
-    //在数据库中找
+    // 在数据库中找
     const data = SavedModels.filter((model) => model.table_name == tab);
 
     const saved = data.length > 0 ? true : false;
@@ -85,35 +85,35 @@ function TableList() {
       // 在数据库里有
       data.forEach((model) => {
         result.push({
-          name: tab, //数据库表名
-          model: model.identity, //表对应的模型
+          name: tab, // 数据库表名
+          model: model.identity, // 表对应的模型
           model_name: model.name,
-          label: model.table_comment || tab, //如果已经加载到模型中，从模型中获取表的描述
-          saved: true, //是否加载到数据库
-          cached: cached ? true : false, //是否已经加载到缓存
-          created: true, //表已创建
+          label: model.table_comment || tab, // 如果已经加载到模型中，从模型中获取表的描述
+          saved: true, // 是否加载到数据库
+          cached: cached ? true : false, // 是否已经加载到缓存
+          created: true, // 表已创建
         });
       });
     } else {
       if (cached) {
         cacheds.forEach((model) => {
           result.push({
-            name: tab, //数据库表名
-            model: model.ID, //表对应的模型
+            name: tab, // 数据库表名
+            model: model.ID, // 表对应的模型
             model_name: model.name,
-            label: model.table?.comment || tab, //如果已经加载到模型中，从模型中获取表的描述
-            saved: false, //是否加保存数据库
-            cached: true, //是否已经加载到缓存
-            created: true, //表已创建
+            label: model.table?.comment || tab, // 如果已经加载到模型中，从模型中获取表的描述
+            saved: false, // 是否加保存数据库
+            cached: true, // 是否已经加载到缓存
+            created: true, // 表已创建
           });
         });
       } else {
         result.push({
-          name: tab, //数据库表名
+          name: tab, // 数据库表名
           label: tab,
           saved: false,
           cached: false,
-          created: true, //表已创建
+          created: true, // 表已创建
         });
       }
     }
@@ -125,11 +125,11 @@ function TableList() {
  * @returns 返回数据库表列表
  */
 function tableNameOptions() {
-  const list = Process("schemas.default.Tables");
+  const list = Process('schemas.default.Tables');
   const tables = list.map((table) => {
     return { label: table, value: table };
   });
-  //不要直接返回数组，amis并不推荐直接返回数组
+  // 不要直接返回数组，amis并不推荐直接返回数组
   // amis默认会使用items属性
   return { items: tables };
 }

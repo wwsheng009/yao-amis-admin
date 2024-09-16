@@ -1,10 +1,10 @@
-import { Exception,FS,Process} from "@yao/yao";
+import { Exception, FS, Process } from '@yao/yao';
 
-import { PaginateArrayWithQuery } from "@scripts/amis/data/lib";
-import { getUserAuthFolderCache, isSuperUser } from "@scripts/auth/lib";
-const uploadDir = "/upload";
-const userDir = "/user";
-const publicDir = "/public";
+import { PaginateArrayWithQuery } from '@scripts/amis/data/lib';
+import { getUserAuthFolderCache, isSuperUser } from '@scripts/auth/lib';
+const uploadDir = '/upload';
+const userDir = '/user';
+const publicDir = '/public';
 
 type Folder = {
   label: string;
@@ -13,15 +13,15 @@ type Folder = {
 };
 
 function buildTree(folders: string[]) {
-  const root: Folder = { label: "", children: [], value: "" };
+  const root: Folder = { label: '', children: [], value: '' };
 
   for (const folder of folders) {
     let currentLevel = root;
-    const path = folder.split("/").filter(Boolean);
+    const path = folder.split('/').filter(Boolean);
 
     for (const folderName of path) {
       let existingFolder = currentLevel.children.find(
-        (child) => child.label === folderName
+        (child) => child.label === folderName,
       );
 
       if (!existingFolder) {
@@ -64,7 +64,7 @@ function buildTree(folders: string[]) {
 // }
 
 function filterUserAuthFolderList(type: string, folderList: string[]) {
-  if (type === "user" || type === "public") {
+  if (type === 'user' || type === 'public') {
     return folderList;
   }
   // 超级用户没有限制
@@ -74,13 +74,13 @@ function filterUserAuthFolderList(type: string, folderList: string[]) {
 
   const authObjects = getUserAuthFolderCache();
   const folder_method = authObjects.method_with_folder;
-  console.log("folder_method", folder_method);
+  console.log('folder_method', folder_method);
   // 未授权
-  if (folder_method["ANY"].length == 0 && folder_method["READ"].length == 0) {
+  if (folder_method['ANY'].length == 0 && folder_method['READ'].length == 0) {
     return [];
   }
 
-  const foldersAuth = folder_method["ANY"].concat(folder_method["READ"]);
+  const foldersAuth = folder_method['ANY'].concat(folder_method['READ']);
   // console.log("foldersAuth", folder_method);
 
   // 权限里没有配置前缀，传入的目录一般是全路径。
@@ -101,7 +101,7 @@ function filterUserAuthFolderList(type: string, folderList: string[]) {
       } else {
         return f.startsWith(f1);
       }
-    })
+    }),
   );
   // console.log("folderList>>>2", folderList);
 
@@ -115,9 +115,9 @@ function filterUserAuthFolderList(type: string, folderList: string[]) {
 function targetOperationAuthCheck(
   type: string,
   targetIn: string,
-  operation: "CREATE" | "DELETE" | "READ" | "UPDATE"
+  operation: 'CREATE' | 'DELETE' | 'READ' | 'UPDATE',
 ) {
-  if (type === "user" || type === "public") {
+  if (type === 'user' || type === 'public') {
     return;
   }
   // 超级用户没有限制
@@ -127,8 +127,8 @@ function targetOperationAuthCheck(
   const authObjects = getUserAuthFolderCache();
   // const folders: string[] = authObjects.folders;
 
-  const foldersAuth = authObjects.method_with_folder["ANY"].concat(
-    authObjects.method_with_folder[operation] || []
+  const foldersAuth = authObjects.method_with_folder['ANY'].concat(
+    authObjects.method_with_folder[operation] || [],
   );
 
   const folders: string[] = foldersAuth.map((f: string) => `${uploadDir}${f}`);
@@ -142,7 +142,7 @@ function targetOperationAuthCheck(
   // ) {
   //   throw new Exception(`操作:${operation} 未授权`);
   // }
-  const target = targetIn.replace(/[\\/]+/g, "/");
+  const target = targetIn.replace(/[\\/]+/g, '/');
 
   // if (folders == null || folders.length == 0) {
   //   throw new Exception(
@@ -165,7 +165,7 @@ function targetOperationAuthCheck(
 
   if (!found) {
     throw new Exception(
-      `目录:${target.substring(uploadDir.length)} 操作:${operation} 未授权`,403
+      `目录:${target.substring(uploadDir.length)} 操作:${operation} 未授权`, 403,
     );
   }
 }
@@ -176,21 +176,21 @@ function targetOperationAuthCheck(
 function getPermissionFolderTree() {
   const rootFolder = uploadDir;
 
-  let list: string[] = Process("fs.system.ReadDir", rootFolder);
-  list = list.map((l) => l.replace(/[\\/]+/g, "/"));
+  let list: string[] = Process('fs.system.ReadDir', rootFolder);
+  list = list.map((l) => l.replace(/[\\/]+/g, '/'));
   // ignore the list
   list = list.filter((d) => !d.startsWith(`${uploadDir}${userDir}`));
   list = list.filter((d) => !d.startsWith(`${uploadDir}${publicDir}`));
 
   let all = [] as string[];
   list.forEach((f) => {
-    const sublist = Process("fs.system.ReadDir", f, true);
+    const sublist = Process('fs.system.ReadDir', f, true);
     all = all.concat(sublist);
   });
   // 避免过多的文件层次
-  all = all.filter((f) => f.split("/").length <= 10);
+  all = all.filter((f) => f.split('/').length <= 10);
   // only the folder
-  all = all.filter((f) => Process("fs.system.IsDir", f));
+  all = all.filter((f) => Process('fs.system.IsDir', f));
   // remove the prefix
   all = all.map((f) => f.substring(rootFolder.length));
   // return all;
@@ -205,10 +205,10 @@ function getPermissionFolderTree() {
 function writeLog(
   file_name: string,
   file_name2: string,
-  operation: "remove" | "upload" | "delete_folder" | "move_folder"
+  operation: 'remove' | 'upload' | 'delete_folder' | 'move_folder',
 ) {
-  const user_id = Process("session.get", "user_id");
-  Process("models.system.log.file.save", {
+  const user_id = Process('session.get', 'user_id');
+  Process('models.system.log.file.save', {
     user_id,
     file_name,
     file_name2,
@@ -237,17 +237,17 @@ function UploadFile(type: string, file: YaoFile, folder: string) {
 function getFolder(type: string) {
   let filePath = `${uploadDir}/public`;
   switch (type) {
-    case "user":
-      const user_id = Process("session.get", "user_id");
+    case 'user':
+      const user_id = Process('session.get', 'user_id');
       if (!user_id) {
-        throw new Exception("用户未登录");
+        throw new Exception('用户未登录');
       }
       filePath = `${uploadDir}${userDir}/${user_id}`;
       break;
-    case "public":
+    case 'public':
       filePath = `${uploadDir}${publicDir}`;
       break;
-    case "project":
+    case 'project':
       filePath = `${uploadDir}/project`;
       break;
     default:
@@ -255,15 +255,15 @@ function getFolder(type: string) {
     // break;
   }
 
-  if (!Process("fs.system.Exists", filePath)) {
-    Process("fs.system.MkdirAll", filePath);
+  if (!Process('fs.system.Exists', filePath)) {
+    Process('fs.system.MkdirAll', filePath);
   }
   return filePath;
 }
 function batchDeleteFile(type: string, payload) {
   const list = payload.items;
   if (!Array.isArray(list)) {
-    throw new Exception("输入参数不正确");
+    throw new Exception('输入参数不正确');
   }
   list.forEach((item) => {
     deleteFile(type, item.path);
@@ -272,22 +272,22 @@ function batchDeleteFile(type: string, payload) {
 function deleteFile(type: string, name: string) {
   const fname = getFilePath(type, name);
 
-  targetOperationAuthCheck(type, fname, "DELETE");
-  const result = Process("fs.system.Remove", fname);
-  writeLog(fname, "", "remove");
+  targetOperationAuthCheck(type, fname, 'DELETE');
+  const result = Process('fs.system.Remove', fname);
+  writeLog(fname, '', 'remove');
 }
 function queryEscape(str: string) {
   return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
-    return "%" + c.charCodeAt(0).toString(16);
+    return '%' + c.charCodeAt(0).toString(16);
   });
 }
 
 function getBasename(filename: string, noEscape) {
   if (filename == null) {
-    return "";
+    return '';
   }
   // Get the last index of the path separator '/'
-  const lastIndex = filename.lastIndexOf("/");
+  const lastIndex = filename.lastIndexOf('/');
 
   // If the separator is found, return the substring after it
   if (lastIndex !== -1) {
@@ -306,8 +306,8 @@ function getFilePath(type: string, name: string) {
 }
 
 function saveFile(type: string, file: YaoFile, folder: string) {
-  if (folder == null || folder == "") {
-    folder = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+  if (folder == null || folder == '') {
+    folder = new Date().toISOString().slice(0, 10).replace(/-/g, '');
   } else {
     // folder = folder.replace(".", "/");
   }
@@ -315,17 +315,17 @@ function saveFile(type: string, file: YaoFile, folder: string) {
   const uploadFolder = `${getFolder(type)}/${folder}`;
   const filePath = `/${uploadFolder}/${file.name}`;
 
-  targetOperationAuthCheck(type, filePath, "CREATE");
+  targetOperationAuthCheck(type, filePath, 'CREATE');
   // 只返回用户的目录下的相对路径
   const filePath2 = `/${folder}/${file.name}`;
 
-  const fs = new FS("system");
+  const fs = new FS('system');
   if (!fs.Exists(uploadFolder)) {
     fs.MkdirAll(uploadFolder);
   }
   fs.Move(file.tempFile, `${filePath}`);
 
-  writeLog(filePath, "", "upload");
+  writeLog(filePath, '', 'upload');
 
   return filePath2;
   // return fs.Abs(filePath2);
@@ -339,7 +339,7 @@ function saveFile(type: string, file: YaoFile, folder: string) {
  * @returns
  */
 function getFolderList(type: string, parent: string) {
-  //没有读取授权
+  // 没有读取授权
   // if (!checkUserCanReadAuth(type)) {
   //   return { items: [], total: 0 };
   // }
@@ -347,22 +347,22 @@ function getFolderList(type: string, parent: string) {
 
   const userDir = getFolder(type);
 
-  const uploadFolder =
-    parentDir != "" ? `${userDir}/${parentDir}/` : `${userDir}/`;
+  const uploadFolder
+    = parentDir != '' ? `${userDir}/${parentDir}/` : `${userDir}/`;
 
-  if (!Process("fs.system.Exists", uploadFolder)) {
+  if (!Process('fs.system.Exists', uploadFolder)) {
     return [];
   }
-  let list = Process("fs.system.ReadDir", uploadFolder);
-  list = list.map((l: string) => l.replace(/[\\/]+/g, "/"));
-  let list2 = list.filter((dir: string) => Process("fs.system.isDir", dir));
+  let list = Process('fs.system.ReadDir', uploadFolder);
+  list = list.map((l: string) => l.replace(/[\\/]+/g, '/'));
+  let list2 = list.filter((dir: string) => Process('fs.system.isDir', dir));
 
   list2 = filterUserAuthFolderList(type, list2);
   list2 = list2.map((dir: string) => {
-    const d = dir.replace(uploadFolder, "");
+    const d = dir.replace(uploadFolder, '');
     return {
       label: d,
-      value: parent != "" ? parent + "/" + d : d,
+      value: parent != '' ? parent + '/' + d : d,
       defer: true,
     };
   });
@@ -383,12 +383,12 @@ function getTimeFormat(unixTime) {
   const second = date.getSeconds();
 
   // Format the date and time as a string
-  const formattedDate = `${year}-${month.toString().padStart(2, "0")}-${day
+  const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day
     .toString()
-    .padStart(2, "0")}`;
-  const formattedTime = `${hour.toString().padStart(2, "0")}:${minute
+    .padStart(2, '0')}`;
+  const formattedTime = `${hour.toString().padStart(2, '0')}:${minute
     .toString()
-    .padStart(2, "0")}:${second.toString().padStart(2, "0")}`;
+    .padStart(2, '0')}:${second.toString().padStart(2, '0')}`;
 
   // Output the formatted date and time
   // console.log(`Formatted Date: ${formattedDate}`);
@@ -406,32 +406,32 @@ function getTimeFormat(unixTime) {
  * @returns
  */
 function fileSearch(type: string, parentFolder: string, querysIn, payload) {
-  //没有读取授权
+  // 没有读取授权
   // if (!checkUserCanReadAuth(type)) {
   //   return { items: [], total: 0 };
   // }
   if (parentFolder == null) {
-    parentFolder == "";
+    parentFolder == '';
   }
 
   parentFolder = normalizeFolder(parentFolder);
   const userFolder = getFolder(type);
   const uploadFolder = `${userFolder}/${parentFolder}/`;
-  let list = Process("fs.system.ReadDir", uploadFolder, true);
-  list = list.map((l: string) => l.replace(/[\\/]+/g, "/"));
+  let list = Process('fs.system.ReadDir', uploadFolder, true);
+  list = list.map((l: string) => l.replace(/[\\/]+/g, '/'));
   list = filterUserAuthFolderList(type, list);
 
   const list2 = [] as FileList[];
   let idx = 0;
   list.forEach((f: string) => {
-    const isFile = Process("fs.system.IsFile", f);
+    const isFile = Process('fs.system.IsFile', f);
     if (isFile) {
-      const fpath = f.replace(userFolder, "");
+      const fpath = f.replace(userFolder, '');
       const baseName = getBasename(f, true);
       // const fname = f.replace(uploadFolder, "");
-      const mimeType = Process("fs.system.MimeType", f);
-      const bytes = Process("fs.system.Size", f);
-      const time = Process("fs.system.ModTime", f);
+      const mimeType = Process('fs.system.MimeType', f);
+      const bytes = Process('fs.system.Size', f);
+      const time = Process('fs.system.ModTime', f);
       const date = getTimeFormat(time);
 
       list2.push({
@@ -440,7 +440,7 @@ function fileSearch(type: string, parentFolder: string, querysIn, payload) {
         name: baseName,
         path: fpath,
         url: `/api/v1/fs/${type}/file/download?name=${encodeURIComponent(
-          fpath
+          fpath,
         )}`,
         mime: mimeType,
         type: getFileTypeFromMimeType(mimeType),
@@ -451,9 +451,9 @@ function fileSearch(type: string, parentFolder: string, querysIn, payload) {
 
   delete querysIn.folder;
   const { items, total } = PaginateArrayWithQuery(list2, querysIn, payload, [
-    "name",
-    "time",
-    "type",
+    'name',
+    'time',
+    'type',
   ]);
 
   items.forEach((item) => {
@@ -465,24 +465,24 @@ function fileSearch(type: string, parentFolder: string, querysIn, payload) {
 // yao run scripts.fs.file.getFileList '20231115'
 function getFileList(type: string, folder: string, keywords) {
   if (folder == null) {
-    folder == "";
+    folder == '';
   }
   folder = normalizeFolder(folder);
   const userFolder = getFolder(type);
   const uploadFolder = `${userFolder}/${folder}/`;
 
-  let list = Process("fs.system.ReadDir", uploadFolder, true);
-  list = list.map((l: string) => l.replace(/[\\/]+/g, "/"));
+  let list = Process('fs.system.ReadDir', uploadFolder, true);
+  list = list.map((l: string) => l.replace(/[\\/]+/g, '/'));
 
   const list2 = [] as FileList[];
   list.forEach((f: string) => {
-    const isFile = Process("fs.system.IsFile", f);
+    const isFile = Process('fs.system.IsFile', f);
     if (isFile) {
-      const fpath = f.replace(userFolder, "");
+      const fpath = f.replace(userFolder, '');
 
-      const fname = f.replace(uploadFolder, "");
-      const mimeType = Process("fs.system.MimeType", f);
-      const bytes = Process("fs.system.Size", f);
+      const fname = f.replace(uploadFolder, '');
+      const mimeType = Process('fs.system.MimeType', f);
+      const bytes = Process('fs.system.Size', f);
       list2.push({
         size: convertFileSize(bytes),
         name: fname,
@@ -493,9 +493,9 @@ function getFileList(type: string, folder: string, keywords) {
       } as FileList);
     }
   });
-  if (keywords != null && keywords != "") {
+  if (keywords != null && keywords != '') {
     return list2.filter((f) =>
-      f.name.toLowerCase().includes(keywords.toLowerCase())
+      f.name.toLowerCase().includes(keywords.toLowerCase()),
     );
   }
   return list2;
@@ -503,28 +503,28 @@ function getFileList(type: string, folder: string, keywords) {
 
 function getFileTypeFromMimeType(mimeType) {
   // Remove any additional information after the main MIME type
-  const mainType = mimeType.split(";")[0];
+  const mainType = mimeType.split(';')[0];
 
   // Map MIME types to human-readable file types
   const typeMap = {
-    "application/pdf": "PDF",
-    "image/jpeg": "Image",
-    "image/png": "Image",
-    "image/gif": "Image",
-    "video/mp4": "Video",
-    "audio/aac": "Audio",
-    "audio/mpeg	": "Audio",
-    "text/plain": "Text Document",
-    "application/msword": "MS WORD",
-    "application/vnd.ms-excel": "MS EXCEL",
-    "application/vnd.openxmlformats-officedocument.presentationml.presentation":
-      "MS PPT",
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-      "MS Word",
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
-      "MS Excel",
-    "application/x-ole-storage": "MS WORD",
-    "application/zip": "Zip",
+    'application/pdf': 'PDF',
+    'image/jpeg': 'Image',
+    'image/png': 'Image',
+    'image/gif': 'Image',
+    'video/mp4': 'Video',
+    'audio/aac': 'Audio',
+    'audio/mpeg	': 'Audio',
+    'text/plain': 'Text Document',
+    'application/msword': 'MS WORD',
+    'application/vnd.ms-excel': 'MS EXCEL',
+    'application/vnd.openxmlformats-officedocument.presentationml.presentation':
+      'MS PPT',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+      'MS Word',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+      'MS Excel',
+    'application/x-ole-storage': 'MS WORD',
+    'application/zip': 'Zip',
     // Add more MIME types and their corresponding file types as needed
   };
 
@@ -532,19 +532,19 @@ function getFileTypeFromMimeType(mimeType) {
   if (typeMap.hasOwnProperty(mainType)) {
     return typeMap[mainType];
   } else {
-    const partType = mainType.split("/")[0];
-    if (partType == "image") {
-      return "Image";
-    } else if (partType == "video") {
-      return "Video";
-    } else if (partType == "audio") {
-      return "Audio";
+    const partType = mainType.split('/')[0];
+    if (partType == 'image') {
+      return 'Image';
+    } else if (partType == 'video') {
+      return 'Video';
+    } else if (partType == 'audio') {
+      return 'Audio';
     }
     return mimeType;
   }
 }
 function convertFileSize(fileSizeInBytes: number) {
-  const units = ["bytes", "KB", "MB", "GB"];
+  const units = ['bytes', 'KB', 'MB', 'GB'];
   let unitIndex = 0;
   let fileSize = fileSizeInBytes;
 
@@ -558,59 +558,59 @@ function convertFileSize(fileSizeInBytes: number) {
 // yao run scripts.fs.file.normalizeFolder "../"
 function normalizeFolder(folder: string) {
   if (folder == null) {
-    return "";
+    return '';
   }
-  if (typeof folder != "string" && typeof folder != "number") {
-    return "";
+  if (typeof folder != 'string' && typeof folder != 'number') {
+    return '';
   }
   // 安全问题，可以通过../访问非应用目录
-  folder = folder.replace(/\.\./g, "");
-  folder = folder.replace(/\/+/g, "/");
-  folder = folder.replace(/\\+/g, "/");
+  folder = folder.replace(/\.\./g, '');
+  folder = folder.replace(/\/+/g, '/');
+  folder = folder.replace(/\\+/g, '/');
 
   return folder;
 }
 function createFolder(type: string, parent: string, folder: string) {
-  if (parent == null || typeof parent != "string") {
-    parent = "";
+  if (parent == null || typeof parent != 'string') {
+    parent = '';
   }
   // parent = parent.replace(/\./g, "/");
 
   parent = normalizeFolder(parent);
   folder = normalizeFolder(folder);
 
-  if (folder == "") {
-    throw new Exception("目录名不能为空", 500);
+  if (folder == '') {
+    throw new Exception('目录名不能为空', 500);
   }
   const uploadFolder = `${getFolder(type)}/${parent}/${folder}`;
-  targetOperationAuthCheck(type, uploadFolder, "CREATE");
-  const fs = new FS("system");
+  targetOperationAuthCheck(type, uploadFolder, 'CREATE');
+  const fs = new FS('system');
   if (!fs.Exists(uploadFolder)) {
     fs.MkdirAll(uploadFolder);
   }
 }
 function deleteFolder(type: string, folder: string) {
-  if (folder == null || folder == "") {
-    throw new Exception("目录不正确", 500);
+  if (folder == null || folder == '') {
+    throw new Exception('目录不正确', 500);
   }
   folder = normalizeFolder(folder);
 
   const targetFolder = `${getFolder(type)}/${folder}`;
 
-  targetOperationAuthCheck(type, targetFolder, "DELETE");
+  targetOperationAuthCheck(type, targetFolder, 'DELETE');
 
-  const fs = new FS("system");
+  const fs = new FS('system');
   if (fs.Exists(targetFolder)) {
     fs.RemoveAll(targetFolder);
   }
-  writeLog(targetFolder, "", "delete_folder");
+  writeLog(targetFolder, '', 'delete_folder');
 }
 function moveFolder(type: string, source: string, target: string) {
-  if (source == null || source == "") {
-    throw new Exception("源目录不能为空");
+  if (source == null || source == '') {
+    throw new Exception('源目录不能为空');
   }
-  if (target == null || target == "") {
-    throw new Exception("目标目录不能为空");
+  if (target == null || target == '') {
+    throw new Exception('目标目录不能为空');
   }
 
   source = normalizeFolder(source);
@@ -622,24 +622,24 @@ function moveFolder(type: string, source: string, target: string) {
   const sourceFolder = `${getFolder(type)}/${source}`;
   const targetFolder = `${getFolder(type)}/${target}`;
 
-  targetOperationAuthCheck(type, targetFolder, "UPDATE");
-  const fs = new FS("system");
+  targetOperationAuthCheck(type, targetFolder, 'UPDATE');
+  const fs = new FS('system');
 
-  const targetParent = targetFolder.split("/").slice(0, -1).join("/");
+  const targetParent = targetFolder.split('/').slice(0, -1).join('/');
   if (!fs.Exists(targetParent)) {
     fs.MkdirAll(targetParent);
   }
   if (fs.Exists(sourceFolder) && !fs.Exists(targetFolder)) {
     fs.Move(sourceFolder, targetFolder);
   }
-  writeLog(sourceFolder, targetFolder, "move_folder");
+  writeLog(sourceFolder, targetFolder, 'move_folder');
 }
 
 function convertToNestedArray(folderList: string[]): object[] {
   // Initialize the root object
   const root = {
-    label: "",
-    value: "",
+    label: '',
+    value: '',
     defer: true,
     children: [],
   };
@@ -647,7 +647,7 @@ function convertToNestedArray(folderList: string[]): object[] {
   // Iterate through each folder path
   for (const folderPath of folderList) {
     // Split the folder path into individual parts
-    const parts = folderPath.split("/").filter((part) => part !== "");
+    const parts = folderPath.split('/').filter((part) => part !== '');
 
     // Initialize the current node as the root
     let currentNode = root;
@@ -704,8 +704,8 @@ interface YaoFile {
   header: {
     [key: string]: object;
     mimeType: {
-      "Content-Disposition": string[];
-      "Content-Type": string[];
+      'Content-Disposition': string[];
+      'Content-Type': string[];
     };
   };
 }

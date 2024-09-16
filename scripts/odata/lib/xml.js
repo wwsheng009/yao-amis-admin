@@ -1,35 +1,35 @@
 class XmlWriter {
   visitor(type, node, name) {
     switch (type) {
-      //根节点
-      case "document":
+      // 根节点
+      case 'document':
         return this.visitDocument(node);
 
-      case "EntityType":
+      case 'EntityType':
         return this.visitEntityType(node, name);
 
-      case "Property":
+      case 'Property':
         return XmlWriter.visitProperty(node, name);
 
-      case "EntityContainer":
+      case 'EntityContainer':
         return this.visitEntityContainter(node);
 
-      case "EntitySet":
+      case 'EntitySet':
         return XmlWriter.visitEntitySet(node, name);
 
-      case "TypeDefinition":
+      case 'TypeDefinition':
         return XmlWriter.visitTypeDefinition(node, name);
 
-      case "ComplexType":
+      case 'ComplexType':
         return this.visitComplexType(node, name);
 
-      case "Action":
+      case 'Action':
         return XmlWriter.visitAction(node, name);
 
-      case "Function":
+      case 'Function':
         return XmlWriter.visitFunction(node, name);
 
-      case "FunctionImport":
+      case 'FunctionImport':
         return XmlWriter.visitFunctionImport(node, name);
 
       default:
@@ -38,14 +38,14 @@ class XmlWriter {
   }
 
   visitDocument(node) {
-    let body = "";
+    let body = '';
 
     Object.keys(node).forEach((subnode) => {
       if (node[subnode].$Kind) {
         body += this.visitor(node[subnode].$Kind, node[subnode], subnode);
       }
     });
-    //node.$EntityContainer Namespage
+    // node.$EntityContainer Namespage
     return `<edmx:Edmx Version="${node.$Version}" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
   <edmx:DataServices xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" m:DataServiceVersion="2.0">
     <Schema xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://schemas.microsoft.com/ado/2007/05/edm" Namespace="${node.$EntityContainer}">
@@ -59,19 +59,19 @@ class XmlWriter {
     return `<EntitySet Name="${name}" EntityType="${node.$Type}"/>`;
   }
 
-  //所有表类型定义。
-  //node {}
+  // 所有表类型定义。
+  // node {}
   visitEntityContainter(node) {
-    let entitySets = "";
-    let functions = "";
+    let entitySets = '';
+    let functions = '';
 
     Object.keys(node)
-      .filter((item) => item !== "$Kind")
+      .filter((item) => item !== '$Kind')
       .forEach((item) => {
         if (node[item].$Type) {
-          entitySets += this.visitor("EntitySet", node[item], item);
+          entitySets += this.visitor('EntitySet', node[item], item);
         } else {
-          functions += this.visitor("FunctionImport", node[item], item);
+          functions += this.visitor('FunctionImport', node[item], item);
         }
       });
     return `<EntityContainer Name="Container">
@@ -82,7 +82,7 @@ class XmlWriter {
   // node 字段对象{}
   // name 字段名称
   static visitProperty(node, name) {
-    let attributes = "";
+    let attributes = '';
 
     if (node.$Nullable === false) {
       attributes += ' Nullable="false"';
@@ -100,13 +100,13 @@ class XmlWriter {
   // node表类型，对象{}
   // name表名
   visitEntityType(node, name) {
-    let properties = "";
+    let properties = '';
 
     Object.keys(node)
-      .filter((item) => item !== "$Kind" && item !== "$Key")
+      .filter((item) => item !== '$Kind' && item !== '$Key')
       .forEach((item) => {
-        //表属性
-        properties += this.visitor("Property", node[item], item);
+        // 表属性
+        properties += this.visitor('Property', node[item], item);
       });
 
     return `<EntityType Name="${name}">
@@ -118,7 +118,7 @@ class XmlWriter {
   }
 
   static visitTypeDefinition(node, name) {
-    let attributes = "";
+    let attributes = '';
 
     if (node.$MaxLength) {
       attributes += ` MaxLength="${node.$MaxLength}"`;
@@ -129,12 +129,12 @@ class XmlWriter {
   }
 
   visitComplexType(node, name) {
-    let properties = "";
+    let properties = '';
 
     Object.keys(node)
-      .filter((item) => item !== "$Kind")
+      .filter((item) => item !== '$Kind')
       .forEach((item) => {
-        properties += this.visitor("Property", node[item], item);
+        properties += this.visitor('Property', node[item], item);
       });
 
     return `
@@ -144,9 +144,9 @@ class XmlWriter {
   }
 
   static visitAction(node, name) {
-    const isBound = node.$IsBound ? ' IsBound="true"' : "";
+    const isBound = node.$IsBound ? ' IsBound="true"' : '';
     const parameter = node.$Parameter.map((item) => {
-      let type = "";
+      let type = '';
 
       if (item.$Collection) {
         type = ` Type="Collection(${item.$Type})"`;
@@ -165,7 +165,7 @@ class XmlWriter {
   }
 
   static visitFunction(node, name) {
-    const collection = node.$ReturnType.$Collection ? ' Collection="true"' : "";
+    const collection = node.$ReturnType.$Collection ? ' Collection="true"' : '';
 
     return `
     <Function Name="${name}">
@@ -179,15 +179,16 @@ class XmlWriter {
     <FunctionImport Name="${name}" Function="${node.$Function}"/>
     `;
   }
-  //data根数据。
-  //{"document":{}}
+
+  // data根数据。
+  // {"document":{}}
   writeXml(data, status) {
-    const xml = this.visitor("document", data, "", "")
-      .replace(/\s*</g, "<")
-      .replace(/>\s*/g, ">");
+    const xml = this.visitor('document', data, '', '')
+      .replace(/\s*</g, '<')
+      .replace(/>\s*/g, '>');
 
     return {
-      type: "application/xml;charset=utf-8",
+      type: 'application/xml;charset=utf-8',
       status: status,
       data: `<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 ${xml}`,

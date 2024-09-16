@@ -4,20 +4,20 @@
  * 模型导入
  * 模型导出
  */
-import {  getModelFromDB,
+import { getModelFromDB,
   loadModeltoMemory,
   ConvertTableLineToModel,
   deepCopyObject,
   migrateModel,
-} from "@scripts/system/model_db";
+} from '@scripts/system/model_db';
 
-import { DotName, UnderscoreName, IsMysql, ClearFalsyKeys } from "@scripts/amis/lib_tool";
+import { DotName, UnderscoreName, IsMysql, ClearFalsyKeys } from '@scripts/amis/lib_tool';
 
-import { SlashName } from "@scripts/amis/lib_tool";
+import { SlashName } from '@scripts/amis/lib_tool';
 
-import { RunTransaction } from "@scripts/system/db_lib";
+import { RunTransaction } from '@scripts/system/db_lib';
 
-import { queryToQueryParam, updateInputData, mergeQueryObject } from "@scripts/amis/data/lib";
+import { queryToQueryParam, updateInputData, mergeQueryObject } from '@scripts/amis/data/lib';
 
 import {
   FindAndLoadYaoModelById,
@@ -25,11 +25,11 @@ import {
   MomoryModelList,
   ModelIDList,
   FindAndLoadDBModelById,
-} from "@scripts/system/model_lib";
+} from '@scripts/system/model_lib';
 
-import { convertColTypeToYao } from "@scripts/system/col_type";
+import { convertColTypeToYao } from '@scripts/system/col_type';
 
-import {Process,Exception,FS} from "@yao/yao"
+import { Process, Exception, FS } from '@yao/yao';
 
 /**
  * yao run scripts.system.model.page
@@ -45,16 +45,16 @@ function page(pageIn, pagesizeIn, querysIn, queryParams, payload) {
   const page = pageIn || 1;
   const pagesize = pagesizeIn || 10;
   const querys = mergeQueryObject(querysIn, payload);
-  const modelDsl = FindAndLoadYaoModelById("ddic.model");
+  const modelDsl = FindAndLoadYaoModelById('ddic.model');
   let queryParam = queryToQueryParam(modelDsl, querys, queryParams);
   queryParam = queryParam || {};
-  queryParam["select"] = [
-    "id",
-    "name",
-    "identity",
-    "comment",
-    "table_name",
-    "table_comment",
+  queryParam['select'] = [
+    'id',
+    'name',
+    'identity',
+    'comment',
+    'table_name',
+    'table_comment',
   ];
   const data = Process(`models.ddic.model.Paginate`, queryParam, page, pagesize);
   return {
@@ -69,8 +69,8 @@ function page(pageIn, pagesizeIn, querysIn, queryParams, payload) {
  * @returns array
  */
 function DatabaseModelList() {
-  const list = Process("models.ddic.model.get", {
-    select: ["identity", "name", "comment"],
+  const list = Process('models.ddic.model.get', {
+    select: ['identity', 'name', 'comment'],
   });
   list.forEach((item) => {
     if (item.comment == null) {
@@ -99,7 +99,7 @@ function CompleteModel(modelDsl) {
       modelDsl.ID = DotName(modelDsl.table?.name);
     }
   }
-  //如果没有表名，但是有ID
+  // 如果没有表名，但是有ID
   if (modelDsl.ID?.length && !modelDsl.table?.name?.length) {
     modelDsl.table.name = modelDsl.ID;
   }
@@ -109,17 +109,17 @@ function CompleteModel(modelDsl) {
     modelDsl.name = modelDsl.table?.comment || modelDsl.comment || modelDsl.ID;
   }
 
-  //在导入数据时，过滤隐藏的字段
+  // 在导入数据时，过滤隐藏的字段
   modelDsl.columns = modelDsl.columns.filter((column) => {
     if (modelDsl.option) {
       //
       if (modelDsl.option?.timestamps) {
-        if (column.name == "updated_at" || column.name == "created_at") {
+        if (column.name == 'updated_at' || column.name == 'created_at') {
           return false;
         }
       }
       if (modelDsl.option?.soft_deletes) {
-        if (column.name == "deleted_at") {
+        if (column.name == 'deleted_at') {
           return false;
         }
       }
@@ -128,7 +128,7 @@ function CompleteModel(modelDsl) {
   });
   modelDsl.columns.forEach((col) => {
     // 传换成bool类型
-    ["index", "nullable", "unique", "primary"].forEach((key) => {
+    ['index', 'nullable', 'unique', 'primary'].forEach((key) => {
       if (col[key] !== null && col[key] !== undefined) {
         if (col[key] !== false && col[key] > 0) {
           col[key] = true;
@@ -140,10 +140,10 @@ function CompleteModel(modelDsl) {
     // 非浮点类型不需要scale属性。
     const type = col.type?.toUpperCase();
     if (
-      type &&
-      !type.includes("DOUBLE") &&
-      !type.includes("DEMICAL") &&
-      !type.includes("FLOAT")
+      type
+      && !type.includes('DOUBLE')
+      && !type.includes('DEMICAL')
+      && !type.includes('FLOAT')
     ) {
       delete col.scale;
       delete col.precision;
@@ -155,7 +155,7 @@ function CompleteModel(modelDsl) {
         col.option.push(opt.value);
       });
     } else {
-      if (col.option != null && typeof col.option === "string") {
+      if (col.option != null && typeof col.option === 'string') {
         try {
           col.option = JSON.parse(col.option);
         } catch (error) {}
@@ -171,53 +171,53 @@ function CompleteModel(modelDsl) {
       }
     }
 
-    if (col.type == "boolean" && typeof col.default === "string") {
-      if (col.default.toLowerCase() == "true") {
+    if (col.type == 'boolean' && typeof col.default === 'string') {
+      if (col.default.toLowerCase() == 'true') {
         col.default = true;
-      } else if (col.default.toLowerCase() == "false") {
+      } else if (col.default.toLowerCase() == 'false') {
         col.default = false;
       }
     }
     // 长度不能为字符串
-    if (col.length == "") {
+    if (col.length == '') {
       delete col.length;
     }
     const colType = col.type.toLowerCase();
-    if (colType == "json" && col.default != null) {
-      if (!(typeof col.default === "object")) {
+    if (colType == 'json' && col.default != null) {
+      if (!(typeof col.default === 'object')) {
         try {
           col.default = JSON.parse(col.default);
         } catch (error) {
           console.log(
-            `Failed to convert the default value for field:${col.name}`
+            `Failed to convert the default value for field:${col.name}`,
           );
         }
       }
     }
-    if (colType === "phone" || colType === "email" || colType === "url") {
+    if (colType === 'phone' || colType === 'email' || colType === 'url') {
       if (col.validations == null) {
         col.validations = [];
       }
       if (col.validations.length == 0) {
-        if (colType === "url") {
+        if (colType === 'url') {
           col.validations.push({
-            method: "pattern",
+            method: 'pattern',
             args: [
               `^(https?:\/\/)?([a-zA-Z0-9\-]+\.)*[a-zA-Z0-9\-]+\.[a-zA-Z]{2,}(\/.*)*$`,
             ],
-            message: " {{label}}URL地址格式不正确",
+            message: ' {{label}}URL地址格式不正确',
           });
-        } else if (colType === "phone") {
+        } else if (colType === 'phone') {
           col.validations.push({
-            method: "pattern",
+            method: 'pattern',
             args: [`^[1]([3-9])[0-9]{9}$`],
-            message: " {{label}}手机号码格式不正确",
+            message: ' {{label}}手机号码格式不正确',
           });
-        } else if (colType === "email") {
+        } else if (colType === 'email') {
           col.validations.push({
-            method: "pattern",
+            method: 'pattern',
             args: [`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`],
-            message: " {{label}}邮箱地址格式不正确",
+            message: ' {{label}}邮箱地址格式不正确',
           });
         }
       }
@@ -254,10 +254,10 @@ function ConvertModelToTableLine(modelDsl) {
   line.timestamps = modelDsl.option?.timestamps ? true : false;
   line.read_only = modelDsl.option?.read_only ? true : false;
   line.columns = modelDsl.columns.map((item) =>
-    ConvertModelColToTableLine(line, item)
+    ConvertModelColToTableLine(line, item),
   );
 
-  //关联关系
+  // 关联关系
   if (modelDsl.relations) {
     line.relations = [];
     const relations = [];
@@ -271,22 +271,22 @@ function ConvertModelToTableLine(modelDsl) {
   if (line.id !== null && line.id !== undefined) {
     return line;
   }
-  //没有ID
-  //根据表名或是模型名称，检查是否已经存在同样ID的模型，防止误更更新
+  // 没有ID
+  // 根据表名或是模型名称，检查是否已经存在同样ID的模型，防止误更更新
   const tableName = line.table_name;
   const wheres = [];
   if (tableName) {
-    wheres.push({ column: "table_name", value: tableName });
+    wheres.push({ column: 'table_name', value: tableName });
     wheres.push({
-      method: "orwhere",
-      column: "identity",
+      method: 'orwhere',
+      column: 'identity',
       value: line.identity,
     });
   } else {
-    wheres.push({ method: "where", column: "identity", value: line.identity });
+    wheres.push({ method: 'where', column: 'identity', value: line.identity });
   }
 
-  const [row] = Process("models.ddic.model.get", {
+  const [row] = Process('models.ddic.model.get', {
     wheres: wheres,
     withs: {},
   });
@@ -300,19 +300,19 @@ function ConvertModelToTableLine(modelDsl) {
  * @returns
  */
 function SaveModelToLocal(modelDsl) {
-  const yaoEnv = Process("utils.env.Get", "YAO_ENV");
-  if (yaoEnv !== "development") {
+  const yaoEnv = Process('utils.env.Get', 'YAO_ENV');
+  if (yaoEnv !== 'development') {
     return;
   }
 
   // 控制是否需要保存到本地
-  const saveFlag = Process("utils.env.Get", "SAVE_MODEL_FILE_TO_LOCAL");
-  if (saveFlag !== "true") {
+  const saveFlag = Process('utils.env.Get', 'SAVE_MODEL_FILE_TO_LOCAL');
+  if (saveFlag !== 'true') {
     return;
   }
 
   // hacked,don't do this in production envirement
-  //@ts-ignore
+  // @ts-ignore
   __yao_data = { ROOT: true };
   let model_id = modelDsl.ID;
   if (!model_id) {
@@ -324,17 +324,17 @@ function SaveModelToLocal(modelDsl) {
   }
   const model = ConvertDBmodelToYaoModel(modelDsl);
 
-  const dsl = new FS("dsl");
+  const dsl = new FS('dsl');
   model_id = SlashName(model_id);
   dsl.WriteFile(`/models/${model_id}.mod.yao`, JSON.stringify(model));
-  //@ts-ignore
+  // @ts-ignore
   __yao_data = { ROOT: false };
 }
 
 function SaveModelTableLine(payload, force?) {
-  //先保存主表，获取id后再保存从表
+  // 先保存主表，获取id后再保存从表
   const saveFun = function (payload) {
-    const res = Process("models.ddic.model.Save", payload);
+    const res = Process('models.ddic.model.Save', payload);
     if (res && res.code && res.code > 300) {
       throw res;
     }
@@ -345,14 +345,14 @@ function SaveModelTableLine(payload, force?) {
   };
   return RunTransaction(saveFun, payload);
 }
-//保存关联表数据
+// 保存关联表数据
 function SaveRelations(id, payload, force?) {
   // BeforeDelete(id);
   SaveColumns(id, payload, force);
   return id;
 }
 
-//删除关联表数据
+// 删除关联表数据
 function BeforeDelete(id) {
   DeleteModelolumns(id);
 }
@@ -375,7 +375,7 @@ function isAscOrder(arr) {
  */
 function SaveColumns(modelId, payload, force?) {
   if (modelId == null) {
-    throw new Exception("无法保存columns,缺少模型主键！");
+    throw new Exception('无法保存columns,缺少模型主键！');
   }
   const cols = payload.columns || [];
 
@@ -418,7 +418,7 @@ function SaveColumns(modelId, payload, force?) {
   cols.forEach((col, idx) => (col.id = modelId * 10000 + idx));
   // }
   // 保存列清单
-  const res = Process("models.ddic.model.column.EachSave", cols, {
+  const res = Process('models.ddic.model.column.EachSave', cols, {
     model_id: modelId,
   });
   if (res?.code && res.message) {
@@ -434,18 +434,18 @@ function SaveColumns(modelId, payload, force?) {
  * @returns
  */
 function DeleteModelolumns(modelId) {
-  const err = Process("models.ddic.model.column.DeleteWhere", {
-    wheres: [{ column: "model_id", value: modelId }],
+  const err = Process('models.ddic.model.column.DeleteWhere', {
+    wheres: [{ column: 'model_id', value: modelId }],
   });
   if (err?.message) {
     throw new Exception(err.message, err.code);
   }
-  //remembe to return the id in array format
+  // remembe to return the id in array format
   return [modelId];
 }
 
 function ConvertModelColToTableLine(model, modelCol) {
-  //复制而不是直接修改
+  // 复制而不是直接修改
   const col = { ...modelCol };
 
   // 增加模型标识，方便搜索
@@ -460,7 +460,7 @@ function ConvertModelColToTableLine(model, modelCol) {
   // 转换
 
   const ismysql = IsMysql();
-  ["index", "nullable", "unique", "primary"].forEach((key) => {
+  ['index', 'nullable', 'unique', 'primary'].forEach((key) => {
     if (col[key] !== null && col[key] !== undefined) {
       if (col[key] !== false && col[key] > 0) {
         col[key] = ismysql ? 1 : true;
@@ -498,11 +498,11 @@ function ConvertApiObjectToModel(modelDsl) {
   if (Array.isArray(model.columns)) {
     model.columns.forEach((col) => {
       // 兼容处理,amis index字段用于表格索引,使用is_index作替代
-      if (col.hasOwnProperty("is_index")) {
+      if (col.hasOwnProperty('is_index')) {
         col.index = col.is_index;
         delete col.is_index;
       }
-      if (col.hasOwnProperty("__index")) {
+      if (col.hasOwnProperty('__index')) {
         delete col.__index;
       }
     });
@@ -527,7 +527,7 @@ function ConvertModelToApiObject(modelDsl) {
   if (Array.isArray(model.columns)) {
     model.columns.forEach((col) => {
       // 兼容处理,amis index字段用于表格索引,使用is_index作替代
-      if (col.hasOwnProperty("index")) {
+      if (col.hasOwnProperty('index')) {
         col.is_index = col.index;
         delete col.index;
       }
@@ -542,7 +542,7 @@ function ConvertModelToApiObject(modelDsl) {
  * @returns object
  */
 function saveModelApi(payload) {
-  //处理amis与yao的兼容性
+  // 处理amis与yao的兼容性
   let model = ConvertApiObjectToModel(payload);
 
   model = CompleteModel(model);
@@ -557,17 +557,17 @@ function saveModelApi(payload) {
     const err = loadModeltoMemory(
       model,
       !model.option?.read_only,
-      model.option?.migrate_force
+      model.option?.migrate_force,
     );
 
     if (err?.message) {
-      return Process("scripts.return.ErrorMessage", err.Code, err.Message);
+      return Process('scripts.return.ErrorMessage', err.Code, err.Message);
     }
   } else {
-    return Process("scripts.return.ErrorMessage", 403, "保存模型失败");
+    return Process('scripts.return.ErrorMessage', 403, '保存模型失败');
   }
 
-  return Process("scripts.return.RSuccess", getModelApi(id), "保存成功");
+  return Process('scripts.return.RSuccess', getModelApi(id), '保存成功');
 }
 
 /**
@@ -614,8 +614,8 @@ function ImportCachedModelById(modelId) {
  * @param {number} modelId 模型标识
  */
 function DeleteModelMetaByIdBatch(modelId) {
-  const models = modelId + "";
-  const ids = models.split(",");
+  const models = modelId + '';
+  const ids = models.split(',');
   ids.forEach((id) => DeleteModelMetaById(id));
 }
 /**
@@ -625,20 +625,20 @@ function DeleteModelMetaByIdBatch(modelId) {
  */
 function DeleteModelMetaById(modelId) {
   // 检查是否存在，不存在会报错
-  Process("models.ddic.model.Find", modelId, {});
+  Process('models.ddic.model.Find', modelId, {});
 
   DeleteModelLocalFile(modelId);
 
   const deleteFun = function (modelId) {
     // 先删除列定义
-    let ret = Process("models.ddic.model.column.DeleteWhere", {
-      wheres: [{ column: "model_id", value: modelId }],
+    let ret = Process('models.ddic.model.column.DeleteWhere', {
+      wheres: [{ column: 'model_id', value: modelId }],
     });
     if (ret?.code && ret.message) {
       throw ret;
     }
 
-    ret = Process("models.ddic.model.Delete", modelId);
+    ret = Process('models.ddic.model.Delete', modelId);
     if (ret?.code && ret.message) {
       throw ret;
     }
@@ -652,19 +652,19 @@ function DeleteModelMetaById(modelId) {
  * @returns
  */
 function DeleteModelLocalFile(modelId) {
-  const yaoEnv = Process("utils.env.Get", "YAO_ENV");
-  if (yaoEnv !== "development") {
+  const yaoEnv = Process('utils.env.Get', 'YAO_ENV');
+  if (yaoEnv !== 'development') {
     return;
   }
-  //@ts-ignore
+  // @ts-ignore
   __yao_data = { ROOT: true };
-  const dsl = new FS("dsl");
+  const dsl = new FS('dsl');
   const model_id = SlashName(modelId);
   const fname = `/models/${model_id}.mod.yao`;
   if (dsl.Exists(fname)) {
     dsl.Remove(fname);
   }
-  //@ts-ignore
+  // @ts-ignore
   __yao_data = { ROOT: false };
 }
 
@@ -749,15 +749,15 @@ function getYaoModelColumnMap(modelId) {
   }
   // fillup the miss col
   if (modelDsl.option?.soft_deletes) {
-    columnMap["deleted_at"] = {
-      type: "datetime",
+    columnMap['deleted_at'] = {
+      type: 'datetime',
     };
   } else if (modelDsl.option?.timestamps) {
-    columnMap["updated_at"] = {
-      type: "datetime",
+    columnMap['updated_at'] = {
+      type: 'datetime',
     };
-    columnMap["created_at"] = {
-      type: "datetime",
+    columnMap['created_at'] = {
+      type: 'datetime',
     };
   }
   return columnMap;
@@ -769,7 +769,7 @@ function getYaoModelColumnMap(modelId) {
  * @returns
  */
 function ExportModelSource(modelId) {
-  const model = Process("models.ddic.model.Find", modelId, {
+  const model = Process('models.ddic.model.Find', modelId, {
     withs: {
       columns: { withs: { element: {} } },
     },
@@ -789,7 +789,7 @@ function ExportModelSource(modelId) {
  * @returns
  */
 function ExportModelYaoSource(modelId) {
-  const model = Process("models.ddic.model.Find", modelId, {
+  const model = Process('models.ddic.model.Find', modelId, {
     withs: {
       columns: { withs: { element: {} } },
     },
@@ -822,7 +822,7 @@ function ConvertDBmodelToYaoModel(modelDsl) {
     delete col.language;
     col = convertColTypeToYao(col);
 
-    ["index", "nullable", "primary", "unique"].forEach((item) => {
+    ['index', 'nullable', 'primary', 'unique'].forEach((item) => {
       if (item in col && col[item] === false) {
         delete col[item];
       }
@@ -851,32 +851,32 @@ function CheckModel(modelDsl) {
     message.push(`数据库表名称不能为空`);
   }
   if (modelDsl.id != null) {
-    const line = Process("models.ddic.model.Find", modelDsl.id, {});
+    const line = Process('models.ddic.model.Find', modelDsl.id, {});
     //  不存在会直接报错
     if (modelDsl.ID && modelDsl.ID != line.identity) {
       message.push(
-        `模型已经存在，但是模型标识[${modelDsl.ID}]与数据库表[${line.identity}]不一致`
+        `模型已经存在，但是模型标识[${modelDsl.ID}]与数据库表[${line.identity}]不一致`,
       );
     }
     if (modelDsl.table?.name && modelDsl.table.name != line.table_name) {
       message.push(
-        `模型已经存在，但是表名称不一致，新表名${modelDsl.table?.name},已经存在${line.table_name}`
+        `模型已经存在，但是表名称不一致，新表名${modelDsl.table?.name},已经存在${line.table_name}`,
       );
     }
   }
 
-  //根据表名或是模型名称，检查是否已经存在同样ID的模型，防止误更更新
+  // 根据表名或是模型名称，检查是否已经存在同样ID的模型，防止误更更新
   const tableName = modelDsl.table.name;
   const wheres = [];
-  wheres.push({ column: "table_name", value: tableName });
-  const [one] = Process("models.ddic.model.get", {
+  wheres.push({ column: 'table_name', value: tableName });
+  const [one] = Process('models.ddic.model.get', {
     wheres: wheres,
     withs: {},
   });
 
   if (one?.id && modelDsl.id != null && one?.id != modelDsl.id) {
     message.push(
-      `存在同名的表[${tableName}]，但是id不同[${modelDsl.id}]=>${one.id}`
+      `存在同名的表[${tableName}]，但是id不同[${modelDsl.id}]=>${one.id}`,
     );
   }
   if (!Array.isArray(modelDsl.columns)) {
@@ -887,7 +887,7 @@ function CheckModel(modelDsl) {
     message.push(`不存在列定义`);
   }
   if (message.length > 0) {
-    throw message.join("\n");
+    throw message.join('\n');
   }
 }
 /**
@@ -910,8 +910,8 @@ function removeModelColumnIds(modelDsl) {
  */
 function ImportModelFromSource(payload) {
   let newCode = payload.source;
-  newCode = newCode.replace(/\/\/.*$/gm, "");
-  newCode = newCode.replace(/\/\*.*?\*\//gs, "");
+  newCode = newCode.replace(/\/\/.*$/gm, '');
+  newCode = newCode.replace(/\/\*.*?\*\//gs, '');
   let model = JSON.parse(newCode);
   model = CompleteModel(model);
   CheckModel(model);
@@ -923,17 +923,17 @@ function ImportModelFromSource(payload) {
   if (id) {
     const err = loadModeltoMemory(model, !model.option?.read_only);
     if (err && err.Message) {
-      return Process("scripts.return.ErrorMessage", err.Code, err.Message);
+      return Process('scripts.return.ErrorMessage', err.Code, err.Message);
     }
   } else {
     return Process(
-      "scripts.return.ErrorMessage",
+      'scripts.return.ErrorMessage',
       403,
-      "模型保存失败，导入失败"
+      '模型保存失败，导入失败',
     );
   }
 
-  return Process("scripts.return.RSuccess", { id: id }, "导入成功");
+  return Process('scripts.return.RSuccess', { id: id }, '导入成功');
 }
 
 /**
@@ -963,7 +963,7 @@ function ImportCachedToDBBatch() {
 }
 function ImportSystemModels() {
   ImportCachedToDBBatch();
-  return { message: "导入成功" };
+  return { message: '导入成功' };
 }
 /**
  * yao run scripts.system.model.modelNameOption
@@ -974,11 +974,11 @@ function modelNameOption() {
   const models = list.map((model) => {
     return { label: model, value: model };
   });
-  //不要直接返回数组，amis并不推荐直接返回数组
+  // 不要直接返回数组，amis并不推荐直接返回数组
   // amis默认会使用items属性
   return { items: models };
 }
-//yao run scripts.system.model.modelNameList
+// yao run scripts.system.model.modelNameList
 function modelNameList() {
   const list = DatabaseModelList();
   const models = list.map((model) => {
@@ -1003,9 +1003,9 @@ function ImportTableAction(payload) {
   //   // 如果已经在缓存中存在，不要覆盖
   //   ms.forEach((module) => ImportCachedModelToDB(module));
   // } else {
-  //如果不存在，把表结构转换成模型，转换成模型，再加载
+  // 如果不存在，把表结构转换成模型，转换成模型，再加载
 
-  let model = Process("schemas.default.TableGet", payload.name);
+  let model = Process('schemas.default.TableGet', payload.name);
   model.table = model.table || {};
   model.table.name = payload.name;
   model.ID = DotName(payload.name);
@@ -1026,17 +1026,17 @@ function ImportTableAction(payload) {
   if (id) {
     const err = loadModeltoMemory(model, false);
     if (err && err.Message) {
-      return Process("scripts.return.ErrorMessage", err.Code, err.Message);
+      return Process('scripts.return.ErrorMessage', err.Code, err.Message);
     }
   } else {
-    return Process("scripts.return.ErrorMessage", 403, "保存模型失败");
+    return Process('scripts.return.ErrorMessage', 403, '保存模型失败');
   }
   // }
 }
 
 function isTextColumn(column) {
   const ty = column.type.toLowerCase();
-  if (ty === "string" || ty.includes("text") || ty === "json") {
+  if (ty === 'string' || ty.includes('text') || ty === 'json') {
     return true;
   }
   return false;
@@ -1048,29 +1048,29 @@ function isTextColumn(column) {
  */
 function guessModelColumnsType(modelDsl) {
   modelDsl.columns.forEach((column) => {
-    const comment = column.comment ? column.comment.toLowerCase() : "";
-    const colName = column.name ? column.name.toLowerCase() : "";
-    const colType = column.type ? column.type.toLowerCase() : "";
+    const comment = column.comment ? column.comment.toLowerCase() : '';
+    const colName = column.name ? column.name.toLowerCase() : '';
+    const colType = column.type ? column.type.toLowerCase() : '';
 
     if (isTextColumn(column)) {
-      if (comment.includes("json")) {
-        column.type = "json";
+      if (comment.includes('json')) {
+        column.type = 'json';
       }
 
       if (
-        colName.includes("pic") ||
-        colName.includes("image") ||
-        colName.includes("img") ||
-        comment.includes("图片")
+        colName.includes('pic')
+        || colName.includes('image')
+        || colName.includes('img')
+        || comment.includes('图片')
       ) {
-        column.type = "image";
+        column.type = 'image';
       } else if (
-        colName.includes("pics") ||
-        colName.includes("images") ||
-        colName.includes("imgs") ||
-        comment.includes("图片集")
+        colName.includes('pics')
+        || colName.includes('images')
+        || colName.includes('imgs')
+        || comment.includes('图片集')
       ) {
-        column.type = "images";
+        column.type = 'images';
       }
       // else if (colName.includes("date") || comment.includes("日期")) {
       //   column.type = "date"
@@ -1079,12 +1079,12 @@ function guessModelColumnsType(modelDsl) {
       // }
     } else {
       if (
-        colType === "integer" ||
-        colType === "tinyinteger" ||
-        colType === "tinyint"
+        colType === 'integer'
+        || colType === 'tinyinteger'
+        || colType === 'tinyint'
       ) {
-        if (colName.includes("status") || comment.includes("状态")) {
-          column.type = "boolean";
+        if (colName.includes('status') || comment.includes('状态')) {
+          column.type = 'boolean';
         }
       }
     }
@@ -1098,7 +1098,7 @@ function guessModelColumnsType(modelDsl) {
  */
 function LoadToCacheFromDB(payload) {
   if (!payload) {
-    return Process("scripts.return.ErrorMessage", 500, "数据不正确");
+    return Process('scripts.return.ErrorMessage', 500, '数据不正确');
   }
   const modelId = payload.model;
   const model = getModelFromDB(modelId);
@@ -1110,24 +1110,24 @@ function LoadToCacheFromDB(payload) {
   } else {
     return { message: `模型:${modelId}不存在`, code: 503 };
   }
-  return { message: "缓存加载成功" };
+  return { message: '缓存加载成功' };
 }
 
 function CheckImportModelLine(modelId, tableName) {
-  //根据表名或是模型名称，检查是否已经存在同样ID的模型，防止误更更新
+  // 根据表名或是模型名称，检查是否已经存在同样ID的模型，防止误更更新
   const wheres = [];
   if (tableName) {
-    wheres.push({ column: "table_name", value: tableName });
+    wheres.push({ column: 'table_name', value: tableName });
     wheres.push({
-      method: "orwhere",
-      column: "identity",
+      method: 'orwhere',
+      column: 'identity',
       value: modelId,
     });
   } else {
-    wheres.push({ method: "where", column: "identity", value: modelId });
+    wheres.push({ method: 'where', column: 'identity', value: modelId });
   }
 
-  const [data] = Process("models.ddic.model.get", {
+  const [data] = Process('models.ddic.model.get', {
     wheres: wheres,
     withs: {},
   });
@@ -1141,7 +1141,7 @@ function CheckImportModelLine(modelId, tableName) {
  * @returns
  */
 function ImportFromNeo(payload) {
-  //处理amis与yao的兼容性
+  // 处理amis与yao的兼容性
   let model = ConvertApiObjectToModel(payload);
 
   model = CompleteModel(model);
@@ -1158,13 +1158,13 @@ function ImportFromNeo(payload) {
       throw new Exception(err.message, err.code);
     }
   } else {
-    throw new Exception("保存模型失败", 503);
+    throw new Exception('保存模型失败', 503);
   }
   return id;
 }
 function ImportFromCached(payload) {
   if (!payload) {
-    return Process("scripts.return.ErrorMessage", 500, "数据不正确");
+    return Process('scripts.return.ErrorMessage', 500, '数据不正确');
   }
   ImportCachedModelById(payload.model);
   return { message: `模型:${payload.model}导入成功` };
@@ -1178,17 +1178,17 @@ function ImportFromCached(payload) {
 function ImportFromCachedBatch(payload) {
   const items = payload.items;
   if (!Array.isArray(items)) {
-    return { message: "传入数据不正确" };
+    return { message: '传入数据不正确' };
   }
   items.forEach((item) => {
     ImportCachedModelById(item.model);
   });
-  return { message: "批量导入本地缓存完成" };
+  return { message: '批量导入本地缓存完成' };
 }
 function ImportTableStruct(payload) {
   // console.log(payload);
   if (!payload) {
-    return Process("scripts.return.ErrorMessage", 500, "数据不正确");
+    return Process('scripts.return.ErrorMessage', 500, '数据不正确');
   }
   const model = CheckImportModelLine(payload.model, payload.name);
   if (model != null) {
@@ -1196,55 +1196,55 @@ function ImportTableStruct(payload) {
       message: `模型:${payload.model}，表:${payload.name} 已经存在，禁止导入`,
     };
   }
-  //先根据表名检查是否缓存中已经有对应的模型，如果存在，加载到数据库，
+  // 先根据表名检查是否缓存中已经有对应的模型，如果存在，加载到数据库，
   // const models = MomoryModelList();
   ImportTableAction(payload);
-  return { message: "导入表结构成功" };
+  return { message: '导入表结构成功' };
 }
 
 function guessJsonType(value) {
   if (!value) {
-    return "string";
+    return 'string';
   }
   const isNumber = /^-?\d*\.?\d+$/.test(value);
 
   if (value === null) {
-    return "string";
+    return 'string';
   } else if (isNumber) {
     if (/^-?\d+$/.test(value)) {
-      return "integer";
+      return 'integer';
     } else if (!isNaN(value)) {
-      return "float";
+      return 'float';
     }
-  } else if (typeof value === "boolean") {
-    return "boolean";
-  } else if (typeof value === "string") {
+  } else if (typeof value === 'boolean') {
+    return 'boolean';
+  } else if (typeof value === 'string') {
     const timestamp = Date.parse(value); // Parse the datetime string
 
     if (!isNaN(timestamp)) {
       const date = new Date(timestamp); // Create a new date object from the timestamp
       if (
-        date.getHours() === 0 &&
-        date.getMinutes() === 0 &&
-        date.getSeconds() === 0
+        date.getHours() === 0
+        && date.getMinutes() === 0
+        && date.getSeconds() === 0
       ) {
-        return "date";
+        return 'date';
       } else {
-        return "datetime";
+        return 'datetime';
       }
     }
-    return "string";
+    return 'string';
   } else if (Array.isArray(value)) {
-    return "json";
-  } else if (typeof value === "object") {
-    return "json";
+    return 'json';
+  } else if (typeof value === 'object') {
+    return 'json';
   } else {
-    return "string";
+    return 'string';
   }
 }
 function getLastPart(str) {
   // Split the string at "-" and get the last part (if "-" exists)
-  const parts = str.split("-");
+  const parts = str.split('-');
   const lastPart = parts[parts.length - 1];
 
   // If the last part is not undefined or null, return it
@@ -1257,7 +1257,7 @@ function getLastPart(str) {
 }
 function guessAmisType(typeIn) {
   if (!typeIn) {
-    return "string";
+    return 'string';
   }
   let type = typeIn.toLowerCase();
   type = getLastPart(type);
@@ -1266,25 +1266,25 @@ function guessAmisType(typeIn) {
   // type = type.replace("list-", "");
   // type = type.replace("tree-", "");
 
-  if (type.includes("text")) {
-    return "string";
+  if (type.includes('text')) {
+    return 'string';
   }
-  if (type.endsWith("_id")) {
-    return "integer";
+  if (type.endsWith('_id')) {
+    return 'integer';
   }
   switch (type) {
-    case "number":
-      return "integer";
-    case "select":
-      return "enum";
-    case "switch":
-    case "picker":
-      return "boolean";
+    case 'number':
+      return 'integer';
+    case 'select':
+      return 'enum';
+    case 'switch':
+    case 'picker':
+      return 'boolean';
 
     default:
       break;
   }
-  return "string";
+  return 'string';
 }
 function GuessAmisCols(columns) {
   const cols = [];
@@ -1309,7 +1309,7 @@ function GuessAmisCols(columns) {
     if (node.description) {
       column.comment = node.description;
     }
-    if (column.type == "enum") {
+    if (column.type == 'enum') {
       column.options = node.options;
     }
 
@@ -1318,8 +1318,8 @@ function GuessAmisCols(columns) {
   traverse(columns);
   return {
     columns: cols,
-    status: "ok",
-    message: "JSON检查成功",
+    status: 'ok',
+    message: 'JSON检查成功',
   };
 }
 function CheckAndGuessJson(payload) {
@@ -1331,22 +1331,22 @@ function CheckAndGuessJson(payload) {
     return {
       columns: [],
       code: 500,
-      message: "请检查输入数据",
+      message: '请检查输入数据',
     };
   }
-  if (typeof json === "string") {
+  if (typeof json === 'string') {
     try {
       json = JSON.parse(payload.json);
     } catch (error) {
-      throw new Exception("数据格式不正确", 500);
+      throw new Exception('数据格式不正确', 500);
     }
   }
 
-  if (!(typeof json == "object")) {
-    throw new Exception("数据格式不正确", 500);
+  if (!(typeof json == 'object')) {
+    throw new Exception('数据格式不正确', 500);
   }
 
-  if (type === "amis") {
+  if (type === 'amis') {
     return GuessAmisCols(json);
   }
 
@@ -1362,16 +1362,16 @@ function CheckAndGuessJson(payload) {
       type: guessJsonType(value),
       label: name,
     };
-    if (name.toLowerCase() == "id" && typeof value === "number") {
-      column.type = "id";
+    if (name.toLowerCase() == 'id' && typeof value === 'number') {
+      column.type = 'id';
     }
     columns.push(column);
   }
 
   return {
     columns: columns,
-    status: "ok",
-    message: "JSON检查成功",
+    status: 'ok',
+    message: 'JSON检查成功',
   };
 }
 /**
@@ -1380,11 +1380,11 @@ function CheckAndGuessJson(payload) {
  * @returns
  */
 function ImportFromTableBatch(payload) {
-  console.log("ImportFromTableBatch", payload);
+  console.log('ImportFromTableBatch', payload);
 
   const items = payload.items;
   if (!Array.isArray(items)) {
-    return { message: "传入数据不正确" };
+    return { message: '传入数据不正确' };
   }
 
   for (const item of items) {
@@ -1398,5 +1398,5 @@ function ImportFromTableBatch(payload) {
     }
     ImportTableAction(item);
   }
-  return { message: "批量导入表结构成功" };
+  return { message: '批量导入表结构成功' };
 }

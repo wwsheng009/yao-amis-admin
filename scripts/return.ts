@@ -1,8 +1,8 @@
-//scripts.return.RSuccess
+// scripts.return.RSuccess
 function RSuccess(data, message) {
   let vmessage = message;
   if (!vmessage) {
-    vmessage = "处理成功";
+    vmessage = '处理成功';
   }
   return {
     status: 0,
@@ -10,12 +10,12 @@ function RSuccess(data, message) {
     data: data,
   };
 }
-//显示成功消息
+// 显示成功消息
 // scripts.return.RSuccessMessage
 function SuccessMessage(message) {
   let vmessage = message;
   if (!vmessage) {
-    vmessage = "处理成功";
+    vmessage = '处理成功';
   }
   return {
     status: 0,
@@ -23,7 +23,7 @@ function SuccessMessage(message) {
     data: {},
   };
 }
-//scripts.return.RError "密码不正确","403","密码不正确"
+// scripts.return.RError "密码不正确","403","密码不正确"
 function RError(data, code, message) {
   let vcode = code;
   let vmessage = message;
@@ -31,7 +31,7 @@ function RError(data, code, message) {
     vcode = -1;
   }
   if (message == undefined) {
-    vmessage = "error";
+    vmessage = 'error';
   }
   return {
     status: vcode,
@@ -40,7 +40,7 @@ function RError(data, code, message) {
   };
 }
 
-//scripts.return.ErrorMessage "403","密码不正确"
+// scripts.return.ErrorMessage "403","密码不正确"
 function ErrorMessage(code, message) {
   let vcode = code;
   let vmessage = message;
@@ -48,7 +48,7 @@ function ErrorMessage(code, message) {
     vcode = -1;
   }
   if (message == undefined) {
-    vmessage = "error";
+    vmessage = 'error';
   }
   return {
     status: vcode,

@@ -1,26 +1,26 @@
-import { DotName, UnderscoreName, SlashName } from "@scripts/amis/lib_tool";
-import { Exception, FS, Process ,ssWrite} from "@yao/yao";
+import { DotName, UnderscoreName, SlashName } from '@scripts/amis/lib_tool';
+import { Exception, FS, Process, ssWrite } from '@yao/yao';
 
 /**
  * Template module
  */
 const Template = {
   data: {
-    name: "Pet",
-    table: { name: "pet" },
+    name: 'Pet',
+    table: { name: 'pet' },
     columns: [
-      { label: "ID", name: "id", type: "ID" },
+      { label: 'ID', name: 'id', type: 'ID' },
       {
-        label: "Name",
-        name: "name",
-        type: "string",
+        label: 'Name',
+        name: 'name',
+        type: 'string',
         length: 256,
         index: true,
         nullable: true,
         Searchable: true,
         Component: {
-          table: { view: "Text", edit: "Input" },
-          form: { view: "Text", edit: "Input" },
+          table: { view: 'Text', edit: 'Input' },
+          form: { view: 'Text', edit: 'Input' },
         },
       },
     ],
@@ -77,8 +77,8 @@ function CreateAfter(content) {
       const table = component.table || {};
       const form = component.form || {};
       const message = `| ${item.label} |  ${item.name} |  ${item.type} | ${
-        item.Searchable || ""
-      } | ${table.view || ""} ${table.edit || ""} | ${form.edit || ""} |\n`;
+        item.Searchable || ''
+      } | ${table.view || ''} ${table.edit || ''} | ${form.edit || ''} |\n`;
       ssWrite(message);
     });
     ssWrite(`  \n\n`);
@@ -86,68 +86,68 @@ function CreateAfter(content) {
   }
 
   // console.log(content);
-  throw new Exception("Error: data is empty.", 500);
+  throw new Exception('Error: data is empty.', 500);
 }
 
 // the following code is used to test generate the module
 const testData = {
   columns: [
-    { label: "ID", name: "id", type: "ID" },
+    { label: 'ID', name: 'id', type: 'ID' },
     {
       Component: {
-        form: { edit: "Input", view: "Text" },
-        table: { edit: "Input", view: "Text" },
+        form: { edit: 'Input', view: 'Text' },
+        table: { edit: 'Input', view: 'Text' },
       },
       Searchable: true,
       index: true,
-      label: "Customer Name",
+      label: 'Customer Name',
       length: 256,
-      name: "customer_name",
+      name: 'customer_name',
       nullable: true,
-      type: "string",
+      type: 'string',
     },
     {
       Component: {
-        form: { edit: "Input", view: "Text" },
-        table: { edit: "Input", view: "Text" },
+        form: { edit: 'Input', view: 'Text' },
+        table: { edit: 'Input', view: 'Text' },
       },
       Searchable: true,
       index: true,
-      label: "Product Name",
+      label: 'Product Name',
       length: 256,
-      name: "product_name",
+      name: 'product_name',
       nullable: true,
-      type: "string",
+      type: 'string',
     },
     {
       Component: {
-        form: { edit: "Input", view: "Text" },
-        table: { edit: "Input", view: "Text" },
+        form: { edit: 'Input', view: 'Text' },
+        table: { edit: 'Input', view: 'Text' },
       },
       Searchable: true,
       index: true,
-      label: "Quantity",
+      label: 'Quantity',
       length: 256,
-      name: "quantity",
+      name: 'quantity',
       nullable: true,
-      type: "integer",
+      type: 'integer',
     },
     {
       Component: {
-        form: { edit: "Input", view: "Text" },
-        table: { edit: "Input", view: "Text" },
+        form: { edit: 'Input', view: 'Text' },
+        table: { edit: 'Input', view: 'Text' },
       },
       Searchable: true,
       index: true,
-      label: "Price",
+      label: 'Price',
       length: 256,
-      name: "price",
+      name: 'price',
       nullable: true,
-      type: "integer",
+      type: 'integer',
     },
   ],
-  name: "Order",
-  table: { name: "order" },
+  name: 'Order',
+  table: { name: 'order' },
 };
 
 /**
@@ -158,13 +158,13 @@ const testData = {
 function Create(payload) {
   // payload = testData;
   validate(payload);
-  //@ts-ignore
+  // @ts-ignore
   __yao_data = { ROOT: true };
 
   const _ = saveModel(payload);
   saveTable(payload);
   saveForm(payload);
-  //@ts-ignore
+  // @ts-ignore
   __yao_data = { ROOT: false };
 
   // Reload
@@ -194,24 +194,24 @@ function Create(payload) {
  */
 function validate(data) {
   if (!data) {
-    throw new Exception("Error: data is empty.", 500);
+    throw new Exception('Error: data is empty.', 500);
   }
   const model_id = data.table?.name.toLowerCase();
 
-  ["admin", "ddic", "system"].forEach((x) => {
+  ['admin', 'ddic', 'system'].forEach((x) => {
     if (model_id.startsWith(x)) {
-      throw new Exception("不能覆盖系统文件夹", 500);
+      throw new Exception('不能覆盖系统文件夹', 500);
     }
   });
   let need_prefix = false;
-  if (model_id.split(".").length === 1) {
+  if (model_id.split('.').length === 1) {
     need_prefix = true;
   }
-  if (!model_id.includes(".")) {
+  if (!model_id.includes('.')) {
     need_prefix = true;
   }
   if (need_prefix) {
-    data.table.name = "demo." + data.table.name;
+    data.table.name = 'demo.' + data.table.name;
   }
 
   data.table.name = DotName(data.table.name);
@@ -243,10 +243,10 @@ function saveModel(data) {
     });
   });
 
-  const id = Process("scripts.system.model.ImportFromNeo", model);
+  const id = Process('scripts.system.model.ImportFromNeo', model);
   // return id;
 
-  const dsl = new FS("dsl");
+  const dsl = new FS('dsl');
   model_id = SlashName(model_id);
   dsl.WriteFile(`/models/${model_id}.mod.yao`, JSON.stringify(model));
 }
@@ -256,12 +256,12 @@ function saveTable(data) {
   const filterActions = [
     {
       title: `New ${data.name}`,
-      icon: "icon-plus",
+      icon: 'icon-plus',
       action: [
         {
-          name: "OpenModal",
-          type: "Common.openModal",
-          payload: { width: 900, Form: { type: "edit", model: id } },
+          name: 'OpenModal',
+          type: 'Common.openModal',
+          payload: { width: 900, Form: { type: 'edit', model: id } },
         },
       ],
     },
@@ -270,43 +270,43 @@ function saveTable(data) {
   const operation = {
     actions: [
       {
-        title: "View",
-        icon: "icon-eye",
-        disabled: { bind: "{{id}}", value: ["1", "2"] },
+        title: 'View',
+        icon: 'icon-eye',
+        disabled: { bind: '{{id}}', value: ['1', '2'] },
         action: [
           {
-            name: "OpenModal",
-            type: "Common.openModal",
-            payload: { width: 640, Form: { type: "view", model: id } },
+            name: 'OpenModal',
+            type: 'Common.openModal',
+            payload: { width: 640, Form: { type: 'view', model: id } },
           },
         ],
       },
       {
-        title: "Edit",
-        icon: "icon-edit-2",
+        title: 'Edit',
+        icon: 'icon-edit-2',
         action: [
           {
-            name: "OpenModal",
-            type: "Common.openModal",
-            payload: { width: "50vw", Form: { type: "edit", model: id } },
+            name: 'OpenModal',
+            type: 'Common.openModal',
+            payload: { width: '50vw', Form: { type: 'edit', model: id } },
           },
         ],
       },
       {
-        title: "Delete",
-        icon: "icon-trash-2",
+        title: 'Delete',
+        icon: 'icon-trash-2',
         action: [
           {
-            name: "Confirm",
-            type: "Common.confirm",
+            name: 'Confirm',
+            type: 'Common.confirm',
             payload: {
-              title: "Confirm",
-              desc: "Please confirm to delete this record.",
+              title: 'Confirm',
+              desc: 'Please confirm to delete this record.',
             },
           },
-          { name: "Delete", type: "Table.delete", payload: {} },
+          { name: 'Delete', type: 'Table.delete', payload: {} },
         ],
-        style: "danger",
+        style: 'danger',
       },
     ],
   };
@@ -315,7 +315,7 @@ function saveTable(data) {
     name: data.name,
     action: { bind: { model: id, option: {} } },
     layout: {
-      primary: "id",
+      primary: 'id',
       header: { preset: {} },
       filter: { columns: [], actions: filterActions },
       table: { columns: [], operation: operation, props: {} },
@@ -344,15 +344,15 @@ function saveTable(data) {
     if (!item.Searchable) {
       return;
     }
-    const op = item.type == "string" ? "match" : "eq";
+    const op = item.type == 'string' ? 'match' : 'eq';
     table.layout.filter.columns.push({ name: item.label, width: 4 });
     table.fields.filter[item.label] = {
       bind: `where.${item.name}.${op}`,
-      edit: { type: "Input", props: { placeholder: item.label } },
+      edit: { type: 'Input', props: { placeholder: item.label } },
     };
   });
 
-  const dsl = new FS("dsl");
+  const dsl = new FS('dsl');
 
   dsl.WriteFile(`/tables/${SlashName(id)}.tab.yao`, JSON.stringify(table));
 }
@@ -361,38 +361,38 @@ function TableComponent(item, component) {
   const default_component = {
     bind: item.name,
     view: { type: component.view, props: {} },
-    edit: { type: component.edit, props: { placeholder: item.label } as any},
+    edit: { type: component.edit, props: { placeholder: item.label } as any },
   };
   switch (item.type) {
-    case "string":
+    case 'string':
       return default_component;
-    case "datetime":
-      default_component["edit"]["type"] = "DatePicker";
+    case 'datetime':
+      default_component['edit']['type'] = 'DatePicker';
       return default_component;
-    case "date":
-      default_component["edit"]["type"] = "DatePicker";
+    case 'date':
+      default_component['edit']['type'] = 'DatePicker';
       return default_component;
-    case "integer":
-      default_component["edit"]["props"]["type"] = "number";
+    case 'integer':
+      default_component['edit']['props']['type'] = 'number';
       return default_component;
-    case "boolean":
-      default_component["view"]["type"] = "Switch";
-      default_component["view"]["props"] = {
+    case 'boolean':
+      default_component['view']['type'] = 'Switch';
+      default_component['view']['props'] = {
         checkedValue: 1,
         unCheckedValue: 0,
-        checkedChildren: "open",
-        unCheckedChildren: "close",
+        checkedChildren: 'open',
+        unCheckedChildren: 'close',
       };
-      default_component["edit"]["type"] = "RadioGroup";
-      default_component["edit"]["props"] = {
+      default_component['edit']['type'] = 'RadioGroup';
+      default_component['edit']['props'] = {
         options: [
           {
             value: 1,
-            label: "open",
+            label: 'open',
           },
           {
             value: 0,
-            label: "close",
+            label: 'close',
           },
         ],
       };
@@ -406,39 +406,39 @@ function saveForm(data) {
   const id = data.table.name;
   const actions = [
     {
-      title: "Save",
-      icon: "icon-check",
-      style: "primary",
+      title: 'Save',
+      icon: 'icon-check',
+      style: 'primary',
       showWhenAdd: true,
       action: [
-        { name: "Submit", type: "Form.submit", payload: {} },
-        { name: "Back", type: "Common.closeModal", payload: {} },
+        { name: 'Submit', type: 'Form.submit', payload: {} },
+        { name: 'Back', type: 'Common.closeModal', payload: {} },
       ],
     },
     {
-      title: "Delete",
-      icon: "icon-trash-2",
-      style: "danger",
+      title: 'Delete',
+      icon: 'icon-trash-2',
+      style: 'danger',
       divideLine: true,
       action: [
         {
-          name: "Confirm",
-          type: "Common.confirm",
+          name: 'Confirm',
+          type: 'Common.confirm',
           payload: {
-            title: "Confirm",
-            desc: "Please confirm to delete this record.",
+            title: 'Confirm',
+            desc: 'Please confirm to delete this record.',
           },
         },
-        { name: "Delete", type: "Form.delete", payload: {} },
-        { name: "Back", type: "Common.closeModal", payload: {} },
+        { name: 'Delete', type: 'Form.delete', payload: {} },
+        { name: 'Back', type: 'Common.closeModal', payload: {} },
       ],
     },
     {
-      title: "Back",
-      icon: "icon-arrow-left",
+      title: 'Back',
+      icon: 'icon-arrow-left',
       showWhenAdd: true,
       showWhenView: true,
-      action: [{ name: "CloseModal", type: "Common.closeModal", payload: {} }],
+      action: [{ name: 'CloseModal', type: 'Common.closeModal', payload: {} }],
     },
   ];
 
@@ -446,7 +446,7 @@ function saveForm(data) {
     name: data.name,
     action: { bind: { model: id, option: {} } },
     layout: {
-      primary: "id",
+      primary: 'id',
       actions: actions,
       form: { props: {}, sections: [{ columns: [] }] },
     },
@@ -470,7 +470,7 @@ function saveForm(data) {
     // };
   });
 
-  const dsl = new FS("dsl");
+  const dsl = new FS('dsl');
   dsl.WriteFile(`/forms/${SlashName(id)}.form.yao`, JSON.stringify(form));
 }
 

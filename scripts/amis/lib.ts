@@ -1,21 +1,21 @@
-//在别的脚本中可以使用Require("scripts.lib")的语法引用在这里导出的函数
-//导出的函数方法有两种，一是使用es的语法格式export作函数修饰，不能使用nodejs执行。
-//二是nodejs的语法格式的module.exports = {},可以在vscode中使用nodejs执行调试。
-//建议使用第二种方法，调试处理起来会比较方便
-//代码调试：
-//使用nodejs调试时，需要把Require()转换成require()
-//使用yao run调试时，需要把module.exports或是export拿掉。
+// 在别的脚本中可以使用Require("scripts.lib")的语法引用在这里导出的函数
+// 导出的函数方法有两种，一是使用es的语法格式export作函数修饰，不能使用nodejs执行。
+// 二是nodejs的语法格式的module.exports = {},可以在vscode中使用nodejs执行调试。
+// 建议使用第二种方法，调试处理起来会比较方便
+// 代码调试：
+// 使用nodejs调试时，需要把Require()转换成require()
+// 使用yao run调试时，需要把module.exports或是export拿掉。
 
-//模型字段的详细定义查看https://yaoapps.com/doc/%E6%89%8B%E5%86%8C/Widgets/Model
-//todo检查模型定义来更新字段
+// 模型字段的详细定义查看https://yaoapps.com/doc/%E6%89%8B%E5%86%8C/Widgets/Model
+// todo检查模型定义来更新字段
 
-import { DotName } from "@scripts/amis/lib_tool";
+import { DotName } from '@scripts/amis/lib_tool';
 import {
   column2AmisTableViewColumn,
   column2AmisFormViewColumn,
   column2AmisFormEditColumn,
-} from "@scripts/system/col_type";
-import { Process, Exception } from "@yao/yao";
+} from '@scripts/system/col_type';
+import { Process, Exception } from '@yao/yao';
 
 /**
  * 读取已经加载在内存中的模型的定义,并根据传入列的类型定义更新模型定义
@@ -28,8 +28,8 @@ import { Process, Exception } from "@yao/yao";
  */
 export function getModelDefinition(modelId, columnsIn?) {
   let model = Process(
-    "scripts.system.model.getDBModelById", //优先从数据库中加载，
-    DotName(modelId)
+    'scripts.system.model.getDBModelById', // 优先从数据库中加载，
+    DotName(modelId),
   );
   if (!model) {
     throw new Exception(`模型:${modelId}不存在`);
@@ -58,17 +58,17 @@ function updateAmisViewColFromModel(amisColumn, column, modelDsl) {
   }
   amisColumn.label = amisColumn.label || column.label || column.comment;
   if (modelDsl.option?.soft_deletes) {
-    if (column.name == "deleted_at") {
-      amisColumn.__ignore = true; //在表格里不需要输出
+    if (column.name == 'deleted_at') {
+      amisColumn.__ignore = true; // 在表格里不需要输出
     }
   }
   if (modelDsl.option?.timestamps) {
-    if (column.name == "updated_at") {
+    if (column.name == 'updated_at') {
       amisColumn.static = true;
-      amisColumn.type = "date";
-    } else if (column.name == "created_at") {
+      amisColumn.type = 'date';
+    } else if (column.name == 'created_at') {
       amisColumn.static = true;
-      amisColumn.type = "date";
+      amisColumn.type = 'date';
     }
   }
   return amisColumn;
@@ -89,24 +89,24 @@ function updateAmisFormColCommon(amisColumn, column, modelDsl) {
   amisColumn.label = amisColumn.label || column.label || column.comment;
 
   if (modelDsl.option?.soft_deletes) {
-    if (column.name == "deleted_at") {
-      amisColumn.type = "static-datetime";
-      amisColumn.visibleOn = "!!this.deleted_at";
+    if (column.name == 'deleted_at') {
+      amisColumn.type = 'static-datetime';
+      amisColumn.visibleOn = '!!this.deleted_at';
       if (amisColumn.required != null) {
         delete amisColumn.required;
       }
     }
   }
   if (modelDsl.option?.timestamps) {
-    if (column.name == "updated_at") {
-      amisColumn.type = "static-datetime";
-      amisColumn.visibleOn = "!!this.updated_at";
+    if (column.name == 'updated_at') {
+      amisColumn.type = 'static-datetime';
+      amisColumn.visibleOn = '!!this.updated_at';
       if (amisColumn.required != null) {
         delete amisColumn.required;
       }
-    } else if (column.name == "created_at") {
-      amisColumn.type = "static-datetime";
-      amisColumn.visibleOn = "!!this.created_at";
+    } else if (column.name == 'created_at') {
+      amisColumn.type = 'static-datetime';
+      amisColumn.visibleOn = '!!this.created_at';
       if (amisColumn.required != null) {
         delete amisColumn.required;
       }
@@ -120,12 +120,12 @@ function updateAmisFormColCommon(amisColumn, column, modelDsl) {
       for (const key in modelDsl.relations) {
         const rel = modelDsl.relations[key];
         if (
-          rel.type == "hasOne" &&
-          rel.foreign == amisColumn.name
+          rel.type == 'hasOne'
+          && rel.foreign == amisColumn.name
           // rel.model.endsWith(model_name)
         ) {
           // found
-          amisColumn.type = "select";
+          amisColumn.type = 'select';
           amisColumn.source = `/api/v1/system/model/${rel.model}/select_options`;
         }
       }
@@ -143,7 +143,7 @@ function updateAmisFormColCommon(amisColumn, column, modelDsl) {
  */
 function updateValidationMessage(text, col) {
   let newString = text.replace(/\{\{label\}\}/g, col.label);
-  newString = newString.replace(/\{\{input\}\}/g, "${col.name}");
+  newString = newString.replace(/\{\{input\}\}/g, '${col.name}');
   return newString;
 }
 
@@ -166,28 +166,28 @@ function updateAmisFormColFromModel(amisColumn, yaoColumn) {
     let regexCount = 0;
     for (const validation of yaoColumn.validations) {
       let isCheck = false;
-      let validationKey = "";
+      let validationKey = '';
 
       switch (validation.method) {
-        case "typeof":
+        case 'typeof':
           if (Array.isArray(validation.args) && validation.args.length) {
             switch (validation.args[0]) {
-              case "integer":
-                validationKey = "isInt";
+              case 'integer':
+                validationKey = 'isInt';
                 amisColumn.validations[validationKey] = true;
                 isCheck = true;
                 break;
-              case "number":
-                validationKey = "isNumeric";
+              case 'number':
+                validationKey = 'isNumeric';
                 amisColumn.validations[validationKey] = true;
                 isCheck = true;
                 break;
-              case "float":
-                validationKey = "isFloat";
+              case 'float':
+                validationKey = 'isFloat';
                 amisColumn.validations[validationKey] = true;
                 isCheck = true;
                 break;
-              //时间用控件类型来控制
+              // 时间用控件类型来控制
               // case "datetime":
               //   amisColumn.validations["isFloat"] = true;
               //   break;
@@ -197,51 +197,51 @@ function updateAmisFormColFromModel(amisColumn, yaoColumn) {
             }
           }
           break;
-        case "mobile":
-          validationKey = "isTelNumber";
+        case 'mobile':
+          validationKey = 'isTelNumber';
           amisColumn.validations[validationKey] = true;
           isCheck = true;
           break;
-        case "email":
-          validationKey = "isEmail";
+        case 'email':
+          validationKey = 'isEmail';
           amisColumn.validations[validationKey] = true;
           isCheck = true;
           break;
-        case "min":
+        case 'min':
           if (Array.isArray(validation.args) && validation.args.length) {
-            validationKey = "minimum";
+            validationKey = 'minimum';
             amisColumn.validations[validationKey] = validation.args[0];
             isCheck = true;
           }
           break;
-        case "max":
+        case 'max':
           if (Array.isArray(validation.args) && validation.args.length) {
-            validationKey = "maximum";
+            validationKey = 'maximum';
             amisColumn.validations[validationKey] = validation.args[0];
             isCheck = true;
           }
           break;
-        case "minLength":
+        case 'minLength':
           if (Array.isArray(validation.args) && validation.args.length) {
-            validationKey = "minLength";
+            validationKey = 'minLength';
             amisColumn.validations[validationKey] = validation.args[0];
             isCheck = true;
           }
           break;
-        case "maxLength":
+        case 'maxLength':
           if (Array.isArray(validation.args) && validation.args.length) {
-            validationKey = "maxLength";
+            validationKey = 'maxLength';
             amisColumn.validations[validationKey] = validation.args[0];
             isCheck = true;
           }
           break;
-        case "pattern":
+        case 'pattern':
           if (Array.isArray(validation.args) && validation.args.length) {
-            validationKey = "matchRegexp";
+            validationKey = 'matchRegexp';
             if (regexCount > 0) {
               validationKey = `matchRegexp${regexCount}`;
             }
-            amisColumn.validations[validationKey] = validation?.args[0] || "";
+            amisColumn.validations[validationKey] = validation?.args[0] || '';
             regexCount += 1;
             isCheck = true;
           }
@@ -252,7 +252,7 @@ function updateAmisFormColFromModel(amisColumn, yaoColumn) {
       if (isCheck === true) {
         amisColumn.validationErrors[validationKey] = updateValidationMessage(
           validation.message,
-          yaoColumn
+          yaoColumn,
         );
       }
     }
@@ -276,7 +276,7 @@ function updateAmisFormColFromModel(amisColumn, yaoColumn) {
 export function getModelFieldsForAmis(modelId, columnsIn?) {
   const model = getModelDefinition(modelId, columnsIn);
   const columns = model.columns;
-  //从模型定义中获取数据
+  // 从模型定义中获取数据
 
   const schemas = [];
   columns.forEach((column) => {
@@ -301,36 +301,36 @@ export function getModelFieldsForAmis(modelId, columnsIn?) {
  */
 function AddMetaFields(modelDsl) {
   if (modelDsl.option?.timestamps) {
-    let result = modelDsl.columns?.some((item) => item.name === "created_at");
+    let result = modelDsl.columns?.some((item) => item.name === 'created_at');
     if (!result) {
       modelDsl.columns.push({
-        name: "created_at",
-        label: "创建时间",
+        name: 'created_at',
+        label: '创建时间',
         static: true,
-        type: "datetime",
-        format: "YYYY-MM-DD HH:mm:ss",
+        type: 'datetime',
+        format: 'YYYY-MM-DD HH:mm:ss',
       });
     }
-    result = modelDsl.columns?.some((item) => item.name === "updated_at");
+    result = modelDsl.columns?.some((item) => item.name === 'updated_at');
     if (!result) {
       modelDsl.columns.push({
-        name: "updated_at",
-        label: "更新时间",
+        name: 'updated_at',
+        label: '更新时间',
         static: true,
-        type: "datetime",
-        format: "YYYY-MM-DD HH:mm:ss",
+        type: 'datetime',
+        format: 'YYYY-MM-DD HH:mm:ss',
       });
     }
   }
   if (modelDsl.option?.soft_deletes) {
-    const result = modelDsl.columns?.some((item) => item.name === "deleted_at");
+    const result = modelDsl.columns?.some((item) => item.name === 'deleted_at');
     if (!result) {
       modelDsl.columns.push({
-        name: "deleted_at",
-        label: "删除时间",
+        name: 'deleted_at',
+        label: '删除时间',
         static: true,
-        type: "datetime",
-        format: "YYYY-MM-DD HH:mm:ss",
+        type: 'datetime',
+        format: 'YYYY-MM-DD HH:mm:ss',
       });
     }
   }
@@ -346,7 +346,7 @@ function AddMetaFields(modelDsl) {
 export function getWithsUrl(modelId) {
   const model = getModelDefinition(modelId, null);
   if (model.relations) {
-    return `with=${Object.keys(model.relations).join(",")}`;
+    return `with=${Object.keys(model.relations).join(',')}`;
   }
 }
 
@@ -370,7 +370,7 @@ export function getFormViewFields(modelId, columnsIn?, noRelation?) {
   });
   // 避免递归
   if (!noRelation) {
-    updateFormRelations(schemas, model, "view");
+    updateFormRelations(schemas, model, 'view');
   }
   return schemas;
 }
@@ -389,9 +389,9 @@ function updateFormRelations(schemas, model, actionType) {
     for (const key in model.relations) {
       if (Object.hasOwnProperty.call(model.relations, key)) {
         const element = model.relations[key];
-        if (element.type === "hasOne") {
+        if (element.type === 'hasOne') {
           hasOnes[key] = element;
-        } else if (element.type === "hasMany") {
+        } else if (element.type === 'hasMany') {
           hasManys[key] = element;
         }
       }
@@ -401,17 +401,17 @@ function updateFormRelations(schemas, model, actionType) {
     const element = hasOnes[key];
     const label = element.label || key;
     let fields = [];
-    if (actionType === "view") {
+    if (actionType === 'view') {
       fields = getFormViewFields(element.model, null, true);
     } else {
       fields = getFormFields(element.model, actionType, null, null, true);
     }
     fields = fields.filter((col) => col.name !== element.key);
     schemas.push({
-      type: "input-sub-form",
+      type: 'input-sub-form',
       name: key,
       label: label,
-      btnLabel: "明细",
+      btnLabel: '明细',
       form: {
         // body: {
         //   type: "service",
@@ -428,30 +428,30 @@ function updateFormRelations(schemas, model, actionType) {
     const label = element.label || key;
     let fields = [];
     let tableSchema = {};
-    if (actionType === "view") {
+    if (actionType === 'view') {
       fields = getModelFieldsForAmis(element.model, null);
       fields = fields.filter((col) => col.name !== element.key);
 
       tableSchema = {
         columns: fields,
-        source: "${" + key + "}",
-        type: "table",
+        source: '${' + key + '}',
+        type: 'table',
       };
     } else {
       fields = getModelFieldsWithQuick(element.model, null);
       fields = fields.filter((col) => col.name !== element.key);
 
       tableSchema = {
-        labelClassName: "hidden",
+        labelClassName: 'hidden',
         columns: fields,
         name: key,
-        source: "${" + key + "}",
+        source: '${' + key + '}',
         copyable: true,
         editable: true,
         removable: true,
         showIndex: true,
         addable: true,
-        type: "input-table",
+        type: 'input-table',
       };
     }
     const tab = {
@@ -464,8 +464,8 @@ function updateFormRelations(schemas, model, actionType) {
   // 多个就使用页签显示，一个就直接显示表格
   if (tabList.length > 1) {
     const tabs = {
-      label: "关联表",
-      type: "static-tabs",
+      label: '关联表',
+      type: 'static-tabs',
       swipeable: true,
       tabs: [],
     };
@@ -478,8 +478,8 @@ function updateFormRelations(schemas, model, actionType) {
     const table = tabList[0].body;
     delete table.labelClassName;
     table.label = tabList[0].title;
-    if (actionType === "view") {
-      table.type = "static-table";
+    if (actionType === 'view') {
+      table.type = 'static-table';
     }
     schemas.push(table);
   }
@@ -499,12 +499,12 @@ export function getFormFields(
   actionType,
   columnsIn,
   excludeFields?,
-  noRelation = false
+  noRelation = false,
 ) {
   const model = getModelDefinition(modelId, columnsIn);
   const columns = model.columns;
 
-  const formType = actionType ? actionType.toLowerCase() : "view";
+  const formType = actionType ? actionType.toLowerCase() : 'view';
   let schemas = [];
 
   for (const column of columns) {
@@ -514,17 +514,17 @@ export function getFormFields(
     //   col.isID = undefined;
     // }
     switch (formType) {
-      case "view":
+      case 'view':
         if (col.isID) {
           col.static = true;
         }
         break;
-      case "update":
+      case 'update':
         if (col.isID) {
           col.static = true;
         }
         break;
-      case "create":
+      case 'create':
         if (col.isID) {
           output = false;
         }
@@ -551,9 +551,9 @@ export function getFormFields(
   return schemas;
 }
 
-//转换表字段清单成amis的form filter
+// 转换表字段清单成amis的form filter
 export function getFilterFormFields(modelId, columnsIn) {
-  //从数据库表中获取定义
+  // 从数据库表中获取定义
   const model = getModelDefinition(modelId, columnsIn);
   const columns = model?.columns || [];
 
@@ -564,30 +564,30 @@ export function getFilterFormFields(modelId, columnsIn) {
     col = updateAmisFormColCommon(col, column, model);
 
     if (col.isID) {
-      col.type = "input-number";
+      col.type = 'input-number';
     }
     delete col.isID;
-    //筛选框不强制输入
+    // 筛选框不强制输入
     delete col.required;
 
     let output = true;
 
-    if (column.crypt?.toUpperCase() === "PASSWORD") {
+    if (column.crypt?.toUpperCase() === 'PASSWORD') {
       output = false;
     }
     switch (column.type?.toLowerCase()) {
-      case "editor":
-      case "richtext":
-      case "video":
-      case "file":
-      case "image":
-      case "json":
-      case "images":
+      case 'editor':
+      case 'richtext':
+      case 'video':
+      case 'file':
+      case 'image':
+      case 'json':
+      case 'images':
         output = false;
         break;
     }
     switch (col.type?.toLowerCase()) {
-      case "editor":
+      case 'editor':
         output = false;
         break;
       default:
@@ -609,12 +609,11 @@ export function getFilterFormFields(modelId, columnsIn) {
 export function getModelFieldsWithQuick(modelId, columnsIn) {
   const model = getModelDefinition(modelId, columnsIn);
   const columns = model?.columns || [];
-  //yao的原始字段设置
+  // yao的原始字段设置
   const newFields = [];
   for (const column of columns) {
-    
-    let { newColumn: viewColumn, displayOnly } =
-      column2AmisTableViewColumn(column);
+    let { newColumn: viewColumn, displayOnly }
+      = column2AmisTableViewColumn(column);
     let formColumn = column2AmisFormEditColumn(column);
     let label = column.label;
 
@@ -648,12 +647,12 @@ export function getModelFieldsWithQuick(modelId, columnsIn) {
       fieldNew.quickEdit = false;
     }
     if (model.option?.timestamps) {
-      if (column.name == "updated_at" || column.name == "created_at") {
+      if (column.name == 'updated_at' || column.name == 'created_at') {
         fieldNew.quickEdit = false;
       }
     }
     // 不需要弹出快速编辑
-    if (model.option?.soft_deletes && column.name == "deleted_at") {
+    if (model.option?.soft_deletes && column.name == 'deleted_at') {
       fieldNew.quickEdit = false;
     }
     newFields.push(fieldNew);
@@ -676,29 +675,29 @@ export function excelMapping(modelId, columnsIn) {
   columns.forEach((column) => {
     let type = column.type.toUpperCase();
     if (column.primary === true) {
-      type = "ID";
+      type = 'ID';
     }
     let ignore = false;
     switch (type) {
       // 自增长的不要
-      case "ID":
-      case "TINYINCREMENTS":
-      case "SMALLINCREMENTS":
-      case "INCREMENTS":
+      case 'ID':
+      case 'TINYINCREMENTS':
+      case 'SMALLINCREMENTS':
+      case 'INCREMENTS':
         ignore = true;
         break;
       default:
         break;
     }
-    if (column.name === "deleted_at" && model.option.soft_deletes) {
+    if (column.name === 'deleted_at' && model.option.soft_deletes) {
       ignore = true;
-    } else if (column.name === "created_at" && model.option?.timestamps) {
+    } else if (column.name === 'created_at' && model.option?.timestamps) {
       ignore = true;
-    } else if (column.name === "updated_at" && model.option?.timestamps) {
+    } else if (column.name === 'updated_at' && model.option?.timestamps) {
       ignore = true;
     }
     if (!ignore) {
-      obj[column.name] = "${" + column.name + "}";
+      obj[column.name] = '${' + column.name + '}';
     }
   });
   return obj;
@@ -721,7 +720,7 @@ export function excelMapping(modelId, columnsIn) {
   //   return {};
   // }
 }
-//如果是使用yao run 的调试方法，需要先把module.exports注释掉
+// 如果是使用yao run 的调试方法，需要先把module.exports注释掉
 // module.exports = {
 //   getFormViewFields,
 //   excelMapping,

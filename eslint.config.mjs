@@ -1,12 +1,12 @@
-import globals from "globals";
-import pluginJs from "@eslint/js";
-import tseslint from "typescript-eslint";
-import stylistic from "@stylistic/eslint-plugin";
+import globals from 'globals';
+import pluginJs from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import stylistic from '@stylistic/eslint-plugin';
 // import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
 
 export default [
   {
-    ignores: ["node_modules", "dist", "public"],
+    ignores: ['node_modules', 'dist', 'public'],
   },
 
   /** js推荐配置 */
@@ -15,19 +15,19 @@ export default [
   ...tseslint.configs.recommended,
   stylistic.configs.customize({
     indent: 2,
-    quotes: "double",
+    quotes: 'single',
     semi: true,
     jsx: false,
-    braceStyle: "1tbs",
-    arrowParens: "always",
+    braceStyle: '1tbs',
+    arrowParens: 'always',
   }),
   /**
    * javascript 规则
    */
   {
-    files: ["**/*.{js,mjs,cjs}"],
+    files: ['**/*.{js,mjs,cjs}'],
     rules: {
-      "no-console": "error",
+      'no-console': 'error',
     },
   },
   { languageOptions: { globals: globals.browser } },
@@ -35,7 +35,7 @@ export default [
    * typescript 规则
    */
   {
-    files: ["**/*.{ts}"],
+    files: ['**/*.{ts}'],
     rules: {},
   },
   /**

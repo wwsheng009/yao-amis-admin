@@ -1,24 +1,24 @@
-import { Process, Exception, Query,FS} from "@yao/yao";
+import { Process, Exception, Query, FS } from '@yao/yao';
 
-//禁止使用
+// 禁止使用
 // yao run scripts.fs.file.Download '/20231115/微信图片_20220601141654.png'
 function Download_abandan(name) {
-  let user_id = Process("session.get", "user_id");
+  let user_id = Process('session.get', 'user_id');
   if (!user_id) {
-    user_id = "1";
+    user_id = '1';
   }
   name = normalizeFolder(name);
-  const uploadDir = "/data/upload"
+  const uploadDir = '/data/upload';
   const filePath = `${uploadDir}/${user_id}/${name}`;
 
-  const fs = new FS("system");
+  const fs = new FS('system');
   if (!fs.Exists(filePath)) {
-    throw new Exception("文件不存在", 500);
+    throw new Exception('文件不存在', 500);
   }
   // 这里会发生大量的字节数组转换，不要使用！！！！！！
   const buf = fs.ReadFileBuffer(filePath);
 
-  const mimeType = Process("fs.system.MimeType", filePath);
+  const mimeType = Process('fs.system.MimeType', filePath);
   return {
     content: buf,
     type: mimeType,
@@ -28,15 +28,15 @@ function Download_abandan(name) {
 function convertToNestedArray(folderList) {
   // Initialize the root object
   const root = {
-    label: "",
-    value: "",
+    label: '',
+    value: '',
     children: [],
   };
 
   // Iterate through each folder path
   for (const folderPath of folderList) {
     // Split the folder path into individual parts
-    const parts = folderPath.split("/").filter((part) => part !== "");
+    const parts = folderPath.split('/').filter((part) => part !== '');
 
     // Initialize the current node as the root
     let currentNode = root;
@@ -66,12 +66,12 @@ function convertToNestedArray(folderList) {
 
 // Usage example
 const folderList = [
-  "/pages/admin",
-  "/pages/api",
-  "/pages/api/crud",
-  "/pages/api/demo",
-  "/pages/model",
-  "/pages/studio",
+  '/pages/admin',
+  '/pages/api',
+  '/pages/api/crud',
+  '/pages/api/demo',
+  '/pages/model',
+  '/pages/studio',
 ];
 
 function removeEmptyChildren(node) {
@@ -88,12 +88,12 @@ const nestedArray = convertToNestedArray(folderList);
 // console.log(JSON.stringify(nestedArray, null, 2));
 
 // yao run scripts.file.user.normalizeFolder "../"
-function normalizeFolder(folder:string) {
+function normalizeFolder(folder: string) {
   if (folder == null) {
-    return "";
+    return '';
   }
-  if (typeof folder != "string" && typeof folder != "number") {
-    return "";
+  if (typeof folder != 'string' && typeof folder != 'number') {
+    return '';
   }
 
   // Replace occurrences of "../" and "..\\" with an empty string
@@ -103,9 +103,9 @@ function normalizeFolder(folder:string) {
   // folder = folder.replace(/(\.\/|\.\\)/g, "");
 
   // folder = folder.replace(/[^\w\s.-]/g, "");
-  folder = folder.replace(/\.\./g, "");
-  folder = folder.replace(/\/+/g, "/");
-  folder = folder.replace(/\\+/g, "/");
+  folder = folder.replace(/\.\./g, '');
+  folder = folder.replace(/\/+/g, '/');
+  folder = folder.replace(/\\+/g, '/');
 
   return folder;
 }

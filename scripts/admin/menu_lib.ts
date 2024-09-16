@@ -12,29 +12,29 @@ export function updateSoyRouteComponent(node, parent) {
     return;
   }
   const hasParent = parent != null ? true : false;
-  const hasChildren =
-    Array.isArray(node.children) && node.children.length > 0 ? true : false;
+  const hasChildren
+    = Array.isArray(node.children) && node.children.length > 0 ? true : false;
 
   delete node.meta.singleLayout;
 
   if (!hasParent) {
     if (!hasChildren) {
-      node.meta.singleLayout = "basic";
-      node.component = "self";
+      node.meta.singleLayout = 'basic';
+      node.component = 'self';
     } else {
-      if (!node.component || node.component === "self") {
-        node.component = "basic";
+      if (!node.component || node.component === 'self') {
+        node.component = 'basic';
       }
     }
   } else {
     if (!hasChildren) {
-      if (node.meta.schemaApi && node.meta.schemaApi != "") {
-        node.component = "amis";
+      if (node.meta.schemaApi && node.meta.schemaApi != '') {
+        node.component = 'amis';
       } else {
-        node.component = "self";
+        node.component = 'self';
       }
     } else {
-      node.component = "multi";
+      node.component = 'multi';
     }
   }
 

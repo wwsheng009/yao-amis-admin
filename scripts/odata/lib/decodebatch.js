@@ -1,6 +1,6 @@
 // 参考：https://ui5.sap.com/resources/sap/ui/model/odata/v4/lib/_Batch-dbg.js
 
-const { parseUrl } = Require("odata.lib.url");
+const { parseUrl } = Require('odata.lib.url');
 /**
  * Extracts value of the parameter with the specified <code>sParameterName</code>
  * from the specified <code>sHeaderValue</code>.
@@ -14,7 +14,7 @@ const { parseUrl } = Require("odata.lib.url");
 function getHeaderParameterValue(sHeaderValue, sParameterName) {
   var rHeaderParameter = /(\S*?)=(?:"(.+)"|(\S+))/;
   var iParamIndex,
-    aHeaderParts = sHeaderValue.split(";"),
+    aHeaderParts = sHeaderValue.split(';'),
     aMatches;
 
   sParameterName = sParameterName.toLowerCase();
@@ -223,15 +223,15 @@ function decodePartsRequest(headers, parts) {
     // 包含两部分，一个是headers,另外是body
     // iMimeHeadersEnd = sBatchPart.indexOf("\r\n\r\n");
     // sMimeHeaders = sBatchPart.slice(0, iMimeHeadersEnd);
-    let iHttpHeadersEnd = sBatchPart.indexOf("\r\n\r\n");
+    let iHttpHeadersEnd = sBatchPart.indexOf('\r\n\r\n');
     let sHttpHeaders = sBatchPart.slice(0, iHttpHeadersEnd);
 
     oRequest.requstText = sBatchPart.slice(iHttpHeadersEnd + 4, -2);
 
-    let aHttpHeaders = sHttpHeaders.split("\r\n");
+    let aHttpHeaders = sHttpHeaders.split('\r\n');
     // e.g. HTTP/1.1 200 OK
 
-    aHttpStatusInfos = aHttpHeaders[0].split(" ");
+    aHttpStatusInfos = aHttpHeaders[0].split(' ');
     oRequest.method = aHttpStatusInfos[0];
     oRequest.urlText = aHttpStatusInfos[1];
     oRequest.version = aHttpStatusInfos[2];
@@ -243,11 +243,11 @@ function decodePartsRequest(headers, parts) {
     for (i = 1; i < aHttpHeaders.length; i += 1) {
       // e.g. Content-Type: application/json;odata.metadata=minimal
       let sHeader = aHttpHeaders[i];
-      iColonIndex = sHeader.indexOf(":");
+      iColonIndex = sHeader.indexOf(':');
       sHeaderName = sHeader.slice(0, iColonIndex).trim();
       sHeaderValue = sHeader.slice(iColonIndex + 1).trim();
 
-      //解析成数组，与yao保持一致。
+      // 解析成数组，与yao保持一致。
       if (oRequest.headers.hasOwnProperty(sHeaderName)) {
         if (Array.isArray(oRequest.headers[sHeaderName])) {
           oRequest.headers[sHeaderName].push(sHeaderValue);
@@ -260,9 +260,9 @@ function decodePartsRequest(headers, parts) {
       }
       // oRequest.headers[sHeaderName] = [sHeaderValue];
 
-      if (sHeaderName.toLowerCase() === "content-type") {
-        sCharset = getHeaderParameterValue(sHeaderValue, "charset");
-        if (sCharset && sCharset.toLowerCase() !== "utf-8") {
+      if (sHeaderName.toLowerCase() === 'content-type') {
+        sCharset = getHeaderParameterValue(sHeaderValue, 'charset');
+        if (sCharset && sCharset.toLowerCase() !== 'utf-8') {
           throw new Exception('Unsupported "Content-Type" charset: ' + sCharset);
         }
       }
@@ -270,10 +270,10 @@ function decodePartsRequest(headers, parts) {
     for (const key in oRequest.headers) {
       if (Object.hasOwnProperty.call(oRequest.headers, key)) {
         const sType = oRequest.headers[key];
-        if (key.toLowerCase() === "content-type") {
+        if (key.toLowerCase() === 'content-type') {
           if (
-            sType.includes("application/json") &&
-            oRequest.requstText.trim() !== ""
+            sType.includes('application/json')
+            && oRequest.requstText.trim() !== ''
           ) {
             oRequest.body = JSON.parse(oRequest.requstText);
           }

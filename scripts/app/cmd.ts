@@ -1,7 +1,7 @@
-//使用命令插件调用操作系统的功能，引功能需要command插件的支持
-//命令插件支持调用本地系统的命令，或是通过ssh在远程服务器上执行命令
-//https://github.com/wwsheng009/yao-amis-admin
-import { Process, Exception, Query } from "@yao/yao";
+// 使用命令插件调用操作系统的功能，引功能需要command插件的支持
+// 命令插件支持调用本地系统的命令，或是通过ssh在远程服务器上执行命令
+// https://github.com/wwsheng009/yao-amis-admin
+import { Process, Exception, Query } from '@yao/yao';
 
 /**
  * yao run scripts.app.cmd.execute
@@ -10,11 +10,11 @@ import { Process, Exception, Query } from "@yao/yao";
 function execute(payload) {
   //   console.log("payload", payload);
   const hostId = payload.host;
-  const hostInfo = Process("models.app.cmd.host.find", hostId, {});
+  const hostInfo = Process('models.app.cmd.host.find', hostId, {});
 
   if (!hostInfo.is_remote) {
-    let script = payload.source.replace(/^\s*\r/gm, "");
-    script = script.replace(/\r/g, ";");
+    let script = payload.source.replace(/^\s*\r/gm, '');
+    script = script.replace(/\r/g, ';');
     const result = Process(`plugins.command.${payload.cmd}`, script);
     // console.log("result", result);
     writeCommandlog({
@@ -30,8 +30,8 @@ function execute(payload) {
     }
     return result;
   } else {
-    let script = payload.source.replace(/^\s*\r/gm, "");
-    script = script.replace(/\r/g, ";");
+    let script = payload.source.replace(/^\s*\r/gm, '');
+    script = script.replace(/\r/g, ';');
 
     let result = null;
 
@@ -40,19 +40,19 @@ function execute(payload) {
       result = Process(
         `plugins.command.remote_key`,
         hostInfo.host,
-        hostInfo.port + "",
+        hostInfo.port + '',
         hostInfo.username,
         hostInfo.ssh_key,
-        script
+        script,
       );
     } else {
       result = Process(
         `plugins.command.remote`,
         hostInfo.host,
-        hostInfo.port + "",
+        hostInfo.port + '',
         hostInfo.username,
         hostInfo.password,
-        script
+        script,
       );
     }
 
@@ -71,13 +71,13 @@ function execute(payload) {
 }
 /**
  * write the command excute log into database
- * 
- * @param {object} data 
+ *
+ * @param {object} data
  */
 function writeCommandlog(data) {
-  const user_id = Process("session.get", "user_id");
-  const user = Process("session.get", "user");
+  const user_id = Process('session.get', 'user_id');
+  const user = Process('session.get', 'user');
   data.user_id = user_id;
   data.user_name = user.name;
-  data.user_id = Process("models.app.cmd.log.save", data);
+  data.user_id = Process('models.app.cmd.log.save', data);
 }

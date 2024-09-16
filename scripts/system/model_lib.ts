@@ -1,14 +1,13 @@
-import { getModelFromDB, loadModeltoMemory } from "@scripts/system/model_db";
+import { getModelFromDB, loadModeltoMemory } from '@scripts/system/model_db';
 
-import {Process,Exception} from "@yao/yao"
+import { Process, Exception } from '@yao/yao';
 
-
-//读取所有的模型id的列表
-//缺少一个name属性，所有只能读取到id列表
-//yao run scripts.system.model.ModelIDList
-//["admin.user","demo.table"]
+// 读取所有的模型id的列表
+// 缺少一个name属性，所有只能读取到id列表
+// yao run scripts.system.model.ModelIDList
+// ["admin.user","demo.table"]
 export function ModelIDList() {
-  return MomoryModelList("ID").map((item) => item.ID);
+  return MomoryModelList('ID').map((item) => item.ID);
 }
 
 /**
@@ -16,7 +15,7 @@ export function ModelIDList() {
  * @returns []object
  */
 function CachedModelList() {
-  const models = Process("widget.models");
+  const models = Process('widget.models');
   return FlatModelList(models);
 }
 /**
@@ -28,7 +27,7 @@ function CachedModelList() {
  * @returns
  */
 export function MomoryModelList(attr?) {
-  const models = Process("widget.models");
+  const models = Process('widget.models');
   return FlatModelList(models, attr);
 }
 /**
@@ -41,7 +40,7 @@ function FlatModelList(models, attr?) {
   const list = [];
 
   const getProperty = (object, path) => {
-    const properties = path.split(".");
+    const properties = path.split('.');
     let currentObject = object;
 
     for (let i = 0; i < properties.length; i++) {
@@ -51,13 +50,13 @@ function FlatModelList(models, attr?) {
   };
 
   const setProperty = (object, path, value) => {
-    const properties = path.split(".");
+    const properties = path.split('.');
     let currentObject = object;
 
     for (let i = 0; i < properties.length - 1; i++) {
       if (currentObject === undefined) {
         throw new Error(
-          `Property '${properties[i]}' does not exist in path '${path}'`
+          `Property '${properties[i]}' does not exist in path '${path}'`,
         );
       }
       //   注意，不支持生成数组
@@ -71,13 +70,13 @@ function FlatModelList(models, attr?) {
   };
   let attr2 = [];
   if (attr != null) {
-  if (typeof attr === "string") {
+    if (typeof attr === 'string') {
     // 单个属性
-    attr2 = attr.split(",");
-  } else if (Array.isArray(attr)) {
-    attr2 = attr;
+      attr2 = attr.split(',');
+    } else if (Array.isArray(attr)) {
+      attr2 = attr;
+    }
   }
-}
   const traverse = (node) => {
     if (node.children) {
       traverse(node.children);
@@ -113,7 +112,7 @@ function FlatModelList(models, attr?) {
  * @returns object | null
  */
 export function FindCachedModelById(modelId) {
-  const models = Process("widget.models");
+  const models = Process('widget.models');
 
   const traverse = (node, id) => {
     if (node.children) {
@@ -137,10 +136,10 @@ export function FindCachedModelById(modelId) {
 
 /**
  * 优先从缓存中加载模型，如果不存在，从数据库中加载并转换成yao模型
- * @param {string} modelId 
+ * @param {string} modelId
  */
 export function FindAndLoadYaoModelById(modelId) {
-  const modelDsl = FindCachedModelById(modelId)
+  const modelDsl = FindCachedModelById(modelId);
   if (modelDsl == null) {
     let modelDsl = getModelFromDB(modelId);
 
@@ -150,28 +149,27 @@ export function FindAndLoadYaoModelById(modelId) {
       if (err?.code && err?.Message) {
         throw Error(err?.Message + err?.code);
       }
-      modelDsl = FindCachedModelById(modelId)
+      modelDsl = FindCachedModelById(modelId);
     }
   }
 
   if (!modelDsl) {
     throw new Exception(`模型${modelId}定义不存在，未加载？`, 500);
   }
-  return modelDsl
+  return modelDsl;
 }
-
 
 /**
  * 加载模型标识，优先从数据库中加载，找不到再在缓存中加载
  * 数据库的模型信息会更多
- * 
+ *
  * yao run scripts.system.model.getDBModelById
  * @param {string} modelId 模型标识
  * @returns
  */
 export function FindAndLoadDBModelById(modelId) {
   if (!modelId) {
-    throw new Exception(`缺少模型标识`)
+    throw new Exception(`缺少模型标识`);
   }
   let modelDsl = getModelFromDB(modelId);
   const modelDsl2 = FindCachedModelById(modelId);
@@ -180,15 +178,13 @@ export function FindAndLoadDBModelById(modelId) {
     loadModeltoMemory(modelDsl, false);
   }
   if (modelDsl == null && modelDsl2 != null) {
-    modelDsl = modelDsl2
+    modelDsl = modelDsl2;
   }
   if (modelDsl == null) {
-    throw new Exception(`模型：${modelId}不存在`)
+    throw new Exception(`模型：${modelId}不存在`);
   }
   return modelDsl;
 }
-
-
 
 /**
  * 解析内存中的模型数据
@@ -215,8 +211,7 @@ function modelIdListFromMemory(modelData) {
   return idList;
 }
 
-
-//yao run调试前先注释
+// yao run调试前先注释
 // module.exports = {
 //   FlatModelList,
 //   FindCachedModelById,

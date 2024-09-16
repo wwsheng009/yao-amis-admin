@@ -1,60 +1,60 @@
 function getCodeGenerationList() {
   return [
     {
-      label: "Amis增删改查-页面",
-      value: "CRUDAllTemplate",
+      label: 'Amis增删改查-页面',
+      value: 'CRUDAllTemplate',
     },
     {
-      label: "Amis增删改查-查看",
-      value: "CRUDListTemplate",
+      label: 'Amis增删改查-查看',
+      value: 'CRUDListTemplate',
     },
     {
-      label: "Amis增删改查-创建",
-      value: "CRUDNewTemplate",
+      label: 'Amis增删改查-创建',
+      value: 'CRUDNewTemplate',
     },
     {
-      label: "Amis列表视图-字段列表",
-      value: "getTableAmisViewFields",
+      label: 'Amis列表视图-字段列表',
+      value: 'getTableAmisViewFields',
     },
     {
-      label: "Amis表单查看-字段列表",
-      value: "getTableAmisFormViewFields",
+      label: 'Amis表单查看-字段列表',
+      value: 'getTableAmisFormViewFields',
     },
     {
-      label: "Amis表单修改-字段列表",
-      value: "getTableAmisFormFields",
+      label: 'Amis表单修改-字段列表',
+      value: 'getTableAmisFormFields',
     },
     {
-      label: "Amis表单修改-带快速-字段列表",
-      value: "getTableAmisViewFieldsWithQuick",
+      label: 'Amis表单修改-带快速-字段列表',
+      value: 'getTableAmisViewFieldsWithQuick',
     },
     {
-      label: "Xgen所有对象",
-      value: "getXgenObjects",
+      label: 'Xgen所有对象',
+      value: 'getXgenObjects',
     },
     {
-      label: "Xgen表格定义-简单",
-      value: "getXgenTable",
+      label: 'Xgen表格定义-简单',
+      value: 'getXgenTable',
     },
     {
-      label: "Xgen表格定义-完整",
-      value: "getXgenTableFull",
+      label: 'Xgen表格定义-完整',
+      value: 'getXgenTableFull',
     },
     {
-      label: "Xgen表单定义-简单",
-      value: "getXgenForm",
+      label: 'Xgen表单定义-简单',
+      value: 'getXgenForm',
     },
     {
-      label: "Xgen表单定义-完整-查看",
-      value: "getXgenFormFullView",
+      label: 'Xgen表单定义-完整-查看',
+      value: 'getXgenFormFullView',
     },
     {
-      label: "Xgen表单定义-完整-编辑",
-      value: "getXgenFormFullEdit",
+      label: 'Xgen表单定义-完整-编辑',
+      value: 'getXgenFormFullEdit',
     },
     {
-      label: "TypeScript类型定义",
-      value: "getTSType",
+      label: 'TypeScript类型定义',
+      value: 'getTSType',
     },
   ];
 }
@@ -64,13 +64,13 @@ function getCodeGenerationList() {
  * @returns list
  */
 function getTables() {
-  //跟studio的service不同，services不需要跨域
+  // 跟studio的service不同，services不需要跨域
   //    curl -X POST http://127.0.0.1:5099/api/__yao/app/service/schema \
   //    -H 'Content-Type: application/json' \
   //    -H 'Authorization: Bearer <Studio JWT>' \
   //    -d '{ "args":[],"method":"getTables"}'
 
-  const list = Process("schemas.default.Tables");
+  const list = Process('schemas.default.Tables');
   const tables = list.map((table) => {
     return { item: table };
   });
@@ -81,13 +81,13 @@ function getTables() {
  * @returns list
  */
 function getTables2() {
-  //跟studio的service不同，services不需要跨域
+  // 跟studio的service不同，services不需要跨域
   //    curl -X POST http://127.0.0.1:5099/api/__yao/app/service/schema \
   //    -H 'Content-Type: application/json' \
   //    -H 'Authorization: Bearer <Studio JWT>' \
   //    -d '{ "args":[],"method":"getTables"}'
 
-  return Process("scripts.system.model.modelNameOption");
+  return Process('scripts.system.model.modelNameOption');
 }
 
 /**
@@ -98,20 +98,20 @@ function getTables2() {
  */
 function getTable(table) {
   // 注意不要直接返回`{columns}`,返回columns会改变amis的table 的columns设置
-  const data = Process("schemas.default.TableGet", table);
+  const data = Process('schemas.default.TableGet', table);
   return { items: data.columns };
 }
 function CRUDNewTemplate(modelId, columns) {
   return {
     __code_sources: [
       {
-        language: "json",
-        title: "增删改查-创建",
+        language: 'json',
+        title: '增删改查-创建',
         can_preview: true,
         __code_source: Process(
-          "scripts.amis.schema.curdNewPage",
+          'scripts.amis.schema.curdNewPage',
           modelId,
-          columns
+          columns,
         ),
       },
     ],
@@ -122,13 +122,13 @@ function CRUDListTemplate(modelId, columns) {
   return {
     __code_sources: [
       {
-        language: "json",
-        title: "增删改查-列表",
+        language: 'json',
+        title: '增删改查-列表',
         can_preview: true,
         __code_source: Process(
-          "scripts.amis.schema.curdListPage",
+          'scripts.amis.schema.curdListPage',
           modelId,
-          columns
+          columns,
         ),
       },
     ],
@@ -139,13 +139,13 @@ function CRUDAllTemplate(modelId, columns) {
   return {
     __code_sources: [
       {
-        language: "json",
-        title: "增删改查-所有功能",
+        language: 'json',
+        title: '增删改查-所有功能',
         can_preview: true,
         __code_source: Process(
-          "scripts.amis.curd.curdTemplate",
+          'scripts.amis.curd.curdTemplate',
           modelId,
-          columns
+          columns,
         ),
       },
     ],
@@ -161,12 +161,12 @@ function getTSType(modelId, columns) {
   return {
     __code_sources: [
       {
-        language: "typescript",
-        title: "Ts类型",
+        language: 'typescript',
+        title: 'Ts类型',
         __code_source: Process(
-          "scripts.system.tstype.createModelType",
+          'scripts.system.tstype.createModelType',
           modelId,
-          columns
+          columns,
         ),
       },
     ],
@@ -181,13 +181,13 @@ function getTableAmisViewFields(modelId, columns) {
   return {
     __code_sources: [
       {
-        language: "json",
-        title: "表单查看",
+        language: 'json',
+        title: '表单查看',
         can_preview: true,
         __code_source: Process(
-          "scripts.amis.schema.generateViewFields",
+          'scripts.amis.schema.generateViewFields',
           modelId,
-          columns
+          columns,
         ),
       },
     ],
@@ -202,13 +202,13 @@ function getTableAmisFormFields(modelId, columns) {
   return {
     __code_sources: [
       {
-        language: "json",
-        title: "表单编辑",
+        language: 'json',
+        title: '表单编辑',
         can_preview: true,
         __code_source: Process(
-          "scripts.amis.schema.generateEditFormFields",
+          'scripts.amis.schema.generateEditFormFields',
           modelId,
-          columns
+          columns,
         ),
       },
     ],
@@ -224,13 +224,13 @@ function getTableAmisFormViewFields(modelId, columns) {
   return {
     __code_sources: [
       {
-        language: "json",
-        title: "表单查看",
+        language: 'json',
+        title: '表单查看',
         can_preview: true,
         __code_source: Process(
-          "scripts.amis.schema.formViewFieldsSchema",
+          'scripts.amis.schema.formViewFieldsSchema',
           modelId,
-          columns
+          columns,
         ),
       },
     ],
@@ -246,13 +246,13 @@ function getTableAmisViewFieldsWithQuick(modelId, columns) {
   return {
     __code_sources: [
       {
-        language: "json",
-        title: "列表查看-带快速编辑",
+        language: 'json',
+        title: '列表查看-带快速编辑',
         can_preview: true,
         __code_source: Process(
-          "scripts.amis.schema.generateViewFieldsWithQuick",
+          'scripts.amis.schema.generateViewFieldsWithQuick',
           modelId,
-          columns
+          columns,
         ),
       },
     ],
@@ -267,10 +267,10 @@ function getTableAmisViewFieldsWithQuick(modelId, columns) {
  */
 function getXgenTable(modelId, columns) {
   let template = Process(
-    "scripts.xgen.schema.generateTableView",
+    'scripts.xgen.schema.generateTableView',
     modelId,
     columns,
-    "simple"
+    'simple',
   );
   return {
     __code_sources: template,
@@ -284,10 +284,10 @@ function getXgenTable(modelId, columns) {
  */
 function getXgenTableFull(modelId, columns) {
   let template = Process(
-    "scripts.xgen.schema.generateTableView",
+    'scripts.xgen.schema.generateTableView',
     modelId,
     columns,
-    "full"
+    'full',
   );
   return {
     __code_sources: template,
@@ -304,13 +304,13 @@ function getXgenForm(modelId, columns) {
   return {
     __code_sources: [
       {
-        language: "json",
-        title: "xgen-表单查看",
+        language: 'json',
+        title: 'xgen-表单查看',
         __code_source: Process(
-          "scripts.xgen.schema.generateFormView",
+          'scripts.xgen.schema.generateFormView',
           modelId,
           columns,
-          "simple"
+          'simple',
         ),
       },
     ],
@@ -326,11 +326,11 @@ function getXgenForm(modelId, columns) {
 function getXgenFormFullView(modelId, columns) {
   return {
     __code_sources: Process(
-      "scripts.xgen.schema.generateFormView",
+      'scripts.xgen.schema.generateFormView',
       modelId,
       columns,
-      "full",
-      "view"
+      'full',
+      'view',
     ),
   };
 }
@@ -343,11 +343,11 @@ function getXgenFormFullView(modelId, columns) {
 function getXgenFormFullEdit(modelId, columns) {
   return {
     __code_sources: Process(
-      "scripts.xgen.schema.generateFormView",
+      'scripts.xgen.schema.generateFormView',
       modelId,
       columns,
-      "full",
-      "edit"
+      'full',
+      'edit',
     ),
   };
 }
@@ -360,32 +360,32 @@ function getXgenFormFullEdit(modelId, columns) {
  */
 function getXgenObjects(modelId, columns) {
   const formFullviews = Process(
-    "scripts.xgen.schema.generateFormView",
+    'scripts.xgen.schema.generateFormView',
     modelId,
     columns,
-    "full",
-    "view"
+    'full',
+    'view',
   );
 
   const formFulledits = Process(
-    "scripts.xgen.schema.generateFormView",
+    'scripts.xgen.schema.generateFormView',
     modelId,
     columns,
-    "full",
-    "edit"
+    'full',
+    'edit',
   );
 
   const tableFullViews = Process(
-    "scripts.xgen.schema.generateTableView",
+    'scripts.xgen.schema.generateTableView',
     modelId,
     columns,
-    "full"
+    'full',
   );
 
   const menus = Process(
-    "scripts.xgen.schema.generateMenuConfig",
+    'scripts.xgen.schema.generateMenuConfig',
     modelId,
-    columns
+    columns,
   );
 
   return {

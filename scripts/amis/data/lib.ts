@@ -1,8 +1,8 @@
-import { FindAndLoadYaoModelById, FindAndLoadDBModelById } from "@scripts/system/model_lib";
-import { IsMysql } from "@scripts/amis/lib_tool";
-import { isDateTimeType } from "@scripts/system/col_type";
+import { FindAndLoadYaoModelById, FindAndLoadDBModelById } from '@scripts/system/model_lib';
+import { IsMysql } from '@scripts/amis/lib_tool';
+import { isDateTimeType } from '@scripts/system/col_type';
 
-import {Process,Exception} from "@yao/yao"
+import { Process, Exception } from '@yao/yao';
 
 // 推荐在循环对象属性的时候，使用for...in,
 // 在遍历数组的时候的时候使用for...of。
@@ -17,17 +17,17 @@ export function mergeQueryObject(querysIn, payload) {
   if (querysIn == null || payload == null) {
     return querysIn;
   }
-  if (typeof querysIn !== "object") {
+  if (typeof querysIn !== 'object') {
     return querysIn;
   }
-  if (payload != null && typeof payload === "object") {
+  if (payload != null && typeof payload === 'object') {
     for (const key in payload) {
       if (Object.hasOwnProperty.call(payload, key)) {
         const element = payload[key];
         const values = querys[key];
         if (Array.isArray(values)) {
           if (!values.some((x) => x == element)) {
-            //使用弱比较，'1'应该等于1
+            // 使用弱比较，'1'应该等于1
             querys[key].push(element);
           }
         } else {
@@ -47,21 +47,21 @@ export function mergeQueryObject(querysIn, payload) {
  * @param {object} queryParams yao解析的queryParams
  * @returns 返回Yao QueryParam
  */
-export function queryToQueryParam(modelIn, querysIn, queryParams={}) {
+export function queryToQueryParam(modelIn, querysIn, queryParams = {}) {
   let model = modelIn;
   if (querysIn == null && queryParams == null) {
     return {};
   }
   const querys = querysIn;
-  //查询条件
+  // 查询条件
   const queryParam = queryParams || {};
   const orders = [];
   const wheres = [];
-  //根据url参数信息，构造yao的查询条件
+  // 根据url参数信息，构造yao的查询条件
   let whereCount = 1;
 
   const columnMap = {};
-  if (typeof model === "string") {
+  if (typeof model === 'string') {
     model = FindAndLoadYaoModelById(model);
   }
   model.columns?.forEach((col) => {
@@ -69,43 +69,43 @@ export function queryToQueryParam(modelIn, querysIn, queryParams={}) {
   });
   // fillup the miss col
   if (model.option?.soft_deletes) {
-    columnMap["deleted_at"] = {
-      type: "datetime",
+    columnMap['deleted_at'] = {
+      type: 'datetime',
     };
   } else if (model.option?.timestamps) {
-    columnMap["updated_at"] = {
-      type: "datetime",
+    columnMap['updated_at'] = {
+      type: 'datetime',
     };
-    columnMap["created_at"] = {
-      type: "datetime",
+    columnMap['created_at'] = {
+      type: 'datetime',
     };
   }
 
   let select = [];
-  if (querys.hasOwnProperty("select")) {
-    const joinedString = querys["select"].join(",");
-    const selectArray = joinedString.split(",");
+  if (querys.hasOwnProperty('select')) {
+    const joinedString = querys['select'].join(',');
+    const selectArray = joinedString.split(',');
     select = [...new Set(selectArray)];
-    delete querys["select"];
+    delete querys['select'];
     select = select.filter((col) => columnMap.hasOwnProperty(col));
   }
 
-  const keywords = querys["keywords"];
-  delete querys["keywords"];
+  const keywords = querys['keywords'];
+  delete querys['keywords'];
 
-  delete querys["page"];
-  delete querys["perPage"];
+  delete querys['page'];
+  delete querys['perPage'];
 
-  const orderby = querys["orderBy"];
-  const orderDir = querys["orderDir"];
-  delete querys["orderBy"];
-  delete querys["orderDir"];
-  let option = "asc";
-  if (orderDir && orderDir.length && orderDir[0] != "") {
+  const orderby = querys['orderBy'];
+  const orderDir = querys['orderDir'];
+  delete querys['orderBy'];
+  delete querys['orderDir'];
+  let option = 'asc';
+  if (orderDir && orderDir.length && orderDir[0] != '') {
     option = orderDir[0];
   }
   // only one object
-  if (orderby && orderby.length && orderby[0] != "") {
+  if (orderby && orderby.length && orderby[0] != '') {
     orders.push({
       column: orderby[0],
       option: option,
@@ -123,30 +123,30 @@ export function queryToQueryParam(modelIn, querysIn, queryParams={}) {
     }
     const isDateTime = isDateTimeType(column);
 
-    const conditions = querys[key]; //查询都是一个数组
+    const conditions = querys[key]; // 查询都是一个数组
 
     for (const condition of conditions) {
-      if (condition === "") {
-        //前端无法清空搜索值
+      if (condition === '') {
+        // 前端无法清空搜索值
         continue;
       }
       // 时间范围查询
-      if (isDateTime && condition.includes(",")) {
-        const conds = condition.split(",");
+      if (isDateTime && condition.includes(',')) {
+        const conds = condition.split(',');
         if (conds.length === 2) {
           const low = conds[0];
           const high = conds[1];
           wheres.push({
             column: key,
             value: low,
-            method: "where",
-            op: "ge", //>=
+            method: 'where',
+            op: 'ge', // >=
           });
           wheres.push({
             column: key,
             value: high,
-            method: "where",
-            op: "le", //<=
+            method: 'where',
+            op: 'le', // <=
           });
           whereCount += 2;
           continue;
@@ -154,16 +154,16 @@ export function queryToQueryParam(modelIn, querysIn, queryParams={}) {
       }
 
       let param = {};
-      //*xx* 转换成数据库的%%
-      if (typeof condition === "string" && condition.includes("*")) {
-        if (condition === "*") {
+      //* xx* 转换成数据库的%%
+      if (typeof condition === 'string' && condition.includes('*')) {
+        if (condition === '*') {
           continue;
         }
-        const newcondt = condition.replaceAll(/\*/g, "%");
+        const newcondt = condition.replaceAll(/\*/g, '%');
         param = {
           column: key,
           value: newcondt,
-          op: "like",
+          op: 'like',
         };
       } else {
         param = {
@@ -171,32 +171,32 @@ export function queryToQueryParam(modelIn, querysIn, queryParams={}) {
           value: condition,
         };
       }
-      //超过一个条件，使用交叉查询
+      // 超过一个条件，使用交叉查询
       if (whereCount > 1) {
-        param["method"] = "where";
+        param['method'] = 'where';
       }
       wheres.push(param);
       whereCount += 1;
     }
   }
 
-  //使用keywords进行模糊
+  // 使用keywords进行模糊
   if (
-    keywords &&
-    Array.isArray(keywords) &&
-    keywords.length &&
-    keywords[0] != "" &&
-    keywords[0] != "*" &&
-    wheres.length == 0
+    keywords
+    && Array.isArray(keywords)
+    && keywords.length
+    && keywords[0] != ''
+    && keywords[0] != '*'
+    && wheres.length == 0
   ) {
-    const keyword = keywords[0] + "";
+    const keyword = keywords[0] + '';
     for (const colname in columnMap) {
       // const type = column.type.toUpperCase();
       if (
-        colname == "deleted_at" ||
-        colname == "updated_at" ||
-        colname == "created_at" ||
-        colname == "__restore_data"
+        colname == 'deleted_at'
+        || colname == 'updated_at'
+        || colname == 'created_at'
+        || colname == '__restore_data'
       ) {
         continue;
       }
@@ -209,15 +209,15 @@ export function queryToQueryParam(modelIn, querysIn, queryParams={}) {
         const param = {
           column: column.name,
           value: `%${keyword}%`,
-          op: "like",
+          op: 'like',
         };
-        if (keyword.includes("*")) {
-          const newcondt = keyword.replaceAll(/\*/g, "%");
+        if (keyword.includes('*')) {
+          const newcondt = keyword.replaceAll(/\*/g, '%');
           param.value = newcondt;
         }
 
         if (whereCount > 1) {
-          param["method"] = "orwhere";
+          param['method'] = 'orwhere';
         }
         wheres.push(param);
         whereCount += 1;
@@ -225,21 +225,20 @@ export function queryToQueryParam(modelIn, querysIn, queryParams={}) {
     }
   }
   if (wheres.length) {
-    queryParam["wheres"] = wheres;
+    queryParam['wheres'] = wheres;
   }
   if (orders.length) {
-    queryParam["orders"] = orders;
+    queryParam['orders'] = orders;
   }
   if (select.length) {
-    queryParam["select"] = select;
+    queryParam['select'] = select;
   }
 
   return queryParam;
 }
 function getDbModelColumnMap(model) {
-
   let modelDsl = model;
-  if (typeof model === "string") {
+  if (typeof model === 'string') {
     modelDsl = FindAndLoadDBModelById(model);
   }
 
@@ -248,14 +247,13 @@ function getDbModelColumnMap(model) {
     columnMap[col.name] = col;
   });
   if (Object.keys(columnMap).length == 0) {
-    throw new Exception("模型定义不正确，缺少字段定义", 500);
+    throw new Exception('模型定义不正确，缺少字段定义', 500);
   }
   return columnMap;
 }
 function getYaoModelColumnMap(model) {
-
   let modelDsl = model;
-  if (typeof model === "string") {
+  if (typeof model === 'string') {
     modelDsl = FindAndLoadYaoModelById(model);
   }
 
@@ -264,7 +262,7 @@ function getYaoModelColumnMap(model) {
     columnMap[col.name] = col;
   });
   if (Object.keys(columnMap).length == 0) {
-    throw new Exception("模型定义不正确，缺少字段定义", 500);
+    throw new Exception('模型定义不正确，缺少字段定义', 500);
   }
   return columnMap;
 }
@@ -274,23 +272,23 @@ export function updateOutputData(model, Data) {
     let modelDsl = model;
     if (typeof modelDsl === 'string') {
       // 如果使用yao model定义，无法获取用户定义的类型，比如json类型的数据就可能有多种含义。
-      modelDsl = FindAndLoadDBModelById(model)
+      modelDsl = FindAndLoadDBModelById(model);
     }
     const dbColmap = getDbModelColumnMap(modelDsl);
 
-    Data = Data.map(line => updateOutputDataLine(dbColmap, line))
-    return Data
+    Data = Data.map((line) => updateOutputDataLine(dbColmap, line));
+    return Data;
   }
-  return Data
+  return Data;
 }
 /**
  * update the data line before output
- * @param {object} dbColMap 
- * @param {object} line 
- * @returns 
+ * @param {object} dbColMap
+ * @param {object} line
+ * @returns
  */
 function updateOutputDataLine(dbColMap, line) {
-  if (typeof line !== "object") {
+  if (typeof line !== 'object') {
     return line;
   }
   for (const key in dbColMap) {
@@ -301,14 +299,14 @@ function updateOutputDataLine(dbColMap, line) {
     switch (colType) {
       // 如果数据库中使用的是json的字符串，作一次转换
       // 在amis编辑保存后会自动的转换成","拼接的字符串
-      case "IMAGES":
-        if (typeof field === 'string' && field.length >= 2 && field[0] === "[" && field[field.length - 1] === "]") {
+      case 'IMAGES':
+        if (typeof field === 'string' && field.length >= 2 && field[0] === '[' && field[field.length - 1] === ']') {
           try {
             const array = JSON.parse(field);
             if (Array.isArray(array)) {
               if (array.length > 0) {
                 line[key] = array;
-              }else{
+              } else {
                 line[key] = null;
               }
             }
@@ -319,7 +317,7 @@ function updateOutputDataLine(dbColMap, line) {
         break;
     }
   }
-  return line
+  return line;
 }
 
 /**
@@ -330,25 +328,25 @@ function updateOutputDataLine(dbColMap, line) {
  * @returns 处理后的Data
  */
 export function updateInputData(model, Data) {
-  if (typeof Data !== "object" || Data === null || Data === undefined) {
+  if (typeof Data !== 'object' || Data === null || Data === undefined) {
     return Data;
   }
   const yaoColMap = getYaoModelColumnMap(model);
 
-  const hasUserId = yaoColMap["user_id"] !== null; // columns.some(col=>col.name = 'user_id')
-  const user_id = Process("session.get", "user_id");
+  const hasUserId = yaoColMap['user_id'] !== null; // columns.some(col=>col.name = 'user_id')
+  const user_id = Process('session.get', 'user_id');
 
   function updateLine(line) {
-    if (typeof line !== "object") {
+    if (typeof line !== 'object') {
       return;
     }
     for (const key in yaoColMap) {
       const modelCol = yaoColMap[key];
       const colType = modelCol.type.toUpperCase();
       const field = line[key];
-      if (colType == "UUID" && modelCol.primary == true && !field) {
+      if (colType == 'UUID' && modelCol.primary == true && !field) {
         // 自动生成uuid
-        line[key] = Process("utils.str.UUID");
+        line[key] = Process('utils.str.UUID');
         continue;
       }
       if (!Object.hasOwnProperty.call(line, key)) {
@@ -359,21 +357,21 @@ export function updateInputData(model, Data) {
         continue;
       }
       switch (colType) {
-        case "TINYINTEGER":
-        case "SMALLINTEGER":
-        case "INTEGER":
-        case "BIGINTEGE":
-        case "UNSIGNEDTINYINTEGER":
-        case "UNSIGNEDSMALLINTEGER":
-        case "UNSIGNEDINTEGER":
-        case "UNSIGNEDBIGINTEGER":
-        case "ID":
-        case "TINYINCREMENTS":
-        case "SMALLINCREMENTS":
-        case "INCREMENTS":
-        case "BIGINCREMENTS":
-          if (typeof field === "string") {
-            if (field === "") {
+        case 'TINYINTEGER':
+        case 'SMALLINTEGER':
+        case 'INTEGER':
+        case 'BIGINTEGE':
+        case 'UNSIGNEDTINYINTEGER':
+        case 'UNSIGNEDSMALLINTEGER':
+        case 'UNSIGNEDINTEGER':
+        case 'UNSIGNEDBIGINTEGER':
+        case 'ID':
+        case 'TINYINCREMENTS':
+        case 'SMALLINCREMENTS':
+        case 'INCREMENTS':
+        case 'BIGINCREMENTS':
+          if (typeof field === 'string') {
+            if (field === '') {
               // tree-select控件清空时的值是字符串
               line[key] = 0;
             } else {
@@ -381,14 +379,14 @@ export function updateInputData(model, Data) {
             }
           }
           break;
-        case "FLOAT":
-        case "DOUBLE":
-        case "DECIMAL":
-        case "UNSIGNEDFLOAT":
-        case "UNSIGNEDDOUBLE":
-        case "UNSIGNEDDECIMAL":
-          if (typeof field === "string") {
-            if (field === "") {
+        case 'FLOAT':
+        case 'DOUBLE':
+        case 'DECIMAL':
+        case 'UNSIGNEDFLOAT':
+        case 'UNSIGNEDDOUBLE':
+        case 'UNSIGNEDDECIMAL':
+          if (typeof field === 'string') {
+            if (field === '') {
               // tree-select控件清空时的值是字符串
               line[key] = 0.0;
             } else {
@@ -396,33 +394,33 @@ export function updateInputData(model, Data) {
             }
           }
           break;
-        case "BOOLEAN":
+        case 'BOOLEAN':
           if (line[key]) {
             line[key] = IsMysql() ? 1 : true;
           } else {
             line[key] = IsMysql() ? 0 : false;
           }
           break;
-        case "STRING":
-        case "TEXT":
-        case "LONGTEXT":
-          if (typeof field !== "string") {
-            line[key] = line[key] + "";
+        case 'STRING':
+        case 'TEXT':
+        case 'LONGTEXT':
+          if (typeof field !== 'string') {
+            line[key] = line[key] + '';
           }
           break;
         default:
           break;
       }
-      if (colType.includes("DATE") || colType.includes("TIME")) {
-        if (field === "") {
+      if (colType.includes('DATE') || colType.includes('TIME')) {
+        if (field === '') {
           line[key] = undefined;
         }
       } else if (
-        colType === "JSON" &&
-        field != null &&
-        typeof field === "string" &&
-        field.length > 0 &&
-        !/^\s*\[/.test(field)
+        colType === 'JSON'
+        && field != null
+        && typeof field === 'string'
+        && field.length > 0
+        && !/^\s*\[/.test(field)
       ) {
         try {
           line[key] = JSON.parse(field);
@@ -431,9 +429,9 @@ export function updateInputData(model, Data) {
     }
 
     // 存在用户ID定义,但是前台没有明显输入
-    if (hasUserId && line["user_id"] == null) {
+    if (hasUserId && line['user_id'] == null) {
       if (user_id != null) {
-        line["user_id"] = user_id;
+        line['user_id'] = user_id;
       }
     }
   }
@@ -473,9 +471,9 @@ function paginateArray(arr, pageIn, pageSizeIn, orderBy, orderDirection) {
 
   // Apply sorting based on the orderBy and orderDirection parameters
   if (orderBy && orderDirection) {
-    const orderMultiplier = orderDirection === "desc" ? -1 : 1;
+    const orderMultiplier = orderDirection === 'desc' ? -1 : 1;
     arr.sort((a, b) =>
-      a[orderBy] > b[orderBy] ? orderMultiplier : -orderMultiplier
+      a[orderBy] > b[orderBy] ? orderMultiplier : -orderMultiplier,
     );
   }
 
@@ -490,7 +488,7 @@ function paginateArray(arr, pageIn, pageSizeIn, orderBy, orderDirection) {
 }
 
 export function getArrayItem(querys, key) {
-  if (typeof querys !== "object") {
+  if (typeof querys !== 'object') {
     return;
   }
   if (Array.isArray(querys[key]) && querys[key].length) {
@@ -508,14 +506,14 @@ export function getArrayItem(querys, key) {
  * @param {Array} searchFields 使用keyword搜索时，限制模糊匹配的字段列表。
  * @returns 数组
  */
-export function PaginateArrayWithQuery(data, querysIn, payload, searchFields=[]) {
+export function PaginateArrayWithQuery(data, querysIn, payload, searchFields = []) {
   const querys = mergeQueryObject(querysIn, payload);
 
-  const orderBy = getArrayItem(querys, "orderBy");
-  const orderDir = getArrayItem(querys, "orderDir");
+  const orderBy = getArrayItem(querys, 'orderBy');
+  const orderDir = getArrayItem(querys, 'orderDir');
 
-  const page = getArrayItem(querys, "page") || 1;
-  const perPage = getArrayItem(querys, "perPage") || 10;
+  const page = getArrayItem(querys, 'page') || 1;
+  const perPage = getArrayItem(querys, 'perPage') || 10;
 
   // console.log(
   //   `querys:${querys},page:${page},perage:${perPage},orderBy${orderBy},orderDir:${orderDir}`
@@ -532,7 +530,7 @@ export function PaginateArrayWithQuery(data, querysIn, payload, searchFields=[])
     total: count,
   };
 }
-function FilterArrayWithQuery(list, querysIn, searchFields=[]) {
+function FilterArrayWithQuery(list, querysIn, searchFields = []) {
   if (!Array.isArray(list) || list.length == 0) {
     return list;
   }
@@ -540,19 +538,19 @@ function FilterArrayWithQuery(list, querysIn, searchFields=[]) {
 
   const first = list[0];
 
-  if (!(typeof first === "object")) {
+  if (!(typeof first === 'object')) {
     return list;
   }
 
-  delete querys["page"];
-  delete querys["perPage"];
-  delete querys["orderDir"];
-  delete querys["orderBy"];
+  delete querys['page'];
+  delete querys['perPage'];
+  delete querys['orderDir'];
+  delete querys['orderBy'];
 
-  const keyword = getArrayItem(querys, "keywords");
+  const keyword = getArrayItem(querys, 'keywords');
 
   const keywordQuery = {};
-  if (querys["keywords"] != null && !first["keywords"]) {
+  if (querys['keywords'] != null && !first['keywords']) {
     // 只有keywords
     searchFields = searchFields || [];
     if (!Array.isArray(searchFields)) {
@@ -560,7 +558,7 @@ function FilterArrayWithQuery(list, querysIn, searchFields=[]) {
     }
     for (const key in first) {
       if (Object.hasOwnProperty.call(first, key)) {
-        if (keyword.includes("*")) {
+        if (keyword.includes('*')) {
           keywordQuery[key] = [keyword];
         } else {
           keywordQuery[key] = [`*${keyword}*`];
@@ -571,7 +569,7 @@ function FilterArrayWithQuery(list, querysIn, searchFields=[]) {
         delete keywordQuery[key];
       }
     }
-    delete querys["keywords"];
+    delete querys['keywords'];
   }
 
   for (const key in querys) {
@@ -580,7 +578,7 @@ function FilterArrayWithQuery(list, querysIn, searchFields=[]) {
       continue;
     }
     // 前端无法重置空值
-    if (querys[key] + "" == "") {
+    if (querys[key] + '' == '') {
       delete querys[key];
       continue;
     }
@@ -589,13 +587,13 @@ function FilterArrayWithQuery(list, querysIn, searchFields=[]) {
   function filterArray(queryObject, AndMode) {
     const arr = list.filter((item) => {
       for (const key in queryObject) {
-        let value = queryObject[key] + "";
+        let value = queryObject[key] + '';
         if (Array.isArray(queryObject[key]) && queryObject[key].length) {
-          value = queryObject[key][0] + "";
+          value = queryObject[key][0] + '';
         }
         if (value === undefined) continue;
-        if (value.includes("*")) {
-          const pattern = new RegExp(`^${value.replace(/\*/g, ".*")}`, "i");
+        if (value.includes('*')) {
+          const pattern = new RegExp(`^${value.replace(/\*/g, '.*')}`, 'i');
           if (AndMode) {
             if (!pattern.test(item[key])) return false;
           } else {
@@ -603,9 +601,9 @@ function FilterArrayWithQuery(list, querysIn, searchFields=[]) {
           }
         } else {
           if (AndMode) {
-            if (item[key] + "" != value) return false;
+            if (item[key] + '' != value) return false;
           } else {
-            if (item[key] + "" == value) return true;
+            if (item[key] + '' == value) return true;
           }
         }
       }

@@ -1,7 +1,7 @@
-const { getModelNameList, getOdataViewList, getModels, getModel } =
-  Require("odata.lib.model");
-const { Metadata, getEdmType } = Require("odata.lib.meta");
-const { XmlWriter } = Require("odata.lib.xml");
+const { getModelNameList, getOdataViewList, getModels, getModel }
+  = Require('odata.lib.model');
+const { Metadata, getEdmType } = Require('odata.lib.meta');
+const { XmlWriter } = Require('odata.lib.xml');
 
 /**
  * 获取模型列表
@@ -57,7 +57,7 @@ function convertJsonToXml(json, viewId, sBaseUrl) {
     <id>${sBaseUrl}${viewId}</id>
     <updated>2023-09-07T04:58:35Z</updated>
     <link rel="self" title="${viewId}" href="${viewId}" />
-    ${entrys.join("")}
+    ${entrys.join('')}
 </feed>`;
   return xml;
 }
@@ -73,7 +73,7 @@ function convertEntrys(json, viewId, sBaseUrl) {
 
   const entrys = [];
   for (const item of json) {
-    let colXmlstr = "";
+    let colXmlstr = '';
     // 不要直接循环item对象，那个索引是随机的。
     model.columns.forEach((col) => {
       const key = col.name;
@@ -82,7 +82,7 @@ function convertEntrys(json, viewId, sBaseUrl) {
         let element = item[key];
         let edmType = getEdmType(col.type);
         // edmType = "Edm.String";
-        if (edmType == "Edm.String") {
+        if (edmType == 'Edm.String') {
           element = escapedXmlString(element);
         }
         colXmlstr += `<d:${key} m:type="${edmType}">${element}</d:${key}>
@@ -90,7 +90,7 @@ function convertEntrys(json, viewId, sBaseUrl) {
       }
     });
     colXmlstr = colXmlstr.trimEnd(`
-    `)
+    `);
 
     entrys.push(`<entry>
       <id>${sBaseUrl}${viewId}(${item.id})</id>
@@ -112,17 +112,17 @@ function convertEntrys(json, viewId, sBaseUrl) {
  * @returns
  */
 function escapedXmlString(str) {
-  if (!str || typeof str.replace !== "function") {
+  if (!str || typeof str.replace !== 'function') {
     return str;
   }
   const strXml = str.replace(/[&<>"']/g, (char) => {
     const entityMap = {
       // Object to map characters to their XML entities
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&apos;",
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      '\'': '&apos;',
     };
     return entityMap[char] || char; // Return XML entity if exists, otherwise return original character
   });

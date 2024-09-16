@@ -1,5 +1,5 @@
 // Require("amis.lib_tool")
-import {Process} from '@yao/yao'
+import { Process } from '@yao/yao';
 
 /**
  * 处理模型名称分隔符
@@ -14,12 +14,12 @@ export function DotName(pathname) {
     return pathname;
   }
   let str = pathname;
-  str = str.replace(/\\/g, "/");
-  str = str.replace(/\/\//g, "/");
-  str = str.replace(/\//g, ".");
-  str = str.replace(/-/g, ".");
-  str = str.replace(/_/g, ".");
-  const newStr = str.replace(/^\.+|\.+$/g, "");
+  str = str.replace(/\\/g, '/');
+  str = str.replace(/\/\//g, '/');
+  str = str.replace(/\//g, '.');
+  str = str.replace(/-/g, '.');
+  str = str.replace(/_/g, '.');
+  const newStr = str.replace(/^\.+|\.+$/g, '');
   return newStr;
 }
 
@@ -35,12 +35,12 @@ export function UnderscoreName(pathname) {
     return pathname;
   }
   let str = pathname;
-  str = str.replace(/\\/g, "/");
-  str = str.replace(/\/\//g, "/");
-  str = str.replace(/\//g, "_");
-  str = str.replace(/-/g, "_");
-  str = str.replace(/\./g, "_");
-  const newStr = str.replace(/^_+|_+$/g, "");
+  str = str.replace(/\\/g, '/');
+  str = str.replace(/\/\//g, '/');
+  str = str.replace(/\//g, '_');
+  str = str.replace(/-/g, '_');
+  str = str.replace(/\./g, '_');
+  const newStr = str.replace(/^_+|_+$/g, '');
   return newStr;
 }
 
@@ -55,13 +55,13 @@ export function SlashName(pathname) {
     return pathname;
   }
   let str = pathname;
-  str = str.replace(/\\/g, "/");
+  str = str.replace(/\\/g, '/');
   // 不应把下划线作转换
   // str = str.replace(/_/g, "/");
-  str = str.replace(/-/g, "/");
-  str = str.replace(/\./g, "/");
-  str = str.replace(/\/\//g, "/");
-  const newStr = str.replace(/^\/+|\/+$/g, "");
+  str = str.replace(/-/g, '/');
+  str = str.replace(/\./g, '/');
+  str = str.replace(/\/\//g, '/');
+  const newStr = str.replace(/^\/+|\/+$/g, '');
   return newStr;
 }
 
@@ -75,14 +75,14 @@ export function FileNameConvert(filename) {
   // 不应用把下划线作转换
   // const str = filename.replace(/[\\_]/g, "/");
   const str = filename;
-  const arr = str.split(".");
+  const arr = str.split('.');
   if (arr.length < 3) {
     return str;
   }
   const suffix = arr.slice(-2);
   const header = arr.slice(0, -2);
-  const str1 = header.join("/") + "." + suffix.join(".");
-  return str1.replace(/\/\//g, "/");
+  const str1 = header.join('/') + '.' + suffix.join('.');
+  return str1.replace(/\/\//g, '/');
 }
 
 /**
@@ -90,7 +90,7 @@ export function FileNameConvert(filename) {
  * @returns string
  */
 function getDBType() {
-  return Process("utils.env.Get", "YAO_DB_DRIVER");
+  return Process('utils.env.Get', 'YAO_DB_DRIVER');
 }
 /**
  * 判断是否是mysql数据库
@@ -111,7 +111,7 @@ export function IsSqlite() {
   return /sqlite/i.test(getDBType());
 }
 export function ClearFalsyKeys(target) {
-  if (target === null || target === undefined || typeof target !== "object") {
+  if (target === null || target === undefined || typeof target !== 'object') {
     return target;
   }
   const result = Array.isArray(target) ? [] : {}; // Fix 2: Create new object/array
@@ -125,17 +125,17 @@ export function ClearFalsyKeys(target) {
     }
     if (Array.isArray(value)) {
       const newArray = value.map((item) => ClearFalsyKeys(item));
-      result[key] = newArray.filter((item) => item !==undefined && item !== null ); // remove falsy values from array
+      result[key] = newArray.filter((item) => item !== undefined && item !== null); // remove falsy values from array
 
       if (value.length == 0) {
         delete result[key];
       }
-    } else if (typeof value === "object") {
-      const obj = ClearFalsyKeys(value); //Fix 4: Assign the returned value to result
+    } else if (typeof value === 'object') {
+      const obj = ClearFalsyKeys(value); // Fix 4: Assign the returned value to result
       if (obj !== undefined && obj != null) {
-        result[key] = obj
+        result[key] = obj;
         // 空对象不输出
-        if (typeof result[key] === 'object'  && Object.keys(result[key]).length == 0) {
+        if (typeof result[key] === 'object' && Object.keys(result[key]).length == 0) {
           delete result[key];
         }
       }
@@ -143,23 +143,23 @@ export function ClearFalsyKeys(target) {
       result[key] = value;
     }
   }
-  return result; //Fix 2: return new object/array
+  return result; // Fix 2: return new object/array
 }
 
-//删除对象中的空节点
+// 删除对象中的空节点
 export function RemoveOjbectEmptyKey(obj) {
   for (const prop in obj) {
     if (obj[prop] === null || obj[prop] === undefined) {
-      //null属性
+      // null属性
       delete obj[prop];
-    } else if (typeof obj[prop] === "object") {
-      //递归处理
+    } else if (typeof obj[prop] === 'object') {
+      // 递归处理
       RemoveOjbectEmptyKey(obj[prop]);
       if (Array.isArray(obj[prop]) && obj[prop].length === 0) {
-        //空数组
+        // 空数组
         delete obj[prop];
       } else if (Object.keys(obj[prop]).length === 0) {
-        //空对象
+        // 空对象
         delete obj[prop];
       }
     }

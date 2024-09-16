@@ -3,12 +3,12 @@ function parseUrl(urlString) {
 
   // parse query string into query object
   const query = {};
-  let queryParams = "";
-  if (urlString.indexOf("?") !== -1) {
-    queryParams = urlString.slice(urlString.indexOf("?") + 1);
+  let queryParams = '';
+  if (urlString.indexOf('?') !== -1) {
+    queryParams = urlString.slice(urlString.indexOf('?') + 1);
   }
-  queryParams.split("&").forEach((param) => {
-    const [key, value] = param.split("=");
+  queryParams.split('&').forEach((param) => {
+    const [key, value] = param.split('=');
     const decodedKey = decodeURIComponent(key);
     const decodedValue = decodeURIComponent(value);
     if (query.hasOwnProperty(decodedKey)) {
@@ -26,32 +26,32 @@ function parseUrl(urlString) {
   // parse schema, hostname, port, and path
   let urlWithoutQuery = urlString;
   if (queryParams.length !== 0) {
-    urlWithoutQuery = urlString.slice(0, urlString.indexOf("?"));
+    urlWithoutQuery = urlString.slice(0, urlString.indexOf('?'));
   }
-  if (urlWithoutQuery.indexOf("://") !== -1) {
-    url.schema = urlWithoutQuery.slice(0, urlWithoutQuery.indexOf("://"));
+  if (urlWithoutQuery.indexOf('://') !== -1) {
+    url.schema = urlWithoutQuery.slice(0, urlWithoutQuery.indexOf('://'));
     urlWithoutQuery = urlWithoutQuery.slice(url.schema.length + 3);
   }
-  let port = "";
-  if (urlWithoutQuery.indexOf(":") !== -1) {
-    const parts = urlWithoutQuery.split(":");
+  let port = '';
+  if (urlWithoutQuery.indexOf(':') !== -1) {
+    const parts = urlWithoutQuery.split(':');
     url.hostname = parts[0];
     port = parts[1];
   } else {
-    url.hostname = "";
+    url.hostname = '';
   }
-  if (port.indexOf("/") !== -1) {
-    port = port.slice(0, port.indexOf("/"));
+  if (port.indexOf('/') !== -1) {
+    port = port.slice(0, port.indexOf('/'));
   }
   url.port = port;
-  let path = "";
-  if (urlWithoutQuery.indexOf("/") !== -1) {
-    path = urlWithoutQuery.slice(urlWithoutQuery.indexOf("/"));
-    if (path.indexOf("?") !== -1) {
-      path = path.slice(0, path.indexOf("?"));
+  let path = '';
+  if (urlWithoutQuery.indexOf('/') !== -1) {
+    path = urlWithoutQuery.slice(urlWithoutQuery.indexOf('/'));
+    if (path.indexOf('?') !== -1) {
+      path = path.slice(0, path.indexOf('?'));
     }
   }
-  if (path === "" && urlWithoutQuery.indexOf("/") === -1) {
+  if (path === '' && urlWithoutQuery.indexOf('/') === -1) {
     path = urlWithoutQuery;
   }
   url.path = path;

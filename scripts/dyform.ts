@@ -8,7 +8,7 @@ import { Exception, Process, Query } from '@yao/yao';
  */
 function Load(id, source) {
   const dsl = source || {};
-  dsl["id"] = id;
+  dsl['id'] = id;
   return dsl;
 }
 
@@ -21,7 +21,7 @@ function Load(id, source) {
  */
 function Reload(id, source, dsl) {
   const newDSL = source || {};
-  newDSL["id"] = id;
+  newDSL['id'] = id;
   // newDSL["tests.reload"] = typeof dsl === "object";
   return newDSL;
 }
@@ -32,7 +32,7 @@ function Reload(id, source, dsl) {
  */
 function Unload(id) {
   if (id == undefined || id == null) {
-    throw new Exception("id is required");
+    throw new Exception('id is required');
   }
 }
 

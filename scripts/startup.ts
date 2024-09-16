@@ -8,10 +8,10 @@
  * yao run scripts.startup.run
  */
 function run() {
-  const yao_env = Process("utils.env.get", "YAO_ENV");
+  const yao_env = Process('utils.env.get', 'YAO_ENV');
   // 生产环境才自动加载，开发环境，开发人员手动处理
-  if (yao_env !== "development") {
-    console.log("加载所有数据库模型到缓存");
-    Process("scripts.system.model.importDBModelsToCache");
+  if (yao_env !== 'development') {
+    console.log('加载所有数据库模型到缓存');
+    Process('scripts.system.model.importDBModelsToCache');
   }
 }

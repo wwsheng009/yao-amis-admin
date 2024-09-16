@@ -10,7 +10,7 @@ function View(data) {
     return null;
   }
   if (!Array.isArray(data)) {
-    return data.split(",");
+    return data.split(',');
   }
   //   let isArray = true;
   //   try {
@@ -41,7 +41,7 @@ function View(data) {
  */
 function Edit(row, name, model_name) {
   if (Array.isArray(row[name])) {
-    return row[name].join(",");
+    return row[name].join(',');
   }
   //   const table = Process("schemas.default.TableGet", model_name);
   //   const column = table.columns.find((col) => col.name === name);

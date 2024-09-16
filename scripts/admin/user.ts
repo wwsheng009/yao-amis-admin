@@ -1,29 +1,29 @@
 // const { User, admin_user } = Require("admin.types.user");
-import {Process} from "@yao/yao"
+import { Process } from '@yao/yao';
 
 // scripts.admin.user.saveSetting
 function saveSetting(payload) {
-  console.log("scripts.admin.user.saveSetting");
-  const user_id = Process("session.get", "user_id");
+  console.log('scripts.admin.user.saveSetting');
+  const user_id = Process('session.get', 'user_id');
 
   let setting = payload.system_theme_setting;
-  if (typeof setting === "string") {
+  if (typeof setting === 'string') {
     try {
       setting = JSON.parse(setting);
     } catch (err) {
-      console.log("failed to parse the setting" + err);
+      console.log('failed to parse the setting' + err);
     }
   }
-  const [theme_setting] = Process("models.admin.theme.setting.Get", {
-    wheres: [{ column: "user_id", value: user_id }],
+  const [theme_setting] = Process('models.admin.theme.setting.Get', {
+    wheres: [{ column: 'user_id', value: user_id }],
   });
   if (theme_setting) {
-    return Process("models.admin.theme.setting.save", {
+    return Process('models.admin.theme.setting.save', {
       user_id: user_id,
       theme_setting: setting,
     });
   } else {
-    return Process("models.admin.theme.setting.create", {
+    return Process('models.admin.theme.setting.create', {
       user_id: user_id,
       theme_setting: setting,
     });
@@ -36,25 +36,25 @@ function readSetting() {
     footer: false,
     breadcrumb: true,
     breadcrumbIcon: false,
-    themeColor: "#4080FF",
+    themeColor: '#4080FF',
     menuWidth: 220,
-    layoutMode: "default",
-    siderTheme: "light",
-    topTheme: "light",
-    animateInType: "alpha",
+    layoutMode: 'default',
+    siderTheme: 'light',
+    topTheme: 'light',
+    animateInType: 'alpha',
     animateInDuration: 550,
-    animateOutType: "alpha",
+    animateOutType: 'alpha',
     animateOutDuration: 450,
-    loginTemplate: "default",
+    loginTemplate: 'default',
     keepAlive: false,
     enableTab: true,
     tabIcon: true,
   };
 
-  const user_id = Process("session.get", "user_id");
+  const user_id = Process('session.get', 'user_id');
   if (user_id) {
-    const [row] = Process("models.admin.theme.setting.Get", {
-      wheres: [{ column: "user_id", value: user_id }],
+    const [row] = Process('models.admin.theme.setting.Get', {
+      wheres: [{ column: 'user_id', value: user_id }],
     });
     // const { theme_setting } = Process(
     //   "models.admin.theme.setting.find",
@@ -70,13 +70,13 @@ function readSetting() {
     nav: {
       appendNav: null,
       prependNav: {
-        type: "button",
-        actionType: "url",
-        icon: "fa-brands fa-github",
+        type: 'button',
+        actionType: 'url',
+        icon: 'fa-brands fa-github',
         blank: true,
-        url: "https://github.com/Slowlyo/owl-admin-demo",
-        tooltip: "demo 源码",
-        className: "mr-2 rounded-full",
+        url: 'https://github.com/Slowlyo/owl-admin-demo',
+        tooltip: 'demo 源码',
+        className: 'mr-2 rounded-full',
       },
     },
     assets: {
@@ -87,10 +87,10 @@ function readSetting() {
       ],
       styles: [],
     },
-    app_name: "Owl Admin",
-    locale: "zh_CN",
+    app_name: 'Owl Admin',
+    locale: 'zh_CN',
     layout: {
-      title: "%title% | OwlAdmin",
+      title: '%title% | OwlAdmin',
       header: {
         refresh: true,
         dark: true,
@@ -101,11 +101,11 @@ function readSetting() {
       footer:
         '<a href="https://github.com/slowlyo/owl-admin" target="_blank">Owl Admin</a>',
     },
-    logo: "http://demo.owladmin.com/admin/logo.png",
+    logo: 'http://demo.owladmin.com/admin/logo.png',
     login_captcha: true,
     show_development_tools: true,
     system_theme_setting: default_setting,
-    enabled_extensions: ["slowlyo.owl-amis-json-parse"],
+    enabled_extensions: ['slowlyo.owl-amis-json-parse'],
   };
 }
 
@@ -115,7 +115,7 @@ function readSetting() {
  * @returns array[]
  */
 function userList() {
-  const userlist: admin_user[] = Process("models.admin.user.get", {});
+  const userlist: admin_user[] = Process('models.admin.user.get', {});
 
   const user: User[] = userlist.map((user: admin_user) => {
     return {
@@ -125,7 +125,7 @@ function userList() {
       gender: user.extra?.sex,
       email: user.email,
       phone: user.mobile,
-      userStatus: user.status == "enabled" ? "1" : "2",
+      userStatus: user.status == 'enabled' ? '1' : '2',
     } as User;
   });
   return user;
@@ -143,7 +143,7 @@ export interface User {
    * - 0: 女
    * - 1: 男
    */
-  gender: "0" | "1" | null;
+  gender: '0' | '1' | null;
   /** 用户手机号码 */
   phone: string;
   /** 用户邮箱 */
@@ -155,7 +155,7 @@ export interface User {
    * - 3: 冻结
    * - 4: 软删除
    */
-  userStatus: "1" | "2" | "3" | "4" | null;
+  userStatus: '1' | '2' | '3' | '4' | null;
 }
 
 /**
@@ -164,28 +164,28 @@ export interface User {
  * Table=> admin_user (用户表)
  */
 export interface admin_user {
-  /**ID */
+  /** ID */
   id?: number;
-  /**账号类型 admin 管理员, staff 员工, user 用户, robot 机器人 */
+  /** 账号类型 admin 管理员, staff 员工, user 用户, robot 机器人 */
   type?: string;
-  /**邮箱 */
+  /** 邮箱 */
   email?: string;
-  /**手机号 */
+  /** 手机号 */
   mobile?: string;
-  /**登录密码 */
+  /** 登录密码 */
   password?: string;
-  /**操作密码 */
+  /** 操作密码 */
   password2nd?: string;
-  /**姓名 */
+  /** 姓名 */
   name?: string;
-  /**身份证号码 */
+  /** 身份证号码 */
   idcard?: string;
-  /**API Key */
+  /** API Key */
   key?: string;
-  /**API 密钥 */
+  /** API 密钥 */
   secret?: string;
-  /**扩展信息 */
+  /** 扩展信息 */
   extra?: object | any;
-  /**用户状态 enabled 有效, disabled 无效 */
+  /** 用户状态 enabled 有效, disabled 无效 */
   status?: string;
 }

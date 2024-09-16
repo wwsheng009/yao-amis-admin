@@ -1,200 +1,200 @@
-import { PaginateArrayWithQuery } from "@scripts/amis/data/lib";
+import { PaginateArrayWithQuery } from '@scripts/amis/data/lib';
 
-import { GetColumnTypeList } from "@scripts/system/col_type";
+import { GetColumnTypeList } from '@scripts/system/col_type';
 
-import { Process, Query } from "@yao/yao";
+import { Process, Query } from '@yao/yao';
 
 function GetColumnOptions2() {
   return GetColumnTypeList();
 }
 
-//scripts.system.meta.GetColumnOptions
+// scripts.system.meta.GetColumnOptions
 function GetColumnOptions() {
   return [
     {
       children: [
         {
-          label: "字符串",
-          value: "string",
+          label: '字符串',
+          value: 'string',
         },
         {
-          label: "字符",
-          value: "char",
+          label: '字符',
+          value: 'char',
         },
         {
-          label: "文本",
-          value: "text",
+          label: '文本',
+          value: 'text',
         },
         {
-          label: "中文本",
-          value: "mediumText",
+          label: '中文本',
+          value: 'mediumText',
         },
         {
-          label: "长文本",
-          value: "longText",
+          label: '长文本',
+          value: 'longText',
         },
         {
-          label: "JSON文本",
-          value: "json",
+          label: 'JSON文本',
+          value: 'json',
         },
         {
-          label: "JSON二进制",
-          value: "jsonb",
+          label: 'JSON二进制',
+          value: 'jsonb',
         },
         {
-          label: "UUID",
-          value: "格式字符串",
+          label: 'UUID',
+          value: '格式字符串',
         },
         {
-          label: "二进制数据",
-          value: "binary",
+          label: '二进制数据',
+          value: 'binary',
         },
       ],
-      label: "文本",
+      label: '文本',
     },
     {
       children: [
         {
-          label: "日期",
-          value: "date",
+          label: '日期',
+          value: 'date',
         },
         {
-          label: "日期时间",
-          value: "datetime",
+          label: '日期时间',
+          value: 'datetime',
         },
         {
-          label: "带时区的日期时间",
-          value: "datetimeTz",
+          label: '带时区的日期时间',
+          value: 'datetimeTz',
         },
         {
-          label: "时间",
-          value: "time",
+          label: '时间',
+          value: 'time',
         },
         {
-          label: "带时区的时间",
-          value: "timeTz",
+          label: '带时区的时间',
+          value: 'timeTz',
         },
         {
-          label: "时间戳",
-          value: "timestamp",
+          label: '时间戳',
+          value: 'timestamp',
         },
         {
-          label: "带时区的时间戳",
-          value: "timestampTz",
+          label: '带时区的时间戳',
+          value: 'timestampTz',
         },
       ],
-      label: "日期时间",
+      label: '日期时间',
     },
     {
       children: [
         {
-          label: "长整型+自增",
-          value: "id",
+          label: '长整型+自增',
+          value: 'id',
         },
         {
-          label: "无符号微整型+自增",
-          value: "tinyIncrements",
+          label: '无符号微整型+自增',
+          value: 'tinyIncrements',
         },
         {
-          label: "无符号小整型+自增",
-          value: "smallIncrements",
+          label: '无符号小整型+自增',
+          value: 'smallIncrements',
         },
         {
-          label: "无符号整型+自增",
-          value: "increments",
+          label: '无符号整型+自增',
+          value: 'increments',
         },
         {
-          label: "无符号长整型+自增",
-          value: "bigIncrements",
+          label: '无符号长整型+自增',
+          value: 'bigIncrements',
         },
       ],
-      label: "自增",
+      label: '自增',
     },
     {
       children: [
         {
-          label: "微整型",
-          value: "tinyInteger",
+          label: '微整型',
+          value: 'tinyInteger',
         },
         {
-          label: "无符号微整型",
-          value: "unsignedTinyInteger",
+          label: '无符号微整型',
+          value: 'unsignedTinyInteger',
         },
         {
-          label: "小整型",
-          value: "smallInteger",
+          label: '小整型',
+          value: 'smallInteger',
         },
         {
-          label: "无符号小整型",
-          value: "unsignedSmallInteger",
+          label: '无符号小整型',
+          value: 'unsignedSmallInteger',
         },
         {
-          label: "整型",
-          value: "integer",
+          label: '整型',
+          value: 'integer',
         },
         {
-          label: "无符号整型",
-          value: "unsignedInteger",
+          label: '无符号整型',
+          value: 'unsignedInteger',
         },
         {
-          label: "长整型",
-          value: "bigInteger",
+          label: '长整型',
+          value: 'bigInteger',
         },
         {
-          label: "无符号长整型",
-          value: "unsignedBigInteger",
+          label: '无符号长整型',
+          value: 'unsignedBigInteger',
         },
       ],
-      label: "整型",
+      label: '整型',
     },
     {
       children: [
         {
-          label: "浮点数",
-          value: "float",
+          label: '浮点数',
+          value: 'float',
         },
         {
-          label: "无符号浮点数",
-          value: "unsignedFloat",
+          label: '无符号浮点数',
+          value: 'unsignedFloat',
         },
         {
-          label: "双精度",
-          value: "double",
+          label: '双精度',
+          value: 'double',
         },
         {
-          label: "无符号双精度",
-          value: "unsignedDouble",
+          label: '无符号双精度',
+          value: 'unsignedDouble',
         },
         {
-          label: "小数(一般用于存储货币)",
-          value: "decimal",
+          label: '小数(一般用于存储货币)',
+          value: 'decimal',
         },
         {
-          label: "无符号小数",
-          value: "unsignedDecimal",
+          label: '无符号小数',
+          value: 'unsignedDecimal',
         },
       ],
-      label: "小数",
+      label: '小数',
     },
     {
-      label: "布尔型",
-      value: "boolean",
+      label: '布尔型',
+      value: 'boolean',
     },
     {
-      label: "枚举型",
-      value: "enum",
+      label: '枚举型',
+      value: 'enum',
     },
     {
-      label: "IP",
-      value: "ipAddress",
+      label: 'IP',
+      value: 'ipAddress',
     },
     {
-      label: "网卡地址",
-      value: "macAddress",
+      label: '网卡地址',
+      value: 'macAddress',
     },
     {
-      label: "年份",
-      value: "year",
+      label: '年份',
+      value: 'year',
     },
   ];
 }
@@ -207,11 +207,11 @@ function GetColumnOptions() {
 function saveApis() {
   const list = allApi();
 
-  const { columns, values } = Process("utils.arr.split", list);
-  Process("flows.system.api_clean");
-  Process("models.system.api.insert", columns, values);
+  const { columns, values } = Process('utils.arr.split', list);
+  Process('flows.system.api_clean');
+  Process('models.system.api.insert', columns, values);
 
-  return { message: "保存成功" };
+  return { message: '保存成功' };
 }
 
 /**
@@ -236,7 +236,7 @@ function ApiListPaginate(querysIn, payload) {
  * @returns
  */
 function allApi() {
-  const apisList = Process("widget.apis");
+  const apisList = Process('widget.apis');
   let apis = apiDefinitionList(apisList);
   apis = apis.map((api) => {
     api.method = api.method.toLowerCase();
@@ -251,22 +251,22 @@ function allApi() {
  * @returns
  */
 function formApis() {
-  const apisList = Process("widget.apis");
+  const apisList = Process('widget.apis');
 
-  return apiDefinitionList(apisList.filter((x) => x.name == "forms"));
+  return apiDefinitionList(apisList.filter((x) => x.name == 'forms'));
 }
 /**
  * get all the yao talbe api list
  * @returns 所有的自定义的API清单列表
  */
 function customApis() {
-  const apisList = Process("widget.apis");
-  return apiDefinitionList(apisList.filter((x) => x.name == "apis"));
+  const apisList = Process('widget.apis');
+  return apiDefinitionList(apisList.filter((x) => x.name == 'apis'));
 }
-//yao run scripts.system.meta.tableApis
+// yao run scripts.system.meta.tableApis
 function tableApis() {
-  const apisList = Process("widget.apis");
-  return apiDefinitionList(apisList.filter((x) => x.name == "tables"));
+  const apisList = Process('widget.apis');
+  return apiDefinitionList(apisList.filter((x) => x.name == 'tables'));
 }
 
 /**
@@ -279,8 +279,8 @@ function getTableListFromApis() {
 
   const paths = {};
 
-  const prefix = "/tables/";
-  const suffix = ".tab.json";
+  const prefix = '/tables/';
+  const suffix = '.tab.json';
 
   apis.forEach((api) => {
     if (!paths[api.dsl_path]) {
@@ -289,7 +289,7 @@ function getTableListFromApis() {
 
       paths[api.dsl_path] = api.dsl_path
         .substring(startIndex, endIndex)
-        .replace(/\//g, ".");
+        .replace(/\//g, '.');
     }
   });
 
@@ -307,8 +307,8 @@ function getFormListFromApis() {
 
   const paths = {};
 
-  const prefix = "/forms/";
-  const suffix = ".form.json";
+  const prefix = '/forms/';
+  const suffix = '.form.json';
 
   apis.forEach((api) => {
     if (!paths[api.dsl_path]) {
@@ -317,7 +317,7 @@ function getFormListFromApis() {
 
       paths[api.dsl_path] = api.dsl_path
         .substring(startIndex, endIndex)
-        .replace(/\//g, ".");
+        .replace(/\//g, '.');
     }
   });
 
@@ -357,7 +357,7 @@ function apiDefinitionList(apisList) {
             url_params: path.params,
             guard: path.guard || api.data.guard,
             group: api.group || api.data.group,
-            dsl_path: "/" + api.data.DSL.replace(/\\/g, "/"),
+            dsl_path: '/' + api.data.DSL.replace(/\\/g, '/'),
             dsl_name: api.name,
             description: path.description || api.data.description,
             version: api.data.version,
@@ -388,9 +388,9 @@ function apiDefinitionList(apisList) {
  * @returns
  */
 function cleanPath(path) {
-  let newPath = path.replace(/\/\//g, "/");
-  newPath = newPath.replace(/\\/g, "/");
-  newPath = newPath.replace("/apis", "/api");
+  let newPath = path.replace(/\/\//g, '/');
+  newPath = newPath.replace(/\\/g, '/');
+  newPath = newPath.replace('/apis', '/api');
   return newPath;
 }
 
@@ -401,18 +401,18 @@ function cleanPath(path) {
  * @returns
  */
 function modelApiList(model) {
-  const allApi = Process("scripts.system.meta.allApi");
-  const apilist = allApi.filter((api) => api.group == "/v1/system/model");
+  const allApi = Process('scripts.system.meta.allApi');
+  const apilist = allApi.filter((api) => api.group == '/v1/system/model');
   apilist.forEach((api) => {
-    api.fullpath = api.fullpath.replace(":model", model);
-    api.router = api.router.replace(":model", model);
-    api.path = api.path.replace(":model", model);
+    api.fullpath = api.fullpath.replace(':model', model);
+    api.router = api.router.replace(':model', model);
+    api.path = api.path.replace(':model', model);
   });
   const tableApis = allApi.filter(
-    (api) => api.group == "/__yao/table" && api.url_params?.id === model
+    (api) => api.group == '/__yao/table' && api.url_params?.id === model,
   );
   const formApis = allApi.filter(
-    (api) => api.group == "/__yao/form" && api.url_params?.id === model
+    (api) => api.group == '/__yao/form' && api.url_params?.id === model,
   );
 
   return [...apilist, ...tableApis, ...formApis];

@@ -1,13 +1,11 @@
-import { deleteObjectKey } from "@scripts/system/lib";
-import { ClearFalsyKeys } from "@scripts/amis/lib_tool";
-import { updateSoyRouteComponent } from "@scripts/admin/menu_lib";
-import { filterTreeDataWithFunc } from "@scripts/amis/data/tree";
+import { deleteObjectKey } from '@scripts/system/lib';
+import { ClearFalsyKeys } from '@scripts/amis/lib_tool';
+import { updateSoyRouteComponent } from '@scripts/admin/menu_lib';
+import { filterTreeDataWithFunc } from '@scripts/amis/data/tree';
 
-import { getUserAuthMenuIds } from "@scripts/auth/lib";
+import { getUserAuthMenuIds } from '@scripts/auth/lib';
 
-import {Process,Exception,FS} from "@yao/yao"
-
-
+import { Process, Exception, FS } from '@yao/yao';
 
 /**
  * 处理用户的菜单
@@ -17,17 +15,16 @@ import {Process,Exception,FS} from "@yao/yao"
  *
  * */
 
-
-const PagesLocation = "/pages";
-const WorkingPagesLocation = "/amis_editor";
+const PagesLocation = '/pages';
+const WorkingPagesLocation = '/amis_editor';
 
 /**
  * get user auth menus
  * yao run scripts.admin.menu.getUserAuthMenu
  */
 function getSoyAdminUserMenu() {
-  const user = Process("session.get", "user");
-  if (user?.type === "super") {
+  const user = Process('session.get', 'user');
+  if (user?.type === 'super') {
     return getSoySuperUserMenu();
   }
 
@@ -35,7 +32,7 @@ function getSoyAdminUserMenu() {
   if (menusIds.length) {
     // get menus
     let routes = getSoyRoutesFromDB();
-    routes = Process(`utils.arr.Tree`, routes, { parent: "parent", empty: 0 });
+    routes = Process(`utils.arr.Tree`, routes, { parent: 'parent', empty: 0 });
     routes = filterTreeDataWithFunc(routes, (item) => {
       return menusIds.includes(item.id) || !item.meta?.requiresAuth;
     });
@@ -57,12 +54,12 @@ function reLoadAndSaveMenus() {
 function cleanUpRouteMenu(routes) {
   routes.forEach((x) => updateSoyRouteComponent(x));
 
-  deleteObjectKey(routes, "parent");
-  deleteObjectKey(routes, "id");
+  deleteObjectKey(routes, 'parent');
+  deleteObjectKey(routes, 'id');
 
   routes = ClearFalsyKeys(routes);
 
-  let home = "dashboard_analysis";
+  let home = 'dashboard_analysis';
   if (routes?.length > 0) {
     home = routes[0].name;
   }
@@ -77,17 +74,17 @@ function cleanUpRouteMenu(routes) {
 function getSoySuperUserMenu() {
   let routes = getSoyRoutesFromDB();
   if (routes.length === 0) {
-    const routesSoy = Process("scripts.amis.site.MenuSoybean")["routes"];
+    const routesSoy = Process('scripts.amis.site.MenuSoybean')['routes'];
     const routesLocal = getAmisLocalPageAsSoyRoutes();
     const localRoutes = [...routesSoy, ...routesLocal];
 
     return cleanUpRouteMenu(localRoutes);
   }
   // 转换成树结构
-  routes = Process(`utils.arr.Tree`, routes, { parent: "parent", empty: 0 });
+  routes = Process(`utils.arr.Tree`, routes, { parent: 'parent', empty: 0 });
 
   // 导入正在编辑的页面
-  const editor_routes = Process("scripts.admin.menu.getAmisEditorSoyRoute");
+  const editor_routes = Process('scripts.admin.menu.getAmisEditorSoyRoute');
   routes = routes.concat(editor_routes);
 
   return cleanUpRouteMenu(routes);
@@ -99,22 +96,22 @@ function getSoySuperUserMenu() {
  */
 function getSoyRoutesFromDB() {
   // 优先从数据库读取菜单
-  const menus: admin_menu[] = Process("models.admin.menu.get", {});
+  const menus: admin_menu[] = Process('models.admin.menu.get', {});
 
   const menus2: Route[] = menus.map((menu: admin_menu) => {
     const r: Route = {
-      id: menu.id, //required
-      parent: menu.parent, //required
-      name: menu.name || "amis_" + menu.id,
-      path: menu.url || "",
+      id: menu.id, // required
+      parent: menu.parent, // required
+      name: menu.name || 'amis_' + menu.id,
+      path: menu.url || '',
       redirect: menu.redirect,
-      component: menu.component ? menu.component : "amis",
+      component: menu.component ? menu.component : 'amis',
       meta: {
-        title: menu.title || menu.name || "" + menu.id,
+        title: menu.title || menu.name || '' + menu.id,
         icon: menu.icon,
         order: menu.rank,
         requiresAuth: menu.requires_auth,
-        source: menu.source, //提供后续的导入支持
+        source: menu.source, // 提供后续的导入支持
       },
       children: [],
     };
@@ -122,8 +119,8 @@ function getSoyRoutesFromDB() {
     if (menu.url_type == 2) {
       r.meta.href = menu.url;
     } else if (menu.url_type == 3) {
-      //amis组件
-      r.component = "amis";
+      // amis组件
+      r.component = 'amis';
       // 需要配置api
       r.meta.schemaApi = menu.schema_api;
     }
@@ -137,7 +134,7 @@ function getSoyRoutesFromDB() {
       r.meta.keepAlive = menu.keep_alive ? true : false;
     }
     if (!r.meta.icon) {
-      r.meta.icon = "icon-park-outline:workbench";
+      r.meta.icon = 'icon-park-outline:workbench';
     }
     return r;
   });
@@ -149,14 +146,14 @@ function getSoyRoutesFromDB() {
  * yao run scripts.admin.menu.exportMenus
  */
 function exportMenus(pathIn: string | undefined) {
-  const folder = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+  const folder = new Date().toISOString().slice(0, 10).replace(/-/g, '');
 
   const path = pathIn || `/upload/public/system_menus_${folder}.json`;
 
   let routes = getSoyRoutesFromDB();
-  routes = Process(`utils.arr.Tree`, routes, { parent: "parent", empty: 0 });
+  routes = Process(`utils.arr.Tree`, routes, { parent: 'parent', empty: 0 });
   const json = JSON.stringify(routes, null, 2);
-  Process("fs.system.writefile", path, json);
+  Process('fs.system.writefile', path, json);
 
   return `Menu Saved to ${path}`;
 }
@@ -167,9 +164,9 @@ function exportMenus(pathIn: string | undefined) {
  * @param pathIn import menu path
  */
 function importMenus(pathIn: string | undefined) {
-  const folder = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+  const folder = new Date().toISOString().slice(0, 10).replace(/-/g, '');
   const path = pathIn || `/upload/public/system_menus_${folder}.json`;
-  const json = Process("fs.system.readfile", path);
+  const json = Process('fs.system.readfile', path);
   const routes = JSON.parse(json);
   saveTreeMenusToDB(routes, undefined, false);
 }
@@ -180,7 +177,7 @@ function importMenus(pathIn: string | undefined) {
  */
 function saveLocalAmisSoyRoutesToDB() {
   const routes = getAmisLocalPageAsSoyRoutes();
-  saveTreeMenusToDB(routes, "amis", false);
+  saveTreeMenusToDB(routes, 'amis', false);
 }
 /**
  * 将Soyadmin的系统菜单作转换并导入到数据库
@@ -188,8 +185,8 @@ function saveLocalAmisSoyRoutesToDB() {
  */
 function saveSoyRoutesToDB() {
   // 导入前端本身的菜单
-  const routes = Process("scripts.amis.site.MenuSoybean")["routes"];
-  saveTreeMenusToDB(routes, "soy", false);
+  const routes = Process('scripts.amis.site.MenuSoybean')['routes'];
+  saveTreeMenusToDB(routes, 'soy', false);
 }
 /**
  * 获取文件系统中的页面，根据文件目录结构转换成Soy菜单结构
@@ -197,26 +194,26 @@ function saveSoyRoutesToDB() {
  * @returns []
  */
 function getAmisLocalPageAsSoyRoutes() {
-  const fs = new FS("system");
+  const fs = new FS('system');
   let files: string[] = fs.ReadDir(PagesLocation, true); // recursive
-  files = files.filter((x) => x.length > 5 && x.endsWith(".json"));
+  files = files.filter((x) => x.length > 5 && x.endsWith('.json'));
   files = files.map((f) => {
-    f = f.replace(/\\/g, "/");
+    f = f.replace(/\\/g, '/');
     return f.substring(PagesLocation.length);
   });
   const routes = convertFileListToSoyRoute(files);
 
-  updateSoyRoutePath("/api/v1/amis/pages/", routes, undefined);
+  updateSoyRoutePath('/api/v1/amis/pages/', routes, undefined);
 
   // 这里包装了一个顶层
   const rootRoutes = [
     {
-      name: "amis",
-      path: "/amis",
-      subPath: "amis",
-      component: "basic",
+      name: 'amis',
+      path: '/amis',
+      subPath: 'amis',
+      component: 'basic',
       children: routes,
-      meta: { order: 2001, requiresAuth: true, title: "AMIS页面" },
+      meta: { order: 2001, requiresAuth: true, title: 'AMIS页面' },
     },
   ];
   updateSoyRouteComponent(rootRoutes);
@@ -231,20 +228,20 @@ function getAmisLocalPageAsSoyRoutes() {
  * @returns
  */
 function getAmisPageSchema(pageId: string) {
-  const page = pageId.replace(".", "/") + ".json";
+  const page = pageId.replace('.', '/') + '.json';
 
-  const fpath = PagesLocation + "/" + page;
-  const isExist = Process("fs.system.Exists", fpath);
+  const fpath = PagesLocation + '/' + page;
+  const isExist = Process('fs.system.Exists', fpath);
   if (!isExist) {
     throw new Exception(`文件不存在：${fpath}`);
   }
 
-  const str = Process("fs.system.ReadFile", fpath);
+  const str = Process('fs.system.ReadFile', fpath);
   const source = JSON.parse(str);
-  if (source.type === "app") {
+  if (source.type === 'app') {
     return {
-      type: "tpl",
-      tpl: "不能显示类型为app的页面",
+      type: 'tpl',
+      tpl: '不能显示类型为app的页面',
     };
   }
   return JSON.parse(str);
@@ -257,25 +254,25 @@ function getAmisPageSchema(pageId: string) {
  * @returns
  */
 function getAmisEditorPageSource(pageId: string) {
-  const user_id = Process("session.get", "user_id");
+  const user_id = Process('session.get', 'user_id');
   let dir = `${WorkingPagesLocation}/${user_id}/`;
-  dir = dir.replace(/\\/g, "/");
-  dir = dir.replace(/\/\//g, "/");
+  dir = dir.replace(/\\/g, '/');
+  dir = dir.replace(/\/\//g, '/');
 
-  pageId = pageId.replace(/^amis_editor\./, "");
-  const page = pageId.replace(".", "/") + ".json";
+  pageId = pageId.replace(/^amis_editor\./, '');
+  const page = pageId.replace('.', '/') + '.json';
 
   const fpath = dir + page;
-  const isExist = Process("fs.system.Exists", fpath);
+  const isExist = Process('fs.system.Exists', fpath);
   if (!isExist) {
     throw new Exception(`文件不存在：${fpath}`);
   }
-  const str = Process("fs.system.ReadFile", fpath);
+  const str = Process('fs.system.ReadFile', fpath);
   const source = JSON.parse(str);
-  if (source.type === "app") {
+  if (source.type === 'app') {
     return {
-      type: "tpl",
-      tpl: "不能显示类型为app的页面",
+      type: 'tpl',
+      tpl: '不能显示类型为app的页面',
     };
   }
   return JSON.parse(str);
@@ -283,42 +280,42 @@ function getAmisEditorPageSource(pageId: string) {
 
 // yao run scripts.admin.menu.getAmisEditorSoyRoute
 function getAmisEditorSoyRoute() {
-  let user_id = Process("session.get", "user_id");
+  let user_id = Process('session.get', 'user_id');
   if (!user_id) {
     // return [];
-    user_id = "1";
+    user_id = '1';
   }
   let dir = `${WorkingPagesLocation}/${user_id}/`;
-  dir = dir.replace(/\\/g, "/");
-  dir = dir.replace(/\/\//g, "/");
+  dir = dir.replace(/\\/g, '/');
+  dir = dir.replace(/\/\//g, '/');
 
-  const fs = new FS("system");
+  const fs = new FS('system');
   let files = [] as string[];
 
   // 这里包装了一个顶层
   const rootRoutes = [
     {
-      name: "amis_editor",
-      path: "/amis_editor",
-      subPath: "amis_editor",
-      component: "basic",
+      name: 'amis_editor',
+      path: '/amis_editor',
+      subPath: 'amis_editor',
+      component: 'basic',
       children: [] as Route[],
-      meta: { order: 2001, requiresAuth: true, title: "AMIS编辑器" },
+      meta: { order: 2001, requiresAuth: true, title: 'AMIS编辑器' },
     },
   ] as Route[];
 
   if (fs.Exists(dir)) {
     files = fs.ReadDir(dir, true); // recursive
-    files = files.filter((x) => x.length > 5 && x.endsWith(".json"));
-    const regex = new RegExp(`^${dir}`, "i");
+    files = files.filter((x) => x.length > 5 && x.endsWith('.json'));
+    const regex = new RegExp(`^${dir}`, 'i');
     files = files.map((f) => {
-      f = f.replace(/\\/g, "/");
-      return f.replace(regex, "/amis_editor/");
+      f = f.replace(/\\/g, '/');
+      return f.replace(regex, '/amis_editor/');
     });
     const routes = convertFileListToSoyRoute(files);
 
     // 这里比较特殊，不要更新amis_editor节点
-    updateSoyRoutePath("/api/v1/amis/edit_pages/", routes, undefined);
+    updateSoyRoutePath('/api/v1/amis/edit_pages/', routes, undefined);
     rootRoutes[0].children = routes[0]?.children || [];
   }
   updateSoyRouteComponent(rootRoutes);
@@ -333,39 +330,39 @@ function getAmisEditorSoyRoute() {
 function convertListToSoyRoute(list: string[]): Route {
   let order = 1000;
   const result = {
-    name: "",
-    path: "",
-    component: "basic",
-    subPath: "", //单一层级的节点
+    name: '',
+    path: '',
+    component: 'basic',
+    subPath: '', // 单一层级的节点
     children: [],
-    meta: { title: "", order: order, requiresAuth: true },
+    meta: { title: '', order: order, requiresAuth: true },
   };
 
   const getPath = (url: string) =>
     url
-      .split("/")
-      .filter((path) => path !== "")
+      .split('/')
+      .filter((path) => path !== '')
       .map((path, index) => {
-        if (index === 0 && path.startsWith(".")) {
+        if (index === 0 && path.startsWith('.')) {
           return path.substring(1);
         }
-        const dotIndex = path.lastIndexOf(".");
+        const dotIndex = path.lastIndexOf('.');
         return dotIndex > -1 ? path.substring(0, dotIndex) : path;
       })
-      .join("/");
+      .join('/');
 
   const addSubPath = (obj: Route, subPathArr: string[]) => {
     let tempObj = obj as Route;
     for (let i = 0; i < subPathArr.length; i++) {
       const subPath = subPathArr[i];
       const existingObj = tempObj.children.find(
-        (child) => child.subPath === subPath
+        (child) => child.subPath === subPath,
       );
       if (existingObj) {
         tempObj = existingObj;
       } else {
         const newChild = {
-          name: "", //update later
+          name: '', // update later
           subPath: subPath,
           // fullpath: `${tempObj.fullpath}/${subPath}`,
           path: tempObj.subPath ? `${tempObj.subPath}.${subPath}` : subPath,
@@ -381,7 +378,7 @@ function convertListToSoyRoute(list: string[]): Route {
 
   list.forEach((url) => {
     const path = getPath(url);
-    addSubPath(result, path.split("/"));
+    addSubPath(result, path.split('/'));
   });
   return result;
 }
@@ -417,7 +414,7 @@ function removeEmptyChildren(node: Route) {
 function updateSoyRoutePath(
   api: string,
   route: Route | Route[],
-  parent: Route | undefined
+  parent: Route | undefined,
 ) {
   if (Array.isArray(route)) {
     route.forEach((n) => updateSoyRoutePath(api, n, parent));
@@ -427,18 +424,18 @@ function updateSoyRoutePath(
   route.meta.title = route.meta.title || route.subPath || route.name;
   if (!route.meta?.schemaApi?.startsWith(api)) {
     route.meta.schemaApi = api + route.path;
-    route.meta.schemaApi = route.meta.schemaApi.replace(/\/\//g, "/");
+    route.meta.schemaApi = route.meta.schemaApi.replace(/\/\//g, '/');
   }
 
   if (parent == null) {
-    route.path = "/" + route.subPath;
+    route.path = '/' + route.subPath;
   } else {
-    route.path = parent.path + "/" + route.subPath;
+    route.path = parent.path + '/' + route.subPath;
   }
-  route.path = route.path.replace(/\/\//g, "/");
+  route.path = route.path.replace(/\/\//g, '/');
 
-  route.name = route.path.replace(/[./-]/g, "_");
-  if (route.name.startsWith("_")) {
+  route.name = route.path.replace(/[./-]/g, '_');
+  if (route.name.startsWith('_')) {
     route.name = route.name.substring(1);
   }
 
@@ -456,8 +453,8 @@ function updateSoyRoutePath(
  */
 function saveTreeMenusToDB(
   menus: Route[],
-  source: "amis" | "soy" | undefined = "amis",
-  deleteFlag: boolean
+  source: 'amis' | 'soy' | undefined = 'amis',
+  deleteFlag: boolean,
 ) {
   function traverse(route: Route | Route[], parentId: number) {
     if (Array.isArray(route)) {
@@ -465,30 +462,30 @@ function saveTreeMenusToDB(
       return;
     }
     if (deleteFlag) {
-      Process("models.admin.menu.deletewhere", {
+      Process('models.admin.menu.deletewhere', {
         wheres: [
           {
-            column: "name",
+            column: 'name',
             value: route.name,
           },
         ],
       });
     }
 
-    route.meta = route.meta || {title:""};
+    route.meta = route.meta || { title: '' };
 
     let menu: admin_menu = {
       name: route.name,
-      title: "",
+      title: '',
       source: route.meta.source || source,
     };
 
     // 根据路由的名称进行判断，如果已经存在，进行更新
     if (route.name) {
-      const [menudb] = Process("models.admin.menu.get", {
+      const [menudb] = Process('models.admin.menu.get', {
         wheres: [
           {
-            column: "name",
+            column: 'name',
             value: route.name,
           },
         ],
@@ -498,23 +495,23 @@ function saveTreeMenusToDB(
       }
     }
 
-    menu.name = menu.name || route.name || route.path || "__";
+    menu.name = menu.name || route.name || route.path || '__';
     menu.title = menu.title || route.meta?.title || menu.name;
     menu.url = menu.url || route.path;
     menu.component = menu.component || route.component;
-    if (menu.component === "amis") {
+    if (menu.component === 'amis') {
       menu.url_type = 3;
     }
     menu.schema_api = menu.schema_api || route.meta?.schemaApi;
     menu.icon = menu.icon || route.meta?.icon;
     menu.visible = menu.visible || !route.meta?.hide;
     menu.rank = menu.rank || route.meta?.order;
-    menu.requires_auth =
-      menu.requires_auth != null ? menu.requires_auth : route.meta.requiresAuth;
+    menu.requires_auth
+      = menu.requires_auth != null ? menu.requires_auth : route.meta.requiresAuth;
 
-    menu.parent = parentId; //reset parent
+    menu.parent = parentId; // reset parent
 
-    const id = Process("models.admin.menu.save", menu);
+    const id = Process('models.admin.menu.save', menu);
     // console.log("id==>", id, menu);
     if (Array.isArray(route.children)) {
       route.children.forEach((element) => {
@@ -531,16 +528,16 @@ function saveTreeMenusToDB(
  * @returns
  */
 function getAmisRoutesFromDB(): AmisAppPage[] {
-  const menus: admin_menu[] = Process("models.admin.menu.get", {
-    wheres: [{ column: "source", value: "amis" }],
+  const menus: admin_menu[] = Process('models.admin.menu.get', {
+    wheres: [{ column: 'source', value: 'amis' }],
   });
 
   const menus2: AmisAppPage[] = menus.map((menu: admin_menu) => {
     const route: AmisAppPage = {
-      id: menu.id, //required
-      parent: menu.parent, //required
+      id: menu.id, // required
+      parent: menu.parent, // required
       label: menu.title,
-      url: menu.url_type === 3 ? menu.url : undefined, //amis menu type
+      url: menu.url_type === 3 ? menu.url : undefined, // amis menu type
       icon: menu.icon,
       schemaApi: menu.schema_api,
       schema: menu.schema,
@@ -549,8 +546,8 @@ function getAmisRoutesFromDB(): AmisAppPage[] {
       link: menu.url_type === 2 ? menu.url : undefined,
       children: [],
     };
-    route.url = route.url?.replace(/\/\//g, "/");
-    route.schemaApi = route.schemaApi?.replace(/\/\//g, "/");
+    route.url = route.url?.replace(/\/\//g, '/');
+    route.schemaApi = route.schemaApi?.replace(/\/\//g, '/');
     return route;
   });
   return menus2;
@@ -564,17 +561,17 @@ function getAmisRoutesFromDB(): AmisAppPage[] {
 function getAmisPageRoutesFromDB(): AmisAppPage[] {
   let routes = getAmisRoutesFromDB();
   // 转换成树结构
-  routes = Process(`utils.arr.Tree`, routes, { parent: "parent", empty: 0 });
-  const user = Process("session.get", "user");
-  if (user?.type !== "super") {
+  routes = Process(`utils.arr.Tree`, routes, { parent: 'parent', empty: 0 });
+  const user = Process('session.get', 'user');
+  if (user?.type !== 'super') {
     const menusIds = getUserAuthMenuIds();
     routes = filterTreeDataWithFunc(routes, (item) => {
       return menusIds.includes(item.id);
     });
   }
 
-  deleteObjectKey(routes, "parent");
-  deleteObjectKey(routes, "id");
+  deleteObjectKey(routes, 'parent');
+  deleteObjectKey(routes, 'id');
 
   routes = ClearFalsyKeys(routes);
   return routes;
@@ -600,8 +597,8 @@ function convertSoyRoutesToAmisPages(routes: Route[]): AmisAppPage[] {
       // link: menu.url_type === 2 ? menu.url : undefined,
       children: [] as AmisAppPage[],
     };
-    route.url = route.url?.replace(/\/\//g, "/");
-    route.schemaApi = route.schemaApi?.replace(/\/\//g, "/");
+    route.url = route.url?.replace(/\/\//g, '/');
+    route.schemaApi = route.schemaApi?.replace(/\/\//g, '/');
 
     if (Array.isArray(r.children)) {
       r.children.forEach((r) => travel(r, route.children));
@@ -639,8 +636,8 @@ interface SpinnerExtraProps {
 type SchemaClassName =
   | string
   | {
-      [propName: string]: boolean | undefined | null | string;
-    };
+    [propName: string]: boolean | undefined | null | string;
+  };
 // amis 多页的菜单配置
 interface AmisAppPage extends SpinnerExtraProps {
   id?: number;
@@ -717,7 +714,7 @@ type Route<K extends AllRouteKey = AllRouteKey> = K extends AllRouteKey
 
       /** 路由名称(路由唯一标识) */
       name: K;
-      /**子路径 */
+      /** 子路径 */
       subPath?: string;
       /** 路由路径 */
       path: string;
@@ -750,7 +747,7 @@ interface RouteMeta {
   /** 路由的动态路径(需要动态路径的页面需要将path添加进范型参数) */
   dynamicPath?: string;
   /** 作为单级路由的父级路由布局组件 */
-  singleLayout?: "basic" | "blank";
+  singleLayout?: 'basic' | 'blank';
   /** 需要登录权限 */
   requiresAuth?: boolean;
   /**
@@ -780,7 +777,7 @@ interface RouteMeta {
   affix?: boolean;
   /** Schema Api */
   schemaApi?: string;
-  /**source soy|amis*/
+  /** source soy|amis */
   source?: string;
 }
 
@@ -790,48 +787,48 @@ interface RouteMeta {
  * Table=> admin_menu (菜单表)
  */
 interface admin_menu {
-  /**ID */
+  /** ID */
   id?: number;
-  /**父级 */
+  /** 父级 */
   parent?: number;
-  /**菜单名称 */
+  /** 菜单名称 */
   name: string;
-  /**标题 */
+  /** 标题 */
   title: string;
-  /**图标 */
+  /** 图标 */
   icon?: string;
-  /**路由 */
+  /** 路由 */
   url?: string;
-  /**路由类型 */
+  /** 路由类型 */
   url_type?: number;
-  /**组件 */
+  /** 组件 */
   component?: string;
-  /**作为单级路由的父级路由布局组件 */
-  single_layout?: "basic" | "blank";
-  /**缓存页面 */
+  /** 作为单级路由的父级路由布局组件 */
+  single_layout?: 'basic' | 'blank';
+  /** 缓存页面 */
   keep_alive?: boolean;
-  /**重定位 */
+  /** 重定位 */
   redirect?: string;
-  /**重渲染 */
+  /** 重渲染 */
   rewrite?: string;
-  /**默认页面 */
+  /** 默认页面 */
   is_default_page?: boolean;
-  /**页面的配置 */
+  /** 页面的配置 */
   schema?: any;
-  /**配置接口 */
+  /** 配置接口 */
   schema_api?: string;
-  /**是否可见 */
+  /** 是否可见 */
   visible?: boolean;
-  /**排列 */
+  /** 排列 */
   rank?: number;
-  /**类名 */
+  /** 类名 */
   class_name?: string;
-  /**状态 */
+  /** 状态 */
   status?: string;
 
   /** 需要权限 */
   requires_auth?: boolean;
-  /**来源 */
+  /** 来源 */
   source: string;
   /** Relation: children=> admin.menu */
   children?: admin_menu[];

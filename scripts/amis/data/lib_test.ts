@@ -6,17 +6,17 @@ function mergeQueryObject(querysIn, payload) {
   if (querysIn == null || payload == null) {
     return querysIn;
   }
-  if (typeof querysIn !== "object") {
+  if (typeof querysIn !== 'object') {
     return querysIn;
   }
-  if (payload != null && typeof payload === "object") {
+  if (payload != null && typeof payload === 'object') {
     for (const key in payload) {
       if (Object.hasOwnProperty.call(payload, key)) {
         const element = payload[key];
         const values = querys[key];
         if (Array.isArray(values)) {
           if (!values.some((x) => x == element)) {
-            //使用弱比较，'1'应该等于1
+            // 使用弱比较，'1'应该等于1
             querys[key].push(element);
           }
         } else {
@@ -29,16 +29,16 @@ function mergeQueryObject(querysIn, payload) {
   return querys;
 }
 
-//yao run scripts.amis.data.test.testMerage
+// yao run scripts.amis.data.test.testMerage
 function testMerage() {
   const querys = {
-    orderBy: [""],
-    orderDir: [""],
-    page: ["1"],
-    perPage: ["10"],
+    orderBy: [''],
+    orderDir: [''],
+    page: ['1'],
+    perPage: ['10'],
   };
   const payload = {
-    name: "*请求",
+    name: '*请求',
     page: 1,
     perPage: 10,
   };
@@ -57,22 +57,22 @@ function FilterArrayWithQuery(list, querysIn) {
 
   const first = list[0];
 
-  if (!(typeof first === "object")) {
+  if (!(typeof first === 'object')) {
     return list;
   }
 
   let AndMode = true;
-  if (typeof querys === "object") {
-    delete querys["page"];
-    delete querys["pageSize"];
-    delete querys["orderDir"];
-    delete querys["orderBy"];
-    let keyword = "";
-    if (Array.isArray(querys["keywords"]) && querys["keywords"].length) {
-      keyword = querys["keywords"][0];
+  if (typeof querys === 'object') {
+    delete querys['page'];
+    delete querys['pageSize'];
+    delete querys['orderDir'];
+    delete querys['orderBy'];
+    let keyword = '';
+    if (Array.isArray(querys['keywords']) && querys['keywords'].length) {
+      keyword = querys['keywords'][0];
     }
 
-    if (keyword != "" && !first["keywords"]) {
+    if (keyword != '' && !first['keywords']) {
       for (const key in first) {
         if (Object.hasOwnProperty.call(first, key)) {
           querys[key] = [keyword];
@@ -90,13 +90,13 @@ function FilterArrayWithQuery(list, querysIn) {
 
   const arr = list.filter((item) => {
     for (const key in querys) {
-      let value = querys[key] + "";
+      let value = querys[key] + '';
       if (Array.isArray(querys[key]) && querys[key].length) {
-        value = querys[key][0] + "";
+        value = querys[key][0] + '';
       }
       if (value === undefined) continue;
-      if (value.includes("*")) {
-        const pattern = new RegExp(`^${value.replace(/\*/g, ".*")}`, "i");
+      if (value.includes('*')) {
+        const pattern = new RegExp(`^${value.replace(/\*/g, '.*')}`, 'i');
         if (AndMode) {
           if (!pattern.test(item[key])) return false;
         } else {
@@ -104,9 +104,9 @@ function FilterArrayWithQuery(list, querysIn) {
         }
       } else {
         if (AndMode) {
-          if (item[key] + "" != value) return false;
+          if (item[key] + '' != value) return false;
         } else {
-          if (item[key] + "" == value) return true;
+          if (item[key] + '' == value) return true;
         }
       }
     }
@@ -124,192 +124,192 @@ function test1() {
     {
       cached: true,
       created: true,
-      label: "用户表",
-      model: "admin.user",
-      name: "admin_user",
+      label: '用户表',
+      model: 'admin.user',
+      name: 'admin_user',
       saved: false,
     },
     {
       cached: false,
       created: true,
-      label: "ddic_form",
-      name: "ddic_form",
+      label: 'ddic_form',
+      name: 'ddic_form',
       saved: false,
     },
     {
       cached: false,
       created: true,
-      label: "ddic_form_action",
-      name: "ddic_form_action",
+      label: 'ddic_form_action',
+      name: 'ddic_form_action',
       saved: false,
     },
     {
       cached: false,
       created: true,
-      label: "ddic_form_field",
-      name: "ddic_form_field",
+      label: 'ddic_form_field',
+      name: 'ddic_form_field',
       saved: false,
     },
     {
       cached: true,
       created: true,
-      label: "业务模型",
-      model: "ddic.model",
-      name: "ddic_model",
+      label: '业务模型',
+      model: 'ddic.model',
+      name: 'ddic_model',
       saved: false,
     },
     {
       cached: true,
       created: true,
-      label: "模型字段列表",
-      model: "ddic.model.column",
-      name: "ddic_model_column",
+      label: '模型字段列表',
+      model: 'ddic.model.column',
+      name: 'ddic_model_column',
       saved: false,
     },
     {
       cached: true,
       created: true,
-      label: "数据元素",
-      model: "ddic.model.element",
-      name: "ddic_model_element",
+      label: '数据元素',
+      model: 'ddic.model.element',
+      name: 'ddic_model_element',
       saved: false,
     },
     {
       cached: false,
       created: true,
-      label: "ddic_table",
-      name: "ddic_table",
+      label: 'ddic_table',
+      name: 'ddic_table',
       saved: false,
     },
     {
       cached: false,
       created: true,
-      label: "ddic_table_action",
-      name: "ddic_table_action",
+      label: 'ddic_table_action',
+      name: 'ddic_table_action',
       saved: false,
     },
     {
       cached: false,
       created: true,
-      label: "ddic_table_field",
-      name: "ddic_table_field",
+      label: 'ddic_table_field',
+      name: 'ddic_table_field',
       saved: false,
     },
     {
       cached: false,
       created: true,
-      label: "ddic_table_filter",
-      name: "ddic_table_filter",
+      label: 'ddic_table_filter',
+      name: 'ddic_table_filter',
       saved: false,
     },
     {
       cached: false,
       created: true,
-      label: "demo_book",
-      name: "demo_book",
+      label: 'demo_book',
+      name: 'demo_book',
       saved: false,
     },
     {
       cached: true,
       created: true,
-      label: "demo_excel",
-      model: "demo.excel",
-      name: "demo_excel",
+      label: 'demo_excel',
+      model: 'demo.excel',
+      name: 'demo_excel',
       saved: false,
     },
     {
       cached: false,
       created: true,
-      label: "demo_mobile",
-      name: "demo_mobile",
+      label: 'demo_mobile',
+      name: 'demo_mobile',
       saved: false,
     },
     {
       cached: true,
       created: true,
-      label: "演示表",
-      model: "demo.table",
-      model_name: "demo.table",
-      name: "demo_table",
+      label: '演示表',
+      model: 'demo.table',
+      model_name: 'demo.table',
+      name: 'demo_table',
       saved: true,
     },
     {
       cached: true,
       created: true,
-      label: "dsl_amis",
-      model: "system.amis",
-      name: "dsl_amis",
+      label: 'dsl_amis',
+      model: 'system.amis',
+      name: 'dsl_amis',
       saved: false,
     },
     {
       cached: false,
       created: true,
-      label: "phone_config",
-      model: "phone.config",
-      model_name: "phone.config",
-      name: "phone_config",
+      label: 'phone_config',
+      model: 'phone.config',
+      model_name: 'phone.config',
+      name: 'phone_config',
       saved: true,
     },
     {
       cached: true,
       created: true,
-      label: "system_api",
-      model: "system.api",
-      name: "system_api",
+      label: 'system_api',
+      model: 'system.api',
+      name: 'system_api',
       saved: false,
     },
     {
       cached: true,
       created: true,
-      label: "admin_dept",
-      model: "admin.dept",
-      name: "admin_dept",
+      label: 'admin_dept',
+      model: 'admin.dept',
+      name: 'admin_dept',
       saved: false,
     },
     {
       cached: true,
       created: true,
-      label: "用户的编辑器文件",
-      model: "system.file",
-      name: "system_file",
+      label: '用户的编辑器文件',
+      model: 'system.file',
+      name: 'system_file',
       saved: false,
     },
     {
       cached: true,
       created: true,
-      label: "system_font",
-      model: "system.font",
-      name: "system_font",
+      label: 'system_font',
+      model: 'system.font',
+      name: 'system_font',
       saved: false,
     },
     {
       cached: true,
       created: true,
-      label: "菜单表",
-      model: "admin.menu",
-      name: "admin_menu",
+      label: '菜单表',
+      model: 'admin.menu',
+      name: 'admin_menu',
       saved: false,
     },
     {
       cached: true,
       created: true,
-      label: "system_role",
-      model: "admin.auth.role",
-      name: "system_role",
+      label: 'system_role',
+      model: 'admin.auth.role',
+      name: 'system_role',
       saved: false,
     },
     {
       cached: false,
       created: true,
-      label: "water_bottle",
-      name: "water_bottle",
+      label: 'water_bottle',
+      name: 'water_bottle',
       saved: false,
     },
     {
       cached: false,
       created: true,
-      label: "yao_neo_conversation",
-      name: "yao_neo_conversation",
+      label: 'yao_neo_conversation',
+      name: 'yao_neo_conversation',
       saved: false,
     },
   ];
@@ -317,7 +317,7 @@ function test1() {
     // cached: [false],
     // saved: [false],
     // label: ["ddic_form_*"],
-    keywords: ["ddic_form_*"],
+    keywords: ['ddic_form_*'],
     // keywords: [""],
   };
 
@@ -329,7 +329,7 @@ function test1() {
 function testGet(data, pageIn, pageSizeIn, querysIn, payload) {
   const querys = { page: [1], perPage: [10] };
   function getArrayItem(key) {
-    if (typeof querys !== "object") {
+    if (typeof querys !== 'object') {
       return;
     }
     if (Array.isArray(querys[key]) && querys[key].length) {
@@ -341,10 +341,10 @@ function testGet(data, pageIn, pageSizeIn, querysIn, payload) {
   let page = pageIn;
   let pageSize = pageSizeIn;
   if (page == null) {
-    page = getArrayItem("page");
+    page = getArrayItem('page');
   }
   if (pageSize == null) {
-    pageSize = getArrayItem("perPage");
+    pageSize = getArrayItem('perPage');
   }
 }
 // testGet();

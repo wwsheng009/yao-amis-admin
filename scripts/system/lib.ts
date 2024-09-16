@@ -14,12 +14,12 @@ export type MapAny = {
  */
 export function MergeObject(target: MapAny, source: MapAny) {
   if (
-    target === null ||
-    target === undefined ||
-    typeof target !== "object" ||
-    source === null || //mybe undefined
-    source === undefined ||
-    typeof source !== "object"
+    target === null
+    || target === undefined
+    || typeof target !== 'object'
+    || source === null // mybe undefined
+    || source === undefined
+    || typeof source !== 'object'
   ) {
     return target;
   }
@@ -27,10 +27,10 @@ export function MergeObject(target: MapAny, source: MapAny) {
   for (const [key, value] of Object.entries(source)) {
     if (Object.prototype.hasOwnProperty.call(source, key)) {
       if (
-        target[key] &&
-        typeof target[key] === "object" &&
-        typeof value === "object" &&
-        !Array.isArray(value)
+        target[key]
+        && typeof target[key] === 'object'
+        && typeof value === 'object'
+        && !Array.isArray(value)
       ) {
         MergeObject(target[key], value);
       } else if (Array.isArray(target[key]) && Array.isArray(value)) {
@@ -76,10 +76,10 @@ export function deleteObjectKey(obj: any, object_key: string): void {
 
 export function areObjectsEqual(
   obj1: object | Array<object>,
-  obj2: object | Array<object>
+  obj2: object | Array<object>,
 ) {
   // Check if both objects are of type object
-  if (typeof obj1 !== "object" || typeof obj2 !== "object") {
+  if (typeof obj1 !== 'object' || typeof obj2 !== 'object') {
     return false;
   }
 
@@ -100,7 +100,7 @@ export function areObjectsEqual(
     }
 
     // Recursively compare nested objects
-    if (typeof obj1[key] === "object" && typeof obj2[key] === "object") {
+    if (typeof obj1[key] === 'object' && typeof obj2[key] === 'object') {
       if (!areObjectsEqual(obj1[key], obj2[key])) {
         return false;
       }

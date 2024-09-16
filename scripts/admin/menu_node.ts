@@ -1,4 +1,4 @@
-import { GetNodeItems, GetNodes, UpdateNode, DeleteNode, CreateNode } from "@scripts/amis/data/tree";
+import { GetNodeItems, GetNodes, UpdateNode, DeleteNode, CreateNode } from '@scripts/amis/data/tree';
 
 // 菜单处理
 /**
@@ -6,7 +6,7 @@ import { GetNodeItems, GetNodes, UpdateNode, DeleteNode, CreateNode } from "@scr
  * @returns
  */
 function GetMenuNodes() {
-  return GetNodes("admin.menu");
+  return GetNodes('admin.menu');
 }
 
 /**
@@ -18,7 +18,7 @@ function GetMenuNodes() {
  * @returns
  */
 function CreateMenuNode({ idx, parent, ...node }) {
-  return CreateNode("admin.menu", { idx, parent, ...node });
+  return CreateNode('admin.menu', { idx, parent, ...node });
 }
 /**
  * 编辑更新一个菜单项
@@ -28,19 +28,19 @@ function CreateMenuNode({ idx, parent, ...node }) {
  * @returns
  */
 function UpdateMenuNode(id, menuNode) {
-  return UpdateNode("admin.menu", id, menuNode);
+  return UpdateNode('admin.menu', id, menuNode);
 }
 //
 // 删除根节点 yao run scripts.admin.menu_node.DeleteMenuNode 3
 // 删除节点与及所有的子节点
 function DeleteMenuNode(ids) {
-  return DeleteNode("admin.menu", ids);
+  return DeleteNode('admin.menu', ids);
 }
 
 // yao run scripts.admin.menu_node.GetMenuNodeItems 1
 // 根据特定的id获取菜单节点以及所有的子节点
 function GetMenuNodeItems(id) {
-  return GetNodeItems("admin.menu", id);
+  return GetNodeItems('admin.menu', id);
 }
 
 /**
@@ -48,13 +48,13 @@ function GetMenuNodeItems(id) {
  * yao run scripts.admin.menu_node.xgenMenu
  */
 function xgenMenu() {
-  const tabs = Process("scripts.system.meta.getTableListFromApis");
+  const tabs = Process('scripts.system.meta.getTableListFromApis');
   const menuTab = tabs.map((name, idx) => {
-    const setting = Process("yao.table.setting", name);
+    const setting = Process('yao.table.setting', name);
     const label = setting.name || name;
     return {
       path: `/x/Table/${name}`,
-      icon: "icon-activity",
+      icon: 'icon-activity',
       id: idx + 1000,
       name: label,
       parent: 1000,
@@ -62,15 +62,15 @@ function xgenMenu() {
   });
   const nodes = [];
   if (menuTab.length) {
-    const first = tabs[0];//use tabs,not the menutab
+    const first = tabs[0];// use tabs,not the menutab
     const node = {
       parent: null,
       visible_menu: 0,
       blocks: 1,
       path: `/x/Table/${first}`,
-      icon: "icon-activity",
+      icon: 'icon-activity',
       id: 1000,
-      name: "表数据",
+      name: '表数据',
       children: menuTab,
     };
     nodes.push(node);
@@ -80,37 +80,37 @@ function xgenMenu() {
     items: [
       {
         parent: null,
-        path: "/iframe?src=/amis-admin",
+        path: '/iframe?src=/amis-admin',
         visible_menu: 0,
         blocks: 0,
-        icon: "icon-activity",
+        icon: 'icon-activity',
         id: 1,
-        name: "AMIS管理",
+        name: 'AMIS管理',
       },
       {
         parent: null,
-        path: "/iframe?src=/yao/builder/?page=blog/website/index",
+        path: '/iframe?src=/yao/builder/?page=blog/website/index',
         visible_menu: 0,
         blocks: 0,
-        icon: "icon-activity",
+        icon: 'icon-activity',
         id: 1,
-        name: "builder",
+        name: 'builder',
       },
       ...nodes,
     ],
     setting: [
       {
-        path: "/setting",
+        path: '/setting',
         children: [
           {
             id: 10002,
-            name: "系统设置",
-            path: "/setting",
+            name: '系统设置',
+            path: '/setting',
           },
         ],
-        icon: "icon-settings",
+        icon: 'icon-settings',
         id: 999999,
-        name: "设置",
+        name: '设置',
       },
     ],
   };

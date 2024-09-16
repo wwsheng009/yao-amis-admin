@@ -1,6 +1,6 @@
 // 复杂嵌套结构处理
 
-import {Process,Exception} from '@yao/yao'
+import { Process, Exception } from '@yao/yao';
 /**
  * 读取并转换一个树结构模型
  * yao run scripts.amis.data.tree.GetNodes admin.menu
@@ -9,10 +9,10 @@ import {Process,Exception} from '@yao/yao'
  * @returns
  */
 export function GetNodes(model, querys) {
-  let labelField = "name";
-  let valueField = "id";
+  let labelField = 'name';
+  let valueField = 'id';
 
-  let fields = ["id", "parent"];
+  let fields = ['id', 'parent'];
 
   if (Array.isArray(querys?.__label) && querys.__label[0].length) {
     labelField = querys.__label[0];
@@ -25,7 +25,7 @@ export function GetNodes(model, querys) {
 
   if (Array.isArray(querys?.select) && querys.select[0].length) {
     const selectFields = querys.select[0];
-    fields.push(...selectFields.split(","));
+    fields.push(...selectFields.split(','));
   }
 
   fields = [...new Set(fields)];
@@ -43,7 +43,7 @@ export function GetNodes(model, querys) {
     x.value = x[valueField] || x.id;
   });
 
-  return Process(`utils.arr.Tree`, data, { parent: "parent", empty: 0 });
+  return Process(`utils.arr.Tree`, data, { parent: 'parent', empty: 0 });
 }
 /**
  * amis input-tree增加一个节点
@@ -52,15 +52,15 @@ export function GetNodes(model, querys) {
  * @param node 当前节点数据
  * @returns
  */
-export function CreateNode(model, { path, parent, ...node }:any) {
+export function CreateNode(model, { path, parent, ...node }: any) {
   const newNode = { ...node };
-  if (parent && typeof parent === "object" && parent.id) {
+  if (parent && typeof parent === 'object' && parent.id) {
     newNode.parent = parent.id;
   } else {
-    newNode.parent = parent; //如果是ID
+    newNode.parent = parent; // 如果是ID
   }
   if (newNode.id && newNode.id == newNode.parent) {
-    throw new Exception("上级节点不能选择自己", 400);
+    throw new Exception('上级节点不能选择自己', 400);
   }
 
   return Process(`models.${model}.save`, newNode);
@@ -73,48 +73,46 @@ export function CreateNode(model, { path, parent, ...node }:any) {
  */
 export function UpdateNode(model, id, newNode) {
   if (id && id == newNode.parent) {
-    throw new Exception("上级节点不能选择自己", 400);
+    throw new Exception('上级节点不能选择自己', 400);
   }
   newNode.id = id;
 
   // 清空父节点
-  if (newNode.parent == "" || !newNode.parent) {
+  if (newNode.parent == '' || !newNode.parent) {
     newNode.parent = 0;
   }
   // console.log("newNode", newNode);
   return Process(`models.${model}.save`, newNode);
 }
 
-
 /**
  * 删除节点与及所有的子节点
- * @param {string} modelId 
- * @param {string} ids 
+ * @param {string} modelId
+ * @param {string} ids
  */
 export function DeleteNode(modelId, ids) {
   // 需要处理子节点
   let subItems = [];
-  const myArray = ids.split(",");
-  myArray &&
-    myArray.forEach((id) => {
-      const item = Process(`models.${modelId}.find`, id, null);
-      if (item && item.id) {
-        subItems = subItems.concat(getSubNodeItems(modelId, item.id));
-        subItems.push(item); //删除自己
-      }
-    });
+  const myArray = ids.split(',');
+  myArray
+  && myArray.forEach((id) => {
+    const item = Process(`models.${modelId}.find`, id, null);
+    if (item && item.id) {
+      subItems = subItems.concat(getSubNodeItems(modelId, item.id));
+      subItems.push(item); // 删除自己
+    }
+  });
 
   subItems.forEach((item) => {
     Process(`models.${modelId}.delete`, item.id);
   });
 }
 
-
 /**
  * 根据特定的id获取树节点以及所有的子节点
- * @param {string} modelId 
- * @param {string|number} id 
- * @returns 
+ * @param {string} modelId
+ * @param {string|number} id
+ * @returns
  */
 export function GetNodeItems(modelId, id) {
   const item = Process(`models.${modelId}.find`, id, null);
@@ -125,7 +123,7 @@ export function GetNodeItems(modelId, id) {
     subItems.push(item);
     items = items.concat(subItems);
   }
-  return Process("utils.arr.Tree", items, {});
+  return Process('utils.arr.Tree', items, {});
   // return items;
 }
 
@@ -138,7 +136,7 @@ function getSubNodeItems(modelId, parentId) {
   const subNodes = Process(`models.${modelId}.get`, {
     wheres: [
       {
-        column: "parent",
+        column: 'parent',
         value: parentId,
       },
     ],
@@ -163,12 +161,12 @@ export function filterTreeDataWithFunc(dataArray, func) {
   return dataArray.reduce((acc, item) => {
     // Check if the current node or its children match the filter condition
     // console.log("item id=======>", item.id);
-    const includesFilter =
-      func(item) ||
-      (item.children && filterTreeDataWithFunc(item.children, func).length > 0);
+    const includesFilter
+      = func(item)
+      || (item.children && filterTreeDataWithFunc(item.children, func).length > 0);
     if (includesFilter) {
       if (func(item)) {
-        //直接包含所有的子节点
+        // 直接包含所有的子节点
         acc.push({ ...item });
       } else {
         const filteredChildren = item.children
@@ -213,7 +211,7 @@ export function collectTreeFields(data, field) {
 
   // Recursive function to traverse the object
   function traverse(obj) {
-    if (obj != null && typeof obj === "object") {
+    if (obj != null && typeof obj === 'object') {
       if (obj.hasOwnProperty(field)) {
         obj[field] != null && fields.push(obj[field]);
       }
@@ -232,8 +230,8 @@ export function collectTreeFields(data, field) {
 }
 /**
  * 将多维数组转换为一维数组，并删除重复项。
- * @param {Array} array 
- * @returns 
+ * @param {Array} array
+ * @returns
  */
 function flatAndRemoveDuplicate(array) {
   // 将多维数组转换为一维数组
@@ -266,9 +264,9 @@ export function collectAndCombineData(data, key, key2, defaultKey?) {
     }
 
     if (
-      obj.hasOwnProperty(key) &&
-      Array.isArray(obj[key]) &&
-      obj[key].length > 0
+      obj.hasOwnProperty(key)
+      && Array.isArray(obj[key])
+      && obj[key].length > 0
     ) {
       for (const o of obj[key]) {
         // 使用数组中的行项目作key

@@ -1,22 +1,22 @@
-import { FileNameConvert } from "@scripts/amis/lib_tool";
-import { Process, Exception, Query,FS} from "@yao/yao";
+import { FileNameConvert } from '@scripts/amis/lib_tool';
+import { Process, Exception, Query, FS } from '@yao/yao';
 
 /**
  * 在amis-editor里创建或是修改页面配置后可以先保存成文件，在确定没有问题后再加载到数据库
  */
 
-//1 防止误操作，在特定的目录下使用editor的创建与编辑，创建好后再手动复制到正式的目录pages
-//2 编辑器的功能比较简单，目录结构不支持嵌套的目录结构
-const WorkingPagesLocation = "/amis_editor";
-const PagesLocation = "/pages";
+// 1 防止误操作，在特定的目录下使用editor的创建与编辑，创建好后再手动复制到正式的目录pages
+// 2 编辑器的功能比较简单，目录结构不支持嵌套的目录结构
+const WorkingPagesLocation = '/amis_editor';
+const PagesLocation = '/pages';
 
 function getUserDir() {
-  let user_id = Process("session.get", "user_id");
+  let user_id = Process('session.get', 'user_id');
   if (!user_id) {
-    user_id = "1";
+    user_id = '1';
   }
   let dir = `${WorkingPagesLocation}/${user_id}/`;
-  dir = dir.replaceAll("//", "/");
+  dir = dir.replaceAll('//', '/');
   Mkdir(dir);
   return dir;
 }
@@ -26,13 +26,13 @@ function getPages(dirIn) {
   if (dir == null) {
     dir = getUserDir();
   }
-  const fs = new FS("system");
+  const fs = new FS('system');
   let files = fs.ReadDir(dir, true); // recursive
   files = files
     .map((str) => {
-      str = str.replaceAll("\\", "/");
+      str = str.replaceAll('\\', '/');
       // console.log("dir:", dir);
-      if (str.endsWith(".json") && str.startsWith(dir)) {
+      if (str.endsWith('.json') && str.startsWith(dir)) {
         return str.substr(dir.length);
       }
     })
@@ -43,9 +43,9 @@ function getPages(dirIn) {
     const dataString = fs.ReadFile(dir + file);
     try {
       const page = JSON.parse(dataString);
-      //不处理多页应用
-      if (page.type && page.type !== "app") {
-        const filename = file.replace(/\.json$/, "");
+      // 不处理多页应用
+      if (page.type && page.type !== 'app') {
+        const filename = file.replace(/\.json$/, '');
         result[filename] = page;
       } else {
         console.log(`invalid amis file format:${dir + file}`);
@@ -65,19 +65,19 @@ function saveFileRecord(user_id, file_name) {
   if (!user_id || !file_name) {
     return;
   }
-  const [record] = Process("models.system.file.get", {
+  const [record] = Process('models.system.file.get', {
     wheres: [
-      { column: "user_id", value: user_id },
-      { column: "file_name", value: file_name, method: "where" },
+      { column: 'user_id', value: user_id },
+      { column: 'file_name', value: file_name, method: 'where' },
     ],
     limit: 1,
   });
   if (!record) {
-    Process("models.system.file.save", { user_id, file_name });
+    Process('models.system.file.save', { user_id, file_name });
   } else {
     // 更新时间
     // console.log(`更新时间${data[0].id}`);
-    Process("models.system.file.save", { id: record.id });
+    Process('models.system.file.save', { id: record.id });
   }
 }
 // yao studio run editor.deleteFileRecord 1, "/public/amis-admin/pages_working/1/测试.json"
@@ -86,32 +86,32 @@ function deleteFileRecord(user_id, file_name) {
   if (!user_id || !file_name) {
     return;
   }
-  Process("models.system.file.deletewhere", {
+  Process('models.system.file.deletewhere', {
     wheres: [
-      { column: "user_id", value: user_id },
-      { column: "file_name", value: file_name, method: "where" },
+      { column: 'user_id', value: user_id },
+      { column: 'file_name', value: file_name, method: 'where' },
     ],
   });
 }
-//保存数据
+// 保存数据
 function savePage(file, payload) {
   if (!file || !payload) {
     return;
   }
-  //空数据
+  // 空数据
   if (!payload.body && !payload.type) {
     console.log(`空页面：${file}`);
     return;
   }
   let fname = file;
-  if (!fname.toUpperCase().endsWith(".JSON")) {
-    fname += ".json";
+  if (!fname.toUpperCase().endsWith('.JSON')) {
+    fname += '.json';
   }
   const userDir = getUserDir();
   const nfilename = userDir + fname;
-  let user_id = Process("session.get", "user_id");
+  let user_id = Process('session.get', 'user_id');
   if (!user_id) {
-    user_id = "1";
+    user_id = '1';
   }
 
   // 备份后再保存
@@ -123,23 +123,23 @@ function savePage(file, payload) {
   // console.log("nfilename", nfilename);
   saveFileRecord(user_id, nfilename);
 
-  return { message: "Page Saved" };
+  return { message: 'Page Saved' };
 }
-//删除文件
+// 删除文件
 function deletePage(file) {
   const dir = getUserDir();
 
-  let user_id = Process("session.get", "user_id");
+  let user_id = Process('session.get', 'user_id');
   if (!user_id) {
-    user_id = "1";
+    user_id = '1';
   }
   let nfilename = dir + file;
-  if (!nfilename.toUpperCase().endsWith(".JSON")) {
-    nfilename += ".json";
+  if (!nfilename.toUpperCase().endsWith('.JSON')) {
+    nfilename += '.json';
   }
   deleteFileRecord(user_id, nfilename);
 
-  //移动到临时目录，而不是真正删除
+  // 移动到临时目录，而不是真正删除
   return Move(dir, file);
   // fs.remove(fname);
 }
@@ -148,31 +148,31 @@ function deletePage(file) {
 // yao  run scripts.editor.localfile.loadSinglePageToDB site.json
 function loadSinglePageToDB(fname) {
   const dir = getUserDir();
-  const fs = new FS("system");
+  const fs = new FS('system');
   const dataString = fs.ReadFile(dir + fname);
   const page = JSON.parse(dataString);
-  if (page.type && page.type !== "app") {
+  if (page.type && page.type !== 'app') {
     // let filename = fname.replace(/\.json$/, "");
     // 不能删除后缀
-    Process("widget.save", "amis", fname, page);
+    Process('widget.save', 'amis', fname, page);
   }
 }
 
 // dump the pages form database to file
 // yao studio run editor.dumpPagesFromDB
 function dumpPagesFromDB() {
-  const pages = Process("scripts.editor.getPages");
+  const pages = Process('scripts.editor.getPages');
   for (const key in pages) {
     const page = pages[key];
-    if (page.type && page.type !== "app") {
+    if (page.type && page.type !== 'app') {
       savePage(key, page);
     }
   }
 }
 // yao studio run editor.dumpSinglePageFromDB "tables.json"
 function dumpSinglePageFromDB(fname) {
-  const page = Process("scripts.editor.getPage", fname);
-  if (page.type && page.type !== "app") {
+  const page = Process('scripts.editor.getPage', fname);
+  if (page.type && page.type !== 'app') {
     savePage(fname, page);
   }
 }
@@ -197,10 +197,10 @@ function MoveAndWrite(folder, file, dsl) {
  * @param {object} data
  */
 function WriteFile(filename, data) {
-  const fs = new FS("system");
+  const fs = new FS('system');
   const nfilename = FileNameConvert(filename);
   if (!fs.Exists(nfilename)) {
-    const folder = nfilename.split("/").slice(0, -1).join("/");
+    const folder = nfilename.split('/').slice(0, -1).join('/');
     if (!fs.Exists(folder)) {
       fs.MkdirAll(folder);
     }
@@ -219,20 +219,20 @@ function WriteFile(filename, data) {
  */
 function Move(dir, name) {
   let fname = name;
-  if (!fname.toUpperCase().endsWith(".JSON")) {
-    fname = fname + ".json";
+  if (!fname.toUpperCase().endsWith('.JSON')) {
+    fname = fname + '.json';
   }
-  const sourceFile = dir ? dir + "/" + fname : fname;
+  const sourceFile = dir ? dir + '/' + fname : fname;
 
-  const fs = new FS("system");
-  const baseDir = ".trash";
+  const fs = new FS('system');
+  const baseDir = '.trash';
   // 判断文件夹是否存在.不存在就创建
 
   const newDir = Math.floor(Date.now() / 1000);
   // models的文件移动到
   // 如果已经存在
   if (fs.Exists(sourceFile)) {
-    Mkdir(baseDir + "/" + newDir);
+    Mkdir(baseDir + '/' + newDir);
     fs.Copy(sourceFile, `${baseDir}/${newDir}/${name}`);
     // 复制完成后,删除文件
     fs.Remove(sourceFile);
@@ -242,7 +242,7 @@ function Move(dir, name) {
   }
 }
 function Mkdir(name) {
-  const fs = new FS("system");
+  const fs = new FS('system');
   const res = fs.Exists(name);
   if (res !== true) {
     // console.log("make dir:", name);
@@ -256,16 +256,16 @@ function Mkdir(name) {
 //    -H 'Authorization: Bearer <Studio JWT>' \
 //    -d '{ "args":["admin.menu"],"method":"createCurdPage"}'
 function createCurdPage(table) {
-  const page = Process("scripts.amis.curd.curdTemplate", table);
+  const page = Process('scripts.amis.curd.curdTemplate', table);
 
-  const fs = new FS("system");
-  const fname = WorkingPagesLocation + table + "_amis_page.json";
+  const fs = new FS('system');
+  const fname = WorkingPagesLocation + table + '_amis_page.json';
   if (!page.type) {
-    //empty page
+    // empty page
     return;
   }
   // 备份后再保存
-  fs.WriteFile(fname, JSON.stringify(page), "0644");
+  fs.WriteFile(fname, JSON.stringify(page), '0644');
   // console.log("page saved:", fname);
 }
 
@@ -279,21 +279,21 @@ function loadPageToDB() {
   for (const key in pages) {
     const page = pages[key];
     let fname = key;
-    if (page.type && page.type !== "app") {
+    if (page.type && page.type !== 'app') {
       const compKey = key.toUpperCase();
       if (
-        !compKey.endsWith(".JSON") &&
-        !compKey.endsWith(".JSONC") &&
-        !compKey.endsWith(".YAO") &&
-        !compKey.endsWith(".YAM") &&
-        !compKey.endsWith(".YAML")
+        !compKey.endsWith('.JSON')
+        && !compKey.endsWith('.JSONC')
+        && !compKey.endsWith('.YAO')
+        && !compKey.endsWith('.YAM')
+        && !compKey.endsWith('.YAML')
       ) {
-        fname += ".json";
+        fname += '.json';
       }
-      //widget的保存需要文件后缀名。
-      //如果没有后缀名，无法区分文件类型。
+      // widget的保存需要文件后缀名。
+      // 如果没有后缀名，无法区分文件类型。
       // fname是关键字段，并且有唯一性
-      Process("widget.save", "amis", fname, page);
+      Process('widget.save', 'amis', fname, page);
     }
   }
 }

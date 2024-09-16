@@ -80,12 +80,12 @@ const exptected = [
 function filterTreeDataWithFun(dataArray, func) {
   return dataArray.reduce((acc, item) => {
     // Check if the current node or its children match the filter condition
-    const includesFilter =
-      func(item) ||
-      (item.children && filterTreeDataWithFun(item.children, func).length > 0);
+    const includesFilter
+      = func(item)
+      || (item.children && filterTreeDataWithFun(item.children, func).length > 0);
     if (includesFilter) {
       if (func(item)) {
-        //直接包含所有的子节点
+        // 直接包含所有的子节点
         acc.push({ ...item });
       } else {
         const filteredChildren = item.children
@@ -105,10 +105,10 @@ function filterTreeDataWithFun(dataArray, func) {
 function filterTreeDataById(data, filterIds) {
   return data.reduce((acc, item) => {
     // Check if the current node or its children match the filter condition
-    const includesFilter =
-      filterIds.includes(item.id) ||
-      (item.children &&
-        filterTreeDataById(item.children, filterIds).length > 0);
+    const includesFilter
+      = filterIds.includes(item.id)
+      || (item.children
+        && filterTreeDataById(item.children, filterIds).length > 0);
     if (includesFilter) {
       if (filterIds.includes(item.id)) {
         acc.push({ ...item });
@@ -129,7 +129,7 @@ function filterTreeDataById(data, filterIds) {
 
 function areObjectsEqual(obj1, obj2) {
   // Check if both objects are of type object
-  if (typeof obj1 !== "object" || typeof obj2 !== "object") {
+  if (typeof obj1 !== 'object' || typeof obj2 !== 'object') {
     return false;
   }
 
@@ -150,7 +150,7 @@ function areObjectsEqual(obj1, obj2) {
     }
 
     // Recursively compare nested objects
-    if (typeof obj1[key] === "object" && typeof obj2[key] === "object") {
+    if (typeof obj1[key] === 'object' && typeof obj2[key] === 'object') {
       if (!areObjectsEqual(obj1[key], obj2[key])) {
         return false;
       }
@@ -170,7 +170,7 @@ function collectFields(data, field) {
 
   // Recursive function to traverse the object
   function traverse(obj) {
-    if (typeof obj === "object") {
+    if (typeof obj === 'object') {
       if (obj.hasOwnProperty(field)) {
         fields.push(obj[field]);
       }
@@ -189,20 +189,20 @@ function collectFields(data, field) {
 const filterIds = [17, 6];
 const result = filterTreeDataById(data, filterIds);
 
-console.log("equal?:", areObjectsEqual(exptected, result));
+console.log('equal?:', areObjectsEqual(exptected, result));
 
 const isObj1EqualToObj2 = JSON.stringify(exptected) === JSON.stringify(result);
 
 if (isObj1EqualToObj2 !== true) {
-  throw new Error("Not Match");
+  throw new Error('Not Match');
 }
 
 const result1 = filterTreeDataWithFun(data, (item) =>
-  filterIds.includes(item.id)
+  filterIds.includes(item.id),
 );
 const isObj1EqualToObj3 = areObjectsEqual(exptected, result1);
 if (isObj1EqualToObj3 !== true) {
-  throw new Error("Not Match");
+  throw new Error('Not Match');
 }
-const ids = collectFields(data, "id");
-console.log("ids", ids);
+const ids = collectFields(data, 'id');
+console.log('ids', ids);

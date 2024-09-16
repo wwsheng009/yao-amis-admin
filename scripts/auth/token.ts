@@ -1,5 +1,4 @@
-import { Process, Exception, Query } from "@yao/yao";
-
+import { Process, Exception, Query } from '@yao/yao';
 
 /**
  * api guard,scripts.auth.token.Check，检查身份验证
@@ -14,15 +13,15 @@ function Check(path, params, queries, payload, headers) {
   if (!token) {
     error();
   }
-  if (token == "" || token.length == 0) {
+  if (token == '' || token.length == 0) {
     error();
   }
 
-  const data = Process("utils.jwt.Verify", token);
+  const data = Process('utils.jwt.Verify', token);
   return { __sid: data.sid, __global: data.data };
 }
 function error() {
-  throw new Exception("Not Authorized", 403);
+  throw new Exception('Not Authorized', 403);
 }
 
 // yao run scripts.security.CheckToken
@@ -33,7 +32,7 @@ function CheckToken(path, params, queries, payload, headers) {
   }
 
   // try {
-  const data = Process("utils.jwt.Verify", token);
+  const data = Process('utils.jwt.Verify', token);
   return { __sid: data.sid, __global: data.data };
   // } catch (error) {
   //   console.log("Error:", error);
@@ -47,27 +46,27 @@ function getToken(path, params, queries, payload, headers) {
   // 2 cookie token
   // 3 url查询参数中的token
   let token = null;
-  const auth = headers["Authorization"];
+  const auth = headers['Authorization'];
   if (auth) {
     token = auth[0];
   } else {
-    token = token || (queries["token"] && queries["token"][0]);
+    token = token || (queries['token'] && queries['token'][0]);
   }
   if (!auth) {
-    const cookies = headers["Cookie"];
-    cookies &&
-      cookies.forEach((cookie) => {
-        const cookies2 = cookie.split(";"); // split the cookies into an array
-        cookies2.forEach((cookie) => {
-          const [name, value] = cookie.trim().split("="); // split cookie name and value
-          if (name === "token") {
-            token = value; // assign cookie value to token variable
-          }
-        });
+    const cookies = headers['Cookie'];
+    cookies
+    && cookies.forEach((cookie) => {
+      const cookies2 = cookie.split(';'); // split the cookies into an array
+      cookies2.forEach((cookie) => {
+        const [name, value] = cookie.trim().split('='); // split cookie name and value
+        if (name === 'token') {
+          token = value; // assign cookie value to token variable
+        }
       });
+    });
   }
   if (token) {
-    token = token.replace("Bearer ", "");
+    token = token.replace('Bearer ', '');
   }
   return token;
 }

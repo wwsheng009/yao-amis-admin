@@ -1,9 +1,9 @@
 function getModelList() {
-  const viewList = Process("models.odata.view.get", {
-    wheres: [{ column: "disabled", value: false }],
+  const viewList = Process('models.odata.view.get', {
+    wheres: [{ column: 'disabled', value: false }],
     limit: 10000,
   });
-  const modelsList = Process("widget.models");
+  const modelsList = Process('widget.models');
   // 原始的模型列表
   let model_list = modelDefinitionList(modelsList);
   // model_list = model_list.filter((model) => viewList.find((v) => v.model_id == model.ID));
@@ -26,7 +26,7 @@ function getModelList() {
     const model = model_list.find((m) => m.ID === v.model_id);
     if (model) {
       model.model_id = v.model_id;
-      const m = { ...model }; //copy object
+      const m = { ...model }; // copy object
       if (v.table_id) {
         model.table_id = v.table_id;
         const model_cols = getTableColumns(v.table_id);
@@ -43,7 +43,7 @@ function getModelList() {
   return viewModelList;
 }
 
-//yao run scripts.main.models
+// yao run scripts.main.models
 function getModels() {
   const list = getModelList();
   // Process("models.system.api.eachsave", list);
@@ -66,7 +66,7 @@ function getModelsEntityset() {
   let modelObj = [];
   list.forEach((model) => {
     modelObj.push({
-      kind: "EntitySet",
+      kind: 'EntitySet',
       name: model.odata_view_name,
       url: model.odata_view_name,
     });
@@ -92,10 +92,10 @@ function getModelNameList() {
  * @returns odata view list
  */
 function getOdataViewList() {
-  const list = Process("models.odata.view.get", {
+  const list = Process('models.odata.view.get', {
     wheres: [
       {
-        column: "disabled",
+        column: 'disabled',
         value: false,
       },
     ],
@@ -155,7 +155,7 @@ function getTableColumns(table_id) {
   if (!table_id) {
     return [];
   }
-  const setting = Process("yao.table.setting", table_id);
+  const setting = Process('yao.table.setting', table_id);
   // output columns
   const cols = setting.table.columns.reduce((arr, col) => {
     arr.push(col.name);
@@ -178,10 +178,10 @@ function getModel(viewId) {
   if (!viewId) {
     return { columns: [] };
   }
-  const [odataview] = Process("models.odata.view.get", {
+  const [odataview] = Process('models.odata.view.get', {
     wheres: [
       {
-        column: "name",
+        column: 'name',
         value: viewId,
       },
     ],
@@ -196,7 +196,7 @@ function getModel(viewId) {
 
   // 如果数据库里没有，从内存中加载定义
   // 只有加载到内存的才能获取的了
-  const models = Process("widget.models");
+  const models = Process('widget.models');
   let model = findModelById(models, model_id);
   if (model) {
     model.model_id = model_id;
@@ -206,16 +206,16 @@ function getModel(viewId) {
         return model_cols.includes(column.name);
       });
     } else {
-      //过滤隐藏的字段
+      // 过滤隐藏的字段
       model.columns = model.columns.filter((column) => {
         if (model.option) {
           if (model.option.timestamps) {
-            if (column.name == "updated_at" || column.name == "created_at") {
+            if (column.name == 'updated_at' || column.name == 'created_at') {
               return false;
             }
           }
           if (model.option.soft_deletes) {
-            if (column.name == "deleted_at") {
+            if (column.name == 'deleted_at') {
               return false;
             }
           }
@@ -225,13 +225,13 @@ function getModel(viewId) {
     }
 
     model.name = model.ID;
-  }else{
+  } else {
     throw new Exception(`模型：${model_id}不存在`);
   }
   return model;
 }
 function findModelById(models, id) {
-  if (typeof models !== "object" || models === null || models === undefined) {
+  if (typeof models !== 'object' || models === null || models === undefined) {
     return null;
   }
 

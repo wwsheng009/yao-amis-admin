@@ -1,14 +1,14 @@
-import {Process,Query} from '@yao/yao'
+import { Process, Query } from '@yao/yao';
 
 /**
- * 
- * 
+ *
+ *
  * yao run scripts.system.account.UserInfo
- * 
+ *
  * @returns 当前登录用户的信息
  */
 function UserInfo(id) {
-  let user_id = Process("session.get", "user_id");
+  let user_id = Process('session.get', 'user_id');
   if (id) {
     user_id = id;
   }
@@ -16,26 +16,26 @@ function UserInfo(id) {
   const user = q.First({
     // "debug": true,
     select: [
-      "id",
-      "name",
-      "created_at",
-      "email",
-      "extra",
+      'id',
+      'name',
+      'created_at',
+      'email',
+      'extra',
       //   "idcard",
-      "key",
-      "mobile",
+      'key',
+      'mobile',
       //   "password",
       //   "password2nd",
       //   "secret",
-      "status",
-      "type",
-      "updated_at",
+      'status',
+      'type',
+      'updated_at',
     ],
     wheres: [
-      { ":deleted_at": "删除", "=": null },
-      { field: "id", op: "=", value: user_id }, //使用传入参数
+      { ':deleted_at': '删除', '=': null },
+      { field: 'id', op: '=', value: user_id }, // 使用传入参数
     ],
-    from: "$admin.user",
+    from: '$admin.user',
     limit: 1,
   });
   if (user) {
@@ -53,23 +53,23 @@ function UserList() {
   const list = q.Get({
     // "debug": true,
     select: [
-      "id",
-      "name",
-      "created_at",
-      "email",
-      "extra",
+      'id',
+      'name',
+      'created_at',
+      'email',
+      'extra',
       //   "idcard",
-      "key",
-      "mobile",
+      'key',
+      'mobile',
       //   "password",
       //   "password2nd",
       //   "secret",
-      "status",
-      "type",
-      "updated_at",
+      'status',
+      'type',
+      'updated_at',
     ],
-    wheres: [{ ":deleted_at": "删除", "=": null }],
-    from: "$admin.user",
+    wheres: [{ ':deleted_at': '删除', '=': null }],
+    from: '$admin.user',
     limit: 1000,
   });
   list.forEach((user) => {
@@ -81,76 +81,76 @@ function UserList() {
 /**
  * 已登录用户修改自己的密码
  * @param {object} form
- * @returns 
+ * @returns
  */
 function changeOwnassword({ current, new_password, confirm }) {
-  const user_id = Process("session.get", "user_id");
+  const user_id = Process('session.get', 'user_id');
   if (!user_id) {
-    return Process("scripts.return.RError", "", 400, "用户不存在");
+    return Process('scripts.return.RError', '', 400, '用户不存在');
   }
   const q = new Query();
   const user = q.First({
     // debug: true,
-    select: ["id", "password"],
+    select: ['id', 'password'],
     wheres: [
       {
-        field: "id",
+        field: 'id',
         value: user_id,
       },
     ],
-    from: "$admin.user",
+    from: '$admin.user',
     limit: 1,
   });
   try {
     const password_validate = Process(
-      "utils.pwd.Verify",
+      'utils.pwd.Verify',
       current,
-      user.password
+      user.password,
     );
     if (password_validate !== true) {
-      return Process("scripts.return.RError", "", 400, "密码不正确");
+      return Process('scripts.return.RError', '', 400, '密码不正确');
     }
   } catch (error) {
-    return Process("scripts.return.RError", "", 400, "密码不正确");
+    return Process('scripts.return.RError', '', 400, '密码不正确');
   }
 
   if (new_password !== confirm) {
-    return Process("scripts.return.RError", "", 400, "密码不一致");
+    return Process('scripts.return.RError', '', 400, '密码不一致');
   }
   user.password = new_password;
-  Process("models.admin.user.save", user);
+  Process('models.admin.user.save', user);
 }
 
 /**
  * 新用户注册
- * @param {object} payload 
- * @returns 
+ * @param {object} payload
+ * @returns
  */
 function register(payload) {
   let { captcha, password, email, confirm, name } = payload;
 
-  const ok = Process("utils.captcha.Verify", captcha.id, captcha.code);
+  const ok = Process('utils.captcha.Verify', captcha.id, captcha.code);
   if (ok) {
     if (password !== confirm) {
-      return Process("scripts.return.RError", "", 400, "密码不一致");
+      return Process('scripts.return.RError', '', 400, '密码不一致');
     }
 
     const q = new Query();
     const user = q.First({
-      select: ["id", "name", "password"],
+      select: ['id', 'name', 'password'],
       wheres: [
         {
-          field: "name",
+          field: 'name',
           value: email,
         },
-        { or: true, field: "email", value: email },
+        { or: true, field: 'email', value: email },
       ],
-      from: "$admin.user",
+      from: '$admin.user',
       limit: 1,
     });
 
     if (user) {
-      return Process("scripts.return.RError", "", "400", "用户已存在");
+      return Process('scripts.return.RError', '', '400', '用户已存在');
     }
 
     if (!name) {
@@ -162,10 +162,10 @@ function register(payload) {
       name,
     };
     try {
-      Process("models.admin.user.Create", user1);
+      Process('models.admin.user.Create', user1);
     } catch (error) {
-      //为了返回的数据好看
-      return Process("scripts.return.RError", "", error.code, error.message);
+      // 为了返回的数据好看
+      return Process('scripts.return.RError', '', error.code, error.message);
     }
   }
   return {};

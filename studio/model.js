@@ -1,16 +1,16 @@
-const { SlashName, FileNameConvert } = Require("amis.lib_tool");
+const { SlashName, FileNameConvert } = Require('amis.lib_tool');
 /**
  * yao studio run model.GenerateModelFile
  * @param modelid model id
  */
 function GenerateModelFile(modelid) {
-  const model = Process("models.ddic.model.Find", modelid, {
+  const model = Process('models.ddic.model.Find', modelid, {
     withs: {
       columns: { withs: { element: {} } },
     },
   });
 
-  const m = Process("scripts.system.model.ConvertTableLineToModel", model);
+  const m = Process('scripts.system.model.ConvertTableLineToModel', model);
   m.columns.forEach((col) => {
     delete col.id;
     delete col.model_id;
@@ -24,10 +24,10 @@ function SaveModelToFile(model) {
   let modelName = SlashName(model.name);
   const filename = `/models/${modelName}.mod.json`;
 
-  const fs = new FS("dsl");
+  const fs = new FS('dsl');
   const nfilename = FileNameConvert(filename);
   if (!fs.Exists(nfilename)) {
-    const folder = nfilename.split("/").slice(0, -1).join("/");
+    const folder = nfilename.split('/').slice(0, -1).join('/');
     if (!fs.Exists(folder)) {
       fs.MkdirAll(folder);
     }
