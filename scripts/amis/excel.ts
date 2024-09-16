@@ -1,6 +1,6 @@
 // 使用input-excel组件批量导入数据
 // input-excel导入的数据已经是解析好的数据，只要在amis页面上配置好映射关系就可以直接使用数据了。
-import { Process, Exception, Query } from '@yao/yao';
+import { Process, Query } from '@yao/yao';
 
 function importData(payload) {
   // Save payload to database or storage
@@ -9,7 +9,9 @@ function importData(payload) {
     wheres: [{ column: 'number', op: 'notnull' }],
   });
   // 直接插入新记录，这里是可以直接使用amis传入的input-excel的数据结构
-  payload.excel && Process('models.demo.excel.EachSave', payload.excel);
+  if (payload.excel) {
+    Process('models.demo.excel.EachSave', payload.excel);
+  }
 
   return Process('scripts.return.RSuccessMessage', '数据已成功导入');
 }

@@ -3,7 +3,7 @@ import { Process } from '@yao/yao';
 function studio() {
   const jwtOptions = {
     timeout: 3600,
-    sid: '123123',
+    sid: 123123,
   };
   const jwtClaims = { user_name: 'abc' };
   //   let myString = "hello world";

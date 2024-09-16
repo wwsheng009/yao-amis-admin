@@ -26,7 +26,7 @@ import { Process, Exception } from '@yao/yao';
  * @param {Array} columnsIn 字段列表字义，从前端传入
  * @returns
  */
-export function getModelDefinition(modelId, columnsIn?) {
+export function getModelDefinition(modelId: string, columnsIn?: any[]) {
   let model = Process(
     'scripts.system.model.getDBModelById', // 优先从数据库中加载，
     DotName(modelId),

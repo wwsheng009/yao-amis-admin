@@ -83,8 +83,8 @@ function curdTemplate(modelId, columns) {
         api: {
           method: 'post',
           url:
-            `/api/v1/system/model/${modelId}`
-            + `/search${withUrl ? '?' + withUrl : ''}`,
+            `/api/v1/system/model/${modelId}` +
+            `/search${withUrl ? '?' + withUrl : ''}`,
           data: {
             '&': '$$',
           },

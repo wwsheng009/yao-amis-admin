@@ -1,4 +1,4 @@
-import { Exception, Process } from '../__types/yao';
+import { Process } from '../__types/yao';
 
 describe('Sum function', () => {
   test('yao test', () => {

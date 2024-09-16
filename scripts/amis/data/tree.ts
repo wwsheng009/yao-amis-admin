@@ -8,24 +8,25 @@ import { Process, Exception } from '@yao/yao';
  * @param {string} model 模型名称
  * @returns
  */
-export function GetNodes(model, querys) {
+export function GetNodes(model: string, querys?) {
   let labelField = 'name';
   let valueField = 'id';
 
   let fields = ['id', 'parent'];
 
-  if (Array.isArray(querys?.__label) && querys.__label[0].length) {
-    labelField = querys.__label[0];
-    fields.push(labelField);
-  }
-  if (Array.isArray(querys?.__value) && querys.__value[0].length) {
-    valueField = querys.__value[0];
-    fields.push(valueField);
-  }
-
-  if (Array.isArray(querys?.select) && querys.select[0].length) {
-    const selectFields = querys.select[0];
-    fields.push(...selectFields.split(','));
+  if (querys != null) {
+    if (Array.isArray(querys?.__label) && querys.__label[0].length) {
+      labelField = querys.__label[0];
+      fields.push(labelField);
+    }
+    if (Array.isArray(querys?.__value) && querys.__value[0].length) {
+      valueField = querys.__value[0];
+      fields.push(valueField);
+    }
+    if (Array.isArray(querys?.select) && querys.select[0].length) {
+      const selectFields = querys.select[0];
+      fields.push(...selectFields.split(','));
+    }
   }
 
   fields = [...new Set(fields)];
@@ -71,7 +72,7 @@ export function CreateNode(model, { path, parent, ...node }: any) {
  * @param {*} newNode 节点，没有携带id信息
  * @returns
  */
-export function UpdateNode(model, id, newNode) {
+export function UpdateNode(model: string, id: number, newNode) {
   if (id && id == newNode.parent) {
     throw new Exception('上级节点不能选择自己', 400);
   }
@@ -94,8 +95,7 @@ export function DeleteNode(modelId, ids) {
   // 需要处理子节点
   let subItems = [];
   const myArray = ids.split(',');
-  myArray
-  && myArray.forEach((id) => {
+  myArray?.forEach((id) => {
     const item = Process(`models.${modelId}.find`, id, null);
     if (item && item.id) {
       subItems = subItems.concat(getSubNodeItems(modelId, item.id));

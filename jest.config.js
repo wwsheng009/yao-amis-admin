@@ -2,6 +2,7 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node', // 可选择其他环境，如jsdom for browser-like tests
+  testRegex: '/tests/.*\\.(test|spec)?\\.(ts|tsx)$',
   roots: ['<rootDir>/scripts'], // 指定查找源码的根目录
   extensionsToTreatAsEsm: ['.ts', '.tsx'], // 处理为ESM模块的扩展名
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],

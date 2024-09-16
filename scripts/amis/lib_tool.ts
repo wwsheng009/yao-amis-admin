@@ -9,7 +9,7 @@ import { Process } from '@yao/yao';
  * @param {string} pathname
  * @returns model name with dot
  */
-export function DotName(pathname) {
+export function DotName(pathname: string) {
   if (!pathname || !pathname.length) {
     return pathname;
   }
@@ -30,7 +30,7 @@ export function DotName(pathname) {
  * @param {string} pathname
  * @returns pathname
  */
-export function UnderscoreName(pathname) {
+export function UnderscoreName(pathname: string) {
   if (!pathname || !pathname.length) {
     return pathname;
   }
@@ -50,7 +50,7 @@ export function UnderscoreName(pathname) {
  * @param {string} pathname
  * @returns pathname
  */
-export function SlashName(pathname) {
+export function SlashName(pathname: string) {
   if (!pathname || !pathname.length) {
     return pathname;
   }
@@ -71,7 +71,7 @@ export function SlashName(pathname) {
  * @param {string} filename
  * @returns new filename
  */
-export function FileNameConvert(filename) {
+export function FileNameConvert(filename: string) {
   // 不应用把下划线作转换
   // const str = filename.replace(/[\\_]/g, "/");
   const str = filename;
@@ -147,7 +147,7 @@ export function ClearFalsyKeys(target) {
 }
 
 // 删除对象中的空节点
-export function RemoveOjbectEmptyKey(obj) {
+export function RemoveOjbectEmptyKey(obj: { [x: string]: any }) {
   for (const prop in obj) {
     if (obj[prop] === null || obj[prop] === undefined) {
       // null属性
