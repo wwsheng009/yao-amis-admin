@@ -459,16 +459,6 @@
               "visibleOn": "data.type === 'MS Excel'"
             },
             {
-              "url": "/pdfjs/web/viewer.html?file=/api/v1/fs/${params.file_type}/file/attachement?name=${path}&token=${cookie:token}",
-              "actionType": "url",
-              "className": "text-info",
-              "id": "u:c345fb2a01fb",
-              "label": "预览",
-              "level": "link",
-              "type": "button",
-              "visibleOn": "data.type === 'PDF'"
-            },
-            {
               "url": "/amis-admin/preview-pdf.html?file=/api/v1/fs/${params.file_type}/file/attachement?name=${path}&token=${cookie:token}",
               "actionType": "url",
               "className": "text-info",

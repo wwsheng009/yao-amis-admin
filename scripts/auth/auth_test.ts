@@ -7,13 +7,8 @@ function testAuth() {
       children: [],
       created_at: '2023-11-29T14:41:41+08:00',
       desc: '文件管理',
-      folder_method: [
-        'READ',
-      ],
-      folders: [
-        '/project/project2',
-        '/project/测试项目',
-      ],
+      folder_method: ['READ'],
+      folders: ['/project/project2', '/project/测试项目'],
       http_method: null,
       http_path: null,
       id: 1,
@@ -31,13 +26,8 @@ function testAuth() {
           children: [],
           created_at: '2023-11-29T19:12:56+08:00',
           desc: '子节点',
-          folder_method: [
-            'UPDATE',
-            'CREATE',
-          ],
-          folders: [
-            '/project/测试项目',
-          ],
+          folder_method: ['UPDATE', 'CREATE'],
+          folders: ['/project/测试项目'],
           http_method: null,
           http_path: null,
           id: 10,
@@ -52,13 +42,8 @@ function testAuth() {
       ],
       created_at: '2023-11-29T19:00:17+08:00',
       desc: '文件操作2',
-      folder_method: [
-        'DELETE',
-      ],
-      folders: [
-        '/project/project2',
-        '/project/project4',
-      ],
+      folder_method: ['DELETE'],
+      folders: ['/project/project2', '/project/project4'],
       http_method: null,
       http_path: null,
       id: 2,
@@ -82,12 +67,8 @@ function testAuth() {
       children: [],
       created_at: '2023-11-29T14:41:41+08:00',
       desc: '文件管理',
-      folder_method: [
-      ],
-      folders: [
-        '/project/project2',
-        '/project/测试项目',
-      ],
+      folder_method: [],
+      folders: ['/project/project2', '/project/测试项目'],
       http_method: null,
       http_path: null,
       id: 1,
@@ -105,12 +86,8 @@ function testAuth() {
           children: [],
           created_at: '2023-11-29T19:12:56+08:00',
           desc: '子节点',
-          folder_method: [
-
-          ],
-          folders: [
-            '/project/测试项目',
-          ],
+          folder_method: [],
+          folders: ['/project/测试项目'],
           http_method: null,
           http_path: null,
           id: 10,
@@ -125,12 +102,8 @@ function testAuth() {
       ],
       created_at: '2023-11-29T19:00:17+08:00',
       desc: '文件操作2',
-      folder_method: [
-        'UPDATE',
-      ],
-      folders: [
-        '/project/project2',
-      ],
+      folder_method: ['UPDATE'],
+      folders: ['/project/project2'],
       http_method: null,
       http_path: null,
       id: 2,
@@ -144,7 +117,12 @@ function testAuth() {
     },
   ];
   // 反过来收集，操作都有哪些对象
-  const xxx2 = collectAndCombineData(permissions2, 'folder_method', 'folders', 'ALL');
+  const xxx2 = collectAndCombineData(
+    permissions2,
+    'folder_method',
+    'folders',
+    'ALL',
+  );
   console.log('xxx', xxx2);
 }
 
@@ -169,7 +147,11 @@ function collectAndCombineData(data, key, key2, defaultKey = '') {
       return;
     }
 
-    if (obj.hasOwnProperty(key) && Array.isArray(obj[key]) && obj[key].length > 0) {
+    if (
+      obj.hasOwnProperty(key) &&
+      Array.isArray(obj[key]) &&
+      obj[key].length > 0
+    ) {
       for (const o of obj[key]) {
         // 使用数组中的行项目作key
         const old = collectedData[o];
@@ -218,8 +200,8 @@ function collectTreeFields(data, field) {
   // Recursive function to traverse the object
   function traverse(obj) {
     if (obj != null && typeof obj === 'object') {
-      if (obj.hasOwnProperty(field)) {
-        obj[field] != null && fields.push(obj[field]);
+      if (obj.hasOwnProperty(field) && obj[field] != null) {
+        fields.push(obj[field]);
       }
 
       for (const key in obj) {
