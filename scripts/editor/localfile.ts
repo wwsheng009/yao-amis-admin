@@ -1,5 +1,5 @@
 import { FileNameConvert } from '@scripts/amis/lib_tool';
-import { Process, Exception, Query, FS } from '@yao/yao';
+import { Process, FS, Exception } from '@yao/yao';
 
 /**
  * 在amis-editor里创建或是修改页面配置后可以先保存成文件，在确定没有问题后再加载到数据库
@@ -49,9 +49,10 @@ function getPages(dirIn) {
         result[filename] = page;
       } else {
         console.log(`invalid amis file format:${dir + file}`);
+        throw new Exception(`invalid amis file format:${dir + file}`);
       }
     } catch (error) {
-      console.log(`error when parse json:${dir + file}`);
+      console.log(`error when parse json:${dir + file}` + error.message);
     }
   });
 
@@ -282,11 +283,11 @@ function loadPageToDB() {
     if (page.type && page.type !== 'app') {
       const compKey = key.toUpperCase();
       if (
-        !compKey.endsWith('.JSON')
-        && !compKey.endsWith('.JSONC')
-        && !compKey.endsWith('.YAO')
-        && !compKey.endsWith('.YAM')
-        && !compKey.endsWith('.YAML')
+        !compKey.endsWith('.JSON') &&
+        !compKey.endsWith('.JSONC') &&
+        !compKey.endsWith('.YAO') &&
+        !compKey.endsWith('.YAM') &&
+        !compKey.endsWith('.YAML')
       ) {
         fname += '.json';
       }
