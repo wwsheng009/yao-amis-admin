@@ -1,28 +1,27 @@
 // model db operations
 
-import {
-  DotName,
-  UnderscoreName,
-  IsMysql,
-  IsSqlite,
-  ClearFalsyKeys,
-} from '@scripts/amis/lib_tool';
+import { IsSqlite, ClearFalsyKeys } from '@scripts/amis/lib_tool';
 
 import { convertColTypeToYao } from '@scripts/system/col_type';
 
-import { FileNameConvert, SlashName } from '@scripts/amis/lib_tool';
+import { FileNameConvert } from '@scripts/amis/lib_tool';
 import { Process, Exception } from '@yao/yao';
 
 export function deepCopyObject(obj) {
   return JSON.parse(JSON.stringify(obj));
 }
-function checkType(value) {
+/**
+ * yao run scripts.system.model_db.checkType
+ * @param value object
+ * @returns type
+ */
+function checkType(value: string | number) {
   if (typeof value === 'number') {
     if (!isNaN(value)) {
       return 'number';
     }
   } else if (typeof value === 'string') {
-    if (value.trim() !== '') {
+    if (value.trim() !== '' && !isNaN(value as unknown as number)) {
       return 'number';
     } else {
       return 'string';
@@ -49,6 +48,8 @@ export function getModelFromDB(modelId) {
   } else {
     wheres.push({ column: 'identity', value: modelId });
   }
+  console.log(wheres);
+
   // 根据id在数据库表中查找
   const [line] = Process('models.ddic.model.get', {
     wheres: wheres,
@@ -56,7 +57,6 @@ export function getModelFromDB(modelId) {
       columns: {},
     },
   });
-
   if (line != null) {
     // 数据库表信息转成模型定义
     return ConvertTableLineToModel(line);
@@ -150,10 +150,10 @@ export function ConvertTableLineToModel(line) {
     // 非浮点类型不需要scale属性。
     const type = colNew.type?.toUpperCase();
     if (
-      type
-      && !type.includes('DOUBLE')
-      && !type.includes('DEMICAL')
-      && !type.includes('FLOAT')
+      type &&
+      !type.includes('DOUBLE') &&
+      !type.includes('DEMICAL') &&
+      !type.includes('FLOAT')
     ) {
       delete colNew.scale;
       delete colNew.precision;
@@ -205,7 +205,7 @@ export function loadModeltoMemory(modelDsl, migrate?, force?) {
 
   const modelYao = deepCopyObject(modelDsl);
   modelYao.columns.forEach((col) => {
-    col = convertColTypeToYao(col);
+    convertColTypeToYao(col);
   });
   if (modelYao.table?.name && modelYao.ID && modelYao.columns?.length) {
     let fname = `${modelYao.ID}.mod.json`;
@@ -269,3 +269,4 @@ export function migrateModel(modelId, forceIn?) {
 //   deepCopyObject,
 //   migrateModel,
 // };
+// checkType('product');

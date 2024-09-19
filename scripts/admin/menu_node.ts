@@ -1,5 +1,6 @@
 import { GetNodeItems, GetNodes, UpdateNode, DeleteNode, CreateNode } from '@scripts/amis/data/tree';
 
+import { Process } from '@yao/yao';
 // 菜单处理
 /**
  * yao run scripts.admin.menu_node.GetMenuNodes

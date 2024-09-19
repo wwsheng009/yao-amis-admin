@@ -4,20 +4,30 @@
  * 模型导入
  * 模型导出
  */
-import { getModelFromDB,
+import {
+  getModelFromDB,
   loadModeltoMemory,
   ConvertTableLineToModel,
   deepCopyObject,
   migrateModel,
 } from '@scripts/system/model_db';
 
-import { DotName, UnderscoreName, IsMysql, ClearFalsyKeys } from '@scripts/amis/lib_tool';
+import {
+  DotName,
+  UnderscoreName,
+  IsMysql,
+  ClearFalsyKeys,
+} from '@scripts/amis/lib_tool';
 
 import { SlashName } from '@scripts/amis/lib_tool';
 
 import { RunTransaction } from '@scripts/system/db_lib';
 
-import { queryToQueryParam, updateInputData, mergeQueryObject } from '@scripts/amis/data/lib';
+import {
+  queryToQueryParam,
+  updateInputData,
+  mergeQueryObject,
+} from '@scripts/amis/data/lib';
 
 import {
   FindAndLoadYaoModelById,
@@ -56,7 +66,12 @@ function page(pageIn, pagesizeIn, querysIn, queryParams, payload) {
     'table_name',
     'table_comment',
   ];
-  const data = Process(`models.ddic.model.Paginate`, queryParam, page, pagesize);
+  const data = Process(
+    `models.ddic.model.Paginate`,
+    queryParam,
+    page,
+    pagesize,
+  );
   return {
     items: data.data,
     total: data.total,
@@ -140,10 +155,10 @@ function CompleteModel(modelDsl) {
     // 非浮点类型不需要scale属性。
     const type = col.type?.toUpperCase();
     if (
-      type
-      && !type.includes('DOUBLE')
-      && !type.includes('DEMICAL')
-      && !type.includes('FLOAT')
+      type &&
+      !type.includes('DOUBLE') &&
+      !type.includes('DEMICAL') &&
+      !type.includes('FLOAT')
     ) {
       delete col.scale;
       delete col.precision;
@@ -1058,17 +1073,17 @@ function guessModelColumnsType(modelDsl) {
       }
 
       if (
-        colName.includes('pic')
-        || colName.includes('image')
-        || colName.includes('img')
-        || comment.includes('图片')
+        colName.includes('pic') ||
+        colName.includes('image') ||
+        colName.includes('img') ||
+        comment.includes('图片')
       ) {
         column.type = 'image';
       } else if (
-        colName.includes('pics')
-        || colName.includes('images')
-        || colName.includes('imgs')
-        || comment.includes('图片集')
+        colName.includes('pics') ||
+        colName.includes('images') ||
+        colName.includes('imgs') ||
+        comment.includes('图片集')
       ) {
         column.type = 'images';
       }
@@ -1079,9 +1094,9 @@ function guessModelColumnsType(modelDsl) {
       // }
     } else {
       if (
-        colType === 'integer'
-        || colType === 'tinyinteger'
-        || colType === 'tinyint'
+        colType === 'integer' ||
+        colType === 'tinyinteger' ||
+        colType === 'tinyint'
       ) {
         if (colName.includes('status') || comment.includes('状态')) {
           column.type = 'boolean';
@@ -1224,9 +1239,9 @@ function guessJsonType(value) {
     if (!isNaN(timestamp)) {
       const date = new Date(timestamp); // Create a new date object from the timestamp
       if (
-        date.getHours() === 0
-        && date.getMinutes() === 0
-        && date.getSeconds() === 0
+        date.getHours() === 0 &&
+        date.getMinutes() === 0 &&
+        date.getSeconds() === 0
       ) {
         return 'date';
       } else {
