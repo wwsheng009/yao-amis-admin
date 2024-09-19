@@ -34,7 +34,7 @@ RUN mkdir -p /data && curl -fsSL "https://github.com/wwsheng009/yao-amis-admin/r
 #     mkdir -p /data/db
 
 RUN mkdir -p /data/public/amis-editor && \
-    curl -fsSL "https://github.com/wwsheng009/amis-editor-yao/releases/download/1.0.0/amis-editor-1.0.0.zip" > /data/public/amis-editor/latest.zip && \
+    curl -fsSL "https://github.com/wwsheng009/amis-editor-yao/releases/download/1.0.0/amis-editor-1.1.0.zip" > /data/public/amis-editor/latest.zip && \
     unzip /data/public/amis-editor/latest.zip -d /data/public/amis-editor/ && \
     rm /data/public/amis-editor/latest.zip
 
