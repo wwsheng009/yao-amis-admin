@@ -5,7 +5,9 @@ import { IsSqlite, ClearFalsyKeys } from '@scripts/amis/lib_tool';
 import { convertColTypeToYao } from '@scripts/system/col_type';
 
 import { FileNameConvert } from '@scripts/amis/lib_tool';
-import { Process, Exception } from '@yao/yao';
+import { Process, Exception, log } from '@yao/yao';
+import { YaoModel } from '@yaoapps/types';
+import { AmisModel, AmisRelation, YaoModelEx } from '@yao/types';
 
 export function deepCopyObject(obj) {
   return JSON.parse(JSON.stringify(obj));
@@ -35,7 +37,7 @@ function checkType(value: string | number) {
  * @param {int/string} modelId 模型ID标识
  * @returns
  */
-export function getModelFromDB(modelId) {
+export function getModelFromDB(modelId: string) {
   // 数字ID可能是数据库数据
 
   const wheres = [];
@@ -48,7 +50,6 @@ export function getModelFromDB(modelId) {
   } else {
     wheres.push({ column: 'identity', value: modelId });
   }
-  console.log(wheres);
 
   // 根据id在数据库表中查找
   const [line] = Process('models.ddic.model.get', {
@@ -69,13 +70,13 @@ export function getModelFromDB(modelId) {
  * @param {*} line
  * @returns
  */
-export function ConvertTableLineToModel(line) {
+export function ConvertTableLineToModel(line: AmisModel): YaoModelEx {
   let model = {
     table: {},
     option: {},
     relations: {},
     columns: [],
-  } as any;
+  } as YaoModelEx;
   model.id = line.id;
   model.ID = line.identity;
   model.name = line.name;
@@ -93,21 +94,21 @@ export function ConvertTableLineToModel(line) {
   if (line.read_only != null && line.read_only) {
     model.option.read_only = true;
   }
-
-  line.relations?.forEach((rel) => {
+  line.relations?.forEach((rel: AmisRelation) => {
     model.relations[rel.name] = rel;
     //
     if (typeof rel.query == 'string') {
       try {
         model.relations[rel.name].query = JSON.parse(rel.query);
       } catch (error) {
+        log.Error(error.message);
         model.relations[rel.name].query = {};
       }
     }
   });
   line.columns?.forEach((col) => {
     ['index', 'nullable', 'unique', 'primary'].forEach((key) => {
-      if (col.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(col, key)) {
         if (col[key] !== false && col[key] > 0) {
           col[key] = true;
         } else {
@@ -130,7 +131,10 @@ export function ConvertTableLineToModel(line) {
     if (col.element_id) {
       const ele = Process('models.ddic.model.element.Find', col.element_id, {});
       ['type', 'length', 'scale', 'precision'].forEach((field) => {
-        if (col[field] == null && ele.hasOwnProperty(field)) {
+        if (
+          col[field] == null &&
+          Object.prototype.hasOwnProperty.call(ele, field)
+        ) {
           col[field] = ele[field];
         }
       });
@@ -198,12 +202,16 @@ export function ConvertTableLineToModel(line) {
  * @param {boolean} force 强制更新
  * @returns
  */
-export function loadModeltoMemory(modelDsl, migrate?, force?) {
-  if (!Array.isArray(modelDsl.columns) && !modelDsl.columns?.length) {
+export function loadModeltoMemory(
+  modelDsl: YaoModel.ModelDSL,
+  migrate?: boolean,
+  force?: boolean,
+) {
+  if (!Array.isArray(modelDsl.columns) || !modelDsl.columns?.length) {
     return;
   }
 
-  const modelYao = deepCopyObject(modelDsl);
+  const modelYao = deepCopyObject(modelDsl) as YaoModelEx;
   modelYao.columns.forEach((col) => {
     convertColTypeToYao(col);
   });
@@ -226,7 +234,7 @@ export function loadModeltoMemory(modelDsl, migrate?, force?) {
   }
 }
 
-function bytesToString(bytes) {
+function bytesToString(bytes: number[]) {
   let string = '';
   for (let i = 0; i < bytes.length; i++) {
     string += String.fromCharCode(bytes[i]);
@@ -234,7 +242,7 @@ function bytesToString(bytes) {
   return string;
 }
 
-export function migrateModel(modelId, forceIn?) {
+export function migrateModel(modelId: string, forceIn?: boolean) {
   let force = forceIn;
   if (IsSqlite()) {
     force = true;

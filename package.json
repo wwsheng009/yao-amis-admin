@@ -28,9 +28,10 @@
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript-eslint": "^8.5.0"
+    "typescript-eslint": "^8.5.0",
+    "@yaoapps/client": "npm:yao-node-client@^1.1.0",
+    "@yaoapps/types": "npm:yao-app-ts-types@^1.0.8"
   },
   "dependencies": {
-    "@yaoapps/client": "npm:yao-node-client@^1.1.0"
   }
 }

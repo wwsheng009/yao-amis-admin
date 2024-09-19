@@ -1,8 +1,12 @@
-import { FindAndLoadYaoModelById, FindAndLoadDBModelById } from '@scripts/system/model_lib';
+import {
+  FindAndLoadYaoModelById,
+  FindAndLoadDBModelById,
+} from '@scripts/system/model_lib';
 import { IsMysql } from '@scripts/amis/lib_tool';
 import { isDateTimeType } from '@scripts/system/col_type';
 
 import { Process, Exception } from '@yao/yao';
+import { YaoModel } from '@yaoapps/types';
 
 // 推荐在循环对象属性的时候，使用for...in,
 // 在遍历数组的时候的时候使用for...of。
@@ -182,21 +186,21 @@ export function queryToQueryParam(modelIn, querysIn, queryParams = {}) {
 
   // 使用keywords进行模糊
   if (
-    keywords
-    && Array.isArray(keywords)
-    && keywords.length
-    && keywords[0] != ''
-    && keywords[0] != '*'
-    && wheres.length == 0
+    keywords &&
+    Array.isArray(keywords) &&
+    keywords.length &&
+    keywords[0] != '' &&
+    keywords[0] != '*' &&
+    wheres.length == 0
   ) {
     const keyword = keywords[0] + '';
     for (const colname in columnMap) {
       // const type = column.type.toUpperCase();
       if (
-        colname == 'deleted_at'
-        || colname == 'updated_at'
-        || colname == 'created_at'
-        || colname == '__restore_data'
+        colname == 'deleted_at' ||
+        colname == 'updated_at' ||
+        colname == 'created_at' ||
+        colname == '__restore_data'
       ) {
         continue;
       }
@@ -236,7 +240,7 @@ export function queryToQueryParam(modelIn, querysIn, queryParams = {}) {
 
   return queryParam;
 }
-function getDbModelColumnMap(model) {
+function getDbModelColumnMap(model: YaoModel.ModelDSL) {
   let modelDsl = model;
   if (typeof model === 'string') {
     modelDsl = FindAndLoadDBModelById(model);
@@ -251,7 +255,7 @@ function getDbModelColumnMap(model) {
   }
   return columnMap;
 }
-function getYaoModelColumnMap(model) {
+function getYaoModelColumnMap(model: YaoModel.ModelDSL) {
   let modelDsl = model;
   if (typeof model === 'string') {
     modelDsl = FindAndLoadYaoModelById(model);
@@ -267,7 +271,7 @@ function getYaoModelColumnMap(model) {
   return columnMap;
 }
 
-export function updateOutputData(model, Data) {
+export function updateOutputData(model: YaoModel.ModelDSL, Data) {
   if (Array.isArray(Data)) {
     let modelDsl = model;
     if (typeof modelDsl === 'string') {
@@ -300,7 +304,12 @@ function updateOutputDataLine(dbColMap, line) {
       // 如果数据库中使用的是json的字符串，作一次转换
       // 在amis编辑保存后会自动的转换成","拼接的字符串
       case 'IMAGES':
-        if (typeof field === 'string' && field.length >= 2 && field[0] === '[' && field[field.length - 1] === ']') {
+        if (
+          typeof field === 'string' &&
+          field.length >= 2 &&
+          field[0] === '[' &&
+          field[field.length - 1] === ']'
+        ) {
           try {
             const array = JSON.parse(field);
             if (Array.isArray(array)) {
@@ -327,7 +336,7 @@ function updateOutputDataLine(dbColMap, line) {
  * @param {any} Data 保存到数据库的数据
  * @returns 处理后的Data
  */
-export function updateInputData(model, Data) {
+export function updateInputData(model: YaoModel.ModelDSL, Data) {
   if (typeof Data !== 'object' || Data === null || Data === undefined) {
     return Data;
   }
@@ -416,15 +425,15 @@ export function updateInputData(model, Data) {
           line[key] = undefined;
         }
       } else if (
-        colType === 'JSON'
-        && field != null
-        && typeof field === 'string'
-        && field.length > 0
-        && !/^\s*\[/.test(field)
+        colType === 'JSON' &&
+        field != null &&
+        typeof field === 'string' &&
+        field.length > 0 &&
+        !/^\s*\[/.test(field)
       ) {
         try {
           line[key] = JSON.parse(field);
-        } catch (error) { }
+        } catch (error) {}
       }
     }
 
@@ -506,7 +515,12 @@ export function getArrayItem(querys, key) {
  * @param {Array} searchFields 使用keyword搜索时，限制模糊匹配的字段列表。
  * @returns 数组
  */
-export function PaginateArrayWithQuery(data, querysIn, payload, searchFields = []) {
+export function PaginateArrayWithQuery(
+  data,
+  querysIn,
+  payload,
+  searchFields = [],
+) {
   const querys = mergeQueryObject(querysIn, payload);
 
   const orderBy = getArrayItem(querys, 'orderBy');

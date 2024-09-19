@@ -16,6 +16,7 @@ import {
   column2AmisFormEditColumn,
 } from '@scripts/system/col_type';
 import { Process, Exception } from '@yao/yao';
+import { YaoModel } from '@yaoapps/types';
 
 /**
  * 读取已经加载在内存中的模型的定义,并根据传入列的类型定义更新模型定义
@@ -26,7 +27,10 @@ import { Process, Exception } from '@yao/yao';
  * @param {Array} columnsIn 字段列表字义，从前端传入
  * @returns
  */
-export function getModelDefinition(modelId: string, columnsIn?: any[]) {
+export function getModelDefinition(
+  modelId: string,
+  columnsIn?: any[],
+): YaoModel.ModelDSL {
   let model = Process(
     'scripts.system.model.getDBModelById', // 优先从数据库中加载，
     DotName(modelId),
@@ -52,7 +56,11 @@ export function getModelDefinition(modelId: string, columnsIn?: any[]) {
  * @param {object} modelDsl yao模型定义
  * @returns amis字段定义
  */
-function updateAmisViewColFromModel(amisColumn, column, modelDsl) {
+function updateAmisViewColFromModel(
+  amisColumn,
+  column: YaoModel.ModelColumn,
+  modelDsl: YaoModel.ModelDSL,
+) {
   if (column == null) {
     return amisColumn;
   }
@@ -81,7 +89,11 @@ function updateAmisViewColFromModel(amisColumn, column, modelDsl) {
  * @param {object} modelDsl yao模型定义
  * @returns amis字段定义
  */
-function updateAmisFormColCommon(amisColumn, column, modelDsl) {
+function updateAmisFormColCommon(
+  amisColumn,
+  column: YaoModel.ModelColumn,
+  modelDsl: YaoModel.ModelDSL,
+) {
   if (column == null) {
     return amisColumn;
   }
@@ -120,8 +132,8 @@ function updateAmisFormColCommon(amisColumn, column, modelDsl) {
       for (const key in modelDsl.relations) {
         const rel = modelDsl.relations[key];
         if (
-          rel.type == 'hasOne'
-          && rel.foreign == amisColumn.name
+          rel.type == 'hasOne' &&
+          rel.foreign == amisColumn.name
           // rel.model.endsWith(model_name)
         ) {
           // found
@@ -141,7 +153,7 @@ function updateAmisFormColCommon(amisColumn, column, modelDsl) {
  * @param {object} col 模型字段定义
  * @returns 新文本
  */
-function updateValidationMessage(text, col) {
+function updateValidationMessage(text: string, col: { label: string }) {
   let newString = text.replace(/\{\{label\}\}/g, col.label);
   newString = newString.replace(/\{\{input\}\}/g, '${col.name}');
   return newString;
@@ -299,7 +311,7 @@ export function getModelFieldsForAmis(modelId, columnsIn?) {
  * @param {object} modelDsl yao模型定义
  * @returns 新的模型定义
  */
-function AddMetaFields(modelDsl) {
+function AddMetaFields(modelDsl: YaoModel.ModelDSL): YaoModel.ModelDSL {
   if (modelDsl.option?.timestamps) {
     let result = modelDsl.columns?.some((item) => item.name === 'created_at');
     if (!result) {
@@ -612,8 +624,8 @@ export function getModelFieldsWithQuick(modelId, columnsIn) {
   // yao的原始字段设置
   const newFields = [];
   for (const column of columns) {
-    let { newColumn: viewColumn, displayOnly }
-      = column2AmisTableViewColumn(column);
+    let { newColumn: viewColumn, displayOnly } =
+      column2AmisTableViewColumn(column);
     let formColumn = column2AmisFormEditColumn(column);
     let label = column.label;
 
@@ -665,7 +677,7 @@ export function getModelFieldsWithQuick(modelId, columnsIn) {
  * @param {string} modelId 数据库表名
  * @returns 字段定义
  */
-export function excelMapping(modelId, columnsIn) {
+export function excelMapping(modelId: string, columnsIn: any[]) {
   const model = getModelDefinition(modelId, columnsIn);
   const columns = model?.columns;
 

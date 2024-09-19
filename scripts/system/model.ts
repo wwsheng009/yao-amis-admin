@@ -40,6 +40,7 @@ import {
 import { convertColTypeToYao } from '@scripts/system/col_type';
 
 import { Process, Exception, FS } from '@yao/yao';
+import { YaoModel } from '@yaoapps/types';
 
 /**
  * yao run scripts.system.model.page
@@ -100,7 +101,7 @@ function DatabaseModelList() {
  * @param {object} modelDsl
  * @returns object
  */
-function CompleteModel(modelDsl) {
+function CompleteModel(modelDsl: YaoModel.ModelDSL) {
   modelDsl = modelDsl || {};
   modelDsl.table = modelDsl.table || {};
   modelDsl.option = modelDsl.option || {};
@@ -194,7 +195,7 @@ function CompleteModel(modelDsl) {
       }
     }
     // 长度不能为字符串
-    if (col.length == '') {
+    if (!col.length) {
       delete col.length;
     }
     const colType = col.type.toLowerCase();

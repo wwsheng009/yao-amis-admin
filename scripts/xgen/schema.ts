@@ -1,7 +1,8 @@
 import { getModelDefinition } from '@scripts/amis/lib';
-import { DotName, IsMysql, SlashName } from '@scripts/amis/lib_tool';
-import { Exception, Process, log } from '@yao/yao';
+import { DotName, IsMysql } from '@scripts/amis/lib_tool';
+import { Process, log } from '@yao/yao';
 
+import { YaoField, YaoForm, YaoModel, YaoQuery } from '@yaoapps/types';
 /**
  * Generate the menu items for xgen
  *
@@ -9,7 +10,7 @@ import { Exception, Process, log } from '@yao/yao';
  * @param {string} modelId
  * @param {Array} columns
  */
-function generateMenuConfig(modelId, columns) {
+function generateMenuConfig(modelId: string, columns) {
   const modelDsl = getModelDefinition(modelId, columns);
 
   const name = modelDsl.name || modelId;
@@ -37,7 +38,7 @@ function generateMenuConfig(modelId, columns) {
  * @param {Array} columns
  * @param {string} simple 简单模式
  */
-function generateTableView(modelId, columns, simple) {
+function generateTableView(modelId: string, columns, simple) {
   if (simple == 'simple') {
     return [
       {
@@ -68,7 +69,7 @@ function generateTableView(modelId, columns, simple) {
  * @param {Array} columns
  * @param {string} simple 简单模式
  */
-function generateFormView(modelId, columns, simple, type) {
+function generateFormView(modelId: string, columns, simple, type) {
   if (simple == 'simple') {
     return [
       {
@@ -87,7 +88,7 @@ function generateFormView(modelId, columns, simple, type) {
   return getXgenFormSchema(modelDsl, type);
 }
 
-function getXgenTableSchema(modelDsl) {
+function getXgenTableSchema(modelDsl: YaoModel.ModelDSL) {
   const modelName = DotName(modelDsl.ID);
 
   // const copiedObject = JSON.parse(JSON.stringify(modelDsl.columns));
@@ -229,7 +230,7 @@ function getXgenTableSchema(modelDsl) {
  * @param {string} type 'view' | 'edit'
  * @returns
  */
-function getXgenFormSchema(modelDsl, type = 'view') {
+function getXgenFormSchema(modelDsl: YaoModel.ModelDSL, type = 'view') {
   // const copiedObject = JSON.parse(JSON.stringify(modelDsl.columns));
   let columns = modelDsl.columns || [];
   const table_dot_name = DotName(modelDsl.table.name);
@@ -358,7 +359,7 @@ function getXgenFormSchema(modelDsl, type = 'view') {
 //  *  yao studio run model.relation.GetWiths
 //  * @param modelDsl
 //  */
-function GetWiths(modelDsl) {
+function GetWiths(modelDsl: YaoModel.ModelDSL) {
   const relations = modelDsl.relations || {};
   const withs = {};
   for (const rel in relations) {
@@ -441,7 +442,10 @@ function FilterFields() {
  * @param modelDsl 模型定义
  * @returns 表定义
  */
-function TableColumnCast(column, modelDsl) {
+function TableColumnCast(
+  column: YaoModel.ModelColumn,
+  modelDsl: YaoModel.ModelDSL,
+) {
   // const props = column.props || {};
   const title = column.label || column.name;
   const name = column.name;
@@ -483,7 +487,7 @@ function TableColumnCast(column, modelDsl) {
       bind: bind,
       props: {},
     },
-  } as any;
+  } as YaoField.ColumnDSL;
   let width = 160;
   if (title.length > 5) {
     width = 250;
@@ -529,8 +533,8 @@ function TableColumnCast(column, modelDsl) {
       ismysql &&
       (column.default === 0 || column.default === 1))
   ) {
-    let checkedValue = true as any;
-    let unCheckedValue = false as any;
+    let checkedValue = true as boolean | number;
+    let unCheckedValue = false as boolean | number;
     if (ismysql) {
       checkedValue = 1;
       unCheckedValue = 0;
@@ -942,7 +946,6 @@ function GetRules(column, component) {
   const rules = [];
   const rule = {} as any;
   const {
-    index,
     unique,
     nullable,
     default: columnDefault,
@@ -1021,7 +1024,7 @@ function GetRules(column, component) {
   // }
   return rules;
 }
-function updateReference(formTemplate, modelDsl) {
+function updateReference(formTemplate, modelDsl: YaoModel.ModelDSL) {
   const hasCount = Object.values(modelDsl.relations || { type: '' }).filter(
     (rel) => rel.type === 'hasOne',
   ).length;
@@ -1076,7 +1079,7 @@ function updateReference(formTemplate, modelDsl) {
  * @param source 源对象
  * @returns
  */
-function MergeObject(target, source) {
+function MergeObject(target: object, source: object) {
   if (
     target === null ||
     target === undefined ||
@@ -1111,7 +1114,7 @@ function MergeObject(target, source) {
 /**
  * 把hasMany变成表单中的Table
  */
-function relationTable(formDsl, modelDsl) {
+function relationTable(formDsl: YaoForm.FormDSL, modelDsl: YaoModel.ModelDSL) {
   const modelName = DotName(modelDsl.ID);
   const relations = modelDsl.relations || {};
   const RelList = [];
@@ -1331,7 +1334,7 @@ function Rollback() {
         `
     : '';
 }
-function CreateAfterFind(relations) {
+function CreateAfterFind(relations: YaoModel.Relation[]) {
   const templates = [];
 
   for (const rel in relations) {
@@ -1344,7 +1347,7 @@ function CreateAfterFind(relations) {
       console.log(`模型${element.model}不存在！`);
       continue;
     }
-    let query = {} as any;
+    let query = {} as YaoQuery.QueryDSL;
     if (element.query) {
       query = element.query;
     }
@@ -1460,7 +1463,7 @@ function CreateListFile(rel) {
  * @param {object} modelDsl
  * @returns string
  */
-function toList(modelDsl) {
+function toList(modelDsl: YaoModel.ModelDSL) {
   // const copiedObject = JSON.parse(JSON.stringify(modelDsl.columns));
   let columns = modelDsl.columns || [];
   const table_dot_name = DotName(modelDsl.table.name);
@@ -1508,7 +1511,10 @@ function toList(modelDsl) {
  * @param type 类型
  * @returns
  */
-function CastListColumn(column, modelDsl) {
+function CastListColumn(
+  column: YaoModel.ModelColumn,
+  modelDsl: YaoModel.ModelDSL,
+) {
   const types = GetDBTypeMap();
   const ismysql = IsMysql();
   const title = column.label || column.name;
@@ -1536,7 +1542,7 @@ function CastListColumn(column, modelDsl) {
       type: 'Input',
       props: {},
     },
-  } as any;
+  } as YaoField.ColumnDSL;
   let width = 6;
   const bind = name;
   if (column.type == 'json') {
@@ -1563,8 +1569,8 @@ function CastListColumn(column, modelDsl) {
       ismysql &&
       (column.default === 0 || column.default === 1))
   ) {
-    let checkedValue = true as any;
-    let unCheckedValue = false as any;
+    let checkedValue = true as boolean | number;
+    let unCheckedValue = false as boolean | number;
     if (ismysql) {
       checkedValue = 1;
       unCheckedValue = 0;
@@ -1658,7 +1664,10 @@ function AddTabColumn(formTemplate, column) {
  * @param type 类型
  * @returns
  */
-function FormColumnCast(column, modelDsl) {
+function FormColumnCast(
+  column: YaoModel.ModelColumn,
+  modelDsl: YaoModel.ModelDSL,
+) {
   const types = GetDBTypeMap();
   const ismysql = IsMysql();
   const title = column.label || column.name;
@@ -1686,7 +1695,7 @@ function FormColumnCast(column, modelDsl) {
       type: 'Input',
       props: {},
     },
-  } as any;
+  } as YaoField.ColumnDSL;
   let width = 8;
   const bind = name;
   if (column.type == 'json') {
@@ -1718,8 +1727,8 @@ function FormColumnCast(column, modelDsl) {
       ismysql &&
       (column.default === 0 || column.default === 1))
   ) {
-    let checkedValue = true as any;
-    let unCheckedValue = false as any;
+    let checkedValue = true as boolean | number;
+    let unCheckedValue = false as boolean | number;
     if (ismysql) {
       checkedValue = 1;
       unCheckedValue = 0;
@@ -1786,7 +1795,7 @@ function FormColumnCast(column, modelDsl) {
  * @param modelDsl 模型引用
  * @returns
  */
-function IsFormFile(column, component, modelDsl) {
+function IsFormFile(column, component, modelDsl: YaoModel.ModelDSL) {
   if (!['video', 'image', 'file', 'audio'].includes(column.type)) {
     return component;
   }

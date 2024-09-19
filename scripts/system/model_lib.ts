@@ -1,6 +1,7 @@
 import { getModelFromDB, loadModeltoMemory } from '@scripts/system/model_db';
 
 import { Process, Exception } from '@yao/yao';
+import { YaoModel } from '@yaoapps/types';
 
 // 读取所有的模型id的列表
 // 缺少一个name属性，所有只能读取到id列表
@@ -107,11 +108,10 @@ function FlatModelList(models, attr?) {
 /**
  * 根据模型ID在缓存中查找模型定义
  * yao run scripts.system.model_lib.FindCachedModelById
- * @param {Array} models 模型缓存，保存了所有的模型定义
- * @param {number/string} id 模型标识
- * @returns object | null
+ * @param {string} modelId 模型标识
+ * @returns YaoModel.ModelDSL | null
  */
-export function FindCachedModelById(modelId) {
+export function FindCachedModelById(modelId: string): YaoModel.ModelDSL {
   const models = Process('widget.models');
 
   const traverse = (node, id) => {
@@ -138,7 +138,7 @@ export function FindCachedModelById(modelId) {
  * 优先从缓存中加载模型，如果不存在，从数据库中加载并转换成yao模型
  * @param {string} modelId
  */
-export function FindAndLoadYaoModelById(modelId) {
+export function FindAndLoadYaoModelById(modelId: string) {
   const modelDsl = FindCachedModelById(modelId);
   if (modelDsl == null) {
     let modelDsl = getModelFromDB(modelId);
