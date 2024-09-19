@@ -1,4 +1,5 @@
 import { getModelFromDB, loadModeltoMemory } from '@scripts/system/model_db';
+import { YaoModelEx, YaoModelNode } from '@yao/types';
 
 import { Process, Exception } from '@yao/yao';
 import { YaoModel } from '@yaoapps/types';
@@ -27,7 +28,7 @@ function CachedModelList() {
  * @param {*} modelData
  * @returns
  */
-export function MomoryModelList(attr?) {
+export function MomoryModelList(attr?: string[] | string) {
   const models = Process('widget.models');
   return FlatModelList(models, attr);
 }
@@ -37,10 +38,10 @@ export function MomoryModelList(attr?) {
  * @param {string} attr,使用路径表达式抽取子对象
  * @returns
  */
-function FlatModelList(models, attr?) {
-  const list = [];
+function FlatModelList(models: YaoModelNode[], attr?: string[] | string) {
+  const list = [] as YaoModelEx[];
 
-  const getProperty = (object, path) => {
+  const getProperty = (object: object, path: string) => {
     const properties = path.split('.');
     let currentObject = object;
 
@@ -61,7 +62,7 @@ function FlatModelList(models, attr?) {
         );
       }
       //   注意，不支持生成数组
-      if (!currentObject.hasOwnProperty(properties[i])) {
+      if (!Object.prototype.hasOwnProperty.call(currentObject, properties[i])) {
         currentObject[properties[i]] = {};
       }
       currentObject = currentObject[properties[i]];
@@ -72,13 +73,13 @@ function FlatModelList(models, attr?) {
   let attr2 = [];
   if (attr != null) {
     if (typeof attr === 'string') {
-    // 单个属性
+      // 单个属性
       attr2 = attr.split(',');
     } else if (Array.isArray(attr)) {
       attr2 = attr;
     }
   }
-  const traverse = (node) => {
+  const traverse = (node: any) => {
     if (node.children) {
       traverse(node.children);
     } else if (node.data) {
@@ -114,7 +115,7 @@ function FlatModelList(models, attr?) {
 export function FindCachedModelById(modelId: string): YaoModel.ModelDSL {
   const models = Process('widget.models');
 
-  const traverse = (node, id) => {
+  const traverse = (node: any, id: string) => {
     if (node.children) {
       return traverse(node.children, id);
     } else if (node.data) {
@@ -167,7 +168,7 @@ export function FindAndLoadYaoModelById(modelId: string) {
  * @param {string} modelId 模型标识
  * @returns
  */
-export function FindAndLoadDBModelById(modelId) {
+export function FindAndLoadDBModelById(modelId: string) {
   if (!modelId) {
     throw new Exception(`缺少模型标识`);
   }
@@ -191,7 +192,7 @@ export function FindAndLoadDBModelById(modelId) {
  * @param {*} modelData
  * @returns
  */
-function modelIdListFromMemory(modelData) {
+function modelIdListFromMemory(modelData: YaoModelNode) {
   let idList = [];
   if (modelData.children) {
     modelData.children.forEach((line) => {

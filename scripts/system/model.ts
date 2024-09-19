@@ -41,6 +41,7 @@ import { convertColTypeToYao } from '@scripts/system/col_type';
 
 import { Process, Exception, FS } from '@yao/yao';
 import { YaoModel } from '@yaoapps/types';
+import { AmisModel, YaoModelDBEx, YaoModelEx } from '@yao/types';
 
 /**
  * yao run scripts.system.model.page
@@ -101,7 +102,7 @@ function DatabaseModelList() {
  * @param {object} modelDsl
  * @returns object
  */
-function CompleteModel(modelDsl: YaoModel.ModelDSL) {
+function CompleteModel(modelDsl: YaoModelDBEx) {
   modelDsl = modelDsl || {};
   modelDsl.table = modelDsl.table || {};
   modelDsl.option = modelDsl.option || {};
@@ -180,7 +181,7 @@ function CompleteModel(modelDsl: YaoModel.ModelDSL) {
         col.options = [];
         col.option.forEach((opt) => {
           col.options.push({
-            label: opt,
+            label: opt + '',
             value: opt,
           });
         });
@@ -205,7 +206,8 @@ function CompleteModel(modelDsl: YaoModel.ModelDSL) {
           col.default = JSON.parse(col.default);
         } catch (error) {
           console.log(
-            `Failed to convert the default value for field:${col.name}`,
+            `Failed to convert the default value for field:${col.name}` +
+              error.message,
           );
         }
       }
@@ -258,8 +260,8 @@ function CompleteModel(modelDsl: YaoModel.ModelDSL) {
  * @param {object} modelDsl 模型定义
  * @returns
  */
-function ConvertModelToTableLine(modelDsl) {
-  const line = {} as any;
+function ConvertModelToTableLine(modelDsl: YaoModelEx) {
+  const line = {} as AmisModel;
   line.id = modelDsl.id;
   line.identity = DotName(modelDsl.ID);
   line.name = modelDsl.name;
@@ -373,7 +375,7 @@ function BeforeDelete(id) {
   DeleteModelolumns(id);
 }
 
-function isAscOrder(arr) {
+function isAscOrder(arr: { id: string }[]) {
   for (let i = 0; i < arr.length - 1; i++) {
     if (arr[i].id > arr[i + 1].id) {
       return false;
@@ -389,7 +391,7 @@ function isAscOrder(arr) {
  * @param {boolean} force 强制保存
  * @returns
  */
-function SaveColumns(modelId, payload, force?) {
+function SaveColumns(modelId, payload, force?: boolean) {
   if (modelId == null) {
     throw new Exception('无法保存columns,缺少模型主键！');
   }
@@ -702,7 +704,7 @@ function getModelApi(modelId) {
  * @param {string} modelId 模型ID
  * @returns
  */
-function getModelColumnsApi(modelId) {
+function getModelColumnsApi(modelId: string) {
   const model = ConvertModelToApiObject(getDBModelById(modelId));
   if (Array.isArray(model?.columns) && model.columns.length) {
     model?.columns?.forEach((x, idx) => {
@@ -755,7 +757,7 @@ function getDBModelById(modelId) {
  * @param {string} modelId 模型ID
  * @returns 返回模型的columns定义
  */
-function getYaoModelColumnMap(modelId) {
+function getYaoModelColumnMap(modelId: string) {
   const modelDsl = FindAndLoadYaoModelById(modelId);
   const columnMap = {};
   if (modelDsl && modelDsl.columns) {
@@ -784,7 +786,7 @@ function getYaoModelColumnMap(modelId) {
  * @param {string} modelId
  * @returns
  */
-function ExportModelSource(modelId) {
+function ExportModelSource(modelId: string) {
   const model = Process('models.ddic.model.Find', modelId, {
     withs: {
       columns: { withs: { element: {} } },
@@ -804,7 +806,7 @@ function ExportModelSource(modelId) {
  * @param {string} modelId
  * @returns
  */
-function ExportModelYaoSource(modelId) {
+function ExportModelYaoSource(modelId: string) {
   const model = Process('models.ddic.model.Find', modelId, {
     withs: {
       columns: { withs: { element: {} } },
@@ -823,7 +825,7 @@ function ExportModelYaoSource(modelId) {
  * @param {object} modelDsl
  * @returns
  */
-function ConvertDBmodelToYaoModel(modelDsl) {
+function ConvertDBmodelToYaoModel(modelDsl: YaoModelDBEx) {
   const m = deepCopyObject(modelDsl);
   m.columns.forEach((col) => {
     delete col.id;

@@ -1,9 +1,9 @@
-import { Process, Query } from '@yao/yao';
+import { Process } from '@yao/yao';
 
 // yao run scripts.system.font.loadfont2
 function loadfont2() {
-  const source
-    = 'https://raw.githubusercontent.com/TOMIVERGARA/vscode-fontawesome-gallery/dev/webviews/data/fontawesome-5/metadata/categories.json';
+  const source =
+    'https://raw.githubusercontent.com/TOMIVERGARA/vscode-fontawesome-gallery/dev/webviews/data/fontawesome-5/metadata/categories.json';
 
   const request = Process('http.get', source);
   const jsonData = Process('encoding.base64.Decode', request.data);
@@ -42,8 +42,8 @@ function loadfont() {
   //
   // "https://github.com/FortAwesome/Font-Awesome/blob/master/metadata/icons.json";
 
-  const source
-    = 'https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/metadata/icons.json';
+  const source =
+    'https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/metadata/icons.json';
   const request = Process('http.get', source);
   const jsonData = Process('encoding.base64.Decode', request.data);
   const data = JSON.parse(jsonData);

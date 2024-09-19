@@ -2,7 +2,7 @@ import { PaginateArrayWithQuery } from '@scripts/amis/data/lib';
 
 import { GetColumnTypeList } from '@scripts/system/col_type';
 
-import { Process, Query } from '@yao/yao';
+import { Process } from '@yao/yao';
 
 function GetColumnOptions2() {
   return GetColumnTypeList();
@@ -397,22 +397,22 @@ function cleanPath(path) {
 /**
  * 根据model获取model相关的api列表
  * yao run scripts.system.meta.modelApiList admin.user
- * @param {string} model
+ * @param {string} modelId
  * @returns
  */
-function modelApiList(model) {
+function modelApiList(modelId: string) {
   const allApi = Process('scripts.system.meta.allApi');
   const apilist = allApi.filter((api) => api.group == '/v1/system/model');
   apilist.forEach((api) => {
-    api.fullpath = api.fullpath.replace(':model', model);
-    api.router = api.router.replace(':model', model);
-    api.path = api.path.replace(':model', model);
+    api.fullpath = api.fullpath.replace(':model', modelId);
+    api.router = api.router.replace(':model', modelId);
+    api.path = api.path.replace(':model', modelId);
   });
   const tableApis = allApi.filter(
-    (api) => api.group == '/__yao/table' && api.url_params?.id === model,
+    (api) => api.group == '/__yao/table' && api.url_params?.id === modelId,
   );
   const formApis = allApi.filter(
-    (api) => api.group == '/__yao/form' && api.url_params?.id === model,
+    (api) => api.group == '/__yao/form' && api.url_params?.id === modelId,
   );
 
   return [...apilist, ...tableApis, ...formApis];

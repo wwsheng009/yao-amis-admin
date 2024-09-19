@@ -9,7 +9,7 @@ import { Process, Exception, log } from '@yao/yao';
 import { YaoModel } from '@yaoapps/types';
 import { AmisModel, AmisRelation, YaoModelEx } from '@yao/types';
 
-export function deepCopyObject(obj) {
+export function deepCopyObject<T>(obj: T): T {
   return JSON.parse(JSON.stringify(obj));
 }
 /**

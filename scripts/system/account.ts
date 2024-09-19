@@ -7,7 +7,7 @@ import { Process, Query } from '@yao/yao';
  *
  * @returns 当前登录用户的信息
  */
-function UserInfo(id) {
+function UserInfo(id: string) {
   let user_id = Process('session.get', 'user_id');
   if (id) {
     user_id = id;
@@ -111,7 +111,12 @@ function changeOwnassword({ current, new_password, confirm }) {
       return Process('scripts.return.RError', '', 400, '密码不正确');
     }
   } catch (error) {
-    return Process('scripts.return.RError', '', 400, '密码不正确');
+    return Process(
+      'scripts.return.RError',
+      '',
+      400,
+      '密码不正确' + error.message,
+    );
   }
 
   if (new_password !== confirm) {
@@ -126,8 +131,15 @@ function changeOwnassword({ current, new_password, confirm }) {
  * @param {object} payload
  * @returns
  */
-function register(payload) {
-  let { captcha, password, email, confirm, name } = payload;
+function register(payload: {
+  captcha: { id: string; code: string };
+  password: string;
+  email: string;
+  confirm: string;
+  name: string;
+}) {
+  const { email, confirm, password, captcha } = payload;
+  let { name } = payload;
 
   const ok = Process('utils.captcha.Verify', captcha.id, captcha.code);
   if (ok) {

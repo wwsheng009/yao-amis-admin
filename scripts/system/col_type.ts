@@ -1,5 +1,7 @@
 // 转换列配置成yao的模型配置，才能适配数据库
 import { IsMysql } from '@scripts/amis/lib_tool';
+import { AmisColumn, YaoModelColumnEx } from '@yao/types';
+import { YaoModel } from '@yaoapps/types';
 
 // 集中管理类型字段类型转换处理
 
@@ -8,7 +10,7 @@ import { IsMysql } from '@scripts/amis/lib_tool';
  * @param {object} col
  * @returns
  */
-export function convertColTypeToYao(col) {
+export function convertColTypeToYao(col: YaoModelColumnEx): YaoModelColumnEx {
   switch (col.type?.toLowerCase()) {
     case 'image':
     case 'video':
@@ -146,13 +148,13 @@ export function GetColumnTypeList() {
  * @param {object} column 数据库表列定义
  * @returns 返回amis formitem定义
  */
-export function column2AmisTableViewColumn(column) {
+export function column2AmisTableViewColumn(column: YaoModelColumnEx) {
   // 只读字段的处理有两种方式，一种是使用static-类控件，
   // 不要使用input-控件再加上static属性进行组合控制，会使用quickEdit失效
   // 哪种更好需要测试后才知道
   // const name = column.name.toUpperCase();
   let displayOnly = false;
-  const newColumn = {} as any;
+  const newColumn = {} as AmisColumn;
   newColumn.name = column.name;
   newColumn.label = column.label;
 
@@ -333,13 +335,14 @@ export function column2AmisTableViewColumn(column) {
       break;
     case 'COLOR':
       newColumn.type = 'color';
+      break;
     default:
       break;
   }
   // 布尔
   if (
-    type === 'TINYINTEGER'
-    && (column.default === 0 || column.default === 1)
+    type === 'TINYINTEGER' &&
+    (column.default === 0 || column.default === 1)
   ) {
     newColumn.type = 'status';
   }
@@ -379,7 +382,7 @@ export function column2AmisFormViewColumn(column) {
   // 另外一种是使用input-控件再加上static属性进行组合控制
   // 哪种更好需要测试后才知道
   // const name = column.name.toUpperCase();
-  const newColumn = {} as any;
+  const newColumn = {} as AmisColumn;
   newColumn.name = column.name;
   newColumn.label = column.label;
 
@@ -546,8 +549,8 @@ export function column2AmisFormViewColumn(column) {
   }
   // 布尔
   if (
-    type === 'TINYINTEGER'
-    && (column.default === 0 || column.default === 1)
+    type === 'TINYINTEGER' &&
+    (column.default === 0 || column.default === 1)
   ) {
     newColumn.type = 'static-status';
   }
@@ -580,7 +583,7 @@ export function isDateTimeType(column) {
  */
 export function column2AmisFormEditColumn(column) {
   //   const name = column.name.toUpperCase();
-  const newColumn = {} as any;
+  const newColumn = {} as AmisColumn;
   newColumn.name = column.name;
   newColumn.label = column.label;
 
@@ -588,8 +591,8 @@ export function column2AmisFormEditColumn(column) {
   if (column.primary !== true) {
     if (
       // 不为空且没有默认值
-      column.nullable !== true
-      && (column.default === null || column.default === undefined)
+      column.nullable !== true &&
+      (column.default === null || column.default === undefined)
     ) {
       newColumn.required = true;
     } else if (column.unique === true || column.index === true) {
@@ -716,15 +719,15 @@ export function column2AmisFormEditColumn(column) {
     case 'ENUM':
       newColumn.type = 'select';
       if (
-        column.options != null
-        && Array.isArray(column.options)
-        && column.options.length
+        column.options != null &&
+        Array.isArray(column.options) &&
+        column.options.length
       ) {
         newColumn.options = column.options;
       } else {
-        const options
-          = column.option
-          && column.option.map((option) => {
+        const options =
+          column.option &&
+          column.option.map((option) => {
             return {
               label: option,
               value: option,
@@ -785,8 +788,8 @@ export function column2AmisFormEditColumn(column) {
   }
   // 布尔
   if (
-    columnType === 'TINYINTEGER'
-    && (column.default === 0 || column.default === 1)
+    columnType === 'TINYINTEGER' &&
+    (column.default === 0 || column.default === 1)
   ) {
     newColumn.type = 'switch';
     if (IsMysql()) {

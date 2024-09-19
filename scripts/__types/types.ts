@@ -1,10 +1,21 @@
 import { YaoModel } from '@yaoapps/types';
 
-interface ModelColumnEx extends YaoModel.ModelColumn {
+export interface YaoModelColumnEx extends YaoModel.ModelColumn {
   /**可选项 */
-  options?: { value: string; name: string }[];
+  options?: { value: any; label: string }[];
   /**元素模板 */
   element_id?: string;
+
+  /**检查模型 */
+  check_model: string;
+
+  check_model_label?: string;
+  check_model_value?: string;
+  id?: number;
+  model_id?: string;
+  model_identity?: string;
+  check_model_multi?: boolean;
+  language?: string;
 }
 
 /** 增强的Yao 模型定义 */
@@ -14,6 +25,21 @@ export interface YaoModelEx extends YaoModel.ModelDSL {
 
   /** 编号，一般是数据库id */
   id?: number;
+
+  children?: YaoModelEx[];
+}
+
+export interface YaoModelDBEx extends Omit<YaoModel.ModelDSL, 'columns'> {
+  /** 内部标识 */
+  ID?: string;
+
+  /** 编号，一般是数据库id */
+  id?: number;
+
+  columns?: YaoModelColumnEx[];
+  option?: YaoModel.ModelOption & {
+    migrate_force?: boolean;
+  };
 }
 
 export interface AmisModel extends Omit<YaoModel.ModelDSL, 'relations'> {
@@ -39,7 +65,7 @@ export interface AmisModel extends Omit<YaoModel.ModelDSL, 'relations'> {
   read_only?: boolean;
 
   /** */
-  columns?: ModelColumnEx[];
+  columns?: YaoModelColumnEx[];
 
   relations?: AmisRelation[];
 }
@@ -47,4 +73,58 @@ export interface AmisModel extends Omit<YaoModel.ModelDSL, 'relations'> {
 export interface AmisRelation extends YaoModel.Relation {
   /** name config */
   name: string;
+}
+
+export interface AmisColumn {
+  /**名称 */
+  name?: string;
+  /**标签 */
+  label?: string;
+  /**控件类型 */
+  type?: string;
+  /**长度 */
+  length?: number;
+  /**是否可搜索 */
+  searchable?: boolean;
+  /**是否排序 */
+  sortable?: boolean;
+  levelExpand: 0 | 1;
+  format?: string;
+  /**最小值 */
+  min?: number;
+  /**最大值 */
+  big?: boolean;
+  /**精确度 */
+  precision?: number;
+  /**步 */
+  step?: number;
+  /**true显示值 */
+  trueValue: number | boolean;
+  /**false显示值 */
+  falseValue: number | boolean;
+  href?: string;
+  body?: string;
+  toggled?: boolean;
+  static?: boolean;
+  displayOnly?: boolean;
+  /**语言 */
+  language?: string;
+  multiple?: boolean;
+  source?: object;
+  required?: boolean;
+  value?: object;
+  maxLength?: number;
+  isID?: boolean;
+  options?: string[];
+  /**上传文件api接口 */
+  receiver?: string;
+  /**文件上传时使用块 */
+  useChunk?: boolean;
+  /**检验规则 */
+  validations?: object;
+}
+
+export interface YaoModelNode {
+  children?: { data?: YaoModelEx }[];
+  data?: YaoModelEx;
 }

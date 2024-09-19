@@ -1,5 +1,5 @@
 import { IsMysql, IsPg } from '@scripts/amis/lib_tool';
-import { Process, Query } from '@yao/yao';
+import { Query } from '@yao/yao';
 
 /**
  * Run db transaction
@@ -9,7 +9,10 @@ import { Process, Query } from '@yao/yao';
  * @param  {...any} args
  * @returns
  */
-export function RunTransaction(fun, ...args) {
+export function RunTransaction(
+  fun: (...args: undefined[]) => void,
+  ...args: undefined[]
+) {
   const t = new Query();
   const ismysql = IsMysql();
   const ispg = IsPg();

@@ -14,12 +14,12 @@ export type MapAny = {
  */
 export function MergeObject(target: MapAny, source: MapAny) {
   if (
-    target === null
-    || target === undefined
-    || typeof target !== 'object'
-    || source === null // mybe undefined
-    || source === undefined
-    || typeof source !== 'object'
+    target === null ||
+    target === undefined ||
+    typeof target !== 'object' ||
+    source === null || // mybe undefined
+    source === undefined ||
+    typeof source !== 'object'
   ) {
     return target;
   }
@@ -27,10 +27,10 @@ export function MergeObject(target: MapAny, source: MapAny) {
   for (const [key, value] of Object.entries(source)) {
     if (Object.prototype.hasOwnProperty.call(source, key)) {
       if (
-        target[key]
-        && typeof target[key] === 'object'
-        && typeof value === 'object'
-        && !Array.isArray(value)
+        target[key] &&
+        typeof target[key] === 'object' &&
+        typeof value === 'object' &&
+        !Array.isArray(value)
       ) {
         MergeObject(target[key], value);
       } else if (Array.isArray(target[key]) && Array.isArray(value)) {
