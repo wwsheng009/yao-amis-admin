@@ -15,6 +15,7 @@ import {
   column2AmisFormViewColumn,
   column2AmisFormEditColumn,
 } from '@scripts/system/col_type';
+import { YaoModelDBEx } from '@yao/types';
 import { Process, Exception } from '@yao/yao';
 import { YaoModel } from '@yaoapps/types';
 
@@ -30,7 +31,7 @@ import { YaoModel } from '@yaoapps/types';
 export function getModelDefinition(
   modelId: string,
   columnsIn?: any[],
-): YaoModel.ModelDSL {
+): YaoModelDBEx {
   let model = Process(
     'scripts.system.model.getDBModelById', // 优先从数据库中加载，
     DotName(modelId),

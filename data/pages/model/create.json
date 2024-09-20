@@ -362,8 +362,8 @@
                                               "method": "post",
                                               "url": "/api/v1/system/model/ddic.model/select_options",
                                               "data": {
-                                                "__label": "name",
-                                                "__value": "identity"
+                                                "_label": "name",
+                                                "_value": "identity"
                                               }
                                             }
                                           },
@@ -377,8 +377,8 @@
                                               "url": "/api/v1/system/model/ddic.model.column/select_options",
                                               "data": {
                                                 "model_identity": "${check_model}",
-                                                "__value": "name",
-                                                "__label": "label"
+                                                "_value": "name",
+                                                "_label": "label"
                                               },
                                               "trackExpression": "${check_model}",
                                               "sendOn": "data.check_model"
@@ -394,8 +394,8 @@
                                               "url": "/api/v1/system/model/ddic.model.column/select_options",
                                               "data": {
                                                 "model_identity": "${check_model}",
-                                                "__value": "name",
-                                                "__label": "label"
+                                                "_value": "name",
+                                                "_label": "label"
                                               },
                                               "trackExpression": "${check_model}",
                                               "sendOn": "data.check_model"
@@ -945,8 +945,8 @@
                                                   "method": "post",
                                                   "url": "/api/v1/system/model/ddic.model/select_options",
                                                   "data": {
-                                                    "__label": "name",
-                                                    "__value": "identity"
+                                                    "_label": "name",
+                                                    "_value": "identity"
                                                   }
                                                 }
                                               },
@@ -960,8 +960,8 @@
                                                   "url": "/api/v1/system/model/ddic.model.column/select_options",
                                                   "data": {
                                                     "model_identity": "${check_model}",
-                                                    "__value": "name",
-                                                    "__label": "label"
+                                                    "_value": "name",
+                                                    "_label": "label"
                                                   },
                                                   "trackExpression": "${check_model}",
                                                   "sendOn": "data.check_model"
@@ -977,8 +977,8 @@
                                                   "url": "/api/v1/system/model/ddic.model.column/select_options",
                                                   "data": {
                                                     "model_identity": "${check_model}",
-                                                    "__value": "name",
-                                                    "__label": "label"
+                                                    "_value": "name",
+                                                    "_label": "label"
                                                   },
                                                   "trackExpression": "${check_model}",
                                                   "sendOn": "data.check_model"
@@ -1273,8 +1273,8 @@
                         "method": "post",
                         "url": "/api/v1/system/model/ddic.model/select_options",
                         "data": {
-                          "__label": "name",
-                          "__value": "identity"
+                          "_label": "name",
+                          "_value": "identity"
                         }
                       },
                       "required": true
@@ -1291,8 +1291,8 @@
                         "url": "/api/v1/system/model/ddic.model.column/select_options",
                         "data": {
                           "model_identity": "${model}",
-                          "__value": "name",
-                          "__label": "label"
+                          "_value": "name",
+                          "_label": "label"
                         },
                         "trackExpression": "${model}",
                         "sendOn": "data.model"

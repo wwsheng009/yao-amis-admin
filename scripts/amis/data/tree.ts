@@ -4,7 +4,7 @@ import { Process, Exception } from '@yao/yao';
 /**
  * 读取并转换一个树结构模型
  * yao run scripts.amis.data.tree.GetNodes admin.menu
- * yao run scripts.amis.data.tree.GetNodes admin.menu '::{"__label":["title"]}'
+ * yao run scripts.amis.data.tree.GetNodes admin.menu '::{"_label":["title"]}'
  * @param {string} model 模型名称
  * @returns
  */
@@ -15,12 +15,12 @@ export function GetNodes(model: string, querys?) {
   let fields = ['id', 'parent'];
 
   if (querys != null) {
-    if (Array.isArray(querys?.__label) && querys.__label[0].length) {
-      labelField = querys.__label[0];
+    if (Array.isArray(querys?._label) && querys._label[0].length) {
+      labelField = querys._label[0];
       fields.push(labelField);
     }
-    if (Array.isArray(querys?.__value) && querys.__value[0].length) {
-      valueField = querys.__value[0];
+    if (Array.isArray(querys?._value) && querys._value[0].length) {
+      valueField = querys._value[0];
       fields.push(valueField);
     }
     if (Array.isArray(querys?.select) && querys.select[0].length) {

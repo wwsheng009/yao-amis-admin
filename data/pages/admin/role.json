@@ -87,7 +87,7 @@
                   "multiple": true,
                   "cascade": true,
                   "required": true,
-                  "source": "/api/v1/system/tree/admin.auth.permission/find?__label=desc",
+                  "source": "/api/v1/system/tree/admin.auth.permission/find?_label=desc",
                   "joinValues": false,
                   "extractValue": true
                 },
@@ -199,7 +199,7 @@
                   "required": true,
                   "joinValues": false,
                   "extractValue": true,
-                  "source": "/api/v1/system/tree/admin.auth.permission/find?__label=desc"
+                  "source": "/api/v1/system/tree/admin.auth.permission/find?_label=desc"
                 }
               ],
               "name": "create"

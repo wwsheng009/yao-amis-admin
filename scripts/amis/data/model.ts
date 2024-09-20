@@ -377,11 +377,11 @@ function selectOptions(modelId, querysIn, payload) {
     join = row.join;
   }
 
-  if (querys['__value']) {
-    query.value = querys['__value'][0];
+  if (querys['_value']) {
+    query.value = querys['_value'][0];
   }
-  if (querys['__label']) {
-    query.label = querys['__label'][0];
+  if (querys['_label']) {
+    query.label = querys['_label'][0];
   }
 
   const queryParam = queryToQueryParam(query.model, querys) as any;

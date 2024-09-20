@@ -714,7 +714,8 @@ function getSystemMenu() {
               icon: 'fa fa-file',
               schemaApi: '/api/v1/amis/pages/admin.file',
               url: '/admin/file/:file_type',
-            }, {
+            },
+            {
               label: '文件管理',
               icon: 'fa fa-file',
               schemaApi: '/api/v1/amis/pages/admin.file2',

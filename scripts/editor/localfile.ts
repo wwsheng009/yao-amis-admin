@@ -31,6 +31,7 @@ function getPages(dirIn) {
   files = files
     .map((str) => {
       str = str.replaceAll('\\', '/');
+      str = str.replaceAll('//', '/');
       // console.log("dir:", dir);
       if (str.endsWith('.json') && str.startsWith(dir)) {
         return str.substr(dir.length);

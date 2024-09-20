@@ -257,7 +257,7 @@
                       "label": "角色",
                       "multiple": true,
                       "cascade": true,
-                      "source": "/api/v1/system/model/admin.auth.role/select_options?__label=desc",
+                      "source": "/api/v1/system/model/admin.auth.role/select_options?_label=desc",
                       "joinValues": false,
                       "extractValue": true
                     },
@@ -610,7 +610,7 @@
                   "label": "角色",
                   "multiple": true,
                   "cascade": true,
-                  "source": "/api/v1/system/model/admin.auth.role/select_options?__label=desc",
+                  "source": "/api/v1/system/model/admin.auth.role/select_options?_label=desc",
                   "joinValues": false,
                   "extractValue": true
                 },

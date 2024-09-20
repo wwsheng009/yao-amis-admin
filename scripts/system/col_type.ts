@@ -363,8 +363,8 @@ export function column2AmisTableViewColumn(column: YaoModelColumnEx) {
     //   method: 'post',
     //   url: `/api/v1/system/model/${column.check_model}/select_options`,
     //   data: {
-    //     __label: column.check_model_label || 'name',
-    //     __value: column.check_model_value || 'id',
+    //     _label: column.check_model_label || 'name',
+    //     _value: column.check_model_value || 'id',
     //   }
     // }
   }
@@ -542,8 +542,8 @@ export function column2AmisFormViewColumn(column) {
       method: 'post',
       url: `/api/v1/system/model/${column.check_model}/select_options`,
       data: {
-        __label: column.check_model_label || 'name',
-        __value: column.check_model_value || 'id',
+        _label: column.check_model_label || 'name',
+        _value: column.check_model_value || 'id',
       },
     };
   }
@@ -815,8 +815,8 @@ export function column2AmisFormEditColumn(column) {
       method: 'post',
       url: `/api/v1/system/model/${column.check_model}/select_options`,
       data: {
-        __label: labelField,
-        __value: column.check_model_value || 'id',
+        _label: labelField,
+        _value: column.check_model_value || 'id',
       },
     };
   }

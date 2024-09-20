@@ -114,7 +114,7 @@
                       "label": "上级",
                       "name": "parent",
                       "type": "tree-select",
-                      "source": "/api/v1/system/tree/admin.auth.permission/find?__label=desc",
+                      "source": "/api/v1/system/tree/admin.auth.permission/find?_label=desc",
                       "validations": {
                         "isSameId": true
                       }
@@ -172,7 +172,7 @@
                       "label": "路由",
                       "items": {
                         "type": "input-text",
-                        "source": "/api/v1/system/model/system.api/select_options?__label=router&__value=router"
+                        "source": "/api/v1/system/model/system.api/select_options?_label=router&_value=router"
                       }
                     },
                     {
@@ -186,7 +186,7 @@
                       "autoCheckChildren": false,
                       "joinValues": false,
                       "extractValue": true,
-                      "source": "/api/v1/system/tree/admin.menu/find?__label=title"
+                      "source": "/api/v1/system/tree/admin.menu/find?_label=title"
                     },
                     {
                       "label": "模型",
@@ -195,7 +195,7 @@
                       "multiple": true,
                       "joinValues": false,
                       "extractValue": true,
-                      "source": "/api/v1/system/model/ddic.model/select_options?__value=identity&__label=name"
+                      "source": "/api/v1/system/model/ddic.model/select_options?_value=identity&_label=name"
                     },
                     {
                       "type": "checkboxes",
@@ -348,7 +348,7 @@
             "label": "上级",
             "name": "parent",
             "type": "tree-select",
-            "source": "/api/v1/system/tree/admin.auth.permission/find?__label=desc"
+            "source": "/api/v1/system/tree/admin.auth.permission/find?_label=desc"
           },
           {
             "label": "排序",
@@ -407,7 +407,7 @@
                   "label": "上级",
                   "name": "parent",
                   "type": "tree-select",
-                  "source": "/api/v1/system/tree/admin.auth.permission/find?__label=desc"
+                  "source": "/api/v1/system/tree/admin.auth.permission/find?_label=desc"
                 },
                 {
                   "type": "checkboxes",
@@ -462,7 +462,7 @@
                   "label": "路由",
                   "items": {
                     "type": "input-text",
-                    "source": "/api/v1/system/model/system.api/select_options?__label=router&__value=router"
+                    "source": "/api/v1/system/model/system.api/select_options?_label=router&_value=router"
                   }
                 },
                 {
@@ -476,7 +476,7 @@
                   "autoCheckChildren": false,
                   "joinValues": false,
                   "extractValue": true,
-                  "source": "/api/v1/system/tree/admin.menu/find?__label=title"
+                  "source": "/api/v1/system/tree/admin.menu/find?_label=title"
                 },
                 {
                   "label": "模型",
@@ -485,7 +485,7 @@
                   "multiple": true,
                   "joinValues": false,
                   "extractValue": true,
-                  "source": "/api/v1/system/model/ddic.model/select_options?__value=identity&__label=name"
+                  "source": "/api/v1/system/model/ddic.model/select_options?_value=identity&_label=name"
                 },
                 {
                   "type": "checkboxes",
@@ -628,7 +628,7 @@
                         "label": "上级",
                         "name": "parent",
                         "type": "tree-select",
-                        "source": "/api/v1/system/tree/admin.auth.permission/find?__label=desc"
+                        "source": "/api/v1/system/tree/admin.auth.permission/find?_label=desc"
                       },
                       "searchable": true,
                       "sortable": true,

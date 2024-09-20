@@ -122,6 +122,8 @@ export interface AmisColumn {
   useChunk?: boolean;
   /**检验规则 */
   validations?: object;
+  /**忽略 */
+  __ignore?: boolean | undefined;
 }
 
 export interface YaoModelNode {
