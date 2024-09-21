@@ -9,7 +9,7 @@
 // 模型字段的详细定义查看https://yaoapps.com/doc/%E6%89%8B%E5%86%8C/Widgets/Model
 // todo检查模型定义来更新字段
 
-import { DotName } from '@scripts/amis/lib_tool';
+import { DotName } from '@scripts/system/lib';
 import {
   column2AmisTableViewColumn,
   column2AmisFormViewColumn,

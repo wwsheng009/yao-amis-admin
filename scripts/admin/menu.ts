@@ -1,5 +1,5 @@
 import { deleteObjectKey } from '@scripts/system/lib';
-import { ClearFalsyKeys } from '@scripts/amis/lib_tool';
+import { ClearFalsyKeys } from '@scripts/system/lib';
 import { updateSoyRouteComponent } from '@scripts/admin/menu_lib';
 import { filterTreeDataWithFunc } from '@scripts/amis/data/tree';
 

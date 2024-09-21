@@ -1,4 +1,4 @@
-const { FileNameConvert } = Require('amis.lib_tool');
+const { FileNameConvert } = Require('system.lib');
 
 /**
  * 在amis-editor里创建或是修改页面配置后可以先保存成文件，在确定没有问题后再加载到数据库

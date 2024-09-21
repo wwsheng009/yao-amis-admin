@@ -80,9 +80,9 @@ const exptected = [
 function filterTreeDataWithFun(dataArray, func) {
   return dataArray.reduce((acc, item) => {
     // Check if the current node or its children match the filter condition
-    const includesFilter
-      = func(item)
-      || (item.children && filterTreeDataWithFun(item.children, func).length > 0);
+    const includesFilter =
+      func(item) ||
+      (item.children && filterTreeDataWithFun(item.children, func).length > 0);
     if (includesFilter) {
       if (func(item)) {
         // 直接包含所有的子节点
@@ -105,10 +105,10 @@ function filterTreeDataWithFun(dataArray, func) {
 function filterTreeDataById(data, filterIds) {
   return data.reduce((acc, item) => {
     // Check if the current node or its children match the filter condition
-    const includesFilter
-      = filterIds.includes(item.id)
-      || (item.children
-        && filterTreeDataById(item.children, filterIds).length > 0);
+    const includesFilter =
+      filterIds.includes(item.id) ||
+      (item.children &&
+        filterTreeDataById(item.children, filterIds).length > 0);
     if (includesFilter) {
       if (filterIds.includes(item.id)) {
         acc.push({ ...item });

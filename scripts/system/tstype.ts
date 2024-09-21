@@ -1,5 +1,5 @@
-import { DotName, UnderscoreName, SlashName } from '@scripts/amis/lib_tool';
-import { Process, Exception } from '@yao/yao';
+import { DotName, SlashName } from '@scripts/system/lib';
+import { Process } from '@yao/yao';
 
 // 创建模型对象的ts类型定义。
 

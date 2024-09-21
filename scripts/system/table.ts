@@ -1,11 +1,7 @@
-import {
-  FindAndLoadYaoModelById,
-  MomoryModelList,
-  ModelIDList,
-} from '@scripts/system/model_lib';
+import { MomoryModelList } from '@scripts/system/model_lib';
 
 import { PaginateArrayWithQuery } from '@scripts/amis/data/lib';
-import { Process, Exception } from '@yao/yao';
+import { Process } from '@yao/yao';
 
 /**
  * yao run scripts.system.table.TableListSearch  '::{"created":[false]}'
@@ -35,7 +31,7 @@ function TableListUniq(query?) {
       }
       return acc;
     }, {}),
-  ) as any;
+  ) as { [k: string]: string }[];
 
   if (query && query.name) {
     result = result.filter((item) => item?.name?.includes(query.name));
@@ -125,7 +121,7 @@ function TableList() {
  * @returns 返回数据库表列表
  */
 function tableNameOptions() {
-  const list = Process('schemas.default.Tables');
+  const list = Process('schemas.default.Tables') as string[];
   const tables = list.map((table) => {
     return { label: table, value: table };
   });

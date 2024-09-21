@@ -1,4 +1,4 @@
-import { FileNameConvert } from '@scripts/amis/lib_tool';
+import { FileNameConvert } from '@scripts/system/lib';
 import { Process, FS, Exception } from '@yao/yao';
 
 /**

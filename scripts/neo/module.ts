@@ -1,4 +1,4 @@
-import { DotName, UnderscoreName, SlashName } from '@scripts/amis/lib_tool';
+import { DotName, UnderscoreName, SlashName } from '@scripts/system/lib';
 import { Exception, FS, Process, ssWrite } from '@yao/yao';
 
 /**

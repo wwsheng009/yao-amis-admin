@@ -1,7 +1,6 @@
 // 转换列配置成yao的模型配置，才能适配数据库
-import { IsMysql } from '@scripts/amis/lib_tool';
+import { IsMysql } from '@scripts/system/lib';
 import { AmisColumn, YaoModelColumnEx } from '@yao/types';
-import { YaoModel } from '@yaoapps/types';
 
 // 集中管理类型字段类型转换处理
 

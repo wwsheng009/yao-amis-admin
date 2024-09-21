@@ -12,26 +12,16 @@ import {
   migrateModel,
 } from '@scripts/system/model_db';
 
-import {
-  DotName,
-  UnderscoreName,
-  IsMysql,
-  ClearFalsyKeys,
-} from '@scripts/amis/lib_tool';
+import { DotName, UnderscoreName, IsMysql } from '@scripts/system/lib';
 
-import { SlashName } from '@scripts/amis/lib_tool';
+import { SlashName } from '@scripts/system/lib';
 
 import { RunTransaction } from '@scripts/system/db_lib';
 
-import {
-  queryToQueryParam,
-  updateInputData,
-  mergeQueryObject,
-} from '@scripts/amis/data/lib';
+import { queryToQueryParam, mergeQueryObject } from '@scripts/amis/data/lib';
 
 import {
   FindAndLoadYaoModelById,
-  FindCachedModelById,
   MomoryModelList,
   ModelIDList,
   FindAndLoadDBModelById,
@@ -40,8 +30,8 @@ import {
 import { convertColTypeToYao } from '@scripts/system/col_type';
 
 import { Process, Exception, FS } from '@yao/yao';
-import { YaoModel } from '@yaoapps/types';
 import { AmisModel, YaoModelDBEx, YaoModelEx } from '@yao/types';
+import { YaoModel } from '@yaoapps/types';
 
 /**
  * yao run scripts.system.model.page
@@ -317,7 +307,7 @@ function ConvertModelToTableLine(modelDsl: YaoModelEx) {
  * @param {object} modelDsl
  * @returns
  */
-function SaveModelToLocal(modelDsl) {
+function SaveModelToLocal(modelDsl: YaoModelDBEx) {
   const yaoEnv = Process('utils.env.Get', 'YAO_ENV');
   if (yaoEnv !== 'development') {
     return;
@@ -491,7 +481,7 @@ function ConvertModelColToTableLine(model, modelCol) {
   return col;
 }
 
-function UpdateRelationFromDsl(key, rel) {
+function UpdateRelationFromDsl(key: string, rel: YaoModel.Relation) {
   const data = rel;
   data.name = key;
   data.label = rel.label || key;
@@ -516,11 +506,11 @@ function ConvertApiObjectToModel(modelDsl) {
   if (Array.isArray(model.columns)) {
     model.columns.forEach((col) => {
       // 兼容处理,amis index字段用于表格索引,使用is_index作替代
-      if (col.hasOwnProperty('is_index')) {
+      if (Object.prototype.hasOwnProperty.call(col, 'is_index')) {
         col.index = col.is_index;
         delete col.is_index;
       }
-      if (col.hasOwnProperty('__index')) {
+      if (Object.prototype.hasOwnProperty.call(col, '__index')) {
         delete col.__index;
       }
     });
@@ -695,7 +685,7 @@ function DeleteModelLocalFile(modelId) {
  * @param {string/number} modelId
  * @returns
  */
-function getModelApi(modelId) {
+function getModelApi(modelId: string | number) {
   return ConvertModelToApiObject(getDBModelById(modelId));
 }
 
@@ -726,7 +716,7 @@ function getModelColumnsApi(modelId: string) {
  * @param {string} modelId 模型标识
  * @returns
  */
-function getDBModelById(modelId) {
+function getDBModelById(modelId: string | number) {
   return FindAndLoadDBModelById(modelId);
 }
 

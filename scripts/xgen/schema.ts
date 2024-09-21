@@ -1,5 +1,5 @@
 import { getModelDefinition } from '@scripts/amis/lib';
-import { DotName, IsMysql } from '@scripts/amis/lib_tool';
+import { DotName, IsMysql } from '@scripts/system/lib';
 import { Process, log } from '@yao/yao';
 
 import { YaoField, YaoForm, YaoModel, YaoQuery } from '@yaoapps/types';

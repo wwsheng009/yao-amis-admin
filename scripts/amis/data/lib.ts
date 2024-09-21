@@ -2,7 +2,7 @@ import {
   FindAndLoadYaoModelById,
   FindAndLoadDBModelById,
 } from '@scripts/system/model_lib';
-import { IsMysql } from '@scripts/amis/lib_tool';
+import { IsMysql } from '@scripts/system/lib';
 import { isDateTimeType } from '@scripts/system/col_type';
 
 import { Process, Exception } from '@yao/yao';
@@ -86,12 +86,14 @@ export function queryToQueryParam(modelIn, querysIn, queryParams = {}) {
   }
 
   let select = [];
-  if (querys.hasOwnProperty('select')) {
+  if (Object.prototype.hasOwnProperty.call(querys, 'select')) {
     const joinedString = querys['select'].join(',');
     const selectArray = joinedString.split(',');
     select = [...new Set(selectArray)];
     delete querys['select'];
-    select = select.filter((col) => columnMap.hasOwnProperty(col));
+    select = select.filter((col) =>
+      Object.prototype.hasOwnProperty.call(columnMap, col),
+    );
   }
 
   const keywords = querys['keywords'];
@@ -118,7 +120,7 @@ export function queryToQueryParam(modelIn, querysIn, queryParams = {}) {
 
   for (const key in querys) {
     // 不存在列
-    if (!columnMap.hasOwnProperty(key)) {
+    if (!Object.prototype.hasOwnProperty.call(columnMap, key)) {
       continue;
     }
     const column = columnMap[key];
@@ -276,7 +278,7 @@ export function updateOutputData(model: YaoModel.ModelDSL, Data) {
     let modelDsl = model;
     if (typeof modelDsl === 'string') {
       // 如果使用yao model定义，无法获取用户定义的类型，比如json类型的数据就可能有多种含义。
-      modelDsl = FindAndLoadDBModelById(model);
+      modelDsl = FindAndLoadDBModelById(model as string);
     }
     const dbColmap = getDbModelColumnMap(modelDsl);
 

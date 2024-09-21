@@ -1,4 +1,4 @@
-import { IsMysql, IsPg } from '@scripts/amis/lib_tool';
+import { IsMysql, IsPg } from '@scripts/system/lib';
 import { Query } from '@yao/yao';
 
 /**

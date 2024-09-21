@@ -1,10 +1,10 @@
 // model db operations
 
-import { IsSqlite, ClearFalsyKeys } from '@scripts/amis/lib_tool';
+import { IsSqlite, ClearFalsyKeys } from '@scripts/system/lib';
 
 import { convertColTypeToYao } from '@scripts/system/col_type';
 
-import { FileNameConvert } from '@scripts/amis/lib_tool';
+import { FileNameConvert } from '@scripts/system/lib';
 import { Process, Exception, log } from '@yao/yao';
 import { YaoModel } from '@yaoapps/types';
 import { AmisModel, AmisRelation, YaoModelEx } from '@yao/types';
@@ -34,10 +34,10 @@ function checkType(value: string | number) {
 /**
  * 从数据库中加载Yao模型,返回一个Yao模型定义
  * yao run scripts.system.model.getModelFromDB
- * @param {int/string} modelId 模型ID标识
+ * @param {number | string} modelId 模型ID标识
  * @returns
  */
-export function getModelFromDB(modelId: string) {
+export function getModelFromDB(modelId: string | number) {
   // 数字ID可能是数据库数据
 
   const wheres = [];

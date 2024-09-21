@@ -1,7 +1,13 @@
 // 使用models*类型的处理，这类处理器是直接对表数据的操作，相对tables*处理器，性能会更好
-import { DotName } from '@scripts/amis/lib_tool';
+import { DotName } from '@scripts/system/lib';
 import { FindAndLoadYaoModelById } from '@scripts/system/model_lib';
-import { queryToQueryParam, updateInputData, updateOutputData, getArrayItem, mergeQueryObject } from '@scripts/amis/data/lib';
+import {
+  queryToQueryParam,
+  updateInputData,
+  updateOutputData,
+  getArrayItem,
+  mergeQueryObject,
+} from '@scripts/amis/data/lib';
 
 import { RunTransaction } from '@scripts/system/db_lib';
 
@@ -19,7 +25,14 @@ import { Process, Exception } from '@yao/yao';
  * @param {object} payload request payload
  * @returns
  */
-function dataSearch(modelId, pageIn, perPageIn, querysIn, queryParams, payload) {
+function dataSearch(
+  modelId,
+  pageIn,
+  perPageIn,
+  querysIn,
+  queryParams,
+  payload,
+) {
   const querys = mergeQueryObject(querysIn, payload);
 
   let page = pageIn;
@@ -95,14 +108,11 @@ function dataSearch(modelId, pageIn, perPageIn, querysIn, queryParams, payload) 
   };
 }
 function generateUUID() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
-    /[xy]/g,
-    function (c) {
-      const r = (Math.random() * 16) | 0;
-      const v = c === 'x' ? r : (r & 0x3) | 0x8;
-      return v.toString(16);
-    },
-  );
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    const r = (Math.random() * 16) | 0;
+    const v = c === 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
 }
 function makeFake(modelId) {
   const modelDsl = FindAndLoadYaoModelById(modelId);
@@ -183,27 +193,26 @@ function makeFake(modelId) {
         fakeData[key] = true;
         break;
       case 'UUID':
-
         fakeData[key] = generateUUID();
         break;
       case 'ENUM':
         fakeData[key] = 'enum';
         break;
       case 'FILE':
-        fakeData[key]
-          = 'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png';
+        fakeData[key] =
+          'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png';
         break;
       case 'IMAGE':
-        fakeData[key]
-          = 'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png';
+        fakeData[key] =
+          'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png';
         break;
       case 'IMAGES':
-        fakeData[key]
-          = 'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png,https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png';
+        fakeData[key] =
+          'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png,https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png';
         break;
       case 'VIDEO':
-        fakeData[key]
-          = 'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png';
+        fakeData[key] =
+          'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png';
         break;
       case 'RICHTEXT':
         fakeData[key] = '<p></p>';

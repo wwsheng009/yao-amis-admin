@@ -1,4 +1,4 @@
-const { SlashName, FileNameConvert } = Require('amis.lib_tool');
+const { SlashName, FileNameConvert } = Require('system.lib');
 /**
  * yao studio run model.GenerateModelFile
  * @param modelid model id

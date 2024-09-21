@@ -13,7 +13,7 @@ export function ModelIDList() {
 }
 
 /**
- * 返回所以模型列表
+ * 返回所有模型列表
  * @returns []object
  */
 function CachedModelList() {
@@ -112,7 +112,9 @@ function FlatModelList(models: YaoModelNode[], attr?: string[] | string) {
  * @param {string} modelId 模型标识
  * @returns YaoModel.ModelDSL | null
  */
-export function FindCachedModelById(modelId: string): YaoModel.ModelDSL {
+export function FindCachedModelById(
+  modelId: string | number,
+): YaoModel.ModelDSL {
   const models = Process('widget.models');
 
   const traverse = (node: any, id: string) => {
@@ -132,7 +134,7 @@ export function FindCachedModelById(modelId: string): YaoModel.ModelDSL {
     }
   };
 
-  return traverse(models, modelId);
+  return traverse(models, modelId + '');
 }
 
 /**
@@ -164,11 +166,11 @@ export function FindAndLoadYaoModelById(modelId: string) {
  * 加载模型标识，优先从数据库中加载，找不到再在缓存中加载
  * 数据库的模型信息会更多
  *
- * yao run scripts.system.model.getDBModelById
+ * yao run scripts.system.model.FindAndLoadDBModelById
  * @param {string} modelId 模型标识
  * @returns
  */
-export function FindAndLoadDBModelById(modelId: string) {
+export function FindAndLoadDBModelById(modelId: string | number) {
   if (!modelId) {
     throw new Exception(`缺少模型标识`);
   }

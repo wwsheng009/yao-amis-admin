@@ -53,7 +53,7 @@ export function GetNodes(model: string, querys?) {
  * @param node 当前节点数据
  * @returns
  */
-export function CreateNode(model, { path, parent, ...node }: any) {
+export function CreateNode(model, { path, parent, ...node }) {
   const newNode = { ...node };
   if (parent && typeof parent === 'object' && parent.id) {
     newNode.parent = parent.id;
@@ -161,9 +161,9 @@ export function filterTreeDataWithFunc(dataArray, func) {
   return dataArray.reduce((acc, item) => {
     // Check if the current node or its children match the filter condition
     // console.log("item id=======>", item.id);
-    const includesFilter
-      = func(item)
-      || (item.children && filterTreeDataWithFunc(item.children, func).length > 0);
+    const includesFilter =
+      func(item) ||
+      (item.children && filterTreeDataWithFunc(item.children, func).length > 0);
     if (includesFilter) {
       if (func(item)) {
         // 直接包含所有的子节点
@@ -212,8 +212,10 @@ export function collectTreeFields(data, field) {
   // Recursive function to traverse the object
   function traverse(obj) {
     if (obj != null && typeof obj === 'object') {
-      if (obj.hasOwnProperty(field)) {
-        obj[field] != null && fields.push(obj[field]);
+      if (Object.prototype.hasOwnProperty.call(obj, field)) {
+        if (obj[field] != null) {
+          fields.push(obj[field]);
+        }
       }
 
       for (const key in obj) {
@@ -264,9 +266,9 @@ export function collectAndCombineData(data, key, key2, defaultKey?) {
     }
 
     if (
-      obj.hasOwnProperty(key)
-      && Array.isArray(obj[key])
-      && obj[key].length > 0
+      Object.prototype.hasOwnProperty.call(obj, key) &&
+      Array.isArray(obj[key]) &&
+      obj[key].length > 0
     ) {
       for (const o of obj[key]) {
         // 使用数组中的行项目作key
