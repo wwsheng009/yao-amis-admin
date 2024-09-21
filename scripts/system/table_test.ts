@@ -1898,7 +1898,7 @@ function MomoryModelList(attr) {
         );
       }
       //   注意，不支持生成数组
-      if (!currentObject.hasOwnProperty(properties[i])) {
+      if (!Object.prototype.hasOwnProperty.call(currentObject, properties[i])) {
         currentObject[properties[i]] = {};
       }
       currentObject = currentObject[properties[i]];

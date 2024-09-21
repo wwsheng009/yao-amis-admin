@@ -16,7 +16,7 @@ import { DotName, UnderscoreName, IsMysql } from '@scripts/system/lib';
 
 import { SlashName } from '@scripts/system/lib';
 
-import { RunTransaction } from '@scripts/system/db_lib';
+import { RunTransaction } from '@scripts/system/db';
 
 import { queryToQueryParam, mergeQueryObject } from '@scripts/amis/data/lib';
 
@@ -561,7 +561,7 @@ function saveModelApi(payload) {
   const line = ConvertModelToTableLine(model);
   const id = SaveModelTableLine(line, model.option?.migrate_force);
 
-  if (id) {
+  if (id != null) {
     const err = loadModeltoMemory(
       model,
       !model.option?.read_only,

@@ -49,10 +49,10 @@ function createTSTypes(modelsIn) {
       .map((item) => {
         return `  /**${item.label || item.comment} */
   ${item.name}${isOption(item) ? '?' : ''}: ${getTsType(
-  tabName,
-  item,
-  typeMapping,
-)};`;
+    tabName,
+    item,
+    typeMapping,
+  )};`;
       }, [])
       .join('\n');
 
@@ -71,8 +71,8 @@ function createTSTypes(modelsIn) {
  * Model=> ${dotName} ${model.name ? '(' + model.name + ')' : ''}
  * 
  * Table=> ${model.table.name} ${
-  model.table.comment ? '(' + model.table.comment + ')' : ''
-}
+   model.table.comment ? '(' + model.table.comment + ')' : ''
+ }
 */
 interface ${last} {
 ${fields}

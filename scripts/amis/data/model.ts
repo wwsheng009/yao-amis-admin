@@ -9,7 +9,7 @@ import {
   mergeQueryObject,
 } from '@scripts/amis/data/lib';
 
-import { RunTransaction } from '@scripts/system/db_lib';
+import { RunTransaction } from '@scripts/system/db';
 
 import { Process, Exception } from '@yao/yao';
 
