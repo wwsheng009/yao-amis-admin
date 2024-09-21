@@ -1,0 +1,878 @@
+{
+  "pullRefresh": {
+    "disabled": true
+  },
+  "body": [
+    {
+      "columns": [
+        {
+          "quickEdit": false,
+          "id": "u:f377a4999025",
+          "label": "ID",
+          "name": "id",
+          "searchable": true,
+          "sortable": true,
+          "type": "number"
+        },
+        {
+          "id": "u:806fc01d06c1",
+          "label": "名称",
+          "name": "name",
+          "searchable": true,
+          "sortable": true,
+          "type": "text",
+          "quickEdit": {
+            "saveImmediately": true,
+            "type": "input-text",
+            "required": true
+          }
+        },
+        {
+          "searchable": true,
+          "sortable": true,
+          "type": "text",
+          "quickEdit": {
+            "required": true,
+            "saveImmediately": true,
+            "type": "textarea"
+          },
+          "id": "u:57e323bf3a38",
+          "label": "描述",
+          "name": "label"
+        },
+        {
+          "name": "model",
+          "searchable": true,
+          "sortable": true,
+          "type": "text",
+          "quickEdit": {
+            "required": true,
+            "saveImmediately": true,
+            "type": "textarea"
+          },
+          "id": "u:392c5b00efce",
+          "label": "模型"
+        },
+        {
+          "searchable": true,
+          "sortable": true,
+          "type": "text",
+          "quickEdit": {
+            "required": true,
+            "saveImmediately": true,
+            "type": "textarea"
+          },
+          "id": "u:f5e0fd3456a4",
+          "label": "横轴",
+          "name": "xfield"
+        },
+        {
+          "sortable": true,
+          "type": "json",
+          "quickEdit": {
+            "type": "textarea",
+            "required": true,
+            "saveImmediately": true
+          },
+          "id": "u:2f2309c34414",
+          "label": "横轴",
+          "name": "yfields",
+          "levelExpand": 0,
+          "searchable": true
+        },
+        {
+          "label": "配置",
+          "levelExpand": 0,
+          "name": "config",
+          "type": "json",
+          "quickEdit": {
+            "saveImmediately": true,
+            "type": "editor",
+            "language": "json",
+            "required": true
+          },
+          "id": "u:d4a4211d0971"
+        },
+        {
+          "quickEdit": false,
+          "format": "YYYY-MM-DD HH:mm:ss",
+          "searchable": true,
+          "static": true,
+          "label": "创建时间",
+          "sortable": true,
+          "type": "date",
+          "name": "created_at",
+          "id": "u:edc335e54116"
+        },
+        {
+          "id": "u:debc735846d0",
+          "label": "更新时间",
+          "searchable": true,
+          "name": "updated_at",
+          "static": true,
+          "quickEdit": false,
+          "sortable": true,
+          "type": "date",
+          "format": "YYYY-MM-DD HH:mm:ss"
+        },
+        {
+          "buttons": [
+            {
+              "actionType": "dialog",
+              "dialog": {
+                "body": {
+                  "type": "page",
+                  "body": [
+                    {
+                      "api": "post:/api/v1/system/model/system.chart/create",
+                      "type": "form",
+                      "dsType": "api",
+                      "mode": "flex",
+                      "feat": "Insert",
+                      "resetAfterSubmit": false,
+                      "title": "表单",
+                      "actions": [
+                        {
+                          "level": "primary",
+                          "onEvent": {
+                            "click": {
+                              "actions": [
+                                {
+                                  "componentName": "mychart",
+                                  "actionType": "reload",
+                                  "data": {
+                                    "&": "$$"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "type": "button",
+                          "id": "u:bc1abc8d0aaa",
+                          "label": "测试"
+                        }
+                      ],
+                      "body": [
+                        {
+                          "name": "name",
+                          "row": 0,
+                          "type": "input-text",
+                          "colSize": "1/2",
+                          "static": true,
+                          "label": "名称"
+                        },
+                        {
+                          "name": "label",
+                          "row": 0,
+                          "type": "input-text",
+                          "static": true,
+                          "colSize": "1/2",
+                          "id": "u:c5318c0f0712",
+                          "label": "标题"
+                        },
+                        {
+                          "row": 1,
+                          "source": "/api/v1/system/meta/model/model_name_list",
+                          "type": "select",
+                          "colSize": "1/2",
+                          "id": "u:1baedf88ab9b",
+                          "label": "模型列表",
+                          "multiple": false,
+                          "static": true,
+                          "name": "model"
+                        },
+                        {
+                          "label": "横轴字段",
+                          "name": "xfield",
+                          "row": 2,
+                          "id": "u:066b8bd0946c",
+                          "multiple": false,
+                          "colSize": "1/2",
+                          "static": true,
+                          "source": {
+                            "sendOn": "this.model",
+                            "url": "/api/v1/system/model/ddic.model.column/select_options",
+                            "method": "get",
+                            "dataType": "json",
+                            "messages": {},
+                            "trackExpression": "${model}",
+                            "adaptor": "",
+                            "requestAdaptor": "",
+                            "data": {
+                              "_label": "label",
+                              "_value": "name",
+                              "model_identity": "${model}"
+                            }
+                          },
+                          "type": "select"
+                        },
+                        {
+                          "colSize": "1",
+                          "multiple": true,
+                          "name": "yfields",
+                          "id": "u:690d04107e75",
+                          "type": "combo",
+                          "strictMode": true,
+                          "static": true,
+                          "items": [
+                            {
+                              "multiple": false,
+                              "name": "field",
+                              "placeholder": "选项",
+                              "source": {
+                                "method": "get",
+                                "data": {
+                                  "_label": "label",
+                                  "_value": "name",
+                                  "model_identity": "${model}"
+                                },
+                                "dataType": "json",
+                                "requestAdaptor": "",
+                                "messages": {},
+                                "sendOn": "this.model",
+                                "trackExpression": "${model}",
+                                "url": "/api/v1/system/model/ddic.model.column/select_options",
+                                "adaptor": ""
+                              },
+                              "type": "select",
+                              "id": "u:fe6001e49812"
+                            },
+                            {
+                              "name": "type1",
+                              "options": [
+                                {
+                                  "label": "bar",
+                                  "value": "bar"
+                                },
+                                {
+                                  "value": "line",
+                                  "label": "line"
+                                }
+                              ],
+                              "placeholder": "选项",
+                              "type": "select",
+                              "id": "u:b0548fe15fc3",
+                              "multiple": false
+                            }
+                          ],
+                          "syncFields": [],
+                          "label": "纵轴字段",
+                          "row": 6,
+                          "removable": true,
+                          "addable": true,
+                          "removableMode": "icon"
+                        }
+                      ],
+                      "id": "u:704d757cf8ad",
+                      "labelAlign": "top"
+                    },
+                    {
+                      "name": "mychart",
+                      "replaceChartOption": true,
+                      "type": "chart",
+                      "api": {
+                        "requestAdaptor": "",
+                        "url": "/api/v1/chart/config",
+                        "adaptor": "",
+                        "data": {
+                          "&": "$$"
+                        },
+                        "dataType": "json",
+                        "messages": {},
+                        "method": "post"
+                      },
+                      "config": {},
+                      "dataFilter": "",
+                      "id": "u:f914ce7fc17d"
+                    }
+                  ]
+                },
+                "size": "lg",
+                "title": "",
+                "type": "dialog",
+                "actions": [
+                  {
+                    "label": "关闭",
+                    "type": "button",
+                    "actionType": "cancel",
+                    "id": "u:92ae078f8933"
+                  }
+                ]
+              },
+              "icon": "fa fa-eye",
+              "tooltip": "查看",
+              "id": "u:a66c39240fda",
+              "type": "button"
+            },
+            {
+              "id": "u:5206ea8d15cd",
+              "actionType": "dialog",
+              "dialog": {
+                "body": {
+                  "type": "page",
+                  "body": [
+                    {
+                      "api": "post:/api/v1/system/model/system.chart/create",
+                      "type": "form",
+                      "dsType": "api",
+                      "mode": "flex",
+                      "feat": "Insert",
+                      "resetAfterSubmit": false,
+                      "title": "表单",
+                      "actions": [
+                        {
+                          "level": "primary",
+                          "onEvent": {
+                            "click": {
+                              "actions": [
+                                {
+                                  "componentName": "mychart",
+                                  "actionType": "reload",
+                                  "data": {
+                                    "&": "$$"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "type": "button",
+                          "id": "u:bc1abc8d0aaa",
+                          "label": "测试"
+                        }
+                      ],
+                      "body": [
+                        {
+                          "name": "id",
+                          "row": 0,
+                          "type": "input-text",
+                          "colSize": "1/3",
+                          "label": "ID",
+                          "static": true
+                        },
+                        {
+                          "name": "name",
+                          "row": 0,
+                          "type": "input-text",
+                          "colSize": "1/3",
+                          "label": "名称"
+                        },
+                        {
+                          "name": "label",
+                          "row": 0,
+                          "type": "input-text",
+                          "colSize": "1/3",
+                          "id": "u:c5318c0f0712",
+                          "label": "标题"
+                        },
+                        {
+                          "row": 1,
+                          "source": "/api/v1/system/meta/model/model_name_list",
+                          "type": "select",
+                          "colSize": "1/2",
+                          "id": "u:1baedf88ab9b",
+                          "label": "模型列表",
+                          "multiple": false,
+                          "name": "model"
+                        },
+                        {
+                          "label": "横轴字段",
+                          "name": "xfield",
+                          "row": 2,
+                          "id": "u:066b8bd0946c",
+                          "multiple": false,
+                          "colSize": "1/2",
+                          "source": {
+                            "sendOn": "this.model",
+                            "url": "/api/v1/system/model/ddic.model.column/select_options",
+                            "method": "get",
+                            "dataType": "json",
+                            "messages": {},
+                            "trackExpression": "${model}",
+                            "adaptor": "",
+                            "requestAdaptor": "",
+                            "data": {
+                              "_label": "label",
+                              "_value": "name",
+                              "model_identity": "${model}"
+                            }
+                          },
+                          "type": "select"
+                        },
+                        {
+                          "colSize": "1",
+                          "multiple": true,
+                          "name": "yfields",
+                          "id": "u:690d04107e75",
+                          "type": "combo",
+                          "strictMode": true,
+                          "items": [
+                            {
+                              "multiple": false,
+                              "name": "field",
+                              "placeholder": "选项",
+                              "source": {
+                                "method": "get",
+                                "data": {
+                                  "_label": "label",
+                                  "_value": "name",
+                                  "model_identity": "${model}"
+                                },
+                                "dataType": "json",
+                                "requestAdaptor": "",
+                                "messages": {},
+                                "sendOn": "this.model",
+                                "trackExpression": "${model}",
+                                "url": "/api/v1/system/model/ddic.model.column/select_options",
+                                "adaptor": ""
+                              },
+                              "type": "select",
+                              "id": "u:fe6001e49812"
+                            },
+                            {
+                              "name": "type1",
+                              "options": [
+                                {
+                                  "label": "bar",
+                                  "value": "bar"
+                                },
+                                {
+                                  "value": "line",
+                                  "label": "line"
+                                }
+                              ],
+                              "placeholder": "选项",
+                              "type": "select",
+                              "id": "u:b0548fe15fc3",
+                              "multiple": false
+                            }
+                          ],
+                          "syncFields": [],
+                          "addBtn": {
+                            "size": "sm",
+                            "icon": "fa fa-plus",
+                            "id": "u:1defa3eda688",
+                            "label": "新增",
+                            "level": "primary"
+                          },
+                          "label": "纵轴字段",
+                          "row": 6,
+                          "removable": true,
+                          "addable": true,
+                          "removableMode": "icon"
+                        }
+                      ],
+                      "id": "u:704d757cf8ad",
+                      "labelAlign": "top"
+                    },
+                    {
+                      "name": "mychart",
+                      "replaceChartOption": true,
+                      "type": "chart",
+                      "api": {
+                        "requestAdaptor": "",
+                        "url": "/api/v1/chart/config",
+                        "adaptor": "",
+                        "data": {
+                          "&": "$$"
+                        },
+                        "dataType": "json",
+                        "messages": {},
+                        "method": "post"
+                      },
+                      "config": {},
+                      "dataFilter": "",
+                      "id": "u:f914ce7fc17d"
+                    }
+                  ]
+                },
+                "size": "lg",
+                "title": "",
+                "type": "dialog",
+                "actions": [
+                  {
+                    "label": "取消",
+                    "type": "button",
+                    "actionType": "cancel",
+                    "id": "u:92ae078f8933"
+                  },
+                  {
+                    "id": "u:6353baf55ef5",
+                    "label": "保存",
+                    "primary": true,
+                    "type": "button",
+                    "close": true,
+                    "onEvent": {
+                      "click": {
+                        "actions": [
+                          {
+                            "actionType": "submit",
+                            "componentId": "u:704d757cf8ad"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "icon": "fa fa-pencil",
+              "tooltip": "更新",
+              "type": "button"
+            },
+            {
+              "icon": "fa fa-times text-danger",
+              "tooltip": "删除",
+              "type": "button",
+              "id": "u:382cd8ff61ee",
+              "actionType": "ajax",
+              "api": "delete:/api/v1/system/model/system.chart/delete/$id",
+              "confirmText": "你确定要删除行${id}?"
+            }
+          ],
+          "label": "操作",
+          "type": "operation",
+          "width": 100,
+          "id": "u:decc43a3e23d"
+        }
+      ],
+      "api": {
+        "data": {
+          "&": "$$"
+        },
+        "method": "post",
+        "url": "/api/v1/system/model/system.chart/search"
+      },
+      "filter": {
+        "name": "filter",
+        "silentPolling": false,
+        "trimValues": true,
+        "mode": "inline",
+        "title": "",
+        "body": [
+          {
+            "name": "id",
+            "type": "input-number",
+            "label": "ID"
+          },
+          {
+            "name": "name",
+            "type": "input-text",
+            "label": "名称"
+          },
+          {
+            "label": "描述",
+            "name": "label",
+            "type": "textarea"
+          },
+          {
+            "name": "model",
+            "type": "textarea",
+            "label": "模型"
+          },
+          {
+            "type": "textarea",
+            "label": "横轴",
+            "name": "xfield"
+          },
+          {
+            "label": "横轴",
+            "name": "yfield",
+            "type": "textarea"
+          },
+          {
+            "format": "YYYY-MM-DD HH:mm:ss",
+            "label": "创建时间",
+            "name": "created_at",
+            "type": "static-datetime",
+            "visibleOn": "!!this.created_at"
+          },
+          {
+            "type": "static-datetime",
+            "visibleOn": "!!this.updated_at",
+            "format": "YYYY-MM-DD HH:mm:ss",
+            "label": "更新时间",
+            "name": "updated_at"
+          },
+          {
+            "type": "static-datetime",
+            "visibleOn": "!!this.deleted_at",
+            "format": "YYYY-MM-DD HH:mm:ss",
+            "label": "删除时间",
+            "name": "deleted_at"
+          }
+        ],
+        "actions": [
+          {
+            "level": "default",
+            "type": "button",
+            "actionType": "clear-and-submit",
+            "label": "清空"
+          },
+          {
+            "actionType": "reset-and-submit",
+            "label": "重置",
+            "level": "default",
+            "type": "button"
+          },
+          {
+            "type": "button",
+            "actionType": "submit",
+            "label": "搜索",
+            "level": "primary"
+          }
+        ]
+      },
+      "quickSaveItemApi": "post:/api/v1/system/model/system.chart/update/${id}",
+      "primaryField": "id",
+      "autoFillHeight": true,
+      "itemActions": [],
+      "keepItemSelectionOnPageChange": true,
+      "filterDefaultVisible": false,
+      "footerToolbar": [
+        "statistics",
+        "switch-per-page",
+        "pagination",
+        "load-more",
+        "export-csv",
+        "export-excel"
+      ],
+      "syncLocation": false,
+      "id": "u:c276373971b6",
+      "type": "crud",
+      "perPage": 10,
+      "headerToolbar": [
+        {
+          "type": "columns-toggler"
+        },
+        "filter-toggler",
+        "reload",
+        "bulkActions",
+        {
+          "align": "right",
+          "type": "drag-toggler"
+        },
+        {
+          "actionType": "dialog",
+          "align": "right",
+          "dialog": {
+            "body": {
+              "type": "page",
+              "body": [
+                {
+                  "api": "post:/api/v1/system/model/system.chart/create",
+                  "type": "form",
+                  "dsType": "api",
+                  "mode": "flex",
+                  "feat": "Insert",
+                  "resetAfterSubmit": false,
+                  "title": "表单",
+                  "actions": [
+                    {
+                      "level": "primary",
+                      "onEvent": {
+                        "click": {
+                          "actions": [
+                            {
+                              "componentName": "mychart",
+                              "actionType": "reload",
+                              "data": {
+                                "&": "$$"
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      "type": "button",
+                      "id": "u:bc1abc8d0aaa",
+                      "label": "测试"
+                    }
+                  ],
+                  "body": [
+                    {
+                      "name": "name",
+                      "row": 0,
+                      "type": "input-text",
+                      "colSize": "1/2",
+                      "label": "名称"
+                    },
+                    {
+                      "name": "label",
+                      "row": 0,
+                      "type": "input-text",
+                      "colSize": "1/2",
+                      "id": "u:c5318c0f0712",
+                      "label": "标题"
+                    },
+                    {
+                      "row": 1,
+                      "source": "/api/v1/system/meta/model/model_name_list",
+                      "type": "select",
+                      "colSize": "1/2",
+                      "id": "u:1baedf88ab9b",
+                      "label": "模型列表",
+                      "multiple": false,
+                      "name": "model"
+                    },
+                    {
+                      "label": "横轴字段",
+                      "name": "xfield",
+                      "row": 2,
+                      "id": "u:066b8bd0946c",
+                      "multiple": false,
+                      "colSize": "1/2",
+                      "source": {
+                        "sendOn": "this.model",
+                        "url": "/api/v1/system/model/ddic.model.column/select_options",
+                        "method": "get",
+                        "dataType": "json",
+                        "messages": {},
+                        "trackExpression": "${model}",
+                        "adaptor": "",
+                        "requestAdaptor": "",
+                        "data": {
+                          "_label": "label",
+                          "_value": "name",
+                          "model_identity": "${model}"
+                        }
+                      },
+                      "type": "select"
+                    },
+                    {
+                      "colSize": "1",
+                      "multiple": true,
+                      "name": "yfields",
+                      "id": "u:690d04107e75",
+                      "type": "combo",
+                      "strictMode": true,
+                      "items": [
+                        {
+                          "multiple": false,
+                          "name": "field",
+                          "placeholder": "选项",
+                          "source": {
+                            "method": "get",
+                            "data": {
+                              "_label": "label",
+                              "_value": "name",
+                              "model_identity": "${model}"
+                            },
+                            "dataType": "json",
+                            "requestAdaptor": "",
+                            "messages": {},
+                            "sendOn": "this.model",
+                            "trackExpression": "${model}",
+                            "url": "/api/v1/system/model/ddic.model.column/select_options",
+                            "adaptor": ""
+                          },
+                          "type": "select",
+                          "id": "u:fe6001e49812"
+                        },
+                        {
+                          "name": "type1",
+                          "options": [
+                            {
+                              "label": "bar",
+                              "value": "bar"
+                            },
+                            {
+                              "value": "line",
+                              "label": "line"
+                            }
+                          ],
+                          "placeholder": "选项",
+                          "type": "select",
+                          "id": "u:b0548fe15fc3",
+                          "multiple": false
+                        }
+                      ],
+                      "syncFields": [],
+                      "addBtn": {
+                        "size": "sm",
+                        "icon": "fa fa-plus",
+                        "id": "u:1defa3eda688",
+                        "label": "新增",
+                        "level": "primary"
+                      },
+                      "label": "纵轴字段",
+                      "row": 6,
+                      "removable": true,
+                      "addable": true,
+                      "removableMode": "icon"
+                    }
+                  ],
+                  "id": "u:704d757cf8ad",
+                  "labelAlign": "top"
+                },
+                {
+                  "name": "mychart",
+                  "replaceChartOption": true,
+                  "type": "chart",
+                  "api": {
+                    "requestAdaptor": "",
+                    "url": "/api/v1/chart/config",
+                    "adaptor": "",
+                    "data": {
+                      "&": "$$"
+                    },
+                    "dataType": "json",
+                    "messages": {},
+                    "method": "post"
+                  },
+                  "config": {},
+                  "dataFilter": "",
+                  "id": "u:f914ce7fc17d"
+                }
+              ]
+            },
+            "size": "lg",
+            "title": "",
+            "type": "dialog",
+            "actions": [
+              {
+                "label": "取消",
+                "type": "button",
+                "actionType": "cancel",
+                "id": "u:92ae078f8933"
+              },
+              {
+                "id": "u:6353baf55ef5",
+                "label": "保存",
+                "primary": true,
+                "type": "button",
+                "close": true,
+                "onEvent": {
+                  "click": {
+                    "actions": [
+                      {
+                        "actionType": "submit",
+                        "componentId": "u:704d757cf8ad"
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          "icon": "fa fa-plus pull-left",
+          "label": "新增",
+          "level": "primary",
+          "type": "button",
+          "id": "u:14f606e0e80e"
+        }
+      ],
+      "filterTogglable": true,
+      "bulkActions": [
+        {
+          "confirmText": "你确定要批量删除选中行吗?",
+          "id": "u:84b406bb4c81",
+          "actionType": "ajax",
+          "label": "批量删除",
+          "type": "button",
+          "api": "delete:/api/v1/system/model/system.chart/delete/${ids|raw}"
+        }
+      ]
+    }
+  ],
+  "type": "page",
+  "id": "u:442d7be8935f",
+  "asideResizor": false
+}

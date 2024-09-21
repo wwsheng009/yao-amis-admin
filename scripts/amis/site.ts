@@ -894,6 +894,12 @@ function getModelMenu() {
               url: '/font',
             },
             {
+              schemaApi: '/api/v1/amis/pages/studio.chart',
+              label: '图表编辑器',
+              icon: 'fas fa-chart-line',
+              url: '/chart',
+            },
+            {
               schemaApi: '/api/v1/amis/pages/studio.editor',
               label: 'Amis-编辑器',
               icon: 'far fa-file-code',

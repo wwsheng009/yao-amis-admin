@@ -1,0 +1,58 @@
+{
+  "columns": [
+    {
+      "comment": "ID",
+      "label": "ID",
+      "name": "id",
+      "type": "id",
+    },
+    {
+      "comment": "名称",
+      "index": true,
+      "label": "名称",
+      "name": "name",
+      "type": "string",
+      "unique": true,
+    },
+    {
+      "comment": "描述",
+      "label": "描述",
+      "name": "label",
+      "type": "text",
+    },
+    {
+      "comment": "模型",
+      "label": "模型",
+      "name": "model",
+      "type": "text",
+    },
+    {
+      "comment": "横轴",
+      "label": "横轴",
+      "name": "xfield",
+      "type": "text",
+    },
+    {
+      "comment": "横轴",
+      "label": "横轴",
+      "name": "yfields",
+      "nullable": true,
+      "type": "json",
+    },
+    {
+      "comment": "配置",
+      "label": "配置",
+      "name": "config",
+      "nullable": true,
+      "type": "json",
+    },
+  ],
+  "name": "图表配置",
+  "option": {
+    "soft_deletes": true,
+    "timestamps": true,
+  },
+  "table": {
+    "name": "system_chart",
+  },
+}

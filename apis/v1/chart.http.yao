@@ -1,0 +1,29 @@
+{
+  "name": "chart config",
+  "version": "1.0.0",
+  "description": "Api for the chart config",
+  "group": "",
+  "guard": "bearer-jwt",
+  "paths": [
+    {
+      // /api/v1/chart/config
+      // need pass the chart config to processor
+      "label": "chart config",
+      "description": "chart config",
+      "path": "/config",
+      "method": "POST",
+      "process": "scripts.amis.chart.getChartUseConfig",
+      "in": [":payload"]
+    },
+    {
+      // /api/v1/chart/data/:id
+      // get chart config via chart config id
+      "label": "chart config",
+      "description": "chart config",
+      "path": "/data/:id",
+      "method": "get",
+      "process": "scripts.amis.chart.getChartById",
+      "in": ["$param.id"]
+    }
+  ]
+}
