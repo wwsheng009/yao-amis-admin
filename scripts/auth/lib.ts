@@ -1,7 +1,7 @@
 import {
   filterTreeDataById,
   collectTreeFields,
-  collectAndCombineData,
+  collectAndCombineData
 } from '@scripts/amis/data/tree';
 
 import { Process, Exception, Query } from '@yao/yao';
@@ -62,7 +62,7 @@ function getUserPermission(userId?: string) {
   }
   const permissionsTree = Process(`utils.arr.Tree`, permissions, {
     parent: 'parent',
-    empty: 0,
+    empty: 0
   });
 
   // 返回的结构是一个嵌套的树结构
@@ -110,14 +110,14 @@ export function getUserAuthApi() {
   api_auth.api_with_method = collectAndCombineData(
     permissions,
     'http_path',
-    'http_method',
+    'http_method'
   );
   // map objects = > {'GET':['API1','API2']}
   api_auth.method_with_api = collectAndCombineData(
     permissions,
     'http_method',
     'http_path',
-    'ANY',
+    'ANY'
   );
 
   api_auth.method_with_api = fillApiOpertion(api_auth.method_with_api);
@@ -155,18 +155,18 @@ export function getUserAuthModel() {
   model_auth.model_with_method = collectAndCombineData(
     permissions,
     'models',
-    'model_method',
+    'model_method'
   );
   // map objects = > {'READ':['fmod','folder1']}
   model_auth.method_with_model = collectAndCombineData(
     permissions,
     'model_method',
     'models',
-    'ANY',
+    'ANY'
   );
 
   model_auth.method_with_model = fillModelOpertion(
-    model_auth.method_with_model,
+    model_auth.method_with_model
   );
   return model_auth;
 }
@@ -217,18 +217,18 @@ export function getUserAuthFolder() {
   folder_auth.folder_with_method = collectAndCombineData(
     permissions,
     'folders',
-    'folder_method',
+    'folder_method'
   );
   // map objects = > {'READ':['folder','folder1']}
   folder_auth.method_with_folder = collectAndCombineData(
     permissions,
     'folder_method',
     'folders',
-    'ANY',
+    'ANY'
   );
 
   folder_auth.method_with_folder = fillFolderOpertion(
-    folder_auth.method_with_folder,
+    folder_auth.method_with_folder
   );
 
   return folder_auth;
@@ -259,14 +259,14 @@ export function getUserAuthObjects(userId) {
   model_auth.model_with_method = collectAndCombineData(
     permissions,
     'models',
-    'model_method',
+    'model_method'
   );
   // map objects = > {'READ':['MODEL1','MODEL2']}
   model_auth.method_with_model = collectAndCombineData(
     permissions,
     'model_method',
     'models',
-    'ANY',
+    'ANY'
   );
   fillModelOpertion(model_auth.method_with_model);
 
@@ -276,14 +276,14 @@ export function getUserAuthObjects(userId) {
   api_auth.api_with_method = collectAndCombineData(
     permissions,
     'http_path',
-    'http_method',
+    'http_method'
   );
   // map objects = > {'GET':['API1','API2']}
   api_auth.method_with_api = collectAndCombineData(
     permissions,
     'http_method',
     'http_path',
-    'ANY',
+    'ANY'
   );
   fillApiOpertion(api_auth.method_with_api);
 
@@ -293,14 +293,14 @@ export function getUserAuthObjects(userId) {
   folder_auth.folder_with_method = collectAndCombineData(
     permissions,
     'folders',
-    'folder_method',
+    'folder_method'
   );
   // map objects = > {'READ':['folder','folder1']}
   folder_auth.method_with_folder = collectAndCombineData(
     permissions,
     'folder_method',
     'folders',
-    'ANY',
+    'ANY'
   );
 
   fillFolderOpertion(folder_auth.method_with_folder);

@@ -1,5 +1,5 @@
-const { getEntryMetaDataXml, getMetaDataXml2, convertJsonToXml }
-  = Require('odata.lib.process');
+const { getEntryMetaDataXml, getMetaDataXml2, convertJsonToXml } =
+  Require('odata.lib.process');
 
 const { ConvertUrlToQsl } = Require('odata.lib.queryparam');
 const { decodePartsRequest } = Require('odata.lib.decodebatch');
@@ -13,7 +13,7 @@ function postData(
   schema,
   fullpath,
   payload,
-  parts,
+  parts
 ) {
   console.log('headers:', headers);
   console.log('>>>>>>>>>>>>>>>>>>>>called post');
@@ -112,7 +112,7 @@ function getData(sPathIn, oQueryIn, headers, host, path, schema, fullpath) {
       // 获取模型列表
       data: getEntryMetaDataXml(basePath),
       type: 'application/xml;charset=utf-8',
-      status: 200,
+      status: 200
     };
   }
   // 查询元数据的请求
@@ -132,7 +132,7 @@ function getData(sPathIn, oQueryIn, headers, host, path, schema, fullpath) {
     return {
       type: 'application/json;charset=utf-8',
       status: e.code,
-      data: { message: e.message },
+      data: { message: e.message }
     };
   }
 }
@@ -154,14 +154,14 @@ function getDataFromRequest(oRequest, basePath) {
         `models.${oQsl.model.model_id}.Paginate`,
         {},
         1,
-        1,
+        1
       )?.total;
     }
     // let data = q.Get(oQsl.qsl)[0]["total"];
     return {
       type: 'application/json;charset=utf-8',
       status: 200,
-      data: { total: total },
+      data: { total: total }
     };
   } else {
     if (!oQsl.qsl?.limit) {
@@ -179,7 +179,7 @@ function getDataFromRequest(oRequest, basePath) {
     if (oQsl.format == 'json') {
       let data = {
         '@odata.context': `${metaFullPath}#${oQsl.entitySet}`,
-        'value': data1,
+        value: data1
       };
       // 单条
       if (oQsl.id != '') {
@@ -194,7 +194,7 @@ function getDataFromRequest(oRequest, basePath) {
       return {
         type: 'application/json;charset=utf-8',
         status: 200,
-        data: data,
+        data: data
       };
     } else {
       const data = convertJsonToXml(data1, oQsl.entitySet, basePath);
@@ -202,7 +202,7 @@ function getDataFromRequest(oRequest, basePath) {
         // type: "application/atom+xml;type=feed;charset=utf-8",
         type: 'application/atom+xml;charset=utf-8',
         status: 200,
-        data: data,
+        data: data
       };
     }
   }

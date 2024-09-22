@@ -111,9 +111,9 @@ function getSoyRoutesFromDB() {
         icon: menu.icon,
         order: menu.rank,
         requiresAuth: menu.requires_auth,
-        source: menu.source, // 提供后续的导入支持
+        source: menu.source // 提供后续的导入支持
       },
-      children: [],
+      children: []
     };
     // 外链
     if (menu.url_type == 2) {
@@ -213,8 +213,8 @@ function getAmisLocalPageAsSoyRoutes() {
       subPath: 'amis',
       component: 'basic',
       children: routes,
-      meta: { order: 2001, requiresAuth: true, title: 'AMIS页面' },
-    },
+      meta: { order: 2001, requiresAuth: true, title: 'AMIS页面' }
+    }
   ];
   updateSoyRouteComponent(rootRoutes);
 
@@ -241,7 +241,7 @@ function getAmisPageSchema(pageId: string) {
   if (source.type === 'app') {
     return {
       type: 'tpl',
-      tpl: '不能显示类型为app的页面',
+      tpl: '不能显示类型为app的页面'
     };
   }
   return JSON.parse(str);
@@ -272,7 +272,7 @@ function getAmisEditorPageSource(pageId: string) {
   if (source.type === 'app') {
     return {
       type: 'tpl',
-      tpl: '不能显示类型为app的页面',
+      tpl: '不能显示类型为app的页面'
     };
   }
   return JSON.parse(str);
@@ -300,8 +300,8 @@ function getAmisEditorSoyRoute() {
       subPath: 'amis_editor',
       component: 'basic',
       children: [] as Route[],
-      meta: { order: 2001, requiresAuth: true, title: 'AMIS编辑器' },
-    },
+      meta: { order: 2001, requiresAuth: true, title: 'AMIS编辑器' }
+    }
   ] as Route[];
 
   if (fs.Exists(dir)) {
@@ -335,7 +335,7 @@ function convertListToSoyRoute(list: string[]): Route {
     component: 'basic',
     subPath: '', // 单一层级的节点
     children: [],
-    meta: { title: '', order: order, requiresAuth: true },
+    meta: { title: '', order: order, requiresAuth: true }
   };
 
   const getPath = (url: string) =>
@@ -356,7 +356,7 @@ function convertListToSoyRoute(list: string[]): Route {
     for (let i = 0; i < subPathArr.length; i++) {
       const subPath = subPathArr[i];
       const existingObj = tempObj.children.find(
-        (child) => child.subPath === subPath,
+        (child) => child.subPath === subPath
       );
       if (existingObj) {
         tempObj = existingObj;
@@ -367,7 +367,7 @@ function convertListToSoyRoute(list: string[]): Route {
           // fullpath: `${tempObj.fullpath}/${subPath}`,
           path: tempObj.subPath ? `${tempObj.subPath}.${subPath}` : subPath,
           children: [],
-          meta: { requiresAuth: true, title: subPath },
+          meta: { requiresAuth: true, title: subPath }
         } as Route;
         tempObj.children.push(newChild);
         tempObj = newChild;
@@ -414,7 +414,7 @@ function removeEmptyChildren(node: Route) {
 function updateSoyRoutePath(
   api: string,
   route: Route | Route[],
-  parent: Route | undefined,
+  parent: Route | undefined
 ) {
   if (Array.isArray(route)) {
     route.forEach((n) => updateSoyRoutePath(api, n, parent));
@@ -454,7 +454,7 @@ function updateSoyRoutePath(
 function saveTreeMenusToDB(
   menus: Route[],
   source: 'amis' | 'soy' | undefined = 'amis',
-  deleteFlag: boolean,
+  deleteFlag: boolean
 ) {
   function traverse(route: Route | Route[], parentId: number) {
     if (Array.isArray(route)) {
@@ -466,9 +466,9 @@ function saveTreeMenusToDB(
         wheres: [
           {
             column: 'name',
-            value: route.name,
-          },
-        ],
+            value: route.name
+          }
+        ]
       });
     }
 
@@ -477,7 +477,7 @@ function saveTreeMenusToDB(
     let menu: admin_menu = {
       name: route.name,
       title: '',
-      source: route.meta.source || source,
+      source: route.meta.source || source
     };
 
     // 根据路由的名称进行判断，如果已经存在，进行更新
@@ -486,9 +486,9 @@ function saveTreeMenusToDB(
         wheres: [
           {
             column: 'name',
-            value: route.name,
-          },
-        ],
+            value: route.name
+          }
+        ]
       });
       if (menudb != null) {
         menu = menudb;
@@ -506,8 +506,8 @@ function saveTreeMenusToDB(
     menu.icon = menu.icon || route.meta?.icon;
     menu.visible = menu.visible || !route.meta?.hide;
     menu.rank = menu.rank || route.meta?.order;
-    menu.requires_auth
-      = menu.requires_auth != null ? menu.requires_auth : route.meta.requiresAuth;
+    menu.requires_auth =
+      menu.requires_auth != null ? menu.requires_auth : route.meta.requiresAuth;
 
     menu.parent = parentId; // reset parent
 
@@ -529,7 +529,7 @@ function saveTreeMenusToDB(
  */
 function getAmisRoutesFromDB(): AmisAppPage[] {
   const menus: admin_menu[] = Process('models.admin.menu.get', {
-    wheres: [{ column: 'source', value: 'amis' }],
+    wheres: [{ column: 'source', value: 'amis' }]
   });
 
   const menus2: AmisAppPage[] = menus.map((menu: admin_menu) => {
@@ -544,7 +544,7 @@ function getAmisRoutesFromDB(): AmisAppPage[] {
       rewrite: menu.rewrite,
       visible: menu.visible,
       link: menu.url_type === 2 ? menu.url : undefined,
-      children: [],
+      children: []
     };
     route.url = route.url?.replace(/\/\//g, '/');
     route.schemaApi = route.schemaApi?.replace(/\/\//g, '/');
@@ -595,7 +595,7 @@ function convertSoyRoutesToAmisPages(routes: Route[]): AmisAppPage[] {
       // rewrite: menu.rewrite,
       visible: !r.meta.hide ? undefined : false,
       // link: menu.url_type === 2 ? menu.url : undefined,
-      children: [] as AmisAppPage[],
+      children: [] as AmisAppPage[]
     };
     route.url = route.url?.replace(/\/\//g, '/');
     route.schemaApi = route.schemaApi?.replace(/\/\//g, '/');
@@ -636,8 +636,8 @@ interface SpinnerExtraProps {
 type SchemaClassName =
   | string
   | {
-    [propName: string]: boolean | undefined | null | string;
-  };
+      [propName: string]: boolean | undefined | null | string;
+    };
 // amis 多页的菜单配置
 interface AmisAppPage extends SpinnerExtraProps {
   id?: number;

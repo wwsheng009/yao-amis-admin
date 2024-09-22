@@ -97,7 +97,7 @@ function newCategory(params) {
   const id = Process('models.blog.category.save', {
     name: category.name,
     description: category.description,
-    parent: category.parent_id,
+    parent: category.parent_id
   });
 
   return getRpcResponse(id);
@@ -113,26 +113,26 @@ function getUsersBlogs(user_id, blog, params) {
     wheres: [
       {
         column: 'user_id',
-        value: user_id,
+        value: user_id
       },
       {
         column: 'name',
-        value: blog,
-      },
-    ],
+        value: blog
+      }
+    ]
   });
   if (list.length == 0) {
     list.push({
       id: 1,
       url: 'http://localhost',
-      name: 'myblog',
+      name: 'myblog'
     });
   }
   const bloglist = list.map((l) => {
     return {
       blogid: l.id,
       url: l.url,
-      blogName: l.name,
+      blogName: l.name
     };
   });
   return getRpcResponse(bloglist);
@@ -155,13 +155,13 @@ function getPost(user_id, params) {
       wheres: [
         {
           column: 'id',
-          value: postId,
+          value: postId
         },
         {
           column: 'user_id',
-          value: user_Id,
-        },
-      ],
+          value: user_Id
+        }
+      ]
     });
     const post = {
       dateCreated: b.created_at,
@@ -180,7 +180,7 @@ function getPost(user_id, params) {
       mt_text_more: '',
       mt_excerpt: '',
       mt_keywords: b.keywords,
-      wp_slug: b.wp_slug,
+      wp_slug: b.wp_slug
     };
     return getRpcResponse(post);
   } catch (error) {
@@ -196,13 +196,11 @@ function getPost(user_id, params) {
  * @returns
  */
 function getRecentPosts(user_id, params) {
-  const numberOfPosts = params[3] ? parseInt(params[3]) : 100;// numberOfPosts
+  const numberOfPosts = params[3] ? parseInt(params[3]) : 100; // numberOfPosts
   const blogs = Process('models.blog.post.get', {
-    wheres: [
-      { column: 'user_id', value: user_id },
-    ],
+    wheres: [{ column: 'user_id', value: user_id }],
     orders: [{ column: 'created_at', option: 'desc' }],
-    limit: numberOfPosts,
+    limit: numberOfPosts
   });
 
   const blogs2 = blogs.map((b) => {
@@ -224,7 +222,7 @@ function getRecentPosts(user_id, params) {
       mt_excerpt: '',
       mt_keywords: b.keywords,
       wp_slug: b.wp_slug,
-      type: b.type,
+      type: b.type
     };
   });
   return getRpcResponse(blogs2);
@@ -238,7 +236,13 @@ function getRecentPosts(user_id, params) {
  */
 function getCategories() {
   const categories = Process('models.blog.category.get', {});
-  const categories2 = categories.map((c) => { return { description: c.description || c.name, categoryid: c.id, title: c.name }; });
+  const categories2 = categories.map((c) => {
+    return {
+      description: c.description || c.name,
+      categoryid: c.id,
+      title: c.name
+    };
+  });
   return getRpcResponse(categories2);
 }
 function deletePost(user_id, params) {
@@ -252,13 +256,13 @@ function deletePost(user_id, params) {
     wheres: [
       {
         column: 'id',
-        value: postId,
+        value: postId
       },
       {
         column: 'user_id',
-        value: user_id,
-      },
-    ],
+        value: user_id
+      }
+    ]
   });
   if (count === 0) {
     return getErrorMessage(`ID:${postId}不存在`);
@@ -276,13 +280,14 @@ function editPost(user_id, params) {
     wheres: [
       {
         column: 'id',
-        value: postId,
+        value: postId
       },
       {
         column: 'user_id',
-        value: user_id,
-      },
-    ], limit: 1,
+        value: user_id
+      }
+    ],
+    limit: 1
   });
 
   if (!postRow) {
@@ -302,7 +307,7 @@ function editPost(user_id, params) {
     source: post.source,
     type: post.type ? post.type : 'html',
     categories: post.category || [],
-    user_id: user_id,
+    user_id: user_id
   };
   postId = Process('models.blog.post.save', newArticle);
   return getRpcResponse(postId + '');
@@ -320,7 +325,7 @@ function newPost(user_id, params) {
     post_type: post.post_type,
     created_at: formatDate(post.dateCreated),
     user_id: user_id,
-    type: post.type ? post.type : 'html',
+    type: post.type ? post.type : 'html'
   };
   const postId = Process('models.blog.post.save', newArticle);
   // console.log("newPost postId:", postId)
@@ -332,7 +337,7 @@ function getNormorFileName(fname) {
   let filename = fname;
   const info = {
     fname: '',
-    ext: '',
+    ext: ''
   };
   if (!fname) {
     info.fname = Process('utils.str.UUID').replaceAll('-', '');
@@ -414,7 +419,7 @@ function getErrorMessage(message, code = 500) {
                         </struct>
                     </value>
                 </fault>
-            </methodResponse>`,
+            </methodResponse>`
   };
 }
 
@@ -432,7 +437,8 @@ const convertData = (obj) => {
     const key = keys[0];
     if (key === '_text') {
       return obj[key];
-    } if (key === 'value') {
+    }
+    if (key === 'value') {
       return convertData(obj[key]);
     }
     const type = key;
@@ -455,7 +461,7 @@ const convertData = (obj) => {
       const result = {};
       for (const member of members) {
         result[member.name._text] = convertData(
-          member.value ? member.value : member,
+          member.value ? member.value : member
         );
       }
       return result;
@@ -513,7 +519,12 @@ function isDateTimeOrDate(value) {
     return false;
   }
   // Check if the date has valid time components
-  if (date.getHours() !== 0 || date.getMinutes() !== 0 || date.getSeconds() !== 0 || date.getMilliseconds() !== 0) {
+  if (
+    date.getHours() !== 0 ||
+    date.getMinutes() !== 0 ||
+    date.getSeconds() !== 0 ||
+    date.getMilliseconds() !== 0
+  ) {
     return true; // Assuming a datetime
   }
   return true; // Assuming a date
@@ -566,6 +577,6 @@ function getRpcResponse(data) {
   const xml = `<?xml version="1.0" encoding="utf-8"?><methodResponse><params><param>${convertJs2xml(data)}</param></params></methodResponse>`;
   // console.log("response:", xml)
   return {
-    content: xml,
+    content: xml
   };
 }

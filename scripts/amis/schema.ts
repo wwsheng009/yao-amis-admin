@@ -2,7 +2,7 @@ import {
   getFormFields,
   getModelFieldsForAmis,
   getFormViewFields,
-  getModelFieldsWithQuick,
+  getModelFieldsWithQuick
 } from '@scripts/amis/lib';
 
 // yao run scripts.amis.schema.generateEditFormFields admin.user
@@ -25,15 +25,15 @@ function generateEditFormFields(modelId, columns) {
             actions: [
               {
                 actionType: 'submit',
-                componentName: 'yao-form',
-              },
-            ],
-          },
+                componentName: 'yao-form'
+              }
+            ]
+          }
         },
-        level: 'primary',
-      },
+        level: 'primary'
+      }
     ],
-    resetAfterSubmit: true,
+    resetAfterSubmit: true
   };
   return schema;
 }
@@ -43,7 +43,7 @@ function getTableViewBodySchema(modelId, tableName) {
   return {
     columns: fields,
     source: '${' + tableName + '}',
-    type: 'table',
+    type: 'table'
   };
 }
 
@@ -73,15 +73,15 @@ function formViewFieldsSchema(modelId, columns) {
             actions: [
               {
                 actionType: 'submit',
-                componentName: 'yao-form',
-              },
-            ],
-          },
+                componentName: 'yao-form'
+              }
+            ]
+          }
         },
-        level: 'primary',
-      },
+        level: 'primary'
+      }
     ],
-    resetAfterSubmit: true,
+    resetAfterSubmit: true
   };
   return schema;
 }
@@ -96,12 +96,12 @@ function generateViewFields(modelId, columns) {
     body: [
       {
         columns: fields,
-        type: 'table',
-      },
+        type: 'table'
+      }
     ],
     regions: ['body'],
     title: 'button',
-    toolbar: [],
+    toolbar: []
   };
   return schema;
 }
@@ -127,19 +127,19 @@ function generateViewFieldsWithQuick(modelId, columns) {
               body: {
                 type: 'form',
                 api: {
-                  method: 'post',
+                  method: 'post'
                 },
-                body: fieldsForm,
-              },
-            },
+                body: fieldsForm
+              }
+            }
           },
-          'bulkActions',
-        ],
-      },
+          'bulkActions'
+        ]
+      }
     ],
     regions: ['body'],
     title: 'button',
-    toolbar: [],
+    toolbar: []
   };
   return schema;
 }
@@ -160,8 +160,8 @@ function curdListPage(table, columns) {
         actionType: 'link',
         link: `/crud/${table}/new`,
         label: '新增',
-        primary: true,
-      },
+        primary: true
+      }
     ],
     body: [
       {
@@ -171,9 +171,9 @@ function curdListPage(table, columns) {
         api: {
           method: 'get',
           url:
-            '/api/v1/system/model/'
-            + table
-            + '/search?page=${page}&perPage=${perPage}&keywords=${keywords}',
+            '/api/v1/system/model/' +
+            table +
+            '/search?page=${page}&perPage=${perPage}&keywords=${keywords}'
         },
         filter: {
           title: '',
@@ -188,12 +188,12 @@ function curdListPage(table, columns) {
               addOn: {
                 label: '搜索',
                 type: 'submit',
-                className: 'btn-success',
+                className: 'btn-success'
               },
-              clearable: true,
-            },
+              clearable: true
+            }
           ],
-          className: 'm-b-sm',
+          className: 'm-b-sm'
         },
         bulkActions: [
           {
@@ -211,11 +211,11 @@ function curdListPage(table, columns) {
                   {
                     type: 'text',
                     name: 'engine',
-                    label: 'Engine',
-                  },
-                ],
-              },
-            },
+                    label: 'Engine'
+                  }
+                ]
+              }
+            }
           },
           {
             label: '批量删除',
@@ -223,8 +223,8 @@ function curdListPage(table, columns) {
             level: 'danger',
             actionType: 'ajax',
             api: 'delete:/api/v1/system/model/' + table + '/delete/$ids',
-            confirmText: '确定要批量删除?',
-          },
+            confirmText: '确定要批量删除?'
+          }
         ],
         columns: [
           ...fields,
@@ -242,7 +242,7 @@ function curdListPage(table, columns) {
                     // label: "查看",
                     // level: "primary",
                     actionType: 'link',
-                    link: `/crud/${table}` + '/view/${id}',
+                    link: `/crud/${table}` + '/view/${id}'
                   },
                   {
                     type: 'button',
@@ -250,7 +250,7 @@ function curdListPage(table, columns) {
                     // label: "修改",
                     // level: "info",
                     actionType: 'link',
-                    link: `/crud/${table}` + '/edit/${id}',
+                    link: `/crud/${table}` + '/edit/${id}'
                   },
                   {
                     type: 'button',
@@ -259,14 +259,14 @@ function curdListPage(table, columns) {
                     // level: "danger",
                     actionType: 'ajax',
                     confirmText: '您确认要删除?',
-                    api: 'post:/api/v1/system/model/' + table + '/delete/$id',
-                  },
-                ],
-              },
+                    api: 'post:/api/v1/system/model/' + table + '/delete/$id'
+                  }
+                ]
+              }
             ],
             placeholder: '-',
-            fixed: 'right',
-          },
+            fixed: 'right'
+          }
         ],
         affixHeader: true,
         columnsTogglable: 'auto',
@@ -276,9 +276,9 @@ function curdListPage(table, columns) {
         footerClassName: 'crud-table-footer',
         toolbarClassName: 'crud-table-toolbar',
         combineNum: 0,
-        bodyClassName: 'panel-default',
-      },
-    ],
+        bodyClassName: 'panel-default'
+      }
+    ]
   };
   return schema;
   // return Process("scripts.return.RSuccess", schema, "数据已成功导入");
@@ -296,8 +296,8 @@ function curdNewPage(table, columns) {
         type: 'button',
         actionType: 'link',
         link: `/crud/${table}/list`,
-        label: '返回列表',
-      },
+        label: '返回列表'
+      }
     ],
     body: [
       {
@@ -307,9 +307,9 @@ function curdNewPage(table, columns) {
         mode: 'horizontal',
         name: 'sample-edit-form',
         api: '/api/v1/system/model/' + table + '/create',
-        controls: [...fields],
-      },
-    ],
+        controls: [...fields]
+      }
+    ]
   };
   return schema;
   // return Process("scripts.return.RSuccess", schema, "数据已成功导入");
@@ -329,17 +329,17 @@ function curdViewPage(table) {
         type: 'button',
         actionType: 'link',
         link: `/crud/${table}/list`,
-        label: '返回列表',
-      },
+        label: '返回列表'
+      }
     ],
     body: [
       {
         type: 'form',
         mode: 'horizontal',
         initApi: '/api/v1/system/model/' + table + '/find/${params.id}',
-        controls: [...fields],
-      },
-    ],
+        controls: [...fields]
+      }
+    ]
   };
   return schema;
   // return Process("scripts.return.RSuccess", schema, "数据已成功导入");
@@ -356,8 +356,8 @@ function curdEditPage(table, columns) {
         type: 'button',
         actionType: 'link',
         link: `/crud/${table}/list`,
-        label: '返回列表',
-      },
+        label: '返回列表'
+      }
     ],
     body: [
       {
@@ -366,9 +366,9 @@ function curdEditPage(table, columns) {
         initApi: '/api/v1/system/model/' + table + '/find/${params.id}',
         api: '/api/v1/system/model/' + table + '/update/$id',
         redirect: `/crud/${table}/list`,
-        controls: [...fields],
-      },
-    ],
+        controls: [...fields]
+      }
+    ]
   };
   return schema;
   // return Process("scripts.return.RSuccess", schema, "数据已成功导入");

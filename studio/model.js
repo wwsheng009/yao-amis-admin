@@ -6,8 +6,8 @@ const { SlashName, FileNameConvert } = Require('system.lib');
 function GenerateModelFile(modelid) {
   const model = Process('models.ddic.model.Find', modelid, {
     withs: {
-      columns: { withs: { element: {} } },
-    },
+      columns: { withs: { element: {} } }
+    }
   });
 
   const m = Process('scripts.system.model.ConvertTableLineToModel', model);

@@ -1,4 +1,10 @@
-import { GetNodeItems, GetNodes, UpdateNode, DeleteNode, CreateNode } from '@scripts/amis/data/tree';
+import {
+  GetNodeItems,
+  GetNodes,
+  UpdateNode,
+  DeleteNode,
+  CreateNode
+} from '@scripts/amis/data/tree';
 
 // 部门处理
 // 复杂嵌套结构处理

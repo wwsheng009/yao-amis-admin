@@ -4,7 +4,7 @@ import {
   getFormViewFields,
   getModelFieldsWithQuick,
   excelMapping,
-  getWithsUrl,
+  getWithsUrl
 } from '@scripts/amis/lib';
 
 // 直接生成一个数据库表对应的amis crud单一页面的配置源码
@@ -24,11 +24,11 @@ function curdTemplate(modelId, columns) {
   const batchNewForm = [
     {
       type: 'tpl',
-      tpl: tplHtml,
+      tpl: tplHtml
     },
     {
       name: 'excel',
-      type: 'input-excel',
+      type: 'input-excel'
     },
     {
       columns: cols,
@@ -38,8 +38,8 @@ function curdTemplate(modelId, columns) {
       removable: true,
       showIndex: true,
       type: 'input-table',
-      addable: true,
-    },
+      addable: true
+    }
   ];
 
   const updateFormSchema = getFormFields(modelId, 'update', columns);
@@ -57,24 +57,24 @@ function curdTemplate(modelId, columns) {
               label: '清空',
               level: 'default',
               type: 'button',
-              actionType: 'clear-and-submit',
+              actionType: 'clear-and-submit'
             },
             {
               label: '重置',
               level: 'default',
               type: 'button',
-              actionType: 'reset-and-submit',
+              actionType: 'reset-and-submit'
             },
             {
               label: '搜索',
               level: 'primary',
               type: 'button',
-              actionType: 'submit',
-            },
+              actionType: 'submit'
+            }
           ],
           body: filterForm,
           mode: 'inline',
-          name: 'filter',
+          name: 'filter'
         },
         filterDefaultVisible: false,
         keepItemSelectionOnPageChange: true,
@@ -86,8 +86,8 @@ function curdTemplate(modelId, columns) {
             `/api/v1/system/model/${modelId}` +
             `/search${withUrl ? '?' + withUrl : ''}`,
           data: {
-            '&': '$$',
-          },
+            '&': '$$'
+          }
         },
         autoFillHeight: true,
         columns: [
@@ -107,9 +107,9 @@ function curdTemplate(modelId, columns) {
                   size: 'lg',
                   body: {
                     type: 'form',
-                    body: viewFormSchema,
-                  },
-                },
+                    body: viewFormSchema
+                  }
+                }
               },
               {
                 icon: 'fa fa-pencil',
@@ -126,9 +126,9 @@ function curdTemplate(modelId, columns) {
                     name: 'update',
                     silentPolling: false,
                     trimValues: true,
-                    type: 'form',
-                  },
-                },
+                    type: 'form'
+                  }
+                }
               },
               {
                 api: `delete:/api/v1/system/model/${modelId}/delete/$id`,
@@ -136,23 +136,23 @@ function curdTemplate(modelId, columns) {
                 icon: 'fa fa-times text-danger',
                 tooltip: '删除',
                 type: 'button',
-                actionType: 'ajax',
-              },
-            ],
-          },
+                actionType: 'ajax'
+              }
+            ]
+          }
         ],
         filterTogglable: true,
         headerToolbar: [
           {
             // align: "right",
-            type: 'columns-toggler',
+            type: 'columns-toggler'
           },
           'filter-toggler',
           'reload',
           'bulkActions',
           {
             align: 'right',
-            type: 'drag-toggler',
+            type: 'drag-toggler'
           },
           // {
           //   align: "right",
@@ -174,15 +174,15 @@ function curdTemplate(modelId, columns) {
                 body: newForm,
                 name: 'create',
                 silentPolling: false,
-                type: 'form',
+                type: 'form'
               },
               size: 'lg',
               title: '新增',
-              type: 'dialog',
+              type: 'dialog'
             },
             icon: 'fa fa-plus pull-left',
             label: '新增',
-            level: 'primary',
+            level: 'primary'
           },
           {
             type: 'button',
@@ -200,19 +200,19 @@ function curdTemplate(modelId, columns) {
                   data: {
                     batch: {
                       '&': {
-                        $excel: excelMapping(modelId, columns),
-                      },
-                    },
+                        $excel: excelMapping(modelId, columns)
+                      }
+                    }
                   },
                   method: 'post',
-                  url: `/api/v1/system/model/${modelId}/batch_create`,
-                },
-              },
+                  url: `/api/v1/system/model/${modelId}/batch_create`
+                }
+              }
             },
             icon: 'fa fa-plus pull-left',
             label: '批量新增',
-            level: 'primary',
-          },
+            level: 'primary'
+          }
         ],
         type: 'crud',
         itemActions: [],
@@ -223,8 +223,8 @@ function curdTemplate(modelId, columns) {
               `delete:/api/v1/system/model/${modelId}` + '/delete/${ids|raw}',
             confirmText: '你确定要批量删除选中行吗?',
             label: '批量删除',
-            type: 'button',
-          },
+            type: 'button'
+          }
         ],
         footerToolbar: [
           'statistics',
@@ -232,14 +232,14 @@ function curdTemplate(modelId, columns) {
           'pagination',
           'load-more',
           'export-csv',
-          'export-excel',
+          'export-excel'
         ],
         quickSaveItemApi:
           `post:/api/v1/system/model/${modelId}` + '/update/${id}',
-        syncLocation: false,
-      },
+        syncLocation: false
+      }
     ],
-    type: 'page',
+    type: 'page'
   };
   return template;
 }

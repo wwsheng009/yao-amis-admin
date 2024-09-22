@@ -1,4 +1,10 @@
-import { GetNodeItems, GetNodes, UpdateNode, DeleteNode, CreateNode } from '@scripts/amis/data/tree';
+import {
+  GetNodeItems,
+  GetNodes,
+  UpdateNode,
+  DeleteNode,
+  CreateNode
+} from '@scripts/amis/data/tree';
 
 /**
  * yao run scripts.system.tree.GetTreeNodes admin.menu

@@ -6,13 +6,13 @@ function getPost(post_id) {
     wheres: [
       {
         column: 'id',
-        value: post_id,
+        value: post_id
       },
       {
         column: 'status',
-        value: true,
-      },
-    ],
+        value: true
+      }
+    ]
   });
   if (b != null) {
     if (b.img == null) {
@@ -31,9 +31,9 @@ function getPostList() {
     wheres: [
       {
         column: 'status',
-        value: true,
-      },
-    ],
+        value: true
+      }
+    ]
   });
   list.forEach((item) => {
     if (!item.img) {

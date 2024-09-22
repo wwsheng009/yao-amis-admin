@@ -191,7 +191,7 @@ class XmlWriter {
       type: 'application/xml;charset=utf-8',
       status: status,
       data: `<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-${xml}`,
+${xml}`
     };
   }
 }

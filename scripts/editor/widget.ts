@@ -23,7 +23,7 @@ function getPage(file) {
     // https://wwsheng009.github.io/yao-docs/YaoDSL/Query/QueryParam%E8%AF%AD%E6%B3%95.html
     // 在models处理器传参数时需要使用queryParam语法
     wheres: [{ column: 'file', value: file }],
-    limit: 1,
+    limit: 1
   });
   return amisdsl.source || {};
 }

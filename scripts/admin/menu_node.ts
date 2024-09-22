@@ -1,4 +1,10 @@
-import { GetNodeItems, GetNodes, UpdateNode, DeleteNode, CreateNode } from '@scripts/amis/data/tree';
+import {
+  GetNodeItems,
+  GetNodes,
+  UpdateNode,
+  DeleteNode,
+  CreateNode
+} from '@scripts/amis/data/tree';
 
 import { Process } from '@yao/yao';
 // 菜单处理
@@ -58,12 +64,12 @@ function xgenMenu() {
       icon: 'icon-activity',
       id: idx + 1000,
       name: label,
-      parent: 1000,
+      parent: 1000
     };
   });
   const nodes = [];
   if (menuTab.length) {
-    const first = tabs[0];// use tabs,not the menutab
+    const first = tabs[0]; // use tabs,not the menutab
     const node = {
       parent: null,
       visible_menu: 0,
@@ -72,7 +78,7 @@ function xgenMenu() {
       icon: 'icon-activity',
       id: 1000,
       name: '表数据',
-      children: menuTab,
+      children: menuTab
     };
     nodes.push(node);
   }
@@ -86,7 +92,7 @@ function xgenMenu() {
         blocks: 0,
         icon: 'icon-activity',
         id: 1,
-        name: 'AMIS管理',
+        name: 'AMIS管理'
       },
       {
         parent: null,
@@ -95,9 +101,9 @@ function xgenMenu() {
         blocks: 0,
         icon: 'icon-activity',
         id: 1,
-        name: 'builder',
+        name: 'builder'
       },
-      ...nodes,
+      ...nodes
     ],
     setting: [
       {
@@ -106,14 +112,14 @@ function xgenMenu() {
           {
             id: 10002,
             name: '系统设置',
-            path: '/setting',
-          },
+            path: '/setting'
+          }
         ],
         icon: 'icon-settings',
         id: 999999,
-        name: '设置',
-      },
-    ],
+        name: '设置'
+      }
+    ]
   };
   return menu;
 }

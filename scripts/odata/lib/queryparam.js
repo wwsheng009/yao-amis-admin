@@ -15,7 +15,7 @@ const stringHelper = {
       return str.substr(0, str.length - key.length);
     }
     return str;
-  },
+  }
 };
 
 const validator = {
@@ -28,8 +28,8 @@ const validator = {
     } else if (!Number.isNaN(+value)) {
       val = +value;
     } else if (
-      stringHelper.isBeginWith(value, '\'')
-      && stringHelper.isEndWith(value, '\'')
+      stringHelper.isBeginWith(value, "'") &&
+      stringHelper.isEndWith(value, "'")
     ) {
       val = value.slice(1, -1);
     } else if (value === 'null') {
@@ -38,7 +38,7 @@ const validator = {
       return { err: new Error(`Syntax error at '${value}'.`) };
     }
     return { val };
-  },
+  }
 };
 
 /**
@@ -158,7 +158,7 @@ function ConvertUrlToQsl(oUrl) {
         // sql: {
         //   stmt: `select count(*) as total from ${viewName}`,
         // },
-      },
+      }
     };
   }
 
@@ -202,11 +202,11 @@ function ConvertUrlToQsl(oUrl) {
         if (data.length > 1) {
           return {
             column: data[0],
-            option: data[1],
+            option: data[1]
           };
         } else if (data.length > 0) {
           return {
-            column: data[0],
+            column: data[0]
           };
         }
       });
@@ -270,24 +270,24 @@ function ConvertUrlToQsl(oUrl) {
               case 'eq':
                 wheres.push({
                   column: key,
-                  op: 'null',
+                  op: 'null'
                 });
 
-                // wheres.push({
-                //   field: key,
-                //   op: "is",
-                //   value: "null",
-                // });
+              // wheres.push({
+              //   field: key,
+              //   op: "is",
+              //   value: "null",
+              // });
               case 'ne':
                 wheres.push({
                   column: key,
-                  op: 'notnull',
+                  op: 'notnull'
                 });
-                // wheres.push({
-                //   field: key,
-                //   op: "is",
-                //   value: "not null",
-                // });
+              // wheres.push({
+              //   field: key,
+              //   op: "is",
+              //   value: "not null",
+              // });
               default:
                 break;
             }
@@ -298,7 +298,7 @@ function ConvertUrlToQsl(oUrl) {
               wheres.push({
                 column: key,
                 op: 'eq',
-                value: val,
+                value: val
               });
               // wheres.push({
               //   field: key,
@@ -310,7 +310,7 @@ function ConvertUrlToQsl(oUrl) {
               wheres.push({
                 column: key,
                 op: 'ne',
-                value: val,
+                value: val
               });
               // wheres.push({
               //   field: key,
@@ -322,7 +322,7 @@ function ConvertUrlToQsl(oUrl) {
               wheres.push({
                 column: key,
                 op: 'gt',
-                value: val,
+                value: val
               });
               // wheres.push({
               //   field: key,
@@ -334,7 +334,7 @@ function ConvertUrlToQsl(oUrl) {
               wheres.push({
                 column: key,
                 op: 'ge',
-                value: val,
+                value: val
               });
               // wheres.push({
               //   field: key,
@@ -346,7 +346,7 @@ function ConvertUrlToQsl(oUrl) {
               wheres.push({
                 column: key,
                 op: 'lt',
-                value: val,
+                value: val
               });
               // wheres.push({
               //   field: key,
@@ -358,7 +358,7 @@ function ConvertUrlToQsl(oUrl) {
               wheres.push({
                 column: key,
                 op: 'le',
-                value: val,
+                value: val
               });
               // wheres.push({
               //   field: key,
@@ -379,8 +379,8 @@ function ConvertUrlToQsl(oUrl) {
     queryDsl['wheres'] = [
       {
         field: 'id',
-        value: id,
-      },
+        value: id
+      }
     ];
   }
 
@@ -393,7 +393,7 @@ function ConvertUrlToQsl(oUrl) {
     format,
     entitySet,
     id,
-    model: modelDsl,
+    model: modelDsl
   };
 }
 

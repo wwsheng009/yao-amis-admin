@@ -7,7 +7,7 @@ function RSuccess(data, message) {
   return {
     status: 0,
     msg: vmessage,
-    data: data,
+    data: data
   };
 }
 // 显示成功消息
@@ -20,7 +20,7 @@ function SuccessMessage(message) {
   return {
     status: 0,
     msg: vmessage,
-    data: {},
+    data: {}
   };
 }
 // scripts.return.RError "密码不正确","403","密码不正确"
@@ -36,7 +36,7 @@ function RError(data, code, message) {
   return {
     status: vcode,
     msg: vmessage,
-    data: data,
+    data: data
   };
 }
 
@@ -53,6 +53,6 @@ function ErrorMessage(code, message) {
   return {
     status: vcode,
     msg: vmessage,
-    data: {},
+    data: {}
   };
 }

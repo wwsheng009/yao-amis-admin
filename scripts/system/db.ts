@@ -19,14 +19,14 @@ export function RunTransaction(
   if (ismysql) {
     t.Run({
       sql: {
-        stmt: 'START TRANSACTION;',
-      },
+        stmt: 'START TRANSACTION;'
+      }
     });
   } else if (ispg) {
     t.Run({
       sql: {
-        stmt: 'BEGIN;',
-      },
+        stmt: 'BEGIN;'
+      }
     });
   }
   try {
@@ -36,8 +36,8 @@ export function RunTransaction(
     if (ismysql || ispg) {
       t.Run({
         sql: {
-          stmt: 'COMMIT;',
-        },
+          stmt: 'COMMIT;'
+        }
       });
     }
     return ret;
@@ -45,8 +45,8 @@ export function RunTransaction(
     if (ismysql || ispg) {
       t.Run({
         sql: {
-          stmt: 'ROLLBACK;',
-        },
+          stmt: 'ROLLBACK;'
+        }
       });
     }
     throw error;
@@ -64,7 +64,7 @@ function cleanTable(tableName) {
   const query = new Query('default');
   // use statement
   const data = query.Run({
-    sql: { stmt: `delete from ${tableName}` },
+    sql: { stmt: `delete from ${tableName}` }
   });
   return data;
 }

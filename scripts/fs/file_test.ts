@@ -21,7 +21,7 @@ function Download_abandan(name) {
   const mimeType = Process('fs.system.MimeType', filePath);
   return {
     content: buf,
-    type: mimeType,
+    type: mimeType
   };
 }
 
@@ -30,7 +30,7 @@ function convertToNestedArray(folderList) {
   const root = {
     label: '',
     value: '',
-    children: [],
+    children: []
   };
 
   // Iterate through each folder path
@@ -51,7 +51,7 @@ function convertToNestedArray(folderList) {
         foundNode = {
           label: part,
           value: currentNode.value ? `${currentNode.value}.${part}` : part,
-          children: [],
+          children: []
         };
         currentNode.children.push(foundNode);
       }
@@ -71,7 +71,7 @@ const folderList = [
   '/pages/api/crud',
   '/pages/api/demo',
   '/pages/model',
-  '/pages/studio',
+  '/pages/studio'
 ];
 
 function removeEmptyChildren(node) {

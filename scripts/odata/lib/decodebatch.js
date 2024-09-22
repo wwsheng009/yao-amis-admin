@@ -263,7 +263,9 @@ function decodePartsRequest(headers, parts) {
       if (sHeaderName.toLowerCase() === 'content-type') {
         sCharset = getHeaderParameterValue(sHeaderValue, 'charset');
         if (sCharset && sCharset.toLowerCase() !== 'utf-8') {
-          throw new Exception('Unsupported "Content-Type" charset: ' + sCharset);
+          throw new Exception(
+            'Unsupported "Content-Type" charset: ' + sCharset
+          );
         }
       }
     }
@@ -272,8 +274,8 @@ function decodePartsRequest(headers, parts) {
         const sType = oRequest.headers[key];
         if (key.toLowerCase() === 'content-type') {
           if (
-            sType.includes('application/json')
-            && oRequest.requstText.trim() !== ''
+            sType.includes('application/json') &&
+            oRequest.requstText.trim() !== ''
           ) {
             oRequest.body = JSON.parse(oRequest.requstText);
           }

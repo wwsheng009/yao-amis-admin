@@ -6,7 +6,7 @@ import {
   updateInputData,
   updateOutputData,
   getArrayItem,
-  mergeQueryObject,
+  mergeQueryObject
 } from '@scripts/amis/data/lib';
 
 import { RunTransaction } from '@scripts/system/db';
@@ -31,7 +31,7 @@ function dataSearch(
   perPageIn,
   querysIn,
   queryParams,
-  payload,
+  payload
 ) {
   const querys = mergeQueryObject(querysIn, payload);
 
@@ -86,7 +86,7 @@ function dataSearch(
           query.wheres = query.wheres || [];
           query.wheres.push({
             column: element.key,
-            value: line[element.foreign],
+            value: line[element.foreign]
           });
           if (element.type === 'hasMany') {
             line[key] = Process(`models.${element.model}.Get`, query);
@@ -104,7 +104,7 @@ function dataSearch(
 
   return {
     items: data.data,
-    total: data.total,
+    total: data.total
   };
 }
 function generateUUID() {
@@ -134,7 +134,7 @@ function makeFake(modelId) {
       case 'JSON':
       case 'JSONB':
         fakeData[key] = {
-          dummy: 'dummy',
+          dummy: 'dummy'
         };
         break;
       case 'DATE':
@@ -284,7 +284,7 @@ function saveData(modelId, payload) {
         // 有删除？
         const exist = Process(`models.${w.model}.Get`, {
           select: ['id'],
-          wheres: [{ column: w.key, value: payload[w.foreign] }],
+          wheres: [{ column: w.key, value: payload[w.foreign] }]
         });
         const idsNew = lines.map((l) => l.id);
         const idsOld = exist.map((l) => l.id);
@@ -294,7 +294,7 @@ function saveData(modelId, payload) {
         // console.log(`idsDeleted`, idsDeleted);
 
         const share = {
-          [w.key]: payload[w.foreign],
+          [w.key]: payload[w.foreign]
         };
         // console.log(`share`, share);
 
@@ -302,7 +302,7 @@ function saveData(modelId, payload) {
           `models.${w.model}.EachSaveAfterDelete`,
           idsDeleted,
           lines,
-          share,
+          share
         );
       }
       return { id: id, message: `记录${id}保存成功` };
@@ -370,7 +370,7 @@ function selectOptions(modelId, querysIn, payload) {
   const querys = mergeQueryObject(querysIn, payload);
   const [row] = Process('models.ddic.selectoption.get', {
     wheres: [{ column: 'name', value: modelId }],
-    limit: 1,
+    limit: 1
   });
 
   const query = { model: modelId } as any;

@@ -15,187 +15,187 @@ function GetColumnOptions() {
       children: [
         {
           label: '字符串',
-          value: 'string',
+          value: 'string'
         },
         {
           label: '字符',
-          value: 'char',
+          value: 'char'
         },
         {
           label: '文本',
-          value: 'text',
+          value: 'text'
         },
         {
           label: '中文本',
-          value: 'mediumText',
+          value: 'mediumText'
         },
         {
           label: '长文本',
-          value: 'longText',
+          value: 'longText'
         },
         {
           label: 'JSON文本',
-          value: 'json',
+          value: 'json'
         },
         {
           label: 'JSON二进制',
-          value: 'jsonb',
+          value: 'jsonb'
         },
         {
           label: 'UUID',
-          value: '格式字符串',
+          value: '格式字符串'
         },
         {
           label: '二进制数据',
-          value: 'binary',
-        },
+          value: 'binary'
+        }
       ],
-      label: '文本',
+      label: '文本'
     },
     {
       children: [
         {
           label: '日期',
-          value: 'date',
+          value: 'date'
         },
         {
           label: '日期时间',
-          value: 'datetime',
+          value: 'datetime'
         },
         {
           label: '带时区的日期时间',
-          value: 'datetimeTz',
+          value: 'datetimeTz'
         },
         {
           label: '时间',
-          value: 'time',
+          value: 'time'
         },
         {
           label: '带时区的时间',
-          value: 'timeTz',
+          value: 'timeTz'
         },
         {
           label: '时间戳',
-          value: 'timestamp',
+          value: 'timestamp'
         },
         {
           label: '带时区的时间戳',
-          value: 'timestampTz',
-        },
+          value: 'timestampTz'
+        }
       ],
-      label: '日期时间',
+      label: '日期时间'
     },
     {
       children: [
         {
           label: '长整型+自增',
-          value: 'id',
+          value: 'id'
         },
         {
           label: '无符号微整型+自增',
-          value: 'tinyIncrements',
+          value: 'tinyIncrements'
         },
         {
           label: '无符号小整型+自增',
-          value: 'smallIncrements',
+          value: 'smallIncrements'
         },
         {
           label: '无符号整型+自增',
-          value: 'increments',
+          value: 'increments'
         },
         {
           label: '无符号长整型+自增',
-          value: 'bigIncrements',
-        },
+          value: 'bigIncrements'
+        }
       ],
-      label: '自增',
+      label: '自增'
     },
     {
       children: [
         {
           label: '微整型',
-          value: 'tinyInteger',
+          value: 'tinyInteger'
         },
         {
           label: '无符号微整型',
-          value: 'unsignedTinyInteger',
+          value: 'unsignedTinyInteger'
         },
         {
           label: '小整型',
-          value: 'smallInteger',
+          value: 'smallInteger'
         },
         {
           label: '无符号小整型',
-          value: 'unsignedSmallInteger',
+          value: 'unsignedSmallInteger'
         },
         {
           label: '整型',
-          value: 'integer',
+          value: 'integer'
         },
         {
           label: '无符号整型',
-          value: 'unsignedInteger',
+          value: 'unsignedInteger'
         },
         {
           label: '长整型',
-          value: 'bigInteger',
+          value: 'bigInteger'
         },
         {
           label: '无符号长整型',
-          value: 'unsignedBigInteger',
-        },
+          value: 'unsignedBigInteger'
+        }
       ],
-      label: '整型',
+      label: '整型'
     },
     {
       children: [
         {
           label: '浮点数',
-          value: 'float',
+          value: 'float'
         },
         {
           label: '无符号浮点数',
-          value: 'unsignedFloat',
+          value: 'unsignedFloat'
         },
         {
           label: '双精度',
-          value: 'double',
+          value: 'double'
         },
         {
           label: '无符号双精度',
-          value: 'unsignedDouble',
+          value: 'unsignedDouble'
         },
         {
           label: '小数(一般用于存储货币)',
-          value: 'decimal',
+          value: 'decimal'
         },
         {
           label: '无符号小数',
-          value: 'unsignedDecimal',
-        },
+          value: 'unsignedDecimal'
+        }
       ],
-      label: '小数',
+      label: '小数'
     },
     {
       label: '布尔型',
-      value: 'boolean',
+      value: 'boolean'
     },
     {
       label: '枚举型',
-      value: 'enum',
+      value: 'enum'
     },
     {
       label: 'IP',
-      value: 'ipAddress',
+      value: 'ipAddress'
     },
     {
       label: '网卡地址',
-      value: 'macAddress',
+      value: 'macAddress'
     },
     {
       label: '年份',
-      value: 'year',
-    },
+      value: 'year'
+    }
   ];
 }
 
@@ -360,7 +360,7 @@ function apiDefinitionList(apisList) {
             dsl_path: '/' + api.data.DSL.replace(/\\/g, '/'),
             dsl_name: api.name,
             description: path.description || api.data.description,
-            version: api.data.version,
+            version: api.data.version
           };
           newPath.group = cleanPath(newPath.group);
           newPath.fullpath = cleanPath(newPath.fullpath);
@@ -409,10 +409,10 @@ function modelApiList(modelId: string) {
     api.path = api.path.replace(':model', modelId);
   });
   const tableApis = allApi.filter(
-    (api) => api.group == '/__yao/table' && api.url_params?.id === modelId,
+    (api) => api.group == '/__yao/table' && api.url_params?.id === modelId
   );
   const formApis = allApi.filter(
-    (api) => api.group == '/__yao/form' && api.url_params?.id === modelId,
+    (api) => api.group == '/__yao/form' && api.url_params?.id === modelId
   );
 
   return [...apilist, ...tableApis, ...formApis];

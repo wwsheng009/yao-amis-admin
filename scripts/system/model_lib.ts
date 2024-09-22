@@ -58,7 +58,7 @@ function FlatModelList(models: YaoModelNode[], attr?: string[] | string) {
     for (let i = 0; i < properties.length - 1; i++) {
       if (currentObject === undefined) {
         throw new Error(
-          `Property '${properties[i]}' does not exist in path '${path}'`,
+          `Property '${properties[i]}' does not exist in path '${path}'`
         );
       }
       //   注意，不支持生成数组
@@ -113,7 +113,7 @@ function FlatModelList(models: YaoModelNode[], attr?: string[] | string) {
  * @returns YaoModel.ModelDSL | null
  */
 export function FindCachedModelById(
-  modelId: string | number,
+  modelId: string | number
 ): YaoModel.ModelDSL {
   const models = Process('widget.models');
 

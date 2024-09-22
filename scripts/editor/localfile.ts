@@ -70,9 +70,9 @@ function saveFileRecord(user_id, file_name) {
   const [record] = Process('models.system.file.get', {
     wheres: [
       { column: 'user_id', value: user_id },
-      { column: 'file_name', value: file_name, method: 'where' },
+      { column: 'file_name', value: file_name, method: 'where' }
     ],
-    limit: 1,
+    limit: 1
   });
   if (!record) {
     Process('models.system.file.save', { user_id, file_name });
@@ -91,8 +91,8 @@ function deleteFileRecord(user_id, file_name) {
   Process('models.system.file.deletewhere', {
     wheres: [
       { column: 'user_id', value: user_id },
-      { column: 'file_name', value: file_name, method: 'where' },
-    ],
+      { column: 'file_name', value: file_name, method: 'where' }
+    ]
   });
 }
 // 保存数据

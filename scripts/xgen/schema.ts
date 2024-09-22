@@ -25,10 +25,10 @@ function generateMenuConfig(modelId: string, columns) {
         path: `/x/Table/${modelId}`,
         children: [
           { name: `${name}列表`, path: `/x/Table/${modelId}` },
-          { name: `创建${name}`, path: `/x/Form/${modelId}/0/edit` },
-        ],
-      },
-    },
+          { name: `创建${name}`, path: `/x/Form/${modelId}/0/edit` }
+        ]
+      }
+    }
   ];
 }
 /**
@@ -46,9 +46,9 @@ function generateTableView(modelId: string, columns, simple) {
         title: `${modelId}.tab.yao`,
         __code_source: {
           name: modelId,
-          action: { bind: { model: modelId } },
-        },
-      },
+          action: { bind: { model: modelId } }
+        }
+      }
     ];
   }
   const modelDsl = getModelDefinition(modelId, columns);
@@ -58,8 +58,8 @@ function generateTableView(modelId: string, columns, simple) {
     {
       language: 'json',
       title: `${modelId}.tab.yao`,
-      __code_source: tableDsl,
-    },
+      __code_source: tableDsl
+    }
   ];
 }
 
@@ -78,9 +78,9 @@ function generateFormView(modelId: string, columns, simple, type) {
         can_preview: true,
         __code_source: {
           name: modelId,
-          action: { bind: { model: modelId } },
-        },
-      },
+          action: { bind: { model: modelId } }
+        }
+      }
     ];
   }
 
@@ -99,8 +99,8 @@ function getXgenTableSchema(modelDsl: YaoModel.ModelDSL) {
     action: {
       bind: {
         model: table_dot_name,
-        option: { withs: {}, option: { form: table_dot_name } },
-      },
+        option: { withs: {}, option: { form: table_dot_name } }
+      }
     },
     layout: {
       primary: 'id',
@@ -117,12 +117,12 @@ function getXgenTableSchema(modelDsl: YaoModel.ModelDSL) {
                 name: 'OpenModal',
                 type: 'Common.openModal',
                 payload: {
-                  Form: { type: 'edit', model: table_dot_name },
-                },
-              },
-            ],
-          },
-        ],
+                  Form: { type: 'edit', model: table_dot_name }
+                }
+              }
+            ]
+          }
+        ]
       },
       table: {
         columns: [],
@@ -137,13 +137,13 @@ function getXgenTableSchema(modelDsl: YaoModel.ModelDSL) {
                   payload: {
                     Form: {
                       model: table_dot_name + '_view',
-                      type: 'view',
-                    },
+                      type: 'view'
+                    }
                   },
                   name: 'OpenModal',
-                  type: 'Common.openModal',
-                },
-              ],
+                  type: 'Common.openModal'
+                }
+              ]
             },
             {
               title: '编辑',
@@ -155,11 +155,11 @@ function getXgenTableSchema(modelDsl: YaoModel.ModelDSL) {
                   payload: {
                     Form: {
                       type: 'edit',
-                      model: table_dot_name,
-                    },
-                  },
-                },
-              ],
+                      model: table_dot_name
+                    }
+                  }
+                }
+              ]
             },
             {
               title: '删除',
@@ -170,26 +170,26 @@ function getXgenTableSchema(modelDsl: YaoModel.ModelDSL) {
                   type: 'Common.confirm',
                   payload: {
                     title: '确认删除',
-                    content: '删除后不可撤销！',
-                  },
+                    content: '删除后不可撤销！'
+                  }
                 },
                 {
                   name: 'Delete',
                   type: 'Table.delete',
                   payload: {
-                    model: table_dot_name,
-                  },
-                },
-              ],
-            },
-          ],
-        },
-      },
+                    model: table_dot_name
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     fields: {
       filter: {},
-      table: {},
-    },
+      table: {}
+    }
   };
   columns = MakeColumnOrder(columns);
   columns.forEach((column) => {
@@ -213,7 +213,7 @@ function getXgenTableSchema(modelDsl: YaoModel.ModelDSL) {
     RelList.push({
       name: rel,
       model: relations[rel].model,
-      key: relations[rel].key,
+      key: relations[rel].key
     });
   }
   if (RelList.length > 0) {
@@ -244,9 +244,9 @@ function getXgenFormSchema(modelDsl: YaoModel.ModelDSL, type = 'view') {
         {
           name: 'Fullscreen',
           type: 'Form.fullscreen',
-          payload: {},
-        },
-      ],
+          payload: {}
+        }
+      ]
     },
     {
       title: '返回',
@@ -257,9 +257,9 @@ function getXgenFormSchema(modelDsl: YaoModel.ModelDSL, type = 'view') {
         {
           name: 'CloseModal',
           type: 'Common.closeModal',
-          payload: {},
-        },
-      ],
+          payload: {}
+        }
+      ]
     },
     {
       title: '保存',
@@ -270,14 +270,14 @@ function getXgenFormSchema(modelDsl: YaoModel.ModelDSL, type = 'view') {
         {
           name: 'Submit',
           type: 'Form.submit',
-          payload: {},
+          payload: {}
         },
         {
           name: 'Back',
           type: 'Common.closeModal',
-          payload: {},
-        },
-      ],
+          payload: {}
+        }
+      ]
     },
     {
       icon: 'icon-trash-2',
@@ -289,31 +289,31 @@ function getXgenFormSchema(modelDsl: YaoModel.ModelDSL, type = 'view') {
           type: 'Common.confirm',
           payload: {
             title: '提示',
-            content: '确认删除，删除后数据无法恢复？',
-          },
+            content: '确认删除，删除后数据无法恢复？'
+          }
         },
         {
           name: 'Delete',
           payload: {
-            model: table_dot_name,
+            model: table_dot_name
           },
-          type: 'Form.delete',
+          type: 'Form.delete'
         },
         {
           name: 'Back',
           type: 'Common.closeModal',
-          payload: {},
-        },
-      ],
-    },
+          payload: {}
+        }
+      ]
+    }
   ];
   let formTemplate = {
     name: modelDsl.name || '表单',
     action: {
       bind: {
         model: table_dot_name,
-        option: { withs: {} },
-      },
+        option: { withs: {} }
+      }
     },
     layout: {
       primary: 'id',
@@ -322,14 +322,14 @@ function getXgenFormSchema(modelDsl: YaoModel.ModelDSL, type = 'view') {
         props: {},
         sections: [
           {
-            columns: [],
-          },
-        ],
-      },
+            columns: []
+          }
+        ]
+      }
     },
     fields: {
-      form: {},
-    },
+      form: {}
+    }
   };
   columns = MakeColumnOrder(columns);
   columns.forEach((column) => {
@@ -426,7 +426,7 @@ function GetDBTypeMap() {
     color: 'ColorPicker',
     phone: 'Input',
     url: 'Input',
-    code: 'CodeEditor',
+    code: 'CodeEditor'
   };
 }
 /**
@@ -444,7 +444,7 @@ function FilterFields() {
  */
 function TableColumnCast(
   column: YaoModel.ModelColumn,
-  modelDsl: YaoModel.ModelDSL,
+  modelDsl: YaoModel.ModelDSL
 ) {
   // const props = column.props || {};
   const title = column.label || column.name;
@@ -470,12 +470,12 @@ function TableColumnCast(
   const res = {
     layout: {
       filter: { columns: [] },
-      table: { columns: [] },
+      table: { columns: [] }
     },
     fields: {
       filter: [],
-      table: [],
-    },
+      table: []
+    }
   };
   const bind = name;
   let component = {
@@ -485,8 +485,8 @@ function TableColumnCast(
     edit: {
       type: 'Input',
       bind: bind,
-      props: {},
-    },
+      props: {}
+    }
   } as YaoField.ColumnDSL;
   let width = 160;
   if (title.length > 5) {
@@ -500,13 +500,13 @@ function TableColumnCast(
       view: {
         props: {},
         // compute: "scripts.ddic.compute.json.View",
-        type: 'Tooltip',
+        type: 'Tooltip'
       },
       edit: {
         // compute: "scripts.ddic.compute.json.Edit",
         props: {},
-        type: 'TextArea',
-      },
+        type: 'TextArea'
+      }
     };
     // log.Error("castTableColumn: Type %s does not support", column.type);
   } else if (column.type === 'enum') {
@@ -515,17 +515,17 @@ function TableColumnCast(
       edit: {
         props: {
           options: Enum(column['option']),
-          placeholder: '请选择' + title,
+          placeholder: '请选择' + title
         },
-        type: 'Select',
+        type: 'Select'
       },
       view: {
         props: {
           options: Enum(column['option']),
-          placeholder: '请选择' + title,
+          placeholder: '请选择' + title
         },
-        type: 'Tag',
-      },
+        type: 'Tag'
+      }
     };
   } else if (
     column.type === 'boolean' ||
@@ -547,9 +547,9 @@ function TableColumnCast(
           checkedChildren: '是',
           checkedValue: checkedValue,
           unCheckedChildren: '否',
-          unCheckedValue: unCheckedValue,
-        },
-      },
+          unCheckedValue: unCheckedValue
+        }
+      }
     };
   } else if (column.type == 'color') {
     component.edit.type = 'ColorPicker';
@@ -574,8 +574,8 @@ function TableColumnCast(
       name: title,
       component: {
         bind: where_bind,
-        edit: component.edit,
-      },
+        edit: component.edit
+      }
     });
   } else {
     const filter_target = FilterFields();
@@ -588,9 +588,9 @@ function TableColumnCast(
             edit: {
               type: 'Input',
               compute: 'Trim',
-              props: { placeholder: '请输入' + title },
-            },
-          },
+              props: { placeholder: '请输入' + title }
+            }
+          }
         });
       }
     }
@@ -601,13 +601,13 @@ function TableColumnCast(
   if (column.type !== 'json' && !component.view?.props?.ddic_hide) {
     res.layout.table.columns.push({
       name: title,
-      width: width,
+      width: width
     });
   }
   delete component.is_select;
   res.fields.table.push({
     name: title,
-    component: component,
+    component: component
   });
   return res;
 }
@@ -690,7 +690,7 @@ function IsFile(column, component, modelDsl) {
       'images',
       'audio',
       'video',
-      'file',
+      'file'
     ].includes(column.type)
   ) {
     return component;
@@ -705,22 +705,22 @@ function IsFile(column, component, modelDsl) {
     view: {
       type: viewType,
       compute: 'scripts.xgen.file.upload.View',
-      props: {},
+      props: {}
     },
     edit: {
       type: 'Upload',
       compute: {
         process: 'scripts.xgen.file.upload.Edit',
-        args: ['$C(row)', name, modelDsl.table.name],
+        args: ['$C(row)', name, modelDsl.table.name]
       },
       props: {
         maxCount: 100,
         filetype: fileType,
         $api: {
-          process: 'fs.system.Upload',
-        },
-      },
-    },
+          process: 'fs.system.Upload'
+        }
+      }
+    }
   };
   return component;
 }
@@ -740,7 +740,7 @@ function GetFileType(column) {
   }
   return {
     viewType,
-    fileType,
+    fileType
   };
 }
 
@@ -778,12 +778,12 @@ function RelationSelect(column, modelDsl, component) {
                 query: {
                   model: dotName,
                   label: field,
-                  value: 'id',
-                },
-              },
+                  value: 'id'
+                }
+              }
             },
-            ...props,
-          },
+            ...props
+          }
         },
         edit: {
           type: 'Select',
@@ -794,13 +794,13 @@ function RelationSelect(column, modelDsl, component) {
                 query: {
                   model: dotName,
                   label: field,
-                  value: 'id',
-                },
-              },
+                  value: 'id'
+                }
+              }
             },
-            ...props,
-          },
-        },
+            ...props
+          }
+        }
       };
       return component;
     }
@@ -885,8 +885,8 @@ function EditPropes(component, column) {
         ...(rules.length === 1 &&
         component.edit.props.itemProps?.rules?.length === 1
           ? [Object.assign(component.edit.props.itemProps.rules[0], rules[0])]
-          : rules),
-      ],
+          : rules)
+      ]
     };
   }
   // 默认值
@@ -914,7 +914,7 @@ function GetRules(column, component) {
     float: 'float',
     number: 'number',
     datetime: 'date',
-    bool: 'number',
+    bool: 'number'
   };
   const dbTypeToAntd = {
     // string: "string",有可能是json
@@ -941,7 +941,7 @@ function GetRules(column, component) {
     // float: "number",
     boolean: 'boolean',
     enum: 'enum',
-    image: 'array',
+    image: 'array'
   };
   const rules = [];
   const rule = {} as any;
@@ -949,7 +949,7 @@ function GetRules(column, component) {
     unique,
     nullable,
     default: columnDefault,
-    type: dbColumnType,
+    type: dbColumnType
   } = column;
   const antdType = dbTypeToAntd[dbColumnType];
   if (dbColumnType in dbTypeToAntd) {
@@ -1001,7 +1001,7 @@ function GetRules(column, component) {
           if (validation.args && validation.args.length) {
             rules.push({
               pattern: validation.args[0],
-              message: validation.message,
+              message: validation.message
             });
           }
           break;
@@ -1026,7 +1026,7 @@ function GetRules(column, component) {
 }
 function updateReference(formTemplate, modelDsl: YaoModel.ModelDSL) {
   const hasCount = Object.values(modelDsl.relations || { type: '' }).filter(
-    (rel) => rel.type === 'hasOne',
+    (rel) => rel.type === 'hasOne'
   ).length;
   if (hasCount === 0) {
     return formTemplate; // no need to modify the form if there are no 'hasOne' relations
@@ -1035,10 +1035,10 @@ function updateReference(formTemplate, modelDsl: YaoModel.ModelDSL) {
     layout: {
       form: {
         props: {
-          reference: {},
-        },
-      },
-    },
+          reference: {}
+        }
+      }
+    }
   });
   const referenceContent = [];
   for (const rel in modelDsl.relations || {}) {
@@ -1049,9 +1049,9 @@ function updateReference(formTemplate, modelDsl: YaoModel.ModelDSL) {
           Form: {
             type: 'view',
             model: modelDsl.relations[rel].model + '_view',
-            id: `{{${modelDsl.relations[rel].foreign}}}`,
-          },
-        },
+            id: `{{${modelDsl.relations[rel].foreign}}}`
+          }
+        }
       });
     }
   }
@@ -1063,9 +1063,9 @@ function updateReference(formTemplate, modelDsl: YaoModel.ModelDSL) {
         Form: {
           type: 'view',
           model: referenceContent[0].payload.Form.model,
-          id: `${referenceContent[0].payload.Form.id}`,
-        },
-      },
+          id: `${referenceContent[0].payload.Form.id}`
+        }
+      }
     };
   } else {
     formTemplate.layout.form.props.reference.floatContents = referenceContent;
@@ -1126,7 +1126,7 @@ function relationTable(formDsl: YaoForm.FormDSL, modelDsl: YaoModel.ModelDSL) {
     RelList.push({
       name: rel,
       model: relations[rel].model,
-      key: relations[rel].key,
+      key: relations[rel].key
     });
     let label = relations[rel].label;
     if (!label) {
@@ -1142,19 +1142,19 @@ function relationTable(formDsl: YaoForm.FormDSL, modelDsl: YaoModel.ModelDSL) {
         props: {
           model: relations[rel].model,
           query: {
-            [`where.${relations[rel].key}.eq`]: '{{id}}',
-          },
-        },
-      },
+            [`where.${relations[rel].key}.eq`]: '{{id}}'
+          }
+        }
+      }
     };
     formDsl = AddTabColumn(formDsl, {
       name: label,
-      width: 24,
+      width: 24
     });
   }
   if (RelList.length) {
     formDsl.action.save = {
-      process: `scripts.${modelName}.Save`,
+      process: `scripts.${modelName}.Save`
     };
     formDsl.action['before:delete'] = `scripts.${modelName}.BeforeDelete`;
     formDsl.action['after:find'] = `scripts.${modelName}.AfterFind`;
@@ -1176,7 +1176,7 @@ function relationList(formDsl, modelDsl) {
     RelList.push({
       name: rel,
       model: relations[rel].model,
-      key: relations[rel].key,
+      key: relations[rel].key
     });
     // 创建控件
     let label = relations[rel].label;
@@ -1193,13 +1193,13 @@ function relationList(formDsl, modelDsl) {
         type: 'List',
         props: {
           name: relations[rel].model,
-          showLabel: true,
-        },
-      },
+          showLabel: true
+        }
+      }
     };
     formDsl = AddTabColumn(formDsl, {
       name: label,
-      width: 24,
+      width: 24
     });
   }
   if (RelList.length === 0) {
@@ -1220,7 +1220,7 @@ function relationList(formDsl, modelDsl) {
   const scripts = [];
   if (RelList.length) {
     formDsl.action.save = {
-      process: `scripts.${modelName}.Save`,
+      process: `scripts.${modelName}.Save`
     };
     formDsl.action['before:delete'] = `scripts.${modelName}.BeforeDelete`;
     formDsl.action['after:find'] = `scripts.${modelName}.AfterFind`;
@@ -1232,8 +1232,8 @@ function relationList(formDsl, modelDsl) {
         deleteDataCodes,
         saveDataFunList,
         deleteDataFunList,
-        AfterFind,
-      ),
+        AfterFind
+      )
     );
   }
 
@@ -1247,7 +1247,7 @@ function WriteScript(
   deleteDataCodes,
   saveDataFunctionList,
   deleteDataFuntionList,
-  AfterFind,
+  AfterFind
 ) {
   // let sc = new FS("script");
   const scripts = `function Save(payload) {
@@ -1294,7 +1294,7 @@ ${AfterFind}
   return {
     language: 'js',
     title: `${functionName}.js`,
-    __code_source: scripts,
+    __code_source: scripts
   };
 }
 function StartTrans() {
@@ -1365,7 +1365,7 @@ function CreateAfterFind(relations: YaoModel.Relation[]) {
     query.wheres.push({
       field: element.key,
       op: '=',
-      value: '>>>payload.id<<<',
+      value: '>>>payload.id<<<'
     });
     const str = `   payload["${rel}"]= t.Get(
       ${JSON.stringify(query, null, 2)},
@@ -1433,7 +1433,7 @@ function wrapForm(formDsl, modelDsl, type) {
   return {
     language: 'json',
     title: `${modelDsl.ID}${type == 'view' ? '_view' : ''}.form.yao`,
-    __code_source: formDsl,
+    __code_source: formDsl
   };
 }
 /** 创建列表，并不是所有的模型都创建列表，只有hasMany的关系才需要 */
@@ -1447,7 +1447,7 @@ function CreateListFile(rel) {
   }
   // 在列表显示中不需要显示外键
   modelDsl.columns = modelDsl.columns.filter(
-    (col) => col.name !== excludeField,
+    (col) => col.name !== excludeField
   );
   const listDsl = toList(modelDsl); // 这里有studio js读取操作
   // let listFileName = tableName + ".list.json";
@@ -1455,7 +1455,7 @@ function CreateListFile(rel) {
   return {
     language: 'json',
     title: `${modelDsl.ID}.list.yao`,
-    __code_source: listDsl,
+    __code_source: listDsl
   };
 }
 /**
@@ -1471,17 +1471,17 @@ function toList(modelDsl: YaoModel.ModelDSL) {
     name: modelDsl.name || '列表',
     action: {
       bind: {
-        model: table_dot_name,
-      },
+        model: table_dot_name
+      }
     },
     layout: {
       list: {
-        columns: [],
-      },
+        columns: []
+      }
     },
     fields: {
-      list: {},
-    },
+      list: {}
+    }
   };
   // 并不知道谁会调用列表，
   // 不要显示外部关联ID
@@ -1513,7 +1513,7 @@ function toList(modelDsl: YaoModel.ModelDSL) {
  */
 function CastListColumn(
   column: YaoModel.ModelColumn,
-  modelDsl: YaoModel.ModelDSL,
+  modelDsl: YaoModel.ModelDSL
 ) {
   const types = GetDBTypeMap();
   const ismysql = IsMysql();
@@ -1534,14 +1534,14 @@ function CastListColumn(
   }
   const res = {
     layout: [],
-    fields: [],
+    fields: []
   };
   let component = {
     bind: name,
     edit: {
       type: 'Input',
-      props: {},
-    },
+      props: {}
+    }
   } as YaoField.ColumnDSL;
   let width = 6;
   const bind = name;
@@ -1549,8 +1549,8 @@ function CastListColumn(
     component = {
       bind: bind,
       edit: {
-        type: 'TextArea',
-      },
+        type: 'TextArea'
+      }
     };
   } else if (column.type == 'enum') {
     component = {
@@ -1558,10 +1558,10 @@ function CastListColumn(
       edit: {
         props: {
           options: Enum(column['option']),
-          placeholder: '请选择' + title,
+          placeholder: '请选择' + title
         },
-        type: 'Select',
-      },
+        type: 'Select'
+      }
     };
   } else if (
     column.type === 'boolean' ||
@@ -1583,15 +1583,15 @@ function CastListColumn(
           options: [
             {
               label: '是',
-              value: checkedValue,
+              value: checkedValue
             },
             {
               label: '否',
-              value: unCheckedValue,
-            },
-          ],
-        },
-      },
+              value: unCheckedValue
+            }
+          ]
+        }
+      }
     };
   } else if (column.type == 'color') {
     component.edit.type = 'ColorPicker';
@@ -1618,12 +1618,12 @@ function CastListColumn(
   if (!component.edit?.props?.ddic_hide) {
     res.layout.push({
       name: title,
-      width: width,
+      width: width
     });
   }
   res.fields.push({
     name: title,
-    component: component,
+    component: component
   });
   return res;
 }
@@ -1635,13 +1635,13 @@ function CastListColumn(
  */
 function AddTabColumn(formTemplate, column) {
   const section = formTemplate.layout.form.sections.find((sec) =>
-    sec.columns?.find((col) => col.tabs != null),
+    sec.columns?.find((col) => col.tabs != null)
   );
   if (section) {
     const col = section.columns.find((col) => col.tabs != null);
     col.tabs.push({
       title: column.name,
-      columns: [column],
+      columns: [column]
     });
   } else {
     formTemplate.layout.form.sections.push({
@@ -1649,9 +1649,9 @@ function AddTabColumn(formTemplate, column) {
         {
           name: '列表',
           tabs: [{ title: column.name, columns: [column] }],
-          width: 24,
-        },
-      ],
+          width: 24
+        }
+      ]
     });
   }
   return formTemplate;
@@ -1666,7 +1666,7 @@ function AddTabColumn(formTemplate, column) {
  */
 function FormColumnCast(
   column: YaoModel.ModelColumn,
-  modelDsl: YaoModel.ModelDSL,
+  modelDsl: YaoModel.ModelDSL
 ) {
   const types = GetDBTypeMap();
   const ismysql = IsMysql();
@@ -1687,14 +1687,14 @@ function FormColumnCast(
   }
   const res = {
     layout: [],
-    fields: [],
+    fields: []
   };
   let component = {
     bind: name,
     edit: {
       type: 'Input',
-      props: {},
-    },
+      props: {}
+    }
   } as YaoField.ColumnDSL;
   let width = 8;
   const bind = name;
@@ -1705,10 +1705,10 @@ function FormColumnCast(
         // compute: "scripts.ddic.compute.json.Edit",
         props: {
           language: 'json',
-          height: 200,
+          height: 200
         },
-        type: 'CodeEditor',
-      },
+        type: 'CodeEditor'
+      }
     };
   } else if (column.type == 'enum') {
     component = {
@@ -1716,10 +1716,10 @@ function FormColumnCast(
       edit: {
         props: {
           options: Enum(column['option']),
-          placeholder: '请选择' + title,
+          placeholder: '请选择' + title
         },
-        type: 'Select',
-      },
+        type: 'Select'
+      }
     };
   } else if (
     column.type === 'boolean' ||
@@ -1741,15 +1741,15 @@ function FormColumnCast(
           options: [
             {
               label: '是',
-              value: checkedValue,
+              value: checkedValue
             },
             {
               label: '否',
-              value: unCheckedValue,
-            },
-          ],
-        },
-      },
+              value: unCheckedValue
+            }
+          ]
+        }
+      }
     };
   } else if (column.type == 'color') {
     component.edit.type = 'ColorPicker';
@@ -1775,7 +1775,7 @@ function FormColumnCast(
   if (!component.edit?.props?.ddic_hide) {
     res.layout.push({
       name: title,
-      width: width,
+      width: width
     });
   }
   if (component.edit?.type === 'CodeEditor') {
@@ -1784,7 +1784,7 @@ function FormColumnCast(
   }
   res.fields.push({
     name: title,
-    component: component,
+    component: component
   });
   return res;
 }
@@ -1810,20 +1810,20 @@ function IsFormFile(column, component, modelDsl: YaoModel.ModelDSL) {
     view: {
       type: viewType,
       compute: 'scripts.xgen.file.upload.View',
-      props: {},
+      props: {}
     },
     edit: {
       type: 'Upload',
       compute: {
         process: 'scripts.xgen.file.upload.Edit',
-        args: ['$C(row)', name, modelDsl.table.name],
+        args: ['$C(row)', name, modelDsl.table.name]
       },
       props: {
         maxCount: 100,
         filetype: fileType,
-        $api: { process: 'fs.system.Upload' },
-      },
-    },
+        $api: { process: 'fs.system.Upload' }
+      }
+    }
   };
   return component;
 }
@@ -1857,13 +1857,13 @@ function EditSelect(column, modelDsl, component) {
                 query: {
                   model: DotName(relation[rel].model),
                   label: field,
-                  value: 'id',
-                },
-              },
+                  value: 'id'
+                }
+              }
             },
-            ...props,
-          },
-        },
+            ...props
+          }
+        }
       };
       return component;
     }

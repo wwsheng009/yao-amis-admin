@@ -23,7 +23,10 @@ function checkBasicAuth(headers) {
 
   if (auth && auth.startsWith('Basic ')) {
     const base64 = auth.substring('Basic '.length);
-    const [userName, password] = Process('encoding.base64.Decode', base64).split(':');
+    const [userName, password] = Process(
+      'encoding.base64.Decode',
+      base64
+    ).split(':');
 
     const result = Process('scripts.amis.user.userVerify', userName, password);
 

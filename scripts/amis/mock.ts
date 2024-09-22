@@ -5,7 +5,7 @@ function samples(page, pagesize, keywords) {
   const data = Process('yao.table.Search', 'demo.table', null, page, pagesize);
   return Process('scripts.return.RSuccess', {
     items: data.data,
-    total: data.total,
+    total: data.total
   });
 }
 // 表数据预览，可以用于amis curd控件的api接口测试

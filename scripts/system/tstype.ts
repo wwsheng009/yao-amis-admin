@@ -51,7 +51,7 @@ function createTSTypes(modelsIn) {
   ${item.name}${isOption(item) ? '?' : ''}: ${getTsType(
     tabName,
     item,
-    typeMapping,
+    typeMapping
   )};`;
       }, [])
       .join('\n');
@@ -100,7 +100,7 @@ function getTsType(tabName, column, typeMapping) {
   if (column.type === 'enum') {
     if (!column.option) {
       console.log(
-        `column: ${column.name} in ${tabName} type is enum,but no options, fallback to string`,
+        `column: ${column.name} in ${tabName} type is enum,but no options, fallback to string`
       );
       type = 'string';
     } else {
@@ -139,6 +139,6 @@ function getTSTypeMapping() {
     boolean: 'boolean',
     enum: 'Select',
     json: 'any',
-    JSON: 'any', // 使用大写的JSON区分小写的json
+    JSON: 'any' // 使用大写的JSON区分小写的json
   };
 }

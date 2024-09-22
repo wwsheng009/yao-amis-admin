@@ -13,7 +13,7 @@ export function CheckAccessKey(
   params: any,
   queries: { [x: string]: any[] },
   payload: any,
-  headers: { [x: string]: any },
+  headers: { [x: string]: any }
 ) {
   let token;
   const auth = headers['Authorization'];

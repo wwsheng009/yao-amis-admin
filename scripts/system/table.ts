@@ -30,7 +30,7 @@ function TableListUniq(query?) {
         acc[curr.name] = curr;
       }
       return acc;
-    }, {}),
+    }, {})
   ) as { [k: string]: string }[];
 
   if (query && query.name) {
@@ -87,7 +87,7 @@ function TableList() {
           label: model.table_comment || tab, // 如果已经加载到模型中，从模型中获取表的描述
           saved: true, // 是否加载到数据库
           cached: cached ? true : false, // 是否已经加载到缓存
-          created: true, // 表已创建
+          created: true // 表已创建
         });
       });
     } else {
@@ -100,7 +100,7 @@ function TableList() {
             label: model.table?.comment || tab, // 如果已经加载到模型中，从模型中获取表的描述
             saved: false, // 是否加保存数据库
             cached: true, // 是否已经加载到缓存
-            created: true, // 表已创建
+            created: true // 表已创建
           });
         });
       } else {
@@ -109,7 +109,7 @@ function TableList() {
           label: tab,
           saved: false,
           cached: false,
-          created: true, // 表已创建
+          created: true // 表已创建
         });
       }
     }

@@ -1,14 +1,14 @@
 const {
   convertFileListToSoyRoute,
   // updateSoyRouteComponent,
-  updateSoyRoutePath,
+  updateSoyRoutePath
 } = require('./menu');
 
 let fileList = [
   '/pages/404.json',
   '/pages/about.json',
   '/pages/admin',
-  '/pages/admin/admin.json',
+  '/pages/admin/admin.json'
 ];
 
 const fileList2 = [
@@ -49,7 +49,7 @@ const fileList2 = [
   '/pages/user',
   '/pages/user/info.json',
   '/pages/user/logout.json',
-  '/pages/user/password_change.json',
+  '/pages/user/password_change.json'
 ];
 fileList = fileList2.map((f) => f.substring(`/pages`.length));
 
@@ -63,8 +63,8 @@ const rootRoutes = [
     path: '/amis_pages',
     component: 'basic',
     children: routes,
-    meta: { order: 2001, requiresAuth: true, title: 'AMIS' },
-  },
+    meta: { order: 2001, requiresAuth: true, title: 'AMIS' }
+  }
 ];
 // rootRoutes.forEach((x) => updateSoyRouteComponent(x, null));
 console.log(JSON.stringify(rootRoutes));

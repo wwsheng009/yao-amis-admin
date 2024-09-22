@@ -1,5 +1,5 @@
-const { getModelNameList, getOdataViewList, getModels, getModel }
-  = Require('odata.lib.model');
+const { getModelNameList, getOdataViewList, getModels, getModel } =
+  Require('odata.lib.model');
 const { Metadata, getEdmType } = Require('odata.lib.meta');
 const { XmlWriter } = Require('odata.lib.xml');
 
@@ -122,7 +122,7 @@ function escapedXmlString(str) {
       '<': '&lt;',
       '>': '&gt;',
       '"': '&quot;',
-      '\'': '&apos;',
+      "'": '&apos;'
     };
     return entityMap[char] || char; // Return XML entity if exists, otherwise return original character
   });
@@ -132,5 +132,5 @@ function escapedXmlString(str) {
 module.exports = {
   getEntryMetaDataXml,
   getMetaDataXml2,
-  convertJsonToXml,
+  convertJsonToXml
 };

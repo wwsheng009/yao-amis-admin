@@ -137,9 +137,9 @@ function getSubNodeItems(modelId, parentId) {
     wheres: [
       {
         column: 'parent',
-        value: parentId,
-      },
-    ],
+        value: parentId
+      }
+    ]
   });
   let subItems = [];
 

@@ -110,13 +110,13 @@ class Metadata {
           result.$Type = `OdataService.${notClassifiedName}`;
           root(
             notClassifiedName,
-            this.visitor('ComplexType', node.schema.paths, root),
+            this.visitor('ComplexType', node.schema.paths, root)
           );
         } else {
           const arrayItemType = this.visitor(
             'Property',
             { instance: node.options.type[0].name },
-            root,
+            root
           );
 
           result.$Type = arrayItemType.$Type;
@@ -137,11 +137,7 @@ class Metadata {
       .reduce((previousProperty, curentProperty) => {
         const result = {
           ...previousProperty,
-          [curentProperty]: this.visitor(
-            'Property',
-            node[curentProperty],
-            root,
-          ),
+          [curentProperty]: this.visitor('Property', node[curentProperty], root)
         };
 
         return result;
@@ -152,9 +148,9 @@ class Metadata {
       $Key: ['id'],
       id: {
         $Type: 'Edm.Int32',
-        $Nullable: false,
+        $Nullable: false
       },
-      ...properties,
+      ...properties
     };
   }
 
@@ -164,11 +160,7 @@ class Metadata {
       .reduce((previousProperty, curentProperty) => {
         const result = {
           ...previousProperty,
-          [curentProperty]: this.visitor(
-            'Property',
-            node[curentProperty],
-            root,
-          ),
+          [curentProperty]: this.visitor('Property', node[curentProperty], root)
         };
 
         return result;
@@ -176,7 +168,7 @@ class Metadata {
 
     return {
       $Kind: 'ComplexType',
-      ...properties,
+      ...properties
     };
   }
 
@@ -188,16 +180,16 @@ class Metadata {
         {
           $Name: node.resource,
           $Type: `OdataService.${node.resource}`,
-          $Collection: node.binding === 'collection' ? true : undefined,
-        },
-      ],
+          $Collection: node.binding === 'collection' ? true : undefined
+        }
+      ]
     };
   }
 
   static visitFunction(node) {
     return {
       $Kind: 'Function',
-      ...node.params,
+      ...node.params
     };
   }
 
@@ -237,7 +229,7 @@ class Metadata {
         result[currentResource] = this.visitor(
           'EntityType',
           columns,
-          attachToRoot,
+          attachToRoot
         );
         if (resource.actions) {
           const actions = Object.keys(resource.actions);
@@ -246,7 +238,7 @@ class Metadata {
               result[action] = this.visitor(
                 'Action',
                 resource.actions[action],
-                attachToRoot,
+                attachToRoot
               );
             });
           }
@@ -262,19 +254,19 @@ class Metadata {
 
         return result;
       },
-      {},
+      {}
     );
 
     const entitySetNames = Object.keys(this.models);
     const entitySets = entitySetNames.reduce(
       (previousResource, currentResource) => {
         const result = { ...previousResource };
-        result[currentResource]
-        //   this.models[currentResource] instanceof Resource
-        //     ?
-        = {
+        result[currentResource] =
+          //   this.models[currentResource] instanceof Resource
+          //     ?
+          {
             $Collection: true,
-            $Type: `OdataService.${currentResource}`,
+            $Type: `OdataService.${currentResource}`
           };
         // : {
         //     $Function: `OdataService.${currentResource}`,
@@ -282,7 +274,7 @@ class Metadata {
 
         return result;
       },
-      {},
+      {}
     );
 
     // 创建document
@@ -297,10 +289,9 @@ class Metadata {
       ...entityTypes,
       $EntityContainer: 'OdataService',
       ['OdataService']: {
-
         $Kind: 'EntityContainer',
-        ...entitySets,
-      },
+        ...entitySets
+      }
     };
 
     return document;

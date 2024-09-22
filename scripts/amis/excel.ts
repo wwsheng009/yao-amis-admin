@@ -6,7 +6,7 @@ function importData(payload) {
   // Save payload to database or storage
   // 删除所有的旧记录
   Process('models.demo.excel.DestroyWhere', {
-    wheres: [{ column: 'number', op: 'notnull' }],
+    wheres: [{ column: 'number', op: 'notnull' }]
   });
   // 直接插入新记录，这里是可以直接使用amis传入的input-excel的数据结构
   if (payload.excel) {
@@ -24,7 +24,7 @@ function getStatic() {
   const data1 = q.Get({
     select: [':MAX(number) as number', ':DATE(time) AS date'],
     from: '$demo.excel',
-    groups: ['date'],
+    groups: ['date']
   });
   // 方法二
   // const data = q.Get({
@@ -54,10 +54,10 @@ function getStatic() {
         type: 'line',
         data: series1,
         label: {
-          show: true,
-        },
-      },
-    ],
+          show: true
+        }
+      }
+    ]
   };
   return Process('scripts.return.RSuccess', chartdata, '数据已成功读取');
 }

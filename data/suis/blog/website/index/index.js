@@ -8,7 +8,7 @@ function Index() {
     rows: [
       { name: 'John', age: 30, city: 'New York' },
       { name: 'Mary', age: 20, city: 'Paris' },
-      { name: 'Peter', age: 40, city: 'London' },
-    ],
+      { name: 'Peter', age: 40, city: 'London' }
+    ]
   };
 }

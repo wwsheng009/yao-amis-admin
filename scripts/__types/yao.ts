@@ -10,7 +10,7 @@ import {
   Store,
   Studio,
   WebSocket,
-  ssWrite,
+  ssWrite
 } from '@yaoapps/client';
 
 export {
@@ -24,5 +24,5 @@ export {
   Store,
   Studio,
   WebSocket,
-  ssWrite,
+  ssWrite
 };

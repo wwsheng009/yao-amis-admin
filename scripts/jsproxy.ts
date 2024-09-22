@@ -33,7 +33,7 @@ export function Server(payload: {
     code: 200 as number,
     message: '' as string,
     // error: null as Error, //undefined不会出现在返回json key中
-    data: null as any,
+    data: null as any
   };
   try {
     const type = payload.type;

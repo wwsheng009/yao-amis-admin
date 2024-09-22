@@ -5,7 +5,7 @@ import { Process, Exception } from '@yao/yao';
 function getUserInfo(type, value) {
   const supportTypes = {
     email: 'email',
-    mobile: 'mobile',
+    mobile: 'mobile'
   };
   if (!supportTypes[type]) {
     throw new Exception(`Login type :${type} is not support`);
@@ -20,13 +20,13 @@ function getUserInfo(type, value) {
       'email',
       'mobile',
       'extra',
-      'status',
+      'status'
     ],
     wheres: [
       { column: supportTypes[type], value: value },
-      { Column: 'status', Value: 'enabled' },
+      { Column: 'status', Value: 'enabled' }
     ],
-    limit: 1,
+    limit: 1
   });
   return user;
 }
@@ -41,7 +41,7 @@ function Login(payload) {
     const captcha = Process(
       'yao.utils.CaptchaValidate',
       payload.captcha.id,
-      payload.captcha.code,
+      payload.captcha.code
     );
     if (captcha !== true) {
       throw new Exception('验证码不正确!', 400);
@@ -65,7 +65,7 @@ function Login(payload) {
     const password_validate = Process(
       'utils.pwd.Verify',
       password,
-      user.password,
+      user.password
     );
     if (password_validate !== true) {
       return Process('scripts.return.RError', '', 400, '密码不正确');
@@ -79,7 +79,7 @@ function Login(payload) {
   delete userPayload.password;
   const jwtOptions = {
     timeout: timeout,
-    sid: sessionId,
+    sid: sessionId
   };
   const jwtClaims = { user_name: user.name };
   // 需要注意的是在这里无法生成studio的token,因为这个处理器只接受3个参数，
@@ -96,7 +96,7 @@ function Login(payload) {
     'user_auth_objects',
     userAuthObject,
     timeout,
-    sessionId,
+    sessionId
   );
 
   return Process('scripts.return.RSuccess', {
@@ -104,7 +104,7 @@ function Login(payload) {
     user: userPayload,
     menus: Process('scripts.admin.menu_node.xgenMenu'),
     token: jwt.token,
-    expires_at: jwt.expires_at,
+    expires_at: jwt.expires_at
   });
 }
 
@@ -116,7 +116,7 @@ function Info() {
   return {
     userId: user_id,
     userName: user.name,
-    userRole: user.type || 'user',
+    userRole: user.type || 'user'
   };
 }
 

@@ -54,16 +54,16 @@ function getToken(path, params, queries, payload, headers) {
   }
   if (!auth) {
     const cookies = headers['Cookie'];
-    cookies
-    && cookies.forEach((cookie) => {
-      const cookies2 = cookie.split(';'); // split the cookies into an array
-      cookies2.forEach((cookie) => {
-        const [name, value] = cookie.trim().split('='); // split cookie name and value
-        if (name === 'token') {
-          token = value; // assign cookie value to token variable
-        }
+    cookies &&
+      cookies.forEach((cookie) => {
+        const cookies2 = cookie.split(';'); // split the cookies into an array
+        cookies2.forEach((cookie) => {
+          const [name, value] = cookie.trim().split('='); // split cookie name and value
+          if (name === 'token') {
+            token = value; // assign cookie value to token variable
+          }
+        });
       });
-    });
   }
   if (token) {
     token = token.replace('Bearer ', '');

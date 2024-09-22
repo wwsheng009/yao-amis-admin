@@ -4,40 +4,40 @@ const data = [
     id: 1,
     children: [
       {
-        id: 2,
+        id: 2
       },
       {
-        id: 21,
+        id: 21
       },
       {
         id: 3,
         children: [
           {
-            id: 4,
+            id: 4
           },
           {
-            id: 6,
+            id: 6
           },
           {
             id: 7,
             children: [
               {
-                id: 16,
+                id: 16
               },
               {
                 id: 17,
                 children: [
                   {
-                    id: 18,
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
+                    id: 18
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 ];
 
 //   filter id = 17,6  and get its parent,and children,remove other items not in the tree,the result shold be below
@@ -50,7 +50,7 @@ const exptected = [
         id: 3,
         children: [
           {
-            id: 6,
+            id: 6
           },
           {
             id: 7,
@@ -59,16 +59,16 @@ const exptected = [
                 id: 17,
                 children: [
                   {
-                    id: 18,
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
+                    id: 18
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 ];
 
 /**
@@ -198,7 +198,7 @@ if (isObj1EqualToObj2 !== true) {
 }
 
 const result1 = filterTreeDataWithFun(data, (item) =>
-  filterIds.includes(item.id),
+  filterIds.includes(item.id)
 );
 const isObj1EqualToObj3 = areObjectsEqual(exptected, result1);
 if (isObj1EqualToObj3 !== true) {

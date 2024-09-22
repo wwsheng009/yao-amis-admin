@@ -23,7 +23,7 @@ function execute(payload) {
       cmd: payload.cmd,
       script: payload.source,
       output: result.data?.output,
-      msg: result.msg,
+      msg: result.msg
     });
     if (result.error) {
       throw new Exception(result.error, 503);
@@ -43,7 +43,7 @@ function execute(payload) {
         hostInfo.port + '',
         hostInfo.username,
         hostInfo.ssh_key,
-        script,
+        script
       );
     } else {
       result = Process(
@@ -52,7 +52,7 @@ function execute(payload) {
         hostInfo.port + '',
         hostInfo.username,
         hostInfo.password,
-        script,
+        script
       );
     }
 
@@ -61,7 +61,7 @@ function execute(payload) {
       port: hostInfo.port,
       script: payload.source,
       output: result.data?.output,
-      msg: result.msg,
+      msg: result.msg
     });
     if (result.error) {
       throw new Exception(result.error, 503);

@@ -29,14 +29,14 @@ function UserInfo(id: string) {
       //   "secret",
       'status',
       'type',
-      'updated_at',
+      'updated_at'
     ],
     wheres: [
       { ':deleted_at': '删除', '=': null },
-      { field: 'id', op: '=', value: user_id }, // 使用传入参数
+      { field: 'id', op: '=', value: user_id } // 使用传入参数
     ],
     from: '$admin.user',
-    limit: 1,
+    limit: 1
   });
   if (user) {
     user.extra = JSON.parse(user.extra);
@@ -66,11 +66,11 @@ function UserList() {
       //   "secret",
       'status',
       'type',
-      'updated_at',
+      'updated_at'
     ],
     wheres: [{ ':deleted_at': '删除', '=': null }],
     from: '$admin.user',
-    limit: 1000,
+    limit: 1000
   });
   list.forEach((user) => {
     user.extra = JSON.parse(user.extra);
@@ -95,17 +95,17 @@ function changeOwnassword({ current, new_password, confirm }) {
     wheres: [
       {
         field: 'id',
-        value: user_id,
-      },
+        value: user_id
+      }
     ],
     from: '$admin.user',
-    limit: 1,
+    limit: 1
   });
   try {
     const password_validate = Process(
       'utils.pwd.Verify',
       current,
-      user.password,
+      user.password
     );
     if (password_validate !== true) {
       return Process('scripts.return.RError', '', 400, '密码不正确');
@@ -115,7 +115,7 @@ function changeOwnassword({ current, new_password, confirm }) {
       'scripts.return.RError',
       '',
       400,
-      '密码不正确' + error.message,
+      '密码不正确' + error.message
     );
   }
 
@@ -153,12 +153,12 @@ function register(payload: {
       wheres: [
         {
           field: 'name',
-          value: email,
+          value: email
         },
-        { or: true, field: 'email', value: email },
+        { or: true, field: 'email', value: email }
       ],
       from: '$admin.user',
-      limit: 1,
+      limit: 1
     });
 
     if (user) {
@@ -171,7 +171,7 @@ function register(payload: {
     const user1 = {
       email,
       password,
-      name,
+      name
     };
     try {
       Process('models.admin.user.Create', user1);

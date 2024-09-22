@@ -19,7 +19,7 @@ function loadfont2() {
           name: Icon,
           category: label,
           source: 'fontawesome',
-          version: 5,
+          version: 5
         });
       }
     }
@@ -75,7 +75,7 @@ function loadfont() {
         tag: icon.search?.terms,
         version: icon.changes,
         tag_text: icon.search?.terms?.join(','),
-        version_text: icon.changes?.join(','),
+        version_text: icon.changes?.join(',')
       };
       iconArray.push(iconObject);
     });

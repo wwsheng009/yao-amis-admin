@@ -15,17 +15,17 @@ function saveSetting(payload) {
     }
   }
   const [theme_setting] = Process('models.admin.theme.setting.Get', {
-    wheres: [{ column: 'user_id', value: user_id }],
+    wheres: [{ column: 'user_id', value: user_id }]
   });
   if (theme_setting) {
     return Process('models.admin.theme.setting.save', {
       user_id: user_id,
-      theme_setting: setting,
+      theme_setting: setting
     });
   } else {
     return Process('models.admin.theme.setting.create', {
       user_id: user_id,
-      theme_setting: setting,
+      theme_setting: setting
     });
   }
 }
@@ -48,13 +48,13 @@ function readSetting() {
     loginTemplate: 'default',
     keepAlive: false,
     enableTab: true,
-    tabIcon: true,
+    tabIcon: true
   };
 
   const user_id = Process('session.get', 'user_id');
   if (user_id) {
     const [row] = Process('models.admin.theme.setting.Get', {
-      wheres: [{ column: 'user_id', value: user_id }],
+      wheres: [{ column: 'user_id', value: user_id }]
     });
     // const { theme_setting } = Process(
     //   "models.admin.theme.setting.find",
@@ -76,16 +76,16 @@ function readSetting() {
         blank: true,
         url: 'https://github.com/Slowlyo/owl-admin-demo',
         tooltip: 'demo 源码',
-        className: 'mr-2 rounded-full',
-      },
+        className: 'mr-2 rounded-full'
+      }
     },
     assets: {
       js: [],
       css: [],
       scripts: [
-        'window.localStorage.setItem("admin-api-loginParams", "JTdCJTIydXNlcm5hbWUlMjIlM0ElMjJhZG1pbiUyMiUyQyUyMnBhc3N3b3JkJTIyJTNBJTIyYWRtaW4lMjIlN0Q=")',
+        'window.localStorage.setItem("admin-api-loginParams", "JTdCJTIydXNlcm5hbWUlMjIlM0ElMjJhZG1pbiUyMiUyQyUyMnBhc3N3b3JkJTIyJTNBJTIyYWRtaW4lMjIlN0Q=")'
       ],
-      styles: [],
+      styles: []
     },
     app_name: 'Owl Admin',
     locale: 'zh_CN',
@@ -95,17 +95,17 @@ function readSetting() {
         refresh: true,
         dark: true,
         full_screen: true,
-        theme_config: true,
+        theme_config: true
       },
       keep_alive_exclude: [],
       footer:
-        '<a href="https://github.com/slowlyo/owl-admin" target="_blank">Owl Admin</a>',
+        '<a href="https://github.com/slowlyo/owl-admin" target="_blank">Owl Admin</a>'
     },
     logo: 'http://demo.owladmin.com/admin/logo.png',
     login_captcha: true,
     show_development_tools: true,
     system_theme_setting: default_setting,
-    enabled_extensions: ['slowlyo.owl-amis-json-parse'],
+    enabled_extensions: ['slowlyo.owl-amis-json-parse']
   };
 }
 
@@ -125,7 +125,7 @@ function userList() {
       gender: user.extra?.sex,
       email: user.email,
       phone: user.mobile,
-      userStatus: user.status == 'enabled' ? '1' : '2',
+      userStatus: user.status == 'enabled' ? '1' : '2'
     } as User;
   });
   return user;

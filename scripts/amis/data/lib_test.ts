@@ -35,12 +35,12 @@ function testMerage() {
     orderBy: [''],
     orderDir: [''],
     page: ['1'],
-    perPage: ['10'],
+    perPage: ['10']
   };
   const payload = {
     name: '*请求',
     page: 1,
-    perPage: 10,
+    perPage: 10
   };
 
   const data = mergeQueryObject(querys, payload);
@@ -127,28 +127,28 @@ function test1() {
       label: '用户表',
       model: 'admin.user',
       name: 'admin_user',
-      saved: false,
+      saved: false
     },
     {
       cached: false,
       created: true,
       label: 'ddic_form',
       name: 'ddic_form',
-      saved: false,
+      saved: false
     },
     {
       cached: false,
       created: true,
       label: 'ddic_form_action',
       name: 'ddic_form_action',
-      saved: false,
+      saved: false
     },
     {
       cached: false,
       created: true,
       label: 'ddic_form_field',
       name: 'ddic_form_field',
-      saved: false,
+      saved: false
     },
     {
       cached: true,
@@ -156,7 +156,7 @@ function test1() {
       label: '业务模型',
       model: 'ddic.model',
       name: 'ddic_model',
-      saved: false,
+      saved: false
     },
     {
       cached: true,
@@ -164,7 +164,7 @@ function test1() {
       label: '模型字段列表',
       model: 'ddic.model.column',
       name: 'ddic_model_column',
-      saved: false,
+      saved: false
     },
     {
       cached: true,
@@ -172,42 +172,42 @@ function test1() {
       label: '数据元素',
       model: 'ddic.model.element',
       name: 'ddic_model_element',
-      saved: false,
+      saved: false
     },
     {
       cached: false,
       created: true,
       label: 'ddic_table',
       name: 'ddic_table',
-      saved: false,
+      saved: false
     },
     {
       cached: false,
       created: true,
       label: 'ddic_table_action',
       name: 'ddic_table_action',
-      saved: false,
+      saved: false
     },
     {
       cached: false,
       created: true,
       label: 'ddic_table_field',
       name: 'ddic_table_field',
-      saved: false,
+      saved: false
     },
     {
       cached: false,
       created: true,
       label: 'ddic_table_filter',
       name: 'ddic_table_filter',
-      saved: false,
+      saved: false
     },
     {
       cached: false,
       created: true,
       label: 'demo_book',
       name: 'demo_book',
-      saved: false,
+      saved: false
     },
     {
       cached: true,
@@ -215,14 +215,14 @@ function test1() {
       label: 'demo_excel',
       model: 'demo.excel',
       name: 'demo_excel',
-      saved: false,
+      saved: false
     },
     {
       cached: false,
       created: true,
       label: 'demo_mobile',
       name: 'demo_mobile',
-      saved: false,
+      saved: false
     },
     {
       cached: true,
@@ -231,7 +231,7 @@ function test1() {
       model: 'demo.table',
       model_name: 'demo.table',
       name: 'demo_table',
-      saved: true,
+      saved: true
     },
     {
       cached: true,
@@ -239,7 +239,7 @@ function test1() {
       label: 'dsl_amis',
       model: 'system.amis',
       name: 'dsl_amis',
-      saved: false,
+      saved: false
     },
     {
       cached: false,
@@ -248,7 +248,7 @@ function test1() {
       model: 'phone.config',
       model_name: 'phone.config',
       name: 'phone_config',
-      saved: true,
+      saved: true
     },
     {
       cached: true,
@@ -256,7 +256,7 @@ function test1() {
       label: 'system_api',
       model: 'system.api',
       name: 'system_api',
-      saved: false,
+      saved: false
     },
     {
       cached: true,
@@ -264,7 +264,7 @@ function test1() {
       label: 'admin_dept',
       model: 'admin.dept',
       name: 'admin_dept',
-      saved: false,
+      saved: false
     },
     {
       cached: true,
@@ -272,7 +272,7 @@ function test1() {
       label: '用户的编辑器文件',
       model: 'system.file',
       name: 'system_file',
-      saved: false,
+      saved: false
     },
     {
       cached: true,
@@ -280,7 +280,7 @@ function test1() {
       label: 'system_font',
       model: 'system.font',
       name: 'system_font',
-      saved: false,
+      saved: false
     },
     {
       cached: true,
@@ -288,7 +288,7 @@ function test1() {
       label: '菜单表',
       model: 'admin.menu',
       name: 'admin_menu',
-      saved: false,
+      saved: false
     },
     {
       cached: true,
@@ -296,28 +296,28 @@ function test1() {
       label: 'system_role',
       model: 'admin.auth.role',
       name: 'system_role',
-      saved: false,
+      saved: false
     },
     {
       cached: false,
       created: true,
       label: 'water_bottle',
       name: 'water_bottle',
-      saved: false,
+      saved: false
     },
     {
       cached: false,
       created: true,
       label: 'yao_neo_conversation',
       name: 'yao_neo_conversation',
-      saved: false,
-    },
+      saved: false
+    }
   ];
   const query = {
     // cached: [false],
     // saved: [false],
     // label: ["ddic_form_*"],
-    keywords: ['ddic_form_*'],
+    keywords: ['ddic_form_*']
     // keywords: [""],
   };
 

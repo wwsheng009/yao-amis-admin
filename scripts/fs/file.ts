@@ -21,7 +21,7 @@ function buildTree(folders: string[]) {
 
     for (const folderName of path) {
       let existingFolder = currentLevel.children.find(
-        (child) => child.label === folderName,
+        (child) => child.label === folderName
       );
 
       if (!existingFolder) {
@@ -29,7 +29,7 @@ function buildTree(folders: string[]) {
         const newFolder = {
           label: folderName,
           value: folderPath,
-          children: [],
+          children: []
         };
         currentLevel.children.push(newFolder);
         existingFolder = newFolder;
@@ -101,7 +101,7 @@ function filterUserAuthFolderList(type: string, folderList: string[]) {
       } else {
         return f.startsWith(f1);
       }
-    }),
+    })
   );
   // console.log("folderList>>>2", folderList);
 
@@ -115,7 +115,7 @@ function filterUserAuthFolderList(type: string, folderList: string[]) {
 function targetOperationAuthCheck(
   type: string,
   targetIn: string,
-  operation: 'CREATE' | 'DELETE' | 'READ' | 'UPDATE',
+  operation: 'CREATE' | 'DELETE' | 'READ' | 'UPDATE'
 ) {
   if (type === 'user' || type === 'public') {
     return;
@@ -128,7 +128,7 @@ function targetOperationAuthCheck(
   // const folders: string[] = authObjects.folders;
 
   const foldersAuth = authObjects.method_with_folder['ANY'].concat(
-    authObjects.method_with_folder[operation] || [],
+    authObjects.method_with_folder[operation] || []
   );
 
   const folders: string[] = foldersAuth.map((f: string) => `${uploadDir}${f}`);
@@ -165,7 +165,8 @@ function targetOperationAuthCheck(
 
   if (!found) {
     throw new Exception(
-      `目录:${target.substring(uploadDir.length)} 操作:${operation} 未授权`, 403,
+      `目录:${target.substring(uploadDir.length)} 操作:${operation} 未授权`,
+      403
     );
   }
 }
@@ -205,14 +206,14 @@ function getPermissionFolderTree() {
 function writeLog(
   file_name: string,
   file_name2: string,
-  operation: 'remove' | 'upload' | 'delete_folder' | 'move_folder',
+  operation: 'remove' | 'upload' | 'delete_folder' | 'move_folder'
 ) {
   const user_id = Process('session.get', 'user_id');
   Process('models.system.log.file.save', {
     user_id,
     file_name,
     file_name2,
-    operation,
+    operation
   });
 }
 /**
@@ -225,7 +226,7 @@ function writeLog(
 function UploadFile(type: string, file: YaoFile, folder: string) {
   const filePath = saveFile(type, file, folder);
   return {
-    value: `/api/v1/fs/${type}/file/download?name=${filePath}`,
+    value: `/api/v1/fs/${type}/file/download?name=${filePath}`
   };
 }
 
@@ -347,8 +348,8 @@ function getFolderList(type: string, parent: string) {
 
   const userDir = getFolder(type);
 
-  const uploadFolder
-    = parentDir != '' ? `${userDir}/${parentDir}/` : `${userDir}/`;
+  const uploadFolder =
+    parentDir != '' ? `${userDir}/${parentDir}/` : `${userDir}/`;
 
   if (!Process('fs.system.Exists', uploadFolder)) {
     return [];
@@ -363,7 +364,7 @@ function getFolderList(type: string, parent: string) {
     return {
       label: d,
       value: parent != '' ? parent + '/' + d : d,
-      defer: true,
+      defer: true
     };
   });
 
@@ -440,11 +441,11 @@ function fileSearch(type: string, parentFolder: string, querysIn, payload) {
         name: baseName,
         path: fpath,
         url: `/api/v1/fs/${type}/file/download?name=${encodeURIComponent(
-          fpath,
+          fpath
         )}`,
         mime: mimeType,
         type: getFileTypeFromMimeType(mimeType),
-        time: date,
+        time: date
       } as FileList);
     }
   });
@@ -453,7 +454,7 @@ function fileSearch(type: string, parentFolder: string, querysIn, payload) {
   const { items, total } = PaginateArrayWithQuery(list2, querysIn, payload, [
     'name',
     'time',
-    'type',
+    'type'
   ]);
 
   items.forEach((item) => {
@@ -489,13 +490,13 @@ function getFileList(type: string, folder: string, keywords) {
         path: fpath,
         url: `/api/v1/fs/${type}/file/download?name=${fpath}`,
         mime: mimeType,
-        type: getFileTypeFromMimeType(mimeType),
+        type: getFileTypeFromMimeType(mimeType)
       } as FileList);
     }
   });
   if (keywords != null && keywords != '') {
     return list2.filter((f) =>
-      f.name.toLowerCase().includes(keywords.toLowerCase()),
+      f.name.toLowerCase().includes(keywords.toLowerCase())
     );
   }
   return list2;
@@ -524,7 +525,7 @@ function getFileTypeFromMimeType(mimeType) {
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
       'MS Excel',
     'application/x-ole-storage': 'MS WORD',
-    'application/zip': 'Zip',
+    'application/zip': 'Zip'
     // Add more MIME types and their corresponding file types as needed
   };
 
@@ -641,7 +642,7 @@ function convertToNestedArray(folderList: string[]): object[] {
     label: '',
     value: '',
     defer: true,
-    children: [],
+    children: []
   };
 
   // Iterate through each folder path
@@ -663,7 +664,7 @@ function convertToNestedArray(folderList: string[]): object[] {
           label: part,
           defer: true,
           value: currentNode.value ? `${currentNode.value}/${part}` : part,
-          children: [],
+          children: []
         };
         currentNode.children.push(foundNode);
       }

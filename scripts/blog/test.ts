@@ -10,28 +10,28 @@ import { Process } from '@yao/yao';
 const originObject = {
   methodCall: {
     methodName: {
-      _text: 'metaWeblog.newPost',
+      _text: 'metaWeblog.newPost'
     },
     params: {
       param: [
         {
           value: {
-            string: {},
-          },
+            string: {}
+          }
         },
         {
           value: {
             string: {
-              _text: 'user',
-            },
-          },
+              _text: 'user'
+            }
+          }
         },
         {
           value: {
             string: {
-              _text: 'password',
-            },
-          },
+              _text: 'password'
+            }
+          }
         },
         {
           value: {
@@ -39,84 +39,84 @@ const originObject = {
               member: [
                 {
                   name: {
-                    _text: 'categories',
+                    _text: 'categories'
                   },
                   value: {
                     array: {
-                      data: {},
-                    },
-                  },
+                      data: {}
+                    }
+                  }
                 },
                 {
                   name: {
-                    _text: 'dateCreated',
+                    _text: 'dateCreated'
                   },
                   value: {
                     'dateTime.iso8601': {
-                      _text: '20150901T11:10:51',
-                    },
-                  },
+                      _text: '20150901T11:10:51'
+                    }
+                  }
                 },
                 {
                   name: {
-                    _text: 'description',
+                    _text: 'description'
                   },
                   value: {
                     string: {
-                      _text: '\u003cdiv\u003e\u003cbr\u003e\u003c/div\u003e\u003cdiv\u003e\u003cspan\u003e开发规范\u003c/span\u003e\u003cdiv\u003e\u003cbr\u003e\u003c/div\u003e\u003cdiv\u003e开发包：ZEED\u003c/div\u003e\u003cdiv\u003e\u003cbr\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr\u003e\u003c/div\u003e\u003c/div\u003e\u003cbr /\u003e\u003cbr /\u003e\u003cdiv\u003e\u003ca title="来自为知笔记(Wiz)" href="http://www.wiz.cn/i/2b7cb674"\u003e来自为知笔记(Wiz)\u003c/a\u003e\u003c/div\u003e\u003cbr /\u003e\u003cbr /\u003e',
-                    },
-                  },
+                      _text:
+                        '\u003cdiv\u003e\u003cbr\u003e\u003c/div\u003e\u003cdiv\u003e\u003cspan\u003e开发规范\u003c/span\u003e\u003cdiv\u003e\u003cbr\u003e\u003c/div\u003e\u003cdiv\u003e开发包：ZEED\u003c/div\u003e\u003cdiv\u003e\u003cbr\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr\u003e\u003c/div\u003e\u003cdiv\u003e\u003cbr\u003e\u003c/div\u003e\u003c/div\u003e\u003cbr /\u003e\u003cbr /\u003e\u003cdiv\u003e\u003ca title="来自为知笔记(Wiz)" href="http://www.wiz.cn/i/2b7cb674"\u003e来自为知笔记(Wiz)\u003c/a\u003e\u003c/div\u003e\u003cbr /\u003e\u003cbr /\u003e'
+                    }
+                  }
                 },
                 {
                   name: {
-                    _text: 'mt_keywords',
+                    _text: 'mt_keywords'
                   },
                   value: {
-                    string: {},
-                  },
+                    string: {}
+                  }
                 },
                 {
                   name: {
-                    _text: 'post_type',
-                  },
-                  value: {
-                    string: {
-                      _text: 'post',
-                    },
-                  },
-                },
-                {
-                  name: {
-                    _text: 'title',
+                    _text: 'post_type'
                   },
                   value: {
                     string: {
-                      _text: '开发规范',
-                    },
-                  },
+                      _text: 'post'
+                    }
+                  }
                 },
-              ],
-            },
-          },
+                {
+                  name: {
+                    _text: 'title'
+                  },
+                  value: {
+                    string: {
+                      _text: '开发规范'
+                    }
+                  }
+                }
+              ]
+            }
+          }
         },
         {
           value: {
             boolean: {
-              _text: '1',
-            },
-          },
-        },
-      ],
-    },
-  },
+              _text: '1'
+            }
+          }
+        }
+      ]
+    }
+  }
 };
 
-const targetObj
-= {
+const targetObj = {
   _declaration: {
     _attributes: {
-      version: '1.0',
-    },
+      version: '1.0'
+    }
   },
   methodCall: {
     methodName: 'metaWeblog.newPost',
@@ -127,15 +127,16 @@ const targetObj
       {
         categories: [],
         dateCreated: '20230212T10:25:48',
-        description: '\u003cdiv\u003e递归删除目录与子目录下所有的node_modules目录\u003c/div\u003e\r\n\u003cdiv\u003e\u0026nbsp;\u003c/div\u003e\r\n\u003cdiv\u003enpx rimraf ./**/node_modules\u003c/div\u003e\r\n\u003cbr /\u003e\u003cbr /\u003e\u003cdiv\u003e\u003ca title="来自为知笔记(Wiz)" href="http://www.wiz.cn/i/2b7cb674"\u003e来自为知笔记(Wiz)\u003c/a\u003e\u003c/div\u003e\u003cbr /\u003e\u003cbr /\u003e',
+        description:
+          '\u003cdiv\u003e递归删除目录与子目录下所有的node_modules目录\u003c/div\u003e\r\n\u003cdiv\u003e\u0026nbsp;\u003c/div\u003e\r\n\u003cdiv\u003enpx rimraf ./**/node_modules\u003c/div\u003e\r\n\u003cbr /\u003e\u003cbr /\u003e\u003cdiv\u003e\u003ca title="来自为知笔记(Wiz)" href="http://www.wiz.cn/i/2b7cb674"\u003e来自为知笔记(Wiz)\u003c/a\u003e\u003c/div\u003e\u003cbr /\u003e\u003cbr /\u003e',
         post_type: 'post',
         mt_keywords: '',
         title: '2023年2月12日 递归删除目录与子目录下所有的node',
-        wp_slug: 'ef66d509a1fbf4f4ed40a17f2978d3f0',
+        wp_slug: 'ef66d509a1fbf4f4ed40a17f2978d3f0'
       },
-      1,
-    ],
-  },
+      1
+    ]
+  }
 };
 
 const convertData = (obj) => {
@@ -152,7 +153,8 @@ const convertData = (obj) => {
     const key = keys[0];
     if (key === '_text') {
       return obj[key];
-    } if (key === 'value') {
+    }
+    if (key === 'value') {
       return convertData(obj[key]);
     }
     const type = key;
@@ -175,7 +177,7 @@ const convertData = (obj) => {
       const result = {};
       for (const member of members) {
         result[member.name._text] = convertData(
-          member.value ? member.value : member,
+          member.value ? member.value : member
         );
       }
       return result;
@@ -196,9 +198,9 @@ const convertData = (obj) => {
 const objectSource1 = {
   methodCall: {
     methodName: {
-      _text: 'metaWeblog.getRecentPosts',
-    },
-  },
+      _text: 'metaWeblog.getRecentPosts'
+    }
+  }
 };
 // const targetObj2 = convertData(objectSource1);
 // console.log(JSON.stringify(targetObj2, null, 2));
@@ -238,7 +240,12 @@ function isDateTimeOrDate(value) {
     return false;
   }
   // Check if the date has valid time components
-  if (date.getHours() !== 0 || date.getMinutes() !== 0 || date.getSeconds() !== 0 || date.getMilliseconds() !== 0) {
+  if (
+    date.getHours() !== 0 ||
+    date.getMinutes() !== 0 ||
+    date.getSeconds() !== 0 ||
+    date.getMilliseconds() !== 0
+  ) {
     return true; // Assuming a datetime
   }
   return true; // Assuming a date
@@ -284,49 +291,48 @@ function convertJson2RpcXml(data) {
   const xml = `<?xml version="1.0" encoding="utf-8"?><methodResponse><params><param>${convertJs2xml(data)}</param></params></methodResponse>`;
   console.log('response:', xml);
   return {
-    content: xml,
+    content: xml
   };
 }
 
-const obj1 = [{
-  description: 'description',
-  htmlUrl: 'http://google.com',
-  rssUrl: 'rssUrl123',
-  title: 'title',
-  categoryid: 1,
-}, {
-  description: 'description',
-  htmlUrl: 'http://baidu.com',
-  rssUrl: 'rssUrl222',
-  title: 'title222',
-  categoryid: 2,
-}];
+const obj1 = [
+  {
+    description: 'description',
+    htmlUrl: 'http://google.com',
+    rssUrl: 'rssUrl123',
+    title: 'title',
+    categoryid: 1
+  },
+  {
+    description: 'description',
+    htmlUrl: 'http://baidu.com',
+    rssUrl: 'rssUrl222',
+    title: 'title222',
+    categoryid: 2
+  }
+];
 
-const blogs2
-    = [
-      {
-        categories: [
-          '网络测速',
-          '网络测速2',
-        ],
-        dateCreated: '2023-11-24T21:27:59+08:00',
-        description: '\u003cp\u003esssssssssddd\u003c/p\u003e',
-        enclosure: '',
-        link: '',
-        mt_allow_comments: '',
-        mt_allow_pings: '',
-        mt_convert_breaks: '',
-        mt_excerpt: '',
-        mt_keywords: null,
-        mt_text_more: '',
-        permalink: '',
-        postid: 1,
-        source: '',
-        title: 'ssssssssssss',
-        userid: 1,
-        wp_slug: null,
-      },
-    ];
+const blogs2 = [
+  {
+    categories: ['网络测速', '网络测速2'],
+    dateCreated: '2023-11-24T21:27:59+08:00',
+    description: '\u003cp\u003esssssssssddd\u003c/p\u003e',
+    enclosure: '',
+    link: '',
+    mt_allow_comments: '',
+    mt_allow_pings: '',
+    mt_convert_breaks: '',
+    mt_excerpt: '',
+    mt_keywords: null,
+    mt_text_more: '',
+    permalink: '',
+    postid: 1,
+    source: '',
+    title: 'ssssssssssss',
+    userid: 1,
+    wp_slug: null
+  }
+];
 // const xml1 = convertJson2RpcXml(blogs2)
 // console.log(xml1)
 
@@ -334,7 +340,7 @@ function getFileInfoFromName(fname?) {
   let filename = fname;
   const info = {
     fname: '',
-    ext: '',
+    ext: ''
   };
   if (!fname) {
     info.fname = Process('utils.str.UUID').replaceAll('-', '');

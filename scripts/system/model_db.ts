@@ -45,7 +45,7 @@ export function getModelFromDB(modelId: string | number) {
     wheres.push({
       method: 'where',
       column: 'id',
-      value: modelId,
+      value: modelId
     });
   } else {
     wheres.push({ column: 'identity', value: modelId });
@@ -55,8 +55,8 @@ export function getModelFromDB(modelId: string | number) {
   const [line] = Process('models.ddic.model.get', {
     wheres: wheres,
     withs: {
-      columns: {},
-    },
+      columns: {}
+    }
   });
   if (line != null) {
     // 数据库表信息转成模型定义
@@ -75,7 +75,7 @@ export function ConvertTableLineToModel(line: AmisModel): YaoModelEx {
     table: {},
     option: {},
     relations: {},
-    columns: [],
+    columns: []
   } as YaoModelEx;
   model.id = line.id;
   model.ID = line.identity;
@@ -205,7 +205,7 @@ export function ConvertTableLineToModel(line: AmisModel): YaoModelEx {
 export function loadModeltoMemory(
   modelDsl: YaoModel.ModelDSL,
   migrate?: boolean,
-  force?: boolean,
+  force?: boolean
 ) {
   if (!Array.isArray(modelDsl.columns) || !modelDsl.columns?.length) {
     return;
@@ -223,7 +223,7 @@ export function loadModeltoMemory(
     let err = Process(
       `models.${modelYao.ID}.load`,
       fname,
-      JSON.stringify(modelYao),
+      JSON.stringify(modelYao)
     );
     if (!err && migrate) {
       err = migrateModel(modelYao.ID, force);
@@ -263,7 +263,7 @@ export function migrateModel(modelId: string, forceIn?: boolean) {
 
     throw new Exception(
       `Message:${err.Message},Number:${err.Number},SQLState:${sqlStateString}`,
-      500,
+      500
     );
   }
 

@@ -18,7 +18,7 @@ function testAuth() {
       name: 'file_manager',
       order: 0,
       parent: 0,
-      updated_at: '2023-11-29T19:00:00+08:00',
+      updated_at: '2023-11-29T19:00:00+08:00'
     },
     {
       children: [
@@ -37,8 +37,8 @@ function testAuth() {
           name: 'sub_file_manager',
           order: 0,
           parent: 2,
-          updated_at: null,
-        },
+          updated_at: null
+        }
       ],
       created_at: '2023-11-29T19:00:17+08:00',
       desc: '文件操作2',
@@ -53,8 +53,8 @@ function testAuth() {
       name: 'file_manager2',
       order: 0,
       parent: 0,
-      updated_at: null,
-    },
+      updated_at: null
+    }
   ];
   // 收集每一个对象都有哪些操作
   const xxx = collectAndCombineData(permissions, 'folders', 'folder_method');
@@ -78,7 +78,7 @@ function testAuth() {
       name: 'file_manager',
       order: 0,
       parent: 0,
-      updated_at: '2023-11-29T19:00:00+08:00',
+      updated_at: '2023-11-29T19:00:00+08:00'
     },
     {
       children: [
@@ -97,8 +97,8 @@ function testAuth() {
           name: 'sub_file_manager',
           order: 0,
           parent: 2,
-          updated_at: null,
-        },
+          updated_at: null
+        }
       ],
       created_at: '2023-11-29T19:00:17+08:00',
       desc: '文件操作2',
@@ -113,15 +113,15 @@ function testAuth() {
       name: 'file_manager2',
       order: 0,
       parent: 0,
-      updated_at: null,
-    },
+      updated_at: null
+    }
   ];
   // 反过来收集，操作都有哪些对象
   const xxx2 = collectAndCombineData(
     permissions2,
     'folder_method',
     'folders',
-    'ALL',
+    'ALL'
   );
   console.log('xxx', xxx2);
 }

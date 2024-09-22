@@ -132,7 +132,7 @@ export function ClearFalsyKeys(target) {
     if (Array.isArray(value)) {
       const newArray = value.map((item) => ClearFalsyKeys(item));
       result[key] = newArray.filter(
-        (item) => item !== undefined && item !== null,
+        (item) => item !== undefined && item !== null
       ); // remove falsy values from array
 
       if (value.length == 0) {
@@ -249,7 +249,7 @@ export function deleteObjectKey(obj: any, object_key: string): void {
 
 export function areObjectsEqual(
   obj1: object | Array<object>,
-  obj2: object | Array<object>,
+  obj2: object | Array<object>
 ) {
   // Check if both objects are of type object
   if (typeof obj1 !== 'object' || typeof obj2 !== 'object') {

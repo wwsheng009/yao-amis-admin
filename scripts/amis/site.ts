@@ -16,8 +16,8 @@ function MenuSoybean() {
             title: '分析页',
             requiresAuth: true,
             icon: 'icon-park-outline:analysis',
-            i18nTitle: 'routes.dashboard.analysis',
-          },
+            i18nTitle: 'routes.dashboard.analysis'
+          }
         },
         {
           name: 'dashboard_workbench',
@@ -27,16 +27,16 @@ function MenuSoybean() {
             title: '工作台',
             requiresAuth: true,
             icon: 'icon-park-outline:workbench',
-            i18nTitle: 'routes.dashboard.workbench',
-          },
-        },
+            i18nTitle: 'routes.dashboard.workbench'
+          }
+        }
       ],
       meta: {
         title: '仪表盘',
         icon: 'mdi:monitor-dashboard',
         order: 1,
-        i18nTitle: 'routes.dashboard._value',
-      },
+        i18nTitle: 'routes.dashboard._value'
+      }
     },
     {
       name: 'document',
@@ -51,8 +51,8 @@ function MenuSoybean() {
             title: 'vue文档',
             i18nTitle: 'routes.document.vue',
             requiresAuth: true,
-            icon: 'logos:vue',
-          },
+            icon: 'logos:vue'
+          }
         },
         {
           name: 'document_vite',
@@ -62,8 +62,8 @@ function MenuSoybean() {
             title: 'vite文档',
             i18nTitle: 'routes.document.vite',
             requiresAuth: true,
-            icon: 'logos:vitejs',
-          },
+            icon: 'logos:vitejs'
+          }
         },
         {
           name: 'document_naive',
@@ -73,8 +73,8 @@ function MenuSoybean() {
             title: 'naive文档',
             i18nTitle: 'routes.document.naive',
             requiresAuth: true,
-            icon: 'logos:naiveui',
-          },
+            icon: 'logos:naiveui'
+          }
         },
         {
           name: 'document_project',
@@ -84,8 +84,8 @@ function MenuSoybean() {
             title: '项目文档',
             i18nTitle: 'routes.document.project',
             requiresAuth: true,
-            localIcon: 'logo',
-          },
+            localIcon: 'logo'
+          }
         },
         {
           name: 'document_project-link',
@@ -95,16 +95,16 @@ function MenuSoybean() {
             i18nTitle: 'routes.document.project-link',
             requiresAuth: true,
             localIcon: 'logo',
-            href: 'https://admin-docs.soybeanjs.cn/',
-          },
-        },
+            href: 'https://admin-docs.soybeanjs.cn/'
+          }
+        }
       ],
       meta: {
         title: '文档',
         i18nTitle: 'routes.document._value',
         icon: 'mdi:file-document-multiple-outline',
-        order: 2,
-      },
+        order: 2
+      }
     },
     {
       name: 'component',
@@ -119,8 +119,8 @@ function MenuSoybean() {
             title: '按钮',
             i18nTitle: 'routes.component.button',
             requiresAuth: true,
-            icon: 'mdi:button-cursor',
-          },
+            icon: 'mdi:button-cursor'
+          }
         },
         {
           name: 'component_card',
@@ -130,8 +130,8 @@ function MenuSoybean() {
             title: '卡片',
             i18nTitle: 'routes.component.card',
             requiresAuth: true,
-            icon: 'mdi:card-outline',
-          },
+            icon: 'mdi:card-outline'
+          }
         },
         {
           name: 'component_table',
@@ -141,16 +141,16 @@ function MenuSoybean() {
             title: '表格',
             i18nTitle: 'routes.component.table',
             requiresAuth: true,
-            icon: 'mdi:table-large',
-          },
-        },
+            icon: 'mdi:table-large'
+          }
+        }
       ],
       meta: {
         title: '组件示例',
         i18nTitle: 'routes.component._value',
         icon: 'cib:app-store',
-        order: 3,
-      },
+        order: 3
+      }
     },
     {
       name: 'plugin',
@@ -170,8 +170,8 @@ function MenuSoybean() {
                 title: 'ECharts',
                 i18nTitle: 'routes.plugin.charts.echarts',
                 requiresAuth: true,
-                icon: 'simple-icons:apacheecharts',
-              },
+                icon: 'simple-icons:apacheecharts'
+              }
             },
             {
               name: 'plugin_charts_antv',
@@ -181,15 +181,15 @@ function MenuSoybean() {
                 title: 'AntV',
                 i18nTitle: 'routes.plugin.charts.antv',
                 requiresAuth: true,
-                icon: 'simple-icons:antdesign',
-              },
-            },
+                icon: 'simple-icons:antdesign'
+              }
+            }
           ],
           meta: {
             title: '图表',
             i18nTitle: 'routes.plugin.charts._value',
-            icon: 'mdi:chart-areaspline',
-          },
+            icon: 'mdi:chart-areaspline'
+          }
         },
         {
           name: 'plugin_map',
@@ -199,8 +199,8 @@ function MenuSoybean() {
             title: '地图',
             i18nTitle: 'routes.plugin.map',
             requiresAuth: true,
-            icon: 'mdi:map',
-          },
+            icon: 'mdi:map'
+          }
         },
         {
           name: 'plugin_video',
@@ -210,8 +210,8 @@ function MenuSoybean() {
             title: '视频',
             i18nTitle: 'routes.plugin.video',
             requiresAuth: true,
-            icon: 'mdi:video',
-          },
+            icon: 'mdi:video'
+          }
         },
         {
           name: 'plugin_editor',
@@ -226,8 +226,8 @@ function MenuSoybean() {
                 title: '富文本编辑器',
                 i18nTitle: 'routes.plugin.editor.quill',
                 requiresAuth: true,
-                icon: 'mdi:file-document-edit-outline',
-              },
+                icon: 'mdi:file-document-edit-outline'
+              }
             },
             {
               name: 'plugin_editor_markdown',
@@ -237,15 +237,15 @@ function MenuSoybean() {
                 title: 'markdown编辑器',
                 i18nTitle: 'routes.plugin.editor.markdown',
                 requiresAuth: true,
-                icon: 'ri:markdown-line',
-              },
-            },
+                icon: 'ri:markdown-line'
+              }
+            }
           ],
           meta: {
             title: '编辑器',
             i18nTitle: 'routes.plugin.editor._value',
-            icon: 'icon-park-outline:editor',
-          },
+            icon: 'icon-park-outline:editor'
+          }
         },
         {
           name: 'plugin_swiper',
@@ -255,8 +255,8 @@ function MenuSoybean() {
             title: 'Swiper插件',
             i18nTitle: 'routes.plugin.swiper',
             requiresAuth: true,
-            icon: 'simple-icons:swiper',
-          },
+            icon: 'simple-icons:swiper'
+          }
         },
         {
           name: 'plugin_copy',
@@ -266,8 +266,8 @@ function MenuSoybean() {
             title: '剪贴板',
             i18nTitle: 'routes.plugin.copy',
             requiresAuth: true,
-            icon: 'mdi:clipboard-outline',
-          },
+            icon: 'mdi:clipboard-outline'
+          }
         },
         {
           name: 'plugin_icon',
@@ -277,8 +277,8 @@ function MenuSoybean() {
             title: '图标',
             i18nTitle: 'routes.plugin.icon',
             requiresAuth: true,
-            localIcon: 'custom-icon',
-          },
+            localIcon: 'custom-icon'
+          }
         },
         {
           name: 'plugin_print',
@@ -288,16 +288,16 @@ function MenuSoybean() {
             title: '打印',
             i18nTitle: 'routes.plugin.print',
             requiresAuth: true,
-            icon: 'mdi:printer',
-          },
-        },
+            icon: 'mdi:printer'
+          }
+        }
       ],
       meta: {
         title: '插件示例',
         i18nTitle: 'routes.plugin._value',
         icon: 'clarity:plugin-line',
-        order: 4,
-      },
+        order: 4
+      }
     },
     {
       name: 'auth-demo',
@@ -312,8 +312,8 @@ function MenuSoybean() {
             title: '权限切换',
             i18nTitle: 'routes.auth-demo.permission',
             requiresAuth: true,
-            icon: 'ic:round-construction',
-          },
+            icon: 'ic:round-construction'
+          }
         },
         {
           name: 'auth-demo_super',
@@ -323,16 +323,16 @@ function MenuSoybean() {
             title: '超级管理员可见',
             i18nTitle: 'routes.auth-demo.super',
             requiresAuth: true,
-            icon: 'ic:round-supervisor-account',
-          },
-        },
+            icon: 'ic:round-supervisor-account'
+          }
+        }
       ],
       meta: {
         title: '权限示例',
         i18nTitle: 'routes.auth-demo._value',
         icon: 'ic:baseline-security',
-        order: 5,
-      },
+        order: 5
+      }
     },
     {
       name: 'function',
@@ -347,8 +347,8 @@ function MenuSoybean() {
             title: 'Tab',
             i18nTitle: 'routes.function.tab',
             requiresAuth: true,
-            icon: 'ic:round-tab',
-          },
+            icon: 'ic:round-tab'
+          }
         },
         {
           name: 'function_tab-detail',
@@ -359,8 +359,8 @@ function MenuSoybean() {
             requiresAuth: true,
             hide: true,
             activeMenu: 'function_tab',
-            icon: 'ic:round-tab',
-          },
+            icon: 'ic:round-tab'
+          }
         },
         {
           name: 'function_tab-multi-detail',
@@ -372,16 +372,16 @@ function MenuSoybean() {
             hide: true,
             multiTab: true,
             activeMenu: 'function_tab',
-            icon: 'ic:round-tab',
-          },
-        },
+            icon: 'ic:round-tab'
+          }
+        }
       ],
       meta: {
         title: '功能',
         i18nTitle: 'routes.function._value',
         icon: 'icon-park-outline:all-application',
-        order: 6,
-      },
+        order: 6
+      }
     },
     {
       name: 'exception',
@@ -396,8 +396,8 @@ function MenuSoybean() {
             title: '异常页403',
             i18nTitle: 'routes.exception.403',
             requiresAuth: true,
-            icon: 'ic:baseline-block',
-          },
+            icon: 'ic:baseline-block'
+          }
         },
         {
           name: 'exception_404',
@@ -407,8 +407,8 @@ function MenuSoybean() {
             title: '异常页404',
             i18nTitle: 'routes.exception.404',
             requiresAuth: true,
-            icon: 'ic:baseline-web-asset-off',
-          },
+            icon: 'ic:baseline-web-asset-off'
+          }
         },
         {
           name: 'exception_500',
@@ -418,16 +418,16 @@ function MenuSoybean() {
             title: '异常页500',
             i18nTitle: 'routes.exception.500',
             requiresAuth: true,
-            icon: 'ic:baseline-wifi-off',
-          },
-        },
+            icon: 'ic:baseline-wifi-off'
+          }
+        }
       ],
       meta: {
         i18nTitle: 'routes.exception._value',
         title: '异常页',
         icon: 'ant-design:exception-outlined',
-        order: 7,
-      },
+        order: 7
+      }
     },
     {
       name: 'multi-menu',
@@ -447,8 +447,8 @@ function MenuSoybean() {
                 title: '二级菜单',
                 i18nTitle: 'routes.multi-menu.first.second',
                 requiresAuth: true,
-                icon: 'mdi:menu',
-              },
+                icon: 'mdi:menu'
+              }
             },
             {
               name: 'multi-menu_first_second-new',
@@ -463,30 +463,30 @@ function MenuSoybean() {
                     title: '三级菜单',
                     i18nTitle: 'routes.multi-menu.first.second-new.third',
                     requiresAuth: true,
-                    icon: 'mdi:menu',
-                  },
-                },
+                    icon: 'mdi:menu'
+                  }
+                }
               ],
               meta: {
                 title: '二级菜单(有子菜单)',
                 i18nTitle: 'routes.multi-menu.first.second-new._value',
-                icon: 'mdi:menu',
-              },
-            },
+                icon: 'mdi:menu'
+              }
+            }
           ],
           meta: {
             title: '一级菜单',
             i18nTitle: 'routes.multi-menu.first._value',
-            icon: 'mdi:menu',
-          },
-        },
+            icon: 'mdi:menu'
+          }
+        }
       ],
       meta: {
         title: '多级菜单',
         i18nTitle: 'routes.multi-menu._value',
         icon: 'carbon:menu',
-        order: 8,
-      },
+        order: 8
+      }
     },
     {
       name: 'management',
@@ -501,8 +501,8 @@ function MenuSoybean() {
             title: '权限管理',
             i18nTitle: 'routes.management.auth',
             requiresAuth: true,
-            icon: 'ic:baseline-security',
-          },
+            icon: 'ic:baseline-security'
+          }
         },
         {
           name: 'management_role',
@@ -512,8 +512,8 @@ function MenuSoybean() {
             title: '角色管理',
             i18nTitle: 'routes.management.role',
             requiresAuth: true,
-            icon: 'carbon:user-role',
-          },
+            icon: 'carbon:user-role'
+          }
         },
         {
           name: 'management_user',
@@ -523,8 +523,8 @@ function MenuSoybean() {
             title: '用户管理',
             i18nTitle: 'routes.management.user',
             requiresAuth: true,
-            icon: 'ic:round-manage-accounts',
-          },
+            icon: 'ic:round-manage-accounts'
+          }
         },
         {
           name: 'management_route',
@@ -534,16 +534,16 @@ function MenuSoybean() {
             title: '路由管理',
             i18nTitle: 'routes.management.route',
             requiresAuth: true,
-            icon: 'material-symbols:route',
-          },
-        },
+            icon: 'material-symbols:route'
+          }
+        }
       ],
       meta: {
         title: '系统管理',
         i18nTitle: 'routes.management._value',
         icon: 'carbon:cloud-service-management',
-        order: 9,
-      },
+        order: 9
+      }
     },
     {
       name: 'about',
@@ -556,8 +556,8 @@ function MenuSoybean() {
         keepAlive: true,
         singleLayout: 'basic',
         icon: 'fluent:book-information-24-regular',
-        order: 10,
-      },
+        order: 10
+      }
     },
     {
       name: 'amis-demo_form',
@@ -569,14 +569,14 @@ function MenuSoybean() {
         keepAlive: true,
         singleLayout: 'basic',
         icon: 'fluent:book-information-24-regular',
-        order: 11,
-      },
-    },
+        order: 11
+      }
+    }
   ];
 
   return {
     routes: menus,
-    home: 'dashboard_analysis',
+    home: 'dashboard_analysis'
   };
 }
 
@@ -598,12 +598,12 @@ function Menu() {
     pages: [
       ...getHomeMenu(),
       {
-        children: pages,
+        children: pages
       },
       {
-        children: getSettingMenu(),
-      },
-    ],
+        children: getSettingMenu()
+      }
+    ]
   };
   return siteMenu;
 }
@@ -635,15 +635,15 @@ function getSuperUserMenu() {
       ...getModelMenu(),
       ...getSystemMenu(),
       {
-        children: pages_in,
+        children: pages_in
       },
       {
-        children: editorPages,
+        children: editorPages
       },
       {
-        children: getSettingMenu(),
-      },
-    ],
+        children: getSettingMenu()
+      }
+    ]
   };
   return siteMenu;
 }
@@ -658,12 +658,12 @@ function getHomeMenu() {
           body: [
             {
               type: 'tpl',
-              tpl: '欢迎使用管理平台',
-            },
-          ],
-        },
-      ],
-    },
+              tpl: '欢迎使用管理平台'
+            }
+          ]
+        }
+      ]
+    }
   ];
 }
 function getSystemMenu() {
@@ -679,49 +679,49 @@ function getSystemMenu() {
               label: '菜单管理',
               icon: 'fas fa-bars',
               schemaApi: '/api/v1/amis/pages/admin.menu',
-              url: 'menu',
+              url: 'menu'
             },
             {
               label: '部门管理',
               icon: 'fab fa-dyalog',
-              schemaApi: '/api/v1/amis/pages/admin.dept',
+              schemaApi: '/api/v1/amis/pages/admin.dept'
             },
             {
               label: '修改密码',
               icon: 'fab fa-app-store-ios',
-              schemaApi: '/api/v1/amis/pages/user.password_change',
+              schemaApi: '/api/v1/amis/pages/user.password_change'
             },
             {
               label: '权限管理',
               icon: 'fa fa-group',
               schemaApi: '/api/v1/amis/pages/admin.permission',
-              url: 'admin.permission',
+              url: 'admin.permission'
             },
             {
               label: '角色管理',
               icon: 'fa fa-group',
               schemaApi: '/api/v1/amis/pages/admin.role',
-              url: 'admin.role',
+              url: 'admin.role'
             },
             {
               label: '用户管理',
               icon: 'fa fa-user',
               schemaApi: '/api/v1/amis/pages/admin.user',
-              url: 'admin.user',
+              url: 'admin.user'
             },
             {
               label: '文件管理',
               icon: 'fa fa-file',
               schemaApi: '/api/v1/amis/pages/admin.file',
-              url: '/admin/file/:file_type',
+              url: '/admin/file/:file_type'
             },
             {
               label: '文件管理',
               icon: 'fa fa-file',
               schemaApi: '/api/v1/amis/pages/admin.file2',
-              url: 'admin.file',
-            },
-          ],
+              url: 'admin.file'
+            }
+          ]
         },
         {
           label: '博客管理',
@@ -732,30 +732,30 @@ function getSystemMenu() {
               label: '博客管理',
               icon: 'fas fa-blog',
               schemaApi: '/api/v1/system/schema/blog.blog/crud-all',
-              url: 'blog.blog',
+              url: 'blog.blog'
             },
             {
               label: '文章管理',
               icon: 'fa fa-file',
               schemaApi: '/api/v1/amis/pages/blog.post',
-              url: 'blog.post',
+              url: 'blog.post'
             },
             {
               label: '标签管理',
               icon: 'fas fa-tag',
               schemaApi: '/api/v1/system/schema/blog.tag/crud-all',
-              url: 'blog.tag',
+              url: 'blog.tag'
             },
             {
               label: '分类管理',
               icon: 'fa far fa-flag',
               schemaApi: '/api/v1/system/schema/blog.category/crud-all',
-              url: 'blog.category',
-            },
-          ],
-        },
-      ],
-    },
+              url: 'blog.category'
+            }
+          ]
+        }
+      ]
+    }
   ];
 }
 function getSettingMenu() {
@@ -768,28 +768,28 @@ function getSettingMenu() {
           label: '个人信息',
           icon: 'fas fa-info',
           schemaApi: '/api/v1/amis/pages/user.info',
-          url: 'user/info',
+          url: 'user/info'
         },
         {
           label: '关于',
           icon: 'fa fa-info',
           schemaApi: '/api/v1/amis/pages/system.about',
-          url: '/about',
+          url: '/about'
         },
         {
           label: '退出',
           icon: 'fas fa-outdent',
           schemaApi: '/api/v1/amis/pages/user.logout',
-          url: '/logout',
+          url: '/logout'
         },
         {
           label: '404',
           schemaApi: '/api/v1/amis/pages/system.404',
           isDefaultPage: true,
-          visible: false,
-        },
-      ],
-    },
+          visible: false
+        }
+      ]
+    }
   ];
 }
 function getModelMenu() {
@@ -802,60 +802,60 @@ function getModelMenu() {
               icon: 'fa fa-list',
               label: '列表',
               schemaApi: '/api/v1/amis/pages/model.list',
-              url: 'list',
+              url: 'list'
             },
             {
               label: '新增',
               schemaApi: '/api/v1/amis/pages/model.create',
               url: 'model.create',
-              icon: 'fa fa-plus',
+              icon: 'fa fa-plus'
             },
             {
               label: '模型导入',
               icon: 'fas fa-file-import',
               schemaApi: '/api/v1/amis/pages/model.import',
-              url: 'import',
+              url: 'import'
             },
             {
               label: 'GPT生成模型',
               icon: 'fas fa-braille ',
               schemaApi: '/api/v1/amis/pages/admin.admin',
-              url: 'gpt',
+              url: 'gpt'
             },
             {
               label: '修改',
               schemaApi: '/api/v1/amis/pages/model.create',
-              url: '/model/create/:id/',
+              url: '/model/create/:id/'
             },
             {
               label: '模型关联Api',
               icon: 'fas fa-location-arrow ',
               schemaApi: '/api/v1/amis/pages/api.model',
-              url: 'apilist',
+              url: 'apilist'
             },
             {
               label: '代码生成',
               icon: 'fas fa-code',
               schemaApi: '/api/v1/amis/pages/studio.code',
-              url: 'code_generate',
+              url: 'code_generate'
             },
             {
               label: '搜索帮助维护',
               icon: 'fab fa-hire-a-helper',
               schemaApi: '/api/v1/system/schema/ddic.selectoption/crud-all',
-              url: 'selectoption',
-            },
+              url: 'selectoption'
+            }
           ],
           icon: 'fa fa-cube',
           label: '模型维护',
           rewrite: '/model/list',
-          url: '/model',
+          url: '/model'
         },
         {
           label: '表数据管理',
           icon: 'fa fa-book',
           schemaApi: '/api/v1/amis/pages/table.maintainer',
-          url: '/table_maintain',
+          url: '/table_maintain'
         },
         {
           label: 'Studio',
@@ -867,48 +867,48 @@ function getModelMenu() {
               label: '表格字段',
               icon: 'fas fa-table',
               schemaApi: '/api/v1/amis/pages/table.fields',
-              url: '/table/fields',
+              url: '/table/fields'
             },
             {
               label: '代码生成',
               icon: 'fas fa-code',
               schemaApi: '/api/v1/amis/pages/studio.code',
-              url: '/code',
+              url: '/code'
             },
             {
               label: 'API列表',
               icon: 'fas fa-list-ol',
               schemaApi: '/api/v1/amis/pages/api.list',
-              url: '/api/list',
+              url: '/api/list'
             },
             {
               label: 'API测试',
               icon: 'fas fa-location-arrow ',
               schemaApi: '/api/v1/amis/pages/api.test',
-              url: '/api/test',
+              url: '/api/test'
             },
             {
               label: '字体列表',
               icon: 'fab fa-font-awesome',
               schemaApi: '/api/v1/amis/pages/studio.font',
-              url: '/font',
+              url: '/font'
             },
             {
               schemaApi: '/api/v1/amis/pages/studio.chart',
               label: '图表编辑器',
               icon: 'fas fa-chart-line',
-              url: '/chart',
+              url: '/chart'
             },
             {
               schemaApi: '/api/v1/amis/pages/studio.editor',
               label: 'Amis-编辑器',
               icon: 'far fa-file-code',
-              url: '/editor',
-            },
-          ],
-        },
-      ],
-    },
+              url: '/editor'
+            }
+          ]
+        }
+      ]
+    }
   ];
 }
 // 根据用户信息，返回菜单
