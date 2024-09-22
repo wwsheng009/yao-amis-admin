@@ -48,96 +48,96 @@ export function GetColumnTypeList() {
   return [
     {
       label: '字符串',
-      value: 'string',
+      value: 'string'
     },
     {
       label: '文本',
-      value: 'text',
+      value: 'text'
     },
     {
       label: '富文本',
-      value: 'richtext',
+      value: 'richtext'
     },
     {
       label: 'JSON',
-      value: 'json',
+      value: 'json'
     },
     {
       label: '代码',
-      value: 'code',
+      value: 'code'
     },
     {
       label: '链接',
-      value: 'url',
+      value: 'url'
     },
     {
       label: '日期',
-      value: 'date',
+      value: 'date'
     },
     {
       label: '日期时间',
-      value: 'datetime',
+      value: 'datetime'
     },
     {
       label: '时间',
-      value: 'time',
+      value: 'time'
     },
     {
       label: '图片',
-      value: 'image',
+      value: 'image'
     },
     {
       label: '图片集',
-      value: 'images',
+      value: 'images'
     },
     {
       label: '视频',
-      value: 'video',
+      value: 'video'
     },
     {
       label: '文件',
-      value: 'file',
+      value: 'file'
     },
     {
       label: '手机号码',
-      value: 'phone',
+      value: 'phone'
     },
     {
       label: '邮箱',
-      value: 'email',
+      value: 'email'
     },
     {
       label: '颜色',
-      value: 'color',
+      value: 'color'
     },
     {
       label: '自增ID',
-      value: 'id',
+      value: 'id'
     },
     {
       label: '整型',
-      value: 'integer',
+      value: 'integer'
     },
     {
       label: '浮点数',
-      value: 'float',
+      value: 'float'
     },
     {
       label: '双精度',
-      value: 'double',
+      value: 'double'
     },
     {
       label: '小数',
-      value: 'decimal',
+      value: 'decimal'
     },
     {
       label: '布尔型',
-      value: 'boolean',
+      value: 'boolean'
     },
     {
       label: '枚举型',
-      value: 'enum',
-    },
+      value: 'enum'
+    }
   ];
 }
 
@@ -542,8 +542,8 @@ export function column2AmisFormViewColumn(column) {
       url: `/api/v1/system/model/${column.check_model}/select_options`,
       data: {
         _label: column.check_model_label || 'name',
-        _value: column.check_model_value || 'id',
-      },
+        _value: column.check_model_value || 'id'
+      }
     };
   }
   // 布尔
@@ -580,7 +580,7 @@ export function isDateTimeType(column) {
  * @param {object} column 数据库表列定义
  * @returns amis form item 定义
  */
-export function column2AmisFormEditColumn(column) {
+export function column2AmisFormEditColumn(column: YaoModelColumnEx) {
   //   const name = column.name.toUpperCase();
   const newColumn = {} as AmisColumn;
   newColumn.name = column.name;
@@ -728,8 +728,8 @@ export function column2AmisFormEditColumn(column) {
           column.option &&
           column.option.map((option) => {
             return {
-              label: option,
-              value: option,
+              label: option as string,
+              value: option
             };
           });
         newColumn.options = options;
@@ -815,8 +815,8 @@ export function column2AmisFormEditColumn(column) {
       url: `/api/v1/system/model/${column.check_model}/select_options`,
       data: {
         _label: labelField,
-        _value: column.check_model_value || 'id',
-      },
+        _value: column.check_model_value || 'id'
+      }
     };
   }
   return newColumn;

@@ -2,7 +2,10 @@ import { YaoModel } from '@yaoapps/types';
 
 export interface YaoModelColumnEx extends YaoModel.ModelColumn {
   /**可选项 */
-  options?: { value: any; label: string }[];
+  options?: {
+    value: string | number | boolean;
+    label: string;
+  }[];
   /**元素模板 */
   element_id?: string;
 
@@ -115,7 +118,11 @@ export interface AmisColumn {
   value?: object;
   maxLength?: number;
   isID?: boolean;
-  options?: string[];
+  options?: {
+    value: string | number | boolean;
+    label: string;
+  }[];
+
   /**上传文件api接口 */
   receiver?: string;
   /**文件上传时使用块 */
