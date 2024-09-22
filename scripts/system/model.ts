@@ -535,7 +535,7 @@ function ConvertModelToApiObject(modelDsl) {
   if (Array.isArray(model.columns)) {
     model.columns.forEach((col) => {
       // 兼容处理,amis index字段用于表格索引,使用is_index作替代
-      if (col.hasOwnProperty('index')) {
+      if (Object.prototype.hasOwnProperty.call(col, 'index')) {
         col.is_index = col.index;
         delete col.index;
       }
@@ -685,7 +685,7 @@ function DeleteModelLocalFile(modelId) {
  * @param {string/number} modelId
  * @returns
  */
-function getModelApi(modelId: string | number) {
+export function getModelApi(modelId: string | number) {
   return ConvertModelToApiObject(getDBModelById(modelId));
 }
 
@@ -716,7 +716,7 @@ function getModelColumnsApi(modelId: string) {
  * @param {string} modelId 模型标识
  * @returns
  */
-function getDBModelById(modelId: string | number) {
+export function getDBModelById(modelId: string | number) {
   return FindAndLoadDBModelById(modelId);
 }
 

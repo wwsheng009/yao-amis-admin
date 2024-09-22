@@ -1,10 +1,19 @@
-import { Exception, Process, Query } from '@yao/yao';
+import { getDBModelById } from '@scripts/system/model';
+import { Exception, log, Process, Query } from '@yao/yao';
 
-interface ChartConfig {
+interface ChartDBConfig {
   label: string; //描述
   model: string; //模型名称
-  yfields: { field: string; type1?: string }[]; //系列值
+  yfields: { field: string; chartType?: string }[]; //系列值
   xfield: string; //x轴配置字段
+  config: {
+    series: string | object[];
+    xAxis:
+      | {
+          data: object[];
+        }[]
+      | string;
+  };
 }
 
 /**
@@ -29,7 +38,6 @@ export function getChartById(chartId: string | number) {
   if (!row) {
     throw new Exception(`图表配置不存在${chartId}`);
   }
-  // console.log('row', row);
   return getChartUseConfig(row);
 }
 
@@ -38,38 +46,83 @@ export function getChartById(chartId: string | number) {
  * @param payload
  * @returns
  */
-export function getChartUseConfig(payload: ChartConfig) {
+export function getChartUseConfig(payload: ChartDBConfig) {
   //   payload = {
   //     model: 'product',
-  //     field1: [{ field: 'price', type1: 'bar' }],
+  //     field1: [{ field: 'price', chartType: 'bar' }],
   //     field2: 'name',
   //   };
-  if (!payload || !payload.yfields) {
+
+  // console.log('payload', payload);
+
+  const chartData = getDbDataFromConfig(payload);
+  // 没有自定义配置。
+  if (payload.config == null) {
+    return chartData;
+  }
+
+  let chartData1 = payload.config;
+  if (typeof chartData1 === 'string') {
+    try {
+      chartData1 = JSON.parse(chartData1);
+    } catch (error) {
+      log.Error('invalid config', +error.message);
+      return {};
+    }
+  }
+
+  if (chartData1?.series.length == 0 || chartData1?.series == '$series') {
+    chartData1.series = chartData.series;
+  }
+  if (chartData1?.xAxis?.length == 0 || chartData1?.xAxis == '$xAxis') {
+    chartData1.xAxis = chartData.xAxis;
+  }
+  return chartData1;
+}
+
+function getDbDataFromConfig(payload: ChartDBConfig) {
+  if (!payload.yfields || !payload.model || !payload.xfield) {
     return {};
   }
   let fields = [];
-  payload.yfields.forEach((f) => fields.push(f.field));
+  payload.yfields?.forEach((f) => fields.push(f.field));
   fields.push(payload.xfield);
   fields = [...new Set(fields)];
 
   const model = payload.model;
+
+  const modelDsl = getDBModelById(model);
+  let wheres = [];
+  if (modelDsl.option.soft_deletes) {
+    wheres = [{ ':deleted_at': '删除', '=': null }];
+  }
 
   const q = new Query();
   const list = q.Get({
     // "debug": true,
     select: fields,
     from: `${model}`,
-    wheres: [{ ':deleted_at': '删除', '=': null }],
+    wheres: wheres,
     limit: 1000,
   });
-  // console.log('list', list);
 
   const xAxis = [];
   const series = []; //有可能会有重复的字段，但是显示类型不一样。
   const fieldsDataMap = {};
 
   payload.yfields.forEach((f1) => {
-    series.push({ type: f1.type1 || 'bar', name: f1.field, data: [] });
+    const [column] = modelDsl.columns.filter((c) => c.name === f1.field);
+
+    let name = f1.field;
+    if (column != null) {
+      name = column.label || name;
+    }
+    series.push({
+      type: f1.chartType || 'bar',
+      name: name,
+      data: [],
+      field: f1.field,
+    });
     fieldsDataMap[f1.field] = [];
   });
 
@@ -83,9 +136,10 @@ export function getChartUseConfig(payload: ChartConfig) {
   });
   for (const key in fieldsDataMap) {
     series.forEach((s) => {
-      if (s.name == key) {
+      if (s.field == key) {
         s.data = fieldsDataMap[key];
       }
+      delete s.field;
     });
     // series.filter((x) => x.name == key)[0].data = x1[key];
   }
@@ -98,10 +152,12 @@ export function getChartUseConfig(payload: ChartConfig) {
     legend: {
       data: Object.keys(fieldsDataMap),
     },
-    xAxis: {
-      data: xAxis,
-    },
-    yAxis: {},
+    xAxis: [
+      {
+        data: xAxis,
+      },
+    ],
+    yAxis: [{}],
     series: series,
   };
 }

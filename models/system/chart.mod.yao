@@ -25,12 +25,14 @@
       "label": "模型",
       "name": "model",
       "type": "text",
+      "nullable": true
     },
     {
       "comment": "横轴",
       "label": "横轴",
       "name": "xfield",
       "type": "text",
+      "nullable": true
     },
     {
       "comment": "横轴",
