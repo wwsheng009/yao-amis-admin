@@ -20,10 +20,10 @@ const Template = {
         Searchable: true,
         Component: {
           table: { view: 'Text', edit: 'Input' },
-          form: { view: 'Text', edit: 'Input' },
-        },
-      },
-    ],
+          form: { view: 'Text', edit: 'Input' }
+        }
+      }
+    ]
   },
   explain: `
       - The above content is the JSON template.
@@ -43,7 +43,7 @@ const Template = {
       - The field "table" is description of the Table interface display.
       - The field "view" is a column view, the view is used to generate the column in database. Should be one of "Text", "Tag".
       - The field "edit" is a column edit, the edit is used to generate the column in database. should be one of "Input", "Select".
-    `,
+    `
 };
 
 /**
@@ -96,7 +96,7 @@ const testData = {
     {
       Component: {
         form: { edit: 'Input', view: 'Text' },
-        table: { edit: 'Input', view: 'Text' },
+        table: { edit: 'Input', view: 'Text' }
       },
       Searchable: true,
       index: true,
@@ -104,12 +104,12 @@ const testData = {
       length: 256,
       name: 'customer_name',
       nullable: true,
-      type: 'string',
+      type: 'string'
     },
     {
       Component: {
         form: { edit: 'Input', view: 'Text' },
-        table: { edit: 'Input', view: 'Text' },
+        table: { edit: 'Input', view: 'Text' }
       },
       Searchable: true,
       index: true,
@@ -117,12 +117,12 @@ const testData = {
       length: 256,
       name: 'product_name',
       nullable: true,
-      type: 'string',
+      type: 'string'
     },
     {
       Component: {
         form: { edit: 'Input', view: 'Text' },
-        table: { edit: 'Input', view: 'Text' },
+        table: { edit: 'Input', view: 'Text' }
       },
       Searchable: true,
       index: true,
@@ -130,12 +130,12 @@ const testData = {
       length: 256,
       name: 'quantity',
       nullable: true,
-      type: 'integer',
+      type: 'integer'
     },
     {
       Component: {
         form: { edit: 'Input', view: 'Text' },
-        table: { edit: 'Input', view: 'Text' },
+        table: { edit: 'Input', view: 'Text' }
       },
       Searchable: true,
       index: true,
@@ -143,11 +143,11 @@ const testData = {
       length: 256,
       name: 'price',
       nullable: true,
-      type: 'integer',
-    },
+      type: 'integer'
+    }
   ],
   name: 'Order',
-  table: { name: 'order' },
+  table: { name: 'order' }
 };
 
 /**
@@ -184,7 +184,7 @@ function Create(payload) {
 
   return {
     path: `/x/Table//${id}`,
-    name: id,
+    name: id
   };
 }
 
@@ -229,7 +229,7 @@ function saveModel(data) {
     name: data.name,
     table: table,
     columns: [],
-    option: option,
+    option: option
   };
 
   data.columns.forEach((item) => {
@@ -239,7 +239,7 @@ function saveModel(data) {
       type: item.type,
       length: item.length,
       index: item.index,
-      nullable: item.nullable,
+      nullable: item.nullable
     });
   });
 
@@ -261,10 +261,10 @@ function saveTable(data) {
         {
           name: 'OpenModal',
           type: 'Common.openModal',
-          payload: { width: 900, Form: { type: 'edit', model: id } },
-        },
-      ],
-    },
+          payload: { width: 900, Form: { type: 'edit', model: id } }
+        }
+      ]
+    }
   ];
 
   const operation = {
@@ -277,9 +277,9 @@ function saveTable(data) {
           {
             name: 'OpenModal',
             type: 'Common.openModal',
-            payload: { width: 640, Form: { type: 'view', model: id } },
-          },
-        ],
+            payload: { width: 640, Form: { type: 'view', model: id } }
+          }
+        ]
       },
       {
         title: 'Edit',
@@ -288,9 +288,9 @@ function saveTable(data) {
           {
             name: 'OpenModal',
             type: 'Common.openModal',
-            payload: { width: '50vw', Form: { type: 'edit', model: id } },
-          },
-        ],
+            payload: { width: '50vw', Form: { type: 'edit', model: id } }
+          }
+        ]
       },
       {
         title: 'Delete',
@@ -301,14 +301,14 @@ function saveTable(data) {
             type: 'Common.confirm',
             payload: {
               title: 'Confirm',
-              desc: 'Please confirm to delete this record.',
-            },
+              desc: 'Please confirm to delete this record.'
+            }
           },
-          { name: 'Delete', type: 'Table.delete', payload: {} },
+          { name: 'Delete', type: 'Table.delete', payload: {} }
         ],
-        style: 'danger',
-      },
-    ],
+        style: 'danger'
+      }
+    ]
   };
 
   const table = {
@@ -318,9 +318,9 @@ function saveTable(data) {
       primary: 'id',
       header: { preset: {} },
       filter: { columns: [], actions: filterActions },
-      table: { columns: [], operation: operation, props: {} },
+      table: { columns: [], operation: operation, props: {} }
     },
-    fields: { filter: {}, table: {} },
+    fields: { filter: {}, table: {} }
   };
 
   // data foreach
@@ -348,7 +348,7 @@ function saveTable(data) {
     table.layout.filter.columns.push({ name: item.label, width: 4 });
     table.fields.filter[item.label] = {
       bind: `where.${item.name}.${op}`,
-      edit: { type: 'Input', props: { placeholder: item.label } },
+      edit: { type: 'Input', props: { placeholder: item.label } }
     };
   });
 
@@ -361,7 +361,7 @@ function TableComponent(item, component) {
   const default_component = {
     bind: item.name,
     view: { type: component.view, props: {} },
-    edit: { type: component.edit, props: { placeholder: item.label } as any },
+    edit: { type: component.edit, props: { placeholder: item.label } as any }
   };
   switch (item.type) {
     case 'string':
@@ -381,20 +381,20 @@ function TableComponent(item, component) {
         checkedValue: 1,
         unCheckedValue: 0,
         checkedChildren: 'open',
-        unCheckedChildren: 'close',
+        unCheckedChildren: 'close'
       };
       default_component['edit']['type'] = 'RadioGroup';
       default_component['edit']['props'] = {
         options: [
           {
             value: 1,
-            label: 'open',
+            label: 'open'
           },
           {
             value: 0,
-            label: 'close',
-          },
-        ],
+            label: 'close'
+          }
+        ]
       };
       return default_component;
     default:
@@ -412,8 +412,8 @@ function saveForm(data) {
       showWhenAdd: true,
       action: [
         { name: 'Submit', type: 'Form.submit', payload: {} },
-        { name: 'Back', type: 'Common.closeModal', payload: {} },
-      ],
+        { name: 'Back', type: 'Common.closeModal', payload: {} }
+      ]
     },
     {
       title: 'Delete',
@@ -426,20 +426,20 @@ function saveForm(data) {
           type: 'Common.confirm',
           payload: {
             title: 'Confirm',
-            desc: 'Please confirm to delete this record.',
-          },
+            desc: 'Please confirm to delete this record.'
+          }
         },
         { name: 'Delete', type: 'Form.delete', payload: {} },
-        { name: 'Back', type: 'Common.closeModal', payload: {} },
-      ],
+        { name: 'Back', type: 'Common.closeModal', payload: {} }
+      ]
     },
     {
       title: 'Back',
       icon: 'icon-arrow-left',
       showWhenAdd: true,
       showWhenView: true,
-      action: [{ name: 'CloseModal', type: 'Common.closeModal', payload: {} }],
-    },
+      action: [{ name: 'CloseModal', type: 'Common.closeModal', payload: {} }]
+    }
   ];
 
   const form = {
@@ -448,9 +448,9 @@ function saveForm(data) {
     layout: {
       primary: 'id',
       actions: actions,
-      form: { props: {}, sections: [{ columns: [] }] },
+      form: { props: {}, sections: [{ columns: [] }] }
     },
-    fields: { form: {} },
+    fields: { form: {} }
   };
 
   // data foreach

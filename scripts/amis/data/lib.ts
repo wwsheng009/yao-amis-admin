@@ -1,6 +1,6 @@
 import {
   FindAndLoadYaoModelById,
-  FindAndLoadDBModelById,
+  FindAndLoadDBModelById
 } from '@scripts/system/model_lib';
 import { IsMysql } from '@scripts/system/lib';
 import { isDateTimeType } from '@scripts/system/col_type';
@@ -74,14 +74,14 @@ export function queryToQueryParam(modelIn, querysIn, queryParams = {}) {
   // fillup the miss col
   if (model.option?.soft_deletes) {
     columnMap['deleted_at'] = {
-      type: 'datetime',
+      type: 'datetime'
     };
   } else if (model.option?.timestamps) {
     columnMap['updated_at'] = {
-      type: 'datetime',
+      type: 'datetime'
     };
     columnMap['created_at'] = {
-      type: 'datetime',
+      type: 'datetime'
     };
   }
 
@@ -92,7 +92,7 @@ export function queryToQueryParam(modelIn, querysIn, queryParams = {}) {
     select = [...new Set(selectArray)];
     delete querys['select'];
     select = select.filter((col) =>
-      Object.prototype.hasOwnProperty.call(columnMap, col),
+      Object.prototype.hasOwnProperty.call(columnMap, col)
     );
   }
 
@@ -114,7 +114,7 @@ export function queryToQueryParam(modelIn, querysIn, queryParams = {}) {
   if (orderby && orderby.length && orderby[0] != '') {
     orders.push({
       column: orderby[0],
-      option: option,
+      option: option
     });
   }
 
@@ -146,13 +146,13 @@ export function queryToQueryParam(modelIn, querysIn, queryParams = {}) {
             column: key,
             value: low,
             method: 'where',
-            op: 'ge', // >=
+            op: 'ge' // >=
           });
           wheres.push({
             column: key,
             value: high,
             method: 'where',
-            op: 'le', // <=
+            op: 'le' // <=
           });
           whereCount += 2;
           continue;
@@ -169,12 +169,12 @@ export function queryToQueryParam(modelIn, querysIn, queryParams = {}) {
         param = {
           column: key,
           value: newcondt,
-          op: 'like',
+          op: 'like'
         };
       } else {
         param = {
           column: key,
-          value: condition,
+          value: condition
         };
       }
       // 超过一个条件，使用交叉查询
@@ -215,7 +215,7 @@ export function queryToQueryParam(modelIn, querysIn, queryParams = {}) {
         const param = {
           column: column.name,
           value: `%${keyword}%`,
-          op: 'like',
+          op: 'like'
         };
         if (keyword.includes('*')) {
           const newcondt = keyword.replaceAll(/\*/g, '%');
@@ -484,7 +484,7 @@ function paginateArray(arr, pageIn, pageSizeIn, orderBy, orderDirection) {
   if (orderBy && orderDirection) {
     const orderMultiplier = orderDirection === 'desc' ? -1 : 1;
     arr.sort((a, b) =>
-      a[orderBy] > b[orderBy] ? orderMultiplier : -orderMultiplier,
+      a[orderBy] > b[orderBy] ? orderMultiplier : -orderMultiplier
     );
   }
 
@@ -521,7 +521,7 @@ export function PaginateArrayWithQuery(
   data,
   querysIn,
   payload,
-  searchFields = [],
+  searchFields = []
 ) {
   const querys = mergeQueryObject(querysIn, payload);
 
@@ -543,7 +543,7 @@ export function PaginateArrayWithQuery(
   const items = paginateArray(list, page, perPage, orderBy, orderDir);
   return {
     items: items,
-    total: count,
+    total: count
   };
 }
 function FilterArrayWithQuery(list, querysIn, searchFields = []) {

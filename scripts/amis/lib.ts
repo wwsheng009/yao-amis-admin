@@ -13,7 +13,7 @@ import { DotName } from '@scripts/system/lib';
 import {
   column2AmisTableViewColumn,
   column2AmisFormViewColumn,
-  column2AmisFormEditColumn,
+  column2AmisFormEditColumn
 } from '@scripts/system/col_type';
 import { YaoModelDBEx } from '@yao/types';
 import { Process, Exception } from '@yao/yao';
@@ -30,11 +30,11 @@ import { YaoModel } from '@yaoapps/types';
  */
 export function getModelDefinition(
   modelId: string,
-  columnsIn?: any[],
+  columnsIn?: any[]
 ): YaoModelDBEx {
   let model = Process(
     'scripts.system.model.getDBModelById', // 优先从数据库中加载，
-    DotName(modelId),
+    DotName(modelId)
   );
   if (!model) {
     throw new Exception(`模型:${modelId}不存在`);
@@ -60,7 +60,7 @@ export function getModelDefinition(
 function updateAmisViewColFromModel(
   amisColumn,
   column: YaoModel.ModelColumn,
-  modelDsl: YaoModel.ModelDSL,
+  modelDsl: YaoModel.ModelDSL
 ) {
   if (column == null) {
     return amisColumn;
@@ -93,7 +93,7 @@ function updateAmisViewColFromModel(
 function updateAmisFormColCommon(
   amisColumn,
   column: YaoModel.ModelColumn,
-  modelDsl: YaoModel.ModelDSL,
+  modelDsl: YaoModel.ModelDSL
 ) {
   if (column == null) {
     return amisColumn;
@@ -265,7 +265,7 @@ function updateAmisFormColFromModel(amisColumn, yaoColumn) {
       if (isCheck === true) {
         amisColumn.validationErrors[validationKey] = updateValidationMessage(
           validation.message,
-          yaoColumn,
+          yaoColumn
         );
       }
     }
@@ -321,7 +321,7 @@ function AddMetaFields(modelDsl: YaoModel.ModelDSL): YaoModel.ModelDSL {
         label: '创建时间',
         static: true,
         type: 'datetime',
-        format: 'YYYY-MM-DD HH:mm:ss',
+        format: 'YYYY-MM-DD HH:mm:ss'
       });
     }
     result = modelDsl.columns?.some((item) => item.name === 'updated_at');
@@ -331,7 +331,7 @@ function AddMetaFields(modelDsl: YaoModel.ModelDSL): YaoModel.ModelDSL {
         label: '更新时间',
         static: true,
         type: 'datetime',
-        format: 'YYYY-MM-DD HH:mm:ss',
+        format: 'YYYY-MM-DD HH:mm:ss'
       });
     }
   }
@@ -343,7 +343,7 @@ function AddMetaFields(modelDsl: YaoModel.ModelDSL): YaoModel.ModelDSL {
         label: '删除时间',
         static: true,
         type: 'datetime',
-        format: 'YYYY-MM-DD HH:mm:ss',
+        format: 'YYYY-MM-DD HH:mm:ss'
       });
     }
   }
@@ -430,8 +430,8 @@ function updateFormRelations(schemas, model, actionType) {
         //   type: "service",
         //   schemaApi: `get:/api/v1/system/schema/${element.model}/form-edit`,
         // },
-        body: fields,
-      },
+        body: fields
+      }
     });
   }
 
@@ -448,7 +448,7 @@ function updateFormRelations(schemas, model, actionType) {
       tableSchema = {
         columns: fields,
         source: '${' + key + '}',
-        type: 'table',
+        type: 'table'
       };
     } else {
       fields = getModelFieldsWithQuick(element.model, null);
@@ -464,12 +464,12 @@ function updateFormRelations(schemas, model, actionType) {
         removable: true,
         showIndex: true,
         addable: true,
-        type: 'input-table',
+        type: 'input-table'
       };
     }
     const tab = {
       title: label,
-      body: tableSchema,
+      body: tableSchema
     };
     tabList.push(tab);
   }
@@ -480,7 +480,7 @@ function updateFormRelations(schemas, model, actionType) {
       label: '关联表',
       type: 'static-tabs',
       swipeable: true,
-      tabs: [],
+      tabs: []
     };
 
     for (const tab of tabList) {
@@ -512,7 +512,7 @@ export function getFormFields(
   actionType,
   columnsIn,
   excludeFields?,
-  noRelation = false,
+  noRelation = false
 ) {
   const model = getModelDefinition(modelId, columnsIn);
   const columns = model.columns;
@@ -652,9 +652,9 @@ export function getModelFieldsWithQuick(modelId, columnsIn) {
       label: column.label,
       quickEdit: {
         ...formColumn,
-        saveImmediately: true,
+        saveImmediately: true
       },
-      ...viewColumn,
+      ...viewColumn
     };
     if (displayOnly) {
       fieldNew.quickEdit = false;
@@ -702,7 +702,7 @@ export function excelMapping(modelId: string, columnsIn: any[]) {
       default:
         break;
     }
-    if (column.name === 'deleted_at' && model.option.soft_deletes) {
+    if (column.name === 'deleted_at' && model.option?.soft_deletes) {
       ignore = true;
     } else if (column.name === 'created_at' && model.option?.timestamps) {
       ignore = true;

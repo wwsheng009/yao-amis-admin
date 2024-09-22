@@ -11,7 +11,7 @@ const models = [
             {
               label: 'ID',
               name: 'id',
-              type: 'ID',
+              type: 'ID'
             },
             {
               label: '类型',
@@ -25,15 +25,15 @@ const models = [
                 {
                   method: 'typeof',
                   args: ['string'],
-                  message: '{{input}}类型错误, {{label}}应该为字符串',
+                  message: '{{input}}类型错误, {{label}}应该为字符串'
                 },
                 {
                   method: 'enum',
                   args: ['admin', 'staff', 'user', 'robot'],
                   message:
-                    '{{input}}不在许可范围, {{label}}应该为 admin/staff/user/robot',
-                },
-              ],
+                    '{{input}}不在许可范围, {{label}}应该为 admin/staff/user/robot'
+                }
+              ]
             },
             {
               label: '邮箱',
@@ -46,13 +46,13 @@ const models = [
                 {
                   method: 'typeof',
                   args: ['string'],
-                  message: '{{input}}类型错误, {{label}}应该为字符串',
+                  message: '{{input}}类型错误, {{label}}应该为字符串'
                 },
                 {
                   method: 'email',
-                  message: '{{input}}不是邮箱地址',
-                },
-              ],
+                  message: '{{input}}不是邮箱地址'
+                }
+              ]
             },
             {
               label: '手机号',
@@ -64,9 +64,9 @@ const models = [
               validations: [
                 {
                   method: 'mobile',
-                  message: '{{input}}格式错误',
-                },
-              ],
+                  message: '{{input}}格式错误'
+                }
+              ]
             },
             {
               label: '登录密码',
@@ -80,39 +80,39 @@ const models = [
                 {
                   method: 'typeof',
                   args: ['string'],
-                  message: '{{input}}类型错误, {{label}}应该为字符串',
+                  message: '{{input}}类型错误, {{label}}应该为字符串'
                 },
                 {
                   method: 'minLength',
                   args: [6],
-                  message: '{{label}}应该由6-18位，大小写字母、数字和符号构成',
+                  message: '{{label}}应该由6-18位，大小写字母、数字和符号构成'
                 },
                 {
                   method: 'maxLength',
                   args: [18],
-                  message: '{{label}}应该由6-18位，大小写字母、数字和符号构成',
+                  message: '{{label}}应该由6-18位，大小写字母、数字和符号构成'
                 },
                 {
                   method: 'pattern',
                   args: ['[0-9]+'],
-                  message: '{{label}}应该至少包含一个数字',
+                  message: '{{label}}应该至少包含一个数字'
                 },
                 {
                   method: 'pattern',
                   args: ['[A-Z]+'],
-                  message: '{{label}}应该至少包含一个大写字母',
+                  message: '{{label}}应该至少包含一个大写字母'
                 },
                 {
                   method: 'pattern',
                   args: ['[a-z]+'],
-                  message: '{{label}}应该至少包含一个小写字母',
+                  message: '{{label}}应该至少包含一个小写字母'
                 },
                 {
                   method: 'pattern',
                   args: ['[@#$&*\\+]+'],
-                  message: '{{label}}应该至少包含一个符号',
-                },
-              ],
+                  message: '{{label}}应该至少包含一个符号'
+                }
+              ]
             },
             {
               label: '操作密码',
@@ -126,39 +126,39 @@ const models = [
                 {
                   method: 'typeof',
                   args: ['string'],
-                  message: '{{input}}类型错误, {{label}}应该为字符串',
+                  message: '{{input}}类型错误, {{label}}应该为字符串'
                 },
                 {
                   method: 'minLength',
                   args: [6],
-                  message: '{{label}}应该由6-18位，大小写字母、数字和符号构成',
+                  message: '{{label}}应该由6-18位，大小写字母、数字和符号构成'
                 },
                 {
                   method: 'maxLength',
                   args: [18],
-                  message: '{{label}}应该由6-18位，大小写字母、数字和符号构成',
+                  message: '{{label}}应该由6-18位，大小写字母、数字和符号构成'
                 },
                 {
                   method: 'pattern',
                   args: ['[0-9]+'],
-                  message: '{{label}}应该至少包含一个数字',
+                  message: '{{label}}应该至少包含一个数字'
                 },
                 {
                   method: 'pattern',
                   args: ['[A-Z]+'],
-                  message: '{{label}}应该至少包含一个大写字母',
+                  message: '{{label}}应该至少包含一个大写字母'
                 },
                 {
                   method: 'pattern',
                   args: ['[a-z]+'],
-                  message: '{{label}}应该至少包含一个小写字母',
+                  message: '{{label}}应该至少包含一个小写字母'
                 },
                 {
                   method: 'pattern',
                   args: ['[@#$&*\\+]+'],
-                  message: '{{label}}应该至少包含一个符号',
-                },
-              ],
+                  message: '{{label}}应该至少包含一个符号'
+                }
+              ]
             },
             {
               label: '姓名',
@@ -171,20 +171,20 @@ const models = [
                 {
                   method: 'typeof',
                   args: ['string'],
-                  message: '{{input}}类型错误, {{label}}应该为字符串',
+                  message: '{{input}}类型错误, {{label}}应该为字符串'
                 },
                 {
                   method: 'minLength',
                   args: [2],
-                  message: '{{label}}至少需要2个字',
+                  message: '{{label}}至少需要2个字'
                 },
                 {
                   method: 'maxLength',
                   args: [40],
-                  message: '{{label}}不能超过20个字',
-                },
+                  message: '{{label}}不能超过20个字'
+                }
               ],
-              index: true,
+              index: true
             },
             {
               label: '身份证号码',
@@ -198,14 +198,14 @@ const models = [
                 {
                   method: 'typeof',
                   args: ['string'],
-                  message: '{{input}}类型错误, {{label}}应该为字符串',
+                  message: '{{input}}类型错误, {{label}}应该为字符串'
                 },
                 {
                   method: 'pattern',
                   args: ['^(\\d{18})|(\\d{14}X)$'],
-                  message: '{{label}}格式错误',
-                },
-              ],
+                  message: '{{label}}格式错误'
+                }
+              ]
             },
             {
               label: 'API Key',
@@ -218,14 +218,14 @@ const models = [
                 {
                   method: 'typeof',
                   args: ['string'],
-                  message: '{{input}}类型错误, {{label}}应该为数字',
+                  message: '{{input}}类型错误, {{label}}应该为数字'
                 },
                 {
                   method: 'pattern',
                   args: ['^[0-9]{10}$'],
-                  message: ' {{label}}应该由10位数字构成',
-                },
-              ],
+                  message: ' {{label}}应该由10位数字构成'
+                }
+              ]
             },
             {
               label: 'API 密钥',
@@ -239,21 +239,21 @@ const models = [
                 {
                   method: 'typeof',
                   args: ['string'],
-                  message: '{{input}}类型错误, {{label}}应该为字符串',
+                  message: '{{input}}类型错误, {{label}}应该为字符串'
                 },
                 {
                   method: 'pattern',
                   args: ['^[0-9A-Za-z@#$&*]{32}$'],
-                  message: '{{label}}应该由32位，大小写字母、数字和符号构成',
-                },
-              ],
+                  message: '{{label}}应该由32位，大小写字母、数字和符号构成'
+                }
+              ]
             },
             {
               label: '扩展信息',
               name: 'extra',
               type: 'json',
               comment: '扩展信息',
-              nullable: true,
+              nullable: true
             },
             {
               label: '状态',
@@ -266,43 +266,43 @@ const models = [
                 {
                   method: 'typeof',
                   args: ['string'],
-                  message: '{{input}}类型错误, {{label}}应该为字符串',
+                  message: '{{input}}类型错误, {{label}}应该为字符串'
                 },
                 {
                   method: 'enum',
                   args: ['enabled', 'disabled'],
                   message:
-                    '{{input}}不在许可范围, {{label}}应该为 enabled/disabled',
-                },
-              ],
+                    '{{input}}不在许可范围, {{label}}应该为 enabled/disabled'
+                }
+              ]
             },
             {
               label: '::Delete At',
               name: 'deleted_at',
               type: 'timestamp',
               comment: '::Delete At',
-              nullable: true,
+              nullable: true
             },
             {
               label: '::Created At',
               name: 'created_at',
               type: 'timestamp',
               comment: '::Created At',
-              nullable: true,
+              nullable: true
             },
             {
               label: '::Updated At',
               name: 'updated_at',
               type: 'timestamp',
               comment: '::Updated At',
-              nullable: true,
-            },
+              nullable: true
+            }
           ],
           connector: '',
           indexes: null,
           option: {
             timestamps: true,
-            soft_deletes: true,
+            soft_deletes: true
           },
           relations: {},
           table: {
@@ -311,13 +311,13 @@ const models = [
             engine: 'InnoDB',
             collation: '',
             charset: '',
-            primarykeys: null,
+            primarykeys: null
           },
           values: [
             {
               email: 'xiang@iqka.com',
               extra: {
-                sex: '男',
+                sex: '男'
               },
               key: '8304925176',
               mobile: null,
@@ -325,12 +325,12 @@ const models = [
               password: 'A123456p+',
               secret: 'XMTdNRVigbgUiAPdiJCfaWgWcz2PaQXw',
               status: 'enabled',
-              type: 'admin',
+              type: 'admin'
             },
             {
               email: 'staff@iqka.com',
               extra: {
-                sex: '女',
+                sex: '女'
               },
               key: null,
               mobile: null,
@@ -338,12 +338,12 @@ const models = [
               password: 'S123456p+',
               secret: null,
               status: 'enabled',
-              type: 'staff',
+              type: 'staff'
             },
             {
               email: null,
               extra: {
-                sex: '女',
+                sex: '女'
               },
               key: null,
               mobile: '13900001111',
@@ -351,12 +351,12 @@ const models = [
               password: 'U123456p+',
               secret: null,
               status: 'enabled',
-              type: 'user',
+              type: 'user'
             },
             {
               email: null,
               extra: {
-                sex: '女',
+                sex: '女'
               },
               key: '3845196072',
               mobile: null,
@@ -364,12 +364,12 @@ const models = [
               password: null,
               secret: 'wBeYjL7FjbcvpAdBrxtDFfjydsoPKhRN',
               status: 'enabled',
-              type: 'robot',
-            },
-          ],
-        },
-      },
-    ],
+              type: 'robot'
+            }
+          ]
+        }
+      }
+    ]
   },
   {
     name: 'ddic',
@@ -387,13 +387,13 @@ const models = [
                   label: 'ID',
                   name: 'id',
                   type: 'ID',
-                  comment: 'ID',
+                  comment: 'ID'
                 },
                 {
                   label: '所属模型',
                   name: 'model_id',
                   type: 'integer',
-                  comment: '所属模型',
+                  comment: '所属模型'
                 },
                 {
                   label: '字段名称',
@@ -405,72 +405,72 @@ const models = [
                     {
                       method: 'pattern',
                       args: ['^[a-zA-Z_][a-zA-Z0-9_]*$'],
-                      message: '只允许数字与字母，下划线，划线',
-                    },
-                  ],
+                      message: '只允许数字与字母，下划线，划线'
+                    }
+                  ]
                 },
                 {
                   label: '标签',
                   name: 'label',
                   type: 'string',
                   comment: '标签',
-                  length: 80,
+                  length: 80
                 },
                 {
                   label: '是否索引',
                   name: 'index',
                   type: 'boolean',
                   comment: '是否索引',
-                  default: false,
+                  default: false
                 },
                 {
                   label: '唯一索引',
                   name: 'unique',
                   type: 'boolean',
                   comment: '唯一索引',
-                  default: false,
+                  default: false
                 },
                 {
                   label: '数据元素',
                   name: 'element_id',
                   type: 'integer',
                   comment: '数据元素',
-                  nullable: true,
+                  nullable: true
                 },
                 {
                   label: '数据类型',
                   name: 'type',
                   type: 'string',
                   comment: '数据类型',
-                  nullable: true,
+                  nullable: true
                 },
                 {
                   label: '长度',
                   name: 'length',
                   type: 'integer',
                   comment: '长度',
-                  nullable: true,
+                  nullable: true
                 },
                 {
                   label: '位数(含小数位)',
                   name: 'precision',
                   type: 'integer',
                   comment: '字段位数(含小数位)',
-                  nullable: true,
+                  nullable: true
                 },
                 {
                   label: '小数位',
                   name: 'scale',
                   type: 'integer',
                   comment: '小数位数',
-                  nullable: true,
+                  nullable: true
                 },
                 {
                   label: '允许空值',
                   name: 'nullable',
                   type: 'boolean',
                   comment: '允许空值',
-                  default: false,
+                  default: false
                 },
                 {
                   label: '加密方式',
@@ -478,28 +478,28 @@ const models = [
                   type: 'enum',
                   comment: '加密方式',
                   nullable: true,
-                  option: ['PASSWORD', 'AES'],
+                  option: ['PASSWORD', 'AES']
                 },
                 {
                   label: '默认值',
                   name: 'default',
                   type: 'string',
                   comment: '默认值',
-                  nullable: true,
+                  nullable: true
                 },
                 {
                   label: '可选项',
                   name: 'options',
                   type: 'json',
                   comment: '可选项',
-                  nullable: true,
+                  nullable: true
                 },
                 {
                   label: '校验规则',
                   name: 'validations',
                   type: 'json',
                   comment: '校验规则',
-                  nullable: true,
+                  nullable: true
                 },
                 {
                   label: '注释',
@@ -507,8 +507,8 @@ const models = [
                   type: 'string',
                   comment: '注释',
                   length: 200,
-                  nullable: true,
-                },
+                  nullable: true
+                }
               ],
               connector: '',
               indexes: null,
@@ -519,20 +519,20 @@ const models = [
                   key: 'id',
                   model: 'ddic.model',
                   foreign: 'model_id',
-                  query: {},
-                },
+                  query: {}
+                }
               },
               table: {
                 name: 'ddic_model_column',
                 comment: '模型字段列表',
                 collation: '',
                 charset: '',
-                primarykeys: null,
+                primarykeys: null
               },
-              values: null,
-            },
-          },
-        ],
+              values: null
+            }
+          }
+        ]
       },
       {
         name: 'model.mod.json',
@@ -544,7 +544,7 @@ const models = [
               label: 'ID',
               name: 'id',
               type: 'ID',
-              comment: 'ID',
+              comment: 'ID'
             },
             {
               label: '模型标识',
@@ -556,30 +556,30 @@ const models = [
                 {
                   method: 'maxLength',
                   args: [64],
-                  message: '{{label}}最大长度64',
+                  message: '{{label}}最大长度64'
                 },
                 {
                   method: 'pattern',
                   args: ['^[a-zA-Z.][a-zA-Z0-9.]*$'],
-                  message: '{{label}}只允许数字与字母，点号',
-                },
+                  message: '{{label}}只允许数字与字母，点号'
+                }
               ],
               index: true,
-              unique: true,
+              unique: true
             },
             {
               label: '名称',
               name: 'name',
               type: 'string',
               comment: '名称',
-              index: true,
+              index: true
             },
             {
               label: '备注',
               name: 'comment',
               type: 'string',
               comment: '备注',
-              nullable: true,
+              nullable: true
             },
             {
               label: '数据库表名',
@@ -591,14 +591,14 @@ const models = [
                 {
                   method: 'maxLength',
                   args: [64],
-                  message: '{{label}}最大长度64',
+                  message: '{{label}}最大长度64'
                 },
                 {
                   method: 'pattern',
                   args: ['^[a-zA-Z_][a-zA-Z0-9_]*$'],
-                  message: '{{label}}只允许数字与字母，下划线，划线',
-                },
-              ],
+                  message: '{{label}}只允许数字与字母，下划线，划线'
+                }
+              ]
             },
             {
               label: '数据库表备注',
@@ -606,36 +606,36 @@ const models = [
               type: 'string',
               comment: '数据库表备注',
               length: 100,
-              nullable: true,
+              nullable: true
             },
             {
               label: '软删除',
               name: 'soft_deletes',
               type: 'boolean',
               comment: '软删除，不直接删除',
-              default: true,
+              default: true
             },
             {
               label: '时间戳',
               name: 'timestamps',
               type: 'boolean',
               comment: '增加创建，更新时间戳',
-              default: true,
+              default: true
             },
             {
               label: '只读',
               name: 'read_only',
               type: 'boolean',
               comment: '只读，忽略迁移操作',
-              default: true,
+              default: true
             },
             {
               label: '关联关系',
               name: 'relations',
               type: 'json',
               comment: '关联关系',
-              nullable: true,
-            },
+              nullable: true
+            }
           ],
           connector: '',
           indexes: null,
@@ -646,20 +646,20 @@ const models = [
               key: 'model_id',
               model: 'ddic.model.column',
               foreign: 'id',
-              query: {},
-            },
+              query: {}
+            }
           },
           table: {
             name: 'ddic_model',
             comment: '业务模型',
             collation: '',
             charset: '',
-            primarykeys: null,
+            primarykeys: null
           },
-          values: null,
-        },
-      },
-    ],
+          values: null
+        }
+      }
+    ]
   },
   {
     name: 'demo',
@@ -673,18 +673,18 @@ const models = [
             {
               label: 'ID',
               name: 'id',
-              type: 'id',
+              type: 'id'
             },
             {
               label: 'number',
               name: 'number',
-              type: 'integer',
+              type: 'integer'
             },
             {
               label: '时间',
               name: 'time',
-              type: 'datetime',
-            },
+              type: 'datetime'
+            }
           ],
           connector: '',
           indexes: null,
@@ -694,10 +694,10 @@ const models = [
             name: 'demo_excel',
             collation: '',
             charset: '',
-            primarykeys: null,
+            primarykeys: null
           },
-          values: null,
-        },
+          values: null
+        }
       },
       {
         name: 'table.mod.json',
@@ -708,33 +708,33 @@ const models = [
             {
               label: 'ID',
               name: 'id',
-              type: 'ID',
+              type: 'ID'
             },
             {
               label: '引擎',
               name: 'engine',
-              type: 'string',
+              type: 'string'
             },
             {
               label: '浏览器',
               name: 'browser',
-              type: 'string',
+              type: 'string'
             },
             {
               label: '操作系统',
               name: 'platform',
-              type: 'string',
+              type: 'string'
             },
             {
               label: '版本',
               name: 'version',
-              type: 'string',
+              type: 'string'
             },
             {
               label: '级别',
               name: 'grade',
-              type: 'string',
-            },
+              type: 'string'
+            }
           ],
           connector: '',
           indexes: null,
@@ -746,7 +746,7 @@ const models = [
             engine: 'InnoDB',
             collation: '',
             charset: '',
-            primarykeys: null,
+            primarykeys: null
           },
           values: [
             {
@@ -754,404 +754,404 @@ const models = [
               engine: 'Trident',
               grade: 'X',
               platform: 'Win 95+',
-              version: '4',
+              version: '4'
             },
             {
               browser: 'Internet Explorer 5.0',
               engine: 'Trident',
               grade: 'C',
               platform: 'Win 95+',
-              version: '5',
+              version: '5'
             },
             {
               browser: 'Internet Explorer 5.5',
               engine: 'Trident',
               grade: 'A',
               platform: 'Win 95+',
-              version: '5.5',
+              version: '5.5'
             },
             {
               browser: 'Internet Explorer 6',
               engine: 'Trident',
               grade: 'A',
               platform: 'Win 98+',
-              version: '6',
+              version: '6'
             },
             {
               browser: 'Internet Explorer 7',
               engine: 'Trident',
               grade: 'A',
               platform: 'Win XP SP2+',
-              version: '7',
+              version: '7'
             },
             {
               browser: 'AOL browser (AOL desktop)',
               engine: 'Trident',
               grade: 'A',
               platform: 'Win XP',
-              version: '6',
+              version: '6'
             },
             {
               browser: 'Firefox 1.0',
               engine: 'Gecko',
               grade: 'A',
               platform: 'Win 98+ / OSX.2+',
-              version: '1.7',
+              version: '1.7'
             },
             {
               browser: 'Firefox 1.5',
               engine: 'Gecko',
               grade: 'A',
               platform: 'Win 98+ / OSX.2+',
-              version: '1.8',
+              version: '1.8'
             },
             {
               browser: 'Firefox 2.0',
               engine: 'Gecko',
               grade: 'A',
               platform: 'Win 98+ / OSX.2+',
-              version: '1.8',
+              version: '1.8'
             },
             {
               browser: 'Firefox 3.0',
               engine: 'Gecko',
               grade: 'A',
               platform: 'Win 2k+ / OSX.3+',
-              version: '1.9',
+              version: '1.9'
             },
             {
               browser: 'Camino 1.0',
               engine: 'Gecko',
               grade: 'A',
               platform: 'OSX.2+',
-              version: '1.8',
+              version: '1.8'
             },
             {
               browser: 'Camino 1.5',
               engine: 'Gecko',
               grade: 'A',
               platform: 'OSX.3+',
-              version: '1.8',
+              version: '1.8'
             },
             {
               browser: 'Netscape 7.2',
               engine: 'Gecko',
               grade: 'A',
               platform: 'Win 95+ / Mac OS 8.6-9.2',
-              version: '1.7',
+              version: '1.7'
             },
             {
               browser: 'Netscape Browser 8',
               engine: 'Gecko',
               grade: 'A',
               platform: 'Win 98SE+',
-              version: '1.7',
+              version: '1.7'
             },
             {
               browser: 'Netscape Navigator 9',
               engine: 'Gecko',
               grade: 'A',
               platform: 'Win 98+ / OSX.2+',
-              version: '1.8',
+              version: '1.8'
             },
             {
               browser: 'Mozilla 1.0',
               engine: 'Gecko',
               grade: 'A',
               platform: 'Win 95+ / OSX.1+',
-              version: '1',
+              version: '1'
             },
             {
               browser: 'Mozilla 1.1',
               engine: 'Gecko',
               grade: 'A',
               platform: 'Win 95+ / OSX.1+',
-              version: '1.1',
+              version: '1.1'
             },
             {
               browser: 'Mozilla 1.2',
               engine: 'Gecko',
               grade: 'A',
               platform: 'Win 95+ / OSX.1+',
-              version: '1.2',
+              version: '1.2'
             },
             {
               browser: 'Mozilla 1.3',
               engine: 'Gecko',
               grade: 'A',
               platform: 'Win 95+ / OSX.1+',
-              version: '1.3',
+              version: '1.3'
             },
             {
               browser: 'Mozilla 1.4',
               engine: 'Gecko',
               grade: 'A',
               platform: 'Win 95+ / OSX.1+',
-              version: '1.4',
+              version: '1.4'
             },
             {
               browser: 'Mozilla 1.5',
               engine: 'Gecko',
               grade: 'A',
               platform: 'Win 95+ / OSX.1+',
-              version: '1.5',
+              version: '1.5'
             },
             {
               browser: 'Mozilla 1.6',
               engine: 'Gecko',
               grade: 'A',
               platform: 'Win 95+ / OSX.1+',
-              version: '1.6',
+              version: '1.6'
             },
             {
               browser: 'Mozilla 1.7',
               engine: 'Gecko',
               grade: 'A',
               platform: 'Win 98+ / OSX.1+',
-              version: '1.7',
+              version: '1.7'
             },
             {
               browser: 'Mozilla 1.8',
               engine: 'Gecko',
               grade: 'A',
               platform: 'Win 98+ / OSX.1+',
-              version: '1.8',
+              version: '1.8'
             },
             {
               browser: 'Seamonkey 1.1',
               engine: 'Gecko',
               grade: 'A',
               platform: 'Win 98+ / OSX.2+',
-              version: '1.8',
+              version: '1.8'
             },
             {
               browser: 'Epiphany 2.20',
               engine: 'Gecko',
               grade: 'A',
               platform: 'Gnome',
-              version: '1.8',
+              version: '1.8'
             },
             {
               browser: 'Safari 1.2',
               engine: 'Webkit',
               grade: 'A',
               platform: 'OSX.3',
-              version: '125.5',
+              version: '125.5'
             },
             {
               browser: 'Safari 1.3',
               engine: 'Webkit',
               grade: 'A',
               platform: 'OSX.3',
-              version: '312.8',
+              version: '312.8'
             },
             {
               browser: 'Safari 2.0',
               engine: 'Webkit',
               grade: 'A',
               platform: 'OSX.4+',
-              version: '419.3',
+              version: '419.3'
             },
             {
               browser: 'Safari 3.0',
               engine: 'Webkit',
               grade: 'A',
               platform: 'OSX.4+',
-              version: '522.1',
+              version: '522.1'
             },
             {
               browser: 'OmniWeb 5.5',
               engine: 'Webkit',
               grade: 'A',
               platform: 'OSX.4+',
-              version: '420',
+              version: '420'
             },
             {
               browser: 'iPod Touch / iPhone',
               engine: 'Webkit',
               grade: 'A',
               platform: 'iPod',
-              version: '420.1',
+              version: '420.1'
             },
             {
               browser: 'S60',
               engine: 'Webkit',
               grade: 'A',
               platform: 'S60',
-              version: '413',
+              version: '413'
             },
             {
               browser: 'Opera 7.0',
               engine: 'Presto',
               grade: 'A',
               platform: 'Win 95+ / OSX.1+',
-              version: '-',
+              version: '-'
             },
             {
               browser: 'Opera 7.5',
               engine: 'Presto',
               grade: 'A',
               platform: 'Win 95+ / OSX.2+',
-              version: '-',
+              version: '-'
             },
             {
               browser: 'Opera 8.0',
               engine: 'Presto',
               grade: 'A',
               platform: 'Win 95+ / OSX.2+',
-              version: '-',
+              version: '-'
             },
             {
               browser: 'Opera 8.5',
               engine: 'Presto',
               grade: 'A',
               platform: 'Win 95+ / OSX.2+',
-              version: '-',
+              version: '-'
             },
             {
               browser: 'Opera 9.0',
               engine: 'Presto',
               grade: 'A',
               platform: 'Win 95+ / OSX.3+',
-              version: '-',
+              version: '-'
             },
             {
               browser: 'Opera 9.2',
               engine: 'Presto',
               grade: 'A',
               platform: 'Win 88+ / OSX.3+',
-              version: '-',
+              version: '-'
             },
             {
               browser: 'Opera 9.5',
               engine: 'Presto',
               grade: 'A',
               platform: 'Win 88+ / OSX.3+',
-              version: '-',
+              version: '-'
             },
             {
               browser: 'Opera for Wii',
               engine: 'Presto',
               grade: 'A',
               platform: 'Wii',
-              version: '-',
+              version: '-'
             },
             {
               browser: 'Nokia N800',
               engine: 'Presto',
               grade: 'A',
               platform: 'N800',
-              version: '-',
+              version: '-'
             },
             {
               browser: 'Nintendo DS browser',
               engine: 'Presto',
               grade: 'C',
               platform: 'Nintendo DS',
-              version: '8.5',
+              version: '8.5'
             },
             {
               browser: 'Konqureror 3.1',
               engine: 'KHTML',
               grade: 'C',
               platform: 'KDE 3.1',
-              version: '3.1',
+              version: '3.1'
             },
             {
               browser: 'Konqureror 3.3',
               engine: 'KHTML',
               grade: 'A',
               platform: 'KDE 3.3',
-              version: '3.3',
+              version: '3.3'
             },
             {
               browser: 'Konqureror 3.5',
               engine: 'KHTML',
               grade: 'A',
               platform: 'KDE 3.5',
-              version: '3.5',
+              version: '3.5'
             },
             {
               browser: 'Internet Explorer 4.5',
               engine: 'Tasman',
               grade: 'X',
               platform: 'Mac OS 8-9',
-              version: '-',
+              version: '-'
             },
             {
               browser: 'Internet Explorer 5.1',
               engine: 'Tasman',
               grade: 'C',
               platform: 'Mac OS 7.6-9',
-              version: '1',
+              version: '1'
             },
             {
               browser: 'Internet Explorer 5.2',
               engine: 'Tasman',
               grade: 'C',
               platform: 'Mac OS 8-X',
-              version: '1',
+              version: '1'
             },
             {
               browser: 'NetFront 3.1',
               engine: 'Misc',
               grade: 'C',
               platform: 'Embedded devices',
-              version: '-',
+              version: '-'
             },
             {
               browser: 'NetFront 3.4',
               engine: 'Misc',
               grade: 'A',
               platform: 'Embedded devices',
-              version: '-',
+              version: '-'
             },
             {
               browser: 'Dillo 0.8',
               engine: 'Misc',
               grade: 'X',
               platform: 'Embedded devices',
-              version: '-',
+              version: '-'
             },
             {
               browser: 'Links',
               engine: 'Misc',
               grade: 'X',
               platform: 'Text only',
-              version: '-',
+              version: '-'
             },
             {
               browser: 'Lynx',
               engine: 'Misc',
               grade: 'X',
               platform: 'Text only',
-              version: '-',
+              version: '-'
             },
             {
               browser: 'IE Mobile',
               engine: 'Misc',
               grade: 'C',
               platform: 'Windows Mobile 6',
-              version: '-',
+              version: '-'
             },
             {
               browser: 'PSP browser',
               engine: 'Misc',
               grade: 'C',
               platform: 'PSP',
-              version: '-',
+              version: '-'
             },
             {
               browser: 'All others',
               engine: 'Other browsers',
               grade: 'U',
               platform: '-',
-              version: '-',
-            },
-          ],
-        },
-      },
-    ],
+              version: '-'
+            }
+          ]
+        }
+      }
+    ]
   },
   {
     name: 'dsl',
@@ -1165,54 +1165,54 @@ const models = [
             {
               label: '标识',
               name: 'id',
-              type: 'ID',
+              type: 'ID'
             },
             {
               label: '文件名',
               name: 'file',
-              type: 'string',
+              type: 'string'
             },
             {
               label: '源代码',
               name: 'source',
-              type: 'json',
+              type: 'json'
             },
             {
               label: '失效时间',
               name: 'expired_at',
-              type: 'timestamp',
+              type: 'timestamp'
             },
             {
               label: '::Created At',
               name: 'created_at',
               type: 'timestamp',
               comment: '::Created At',
-              nullable: true,
+              nullable: true
             },
             {
               label: '::Updated At',
               name: 'updated_at',
               type: 'timestamp',
               comment: '::Updated At',
-              nullable: true,
-            },
+              nullable: true
+            }
           ],
           connector: '',
           indexes: null,
           option: {
-            timestamps: true,
+            timestamps: true
           },
           relations: null,
           table: {
             name: 'dsl_amis',
             collation: '',
             charset: '',
-            primarykeys: null,
+            primarykeys: null
           },
-          values: null,
-        },
-      },
-    ],
+          values: null
+        }
+      }
+    ]
   },
   {
     name: 'plan.mod.json',
@@ -1223,7 +1223,7 @@ const models = [
         {
           label: 'ID',
           name: 'id',
-          type: 'ID',
+          type: 'ID'
         },
         {
           label: '名称',
@@ -1231,7 +1231,7 @@ const models = [
           type: 'string',
           comment: '名称',
           length: 40,
-          unique: true,
+          unique: true
         },
         {
           label: '开始时间',
@@ -1239,7 +1239,7 @@ const models = [
           type: 'datetime',
           comment: '开始时间',
           nullable: true,
-          index: true,
+          index: true
         },
         {
           label: '结束时间',
@@ -1247,7 +1247,7 @@ const models = [
           type: 'datetime',
           comment: '结束时间',
           nullable: true,
-          index: true,
+          index: true
         },
         {
           label: '编码',
@@ -1256,7 +1256,7 @@ const models = [
           comment: '编码',
           length: 32,
           nullable: true,
-          unique: true,
+          unique: true
         },
         {
           label: '状态',
@@ -1265,35 +1265,35 @@ const models = [
           comment: '状态: 草稿, 进行中, 已完成',
           option: ['draft', 'process', 'finish'],
           default: 'draft',
-          index: true,
+          index: true
         },
         {
           label: '::Delete At',
           name: 'deleted_at',
           type: 'timestamp',
           comment: '::Delete At',
-          nullable: true,
+          nullable: true
         },
         {
           label: '::Created At',
           name: 'created_at',
           type: 'timestamp',
           comment: '::Created At',
-          nullable: true,
+          nullable: true
         },
         {
           label: '::Updated At',
           name: 'updated_at',
           type: 'timestamp',
           comment: '::Updated At',
-          nullable: true,
-        },
+          nullable: true
+        }
       ],
       connector: '',
       indexes: null,
       option: {
         timestamps: true,
-        soft_deletes: true,
+        soft_deletes: true
       },
       relations: {
         items: {
@@ -1302,19 +1302,19 @@ const models = [
           model: 'plan.item',
           foreign: 'id',
           query: {
-            select: ['id', 'sku_id', 'amount', 'amount_plan'],
-          },
-        },
+            select: ['id', 'sku_id', 'amount', 'amount_plan']
+          }
+        }
       },
       table: {
         name: 'plan',
         comment: '计划',
         collation: '',
         charset: '',
-        primarykeys: null,
+        primarykeys: null
       },
-      values: null,
-    },
+      values: null
+    }
   },
   {
     name: 'system',
@@ -1329,7 +1329,7 @@ const models = [
               label: '编号',
               name: 'id',
               type: 'ID',
-              comment: '标识',
+              comment: '标识'
             },
             {
               label: '名称',
@@ -1337,7 +1337,7 @@ const models = [
               type: 'string',
               comment: '角色名称',
               nullable: true,
-              index: true,
+              index: true
             },
             {
               label: '描述',
@@ -1345,7 +1345,7 @@ const models = [
               type: 'string',
               comment: '描述',
               nullable: true,
-              index: true,
+              index: true
             },
             {
               label: '路径',
@@ -1353,7 +1353,7 @@ const models = [
               type: 'string',
               comment: '路径',
               nullable: true,
-              index: true,
+              index: true
             },
             {
               label: '全路径',
@@ -1361,86 +1361,86 @@ const models = [
               type: 'string',
               comment: '全路径',
               nullable: true,
-              index: true,
+              index: true
             },
             {
               label: '路由',
               name: 'router',
               type: 'string',
               comment: '路由',
-              index: true,
+              index: true
             },
             {
               label: '处理器',
               name: 'process',
               type: 'string',
               comment: '处理器',
-              index: true,
+              index: true
             },
             {
               label: '调用方法',
               name: 'method',
               type: 'string',
               comment: '调用方法',
-              nullable: true,
+              nullable: true
             },
             {
               label: '守卫',
               name: 'guard',
               type: 'string',
               comment: '守卫',
-              nullable: true,
+              nullable: true
             },
             {
               label: '传入参数',
               name: 'in',
               type: 'json',
               comment: '传入参数',
-              nullable: true,
+              nullable: true
             },
             {
               label: '传出参数',
               name: 'out',
               type: 'json',
               comment: '传出参数',
-              nullable: true,
+              nullable: true
             },
             {
               label: '参数',
               name: 'url_params',
               type: 'json',
               comment: '参数',
-              nullable: true,
+              nullable: true
             },
             {
               label: '::Created At',
               name: 'created_at',
               type: 'timestamp',
               comment: '::Created At',
-              nullable: true,
+              nullable: true
             },
             {
               label: '::Updated At',
               name: 'updated_at',
               type: 'timestamp',
               comment: '::Updated At',
-              nullable: true,
-            },
+              nullable: true
+            }
           ],
           connector: '',
           indexes: null,
           option: {
-            timestamps: true,
+            timestamps: true
           },
           relations: null,
           table: {
             name: 'system_api',
             collation: '',
             charset: '',
-            primarykeys: null,
+            primarykeys: null
           },
-          values: null,
-        },
+          values: null
+        }
       },
       {
         name: 'dept.mod.json',
@@ -1452,57 +1452,57 @@ const models = [
               label: '编号',
               name: 'id',
               type: 'ID',
-              comment: '编号',
+              comment: '编号'
             },
             {
               label: '名称',
               name: 'name',
               type: 'string',
-              comment: '名称',
+              comment: '名称'
             },
             {
               label: '上级',
               name: 'parent',
               type: 'bigInteger',
               comment: '上级',
-              default: 0,
+              default: 0
             },
             {
               label: '状态',
               name: 'status',
               type: 'boolean',
               comment: '状态',
-              default: 1,
+              default: 1
             },
             {
               label: '::Created At',
               name: 'created_at',
               type: 'timestamp',
               comment: '::Created At',
-              nullable: true,
+              nullable: true
             },
             {
               label: '::Updated At',
               name: 'updated_at',
               type: 'timestamp',
               comment: '::Updated At',
-              nullable: true,
-            },
+              nullable: true
+            }
           ],
           connector: '',
           indexes: null,
           option: {
-            timestamps: true,
+            timestamps: true
           },
           relations: null,
           table: {
             name: 'admin_dept',
             collation: '',
             charset: '',
-            primarykeys: null,
+            primarykeys: null
           },
-          values: null,
-        },
+          values: null
+        }
       },
       {
         name: 'font.mod.json',
@@ -1514,14 +1514,14 @@ const models = [
               label: '编号',
               name: 'id',
               type: 'ID',
-              comment: '标识',
+              comment: '标识'
             },
             {
               label: '名称',
               name: 'name',
               type: 'string',
               comment: '名称',
-              index: true,
+              index: true
             },
             {
               label: '分类',
@@ -1529,58 +1529,58 @@ const models = [
               type: 'string',
               comment: '分类',
               nullable: true,
-              index: true,
+              index: true
             },
             {
               label: 'URL地址',
               name: 'url',
               type: 'string',
               comment: 'URL地址',
-              nullable: true,
+              nullable: true
             },
             {
               label: '来源',
               name: 'source',
               type: 'string',
               comment: '来源',
-              nullable: true,
+              nullable: true
             },
             {
               label: '版本',
               name: 'version',
               type: 'string',
               comment: '版本',
-              nullable: true,
+              nullable: true
             },
             {
               label: '::Created At',
               name: 'created_at',
               type: 'timestamp',
               comment: '::Created At',
-              nullable: true,
+              nullable: true
             },
             {
               label: '::Updated At',
               name: 'updated_at',
               type: 'timestamp',
               comment: '::Updated At',
-              nullable: true,
-            },
+              nullable: true
+            }
           ],
           connector: '',
           indexes: null,
           option: {
-            timestamps: true,
+            timestamps: true
           },
           relations: null,
           table: {
             name: 'system_font',
             collation: '',
             charset: '',
-            primarykeys: null,
+            primarykeys: null
           },
-          values: null,
-        },
+          values: null
+        }
       },
       {
         name: 'menu.mod.json',
@@ -1591,14 +1591,14 @@ const models = [
             {
               name: 'id',
               type: 'ID',
-              comment: 'ID',
+              comment: 'ID'
             },
             {
               name: 'parent',
               type: 'bigInteger',
               comment: '父节点',
               default: 0,
-              index: true,
+              index: true
             },
             {
               label: '菜单名称',
@@ -1606,7 +1606,7 @@ const models = [
               type: 'string',
               comment: '菜单名称',
               length: 200,
-              index: true,
+              index: true
             },
             {
               label: '菜单图标',
@@ -1614,7 +1614,7 @@ const models = [
               type: 'string',
               comment: '菜单图标',
               length: 200,
-              nullable: true,
+              nullable: true
             },
             {
               label: '路由',
@@ -1623,7 +1623,7 @@ const models = [
               comment: '路由',
               length: 200,
               nullable: true,
-              index: true,
+              index: true
             },
             {
               label: '链接',
@@ -1631,7 +1631,7 @@ const models = [
               type: 'string',
               comment: '链接',
               length: 200,
-              nullable: true,
+              nullable: true
             },
             {
               label: '重定位',
@@ -1639,7 +1639,7 @@ const models = [
               type: 'string',
               comment: '重定位',
               length: 200,
-              nullable: true,
+              nullable: true
             },
             {
               label: '重渲染',
@@ -1647,7 +1647,7 @@ const models = [
               type: 'string',
               comment: '重渲染',
               length: 200,
-              nullable: true,
+              nullable: true
             },
             {
               label: '默认页面',
@@ -1655,28 +1655,28 @@ const models = [
               type: 'boolean',
               comment: '默认页面',
               nullable: true,
-              default: false,
+              default: false
             },
             {
               label: '页面配置',
               name: 'schema',
               type: 'json',
               comment: '页面的配置',
-              nullable: true,
+              nullable: true
             },
             {
               label: '配置接口',
               name: 'schema_api',
               type: 'string',
               comment: '配置接口',
-              nullable: true,
+              nullable: true
             },
             {
               label: '是否可见',
               name: 'visible',
               type: 'boolean',
               comment: '是否可见',
-              default: true,
+              default: true
             },
             {
               label: '排列',
@@ -1684,14 +1684,14 @@ const models = [
               type: 'integer',
               comment: '排列',
               nullable: true,
-              default: 9999,
+              default: 9999
             },
             {
               label: '类名',
               name: 'class_name',
               type: 'string',
               comment: '类名',
-              nullable: true,
+              nullable: true
             },
             {
               label: '状态',
@@ -1699,27 +1699,27 @@ const models = [
               type: 'enum',
               comment: '状态',
               option: ['enabled', 'disabled'],
-              default: 'enabled',
+              default: 'enabled'
             },
             {
               label: '::Created At',
               name: 'created_at',
               type: 'timestamp',
               comment: '::Created At',
-              nullable: true,
+              nullable: true
             },
             {
               label: '::Updated At',
               name: 'updated_at',
               type: 'timestamp',
               comment: '::Updated At',
-              nullable: true,
-            },
+              nullable: true
+            }
           ],
           connector: '',
           indexes: [],
           option: {
-            timestamps: true,
+            timestamps: true
           },
           relations: {
             children: {
@@ -1739,10 +1739,10 @@ const models = [
                   'rewrite',
                   'isDefaultPage',
                   'visible',
-                  'className',
-                ],
-              },
-            },
+                  'className'
+                ]
+              }
+            }
           },
           table: {
             name: 'admin_menu',
@@ -1750,7 +1750,7 @@ const models = [
             engine: 'InnoDB',
             collation: '',
             charset: '',
-            primarykeys: null,
+            primarykeys: null
           },
           values: [
             {
@@ -1759,7 +1759,7 @@ const models = [
               rank: 1,
               status: 'enabled',
               url: '/kanban/kanban',
-              visible: 1,
+              visible: 1
             },
             {
               icon: 'icon-pie-chart',
@@ -1767,7 +1767,7 @@ const models = [
               rank: 2,
               status: 'enabled',
               url: '/chart/compare',
-              visible: 1,
+              visible: 1
             },
             {
               icon: 'icon-cloud',
@@ -1775,31 +1775,31 @@ const models = [
               rank: 3,
               status: 'enabled',
               url: '/table/service',
-              visible: 1,
+              visible: 1
             },
             {
               icon: 'icon-list',
               name: '云服务库',
               parent: 3,
               url: '/table/service',
-              visible: 1,
+              visible: 1
             },
             {
               icon: 'icon-plus',
               name: '创建云服务库',
               parent: 3,
               url: '/form/service/0',
-              visible: 1,
+              visible: 1
             },
             {
               icon: 'icon-plus',
               name: '云服务库',
               parent: 5,
               url: '/form/service/2',
-              visible: 1,
-            },
-          ],
-        },
+              visible: 1
+            }
+          ]
+        }
       },
       {
         name: 'role.mod.json',
@@ -1811,67 +1811,67 @@ const models = [
               label: '编号',
               name: 'id',
               type: 'ID',
-              comment: '标识',
+              comment: '标识'
             },
             {
               label: '名称',
               name: 'name',
               type: 'string',
               comment: '角色名称',
-              index: true,
+              index: true
             },
             {
               label: '角色值',
               name: 'value',
               type: 'string',
               comment: '角色值',
-              index: true,
+              index: true
             },
             {
               label: '菜单',
               name: 'menu',
               type: 'text',
-              comment: '菜单',
+              comment: '菜单'
             },
             {
               label: '状态',
               name: 'status',
               type: 'boolean',
               comment: '状态',
-              default: 1,
+              default: 1
             },
             {
               label: '::Created At',
               name: 'created_at',
               type: 'timestamp',
               comment: '::Created At',
-              nullable: true,
+              nullable: true
             },
             {
               label: '::Updated At',
               name: 'updated_at',
               type: 'timestamp',
               comment: '::Updated At',
-              nullable: true,
-            },
+              nullable: true
+            }
           ],
           connector: '',
           indexes: null,
           option: {
-            timestamps: true,
+            timestamps: true
           },
           relations: null,
           table: {
             name: 'system_role',
             collation: '',
             charset: '',
-            primarykeys: null,
+            primarykeys: null
           },
-          values: null,
-        },
-      },
-    ],
-  },
+          values: null
+        }
+      }
+    ]
+  }
 ];
 
 function MomoryModelList(attr) {
@@ -1894,7 +1894,7 @@ function MomoryModelList(attr) {
     for (let i = 0; i < properties.length - 1; i++) {
       if (currentObject === undefined) {
         throw new Error(
-          `Property '${properties[i]}' does not exist in path '${path}'`,
+          `Property '${properties[i]}' does not exist in path '${path}'`
         );
       }
       //   注意，不支持生成数组

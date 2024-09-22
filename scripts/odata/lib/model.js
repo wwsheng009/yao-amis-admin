@@ -1,7 +1,7 @@
 function getModelList() {
   const viewList = Process('models.odata.view.get', {
     wheres: [{ column: 'disabled', value: false }],
-    limit: 10000,
+    limit: 10000
   });
   const modelsList = Process('widget.models');
   // 原始的模型列表
@@ -68,7 +68,7 @@ function getModelsEntityset() {
     modelObj.push({
       kind: 'EntitySet',
       name: model.odata_view_name,
-      url: model.odata_view_name,
+      url: model.odata_view_name
     });
   });
   return modelObj;
@@ -96,10 +96,10 @@ function getOdataViewList() {
     wheres: [
       {
         column: 'disabled',
-        value: false,
-      },
+        value: false
+      }
     ],
-    limit: 10000,
+    limit: 10000
   });
   return list;
 }
@@ -115,8 +115,8 @@ function getModelsEntityset2() {
   });
   return {
     d: {
-      EntitySets: modelObj,
-    },
+      EntitySets: modelObj
+    }
   };
 }
 
@@ -182,10 +182,10 @@ function getModel(viewId) {
     wheres: [
       {
         column: 'name',
-        value: viewId,
-      },
+        value: viewId
+      }
     ],
-    limit: 1,
+    limit: 1
   });
   if (!odataview) {
     throw new Exception(`视图：${viewId}不存在`);
@@ -208,13 +208,13 @@ function getModel(viewId) {
     } else {
       // 过滤隐藏的字段
       model.columns = model.columns.filter((column) => {
-        if (model.option) {
-          if (model.option.timestamps) {
+        if (model.optionb != null) {
+          if (model.option?.timestamps) {
             if (column.name == 'updated_at' || column.name == 'created_at') {
               return false;
             }
           }
-          if (model.option.soft_deletes) {
+          if (model.option?.soft_deletes) {
             if (column.name == 'deleted_at') {
               return false;
             }
@@ -262,5 +262,5 @@ module.exports = {
   getModelsEntityset,
   getModel,
   getModelNameList,
-  getOdataViewList,
+  getOdataViewList
 };
