@@ -12,8 +12,8 @@ export function updateSoyRouteComponent(node, parent?) {
     return;
   }
   const hasParent = parent != null ? true : false;
-  const hasChildren
-    = Array.isArray(node.children) && node.children.length > 0 ? true : false;
+  const hasChildren =
+    Array.isArray(node.children) && node.children.length > 0 ? true : false;
 
   delete node.meta.singleLayout;
 

@@ -2,60 +2,60 @@ function getCodeGenerationList() {
   return [
     {
       label: 'Amis增删改查-页面',
-      value: 'CRUDAllTemplate',
+      value: 'CRUDAllTemplate'
     },
     {
       label: 'Amis增删改查-查看',
-      value: 'CRUDListTemplate',
+      value: 'CRUDListTemplate'
     },
     {
       label: 'Amis增删改查-创建',
-      value: 'CRUDNewTemplate',
+      value: 'CRUDNewTemplate'
     },
     {
       label: 'Amis列表视图-字段列表',
-      value: 'getTableAmisViewFields',
+      value: 'getTableAmisViewFields'
     },
     {
       label: 'Amis表单查看-字段列表',
-      value: 'getTableAmisFormViewFields',
+      value: 'getTableAmisFormViewFields'
     },
     {
       label: 'Amis表单修改-字段列表',
-      value: 'getTableAmisFormFields',
+      value: 'getTableAmisFormFields'
     },
     {
       label: 'Amis表单修改-带快速-字段列表',
-      value: 'getTableAmisViewFieldsWithQuick',
+      value: 'getTableAmisViewFieldsWithQuick'
     },
     {
       label: 'Xgen所有对象',
-      value: 'getXgenObjects',
+      value: 'getXgenObjects'
     },
     {
       label: 'Xgen表格定义-简单',
-      value: 'getXgenTable',
+      value: 'getXgenTable'
     },
     {
       label: 'Xgen表格定义-完整',
-      value: 'getXgenTableFull',
+      value: 'getXgenTableFull'
     },
     {
       label: 'Xgen表单定义-简单',
-      value: 'getXgenForm',
+      value: 'getXgenForm'
     },
     {
       label: 'Xgen表单定义-完整-查看',
-      value: 'getXgenFormFullView',
+      value: 'getXgenFormFullView'
     },
     {
       label: 'Xgen表单定义-完整-编辑',
-      value: 'getXgenFormFullEdit',
+      value: 'getXgenFormFullEdit'
     },
     {
       label: 'TypeScript类型定义',
-      value: 'getTSType',
-    },
+      value: 'getTSType'
+    }
   ];
 }
 
@@ -111,10 +111,10 @@ function CRUDNewTemplate(modelId, columns) {
         __code_source: Process(
           'scripts.amis.schema.curdNewPage',
           modelId,
-          columns,
-        ),
-      },
-    ],
+          columns
+        )
+      }
+    ]
   };
 }
 
@@ -128,10 +128,10 @@ function CRUDListTemplate(modelId, columns) {
         __code_source: Process(
           'scripts.amis.schema.curdListPage',
           modelId,
-          columns,
-        ),
-      },
-    ],
+          columns
+        )
+      }
+    ]
   };
 }
 
@@ -145,10 +145,10 @@ function CRUDAllTemplate(modelId, columns) {
         __code_source: Process(
           'scripts.amis.curd.curdTemplate',
           modelId,
-          columns,
-        ),
-      },
-    ],
+          columns
+        )
+      }
+    ]
   };
 }
 
@@ -166,10 +166,10 @@ function getTSType(modelId, columns) {
         __code_source: Process(
           'scripts.system.tstype.createModelType',
           modelId,
-          columns,
-        ),
-      },
-    ],
+          columns
+        )
+      }
+    ]
   };
 }
 /**
@@ -187,10 +187,10 @@ function getTableAmisViewFields(modelId, columns) {
         __code_source: Process(
           'scripts.amis.schema.generateViewFields',
           modelId,
-          columns,
-        ),
-      },
-    ],
+          columns
+        )
+      }
+    ]
   };
 }
 /**
@@ -208,10 +208,10 @@ function getTableAmisFormFields(modelId, columns) {
         __code_source: Process(
           'scripts.amis.schema.generateEditFormFields',
           modelId,
-          columns,
-        ),
-      },
-    ],
+          columns
+        )
+      }
+    ]
   };
 }
 
@@ -230,10 +230,10 @@ function getTableAmisFormViewFields(modelId, columns) {
         __code_source: Process(
           'scripts.amis.schema.formViewFieldsSchema',
           modelId,
-          columns,
-        ),
-      },
-    ],
+          columns
+        )
+      }
+    ]
   };
 }
 
@@ -252,10 +252,10 @@ function getTableAmisViewFieldsWithQuick(modelId, columns) {
         __code_source: Process(
           'scripts.amis.schema.generateViewFieldsWithQuick',
           modelId,
-          columns,
-        ),
-      },
-    ],
+          columns
+        )
+      }
+    ]
   };
 }
 
@@ -270,10 +270,10 @@ function getXgenTable(modelId, columns) {
     'scripts.xgen.schema.generateTableView',
     modelId,
     columns,
-    'simple',
+    'simple'
   );
   return {
-    __code_sources: template,
+    __code_sources: template
   };
 }
 /**
@@ -287,10 +287,10 @@ function getXgenTableFull(modelId, columns) {
     'scripts.xgen.schema.generateTableView',
     modelId,
     columns,
-    'full',
+    'full'
   );
   return {
-    __code_sources: template,
+    __code_sources: template
   };
 }
 
@@ -310,10 +310,10 @@ function getXgenForm(modelId, columns) {
           'scripts.xgen.schema.generateFormView',
           modelId,
           columns,
-          'simple',
-        ),
-      },
-    ],
+          'simple'
+        )
+      }
+    ]
   };
 }
 
@@ -330,8 +330,8 @@ function getXgenFormFullView(modelId, columns) {
       modelId,
       columns,
       'full',
-      'view',
-    ),
+      'view'
+    )
   };
 }
 /**
@@ -347,8 +347,8 @@ function getXgenFormFullEdit(modelId, columns) {
       modelId,
       columns,
       'full',
-      'edit',
-    ),
+      'edit'
+    )
   };
 }
 
@@ -364,7 +364,7 @@ function getXgenObjects(modelId, columns) {
     modelId,
     columns,
     'full',
-    'view',
+    'view'
   );
 
   const formFulledits = Process(
@@ -372,20 +372,20 @@ function getXgenObjects(modelId, columns) {
     modelId,
     columns,
     'full',
-    'edit',
+    'edit'
   );
 
   const tableFullViews = Process(
     'scripts.xgen.schema.generateTableView',
     modelId,
     columns,
-    'full',
+    'full'
   );
 
   const menus = Process(
     'scripts.xgen.schema.generateMenuConfig',
     modelId,
-    columns,
+    columns
   );
 
   return {
@@ -393,7 +393,7 @@ function getXgenObjects(modelId, columns) {
       ...tableFullViews,
       ...formFullviews,
       ...formFulledits,
-      ...menus,
-    ],
+      ...menus
+    ]
   };
 }
