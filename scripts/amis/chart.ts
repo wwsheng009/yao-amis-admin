@@ -1,7 +1,7 @@
 import { getDBModelById } from '@scripts/system/model';
 import { Exception, log, Process, Query } from '@yao/yao';
 
-interface ChartDBConfig {
+interface ChartDBLine {
   label: string; //描述
   model: string; //模型名称
   yfields: { field: string; chartType?: string }[]; //系列值
@@ -14,31 +14,50 @@ interface ChartDBConfig {
         }[]
       | string;
   };
+  processor?: string;
 }
-
+interface ChartConfig {
+  title?: {
+    text: string;
+  };
+  tooltip?: object;
+  legend?: {
+    data: string[];
+  };
+  series?: string | object[];
+  yAxis?: object[];
+  xAxis?:
+    | {
+        data: object[];
+      }[]
+    | string;
+}
 /**
  * yao run scripts.amis.chart.getChartById 1
  * @param chartId
  * @returns
  */
-export function getChartById(chartId: string | number) {
+export function getChartById(
+  chartId: string | number,
+  query: { [k: string]: object[] }
+) {
   const [row] = Process('models.system.chart.get', {
     wheres: [
       {
         column: 'id',
-        value: chartId,
+        value: chartId
       },
       {
         method: 'orwhere',
         column: 'name',
-        value: chartId,
-      },
-    ],
+        value: chartId
+      }
+    ]
   });
   if (!row) {
     throw new Exception(`图表配置不存在${chartId}`);
   }
-  return getChartUseConfig(row);
+  return getChartUseConfig(row, query);
 }
 
 /**
@@ -46,7 +65,10 @@ export function getChartById(chartId: string | number) {
  * @param payload
  * @returns
  */
-export function getChartUseConfig(payload: ChartDBConfig) {
+export function getChartUseConfig(
+  payload: ChartDBLine,
+  query: { [k: string]: object[] }
+) {
   //   payload = {
   //     model: 'product',
   //     field1: [{ field: 'price', chartType: 'bar' }],
@@ -54,8 +76,24 @@ export function getChartUseConfig(payload: ChartDBConfig) {
   //   };
 
   // console.log('payload', payload);
-
-  const chartData = getDbDataFromConfig(payload);
+  /**
+   * 优先使用处理器
+   * 再使用数据库模型
+   * 最后使用固定配置
+   */
+  if (payload.processor != null && payload.processor.split('.').length < 3) {
+    throw new Exception('处理器名称不正确');
+  }
+  let chartData = {} as ChartConfig;
+  if (payload.processor != null) {
+    try {
+      chartData = Process(payload.processor, query);
+    } catch (error) {
+      throw new Exception(error.message);
+    }
+  } else {
+    chartData = getDbDataFromConfig(payload);
+  }
   // 没有自定义配置。
   if (payload.config == null) {
     return chartData;
@@ -72,15 +110,15 @@ export function getChartUseConfig(payload: ChartDBConfig) {
   }
 
   if (chartData1?.series.length == 0 || chartData1?.series == '$series') {
-    chartData1.series = chartData.series;
+    chartData1.series = chartData.series || [];
   }
   if (chartData1?.xAxis?.length == 0 || chartData1?.xAxis == '$xAxis') {
-    chartData1.xAxis = chartData.xAxis;
+    chartData1.xAxis = chartData.xAxis || [];
   }
   return chartData1;
 }
 
-function getDbDataFromConfig(payload: ChartDBConfig) {
+function getDbDataFromConfig(payload: ChartDBLine): ChartConfig {
   if (!payload.yfields || !payload.model || !payload.xfield) {
     return {};
   }
@@ -103,7 +141,7 @@ function getDbDataFromConfig(payload: ChartDBConfig) {
     select: fields,
     from: `${model}`,
     wheres: wheres,
-    limit: 1000,
+    limit: 1000
   });
 
   const xAxis = [];
@@ -121,7 +159,7 @@ function getDbDataFromConfig(payload: ChartDBConfig) {
       type: f1.chartType || 'bar',
       name: name,
       data: [],
-      field: f1.field,
+      field: f1.field
     });
     fieldsDataMap[f1.field] = [];
   });
@@ -146,18 +184,100 @@ function getDbDataFromConfig(payload: ChartDBConfig) {
 
   return {
     title: {
-      text: payload.label || payload.model,
+      text: payload.label || payload.model
     },
     tooltip: {},
     legend: {
-      data: Object.keys(fieldsDataMap),
+      data: Object.keys(fieldsDataMap)
     },
     xAxis: [
       {
-        data: xAxis,
-      },
+        data: xAxis
+      }
     ],
     yAxis: [{}],
-    series: series,
+    series: series
+  };
+}
+
+//scripts.amis.chart.chartDemo
+function chartDemo() {
+  return {
+    title: {
+      text: '未来一周气温变化',
+      subtext: '纯属虚构',
+      textStyle: {},
+      subtextStyle: {}
+    },
+    tooltip: {
+      trigger: 'axis'
+    },
+    legend: {
+      data: ['最高气温', '最低气温'],
+      textStyle: {},
+      pageTextStyle: {}
+    },
+    toolbox: {
+      show: true,
+      feature: {
+        mark: {
+          show: true
+        },
+        dataView: {
+          show: true,
+          readOnly: true
+        },
+        magicType: {
+          show: false,
+          type: ['line', 'bar']
+        },
+        restore: {
+          show: true
+        },
+        saveAsImage: {
+          show: true
+        }
+      }
+    },
+    calculable: true,
+    xAxis: [
+      {
+        type: 'category',
+        boundaryGap: false,
+        data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+      }
+    ],
+    yAxis: [
+      {
+        type: 'value',
+        name: '°C'
+      }
+    ],
+    series: [
+      {
+        name: '最高气温',
+        type: 'line',
+        data: [11, 11, 15, 13, 12, 13, 10]
+      },
+      {
+        name: '最低气温',
+        type: 'line',
+        data: [1, -2, 2, 5, 3, 2, 0]
+      }
+    ],
+    color: [
+      '#c23531',
+      '#2f4554',
+      '#61a0a8',
+      '#d48265',
+      '#91c7ae',
+      '#749f83',
+      '#ca8622',
+      '#bda29a',
+      '#6e7074',
+      '#546570',
+      '#c4ccd3'
+    ],
+    textStyle: {}
   };
 }

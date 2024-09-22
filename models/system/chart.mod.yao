@@ -4,7 +4,7 @@
       "comment": "ID",
       "label": "ID",
       "name": "id",
-      "type": "id",
+      "type": "id"
     },
     {
       "comment": "名称",
@@ -12,13 +12,13 @@
       "label": "名称",
       "name": "name",
       "type": "string",
-      "unique": true,
+      "unique": true
     },
     {
       "comment": "描述",
       "label": "描述",
       "name": "label",
-      "type": "text",
+      "type": "text"
     },
     {
       "comment": "模型",
@@ -39,22 +39,29 @@
       "label": "横轴",
       "name": "yfields",
       "nullable": true,
-      "type": "json",
+      "type": "json"
     },
     {
       "comment": "配置",
       "label": "配置",
       "name": "config",
       "nullable": true,
-      "type": "json",
+      "type": "json"
     },
+    {
+      "comment": "处理器",
+      "label": "处理器",
+      "name": "processor",
+      "type": "text",
+      "nullable": true
+    }
   ],
   "name": "图表配置",
   "option": {
     "soft_deletes": true,
-    "timestamps": true,
+    "timestamps": true
   },
   "table": {
-    "name": "system_chart",
-  },
+    "name": "system_chart"
+  }
 }

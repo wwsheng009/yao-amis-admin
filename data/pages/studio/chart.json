@@ -94,6 +94,18 @@
           "id": "u:d4a4211d0971"
         },
         {
+          "label": "处理器",
+          "name": "processor",
+          "searchable": true,
+          "sortable": true,
+          "type": "text",
+          "quickEdit": {
+            "saveImmediately": true,
+            "type": "input-text",
+            "required": true
+          }
+        },
+        {
           "quickEdit": false,
           "format": "YYYY-MM-DD HH:mm:ss",
           "searchable": true,
@@ -217,7 +229,8 @@
                                 {
                                   "value": "line",
                                   "label": "line"
-                                },{
+                                },
+                                {
                                   "value": "pie",
                                   "label": "pie"
                                 }
@@ -240,6 +253,13 @@
                           "levelExpand": 1,
                           "name": "config",
                           "type": "static-json"
+                        },
+                        {
+                          "name": "processor",
+                          "type": "input-text",
+                          "colSize": "1",
+                          "label": "处理器",
+                          "static": true
                         }
                       ],
                       "id": "u:704d757cf8ad",
@@ -446,6 +466,13 @@
                           "type": "editor",
                           "label": "配置",
                           "language": "json"
+                        },
+                        {
+                          "name": "processor",
+                          "type": "input-text",
+                          "colSize": "1",
+                          "label": "处理器",
+                          "required": false
                         }
                       ],
                       "id": "u:704d757cf8ad",
@@ -792,6 +819,13 @@
                       "type": "editor",
                       "label": "配置",
                       "language": "json"
+                    },
+                    {
+                      "name": "processor",
+                      "type": "input-text",
+                      "colSize": "1",
+                      "label": "处理器",
+                      "required": false
                     }
                   ],
                   "id": "u:704d757cf8ad",
