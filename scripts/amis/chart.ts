@@ -130,8 +130,11 @@ function getDbDataFromConfig(payload: ChartDBLine): ChartConfig {
   const model = payload.model;
 
   const modelDsl = getDBModelById(model);
+  if (!modelDsl) {
+    throw new Exception(`模型定义不存在${model}`);
+  }
   let wheres = [];
-  if (modelDsl.option.soft_deletes) {
+  if (modelDsl.option?.soft_deletes) {
     wheres = [{ ':deleted_at': '删除', '=': null }];
   }
 
@@ -139,7 +142,7 @@ function getDbDataFromConfig(payload: ChartDBLine): ChartConfig {
   const list = q.Get({
     // "debug": true,
     select: fields,
-    from: `${model}`,
+    from: `$${model}`,
     wheres: wheres,
     limit: 1000
   });
