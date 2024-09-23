@@ -12,7 +12,7 @@ import { Process } from '@yao/yao';
  * yao run scripts.admin.menu_node.GetMenuNodes
  * @returns
  */
-function GetMenuNodes() {
+export function GetMenuNodes() {
   return GetNodes('admin.menu');
 }
 
@@ -24,7 +24,7 @@ function GetMenuNodes() {
  * @param node 当前节点数据
  * @returns
  */
-function CreateMenuNode({ idx, parent, ...node }) {
+export function CreateMenuNode({ idx, parent, ...node }) {
   return CreateNode('admin.menu', { idx, parent, ...node });
 }
 /**
@@ -34,19 +34,19 @@ function CreateMenuNode({ idx, parent, ...node }) {
  * @param {*} menuNode 菜单节点，没有携带id信息
  * @returns
  */
-function UpdateMenuNode(id, menuNode) {
+export function UpdateMenuNode(id, menuNode) {
   return UpdateNode('admin.menu', id, menuNode);
 }
 //
 // 删除根节点 yao run scripts.admin.menu_node.DeleteMenuNode 3
 // 删除节点与及所有的子节点
-function DeleteMenuNode(ids) {
+export function DeleteMenuNode(ids) {
   return DeleteNode('admin.menu', ids);
 }
 
 // yao run scripts.admin.menu_node.GetMenuNodeItems 1
 // 根据特定的id获取菜单节点以及所有的子节点
-function GetMenuNodeItems(id) {
+export function GetMenuNodeItems(id) {
   return GetNodeItems('admin.menu', id);
 }
 
@@ -54,7 +54,7 @@ function GetMenuNodeItems(id) {
  * 生成xgen的菜单
  * yao run scripts.admin.menu_node.xgenMenu
  */
-function xgenMenu() {
+export function xgenMenu() {
   const tabs = Process('scripts.system.meta.getTableListFromApis');
   const menuTab = tabs.map((name, idx) => {
     const setting = Process('yao.table.setting', name);

@@ -12,7 +12,7 @@ import {
  * yao run scripts.admin.dept.GetDeptNodes
  * @returns
  */
-function GetDeptNodes() {
+export function GetDeptNodes() {
   return GetNodes('admin.dept');
 }
 /**
@@ -23,7 +23,7 @@ function GetDeptNodes() {
  * @param node 当前节点数据
  * @returns
  */
-function CreateDeptNode({ idx, parent, ...node }) {
+export function CreateDeptNode({ idx, parent, ...node }) {
   return CreateNode('admin.dept', { idx, parent, ...node });
 }
 /**
@@ -33,13 +33,13 @@ function CreateDeptNode({ idx, parent, ...node }) {
  * @param {*} newNode 部门节点，没有携带id信息
  * @returns
  */
-function UpdateDeptNode(id, menuNode) {
+export function UpdateDeptNode(id, menuNode) {
   return UpdateNode('admin.dept', id, menuNode);
 }
 //
 // 删除根节点 yao run scripts.admin.dept.DeleteDeptNode 3
 // 删除节点与及所有的子节点
-function DeleteDeptNode(ids) {
+export function DeleteDeptNode(ids) {
   return DeleteNode('admin.dept', ids);
   // return { message: "删除成功" };
 }
@@ -50,6 +50,6 @@ function DeleteDeptNode(ids) {
  * @param {integer} parentId,父节点部门id
  * @returns 所有的部门节点列表
  */
-function GetDeptNodeItems(id) {
+export function GetDeptNodeItems(id) {
   return GetNodeItems('admin.dept', id);
 }

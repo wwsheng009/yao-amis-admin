@@ -1,6 +1,6 @@
 // 转换列配置成yao的模型配置，才能适配数据库
 import { IsMysql } from '@scripts/system/lib';
-import { AmisColumn, YaoModelColumnEx } from '@yao/types';
+import { AmisUIColumn, AmisModelColumn } from '@yao/types';
 
 // 集中管理类型字段类型转换处理
 
@@ -9,7 +9,7 @@ import { AmisColumn, YaoModelColumnEx } from '@yao/types';
  * @param {object} col
  * @returns
  */
-export function convertColTypeToYao(col: YaoModelColumnEx): YaoModelColumnEx {
+export function convertColTypeToYao(col: AmisModelColumn): AmisModelColumn {
   switch (col.type?.toLowerCase()) {
     case 'image':
     case 'video':
@@ -147,13 +147,13 @@ export function GetColumnTypeList() {
  * @param {object} column 数据库表列定义
  * @returns 返回amis formitem定义
  */
-export function column2AmisTableViewColumn(column: YaoModelColumnEx) {
+export function column2AmisTableViewColumn(column: AmisModelColumn) {
   // 只读字段的处理有两种方式，一种是使用static-类控件，
   // 不要使用input-控件再加上static属性进行组合控制，会使用quickEdit失效
   // 哪种更好需要测试后才知道
   // const name = column.name.toUpperCase();
   let displayOnly = false;
-  const newColumn = {} as AmisColumn;
+  const newColumn = {} as AmisUIColumn;
   newColumn.name = column.name;
   newColumn.label = column.label;
 
@@ -381,7 +381,7 @@ export function column2AmisFormViewColumn(column) {
   // 另外一种是使用input-控件再加上static属性进行组合控制
   // 哪种更好需要测试后才知道
   // const name = column.name.toUpperCase();
-  const newColumn = {} as AmisColumn;
+  const newColumn = {} as AmisUIColumn;
   newColumn.name = column.name;
   newColumn.label = column.label;
 
@@ -580,9 +580,9 @@ export function isDateTimeType(column) {
  * @param {object} column 数据库表列定义
  * @returns amis form item 定义
  */
-export function column2AmisFormEditColumn(column: YaoModelColumnEx) {
+export function column2AmisFormEditColumn(column: AmisModelColumn) {
   //   const name = column.name.toUpperCase();
-  const newColumn = {} as AmisColumn;
+  const newColumn = {} as AmisUIColumn;
   newColumn.name = column.name;
   newColumn.label = column.label;
 

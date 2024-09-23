@@ -12,9 +12,12 @@ import {
   migrateModel
 } from '@scripts/system/model_db';
 
-import { DotName, UnderscoreName, IsMysql } from '@scripts/system/lib';
-
-import { SlashName } from '@scripts/system/lib';
+import {
+  DotName,
+  UnderscoreName,
+  IsMysql,
+  SlashName
+} from '@scripts/system/lib';
 
 import { RunTransaction } from '@scripts/system/db';
 
@@ -29,8 +32,14 @@ import {
 
 import { convertColTypeToYao } from '@scripts/system/col_type';
 
-import { Process, Exception, FS } from '@yao/yao';
-import { AmisModel, YaoModelDBEx, YaoModelEx } from '@yao/types';
+import { Process, Exception, FS, log } from '@yao/yao';
+import {
+  AmisModel,
+  AmisRelation,
+  AmisModelColumn,
+  AmisModelDBEx,
+  YaoModelEx
+} from '@yao/types';
 import { YaoModel } from '@yaoapps/types';
 
 /**
@@ -43,7 +52,7 @@ import { YaoModel } from '@yaoapps/types';
  * @param {object} payload
  * @returns
  */
-function page(pageIn, pagesizeIn, querysIn, queryParams, payload) {
+export function page(pageIn, pagesizeIn, querysIn, queryParams, payload) {
   const page = pageIn || 1;
   const pagesize = pagesizeIn || 10;
   const querys = mergeQueryObject(querysIn, payload);
@@ -92,7 +101,7 @@ function DatabaseModelList() {
  * @param {object} modelDsl
  * @returns object
  */
-function CompleteModel(modelDsl: YaoModelDBEx) {
+function CompleteModel(modelDsl: AmisModelDBEx) {
   modelDsl = modelDsl || {};
   modelDsl.table = modelDsl.table || {};
   modelDsl.option = modelDsl.option || {};
@@ -165,7 +174,9 @@ function CompleteModel(modelDsl: YaoModelDBEx) {
       if (col.option != null && typeof col.option === 'string') {
         try {
           col.option = JSON.parse(col.option);
-        } catch (error) {}
+        } catch (err) {
+          log.Error(err);
+        }
       }
       if (Array.isArray(col.option) && col.option.length > 0) {
         col.options = [];
@@ -307,7 +318,7 @@ function ConvertModelToTableLine(modelDsl: YaoModelEx) {
  * @param {object} modelDsl
  * @returns
  */
-function SaveModelToLocal(modelDsl: YaoModelDBEx) {
+function SaveModelToLocal(modelDsl: AmisModelDBEx) {
   const yaoEnv = Process('utils.env.Get', 'YAO_ENV');
   if (yaoEnv !== 'development') {
     return;
@@ -339,7 +350,7 @@ function SaveModelToLocal(modelDsl: YaoModelDBEx) {
   __yao_data = { ROOT: false };
 }
 
-function SaveModelTableLine(payload, force?) {
+function SaveModelTableLine(payload, force?): number {
   // 先保存主表，获取id后再保存从表
   const saveFun = function (payload) {
     const res = Process('models.ddic.model.Save', payload);
@@ -351,21 +362,21 @@ function SaveModelTableLine(payload, force?) {
     }
     return res;
   };
-  return RunTransaction(saveFun, payload);
+  return RunTransaction(saveFun, payload) as unknown as number;
 }
 // 保存关联表数据
-function SaveRelations(id, payload, force?) {
+function SaveRelations(id, payload, force?: boolean) {
   // BeforeDelete(id);
   SaveColumns(id, payload, force);
   return id;
 }
 
 // 删除关联表数据
-function BeforeDelete(id) {
+export function BeforeDelete(id) {
   DeleteModelolumns(id);
 }
 
-function isAscOrder(arr: { id: string }[]) {
+export function isAscOrder(arr: { id: string }[]) {
   for (let i = 0; i < arr.length - 1; i++) {
     if (arr[i].id > arr[i + 1].id) {
       return false;
@@ -387,6 +398,9 @@ function SaveColumns(modelId, payload, force?: boolean) {
   }
   const cols = payload.columns || [];
 
+  if (force == true) {
+    force = true;
+  }
   if (!cols.length) {
     return;
   }
@@ -481,8 +495,11 @@ function ConvertModelColToTableLine(model, modelCol) {
   return col;
 }
 
-function UpdateRelationFromDsl(key: string, rel: YaoModel.Relation) {
-  const data = rel;
+function UpdateRelationFromDsl(
+  key: string,
+  rel: YaoModel.Relation
+): AmisRelation {
+  const data = rel as AmisRelation;
   data.name = key;
   data.label = rel.label || key;
   data.model = rel.model;
@@ -549,7 +566,7 @@ function ConvertModelToApiObject(modelDsl) {
  * @param {object} payload 模型定义
  * @returns object
  */
-function saveModelApi(payload) {
+export function saveModelApi(payload) {
   // 处理amis与yao的兼容性
   let model = ConvertApiObjectToModel(payload);
 
@@ -575,7 +592,11 @@ function saveModelApi(payload) {
     return Process('scripts.return.ErrorMessage', 403, '保存模型失败');
   }
 
-  return Process('scripts.return.RSuccess', getModelApi(id), '保存成功');
+  return Process(
+    'scripts.return.RSuccess',
+    getModelApi(id as unknown as number),
+    '保存成功'
+  );
 }
 
 /**
@@ -585,7 +606,7 @@ function saveModelApi(payload) {
  * @param {object} modelDsl Yao模型
  * @returns id
  */
-function ImportCachedModelToDB(modelDsl) {
+function ImportCachedModelToDB(modelDsl): number {
   const model = CompleteModel(modelDsl);
   CheckModel(model);
 
@@ -594,7 +615,7 @@ function ImportCachedModelToDB(modelDsl) {
   // console.log("ImportCachedModelToDB", model)
   // 传入的是模型数据，转成表结构后再保存
   const line = ConvertModelToTableLine(model);
-  return SaveModelTableLine(line, true);
+  return SaveModelTableLine(line, true) as unknown as number;
 }
 
 /**
@@ -621,7 +642,7 @@ function ImportCachedModelById(modelId) {
  * 删除模型
  * @param {number} modelId 模型标识
  */
-function DeleteModelMetaByIdBatch(modelId) {
+export function DeleteModelMetaByIdBatch(modelId) {
   const models = modelId + '';
   const ids = models.split(',');
   ids.forEach((id) => DeleteModelMetaById(id));
@@ -694,7 +715,7 @@ export function getModelApi(modelId: string | number) {
  * @param {string} modelId 模型ID
  * @returns
  */
-function getModelColumnsApi(modelId: string) {
+export function getModelColumnsApi(modelId: string) {
   const model = ConvertModelToApiObject(getDBModelById(modelId));
   if (Array.isArray(model?.columns) && model.columns.length) {
     model?.columns?.forEach((x, idx) => {
@@ -747,7 +768,7 @@ export function getDBModelById(modelId: string | number) {
  * @param {string} modelId 模型ID
  * @returns 返回模型的columns定义
  */
-function getYaoModelColumnMap(modelId: string) {
+export function getYaoModelColumnMap(modelId: string) {
   const modelDsl = FindAndLoadYaoModelById(modelId);
   const columnMap = {};
   if (modelDsl && modelDsl.columns) {
@@ -776,7 +797,7 @@ function getYaoModelColumnMap(modelId: string) {
  * @param {string} modelId
  * @returns
  */
-function ExportModelSource(modelId: string) {
+export function ExportModelSource(modelId: string) {
   const model = Process('models.ddic.model.Find', modelId, {
     withs: {
       columns: { withs: { element: {} } }
@@ -796,7 +817,7 @@ function ExportModelSource(modelId: string) {
  * @param {string} modelId
  * @returns
  */
-function ExportModelYaoSource(modelId: string) {
+export function ExportModelYaoSource(modelId: string) {
   const model = Process('models.ddic.model.Find', modelId, {
     withs: {
       columns: { withs: { element: {} } }
@@ -815,7 +836,7 @@ function ExportModelYaoSource(modelId: string) {
  * @param {object} modelDsl
  * @returns
  */
-function ConvertDBmodelToYaoModel(modelDsl: YaoModelDBEx) {
+function ConvertDBmodelToYaoModel(modelDsl: AmisModelDBEx) {
   const m = deepCopyObject(modelDsl);
   m.columns.forEach((col) => {
     delete col.id;
@@ -916,7 +937,7 @@ function removeModelColumnIds(modelDsl) {
  * @param {object} payload 外部传的源代码
  * @returns
  */
-function ImportModelFromSource(payload) {
+export function ImportModelFromSource(payload) {
   let newCode = payload.source;
   newCode = newCode.replace(/\/\/.*$/gm, '');
   newCode = newCode.replace(/\/\*.*?\*\//gs, '');
@@ -927,7 +948,7 @@ function ImportModelFromSource(payload) {
   SaveModelToLocal(model);
   // 传入的是模型数据，转成表结构后再保存
   const line = ConvertModelToTableLine(model);
-  const id = SaveModelTableLine(line);
+  const id = SaveModelTableLine(line) as unknown as number;
   if (id) {
     const err = loadModeltoMemory(model, !model.option?.read_only);
     if (err && err.Message) {
@@ -948,7 +969,7 @@ function ImportModelFromSource(payload) {
  * 批量把所有的数据库的模型加载到缓存
  * yao run scripts.system.model.importDBModelsToCache
  */
-function importDBModelsToCache() {
+export function importDBModelsToCache() {
   const list = DatabaseModelList();
 
   list.forEach((m) => {
@@ -969,7 +990,7 @@ function ImportCachedToDBBatch() {
     ImportCachedModelToDB(model);
   });
 }
-function ImportSystemModels() {
+export function ImportSystemModels() {
   ImportCachedToDBBatch();
   return { message: '导入成功' };
 }
@@ -977,7 +998,7 @@ function ImportSystemModels() {
  * yao run scripts.system.model.modelNameOption
  * @returns 返回模型ID列表
  */
-function modelNameOption() {
+export function modelNameOption() {
   const list = ModelIDList();
   const models = list.map((model) => {
     return { label: model, value: model };
@@ -987,7 +1008,7 @@ function modelNameOption() {
   return { items: models };
 }
 // yao run scripts.system.model.modelNameList
-function modelNameList() {
+export function modelNameList() {
   const list = DatabaseModelList();
   const models = list.map((model) => {
     let label = model.comment ? model.comment : model.name;
@@ -1104,7 +1125,7 @@ function guessModelColumnsType(modelDsl) {
  * @param {*} payload
  * @returns
  */
-function LoadToCacheFromDB(payload) {
+export function LoadToCacheFromDB(payload) {
   if (!payload) {
     return Process('scripts.return.ErrorMessage', 500, '数据不正确');
   }
@@ -1148,7 +1169,7 @@ function CheckImportModelLine(modelId, tableName) {
  * @param {object} payload 模型对象
  * @returns
  */
-function ImportFromNeo(payload) {
+export function ImportFromNeo(payload) {
   // 处理amis与yao的兼容性
   let model = ConvertApiObjectToModel(payload);
 
@@ -1170,7 +1191,7 @@ function ImportFromNeo(payload) {
   }
   return id;
 }
-function ImportFromCached(payload) {
+export function ImportFromCached(payload) {
   if (!payload) {
     return Process('scripts.return.ErrorMessage', 500, '数据不正确');
   }
@@ -1183,7 +1204,7 @@ function ImportFromCached(payload) {
  * @param {object} payload 请求数据
  * @returns
  */
-function ImportFromCachedBatch(payload) {
+export function ImportFromCachedBatch(payload) {
   const items = payload.items;
   if (!Array.isArray(items)) {
     return { message: '传入数据不正确' };
@@ -1193,7 +1214,7 @@ function ImportFromCachedBatch(payload) {
   });
   return { message: '批量导入本地缓存完成' };
 }
-function ImportTableStruct(payload) {
+export function ImportTableStruct(payload) {
   // console.log(payload);
   if (!payload) {
     return Process('scripts.return.ErrorMessage', 500, '数据不正确');
@@ -1310,7 +1331,7 @@ function GuessAmisCols(columns) {
       name: node.name,
       type: guessAmisType(node.type),
       label: node.label
-    } as any;
+    } as AmisModelColumn;
     if (node.required) {
       column.nullable = false;
     }
@@ -1330,7 +1351,7 @@ function GuessAmisCols(columns) {
     message: 'JSON检查成功'
   };
 }
-function CheckAndGuessJson(payload) {
+export function CheckAndGuessJson(payload) {
   let json = payload.json;
   const type = payload.type;
 
@@ -1346,7 +1367,7 @@ function CheckAndGuessJson(payload) {
     try {
       json = JSON.parse(payload.json);
     } catch (error) {
-      throw new Exception('数据格式不正确', 500);
+      throw new Exception('数据格式不正确' + error.message, 500);
     }
   }
 
@@ -1387,7 +1408,7 @@ function CheckAndGuessJson(payload) {
  * @param {object} payload 数据库表列表
  * @returns
  */
-function ImportFromTableBatch(payload) {
+export function ImportFromTableBatch(payload) {
   console.log('ImportFromTableBatch', payload);
 
   const items = payload.items;

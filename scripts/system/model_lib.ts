@@ -16,7 +16,7 @@ export function ModelIDList() {
  * 返回所有模型列表
  * @returns []object
  */
-function CachedModelList() {
+export function CachedModelList() {
   const models = Process('widget.models');
   return FlatModelList(models);
 }
@@ -194,7 +194,7 @@ export function FindAndLoadDBModelById(modelId: string | number) {
  * @param {*} modelData
  * @returns
  */
-function modelIdListFromMemory(modelData: YaoModelNode) {
+export function modelIdListFromMemory(modelData: YaoModelNode) {
   let idList = [];
   if (modelData.children) {
     modelData.children.forEach((line) => {

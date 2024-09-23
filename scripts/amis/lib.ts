@@ -15,7 +15,7 @@ import {
   column2AmisFormViewColumn,
   column2AmisFormEditColumn
 } from '@scripts/system/col_type';
-import { YaoModelDBEx } from '@yao/types';
+import { AmisModelDBEx } from '@yao/types';
 import { Process, Exception } from '@yao/yao';
 import { YaoModel } from '@yaoapps/types';
 
@@ -31,7 +31,7 @@ import { YaoModel } from '@yaoapps/types';
 export function getModelDefinition(
   modelId: string,
   columnsIn?: any[]
-): YaoModelDBEx {
+): AmisModelDBEx {
   let model = Process(
     'scripts.system.model.getDBModelById', // 优先从数据库中加载，
     DotName(modelId)
@@ -312,7 +312,8 @@ export function getModelFieldsForAmis(modelId, columnsIn?) {
  * @param {object} modelDsl yao模型定义
  * @returns 新的模型定义
  */
-function AddMetaFields(modelDsl: YaoModel.ModelDSL): YaoModel.ModelDSL {
+function AddMetaFields(modelDsl2: YaoModel.ModelDSL): AmisModelDBEx {
+  const modelDsl = modelDsl2 as AmisModelDBEx;
   if (modelDsl.option?.timestamps) {
     let result = modelDsl.columns?.some((item) => item.name === 'created_at');
     if (!result) {

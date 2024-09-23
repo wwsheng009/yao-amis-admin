@@ -1,6 +1,7 @@
 // 复杂嵌套结构处理
 
 import { Process, Exception } from '@yao/yao';
+import { YaoQuery } from '@yaoapps/types';
 /**
  * 读取并转换一个树结构模型
  * yao run scripts.amis.data.tree.GetNodes admin.menu
@@ -31,7 +32,7 @@ export function GetNodes(model: string, querys?) {
 
   fields = [...new Set(fields)];
 
-  const config = {} as any;
+  const config = {} as YaoQuery.QueryDSL;
 
   if (querys != null) {
     config.select = fields;
@@ -53,7 +54,7 @@ export function GetNodes(model: string, querys?) {
  * @param node 当前节点数据
  * @returns
  */
-export function CreateNode(model, { path, parent, ...node }) {
+export function CreateNode(model, { parent, ...node }) {
   const newNode = { ...node };
   if (parent && typeof parent === 'object' && parent.id) {
     newNode.parent = parent.id;

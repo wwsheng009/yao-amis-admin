@@ -1,6 +1,6 @@
-import { YaoModel } from '@yaoapps/types';
+import { YaoField, YaoModel } from '@yaoapps/types';
 
-export interface YaoModelColumnEx extends YaoModel.ModelColumn {
+export interface AmisModelColumn extends YaoModel.ModelColumn {
   /**可选项 */
   options?: {
     value: string | number | boolean;
@@ -10,7 +10,7 @@ export interface YaoModelColumnEx extends YaoModel.ModelColumn {
   element_id?: string;
 
   /**检查模型 */
-  check_model: string;
+  check_model?: string;
 
   check_model_label?: string;
   check_model_value?: string;
@@ -19,6 +19,8 @@ export interface YaoModelColumnEx extends YaoModel.ModelColumn {
   model_identity?: string;
   check_model_multi?: boolean;
   language?: string;
+  static?: boolean;
+  format?: string;
 }
 
 /** 增强的Yao 模型定义 */
@@ -32,14 +34,14 @@ export interface YaoModelEx extends YaoModel.ModelDSL {
   children?: YaoModelEx[];
 }
 
-export interface YaoModelDBEx extends Omit<YaoModel.ModelDSL, 'columns'> {
+export interface AmisModelDBEx extends Omit<YaoModel.ModelDSL, 'columns'> {
   /** 内部标识 */
   ID?: string;
 
   /** 编号，一般是数据库id */
   id?: number;
 
-  columns?: YaoModelColumnEx[];
+  columns?: AmisModelColumn[];
   option?: YaoModel.ModelOption & {
     migrate_force?: boolean;
   };
@@ -68,7 +70,7 @@ export interface AmisModel extends Omit<YaoModel.ModelDSL, 'relations'> {
   read_only?: boolean;
 
   /** */
-  columns?: YaoModelColumnEx[];
+  columns?: AmisModelColumn[];
 
   relations?: AmisRelation[];
 }
@@ -78,7 +80,10 @@ export interface AmisRelation extends YaoModel.Relation {
   name: string;
 }
 
-export interface AmisColumn {
+/**
+ * UI column used in amis curd/table
+ */
+export interface AmisUIColumn {
   /**名称 */
   name?: string;
   /**标签 */
@@ -136,4 +141,11 @@ export interface AmisColumn {
 export interface YaoModelNode {
   children?: { data?: YaoModelEx }[];
   data?: YaoModelEx;
+}
+
+export interface AmisViewColumn extends YaoField.ColumnDSL {
+  /**上传控件 */
+  is_upload?: boolean;
+  /**下拉控件 */
+  is_select?: boolean;
 }

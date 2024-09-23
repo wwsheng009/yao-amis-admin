@@ -1,8 +1,9 @@
 import { getModelDefinition } from '@scripts/amis/lib';
 import { DotName, IsMysql } from '@scripts/system/lib';
+import { AmisModelDBEx, AmisViewColumn, YaoModelEx } from '@yao/types';
 import { Process, log } from '@yao/yao';
 
-import { YaoField, YaoForm, YaoModel, YaoQuery } from '@yaoapps/types';
+import { YaoForm, YaoModel, YaoQuery } from '@yaoapps/types';
 /**
  * Generate the menu items for xgen
  *
@@ -10,7 +11,7 @@ import { YaoField, YaoForm, YaoModel, YaoQuery } from '@yaoapps/types';
  * @param {string} modelId
  * @param {Array} columns
  */
-function generateMenuConfig(modelId: string, columns) {
+export function generateMenuConfig(modelId: string, columns) {
   const modelDsl = getModelDefinition(modelId, columns);
 
   const name = modelDsl.name || modelId;
@@ -38,7 +39,7 @@ function generateMenuConfig(modelId: string, columns) {
  * @param {Array} columns
  * @param {string} simple 简单模式
  */
-function generateTableView(modelId: string, columns, simple) {
+export function generateTableView(modelId: string, columns, simple) {
   if (simple == 'simple') {
     return [
       {
@@ -69,7 +70,7 @@ function generateTableView(modelId: string, columns, simple) {
  * @param {Array} columns
  * @param {string} simple 简单模式
  */
-function generateFormView(modelId: string, columns, simple, type) {
+export function generateFormView(modelId: string, columns, simple, type) {
   if (simple == 'simple') {
     return [
       {
@@ -88,7 +89,7 @@ function generateFormView(modelId: string, columns, simple, type) {
   return getXgenFormSchema(modelDsl, type);
 }
 
-function getXgenTableSchema(modelDsl: YaoModel.ModelDSL) {
+function getXgenTableSchema(modelDsl: YaoModelEx) {
   const modelName = DotName(modelDsl.ID);
 
   // const copiedObject = JSON.parse(JSON.stringify(modelDsl.columns));
@@ -487,7 +488,7 @@ function TableColumnCast(
       bind: bind,
       props: {}
     }
-  } as YaoField.ColumnDSL;
+  } as AmisViewColumn;
   let width = 160;
   if (title.length > 5) {
     width = 250;
@@ -1114,7 +1115,7 @@ function MergeObject(target: object, source: object) {
 /**
  * 把hasMany变成表单中的Table
  */
-function relationTable(formDsl: YaoForm.FormDSL, modelDsl: YaoModel.ModelDSL) {
+function relationTable(formDsl: YaoForm.FormDSL, modelDsl: AmisModelDBEx) {
   const modelName = DotName(modelDsl.ID);
   const relations = modelDsl.relations || {};
   const RelList = [];
@@ -1165,7 +1166,7 @@ function relationTable(formDsl: YaoForm.FormDSL, modelDsl: YaoModel.ModelDSL) {
  * yao studio run model.relation.List
  * 把hasMany变成表单中的List
  */
-function relationList(formDsl, modelDsl) {
+function relationList(formDsl, modelDsl: AmisModelDBEx) {
   const relations = modelDsl.relations || {};
   const RelList = [];
   for (const rel in relations) {
@@ -1334,7 +1335,9 @@ function Rollback() {
         `
     : '';
 }
-function CreateAfterFind(relations: YaoModel.Relation[]) {
+function CreateAfterFind(relations: {
+  [key: string]: YaoModel.Relation | undefined;
+}) {
   const templates = [];
 
   for (const rel in relations) {
@@ -1542,7 +1545,7 @@ function CastListColumn(
       type: 'Input',
       props: {}
     }
-  } as YaoField.ColumnDSL;
+  } as AmisViewColumn;
   let width = 6;
   const bind = name;
   if (column.type == 'json') {
@@ -1695,7 +1698,7 @@ function FormColumnCast(
       type: 'Input',
       props: {}
     }
-  } as YaoField.ColumnDSL;
+  } as AmisViewColumn;
   let width = 8;
   const bind = name;
   if (column.type == 'json') {

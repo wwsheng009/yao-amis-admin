@@ -39,7 +39,7 @@ interface ChartConfig {
  */
 export function getChartById(
   chartId: string | number,
-  query: { [k: string]: object[] }
+  query?: { [k: string]: object[] }
 ) {
   const [row] = Process('models.system.chart.get', {
     wheres: [
@@ -151,6 +151,7 @@ function getDbDataFromConfig(payload: ChartDBLine): ChartConfig {
   const series = []; //有可能会有重复的字段，但是显示类型不一样。
   const fieldsDataMap = {};
 
+  const legend = [];
   payload.yfields.forEach((f1) => {
     const [column] = modelDsl.columns.filter((c) => c.name === f1.field);
 
@@ -158,6 +159,7 @@ function getDbDataFromConfig(payload: ChartDBLine): ChartConfig {
     if (column != null) {
       name = column.label || name;
     }
+    legend.push(name);
     series.push({
       type: f1.chartType || 'bar',
       name: name,
@@ -191,7 +193,7 @@ function getDbDataFromConfig(payload: ChartDBLine): ChartConfig {
     },
     tooltip: {},
     legend: {
-      data: Object.keys(fieldsDataMap)
+      data: legend
     },
     xAxis: [
       {
@@ -204,7 +206,7 @@ function getDbDataFromConfig(payload: ChartDBLine): ChartConfig {
 }
 
 //scripts.amis.chart.chartDemo
-function chartDemo() {
+export function chartDemo() {
   return {
     title: {
       text: '未来一周气温变化',
@@ -284,3 +286,4 @@ function chartDemo() {
     textStyle: {}
   };
 }
+// getChartById(1, {});
