@@ -34,7 +34,7 @@ export interface YaoModelEx extends YaoModel.ModelDSL {
   children?: YaoModelEx[];
 }
 
-export interface AmisModelDBEx extends Omit<YaoModel.ModelDSL, 'columns'> {
+export interface AmisModel extends Omit<YaoModel.ModelDSL, 'columns'> {
   /** 内部标识 */
   ID?: string;
 
@@ -47,7 +47,7 @@ export interface AmisModelDBEx extends Omit<YaoModel.ModelDSL, 'columns'> {
   };
 }
 
-export interface AmisModel extends Omit<YaoModel.ModelDSL, 'relations'> {
+export interface AmisModelDB extends Omit<YaoModel.ModelDSL, 'relations'> {
   /** 内部标识 */
   //   ID?: string;
 
@@ -143,7 +143,7 @@ export interface YaoModelNode {
   data?: YaoModelEx;
 }
 
-export interface AmisViewColumn extends YaoField.ColumnDSL {
+export interface AmisViewComponent extends YaoField.ColumnDSL {
   /**上传控件 */
   is_upload?: boolean;
   /**下拉控件 */

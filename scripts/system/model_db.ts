@@ -4,7 +4,7 @@ import { FileNameConvert, IsSqlite, ClearFalsyKeys } from '@scripts/system/lib';
 import { convertColTypeToYao } from '@scripts/system/col_type';
 import { Process, Exception, log } from '@yao/yao';
 import { YaoModel } from '@yaoapps/types';
-import { AmisModel, AmisRelation, AmisModelDBEx } from '@yao/types';
+import { AmisModelDB, AmisRelation, AmisModel } from '@yao/types';
 
 export function deepCopyObject<T>(obj: T): T {
   return JSON.parse(JSON.stringify(obj));
@@ -67,13 +67,13 @@ export function getModelFromDB(modelId: string | number) {
  * @param {*} line
  * @returns
  */
-export function ConvertTableLineToModel(line: AmisModel): AmisModelDBEx {
+export function ConvertTableLineToModel(line: AmisModelDB): AmisModel {
   let model = {
     table: {},
     option: {},
     relations: {},
     columns: []
-  } as AmisModelDBEx;
+  } as AmisModel;
   model.id = line.id;
   model.ID = line.identity;
   model.name = line.name;
@@ -208,7 +208,7 @@ export function loadModeltoMemory(
     return;
   }
 
-  const modelYao = deepCopyObject(modelDsl) as AmisModelDBEx;
+  const modelYao = deepCopyObject(modelDsl) as AmisModel;
   modelYao.columns.forEach((col) => {
     convertColTypeToYao(col);
   });

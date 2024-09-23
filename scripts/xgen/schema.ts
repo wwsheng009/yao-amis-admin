@@ -1,6 +1,11 @@
 import { getModelDefinition } from '@scripts/amis/lib';
 import { DotName, IsMysql } from '@scripts/system/lib';
-import { AmisModelDBEx, AmisViewColumn, YaoModelEx } from '@yao/types';
+import {
+  AmisModel,
+  AmisModelColumn,
+  AmisViewComponent,
+  YaoModelEx
+} from '@yao/types';
 import { Process, log } from '@yao/yao';
 
 import { YaoForm, YaoModel, YaoQuery } from '@yaoapps/types';
@@ -372,7 +377,7 @@ function GetWiths(modelDsl: YaoModel.ModelDSL) {
  * @param columns 类型定义数据列
  * @returns 排序后的数据列
  */
-function MakeColumnOrder(columns) {
+function MakeColumnOrder(columns: AmisModelColumn[]) {
   const typeMapping = GetDBTypeMap();
   const columnsBefore = [];
   // json或是textarea控件放在最后
@@ -443,10 +448,7 @@ function FilterFields() {
  * @param modelDsl 模型定义
  * @returns 表定义
  */
-function TableColumnCast(
-  column: YaoModel.ModelColumn,
-  modelDsl: YaoModel.ModelDSL
-) {
+function TableColumnCast(column: AmisModelColumn, modelDsl: YaoModel.ModelDSL) {
   // const props = column.props || {};
   const title = column.label || column.name;
   const name = column.name;
@@ -488,7 +490,7 @@ function TableColumnCast(
       bind: bind,
       props: {}
     }
-  } as AmisViewColumn;
+  } as AmisViewComponent;
   let width = 160;
   if (title.length > 5) {
     width = 250;
@@ -617,7 +619,10 @@ function TableColumnCast(
  * @param component
  * @param column
  */
-function updateViewSwitchPropes(component, column) {
+function updateViewSwitchPropes(
+  component: AmisViewComponent,
+  column: AmisModelColumn
+) {
   if (!component || !component?.view) {
     return component;
   }
@@ -753,7 +758,11 @@ function GetFileType(column) {
  * @param {*} component
  * @returns
  */
-function RelationSelect(column, modelDsl, component) {
+function RelationSelect(
+  column: AmisModelColumn,
+  modelDsl: AmisModel,
+  component: AmisViewComponent
+) {
   const props = column.props || {};
   // const title = column.label;
   const name = column.name;
@@ -802,7 +811,7 @@ function RelationSelect(column, modelDsl, component) {
             ...props
           }
         }
-      };
+      } as AmisViewComponent;
       return component;
     }
     // component = Withs(component, rel);
@@ -816,9 +825,9 @@ function RelationSelect(column, modelDsl, component) {
  * @param relation
  * @returns
  */
-function remoteSelect(relation_name, releation) {
+function remoteSelect(relation_name, relation) {
   // 首先从关联关系的模型中找到模型
-  let model = getModelDefinition(releation.model);
+  let model = getModelDefinition(relation.model);
   if (!model) {
     model = Process('schemas.default.TableGet', relation_name);
   }
@@ -1115,7 +1124,7 @@ function MergeObject(target: object, source: object) {
 /**
  * 把hasMany变成表单中的Table
  */
-function relationTable(formDsl: YaoForm.FormDSL, modelDsl: AmisModelDBEx) {
+function relationTable(formDsl: YaoForm.FormDSL, modelDsl: AmisModel) {
   const modelName = DotName(modelDsl.ID);
   const relations = modelDsl.relations || {};
   const RelList = [];
@@ -1166,7 +1175,7 @@ function relationTable(formDsl: YaoForm.FormDSL, modelDsl: AmisModelDBEx) {
  * yao studio run model.relation.List
  * 把hasMany变成表单中的List
  */
-function relationList(formDsl, modelDsl: AmisModelDBEx) {
+function relationList(formDsl: YaoForm.FormDSL, modelDsl: AmisModel) {
   const relations = modelDsl.relations || {};
   const RelList = [];
   for (const rel in relations) {
@@ -1545,7 +1554,7 @@ function CastListColumn(
       type: 'Input',
       props: {}
     }
-  } as AmisViewColumn;
+  } as AmisViewComponent;
   let width = 6;
   const bind = name;
   if (column.type == 'json') {
@@ -1698,7 +1707,7 @@ function FormColumnCast(
       type: 'Input',
       props: {}
     }
-  } as AmisViewColumn;
+  } as AmisViewComponent;
   let width = 8;
   const bind = name;
   if (column.type == 'json') {

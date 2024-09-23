@@ -400,7 +400,7 @@ function cleanPath(path) {
  * @param {string} modelId
  * @returns
  */
-function modelApiList(modelId: string) {
+export function modelApiList(modelId: string) {
   const allApi = Process('scripts.system.meta.allApi');
   const apilist = allApi.filter((api) => api.group == '/v1/system/model');
   apilist.forEach((api) => {

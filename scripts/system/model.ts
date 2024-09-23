@@ -34,10 +34,10 @@ import { convertColTypeToYao } from '@scripts/system/col_type';
 
 import { Process, Exception, FS, log } from '@yao/yao';
 import {
-  AmisModel,
+  AmisModelDB,
   AmisRelation,
   AmisModelColumn,
-  AmisModelDBEx,
+  AmisModel,
   YaoModelEx
 } from '@yao/types';
 import { YaoModel } from '@yaoapps/types';
@@ -101,7 +101,7 @@ function DatabaseModelList() {
  * @param {object} modelDsl
  * @returns object
  */
-function CompleteModel(modelDsl: AmisModelDBEx) {
+function CompleteModel(modelDsl: AmisModel) {
   modelDsl = modelDsl || {};
   modelDsl.table = modelDsl.table || {};
   modelDsl.option = modelDsl.option || {};
@@ -262,7 +262,7 @@ function CompleteModel(modelDsl: AmisModelDBEx) {
  * @returns
  */
 function ConvertModelToTableLine(modelDsl: YaoModelEx) {
-  const line = {} as AmisModel;
+  const line = {} as AmisModelDB;
   line.id = modelDsl.id;
   line.identity = DotName(modelDsl.ID);
   line.name = modelDsl.name;
@@ -318,7 +318,7 @@ function ConvertModelToTableLine(modelDsl: YaoModelEx) {
  * @param {object} modelDsl
  * @returns
  */
-function SaveModelToLocal(modelDsl: AmisModelDBEx) {
+function SaveModelToLocal(modelDsl: AmisModel) {
   const yaoEnv = Process('utils.env.Get', 'YAO_ENV');
   if (yaoEnv !== 'development') {
     return;
@@ -836,7 +836,7 @@ export function ExportModelYaoSource(modelId: string) {
  * @param {object} modelDsl
  * @returns
  */
-function ConvertDBmodelToYaoModel(modelDsl: AmisModelDBEx) {
+function ConvertDBmodelToYaoModel(modelDsl: AmisModel) {
   const m = deepCopyObject(modelDsl);
   m.columns.forEach((col) => {
     delete col.id;
