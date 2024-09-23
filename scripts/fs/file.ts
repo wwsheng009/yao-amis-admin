@@ -6,11 +6,35 @@ const uploadDir = '/upload';
 const userDir = '/user';
 const publicDir = '/public';
 
-type Folder = {
+interface Folder {
   label: string;
   value: string;
   children: Folder[];
-};
+}
+
+interface FileList {
+  id: number;
+  name: string;
+  path: string;
+  url: string;
+  size: string;
+  mime: string;
+  type: string;
+  time: string;
+}
+
+interface YaoFile {
+  name: string;
+  tempFile: string;
+  size: number;
+  header: {
+    [key: string]: object;
+    mimeType: {
+      'Content-Disposition': string[];
+      'Content-Type': string[];
+    };
+  };
+}
 
 function buildTree(folders: string[]) {
   const root: Folder = { label: '', children: [], value: '' };
@@ -74,7 +98,7 @@ function filterUserAuthFolderList(type: string, folderList: string[]) {
 
   const authObjects = getUserAuthFolderCache();
   const folder_method = authObjects.method_with_folder;
-  console.log('folder_method', folder_method);
+  // console.log('folder_method', folder_method);
   // 未授权
   if (folder_method['ANY'].length == 0 && folder_method['READ'].length == 0) {
     return [];
@@ -174,7 +198,7 @@ function targetOperationAuthCheck(
  * 获取需要授权的目录的结构列表
  * yao run scripts.fs.file.getPermissionFolderTree
  */
-function getPermissionFolderTree() {
+export function getPermissionFolderTree() {
   const rootFolder = uploadDir;
 
   let list: string[] = Process('fs.system.ReadDir', rootFolder);
@@ -208,7 +232,7 @@ function writeLog(
   file_name2: string,
   operation: 'remove' | 'upload' | 'delete_folder' | 'move_folder'
 ) {
-  const user_id = Process('session.get', 'user_id');
+  const user_id = Process('session.get', 'user_id') || '';
   Process('models.system.log.file.save', {
     user_id,
     file_name,
@@ -223,7 +247,7 @@ function writeLog(
  * @param folder target folder
  * @returns
  */
-function UploadFile(type: string, file: YaoFile, folder: string) {
+export function UploadFile(type: string, file: YaoFile, folder: string) {
   const filePath = saveFile(type, file, folder);
   return {
     value: `/api/v1/fs/${type}/file/download?name=${filePath}`
@@ -238,13 +262,14 @@ function UploadFile(type: string, file: YaoFile, folder: string) {
 function getFolder(type: string) {
   let filePath = `${uploadDir}/public`;
   switch (type) {
-    case 'user':
+    case 'user': {
       const user_id = Process('session.get', 'user_id');
       if (!user_id) {
         throw new Exception('用户未登录');
       }
       filePath = `${uploadDir}${userDir}/${user_id}`;
       break;
+    }
     case 'public':
       filePath = `${uploadDir}${publicDir}`;
       break;
@@ -261,7 +286,7 @@ function getFolder(type: string) {
   }
   return filePath;
 }
-function batchDeleteFile(type: string, payload) {
+export function batchDeleteFile(type: string, payload) {
   const list = payload.items;
   if (!Array.isArray(list)) {
     throw new Exception('输入参数不正确');
@@ -274,7 +299,7 @@ function deleteFile(type: string, name: string) {
   const fname = getFilePath(type, name);
 
   targetOperationAuthCheck(type, fname, 'DELETE');
-  const result = Process('fs.system.Remove', fname);
+  Process('fs.system.Remove', fname);
   writeLog(fname, '', 'remove');
 }
 function queryEscape(str: string) {
@@ -324,8 +349,8 @@ function saveFile(type: string, file: YaoFile, folder: string) {
   if (!fs.Exists(uploadFolder)) {
     fs.MkdirAll(uploadFolder);
   }
-  fs.Move(file.tempFile, `${filePath}`);
-
+  fs.Move(file.tempFile, `${filePath}`); //在windows系统下有可能会失败，显示文件被占用，无法删除
+  // fs.Copy(file.tempFile, `${filePath}`);
   writeLog(filePath, '', 'upload');
 
   return filePath2;
@@ -339,7 +364,7 @@ function saveFile(type: string, file: YaoFile, folder: string) {
  * @param parent parent folder
  * @returns
  */
-function getFolderList(type: string, parent: string) {
+export function getFolderList(type: string, parent: string) {
   // 没有读取授权
   // if (!checkUserCanReadAuth(type)) {
   //   return { items: [], total: 0 };
@@ -406,13 +431,18 @@ function getTimeFormat(unixTime) {
  * @param payload 查询条件
  * @returns
  */
-function fileSearch(type: string, parentFolder: string, querysIn, payload) {
+export function fileSearch(
+  type: string,
+  parentFolder: string,
+  querysIn,
+  payload
+) {
   // 没有读取授权
   // if (!checkUserCanReadAuth(type)) {
   //   return { items: [], total: 0 };
   // }
   if (parentFolder == null) {
-    parentFolder == '';
+    parentFolder = '';
   }
 
   parentFolder = normalizeFolder(parentFolder);
@@ -464,9 +494,9 @@ function fileSearch(type: string, parentFolder: string, querysIn, payload) {
   return { items: items, total: total };
 }
 // yao run scripts.fs.file.getFileList '20231115'
-function getFileList(type: string, folder: string, keywords) {
+export function getFileList(type: string, folder: string, keywords) {
   if (folder == null) {
-    folder == '';
+    folder = '';
   }
   folder = normalizeFolder(folder);
   const userFolder = getFolder(type);
@@ -530,7 +560,7 @@ function getFileTypeFromMimeType(mimeType) {
   };
 
   // Check if the MIME type exists in the typeMap
-  if (typeMap.hasOwnProperty(mainType)) {
+  if (Object.prototype.hasOwnProperty.call(typeMap, mainType)) {
     return typeMap[mainType];
   } else {
     const partType = mainType.split('/')[0];
@@ -571,7 +601,7 @@ function normalizeFolder(folder: string) {
 
   return folder;
 }
-function createFolder(type: string, parent: string, folder: string) {
+export function createFolder(type: string, parent: string, folder: string) {
   if (parent == null || typeof parent != 'string') {
     parent = '';
   }
@@ -590,7 +620,7 @@ function createFolder(type: string, parent: string, folder: string) {
     fs.MkdirAll(uploadFolder);
   }
 }
-function deleteFolder(type: string, folder: string) {
+export function deleteFolder(type: string, folder: string) {
   if (folder == null || folder == '') {
     throw new Exception('目录不正确', 500);
   }
@@ -606,7 +636,7 @@ function deleteFolder(type: string, folder: string) {
   }
   writeLog(targetFolder, '', 'delete_folder');
 }
-function moveFolder(type: string, source: string, target: string) {
+export function moveFolder(type: string, source: string, target: string) {
   if (source == null || source == '') {
     throw new Exception('源目录不能为空');
   }
@@ -636,7 +666,7 @@ function moveFolder(type: string, source: string, target: string) {
   writeLog(sourceFolder, targetFolder, 'move_folder');
 }
 
-function convertToNestedArray(folderList: string[]): object[] {
+export function convertToNestedArray(folderList: string[]): object[] {
   // Initialize the root object
   const root = {
     label: '',
@@ -685,28 +715,4 @@ function removeEmptyChildren(node) {
       removeEmptyChildren(child);
     }
   }
-}
-
-interface FileList {
-  id: number;
-  name: string;
-  path: string;
-  url: string;
-  size: string;
-  mime: string;
-  type: string;
-  time: string;
-}
-
-interface YaoFile {
-  name: string;
-  tempFile: string;
-  size: number;
-  header: {
-    [key: string]: object;
-    mimeType: {
-      'Content-Disposition': string[];
-      'Content-Type': string[];
-    };
-  };
 }

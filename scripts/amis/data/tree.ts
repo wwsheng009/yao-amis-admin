@@ -2,6 +2,25 @@
 
 import { Process, Exception } from '@yao/yao';
 import { YaoQuery } from '@yaoapps/types';
+
+interface MapObj {
+  [key: string]: MapObj;
+}
+interface TreeObj {
+  [key: string]: string | number | TreeObj | TreeObj[] | string[];
+  children?: TreeObj[];
+  id?: number;
+}
+interface QueryObject {
+  _label: string[];
+  _value: string[];
+  select: string[];
+}
+interface NodeType {
+  parent: string | number;
+  id: number;
+  children?: NodeType[];
+}
 /**
  * 读取并转换一个树结构模型
  * yao run scripts.amis.data.tree.GetNodes admin.menu
@@ -9,7 +28,7 @@ import { YaoQuery } from '@yaoapps/types';
  * @param {string} model 模型名称
  * @returns
  */
-export function GetNodes(model: string, querys?) {
+export function GetNodes(model: string, querys?: QueryObject): NodeType[] {
   let labelField = 'name';
   let valueField = 'id';
 
@@ -54,8 +73,8 @@ export function GetNodes(model: string, querys?) {
  * @param node 当前节点数据
  * @returns
  */
-export function CreateNode(model, { parent, ...node }) {
-  const newNode = { ...node };
+export function CreateNode(model: string, { parent, ...node }): number {
+  const newNode = { ...node } as NodeType;
   if (parent && typeof parent === 'object' && parent.id) {
     newNode.parent = parent.id;
   } else {
@@ -73,7 +92,11 @@ export function CreateNode(model, { parent, ...node }) {
  * @param {*} newNode 节点，没有携带id信息
  * @returns
  */
-export function UpdateNode(model: string, id: number, newNode) {
+export function UpdateNode(
+  model: string,
+  id: number,
+  newNode: NodeType
+): number {
   if (id && id == newNode.parent) {
     throw new Exception('上级节点不能选择自己', 400);
   }
@@ -92,7 +115,7 @@ export function UpdateNode(model: string, id: number, newNode) {
  * @param {string} modelId
  * @param {string} ids
  */
-export function DeleteNode(modelId, ids) {
+export function DeleteNode(modelId: string, ids: string) {
   // 需要处理子节点
   let subItems = [];
   const myArray = ids.split(',');
@@ -111,11 +134,12 @@ export function DeleteNode(modelId, ids) {
 
 /**
  * 根据特定的id获取树节点以及所有的子节点
+ * yao run scripts.amis.data.tree.GetNodeItems admin.menu 1
  * @param {string} modelId
  * @param {string|number} id
  * @returns
  */
-export function GetNodeItems(modelId, id) {
+export function GetNodeItems(modelId: string, id: number): TreeObj {
   const item = Process(`models.${modelId}.find`, id, null);
   let items = [];
   if (item?.id) {
@@ -127,13 +151,12 @@ export function GetNodeItems(modelId, id) {
   return Process('utils.arr.Tree', items, {});
   // return items;
 }
-
 /**
  * 读取一个所有根节点
  * @param {integer} parentId,父节点部门id
  * @returns 所有的部门节点列表
  */
-function getSubNodeItems(modelId, parentId) {
+function getSubNodeItems(modelId: string, parentId: number): NodeType[] {
   const subNodes = Process(`models.${modelId}.get`, {
     wheres: [
       {
@@ -141,7 +164,7 @@ function getSubNodeItems(modelId, parentId) {
         value: parentId
       }
     ]
-  });
+  }) as NodeType[];
   let subItems = [];
 
   subNodes.map((node) => {
@@ -158,7 +181,10 @@ function getSubNodeItems(modelId, parentId) {
  * @param {function} func filter function return true
  * @returns Array
  */
-export function filterTreeDataWithFunc(dataArray, func) {
+export function filterTreeDataWithFunc(
+  dataArray: TreeObj[],
+  func: (x: TreeObj) => boolean
+): TreeObj[] {
   return dataArray.reduce((acc, item) => {
     // Check if the current node or its children match the filter condition
     // console.log("item id=======>", item.id);
@@ -181,7 +207,7 @@ export function filterTreeDataWithFunc(dataArray, func) {
       }
     }
     return acc;
-  }, []);
+  }, [] as TreeObj[]);
 }
 
 /**
@@ -190,7 +216,7 @@ export function filterTreeDataWithFunc(dataArray, func) {
  * @param {Array} filterIds array of ids
  * @returns array
  */
-export function filterTreeDataById(data, filterIds) {
+export function filterTreeDataById(data: TreeObj[], filterIds: string[]) {
   // convert to number and remove duplicate items
   let ids = filterIds.map((item) => Number(item));
   ids = [...new Set(ids)];
@@ -204,23 +230,26 @@ export function filterTreeDataById(data, filterIds) {
  * @param {*} field
  * @returns
  */
-export function collectTreeFields(data, field) {
+export function collectTreeFields(data: TreeObj[], field: string) {
   if (data == null) {
     return [];
   }
   const fields = [];
 
   // Recursive function to traverse the object
-  function traverse(obj) {
+  function traverse(obj: TreeObj | TreeObj[]) {
     if (obj != null && typeof obj === 'object') {
       if (Object.prototype.hasOwnProperty.call(obj, field)) {
         if (obj[field] != null) {
           fields.push(obj[field]);
         }
       }
-
-      for (const key in obj) {
-        traverse(obj[key]);
+      if (Array.isArray(obj)) {
+        obj.forEach((l) => traverse(l));
+      } else {
+        for (const key in obj) {
+          traverse(obj[key] as TreeObj);
+        }
       }
     }
   }
@@ -249,18 +278,23 @@ function flatAndRemoveDuplicate(array) {
  * traverse a tree object,combine the key2 of the object to key of the object
  *
  * @param {object} data
- * @param {string} key
- * @param {string} key2
+ * @param {string} key 作为key的字段名
+ * @param {string} key2 作为组的字段名
  * @param {string} defaultKey the key2 may be empty,use the default key instead
  * @returns
  */
-export function collectAndCombineData(data, key, key2, defaultKey?) {
+export function collectAndCombineData(
+  data: TreeObj[],
+  key: string,
+  key2: string,
+  defaultKey?: string
+) {
   if (data == null) {
     return [];
   }
-  const collectedData = {};
+  const collectedData = {} as { [key: string]: string[] | number[] };
 
-  function traverse(obj) {
+  function traverse(obj: TreeObj | TreeObj[]) {
     if (Array.isArray(obj)) {
       obj.forEach((l) => traverse(l));
       return;
@@ -271,16 +305,19 @@ export function collectAndCombineData(data, key, key2, defaultKey?) {
       Array.isArray(obj[key]) &&
       obj[key].length > 0
     ) {
+      //循环数组
       for (const o of obj[key]) {
         // 使用数组中的行项目作key
-        const old = collectedData[o];
+        const old = collectedData[o as string];
 
         let arrOld = [];
         if (old != null) {
           arrOld = Array.isArray(old) ? old : [old];
         }
         const arryNew = Array.isArray(obj[key2]) ? obj[key2] : [obj[key2]];
-        collectedData[o] = [...new Set([...arrOld, ...arryNew].flat())];
+        collectedData[o as string] = [
+          ...new Set([...arrOld, ...arryNew].flat())
+        ];
       }
     } else if (defaultKey) {
       const old = collectedData[defaultKey];

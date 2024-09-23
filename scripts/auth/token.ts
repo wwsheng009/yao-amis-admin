@@ -1,14 +1,15 @@
-import { Process, Exception, Query } from '@yao/yao';
+import { Process, Exception } from '@yao/yao';
 
 /**
  * api guard,scripts.auth.token.Check，检查身份验证
+ * 注意，不要在大文件（>300m)上传接口中使用此检查器，要不然内存会爆掉
  * @param {string} path api path
  * @param {map} params api path params
  * @param {map} queries api queries in url query string
  * @param {object|string} payload json object or string
  * @param {map} headers request headers
  */
-function Check(path, params, queries, payload, headers) {
+export function Check(path, params, queries, payload, headers) {
   const token = getToken(path, params, queries, payload, headers);
   if (!token) {
     error();
@@ -25,7 +26,7 @@ function error() {
 }
 
 // yao run scripts.security.CheckToken
-function CheckToken(path, params, queries, payload, headers) {
+export function CheckToken(path, params, queries, payload, headers) {
   const token = getToken(path, params, queries, payload, headers);
   if (!token) {
     return;
@@ -54,7 +55,7 @@ function getToken(path, params, queries, payload, headers) {
   }
   if (!auth) {
     const cookies = headers['Cookie'];
-    cookies &&
+    if (cookies && Array.isArray(cookies)) {
       cookies.forEach((cookie) => {
         const cookies2 = cookie.split(';'); // split the cookies into an array
         cookies2.forEach((cookie) => {
@@ -64,6 +65,7 @@ function getToken(path, params, queries, payload, headers) {
           }
         });
       });
+    }
   }
   if (token) {
     token = token.replace('Bearer ', '');

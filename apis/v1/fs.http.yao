@@ -2,7 +2,7 @@
   "name": "文件管理",
   "version": "1.0.3",
   "description": "文件管理",
-  "guard": "scripts.auth.token.Check",
+  "guard": "scripts.auth.token.Check", 
   "paths": [
     {
       // /api/v1/fs/:type/file/upload
@@ -10,6 +10,7 @@
       "label": "文件上传",
       "path": "/:type/file/upload",
       "method": "POST",
+      "guard": "bearer-jwt",// 需要注意的是，如果上传的文件特别大，使用js处理器检查会把文件内容复制到js脚本中去，特别的耗用内存
       "process": "scripts.fs.file.UploadFile",
       "in": [
         "$param.type",

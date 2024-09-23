@@ -4,7 +4,7 @@ import {
   collectAndCombineData
 } from '@scripts/amis/data/tree';
 
-import { Process, Exception, Query } from '@yao/yao';
+import { Process, Exception } from '@yao/yao';
 
 /**
  * 获取用户的权限信息
@@ -13,7 +13,7 @@ import { Process, Exception, Query } from '@yao/yao';
  * @param {number} userId user id
  * @returns
  */
-function getUserPermission(userId?: string) {
+function getUserPermission(userId?: number | string) {
   let user_id = userId;
   if (!user_id) {
     user_id = Process('session.get', 'user_id');
@@ -73,12 +73,12 @@ function getUserPermission(userId?: string) {
  * 获取用户的授权菜单列表id
  * @returns []
  */
-function getUserAuthObjectIds(objkey) {
+function getUserAuthObjectIds(objkey: string) {
   const permissions = getUserPermission();
   const objIds = collectTreeFields(permissions, objkey);
   return objIds;
 }
-// yao run scripts.auth.auth_lib.getUserAuthMenuIds
+// yao run scripts.auth.lib.getUserAuthMenuIds
 export function getUserAuthMenuIds() {
   return getUserAuthObjectIds('menus');
 }
@@ -139,7 +139,7 @@ function fillApiOpertion(methdMap) {
   return methdMap;
 }
 
-function getUserAuthModelCache() {
+export function getUserAuthModelCache() {
   const authObjects = Process('session.get', 'user_auth_objects');
   if (authObjects == null || !authObjects) {
     return getUserAuthModel();
@@ -147,7 +147,7 @@ function getUserAuthModelCache() {
   return authObjects.model;
 }
 export function getUserAuthModel() {
-  const permissions = getUserPermission();
+  const permissions = getUserPermission('2');
   const model_auth = {} as any;
 
   model_auth.model_list = collectTreeFields(permissions, 'models');
@@ -170,6 +170,7 @@ export function getUserAuthModel() {
   );
   return model_auth;
 }
+getUserAuthModel();
 function fillModelOpertion(methdMap) {
   if (typeof methdMap != 'object') {
     return methdMap;
@@ -250,7 +251,7 @@ function fillFolderOpertion(methdMap) {
  * @param {number} userId user id
  * @returns
  */
-export function getUserAuthObjects(userId) {
+export function getUserAuthObjects(userId: number) {
   const permissions = getUserPermission(userId);
   const model_auth = {} as any;
 

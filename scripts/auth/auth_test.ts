@@ -191,7 +191,7 @@ function collectAndCombineData(data, key, key2, defaultKey = '') {
  * @param {*} field
  * @returns
  */
-function collectTreeFields(data, field) {
+export function collectTreeFields(data, field) {
   if (data == null) {
     return [];
   }
@@ -200,7 +200,10 @@ function collectTreeFields(data, field) {
   // Recursive function to traverse the object
   function traverse(obj) {
     if (obj != null && typeof obj === 'object') {
-      if (obj.hasOwnProperty(field) && obj[field] != null) {
+      if (
+        Object.prototype.hasOwnProperty.call(obj, field) &&
+        obj[field] != null
+      ) {
         fields.push(obj[field]);
       }
 
