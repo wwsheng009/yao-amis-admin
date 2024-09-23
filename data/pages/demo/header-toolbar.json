@@ -106,7 +106,7 @@
                         {
                           "actionType": "link",
                           "args": {
-                            "link": "/system/user/info"
+                            "link": "/user/info"
                           }
                         }
                       ]
