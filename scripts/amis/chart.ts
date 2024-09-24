@@ -168,7 +168,6 @@ function getDbDataFromConfig(payload: ChartDBLine): ChartConfig {
     });
     fieldsDataMap[f1.field] = [];
   });
-
   list.forEach((line) => {
     xAxis.push(line[payload.xfield]);
     for (const key in fieldsDataMap) {
@@ -177,15 +176,10 @@ function getDbDataFromConfig(payload: ChartDBLine): ChartConfig {
       }
     }
   });
-  for (const key in fieldsDataMap) {
-    series.forEach((s) => {
-      if (s.field == key) {
-        s.data = fieldsDataMap[key];
-      }
-      delete s.field;
-    });
-    // series.filter((x) => x.name == key)[0].data = x1[key];
-  }
+  series.forEach((s) => {
+    s.data = fieldsDataMap[s.field];
+    delete s.field;
+  });
 
   return {
     title: {
