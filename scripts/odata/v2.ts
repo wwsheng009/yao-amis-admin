@@ -1,11 +1,12 @@
-const { getModelsEntityset } = Require('odata.lib.model');
-const { getEntryMetaDataXml, getMetaDataXml2, convertJsonToXml } =
-  Require('odata.lib.process');
+import {
+  getEntryMetaDataXml,
+  getMetaDataXml2,
+  convertJsonToXml
+} from '@scripts/odata/lib/process';
 
-const { decodePartsRequest } = Require('odata.lib.decodebatch');
-const { ConvertUrlToQsl } = Require('odata.lib.queryparam');
-
-// function head() { }
+import { ConvertUrlToQsl } from '@scripts/odata/lib/queryparam';
+import { decodePartsRequest } from '@scripts/odata/lib/decodebatch';
+import { Process } from '@yao/yao';
 
 function postData(
   pathIn,
@@ -23,25 +24,25 @@ function postData(
   console.log('post payload:', payload);
   console.log('parts:', parts.length, parts);
 
-  let metaFullPath = getMetaFullPath(fullpath, schema, host);
+  const metaFullPath = getMetaFullPath(fullpath, schema, host);
 
   if (pathIn === '/$batch') {
-    return processBatchPost(headers, parts);
+    return processBatchPost(metaFullPath, headers, parts);
   }
 }
 
 function processBatchPost(metaFullPath, headers, parts) {
   // parts
-  aRequest = decodePartsRequest(metaFullPath, headers, parts);
+  const aRequest = decodePartsRequest(headers, parts);
 
   let sResponse = '';
   let iTotalLen = 0;
   aRequest.forEach((request) => {
     const oResponse = getDataFromRequest(request, metaFullPath);
-    let data1 = JSON.stringify(oResponse.data);
-    let len = data1.length;
+    const data1 = JSON.stringify(oResponse.data);
+    const len = data1.length;
     iTotalLen += len;
-    let template = `--batch_foobarbaz
+    const template = `--batch_foobarbaz
 Content-Type: ${oResponse.type}
 Content-ID: <response-item1:12930812@classroom.example.com>
 
@@ -64,77 +65,94 @@ ${sResponse}
   sResponseBody = sResponseBody.replace(/\n/g, '\r\n');
   return sResponseBody;
 }
-function getBasePath(fullpath, schema, host) {
-  let rootpath = fullpath.split('/').slice(0, -1).join('/');
-  let fullPath = `${schema}://${host}${rootpath}/`;
-  return fullPath;
-}
+
 function getMetaFullPath(fullpath, schema, host) {
-  let rootpath = fullpath.split('/').slice(0, -1).join('/');
-  let metapath = `${rootpath}/$metadata`;
-  let metaFullPath = `${schema}://${host}${metapath}`;
+  const rootpath = fullpath.split('/').slice(0, -1).join('/');
+  const metapath = `${rootpath}/$metadata`;
+  const metaFullPath = `${schema}://${host}${metapath}`;
   return metaFullPath;
 }
+
+/**
+ * odata请求的形式一般是 /xx_table/$format=xx
+ * @param {string} fullpath
+ * @param {string} schema http| https
+ * @param {string} host
+ * @returns
+ */
+function getBasePath(fullpath, schema, host) {
+  const rootpath = fullpath.split('/').slice(0, -1).join('/');
+  const fullPath = `${schema}://${host}${rootpath}/`;
+  return fullPath;
+}
+
 /**
  * 转换查询参数
  * 注意：golang 不支持在query里带有符号;
- * @param {string} pathIn url path
+ * @param {string} sPathIn url path
+ * @param {string} path 原始请求的地址，不包含查询参数
  * @param {object} query 查询参数
  * @returns
  */
-function getData(pathIn, queryIn, headers, host, path, schema, fullpath) {
-  console.log('headers:', headers);
+function getData(sPathIn, oQueryIn, headers, host, path, schema, fullpath) {
+  // console.log("headers:", headers);
+  const oQuery = oQueryIn || {};
+  // console.log('pathIn:', sPathIn);
 
-  let query = queryIn || {};
-  console.log('pathIn:', pathIn);
+  // console.log('query:', oQuery);
+  // console.log('path:', path);
+  // console.log('fullpath', fullpath);
 
-  console.log('query:', query);
-  console.log('path:', path);
-  console.log('fullpath', fullpath);
-
-  let metaFullPath = getMetaFullPath(fullpath, schema, host);
-
-  let pathParam = pathIn;
+  let pathParam = sPathIn;
   if (pathParam.startsWith('/')) {
     // check if string starts with "/"
     pathParam = pathParam.substring(1); // remove the first character
   }
-  let basePath = getBasePath(fullpath, schema, host);
+  const basePath = getBasePath(fullpath, schema, host);
 
-  // 元数据
+  // 不是请求元数据，而是/$，请求模型列表
   if (pathParam == '$' || pathParam == '') {
     return {
-      data: {
-        '@odata.context': `${metaFullPath}`,
-        value: getModelsEntityset()
-      },
-      type: 'application/json;charset=utf-8',
+      // 获取模型列表
+      data: getEntryMetaDataXml(basePath),
+      type: 'application/xml;charset=utf-8',
       status: 200
     };
   }
-  if (pathParam == '$metadata' || pathParam == '') {
-    let data = getMetaData();
+  // 查询元数据的请求
+  if (pathParam == '$metadata') {
+    const data = getMetaDataXml2();
     return data;
   }
 
-  let oRequest = {};
-  oRequest.headers = headers;
-  oRequest.URL = {};
-  oRequest.URL.path = pathIn;
-  oRequest.URL.query = query;
-  return getDataFromRequest(oRequest, basePath);
+  const oRequest = { headers, URL: { path: sPathIn, query: oQuery } };
+  // oRequest.headers = headers;
+  // oRequest.URL = {};
+  // oRequest.URL.path = sPathIn;
+  // oRequest.URL.query = oQuery;
+  try {
+    return getDataFromRequest(oRequest, basePath);
+  } catch (e) {
+    console.log('error message', e.message);
+    // 这里应该优化返回xml
+    return {
+      type: 'application/json;charset=utf-8',
+      status: e.code,
+      data: { message: e.message }
+    };
+  }
 }
 
 function getDataFromRequest(oRequest, basePath) {
   const metaFullPath = basePath + '$metadata';
   const oQsl = ConvertUrlToQsl(oRequest);
-
-  const q = new Query();
+  // console.log('oQsl', oQsl);
+  // const q = new Query();
 
   // 计算数量
   if (oQsl.isCount) {
     let total = 0;
-    // console.log("oQsl.model?.table_id",oQsl.model?.table_id)
+
     if (oQsl.model?.table_id) {
       total = Process('yao.table.search', oQsl.model.table_id, {}, 1, 1)?.total;
     } else if (oQsl.model?.model_id) {
@@ -152,15 +170,21 @@ function getDataFromRequest(oRequest, basePath) {
       data: { total: total }
     };
   } else {
-    if (oQsl.qsl.limit) {
+    if (!oQsl.qsl?.limit) {
       oQsl.qsl.limit = 100000;
     }
+    oQsl.qsl.limit = Number(oQsl.qsl.limit);
     // const data1 = q.Get(oQsl.qsl);
     let data1 = null;
+    // console.log('oQsl.qsl', oQsl.qsl);
     if (oQsl.model?.table_id) {
+      // console.log('oQsl.model?.table_id', oQsl.model?.table_id);
+      // console.log('oQsl.model.model_id', oQsl.model.model_id);
+
       data1 = Process('yao.table.get', oQsl.model.table_id, oQsl.qsl);
     } else {
-      data1 = q.Get(oQsl.qsl);
+      // data1 = q.Get(oQsl.qsl);
+      data1 = Process(`models.${oQsl.model.model_id}.get`, oQsl.qsl);
     }
 
     if (oQsl.format == 'json') {
@@ -195,20 +219,20 @@ function getDataFromRequest(oRequest, basePath) {
   }
 }
 
-// /**
-//  * 查询服务的元数据。
-//  * @param {string} service 服务
-//  * @returns
-//  */
+/**
+ * 查询服务的元数据。
+ * @param {string} service 服务
+ * @returns
+ */
 // function getMetaData() {
-//     return Process("scripts.main.test");
+//   return Process("scripts.main.test");
 // }
 
 // const query = {
-//     $select: ["Rating,ReleaseDate"],
-//     $orderby: ["engine asc, browser desc"],
-//     // $count: true,
-//     $filter: ["grade lt 10.00"],
+//   $select: ["Rating,ReleaseDate"],
+//   $orderby: ["engine asc, browser desc"],
+//   // $count: true,
+//   $filter: ["grade lt 10.00"],
 // };
 // getData("/table/", query);
 

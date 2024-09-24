@@ -1,4 +1,4 @@
-function parseUrl(urlString) {
+export function parseUrl(urlString) {
   const url = {};
 
   // parse query string into query object
@@ -11,7 +11,7 @@ function parseUrl(urlString) {
     const [key, value] = param.split('=');
     const decodedKey = decodeURIComponent(key);
     const decodedValue = decodeURIComponent(value);
-    if (query.hasOwnProperty(decodedKey)) {
+    if (Object.prototype.hasOwnProperty.call(query, decodedKey)) {
       if (Array.isArray(query[decodedKey])) {
         query[decodedKey].push(decodedValue);
       } else {
@@ -81,4 +81,4 @@ function parseUrl(urlString) {
 // const parsedUrl5 = parseUrl(url5);
 // console.log(parsedUrl5);
 
-module.exports = { parseUrl };
+// module.exports = { parseUrl };

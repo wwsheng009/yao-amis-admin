@@ -1,18 +1,21 @@
-const { getModelNameList, getOdataViewList, getModels, getModel } =
-  Require('odata.lib.model');
-const { Metadata, getEdmType } = Require('odata.lib.meta');
-const { XmlWriter } = Require('odata.lib.xml');
+import {
+  getOdataViewList,
+  getModels,
+  getModel
+} from '@scripts/odata/lib/model';
+import { Metadata, getEdmType } from '@scripts/odata/lib/meta';
+import { XmlWriter } from '@scripts/odata/lib/xml';
 
 /**
  * 获取模型列表
  * @param {string} base
  * @returns
  */
-function getEntryMetaDataXml(base) {
+export function getEntryMetaDataXml(base) {
   // https://services.odata.org/V2/OData/OData.svc/
   const viewList = getOdataViewList();
 
-  let data = [];
+  const data = [];
   viewList.forEach((view) => {
     data.push(`<collection href="${view.name}">
         <atom:title>${view.label}</atom:title>
@@ -29,9 +32,10 @@ function getEntryMetaDataXml(base) {
 
 /**
  * 获取所有模型的元数据信息
+ * scripts.odata.lib.process.getMetaDataXml2
  * @returns
  */
-function getMetaDataXml2() {
+export function getMetaDataXml2() {
   const models = getModels();
   const meta = new Metadata(models);
   const data = meta.ctrl();
@@ -48,7 +52,7 @@ function getMetaDataXml2() {
  * @param {string} sBaseUrl
  * @returns
  */
-function convertJsonToXml(json, viewId, sBaseUrl) {
+export function convertJsonToXml(json, viewId, sBaseUrl) {
   const entrys = convertEntrys(json, viewId, sBaseUrl);
 
   const xml = `<?xml version="1.0" encoding="utf-8" standalone="yes"?>
@@ -80,17 +84,24 @@ function convertEntrys(json, viewId, sBaseUrl) {
       if (Object.hasOwnProperty.call(item, key)) {
         // column info
         let element = item[key];
-        let edmType = getEdmType(col.type);
-        // edmType = "Edm.String";
-        if (edmType == 'Edm.String') {
-          element = escapedXmlString(element);
-        }
-        colXmlstr += `<d:${key} m:type="${edmType}">${element}</d:${key}>
+        if (element != null) {
+          const edmType = getEdmType(col.type);
+          // edmType = "Edm.String";
+          if (edmType == 'Edm.String') {
+            element = escapedXmlString(element);
+          }
+
+          if (edmType == 'Edm.DateTime') {
+            element = element.replace('/', '-');
+            element = element.replace(' ', 'T');
+            // element = '2001-12-21T12:00';
+          }
+          colXmlstr += `<d:${key} m:type="${edmType}">${element}</d:${key}>
               `;
+        }
       }
     });
-    colXmlstr = colXmlstr.trimEnd(`
-    `);
+    // colXmlstr = colXmlstr.trimEnd(``);
 
     entrys.push(`<entry>
       <id>${sBaseUrl}${viewId}(${item.id})</id>
@@ -129,8 +140,8 @@ function escapedXmlString(str) {
   return strXml;
 }
 
-module.exports = {
-  getEntryMetaDataXml,
-  getMetaDataXml2,
-  convertJsonToXml
-};
+// module.exports = {
+//   getEntryMetaDataXml,
+//   getMetaDataXml2,
+//   convertJsonToXml
+// };

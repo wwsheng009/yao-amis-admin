@@ -1,6 +1,8 @@
-const { getModel } = Require('odata.lib.model');
+import { getModel } from '@scripts/odata/lib/model';
 
-const functions = Require('odata.lib.operator');
+import functions from '@scripts/odata/lib/operator';
+
+import { Exception } from '@yao/yao';
 
 const OPERATORS_KEYS = ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'has'];
 const stringHelper = {
@@ -49,7 +51,7 @@ const validator = {
 function queryObjectToUrl(oQuery) {
   let sParams = '';
   for (const key in oQuery) {
-    if (oQuery.hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(oQuery, key)) {
       const value = Array.isArray(oQuery[key])
         ? oQuery[key].join(',')
         : oQuery[key];
@@ -64,7 +66,7 @@ function queryObjectToUrl(oQuery) {
 }
 // function sRequestUrl(sUrl) { }
 
-function ConvertUrlToQsl(oUrl) {
+export function ConvertUrlToQsl(oUrl) {
   // console.log("oUrl====>", oUrl);
   const headers = oUrl.headers;
 
@@ -95,11 +97,11 @@ function ConvertUrlToQsl(oUrl) {
   }
   let part1 = '';
   let part2 = '';
-  let part3 = '';
+  // let part3 = '';
   if (paths.length > 2) {
     part1 = paths[0];
     part2 = paths[1];
-    part3 = paths[2];
+    // part3 = paths[2];
   } else if (paths.length > 1) {
     part1 = paths[0];
     part2 = paths[1];
@@ -107,20 +109,20 @@ function ConvertUrlToQsl(oUrl) {
     part1 = paths[0];
   }
   let count = false;
-  let queryDsl = {};
+  const queryDsl = {} as { limit?: number };
   let entitySet = part1;
   // is an optional type-cast segment containing the qualified name of a derived or implemented type prefixed with a forward slash.
-  let typeName = '';
+  // let typeName = '';
   if (part2 !== '') {
-    typeName = part2;
+    // typeName = part2;
     // https://services.odata.org/V4/OData/OData.svc/Products/$count
     if (part2 === '$count') {
       count = true;
     }
   }
   // If a response or response part is a single entity of the declared type of an entity set, /$entity is appended to the context URL.
-  if (part3 == '$entity') {
-  }
+  // if (part3 == '$entity') {
+  // }
 
   let format = 'json';
   if (headers['Accept'] && headers['Accept'].length) {
@@ -132,7 +134,7 @@ function ConvertUrlToQsl(oUrl) {
     format = query['$format'][0].trim();
   }
   // 默认json
-  if ((format != 'json') & (format != 'xml')) {
+  if (format != 'json' && format != 'xml') {
     format = 'json';
   }
   // http://host/service/Products?$count=true
@@ -140,7 +142,7 @@ function ConvertUrlToQsl(oUrl) {
     count = query['$count'];
   }
   let viewName = entitySet;
-  let modelDsl = getModel(viewName);
+  const modelDsl = getModel(viewName);
   if (modelDsl.table?.name) {
     viewName = modelDsl.table?.name;
   }
@@ -173,31 +175,31 @@ function ConvertUrlToQsl(oUrl) {
   // console.log(`service :${entitySet},id:${id}`); // Output: "some content"
 
   if (query['$select'] && query['$select'].length) {
-    let selectstr = query['$select'][0].trim();
+    const selectstr = query['$select'][0].trim();
     if (selectstr !== '*') {
       queryDsl['select'] = selectstr.split(',').map((item) => item.trim());
     }
   }
   if (query['$skip'] && query['$skip'].length) {
-    let skip = query['$skip'][0];
+    const skip = query['$skip'][0];
     if (!isNaN(skip)) {
       queryDsl['offset'] = skip;
     }
   }
   if (query['$top'] && query['$top'].length) {
-    let top = query['$top'][0];
+    const top = query['$top'][0];
     if (!isNaN(top)) {
-      queryDsl['limit'] = top;
+      queryDsl['limit'] = Number(top);
     }
   }
 
   // http://host/service/Products?$orderby=ReleaseDate asc, Rating desc
   if (id == '') {
     if (query['$orderby'] && query['$orderby'].length) {
-      let orderby = query['$orderby'][0].trim();
+      const orderby = query['$orderby'][0].trim();
 
       queryDsl['orders'] = orderby.split(',').map((item) => {
-        let data = item.trim().split(/\s+/);
+        const data = item.trim().split(/\s+/);
 
         if (data.length > 1) {
           return {
@@ -216,13 +218,13 @@ function ConvertUrlToQsl(oUrl) {
     // http://host/service/Categories?$filter=Products/$count lt 10
 
     if (query['$filter'] && query['$filter'].length) {
-      let filter = query['$filter'][0].trim();
+      const filter = query['$filter'][0].trim();
 
       const condition = splitByKeys(filter, ['and', 'or']);
       // const condition = splitByKeys(filter, ["and", "or"]).filter(
       //   (item) => item !== "and" && item !== "or"
       // );
-      let wheres = [];
+      const wheres = [];
       for (const item of condition) {
         if (item == 'and') {
           continue;
@@ -252,7 +254,7 @@ function ConvertUrlToQsl(oUrl) {
           const result = validator.formatValue(value);
           if (result.err) {
             // return reject(result.err);
-            throw new Exception(result.err, 404);
+            throw new Exception(result.err.message, 404);
           }
           val = result.val;
         }
@@ -272,17 +274,19 @@ function ConvertUrlToQsl(oUrl) {
                   column: key,
                   op: 'null'
                 });
-
+                break;
               // wheres.push({
               //   field: key,
               //   op: "is",
               //   value: "null",
               // });
-              case 'ne':
+              case 'ne': {
                 wheres.push({
                   column: key,
                   op: 'notnull'
                 });
+                break;
+              }
               // wheres.push({
               //   field: key,
               //   op: "is",
@@ -422,4 +426,4 @@ function splitByKeys(sentence, keys = []) {
   result.push(mergeList(tmp));
   return result;
 }
-module.exports = { ConvertUrlToQsl };
+// module.exports = { ConvertUrlToQsl };

@@ -3,8 +3,8 @@
  * @param {object} column
  * @returns
  */
-function getEdmType(typeIn) {
-  let newColumn = {};
+export function getEdmType(typeIn) {
+  const newColumn = {} as { type: string; format: string };
   const type = typeIn.toUpperCase();
   switch (type) {
     case 'STRING':
@@ -90,13 +90,15 @@ function getEdmType(typeIn) {
   return newColumn.type;
 }
 
-class Metadata {
+export class Metadata {
+  models: any;
+  private _count: number;
   constructor(models) {
     this.models = models;
   }
 
   visitProperty(node, root) {
-    const result = {};
+    const result = {} as { $Collection: boolean; $Type: string };
 
     const type = node.type.toUpperCase();
 
@@ -205,7 +207,7 @@ class Metadata {
         return Metadata.visitAction(node);
 
       case 'Function':
-        return Metadata.visitFunction(node, root);
+        return Metadata.visitFunction(node);
 
       default:
         return this.visitEntityType(node, root);
@@ -298,4 +300,4 @@ class Metadata {
   }
 }
 
-module.exports = { Metadata, getEdmType };
+// module.exports = { Metadata, getEdmType };

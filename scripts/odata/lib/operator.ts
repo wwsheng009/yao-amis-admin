@@ -1,3 +1,5 @@
+import { Exception } from '@yao/yao';
+
 const convertToOperator = (odataOperator) => {
   let operator;
   switch (odataOperator) {
@@ -28,7 +30,7 @@ const convertToOperator = (odataOperator) => {
 };
 
 // contains(CompanyName,'icrosoft')
-const contains = (query, fnKey) => {
+export const contains = (query, fnKey) => {
   let [key, target] = fnKey
     .substring(fnKey.indexOf('(') + 1, fnKey.indexOf(')'))
     .split(',');
@@ -37,7 +39,7 @@ const contains = (query, fnKey) => {
 };
 
 // indexof(CompanyName,'X') eq 1
-const indexof = (query, fnKey, odataOperator, value) => {
+export const indexof = (query, fnKey, odataOperator, value) => {
   let [key, target] = fnKey
     .substring(fnKey.indexOf('(') + 1, fnKey.indexOf(')'))
     .split(',');
@@ -47,7 +49,7 @@ const indexof = (query, fnKey, odataOperator, value) => {
 };
 
 // year(publish_date) eq 2000
-const year = (query, fnKey, odataOperator, value) => {
+export const year = (query, fnKey, odataOperator, value) => {
   const key = fnKey.substring(fnKey.indexOf('(') + 1, fnKey.indexOf(')'));
 
   const start = new Date(+value, 0, 1);
@@ -83,5 +85,5 @@ const year = (query, fnKey, odataOperator, value) => {
   }
 };
 
-// export default { indexof, year, contains };
-module.exports = { indexof, year, contains };
+export default { indexof, year, contains };
+// module.exports = { indexof, year, contains };

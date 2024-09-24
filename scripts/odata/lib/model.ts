@@ -1,3 +1,5 @@
+import { Process, Exception } from '@yao/yao';
+
 function getModelList() {
   const viewList = Process('models.odata.view.get', {
     wheres: [{ column: 'disabled', value: false }],
@@ -5,7 +7,7 @@ function getModelList() {
   });
   const modelsList = Process('widget.models');
   // 原始的模型列表
-  let model_list = modelDefinitionList(modelsList);
+  const model_list = modelDefinitionList(modelsList);
   // model_list = model_list.filter((model) => viewList.find((v) => v.model_id == model.ID));
 
   // // 设置table关联的模型列表
@@ -43,14 +45,14 @@ function getModelList() {
   return viewModelList;
 }
 
-// yao run scripts.main.models
-function getModels() {
+// yao run scripts.odata.lib.model.getModels
+export function getModels() {
   const list = getModelList();
   // Process("models.system.api.eachsave", list);
-  let modelObj = {};
+  const modelObj = {};
   list.forEach((model) => {
     delete model.values;
-    let colObj = {};
+    const colObj = {};
     model.columns.forEach((col) => {
       colObj[col.name] = col;
     });
@@ -60,10 +62,10 @@ function getModels() {
   return modelObj;
 }
 
-function getModelsEntityset() {
+export function getModelsEntityset() {
   const list = getModelList();
   // Process("models.system.api.eachsave", list);
-  let modelObj = [];
+  const modelObj = [];
   list.forEach((model) => {
     modelObj.push({
       kind: 'EntitySet',
@@ -74,12 +76,12 @@ function getModelsEntityset() {
   return modelObj;
 }
 
-function getModelNameList() {
+export function getModelNameList() {
   const list = getModelList();
   // const modelsList = Process("widget.models");
   // const list = modelDefinitionList(modelsList);
   // Process("models.system.api.eachsave", list);
-  let modelObj = [];
+  const modelObj = [];
   list.forEach((model) => {
     modelObj.push(model.odata_view_name);
   });
@@ -91,7 +93,7 @@ function getModelNameList() {
  *
  * @returns odata view list
  */
-function getOdataViewList() {
+export function getOdataViewList() {
   const list = Process('models.odata.view.get', {
     wheres: [
       {
@@ -109,7 +111,7 @@ function getModelsEntityset2() {
   // const modelsList = Process("widget.models");
   // const list = modelDefinitionList(modelsList);
   // Process("models.system.api.eachsave", list);
-  let modelObj = [];
+  const modelObj = [];
   list.forEach((model) => {
     modelObj.push(model.odata_view_name);
   });
@@ -126,11 +128,11 @@ function getModelsEntityset2() {
  * @returns
  */
 function modelDefinitionList(modelData) {
-  var list = [];
+  let list = [];
 
   if (modelData.children) {
     modelData.children.forEach((line) => {
-      var subLine = modelDefinitionList(line);
+      const subLine = modelDefinitionList(line);
       list = list.concat(subLine);
     });
   } else if (modelData.data) {
@@ -139,7 +141,7 @@ function modelDefinitionList(modelData) {
     }
   } else if (Array.isArray(modelData)) {
     modelData.forEach((line) => {
-      var subLine = modelDefinitionList(line);
+      const subLine = modelDefinitionList(line);
       list = list.concat(subLine);
     });
   }
@@ -174,7 +176,7 @@ function getTableColumns(table_id) {
  * @param {string} viewId
  * @returns
  */
-function getModel(viewId) {
+export function getModel(viewId) {
   if (!viewId) {
     return { columns: [] };
   }
@@ -197,7 +199,7 @@ function getModel(viewId) {
   // 如果数据库里没有，从内存中加载定义
   // 只有加载到内存的才能获取的了
   const models = Process('widget.models');
-  let model = findModelById(models, model_id);
+  const model = findModelById(models, model_id);
   if (model) {
     model.model_id = model_id;
     if (model_cols.length) {
@@ -237,7 +239,7 @@ function findModelById(models, id) {
 
   if (models.children) {
     for (const item of models.children) {
-      var obj = findModelById(item, id);
+      const obj = findModelById(item, id);
       if (obj) {
         return obj;
       }
@@ -248,7 +250,7 @@ function findModelById(models, id) {
     }
   } else if (Array.isArray(models)) {
     for (const item of models) {
-      var obj = findModelById(item, id);
+      const obj = findModelById(item, id);
       if (obj) {
         return obj;
       }
@@ -257,10 +259,10 @@ function findModelById(models, id) {
 
   return null;
 }
-module.exports = {
-  getModels,
-  getModelsEntityset,
-  getModel,
-  getModelNameList,
-  getOdataViewList
-};
+// module.exports = {
+//   getModels,
+//   getModelsEntityset,
+//   getModel,
+//   getModelNameList,
+//   getOdataViewList
+// };

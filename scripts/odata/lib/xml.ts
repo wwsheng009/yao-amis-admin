@@ -1,4 +1,6 @@
-class XmlWriter {
+import { Exception } from '@yao/yao';
+
+export class XmlWriter {
   visitor(type, node, name) {
     switch (type) {
       // 根节点
@@ -195,4 +197,4 @@ ${xml}`
     };
   }
 }
-module.exports = { XmlWriter };
+// module.exports = { XmlWriter };

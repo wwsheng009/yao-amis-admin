@@ -60,7 +60,7 @@
           "odata-version": "4.0"
         }
       }
-    },
+    }
     // {
     //   // api/v1/odata/
     //   "name": "入口",
