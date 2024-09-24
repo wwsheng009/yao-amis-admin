@@ -147,7 +147,7 @@ export function getUserAuthModelCache() {
   return authObjects.model;
 }
 export function getUserAuthModel() {
-  const permissions = getUserPermission('2');
+  const permissions = getUserPermission();
   const model_auth = {} as any;
 
   model_auth.model_list = collectTreeFields(permissions, 'models');
@@ -170,7 +170,7 @@ export function getUserAuthModel() {
   );
   return model_auth;
 }
-getUserAuthModel();
+
 function fillModelOpertion(methdMap) {
   if (typeof methdMap != 'object') {
     return methdMap;
