@@ -2,21 +2,59 @@
   "name": "文件管理",
   "version": "1.0.3",
   "description": "文件管理",
-  "guard": "scripts.auth.token.Check", 
+  "guard": "scripts.auth.token.Check",
   "paths": [
+    {
+      // /api/v1/fs/:type/file/startChunkApi
+      "description": "分块上传",
+      "label": "分块上传",
+      "path": "/:type/file/startChunkApi",
+      "method": "POST",
+      "guard": "bearer-jwt",
+      "process": "scripts.fs.file.startChunkApi",
+      "in": ["$param.type", ":payload"],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/fs/:type/file/chunkApi
+      "description": "分块上传",
+      "label": "分块上传",
+      "path": "/:type/file/chunkApi",
+      "method": "POST",
+      "guard": "bearer-jwt",
+      "process": "scripts.fs.file.chunkApi",
+      "in": ["$param.type", "$file.file", ":form"],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/fs/:type/file/finishChunkApi
+      "description": "分块上传",
+      "label": "分块上传",
+      "path": "/:type/file/finishChunkApi",
+      "method": "POST",
+      "guard": "bearer-jwt",
+      "process": "scripts.fs.file.finishChunkApi",
+      "in": ["$param.type", ":payload"],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
     {
       // /api/v1/fs/:type/file/upload
       "description": "文件上传",
       "label": "文件上传",
       "path": "/:type/file/upload",
       "method": "POST",
-      "guard": "bearer-jwt",// 需要注意的是，如果上传的文件特别大，使用js处理器检查会把文件内容复制到js脚本中去，特别的耗用内存
+      "guard": "bearer-jwt", // 需要注意的是，如果上传的文件特别大，使用js处理器检查会把文件内容复制到js脚本中去，特别的耗用内存
       "process": "scripts.fs.file.UploadFile",
-      "in": [
-        "$param.type",
-        "$file.file",
-        "$form.folder"
-      ],
+      "in": ["$param.type", "$file.file", "$form.folder"],
       "out": {
         "status": 200,
         "type": "application/json"
@@ -30,10 +68,7 @@
       "method": "GET",
       "guard": "-",
       "process": "flows.fs.download",
-      "in": [
-        "public",
-        "$query.name"
-      ],
+      "in": ["public", "$query.name"],
       "out": {
         "status": 200,
         "body": "{{content}}",
@@ -49,10 +84,7 @@
       "path": "/public/file/attachement",
       "method": "GET",
       "process": "flows.fs.attachment",
-      "in": [
-        "public",
-        "$query.name"
-      ],
+      "in": ["public", "$query.name"],
       "out": {
         "status": 200,
         "body": "{{content}}",
@@ -69,10 +101,7 @@
       "path": "/:type/file/download",
       "method": "GET",
       "process": "flows.fs.download",
-      "in": [
-        "$param.type",
-        "$query.name"
-      ],
+      "in": ["$param.type", "$query.name"],
       "out": {
         "status": 200,
         "body": "{{content}}",
@@ -88,10 +117,7 @@
       "path": "/:type/file/attachement",
       "method": "GET",
       "process": "flows.fs.attachment",
-      "in": [
-        "$param.type",
-        "$query.name"
-      ],
+      "in": ["$param.type", "$query.name"],
       "out": {
         "status": 200,
         "body": "{{content}}",
@@ -108,10 +134,7 @@
       "path": "/:type/file/delete",
       "method": "GET",
       "process": "scripts.fs.file.deleteFile",
-      "in": [
-        "$param.type",
-        "$query.name"
-      ],
+      "in": ["$param.type", "$query.name"],
       "out": {
         "status": 200,
         "type": "application/json"
@@ -124,10 +147,7 @@
       "path": "/:type/file/bulk_delete",
       "method": "POST",
       "process": "scripts.fs.file.batchDeleteFile",
-      "in": [
-        "$param.type",
-        ":payload"
-      ],
+      "in": ["$param.type", ":payload"],
       "out": {
         "status": 200,
         "type": "application/json"
@@ -140,11 +160,7 @@
       "path": "/:type/file/list",
       "method": "GET",
       "process": "scripts.fs.file.getFileList",
-      "in": [
-        "$param.type",
-        "$query.name",
-        "$query.keywords"
-      ],
+      "in": ["$param.type", "$query.name", "$query.keywords"],
       "out": {
         "status": 200,
         "type": "application/json"
@@ -157,12 +173,7 @@
       "path": "/:type/file/search",
       "method": "POST",
       "process": "scripts.fs.file.fileSearch",
-      "in": [
-        "$param.type",
-        "$query.folder",
-        ":query",
-        ":payload"
-      ],
+      "in": ["$param.type", "$query.folder", ":query", ":payload"],
       "out": {
         "status": 200,
         "type": "application/json"
@@ -175,10 +186,7 @@
       "path": "/:type/folder/list",
       "method": "GET",
       "process": "scripts.fs.file.getFolderList",
-      "in": [
-        "$param.type",
-        "$query.parent"
-      ],
+      "in": ["$param.type", "$query.parent"],
       "out": {
         "status": 200,
         "type": "application/json"
@@ -191,11 +199,7 @@
       "path": "/:type/folder/create",
       "method": "GET",
       "process": "scripts.fs.file.createFolder",
-      "in": [
-        "$param.type",
-        "$query.folder",
-        "$query.name"
-      ],
+      "in": ["$param.type", "$query.folder", "$query.name"],
       "out": {
         "status": 200,
         "type": "application/json"
@@ -208,10 +212,7 @@
       "path": "/:type/folder/delete",
       "method": "GET",
       "process": "scripts.fs.file.deleteFolder",
-      "in": [
-        "$param.type",
-        "$query.folder"
-      ],
+      "in": ["$param.type", "$query.folder"],
       "out": {
         "status": 200,
         "type": "application/json"
@@ -224,11 +225,7 @@
       "path": "/:type/folder/move",
       "method": "GET",
       "process": "scripts.fs.file.moveFolder",
-      "in": [
-        "$param.type",
-        "$query.folder",
-        "$query.name"
-      ],
+      "in": ["$param.type", "$query.folder", "$query.name"],
       "out": {
         "status": 200,
         "type": "application/json"

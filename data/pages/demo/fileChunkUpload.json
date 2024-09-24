@@ -1,0 +1,51 @@
+{
+  "pullRefresh": {
+    "disabled": true
+  },
+  "title": "文件分块上传演示",
+  "type": "page",
+  "asideResizor": false,
+  "body": [
+    {
+      "drag": false,
+      "startChunkApi": {
+        "adaptor": "",
+        "dataType": "json",
+        "messages": {},
+        "method": "post",
+        "requestAdaptor": "",
+        "url": "/api/v1/fs/public/file/startChunkApi"
+      },
+      "autoUpload": true,
+      "asBase64": false,
+      "chunkApi": {
+        "adaptor": "",
+        "dataType": "form-data",
+        "messages": {},
+        "method": "post",
+        "requestAdaptor": "",
+        "url": "/api/v1/fs/public/file/chunkApi"
+      },
+      "multiple": false,
+      "useChunk": true,
+      "finishChunkApi": {
+        "dataType": "json",
+        "messages": {},
+        "method": "post",
+        "requestAdaptor": "",
+        "url": "/api/v1/fs/public/file/finishChunkApi",
+        "adaptor": ""
+      },
+      "proxy": true,
+      "label": "文件上传",
+      "uploadType": "fileReceptor",
+      "id": "u:faf19051b6e6",
+      "btnLabel": "文件上传",
+      "chunkSize": 1000000,
+      "name": "file",
+      "type": "input-file",
+      "accept": ""
+    }
+  ],
+  "id": "u:790496db7e12"
+}

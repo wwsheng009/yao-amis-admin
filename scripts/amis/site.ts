@@ -720,6 +720,12 @@ function getSystemMenu() {
               icon: 'fa fa-file',
               schemaApi: '/api/v1/amis/pages/admin.file2',
               url: 'admin.file'
+            },
+            {
+              label: '分块上传演示',
+              icon: 'fa fa-file',
+              schemaApi: '/api/v1/amis/pages/demo.fileChunkUpload',
+              url: 'admin.fileChunkUpload'
             }
           ]
         },

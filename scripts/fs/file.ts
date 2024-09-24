@@ -66,6 +66,122 @@ function buildTree(folders: string[]) {
   return root.children;
 }
 
+interface FileChunk {
+  uploadId: string; //startChunkApi 返回的
+  key: string; //startChunkApi 返回的,目标文件名
+  partNumber: number; // 分块序号，从 1 开始。
+  partSize: number; //分块大小
+  folder: string;
+}
+
+/**
+ * 开始准备块上传
+ * @param type 类型
+ * @param payload
+ * @returns
+ */
+export function startChunkApi(type: string, payload) {
+  const { filename } = payload;
+  let { folder } = payload;
+
+  if (folder == null || folder == '') {
+    folder = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+  }
+  folder = normalizeFolder(folder);
+
+  const fname = `${getFolder(type)}/${folder}/${filename}`;
+  const uuid = Process('utils.str.UUID').replaceAll('-', '').toLowerCase();
+  return {
+    key: fname,
+    uploadId: uuid
+  };
+}
+export function chunkApi(type: string, file: YaoFile, chunkInfo: FileChunk) {
+  return saveChunkFile(type, file, chunkInfo.folder, chunkInfo);
+}
+
+/**
+ * 保存块文件
+ * @param type
+ * @param file
+ * @param folder
+ * @param chunkInfo
+ * @returns
+ */
+function saveChunkFile(
+  type: string,
+  file: YaoFile,
+  folder: string,
+  chunkInfo: FileChunk
+) {
+  if (folder == null || folder == '') {
+    folder = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+  }
+  folder = normalizeFolder(folder);
+  // 临时目录
+  const uploadFolder = `${getFolder(type)}/${folder}/${chunkInfo.uploadId}`;
+  const filePath = `/${uploadFolder}/chunk-${chunkInfo.partNumber}`;
+
+  // targetOperationAuthCheck(type, filePath, 'CREATE');
+  // 只返回用户的目录下的相对路径
+  const fs = new FS('system');
+  if (!fs.Exists(uploadFolder)) {
+    fs.MkdirAll(uploadFolder);
+  }
+  fs.Move(file.tempFile, `${filePath}`); //在windows系统下有可能会失败，显示文件被占用，无法删除
+  // fs.Copy(file.tempFile, `${filePath}`);
+  return {
+    eTag: `chunk-${chunkInfo.partNumber}`
+  };
+}
+
+interface finishChunk {
+  filename: string; //附件文件名
+  key: string; // startChunkApi 后端返回的文件名
+  uploadId: string; //startChunkApi 返回的本次上传的uuid
+  partList: { partNumber: number; eTag: string }[];
+  folder: string; //目标文件目录
+}
+/**
+ * 合并保存chunk文件
+ * @param type
+ * @param payload
+ * @returns
+ */
+export function finishChunkApi(type: string, payload: finishChunk) {
+  let folder = payload.folder;
+  if (folder == null || folder == '') {
+    folder = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+  }
+  folder = normalizeFolder(folder);
+  // const filePath = `/${folder}/${payload.filename}`;
+  const fs = new FS('system');
+
+  const flist = [];
+
+  //文件块的目录
+  const uploadFolder = `${getFolder(type)}/${folder}/${payload.uploadId}`;
+  payload.partList.map((p) => {
+    const filePath = `/${uploadFolder}/chunk-${p.partNumber}`;
+    flist.push(filePath);
+  });
+
+  const uploadFolder2 = `${getFolder(type)}/${folder}`;
+  //合并后的文件名
+  const filePath = `/${uploadFolder2}/${payload.filename}`;
+  // console.log('flist', flist);
+  // 新加的api
+  fs.Merge(flist, filePath);
+
+  writeLog(filePath, '', 'upload');
+  //删除原目录
+  fs.RemoveAll(uploadFolder);
+  const filePath2 = `/${folder}/${payload.filename}`;
+  return {
+    value: `/api/v1/fs/${type}/file/download?name=${filePath2}`
+  };
+}
+
 // function checkUserCanReadAuth(type: string) {
 //   if (type === "user" || type === "public") {
 //     return true;
