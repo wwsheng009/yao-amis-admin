@@ -42,32 +42,22 @@
           "type": "text"
         },
         {
-          "label": "请求方式",
+          "label": "文件目录",
+          "name": "folders",
           "type": "each",
           "items": {
             "type": "tag",
-            "label": "${item}"
-          },
-          "placeholder": {
-            "type": "tag",
-            "label": "ANY"
+            "label": "${item.folder.value|json}"
           }
-        },
-        {
-          "label": "排序",
-          "name": "order",
-          "searchable": true,
-          "sortable": true,
-          "type": "number"
         },
         {
           "label": "路由",
           "levelExpand": 0,
-          "name": "http_path",
+          "name": "routes",
           "type": "each",
           "items": {
             "type": "tag",
-            "label": "${item}"
+            "label": "${item.route|json}"
           },
           "searchable": true,
           "sortable": true
@@ -79,7 +69,7 @@
           "type": "each",
           "items": {
             "type": "tag",
-            "label": "${item}"
+            "label": "${item.model|json}"
           },
           "searchable": true,
           "sortable": true
@@ -92,12 +82,6 @@
                 "body": {
                   "api": "post:/api/v1/system/model/admin.auth.permission/bulkUpdate/$id",
                   "body": [
-                    {
-                      "label": "ID",
-                      "name": "id",
-                      "type": "input-number",
-                      "static": true
-                    },
                     {
                       "label": "名称",
                       "name": "name",
@@ -114,66 +98,7 @@
                       "label": "上级",
                       "name": "parent",
                       "type": "tree-select",
-                      "source": "/api/v1/system/tree/admin.auth.permission/find?_label=desc",
-                      "validations": {
-                        "isSameId": true
-                      }
-                    },
-                    {
-                      "type": "checkboxes",
-                      "name": "http_method",
-                      "label": "请求方式",
-                      "options": [
-                        {
-                          "value": "GET",
-                          "label": "GET"
-                        },
-                        {
-                          "value": "POST",
-                          "label": "POST"
-                        },
-                        {
-                          "value": "PUT",
-                          "label": "PUT"
-                        },
-                        {
-                          "value": "DELETE",
-                          "label": "DELETE"
-                        },
-                        {
-                          "value": "PATCH",
-                          "label": "PATCH"
-                        },
-                        {
-                          "value": "OPTIONS",
-                          "label": "OPTIONS"
-                        },
-                        {
-                          "value": "HEAD",
-                          "label": "HEAD"
-                        }
-                      ],
-                      "description": "不选则为ANY",
-                      "joinValues": false,
-                      "extractValue": true
-                    },
-                    {
-                      "type": "input-number",
-                      "name": "order",
-                      "label": "排序",
-                      "labelRemark": "升序排序",
-                      "displayMode": "enhance",
-                      "min": 0,
-                      "value": 0
-                    },
-                    {
-                      "type": "input-array",
-                      "name": "http_path",
-                      "label": "路由",
-                      "items": {
-                        "type": "input-text",
-                        "source": "/api/v1/system/model/system.api/select_options?_label=router&_value=router"
-                      }
+                      "source": "/api/v1/system/tree/admin.auth.permission/find?_label=desc"
                     },
                     {
                       "label": "菜单",
@@ -189,93 +114,143 @@
                       "source": "/api/v1/system/tree/admin.menu/find?_label=title"
                     },
                     {
-                      "label": "模型",
+                      "name": "routes",
+                      "type": "combo",
+                      "label": "路由",
+                      "multiple": true,
+                      "items": [
+                        {
+                          "name": "route",
+                          "type": "select",
+                          "joinValues": false,
+                          "extractValue": true,
+                          "unique": true,
+                          "source": "/api/v1/system/model/system.api/select_options?_label=router&_value=router"
+                        },
+                        {
+                          "type": "checkboxes",
+                          "name": "operation",
+                          "label": "请求方式",
+                          "disabledOn": "!this.route",
+                          "options": [
+                            {
+                              "value": "GET",
+                              "label": "GET"
+                            },
+                            {
+                              "value": "POST",
+                              "label": "POST"
+                            },
+                            {
+                              "value": "PUT",
+                              "label": "PUT"
+                            },
+                            {
+                              "value": "DELETE",
+                              "label": "DELETE"
+                            },
+                            {
+                              "value": "PATCH",
+                              "label": "PATCH"
+                            },
+                            {
+                              "value": "OPTIONS",
+                              "label": "OPTIONS"
+                            },
+                            {
+                              "value": "HEAD",
+                              "label": "HEAD"
+                            }
+                          ],
+                          "description": "不选则为ANY",
+                          "joinValues": false,
+                          "extractValue": true
+                        }
+                      ]
+                    },
+                    {
                       "name": "models",
-                      "type": "select",
+                      "type": "combo",
+                      "label": "模型",
                       "multiple": true,
-                      "joinValues": false,
-                      "extractValue": true,
-                      "source": "/api/v1/system/model/ddic.model/select_options?_value=identity&_label=name"
-                    },
-                    {
-                      "type": "checkboxes",
-                      "name": "model_method",
-                      "label": "操作方式",
-                      "options": [
+                      "items": [
                         {
-                          "label": "读取",
-                          "value": "READ"
+                          "name": "model",
+                          "type": "select",
+                          "joinValues": false,
+                          "extractValue": true,
+                          "unique": true,
+                          "source": "/api/v1/system/model/ddic.model/select_options?_value=identity&_label=name"
                         },
                         {
-                          "label": "修改",
-                          "value": "UPDATE"
-                        },
-                        {
-                          "label": "创建",
-                          "value": "CREATE"
-                        },
-                        {
-                          "label": "删除",
-                          "value": "DELETE"
+                          "type": "checkboxes",
+                          "name": "operation",
+                          "disabledOn": "!this.model",
+                          "options": [
+                            {
+                              "label": "读取",
+                              "value": "READ"
+                            },
+                            {
+                              "label": "修改",
+                              "value": "UPDATE"
+                            },
+                            {
+                              "label": "创建",
+                              "value": "CREATE"
+                            },
+                            {
+                              "label": "删除",
+                              "value": "DELETE"
+                            }
+                          ],
+                          "description": "不选则为ANY",
+                          "joinValues": false,
+                          "extractValue": true
                         }
-                      ],
-                      "description": "不选则为ANY",
-                      "joinValues": false,
-                      "extractValue": true
+                      ]
                     },
                     {
-                      "label": "文件目录",
                       "name": "folders",
-                      "searchable": true,
+                      "type": "combo",
+                      "label": "文件目录",
                       "multiple": true,
-                      "type": "tree-select",
-                      "autoCheckChildren": false,
-                      "joinValues": false,
-                      "extractValue": true,
-                      "source": "/api/v1/fs/file/permission_tree"
-                    },
-                    {
-                      "type": "checkboxes",
-                      "name": "folder_method",
-                      "label": "目录操作",
-                      "options": [
+                      "items": [
                         {
-                          "label": "读取",
-                          "value": "READ"
+                          "name": "folder",
+                          "searchable": true,
+                          "type": "tree-select",
+                          "autoCheckChildren": false,
+                          "joinValues": false,
+                          "extractValue": true,
+                          "source": "/api/v1/fs/file/permission_tree",
+                          "unique": true
                         },
                         {
-                          "label": "修改",
-                          "value": "UPDATE"
-                        },
-                        {
-                          "label": "创建",
-                          "value": "CREATE"
-                        },
-                        {
-                          "label": "删除",
-                          "value": "DELETE"
-                        }
-                      ],
-                      "description": "不选则为ANY",
-                      "joinValues": false,
-                      "extractValue": true
-                    },
-                    {
-                      "type": "group",
-                      "body": [
-                        {
-                          "format": "YYYY-MM-DD HH:mm:ss",
-                          "label": "创建时间",
-                          "name": "created_at",
-                          "type": "static-datetime",
-                          "visibleOn": "!!this.created_at"
-                        },
-                        {
-                          "format": "YYYY-MM-DD HH:mm:ss",
-                          "label": "更新时间",
-                          "name": "updated_at",
-                          "type": "static-datetime",
-                          "visibleOn": "!!this.updated_at"
+                          "type": "checkboxes",
+                          "name": "operation",
+                          "disabledOn": "!this.folder",
+                          "options": [
+                            {
+                              "label": "读取",
+                              "value": "READ"
+                            },
+                            {
+                              "label": "修改",
+                              "value": "UPDATE"
+                            },
+                            {
+                              "label": "创建",
+                              "value": "CREATE"
+                            },
+                            {
+                              "label": "删除",
+                              "value": "DELETE"
+                            }
+                          ],
+                          "description": "不选则为ANY",
+                          "joinValues": false,
+                          "extractValue": true
                         }
                       ]
                     }
@@ -410,62 +385,6 @@
                   "source": "/api/v1/system/tree/admin.auth.permission/find?_label=desc"
                 },
                 {
-                  "type": "checkboxes",
-                  "name": "http_method",
-                  "label": "请求方式",
-                  "options": [
-                    {
-                      "value": "GET",
-                      "label": "GET"
-                    },
-                    {
-                      "value": "POST",
-                      "label": "POST"
-                    },
-                    {
-                      "value": "PUT",
-                      "label": "PUT"
-                    },
-                    {
-                      "value": "DELETE",
-                      "label": "DELETE"
-                    },
-                    {
-                      "value": "PATCH",
-                      "label": "PATCH"
-                    },
-                    {
-                      "value": "OPTIONS",
-                      "label": "OPTIONS"
-                    },
-                    {
-                      "value": "HEAD",
-                      "label": "HEAD"
-                    }
-                  ],
-                  "description": "不选则为ANY",
-                  "joinValues": false,
-                  "extractValue": true
-                },
-                {
-                  "type": "input-number",
-                  "name": "order",
-                  "label": "排序",
-                  "labelRemark": "升序排序",
-                  "displayMode": "enhance",
-                  "min": 0,
-                  "value": 0
-                },
-                {
-                  "type": "input-array",
-                  "name": "http_path",
-                  "label": "路由",
-                  "items": {
-                    "type": "input-text",
-                    "source": "/api/v1/system/model/system.api/select_options?_label=router&_value=router"
-                  }
-                },
-                {
                   "label": "菜单",
                   "name": "menus",
                   "searchable": true,
@@ -479,76 +398,145 @@
                   "source": "/api/v1/system/tree/admin.menu/find?_label=title"
                 },
                 {
-                  "label": "模型",
+                  "name": "routes",
+                  "type": "combo",
+                  "label": "路由",
+                  "multiple": true,
+                  "items": [
+                    {
+                      "name": "route",
+                      "type": "select",
+                      "joinValues": false,
+                      "extractValue": true,
+                      "unique": true,
+                      "source": "/api/v1/system/model/system.api/select_options?_label=router&_value=router"
+                    },
+                    {
+                      "type": "checkboxes",
+                      "name": "operation",
+                      "label": "请求方式",
+                      "disabledOn": "!this.route",
+                      "options": [
+                        {
+                          "value": "GET",
+                          "label": "GET"
+                        },
+                        {
+                          "value": "POST",
+                          "label": "POST"
+                        },
+                        {
+                          "value": "PUT",
+                          "label": "PUT"
+                        },
+                        {
+                          "value": "DELETE",
+                          "label": "DELETE"
+                        },
+                        {
+                          "value": "PATCH",
+                          "label": "PATCH"
+                        },
+                        {
+                          "value": "OPTIONS",
+                          "label": "OPTIONS"
+                        },
+                        {
+                          "value": "HEAD",
+                          "label": "HEAD"
+                        }
+                      ],
+                      "description": "不选则为ANY",
+                      "joinValues": false,
+                      "extractValue": true
+                    }
+                  ]
+                },
+                {
                   "name": "models",
-                  "type": "select",
+                  "type": "combo",
+                  "label": "模型",
                   "multiple": true,
-                  "joinValues": false,
-                  "extractValue": true,
-                  "source": "/api/v1/system/model/ddic.model/select_options?_value=identity&_label=name"
-                },
-                {
-                  "type": "checkboxes",
-                  "name": "model_method",
-                  "label": "模型操作",
-                  "options": [
+                  "items": [
                     {
-                      "label": "读取",
-                      "value": "READ"
+                      "name": "model",
+                      "type": "select",
+                      "joinValues": false,
+                      "extractValue": true,
+                      "unique": true,
+                      "source": "/api/v1/system/model/ddic.model/select_options?_value=identity&_label=name"
                     },
                     {
-                      "label": "修改",
-                      "value": "UPDATE"
-                    },
-                    {
-                      "label": "创建",
-                      "value": "CREATE"
-                    },
-                    {
-                      "label": "删除",
-                      "value": "DELETE"
+                      "type": "checkboxes",
+                      "name": "operation",
+                      "disabledOn": "!this.model",
+                      "options": [
+                        {
+                          "label": "读取",
+                          "value": "READ"
+                        },
+                        {
+                          "label": "修改",
+                          "value": "UPDATE"
+                        },
+                        {
+                          "label": "创建",
+                          "value": "CREATE"
+                        },
+                        {
+                          "label": "删除",
+                          "value": "DELETE"
+                        }
+                      ],
+                      "description": "不选则为ANY",
+                      "joinValues": false,
+                      "extractValue": true
                     }
-                  ],
-                  "description": "不选则为ANY",
-                  "joinValues": false,
-                  "extractValue": true
+                  ]
                 },
                 {
-                  "label": "文件目录",
                   "name": "folders",
-                  "searchable": true,
+                  "type": "combo",
+                  "label": "文件目录",
                   "multiple": true,
-                  "type": "tree-select",
-                  "autoCheckChildren": false,
-                  "joinValues": false,
-                  "extractValue": true,
-                  "source": "/api/v1/fs/file/permission_tree"
-                },
-                {
-                  "type": "checkboxes",
-                  "name": "folder_method",
-                  "label": "目录操作",
-                  "options": [
+                  "items": [
                     {
-                      "label": "读取",
-                      "value": "READ"
+                      "name": "folder",
+                      "searchable": true,
+                      "type": "tree-select",
+                      "autoCheckChildren": false,
+                      "joinValues": false,
+                      "extractValue": true,
+                      "source": "/api/v1/fs/file/permission_tree",
+                      "unique": true
                     },
                     {
-                      "label": "修改",
-                      "value": "UPDATE"
-                    },
-                    {
-                      "label": "创建",
-                      "value": "CREATE"
-                    },
-                    {
-                      "label": "删除",
-                      "value": "DELETE"
+                      "type": "checkboxes",
+                      "name": "operation",
+                      "disabledOn": "!this.folder",
+                      "options": [
+                        {
+                          "label": "读取",
+                          "value": "READ"
+                        },
+                        {
+                          "label": "修改",
+                          "value": "UPDATE"
+                        },
+                        {
+                          "label": "创建",
+                          "value": "CREATE"
+                        },
+                        {
+                          "label": "删除",
+                          "value": "DELETE"
+                        }
+                      ],
+                      "description": "不选则为ANY",
+                      "joinValues": false,
+                      "extractValue": true
                     }
-                  ],
-                  "description": "不选则为ANY",
-                  "joinValues": false,
-                  "extractValue": true
+                  ]
                 }
               ],
               "name": "create",
@@ -560,202 +548,6 @@
           },
           "icon": "fa fa-plus pull-left",
           "label": "新增",
-          "level": "primary",
-          "type": "button"
-        },
-        {
-          "visible": false,
-          "actionType": "dialog",
-          "dialog": {
-            "body": {
-              "api": {
-                "data": {
-                  "batch": {
-                    "&": {
-                      "$excel": {
-                        "desc": "${desc}",
-                        "http_method": "${http_method}",
-                        "http_path": "${http_path}",
-                        "menus": "${menus}",
-                        "model_method": "${model_method}",
-                        "models": "${models}",
-                        "name": "${name}",
-                        "order": "${order}",
-                        "parent": "${parent}"
-                      }
-                    }
-                  }
-                },
-                "method": "post",
-                "url": "/api/v1/system/model/admin.auth.permission/batch_create"
-              },
-              "body": [
-                {
-                  "name": "excel",
-                  "type": "input-excel"
-                },
-                {
-                  "addable": true,
-                  "columns": [
-                    {
-                      "label": "名称",
-                      "name": "name",
-                      "quickEdit": {
-                        "required": true,
-                        "saveImmediately": true,
-                        "type": "input-text"
-                      },
-                      "searchable": true,
-                      "sortable": true,
-                      "type": "text"
-                    },
-                    {
-                      "label": "描述",
-                      "name": "desc",
-                      "quickEdit": {
-                        "required": true,
-                        "saveImmediately": true,
-                        "type": "input-text"
-                      },
-                      "searchable": true,
-                      "sortable": true,
-                      "type": "text"
-                    },
-                    {
-                      "label": "上级",
-                      "name": "parent",
-                      "quickEdit": {
-                        "label": "上级",
-                        "name": "parent",
-                        "type": "tree-select",
-                        "source": "/api/v1/system/tree/admin.auth.permission/find?_label=desc"
-                      },
-                      "searchable": true,
-                      "sortable": true,
-                      "type": "number"
-                    },
-                    {
-                      "label": "请求方式",
-                      "levelExpand": 0,
-                      "name": "http_method",
-                      "quickEdit": {
-                        "language": "json",
-                        "saveImmediately": true,
-                        "type": "editor"
-                      },
-                      "searchable": true,
-                      "sortable": true,
-                      "type": "json"
-                    },
-                    {
-                      "label": "排序",
-                      "name": "order",
-                      "quickEdit": {
-                        "saveImmediately": true,
-                        "type": "input-number",
-                        "default": 0
-                      },
-                      "searchable": true,
-                      "sortable": true,
-                      "type": "number"
-                    },
-                    {
-                      "label": "路由",
-                      "levelExpand": 0,
-                      "name": "http_path",
-                      "quickEdit": {
-                        "language": "json",
-                        "saveImmediately": true,
-                        "type": "editor"
-                      },
-                      "searchable": true,
-                      "sortable": true,
-                      "type": "json"
-                    },
-                    {
-                      "label": "菜单",
-                      "levelExpand": 0,
-                      "name": "menus",
-                      "quickEdit": {
-                        "language": "json",
-                        "saveImmediately": true,
-                        "type": "editor"
-                      },
-                      "searchable": true,
-                      "sortable": true,
-                      "type": "json"
-                    },
-                    {
-                      "label": "模型",
-                      "levelExpand": 0,
-                      "name": "models",
-                      "quickEdit": {
-                        "language": "json",
-                        "saveImmediately": true,
-                        "type": "editor"
-                      },
-                      "searchable": true,
-                      "sortable": true,
-                      "type": "json"
-                    },
-                    {
-                      "label": "模型操作",
-                      "levelExpand": 0,
-                      "name": "model_method",
-                      "quickEdit": {
-                        "language": "json",
-                        "saveImmediately": true,
-                        "type": "editor"
-                      },
-                      "searchable": true,
-                      "sortable": true,
-                      "type": "json"
-                    },
-                    {
-                      "label": "目录",
-                      "levelExpand": 0,
-                      "name": "folders",
-                      "quickEdit": {
-                        "language": "json",
-                        "saveImmediately": true,
-                        "type": "editor"
-                      },
-                      "searchable": true,
-                      "sortable": true,
-                      "type": "json"
-                    },
-                    {
-                      "label": "目录操作",
-                      "levelExpand": 0,
-                      "name": "folder_method",
-                      "quickEdit": {
-                        "language": "json",
-                        "saveImmediately": true,
-                        "type": "editor"
-                      },
-                      "searchable": true,
-                      "sortable": true,
-                      "type": "json"
-                    }
-                  ],
-                  "copyable": true,
-                  "editable": true,
-                  "name": "excel",
-                  "removable": true,
-                  "showIndex": true,
-                  "type": "input-table"
-                }
-              ],
-              "mode": "normal",
-              "silentPolling": false,
-              "type": "form"
-            },
-            "size": "full",
-            "title": "批量新增",
-            "type": "dialog"
-          },
-          "icon": "fa fa-plus pull-left",
-          "label": "批量新增",
           "level": "primary",
           "type": "button"
         }

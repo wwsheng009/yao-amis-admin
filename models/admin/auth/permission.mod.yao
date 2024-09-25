@@ -27,23 +27,9 @@
             "type": "integer"
         },
         {
-            "comment": "请求方式",
-            "label": "请求方式",
-            "name": "http_method",
-            "type": "json",
-            "nullable": true
-        },
-        {
-            "comment": "排序",
-            "label": "排序",
-            "name": "order",
-            "type": "integer",
-            "default": 0
-        },
-        {
             "comment": "路由",
             "label": "路由",
-            "name": "http_path",
+            "name": "routes",
             "type": "json",
             "nullable": true
         },
@@ -62,23 +48,9 @@
             "nullable": true
         },
         {
-            "comment": "模型操作",
-            "label": "模型操作",
-            "name": "model_method",
-            "type": "json",
-            "nullable": true
-        },
-        {
             "comment": "文件目录",
             "label": "目录",
             "name": "folders",
-            "type": "json",
-            "nullable": true
-        },
-        {
-            "comment": "目录操作",
-            "label": "目录操作",
-            "name": "folder_method",
             "type": "json",
             "nullable": true
         }

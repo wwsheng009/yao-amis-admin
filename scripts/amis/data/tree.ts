@@ -7,7 +7,7 @@ interface MapObj {
   [key: string]: MapObj;
 }
 interface TreeObj {
-  [key: string]: string | number | TreeObj | TreeObj[] | string[];
+  [key: string]: string | number | TreeObj | TreeObj[] | string[] | any;
   children?: TreeObj[];
   id?: number;
 }
@@ -300,33 +300,51 @@ export function collectAndCombineData(
       return;
     }
 
-    if (
-      Object.prototype.hasOwnProperty.call(obj, key) &&
-      Array.isArray(obj[key]) &&
-      obj[key].length > 0
-    ) {
-      //循环数组
-      for (const o of obj[key]) {
-        // 使用数组中的行项目作key
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      if (Array.isArray(obj[key]) && obj[key].length > 0) {
+        //循环数组
+        for (const o of obj[key]) {
+          // 使用数组中的行项目作key
+          const old = collectedData[o as string];
+
+          let arrOld = [];
+          if (old != null) {
+            arrOld = Array.isArray(old) ? old : [old];
+          }
+          if (obj[key2] != null) {
+            const arryNew = Array.isArray(obj[key2]) ? obj[key2] : [obj[key2]];
+            collectedData[o as string] = [
+              ...new Set([...arrOld, ...arryNew].flat())
+            ];
+          }
+        }
+      } else {
+        const o = obj[key];
         const old = collectedData[o as string];
 
         let arrOld = [];
         if (old != null) {
           arrOld = Array.isArray(old) ? old : [old];
         }
-        const arryNew = Array.isArray(obj[key2]) ? obj[key2] : [obj[key2]];
-        collectedData[o as string] = [
-          ...new Set([...arrOld, ...arryNew].flat())
-        ];
+        if (obj[key2] != null) {
+          const arryNew = Array.isArray(obj[key2]) ? obj[key2] : [obj[key2]];
+          collectedData[o as string] = [
+            ...new Set([...arrOld, ...arryNew].flat())
+          ];
+        }
       }
-    } else if (defaultKey) {
+    } else if (defaultKey != null) {
       const old = collectedData[defaultKey];
       let arrOld = [];
       if (old != null) {
         arrOld = Array.isArray(old) ? old : [old];
       }
-      const arryNew = Array.isArray(obj[key2]) ? obj[key2] : [obj[key2]];
-      collectedData[defaultKey] = [...new Set([...arrOld, ...arryNew].flat())];
+      if (obj[key2] != null) {
+        const arryNew = Array.isArray(obj[key2]) ? obj[key2] : [obj[key2]];
+        collectedData[defaultKey] = [
+          ...new Set([...arrOld, ...arryNew].flat())
+        ];
+      }
     }
 
     // 子节点信息
