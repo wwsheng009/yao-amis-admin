@@ -70,7 +70,7 @@ function Index() {
 <script name="data" type="json">
 {
   "$post": {
-    "process": "scripts.blog.site.getPost",
+    "process": "scripts.app.blog.site.getPost",
     "args": ["$query.post_id"]
   }
  

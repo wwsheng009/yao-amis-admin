@@ -108,8 +108,8 @@
     "timestamps": true
   },
   "table": {
-    "name": "blog_post"
+    "name": "app_blog_post"
   }
 }
-// yao migrate -n blog.post --reset
+// yao migrate -n app.blog.post --reset
 // yao migrate -n system.api --reset

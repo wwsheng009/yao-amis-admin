@@ -15,6 +15,6 @@
   ],
   "name": "标签",
   "table": {
-    "name": "blog_tag"
+    "name": "app_blog_tag"
   }
 }

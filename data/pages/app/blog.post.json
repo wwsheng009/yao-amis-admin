@@ -124,7 +124,7 @@
         "multiple": true,
         "cascade": true,
         "valueField": "label",
-        "source": "/api/v1/system/model/blog.category/select_options",
+        "source": "/api/v1/system/model/app.blog.category/select_options",
         "joinValues": false,
         "extractValue": true
       },
@@ -135,7 +135,7 @@
         "label": "标签",
         "multiple": true,
         "cascade": true,
-        "source": "/api/v1/system/model/blog.tag/select_options",
+        "source": "/api/v1/system/model/app.blog.tag/select_options",
         "joinValues": false,
         "extractValue": true
       },
@@ -308,7 +308,7 @@
                     "multiple": true,
                     "cascade": true,
                     "valueField": "label",
-                    "source": "/api/v1/system/model/blog.category/select_options",
+                    "source": "/api/v1/system/model/app.blog.category/select_options",
                     "joinValues": false,
                     "extractValue": true
                   },
@@ -318,7 +318,7 @@
                     "label": "标签",
                     "multiple": true,
                     "cascade": true,
-                    "source": "/api/v1/system/model/blog.tag/select_options",
+                    "source": "/api/v1/system/model/app.blog.tag/select_options",
                     "joinValues": false,
                     "extractValue": true
                   },
@@ -337,7 +337,7 @@
                     "visibleOn": "!!this.updated_at"
                   }
                 ],
-                "api": "post:/api/v1/system/model/blog.post/update/$id",
+                "api": "post:/api/v1/system/model/app.blog.post/update/$id",
                 "trimValues": true
               },
               "size": "lg",
@@ -350,7 +350,7 @@
             "icon": "fa fa-times text-danger",
             "confirmText": "你确定要删除行${id}?",
             "tooltip": "Delete",
-            "api": "post:/api/v1/system/model/blog.post/delete/$id"
+            "api": "post:/api/v1/system/model/app.blog.post/delete/$id"
           }
         ]
       }
@@ -360,7 +360,7 @@
     "footable": true,
     "mode": "table",
     "api": {
-      "url": "/api/v1/system/model/blog.post/search?page=${page}&perPage=${perPage}&orderBy=${orderBy}&orderDir=${orderDir}",
+      "url": "/api/v1/system/model/app.blog.post/search?page=${page}&perPage=${perPage}&orderBy=${orderBy}&orderDir=${orderDir}",
       "method": "POST"
     },
     "filter": {
@@ -464,14 +464,14 @@
     "filterTogglable": true,
     "filterDefaultVisible": false,
     "syncLocation": false,
-    "quickSaveItemApi": "post:/api/v1/system/model/blog.post/update/${id}",
+    "quickSaveItemApi": "post:/api/v1/system/model/app.blog.post/update/${id}",
     "bulkActions": [
       {
         "type": "button",
         "actionType": "ajax",
         "label": "批量删除",
         "confirmText": "你确定要批量删除选中行吗?",
-        "api": "delete:/api/v1/system/model/blog.post/delete/${ids|raw}"
+        "api": "delete:/api/v1/system/model/app.blog.post/delete/${ids|raw}"
       }
     ],
     "primaryField": "id",
@@ -653,12 +653,12 @@
                 "multiple": true,
                 "valueField": "label",
                 "cascade": true,
-                "source": "/api/v1/system/model/blog.category/select_options",
+                "source": "/api/v1/system/model/app.blog.category/select_options",
                 "joinValues": false,
                 "extractValue": true
               }
             ],
-            "api": "post:/api/v1/system/model/blog.post/create"
+            "api": "post:/api/v1/system/model/app.blog.post/create"
           },
           "size": "lg",
           "title": "创建文章"
@@ -674,7 +674,7 @@
             "type": "service",
             "lable": "维护分类",
             "schemaApi": {
-              "url": "/api/v1/system/schema/blog.category/crud-all",
+              "url": "/api/v1/system/schema/app.blog.category/crud-all",
               "method": "get"
             }
           }
@@ -690,7 +690,7 @@
             "type": "service",
             "lable": "维护标签",
             "schemaApi": {
-              "url": "/api/v1/system/schema/blog.tag/crud-all",
+              "url": "/api/v1/system/schema/app.blog.tag/crud-all",
               "method": "get"
             }
           }

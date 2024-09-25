@@ -69,7 +69,7 @@ function Index() {
 
 <script name="data" type="json">
 {
-  "$articles": "scripts.blog.site.getPostList"
+  "$articles": "scripts.app.blog.site.getPostList"
 }
 
 </script>

@@ -94,7 +94,7 @@ function newCategory(params) {
   // integer	parent_id
   // string	description (optional)
   const category = params[3];
-  const id = Process('models.blog.category.save', {
+  const id = Process('models.app.blog.category.save', {
     name: category.name,
     description: category.description,
     parent: category.parent_id
@@ -105,11 +105,11 @@ function newCategory(params) {
 /**
  * 获取用户博客列表
  *
- * yao run scripts.blog.webblog.getUsersBlogs 1 'myblog'
+ * yao run scripts.app.blog.webblog.getUsersBlogs 1 'myblog'
  * @returns Array
  */
 function getUsersBlogs(user_id, blog, params) {
-  const list = Process('models.blog.blog.get', {
+  const list = Process('models.app.blog.site.get', {
     wheres: [
       {
         column: 'user_id',
@@ -140,7 +140,7 @@ function getUsersBlogs(user_id, blog, params) {
 /**
  * 获取选定的博客文章
  *
- * yao run scripts.blog.webblog.getPost '::["1","13"]'
+ * yao run scripts.app.blog.webblog.getPost '::["1","13"]'
  * @param {object} params
  * @returns
  */
@@ -151,7 +151,7 @@ function getPost(user_id, params) {
     return getErrorMessage('更新时需要指定id');
   }
   try {
-    const [b] = Process('models.blog.post.get', {
+    const [b] = Process('models.app.blog.post.get', {
       wheres: [
         {
           column: 'id',
@@ -191,13 +191,13 @@ function getPost(user_id, params) {
 /**
  * 最近的文章列表
  *
- * yao run scripts.blog.webblog.getRecentPosts 1 '::[0,1,2,"1"]'
+ * yao run scripts.app.blog.webblog.getRecentPosts 1 '::[0,1,2,"1"]'
  * @param {object} params
  * @returns
  */
 function getRecentPosts(user_id, params) {
   const numberOfPosts = params[3] ? parseInt(params[3]) : 100; // numberOfPosts
-  const blogs = Process('models.blog.post.get', {
+  const blogs = Process('models.app.blog.post.get', {
     wheres: [{ column: 'user_id', value: user_id }],
     orders: [{ column: 'created_at', option: 'desc' }],
     limit: numberOfPosts
@@ -231,11 +231,11 @@ function getRecentPosts(user_id, params) {
 /**
  * Get the blog category list
  *
- * yao run scripts.blog.webblog.getCategories
+ * yao run scripts.app.blog.webblog.getCategories
  * @returns
  */
 function getCategories() {
-  const categories = Process('models.blog.category.get', {});
+  const categories = Process('models.app.blog.category.get', {});
   const categories2 = categories.map((c) => {
     return {
       description: c.description || c.name,
@@ -252,7 +252,7 @@ function deletePost(user_id, params) {
   if (postId == null || postId == '') {
     return getErrorMessage('删除时需要指定id');
   }
-  const count = Process('models.blog.post.DeleteWhere', {
+  const count = Process('models.app.blog.post.DeleteWhere', {
     wheres: [
       {
         column: 'id',
@@ -276,7 +276,7 @@ function editPost(user_id, params) {
     return getErrorMessage('更新时需要指定id');
   }
 
-  const [postRow] = Process('models.blog.post.get', {
+  const [postRow] = Process('models.app.blog.post.get', {
     wheres: [
       {
         column: 'id',
@@ -309,7 +309,7 @@ function editPost(user_id, params) {
     categories: post.category || [],
     user_id: user_id
   };
-  postId = Process('models.blog.post.save', newArticle);
+  postId = Process('models.app.blog.post.save', newArticle);
   return getRpcResponse(postId + '');
   // return getPostNewEditMessage(postId)
 }
@@ -327,7 +327,7 @@ function newPost(user_id, params) {
     user_id: user_id,
     type: post.type ? post.type : 'html'
   };
-  const postId = Process('models.blog.post.save', newArticle);
+  const postId = Process('models.app.blog.post.save', newArticle);
   // console.log("newPost postId:", postId)
   return getRpcResponse(postId + '');
   // return getPostNewEditMessage(postId)
@@ -570,9 +570,9 @@ function getXmlType(data) {
   return 'string';
 }
 
-// yao run scripts.blog.webblog.convertJson2RpcXml true
-// yao run scripts.blog.webblog.convertJson2RpcXml 1
-// yao run scripts.blog.webblog.convertJson2RpcXml '::{"name":"test"}'
+// yao run scripts.app.blog.webblog.convertJson2RpcXml true
+// yao run scripts.app.blog.webblog.convertJson2RpcXml 1
+// yao run scripts.app.blog.webblog.convertJson2RpcXml '::{"name":"test"}'
 function getRpcResponse(data) {
   const xml = `<?xml version="1.0" encoding="utf-8"?><methodResponse><params><param>${convertJs2xml(data)}</param></params></methodResponse>`;
   // console.log("response:", xml)

@@ -12,7 +12,7 @@
             "path": "/web/:blog",
             "method": "POST",
             "guard": "-",
-            "process": "scripts.blog.web.metaWeblogHandler",
+            "process": "scripts.app.blog.web.metaWeblogHandler",
             "in": [
                 "$param.blog",
                 ":query",

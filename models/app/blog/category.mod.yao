@@ -36,7 +36,7 @@
   ],
   "name": "博客分类",
   "table": {
-    "name": "blog_category"
+    "name": "app_blog_category"
   }
 }
-// yao migrate -n blog.category --reset
+// yao migrate -n app.blog.category --reset

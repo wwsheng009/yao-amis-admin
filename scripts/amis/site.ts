@@ -731,32 +731,32 @@ function getSystemMenu() {
         },
         {
           label: '博客管理',
-          url: '/blog',
+          url: '/app/blog',
           icon: 'fas fa-blog',
           children: [
             {
               label: '博客管理',
               icon: 'fas fa-blog',
-              schemaApi: '/api/v1/system/schema/blog.blog/crud-all',
-              url: 'blog.blog'
+              schemaApi: '/api/v1/system/schema/app.blog.site/crud-all',
+              url: '/site'
             },
             {
               label: '文章管理',
               icon: 'fa fa-file',
-              schemaApi: '/api/v1/amis/pages/blog.post',
-              url: 'blog.post'
+              schemaApi: '/api/v1/amis/pages/app.blog.post',
+              url: '/post'
             },
             {
               label: '标签管理',
               icon: 'fas fa-tag',
-              schemaApi: '/api/v1/system/schema/blog.tag/crud-all',
-              url: 'blog.tag'
+              schemaApi: '/api/v1/system/schema/app.blog.tag/crud-all',
+              url: '/tag'
             },
             {
               label: '分类管理',
               icon: 'fa far fa-flag',
-              schemaApi: '/api/v1/system/schema/blog.category/crud-all',
-              url: 'blog.category'
+              schemaApi: '/api/v1/system/schema/app.blog.category/crud-all',
+              url: '/category'
             }
           ]
         }

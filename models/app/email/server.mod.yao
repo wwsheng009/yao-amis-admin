@@ -1,6 +1,6 @@
 {
   "table": {
-    "name": "email_server"
+    "name": "app_email_server"
   },
   "option": {
     "soft_deletes": true,
@@ -63,6 +63,6 @@
       "comment": "Password"
     }
   ],
-  "name": "email.server",
+  "name": "app.email.server",
   "relations": {}
 }

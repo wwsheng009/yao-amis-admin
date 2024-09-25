@@ -1,11 +1,11 @@
 import { Process } from '@yao/yao';
 
 // const window = {}
-// const convert = Require("blog.xml-js")
+// const convert = Require("app.blog.xml-js")
 
 // const convert = require('./xml-js')
 
-// yao run scripts.blog.test.test
+// yao run scripts.app.blog.test.test
 
 const originObject = {
   methodCall: {

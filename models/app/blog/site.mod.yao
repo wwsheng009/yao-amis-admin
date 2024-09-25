@@ -35,6 +35,6 @@
     },
     "name": "博客",
     "table": {
-        "name": "blog_blog"
+        "name": "app_blog_site"
     }
 }
