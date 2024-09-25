@@ -12,7 +12,7 @@ import {
 // 对格式有要求的，使用studio命令生成页面后再修改
 
 // yao run scripts.amis.curd.curdTemplate demo.table
-function curdTemplate(modelId, columns) {
+export function curdTemplate(modelId: string, columns) {
   const filterForm = getFilterFormFields(modelId, columns);
 
   const curdColumns = [...getModelFieldsWithQuick(modelId, columns)];

@@ -1,5 +1,5 @@
 import { getModelFromDB, loadModeltoMemory } from '@scripts/system/model_db';
-import { YaoModelEx, YaoModelNode } from '@yao/types';
+import { ModelId, AmisModel, YaoModelNode } from '@yao/types';
 
 import { Process, Exception } from '@yao/yao';
 import { YaoModel } from '@yaoapps/types';
@@ -39,7 +39,7 @@ export function MomoryModelList(attr?: string[] | string) {
  * @returns
  */
 function FlatModelList(models: YaoModelNode[], attr?: string[] | string) {
-  const list = [] as YaoModelEx[];
+  const list = [] as AmisModel[];
 
   const getProperty = (object: object, path: string) => {
     const properties = path.split('.');
@@ -112,21 +112,19 @@ function FlatModelList(models: YaoModelNode[], attr?: string[] | string) {
  * @param {string} modelId 模型标识
  * @returns YaoModel.ModelDSL | null
  */
-export function FindCachedModelById(
-  modelId: string | number
-): YaoModel.ModelDSL {
-  const models = Process('widget.models');
+export function FindCachedModelById(modelId: ModelId): AmisModel {
+  const models = Process('widget.models') as YaoModelNode[];
 
-  const traverse = (node: any, id: string) => {
+  const traverse = (node: any, modelId: string) => {
     if (node.children) {
-      return traverse(node.children, id);
+      return traverse(node.children, modelId);
     } else if (node.data) {
-      if (node.data.ID == id) {
+      if (node.data.ID == modelId) {
         return node.data;
       }
     } else if (Array.isArray(node)) {
       for (const item of node) {
-        const obj = traverse(item, id);
+        const obj = traverse(item, modelId);
         if (obj) {
           return obj;
         }
@@ -141,7 +139,7 @@ export function FindCachedModelById(
  * 优先从缓存中加载模型，如果不存在，从数据库中加载并转换成yao模型
  * @param {string} modelId
  */
-export function FindAndLoadYaoModelById(modelId: string) {
+export function FindAndLoadYaoModelById(modelId: ModelId): YaoModel.ModelDSL {
   const modelDsl = FindCachedModelById(modelId);
   if (modelDsl == null) {
     let modelDsl = getModelFromDB(modelId);
@@ -170,7 +168,7 @@ export function FindAndLoadYaoModelById(modelId: string) {
  * @param {string} modelId 模型标识
  * @returns
  */
-export function FindAndLoadDBModelById(modelId: string | number) {
+export function FindAndLoadDBModelById(modelId: ModelId): AmisModel {
   if (!modelId) {
     throw new Exception(`缺少模型标识`);
   }

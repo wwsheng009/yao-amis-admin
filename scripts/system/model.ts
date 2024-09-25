@@ -38,7 +38,7 @@ import {
   AmisRelation,
   AmisModelColumn,
   AmisModel,
-  YaoModelEx
+  ModelId
 } from '@yao/types';
 import { YaoModel } from '@yaoapps/types';
 
@@ -256,12 +256,13 @@ function CompleteModel(modelDsl: AmisModel) {
 
   return modelDsl;
 }
+
 /**
  * 转换模型定义成数据库表
  * @param {object} modelDsl 模型定义
  * @returns
  */
-function ConvertModelToTableLine(modelDsl: YaoModelEx) {
+function ConvertModelToTableLine(modelDsl: AmisModel) {
   const line = {} as AmisModelDB;
   line.id = modelDsl.id;
   line.identity = DotName(modelDsl.ID);
@@ -737,7 +738,7 @@ export function getModelColumnsApi(modelId: string) {
  * @param {string} modelId 模型标识
  * @returns
  */
-export function getDBModelById(modelId: string | number) {
+export function getDBModelById(modelId: ModelId) {
   return FindAndLoadDBModelById(modelId);
 }
 

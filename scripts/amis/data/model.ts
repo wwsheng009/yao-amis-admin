@@ -12,6 +12,7 @@ import {
 import { RunTransaction } from '@scripts/system/db';
 
 import { Process, Exception } from '@yao/yao';
+import { ModelId } from '@yao/types';
 
 /**
  * 查找数据
@@ -25,10 +26,10 @@ import { Process, Exception } from '@yao/yao';
  * @param {object} payload request payload
  * @returns
  */
-function dataSearch(
-  modelId,
-  pageIn,
-  perPageIn,
+export function dataSearch(
+  modelId: ModelId,
+  pageIn: number,
+  perPageIn: number,
   querysIn,
   queryParams,
   payload
@@ -224,7 +225,7 @@ function makeFake(modelId) {
   return [fakeData];
 }
 // 表数据预览，可以用于amis curd控件的api接口测试
-function PreViewtableData(modelId) {
+export function PreViewtableData(modelId: string) {
   const model_name = DotName(modelId);
   const data = Process(`models.${model_name}.Get`, { limit: 10 });
   if (data.length === 0) {
@@ -233,8 +234,8 @@ function PreViewtableData(modelId) {
   return data;
 }
 // 根据id获取记录
-function getData(model, id) {
-  const data = Process(`models.${DotName(model)}.Find`, id, {});
+export function getData(modelId: string, id: number) {
+  const data = Process(`models.${DotName(modelId)}.Find`, id, {});
   return data;
 }
 
@@ -315,23 +316,23 @@ function saveData(modelId, payload) {
 
 // 保存记录
 // yao run scripts.amis.data.model.saveDataById
-function saveDataById(model, id, payload) {
+export function saveDataById(model, id, payload) {
   payload.id = id;
   return saveData(model, payload);
 }
 // 创建新记录
-function newData(model, payload) {
+export function newData(model, payload) {
   return saveData(model, payload);
 }
 
 // 批量创建新记录
-function newBatchData(model, payload) {
+export function newBatchData(model, payload) {
   payload.batch = updateInputData(model, payload.batch);
   Process(`models.${model}.eachSave`, payload.batch);
 }
 
 // 删除记录，支持单条或是批量
-function deleteData(model, ids) {
+export function deleteData(model, ids) {
   const myArray = ids.split(',');
 
   myArray.forEach((id) => {
@@ -340,7 +341,7 @@ function deleteData(model, ids) {
   });
 }
 // 批量更新数据
-function bulkUpdate(model, ids, payload) {
+export function bulkUpdate(model, ids, payload) {
   const myArray = ids.split(',');
   myArray.forEach((id) => {
     // Process("yao.model.Update", model, id, payload);
@@ -350,7 +351,7 @@ function bulkUpdate(model, ids, payload) {
 }
 
 // scripts.amis.data.model.dummy
-function dummy() {
+export function dummy() {
   return { message: '请传入ID' };
 }
 
@@ -363,7 +364,7 @@ function dummy() {
  * @param {string} modelId model id
  * @param {object} querys querys
  */
-function selectOptions(modelId, querysIn, payload) {
+export function selectOptions(modelId: ModelId, querysIn, payload) {
   if (!modelId) {
     throw new Exception('需要指定模型');
   }

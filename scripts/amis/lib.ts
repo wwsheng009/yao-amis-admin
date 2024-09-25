@@ -9,16 +9,15 @@
 // 模型字段的详细定义查看https://yaoapps.com/doc/%E6%89%8B%E5%86%8C/Widgets/Model
 // todo检查模型定义来更新字段
 
-import { DotName } from '@scripts/system/lib';
 import {
   column2AmisTableViewColumn,
   column2AmisFormViewColumn,
   column2AmisFormEditColumn
 } from '@scripts/system/col_type';
-import { AmisModel } from '@yao/types';
-import { Process, Exception } from '@yao/yao';
+import { AmisModel, AmisUIColumn, ModelId } from '@yao/types';
+import { Exception } from '@yao/yao';
 import { YaoModel } from '@yaoapps/types';
-
+import { getDBModelById } from '@scripts/system/model';
 /**
  * 读取已经加载在内存中的模型的定义,并根据传入列的类型定义更新模型定义
  *
@@ -29,13 +28,14 @@ import { YaoModel } from '@yaoapps/types';
  * @returns
  */
 export function getModelDefinition(
-  modelId: string,
-  columnsIn?: any[]
-): AmisModel {
-  let model = Process(
-    'scripts.system.model.getDBModelById', // 优先从数据库中加载，
-    DotName(modelId)
-  );
+  modelId: ModelId,
+  columnsIn?: AmisUIColumn[]
+) {
+  // let model = Process(
+  //   'scripts.system.model.getDBModelById', // 优先从数据库中加载，
+  //   DotName(modelId)
+  // );
+  let model = getDBModelById(modelId);
   if (!model) {
     throw new Exception(`模型:${modelId}不存在`);
   }
@@ -166,7 +166,10 @@ function updateValidationMessage(text: string, col: { label: string }) {
  * @param {object} yaoColumn yao模型字段定义
  * @returns 返回更新后的amis字段定义
  */
-function updateAmisFormColFromModel(amisColumn, yaoColumn) {
+function updateAmisFormColFromModel(
+  amisColumn: AmisUIColumn,
+  yaoColumn: YaoModel.ModelColumn
+): AmisUIColumn {
   if (yaoColumn == null) {
     return amisColumn;
   }
@@ -174,7 +177,7 @@ function updateAmisFormColFromModel(amisColumn, yaoColumn) {
   amisColumn.label = amisColumn.label || yaoColumn.label;
 
   if (yaoColumn.validations && yaoColumn.validations.length) {
-    amisColumn.validations = amisColumn.validations || {};
+    amisColumn.validations = amisColumn.validations || [];
     amisColumn.validationErrors = amisColumn.validationErrors || {};
     let regexCount = 0;
     for (const validation of yaoColumn.validations) {
@@ -566,7 +569,7 @@ export function getFormFields(
 }
 
 // 转换表字段清单成amis的form filter
-export function getFilterFormFields(modelId, columnsIn) {
+export function getFilterFormFields(modelId: ModelId, columnsIn) {
   // 从数据库表中获取定义
   const model = getModelDefinition(modelId, columnsIn);
   const columns = model?.columns || [];
@@ -620,7 +623,7 @@ export function getFilterFormFields(modelId, columnsIn) {
  * @param {string} modelId 数据库表名
  * @returns
  */
-export function getModelFieldsWithQuick(modelId, columnsIn) {
+export function getModelFieldsWithQuick(modelId: string, columnsIn) {
   const model = getModelDefinition(modelId, columnsIn);
   const columns = model?.columns || [];
   // yao的原始字段设置

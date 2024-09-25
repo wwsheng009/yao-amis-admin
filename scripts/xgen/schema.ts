@@ -1,11 +1,6 @@
 import { getModelDefinition } from '@scripts/amis/lib';
 import { DotName, IsMysql } from '@scripts/system/lib';
-import {
-  AmisModel,
-  AmisModelColumn,
-  AmisViewComponent,
-  YaoModelEx
-} from '@yao/types';
+import { AmisModelColumn, AmisViewComponent, AmisModel } from '@yao/types';
 import { Process, log } from '@yao/yao';
 
 import { YaoForm, YaoModel, YaoQuery } from '@yaoapps/types';
@@ -94,7 +89,7 @@ export function generateFormView(modelId: string, columns, simple, type) {
   return getXgenFormSchema(modelDsl, type);
 }
 
-function getXgenTableSchema(modelDsl: YaoModelEx) {
+function getXgenTableSchema(modelDsl: AmisModel) {
   const modelName = DotName(modelDsl.ID);
 
   // const copiedObject = JSON.parse(JSON.stringify(modelDsl.columns));
@@ -877,7 +872,7 @@ function Other(columns) {
  * @param component
  * @param column
  */
-function EditPropes(component, column) {
+function EditPropes(component: AmisViewComponent, column: AmisModelColumn) {
   if (!component || !component.edit) {
     return component;
   }
@@ -917,7 +912,7 @@ function EditPropes(component, column) {
   }
   return component;
 }
-function GetRules(column, component) {
+function GetRules(column: AmisModelColumn, component: AmisViewComponent) {
   const validationTypeMap = {
     string: 'string',
     integer: 'integer',
@@ -1034,6 +1029,7 @@ function GetRules(column, component) {
   // }
   return rules;
 }
+
 function updateReference(formTemplate, modelDsl: YaoModel.ModelDSL) {
   const hasCount = Object.values(modelDsl.relations || { type: '' }).filter(
     (rel) => rel.type === 'hasOne'
