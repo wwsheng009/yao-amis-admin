@@ -3,28 +3,18 @@ import {
   collectTreeFields,
   collectAndCombineData
 } from '@scripts/amis/data/tree';
-import { PermissionFolder, PermissionModel, PermissionRoute } from '@yao/auth';
+import {
+  AuthFolder,
+  AuthModel,
+  AuthObject,
+  AuthRoute,
+  PermissionFolder,
+  PermissionModel,
+  PermissionRoute
+} from '@yao/auth';
 
 import { Process, Exception } from '@yao/yao';
 
-interface MapObj {
-  [key: string]: any;
-}
-interface AuthFolder {
-  folder_list: PermissionFolder[];
-  folder_with_method: MapObj;
-  method_with_folder: MapObj;
-}
-interface AuthModel {
-  model_list: PermissionModel[];
-  model_with_method: MapObj;
-  method_with_model: MapObj;
-}
-interface AuthRoute {
-  api_list: PermissionRoute[];
-  api_with_method: MapObj;
-  method_with_api: MapObj;
-}
 /**
  * 获取用户的权限信息
  *
@@ -109,9 +99,9 @@ export function getUserAuthMenuIds() {
  * @returns
  */
 export function getUserAuthApiCache() {
-  let authObjects = Process('session.get', 'user_auth_objects');
+  const authObjects = Process('session.get', 'user_auth_objects') as AuthObject;
   if (authObjects == null || !authObjects) {
-    authObjects = getUserAuthApi();
+    return getUserAuthApi();
   }
   return authObjects.api;
 }
@@ -164,7 +154,7 @@ function fillApiOpertion(methdMap) {
 }
 
 export function getUserAuthModelCache() {
-  const authObjects = Process('session.get', 'user_auth_objects');
+  const authObjects = Process('session.get', 'user_auth_objects') as AuthObject;
   if (authObjects == null || !authObjects) {
     return getUserAuthModel();
   }
@@ -232,7 +222,7 @@ export function isSuperUser() {
  */
 export function getUserAuthFolderCache() {
   // return getUserAuthFolder();
-  const authObjects = Process('session.get', 'user_auth_objects');
+  const authObjects = Process('session.get', 'user_auth_objects') as AuthObject;
   if (authObjects == null || !authObjects) {
     return getUserAuthFolder();
   }
@@ -290,10 +280,11 @@ function fillFolderOpertion(methdMap) {
 /**
  * 根据用户ID获取用户的权限对象列表
  * 在用户登录时会把用户的权限对象列表加入缓存中。
+ * yao run scripts.auth.lib.getUserAuthObjects
  * @param {number} userId user id
  * @returns
  */
-export function getUserAuthObjects(userId: number) {
+export function getUserAuthObjects(userId: number): AuthObject {
   const permissions = getUserPermission(userId);
   const model_auth = {} as AuthModel;
 
@@ -357,7 +348,7 @@ export function getUserAuthObjects(userId: number) {
 
   fillFolderOpertion(folder_auth.method_with_folder);
 
-  const menus = collectTreeFields(permissions, 'menus');
+  const menus = collectTreeFields(permissions, 'menus') as number[];
 
   return { api: api_auth, model: model_auth, folder: folder_auth, menus };
 }

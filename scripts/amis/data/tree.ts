@@ -181,10 +181,10 @@ function getSubNodeItems(modelId: string, parentId: number): NodeType[] {
  * @param {function} func filter function return true
  * @returns Array
  */
-export function filterTreeDataWithFunc(
-  dataArray: TreeObj[],
-  func: (x: TreeObj) => boolean
-): TreeObj[] {
+export function filterTreeDataWithFunc<T extends { children?: T[] }>(
+  dataArray: T[],
+  func: (x: T) => boolean
+): T[] {
   return dataArray.reduce((acc, item) => {
     // Check if the current node or its children match the filter condition
     // console.log("item id=======>", item.id);
@@ -207,7 +207,7 @@ export function filterTreeDataWithFunc(
       }
     }
     return acc;
-  }, [] as TreeObj[]);
+  }, [] as T[]);
 }
 
 /**

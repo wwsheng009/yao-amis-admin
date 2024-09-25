@@ -2,9 +2,7 @@ import { deleteObjectKey } from '@scripts/system/lib';
 import { ClearFalsyKeys } from '@scripts/system/lib';
 import { updateSoyRouteComponent } from '@scripts/admin/menu_lib';
 import { filterTreeDataWithFunc } from '@scripts/amis/data/tree';
-
 import { getUserAuthMenuIds } from '@scripts/auth/lib';
-
 import { Process, Exception, FS } from '@yao/yao';
 
 /**
@@ -22,7 +20,7 @@ const WorkingPagesLocation = '/amis_editor';
  * get user auth menus
  * yao run scripts.admin.menu.getUserAuthMenu
  */
-function getSoyAdminUserMenu() {
+export function getSoyAdminUserMenu() {
   const user = Process('session.get', 'user');
   if (user?.type === 'super') {
     return getSoySuperUserMenu();
@@ -45,7 +43,7 @@ function getSoyAdminUserMenu() {
  * yao run scripts.admin.menu.reLoadAndSaveMenus
  * 重新加载菜单列表
  */
-function reLoadAndSaveMenus() {
+export function reLoadAndSaveMenus() {
   saveSoyRoutesToDB();
   // 导入本地开发的页面
   saveLocalAmisSoyRoutesToDB();
@@ -145,7 +143,7 @@ function getSoyRoutesFromDB() {
  * 导出数据库中的菜单，由于导入本地菜单时的描述信息没有，可以编辑好菜单后导出成文件
  * yao run scripts.admin.menu.exportMenus
  */
-function exportMenus(pathIn: string | undefined) {
+export function exportMenus(pathIn: string | undefined) {
   const folder = new Date().toISOString().slice(0, 10).replace(/-/g, '');
 
   const path = pathIn || `/upload/public/system_menus_${folder}.json`;
@@ -163,7 +161,7 @@ function exportMenus(pathIn: string | undefined) {
  * yao run scripts.admin.menu.importMenus
  * @param pathIn import menu path
  */
-function importMenus(pathIn: string | undefined) {
+export function importMenus(pathIn: string | undefined) {
   const folder = new Date().toISOString().slice(0, 10).replace(/-/g, '');
   const path = pathIn || `/upload/public/system_menus_${folder}.json`;
   const json = Process('fs.system.readfile', path);
@@ -227,7 +225,7 @@ function getAmisLocalPageAsSoyRoutes() {
  * @param pageId
  * @returns
  */
-function getAmisPageSchema(pageId: string) {
+export function getAmisPageSchema(pageId: string) {
   const page = pageId.replace('.', '/') + '.json';
 
   const fpath = PagesLocation + '/' + page;
@@ -253,7 +251,7 @@ function getAmisPageSchema(pageId: string) {
  * @param {*} pageId page id
  * @returns
  */
-function getAmisEditorPageSource(pageId: string) {
+export function getAmisEditorPageSource(pageId: string) {
   const user_id = Process('session.get', 'user_id');
   let dir = `${WorkingPagesLocation}/${user_id}/`;
   dir = dir.replace(/\\/g, '/');
@@ -558,7 +556,7 @@ function getAmisRoutesFromDB(): AmisAppPage[] {
  * yao run scripts.admin.menu.getAmisPageRoutesFromDB
  * @returns amis page
  */
-function getAmisPageRoutesFromDB(): AmisAppPage[] {
+export function getAmisPageRoutesFromDB(): AmisAppPage[] {
   let routes = getAmisRoutesFromDB();
   // 转换成树结构
   routes = Process(`utils.arr.Tree`, routes, { parent: 'parent', empty: 0 });
@@ -611,14 +609,14 @@ function convertSoyRoutesToAmisPages(routes: Route[]): AmisAppPage[] {
 }
 
 // yao run scripts.admin.menu.getAmisEditorPages
-function getAmisEditorPages(): AmisAppPage[] {
+export function getAmisEditorPages(): AmisAppPage[] {
   const routes = getAmisEditorSoyRoute();
   let amsiRoutes = convertSoyRoutesToAmisPages(routes);
   amsiRoutes = ClearFalsyKeys(amsiRoutes);
   return amsiRoutes;
 }
 // yao run scripts.admin.menu.getAmisPages
-function getAmisPages(): AmisAppPage[] {
+export function getAmisPages(): AmisAppPage[] {
   const routes = getAmisLocalPageAsSoyRoutes();
   let amsiRoutes = convertSoyRoutesToAmisPages(routes);
   amsiRoutes = ClearFalsyKeys(amsiRoutes);
@@ -736,7 +734,7 @@ type Route<K extends AllRouteKey = AllRouteKey> = K extends AllRouteKey
   : never;
 
 /** 前端导入的路由模块 */
-type RouteModule = Record<string, { default: Route }>;
+// type RouteModule = Record<string, { default: Route }>;
 
 /** 路由描述 */
 interface RouteMeta {

@@ -36,7 +36,7 @@ function getUserInfo(type, value) {
  * @param {object} payload 用户登录信息
  * @returns 返回登录信息
  */
-function Login(payload) {
+export function Login(payload) {
   if (payload.captcha && typeof payload.captcha === 'object') {
     const captcha = Process(
       'yao.utils.CaptchaValidate',
@@ -71,7 +71,12 @@ function Login(payload) {
       return Process('scripts.return.RError', '', 400, '密码不正确');
     }
   } catch (error) {
-    return Process('scripts.return.RError', '', 400, '密码不正确');
+    return Process(
+      'scripts.return.RError',
+      '',
+      400,
+      '密码不正确' + error.message
+    );
   }
   const timeout = 60 * 60 * 8;
   const sessionId = Process('utils.str.UUID');
@@ -109,7 +114,7 @@ function Login(payload) {
 }
 
 // yao run scripts.amis.user.Info
-function Info() {
+export function Info() {
   const user_id = Process('session.get', 'user_id');
   const user = Process('session.get', 'user');
 
@@ -121,7 +126,7 @@ function Info() {
 }
 
 // yao run scripts.amis.user.userVerify
-function userVerify(userName, password) {
+export function userVerify(userName, password) {
   const user = getUserInfo('email', userName);
 
   if (!user) {
@@ -130,7 +135,7 @@ function userVerify(userName, password) {
   try {
     Process('utils.pwd.Verify', password, user.password);
   } catch (error) {
-    return { message: '密码不正确', code: 500 };
+    return { message: '密码不正确' + error.message, code: 500 };
   }
   return { message: '验证通过', code: 200, user_id: user.id };
 }
