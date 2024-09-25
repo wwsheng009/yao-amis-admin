@@ -738,25 +738,25 @@ function getSystemMenu() {
               label: '博客管理',
               icon: 'fas fa-blog',
               schemaApi: '/api/v1/system/schema/app.blog.site/crud-all',
-              url: '/site'
+              url: 'site'
             },
             {
               label: '文章管理',
               icon: 'fa fa-file',
               schemaApi: '/api/v1/amis/pages/app.blog.post',
-              url: '/post'
+              url: 'post'
             },
             {
               label: '标签管理',
               icon: 'fas fa-tag',
               schemaApi: '/api/v1/system/schema/app.blog.tag/crud-all',
-              url: '/tag'
+              url: 'tag'
             },
             {
               label: '分类管理',
               icon: 'fa far fa-flag',
               schemaApi: '/api/v1/system/schema/app.blog.category/crud-all',
-              url: '/category'
+              url: 'category'
             }
           ]
         }

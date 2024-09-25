@@ -601,7 +601,7 @@ function TableColumnCast(column: AmisModelColumn, modelDsl: YaoModel.ModelDSL) {
 
   component = EditPropes(component, column);
   component = updateViewSwitchPropes(component, column);
-  if (column.type !== 'json' && !component.view?.props?.ddic_hide) {
+  if (column.type !== 'json' && !component.view?.props?.hide) {
     res.layout.table.columns.push({
       name: title,
       width: width
@@ -1627,7 +1627,7 @@ function CastListColumn(
   delete component.is_upload;
   component = EditPropes(component, column);
   // component = updateListCompFromModelXgen(component, column, modelDsl);
-  if (!component.edit?.props?.ddic_hide) {
+  if (!component.edit?.props?.hide) {
     res.layout.push({
       name: title,
       width: width
@@ -1784,7 +1784,7 @@ function FormColumnCast(
   }
   delete component.is_upload;
   component = EditPropes(component, column);
-  if (!component.edit?.props?.ddic_hide) {
+  if (!component.edit?.props?.hide) {
     res.layout.push({
       name: title,
       width: width
