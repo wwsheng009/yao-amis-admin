@@ -28,7 +28,8 @@ import {
   FindAndLoadYaoModelById,
   MomoryModelList,
   ModelIDList,
-  FindAndLoadDBModelById
+  FindAndLoadDBModelById,
+  FindCachedModelById
 } from '@scripts/system/model_lib';
 
 import { convertColTypeToYao } from '@scripts/system/col_type';
@@ -39,7 +40,8 @@ import {
   AmisRelation,
   AmisModelColumn,
   AmisModel,
-  ModelId
+  ModelId,
+  CachedModel
 } from '@yao/types';
 import { YaoModel } from '@yaoapps/types';
 
@@ -207,7 +209,7 @@ function CompleteModel(modelDsl: AmisModel) {
         try {
           col.default = JSON.parse(col.default);
         } catch (error) {
-          console.log(
+          log.Error(
             `Failed to convert the default value for field:${col.name}` +
               error.message
           );
@@ -367,7 +369,7 @@ function SaveModelTableLine(payload, force?): number {
   return RunTransaction(saveFun, payload) as unknown as number;
 }
 // 保存关联表数据
-function SaveRelations(id, payload, force?: boolean) {
+function SaveRelations(id: number, payload, force?: boolean) {
   // BeforeDelete(id);
   SaveColumns(id, payload, force);
   return id;
@@ -394,7 +396,7 @@ export function isAscOrder(arr: { id: string }[]) {
  * @param {boolean} force 强制保存
  * @returns
  */
-function SaveColumns(modelId, payload, force?: boolean) {
+function SaveColumns(modelId: number, payload, force?: boolean) {
   if (modelId == null) {
     throw new Exception('无法保存columns,缺少模型主键！');
   }
@@ -468,7 +470,10 @@ function DeleteModelolumns(modelId) {
   return [modelId];
 }
 
-function ConvertModelColToTableLine(model, modelCol) {
+function ConvertModelColToTableLine(
+  model: AmisModelDB,
+  modelCol: AmisModelColumn
+) {
   // 复制而不是直接修改
   const col = { ...modelCol };
 
@@ -608,7 +613,7 @@ export function saveModelApi(payload) {
  * @param {object} modelDsl Yao模型
  * @returns id
  */
-function ImportCachedModelToDB(modelDsl): number {
+function ImportCachedModelToDB(modelDsl: CachedModel): number {
   const model = CompleteModel(modelDsl);
   CheckModel(model);
 
@@ -626,9 +631,11 @@ function ImportCachedModelToDB(modelDsl): number {
  * @param {string} modelId 模型ID
  * @returns
  */
-function ImportCachedModelById(modelId) {
-  const model = FindAndLoadYaoModelById(modelId);
-
+function ImportCachedModelById(modelId: string) {
+  const model = FindCachedModelById(modelId);
+  if (!model) {
+    throw new Exception(`模型：${modelId} 未加载`);
+  }
   // 传入的是模型数据，转成表结构后再保存
   const id = ImportCachedModelToDB(model);
   if (id) {
@@ -872,7 +879,7 @@ function ConvertDBmodelToYaoModel(modelDsl: AmisModel) {
  * 检查模型定义的完整性，Check the model dsl
  * @param {object} modelDsl model dsl
  */
-function CheckModel(modelDsl) {
+function CheckModel(modelDsl: AmisModel) {
   const message = [];
 
   if (!modelDsl.ID || !modelDsl.ID.length) {

@@ -30,6 +30,10 @@ export interface AmisModelColumn extends YaoModel.ModelColumn {
   format?: string;
 }
 
+export interface CachedModel extends YaoModel.ModelDSL {
+  ID?: string;
+}
+
 /** 增强的Yao 模型定义 */
 export interface AmisModel extends Omit<YaoModel.ModelDSL, 'columns'> {
   /** 内部标识 */
