@@ -5,7 +5,8 @@
     {
       "label": "ID",
       "type": "id",
-      "name": "id"
+      "name": "id",
+      "primary": true
     },
     {
       "label": "number",

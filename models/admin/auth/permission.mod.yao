@@ -1,76 +1,79 @@
 {
-    "columns": [
-        {
-            "comment": "ID",
-            "label": "ID",
-            "name": "id",
-            "type": "id"
-        },
-        {
-            "comment": "名称",
-            "label": "名称",
-            "name": "name",
-            "type": "string"
-        },
-        {
-            "comment": "描述",
-            "label": "描述",
-            "name": "desc",
-            "type": "string"
-        },
-        {
-            "comment": "上级",
-            "default": 0,
-            "label": "上级",
-            "name": "parent",
-            "nullable": true,
-            "type": "integer"
-        },
-        {
-            "comment": "路由",
-            "label": "路由",
-            "name": "routes",
-            "type": "json",
-            "nullable": true
-        },
-        {
-            "comment": "菜单",
-            "label": "菜单",
-            "name": "menus",
-            "type": "json",
-            "nullable": true
-        },
-        {
-            "comment": "模型",
-            "label": "模型",
-            "name": "models",
-            "type": "json",
-            "nullable": true
-        },
-        {
-            "comment": "文件目录",
-            "label": "目录",
-            "name": "folders",
-            "type": "json",
-            "nullable": true
-        }
-    ],
-    "name": "权限",
-    "option": {
-        "timestamps": true
+  "columns": [
+    {
+      "comment": "ID",
+      "label": "ID",
+      "name": "id",
+      "type": "id",
+      "primary": true
     },
-    "relations": {
-        "parent": {
-            "foreign": "parent_id",
-            "key": "id",
-            "model": "admin.auth.permission",
-            "name": "parent",
-            "type": "hasOne"
-        }
+    {
+      "comment": "名称",
+      "label": "名称",
+      "name": "name",
+      "type": "string"
     },
-    "table": {
-        "comment": "权限",
-        "name": "admin_auth_permission"
+    {
+      "comment": "描述",
+      "label": "描述",
+      "name": "desc",
+      "type": "string"
+    },
+    {
+      "comment": "上级",
+      "default": 0,
+      "label": "上级",
+      "name": "parent",
+      "nullable": true,
+      "type": "integer"
+    },
+    {
+      "comment": "路由",
+      "label": "路由",
+      "name": "routes",
+      "type": "json",
+      "nullable": true
+    },
+    {
+      "comment": "菜单",
+      "label": "菜单",
+      "name": "menus",
+      "type": "json",
+      "nullable": true
+    },
+    {
+      "comment": "模型",
+      "label": "模型",
+      "name": "models",
+      "type": "json",
+      "nullable": true
+    },
+    {
+      "comment": "文件目录",
+      "label": "目录",
+      "name": "folders",
+      "type": "json",
+      "nullable": true
     }
+  ],
+  "name": "权限",
+  "option": {
+    "timestamps": true
+  },
+  "relations": {
+    "parent": {
+      "foreign": "parent_id",
+      "key": "id",
+      "model": "admin.auth.permission",
+      "name": "parent",
+      "type": "hasOne"
+    }
+  },
+  "table": {
+    "comment": "权限",
+    "name": "admin_auth_permission"
+  }
 }
+
+
 //yao migrate -n admin.auth.permission --reset

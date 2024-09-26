@@ -11,7 +11,8 @@
     {
       "name": "id",
       "type": "ID",
-      "comment": "ID"
+      "comment": "ID",
+      "primary": true
     },
     {
       "name": "parent",

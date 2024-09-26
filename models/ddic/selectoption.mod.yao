@@ -5,7 +5,8 @@
             "comment": "ID",
             "label": "ID",
             "name": "id",
-            "type": "id"
+            "type": "id",
+            "primary": true
         },
         {
             "comment": "搜索定义",

@@ -1,43 +1,44 @@
 {
-    "columns": [
-        {
-            "comment": "ID",
-            "label": "ID",
-            "name": "id",
-            "type": "id"
-        },
-        {
-            "comment": "用户名",
-            "label": "用户名",
-            "name": "username",
-            "type": "string"
-        }
-    ],
-    "name": "demo.user",
-    "relations": {
-        "customers": {
-            "foreign": "id",
-            "key": "user_id",
-            "model": "demo.customer",
-            "name": "customers",
-            "type": "hasMany"
-        },
-        "profile": {
-            "foreign": "id",
-            "key": "user_id",
-            "model": "demo.profile",
-            "name": "profile",
-            "type": "hasOne"
-        },
-        "vendors": {
-            "foreign": "id",
-            "key": "user_id",
-            "model": "demo.vendor",
-            "name": "vendors",
-            "type": "hasMany"
-        }
+  "columns": [
+    {
+      "comment": "ID",
+      "label": "ID",
+      "name": "id",
+      "type": "id",
+      "primary": true
     },
-    "table": {
-        "name": "demo_user"
+    {
+      "comment": "用户名",
+      "label": "用户名",
+      "name": "username",
+      "type": "string"
     }
+  ],
+  "name": "demo.user",
+  "relations": {
+    "customers": {
+      "foreign": "id",
+      "key": "user_id",
+      "model": "demo.customer",
+      "name": "customers",
+      "type": "hasMany"
+    },
+    "profile": {
+      "foreign": "id",
+      "key": "user_id",
+      "model": "demo.profile",
+      "name": "profile",
+      "type": "hasOne"
+    },
+    "vendors": {
+      "foreign": "id",
+      "key": "user_id",
+      "model": "demo.vendor",
+      "name": "vendors",
+      "type": "hasMany"
+    }
+  },
+  "table": {
+    "name": "demo_user"
+  }
 }

@@ -8,7 +8,8 @@
     {
       "name": "id",
       "type": "ID",
-      "label": "标识"
+      "label": "标识",
+      "primary": true
     },
     {
       "name": "file",

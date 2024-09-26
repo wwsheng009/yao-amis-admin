@@ -9,7 +9,8 @@
       "name": "id",
       "type": "ID",
       "label": "ID",
-      "comment": "ID"
+      "comment": "ID",
+      "primary": true
     },
     {
       "name": "identity",

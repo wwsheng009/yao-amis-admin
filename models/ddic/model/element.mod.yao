@@ -11,7 +11,8 @@
       "type": "ID",
       "comment": "ID",
       "label": "ID",
-      "name": "id"
+      "name": "id",
+      "primary": true
     },
     {
       "label": "描述",

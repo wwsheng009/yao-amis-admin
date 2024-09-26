@@ -4,7 +4,8 @@
       "name": "id",
       "type": "id",
       "comment": "ID",
-      "label": "ID"
+      "label": "ID",
+      "primary": true
     },
     {
       "type": "string",

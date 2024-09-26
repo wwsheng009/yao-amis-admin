@@ -4,7 +4,8 @@
       "comment": "id",
       "label": "id",
       "name": "id",
-      "type": "id"
+      "type": "id",
+      "primary": true
     },
     {
       "comment": "标签",

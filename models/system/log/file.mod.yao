@@ -1,46 +1,49 @@
 {
-    "columns": [
-        {
-            "label": "ID",
-            "name": "id",
-            "type": "id"
-        },
-        {
-            "label": "用户ID",
-            "name": "user_id",
-            "type": "integer"
-        },
-        {
-            "label": "文件名",
-            "name": "file_name",
-            "type": "string"
-        },
-        {
-            "label": "文件名2",
-            "name": "file_name2",
-            "type": "string"
-        },
-        {
-            "label": "操作",
-            "name": "operation",
-            "type": "string"
-        }
-    ],
-    "comment": "文件操作记录",
-    "name": "文件操作记录",
-    "option": {
-        "timestamps": true
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "id",
+      "primary": true
     },
-    "relations": {
-        "user": {
-            "foreign": "user_id",
-            "key": "id",
-            "model": "admin.user",
-            "type": "hasOne"
-        }
+    {
+      "label": "用户ID",
+      "name": "user_id",
+      "type": "integer"
     },
-    "table": {
-        "name": "system_log_file"
+    {
+      "label": "文件名",
+      "name": "file_name",
+      "type": "string"
+    },
+    {
+      "label": "文件名2",
+      "name": "file_name2",
+      "type": "string"
+    },
+    {
+      "label": "操作",
+      "name": "operation",
+      "type": "string"
     }
+  ],
+  "comment": "文件操作记录",
+  "name": "文件操作记录",
+  "option": {
+    "timestamps": true
+  },
+  "relations": {
+    "user": {
+      "foreign": "user_id",
+      "key": "id",
+      "model": "admin.user",
+      "type": "hasOne"
+    }
+  },
+  "table": {
+    "name": "system_log_file"
+  }
 }
+
+
 //yao migrate -n system.log.file

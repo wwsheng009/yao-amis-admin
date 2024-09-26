@@ -10,7 +10,8 @@
       "label": "编号",
       "name": "id",
       "type": "ID",
-      "comment": "标识"
+      "comment": "标识",
+      "primary": true
     },
     {
       "label": "名称",

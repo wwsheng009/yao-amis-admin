@@ -9,7 +9,8 @@
     {
       "label": "ID",
       "name": "id",
-      "type": "ID"
+      "type": "ID",
+      "primary": true
     },
     {
       "label": "引擎",

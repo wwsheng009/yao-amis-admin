@@ -7,7 +7,8 @@
       "comment": "ID",
       "label": "ID",
       "name": "id",
-      "type": "id"
+      "type": "id",
+      "primary": true
     },
     {
       "type": "string",
