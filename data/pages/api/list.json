@@ -11,7 +11,7 @@
       "keepItemSelectionOnPageChange": true,
       "mode": "table",
       "perPage": 10,
-      "perPageAvailable": [10],
+      "perPageAvailable": [10, 20, 30, 50, 100, 200],
       "syncLocation": false,
       "type": "crud",
       "filter": {

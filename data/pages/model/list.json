@@ -17,7 +17,7 @@
       "messages": {},
       "placeholder": "暂无数据",
       "id": "u:1044ec331968",
-      "perPageAvailable": [10],
+      "perPageAvailable": [10, 20, 30, 50, 100, 200],
       "name": "model-list",
       "syncLocation": false,
       "toolbarClassName": "crud-table-toolbar",
