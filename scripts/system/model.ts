@@ -203,7 +203,13 @@ function CompleteModel(modelDsl: AmisModel) {
     if (!col.length) {
       delete col.length;
     }
+    // add the primary attribute for id field
     const colType = col.type.toLowerCase();
+    if (colType == 'id' || col.name.toLowerCase() == 'id') {
+      if (col.primary == null) {
+        col.primary = true;
+      }
+    }
     if (colType == 'json' && col.default != null) {
       if (!(typeof col.default === 'object')) {
         try {
