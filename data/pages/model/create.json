@@ -217,7 +217,8 @@
                                   {
                                     "name": "id",
                                     "type": "id",
-                                    "label": "ID"
+                                    "label": "ID",
+                                    "primary": true
                                   }
                                 ]
                               }
