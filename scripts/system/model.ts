@@ -9,7 +9,8 @@ import {
   loadModeltoMemory,
   ConvertTableLineToModel,
   deepCopyObject,
-  migrateModel
+  migrateModel,
+  checkAndloadDefaultTableForm
 } from '@scripts/system/model_db';
 
 import {
@@ -84,7 +85,7 @@ export function page(pageIn, pagesizeIn, querysIn, queryParams, payload) {
  * yao run scripts.system.model.DatabaseModelList
  * @returns array
  */
-function DatabaseModelList() {
+function DatabaseModelList(): AmisModelDB[] {
   const list = Process('models.ddic.model.get', {
     select: ['identity', 'name', 'comment']
   });
@@ -978,6 +979,50 @@ export function importDBModelsToCache() {
 
     loadModeltoMemory(modelDsl);
   });
+  loadDefaultFormTableFormAllModel();
+}
+/**
+ * 加载所有的模型关联的form与table定义
+ */
+export function loadDefaultFormTableFormAllModel() {
+  // need import the db model first.
+  const list = allModelIds();
+  list.forEach((l) => checkAndloadDefaultTableForm(l));
+}
+/**
+ * return the id and the name info for all models.
+ * yao run scripts.system.model.allModelIdAndName
+ * @returns
+ */
+export function allModelIdAndName(): { id: string; name: string }[] {
+  const modelIds = MomoryModelList('ID');
+  const modelsFromDb = DatabaseModelList();
+
+  // 使用Map提高性能
+  const modelMap = new Map<string, string>();
+
+  // 处理内存中的模型
+  modelIds.forEach((m) => modelMap.set(m.ID, m.ID));
+
+  // 处理数据库中的模型，优先使用name
+  modelsFromDb.forEach((m) => modelMap.set(m.identity, m.name || m.identity));
+
+  // 将Map转换为数组
+  return Array.from(modelMap, ([id, name]) => ({ id, name }));
+}
+
+/**
+ * 所有模型的ID
+ */
+export function allModelIds() {
+  let modelIds = ModelIDList();
+  // const models = MomoryModelList('ID');
+  // models.forEach((m) => modelIds.push(m.ID));
+  const modelsFromDb = DatabaseModelList();
+  modelsFromDb.forEach((m) => modelIds.push(m.identity));
+
+  modelIds = [...new Set(modelIds)];
+  return modelIds;
 }
 
 /**

@@ -124,6 +124,9 @@ export function ConvertTableLineToModel(line: AmisModelDB): AmisModel {
     }
 
     const colNew = { ...col };
+    if (colNew.type == 'dateTime') {
+      colNew.type = 'datetime';
+    }
     // 如果存在模板配置，把元素配置复制过来
     if (col.element_id) {
       const ele = Process('models.ddic.model.element.Find', col.element_id, {});
@@ -225,9 +228,84 @@ export function loadModeltoMemory(
     if (!err && migrate) {
       err = migrateModel(modelYao.ID, force);
     }
+    // loadDefaultFormForModel(modelYao.ID);
+    // loadDefaultTableFromModel(modelYao.ID);
+    //don't onverwrite the local defined;
+    checkAndloadDefaultTableForm(modelYao.ID);
     return err;
   } else {
     throw new Exception('模型定义不完整，缺少必要信息');
+  }
+}
+
+function checkJsonAttributes(jsonObj) {
+  // Get the keys of the JSON object
+  const keys = Object.keys(jsonObj);
+
+  // Check if the only keys are 'name' and 'action'
+  const validKeys = ['name', 'action'];
+
+  // Ensure the object has exactly 2 keys and that they match 'name' and 'action'
+  return keys.length === 2 && keys.every((key) => validKeys.includes(key));
+}
+
+function loadDefaultFormForModel(modelId: string) {
+  // console.log('loadDefaultFormForModel', modelId);
+  const formTemplate = {
+    name: modelId,
+    action: {
+      bind: {
+        model: modelId,
+        option: {
+          withs: {}
+        }
+      }
+    }
+  };
+  // console.log(JSON.stringify(formTemplate));
+  Process('yao.form.load', modelId, '', JSON.stringify(formTemplate));
+}
+
+/**
+ * load the form first.
+ * @param modelId model id
+ */
+function loadDefaultTableFromModel(modelId: string) {
+  const tableTemplate = {
+    name: modelId,
+    action: {
+      bind: {
+        model: modelId,
+        option: {
+          withs: {},
+          form: modelId
+        }
+      }
+    }
+  };
+  Process('yao.table.load', modelId, '', JSON.stringify(tableTemplate));
+}
+/**
+ * load default form and table config
+ * @param modelId model id
+ */
+export function checkAndloadDefaultTableForm(modelId: string) {
+  // console.log('loadTableAndForm', modelId);
+  if (Process('yao.form.exists', modelId)) {
+    const formConfig = Process('yao.form.read', modelId);
+    if (checkJsonAttributes(formConfig)) {
+      loadDefaultFormForModel(modelId);
+    }
+  } else {
+    loadDefaultFormForModel(modelId);
+  }
+  if (Process('yao.table.exists', modelId)) {
+    const formConfig = Process('yao.table.read', modelId);
+    if (checkJsonAttributes(formConfig)) {
+      loadDefaultTableFromModel(modelId);
+    }
+  } else {
+    loadDefaultTableFromModel(modelId);
   }
 }
 

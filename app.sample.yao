@@ -10,8 +10,8 @@
   "short": "::Amis-Yao",
   "description": "::Amis Yao Admin",
   "version": "0.10.5",
-  "setup": "studio.setup.run",
-  "startup": "scripts.startup.run",
+  "startup": "scripts.startup.start",
+  "afterLoad": "scripts.startup.afterLoad",
   "adminRoot": "admin",
   "token": {
     "storage": "sessionStorage"

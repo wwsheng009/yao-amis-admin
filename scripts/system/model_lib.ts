@@ -8,6 +8,10 @@ import { YaoModel } from '@yaoapps/types';
 // 缺少一个name属性，所有只能读取到id列表
 // yao run scripts.system.model.ModelIDList
 // ["admin.user","demo.table"]
+/**
+ * get the id of the cached models
+ * @returns list of the cached model ids
+ */
 export function ModelIDList() {
   return MomoryModelList('ID').map((item) => item.ID);
 }
@@ -82,30 +86,37 @@ function FlatModelList(models: YaoModelNode[], attr?: string[] | string) {
   const traverse = (node: any) => {
     if (node.children) {
       traverse(node.children);
-    } else if (node.data) {
-      if (attr != null) {
+    } else if (Array.isArray(node)) {
+      node.forEach((line) => {
+        traverse(line);
+      });
+    } else {
+      if (attr2.length) {
         const o = {};
         attr2.forEach((a) => {
-          const p = getProperty(node.data, a);
+          let p = getProperty(node, a);
+          if (p != null) {
+            // o[a] = p;
+            setProperty(o, a, p);
+          }
+          p = getProperty(node.data, a);
           if (p != null) {
             // o[a] = p;
             setProperty(o, a, p);
           }
         });
-        list.push(o);
-      } else {
+        if (Object.keys(o).length > 0) {
+          list.push(o);
+        }
+      } else if (node.data) {
         list.push(node.data);
       }
-    } else if (Array.isArray(node)) {
-      node.forEach((line) => {
-        traverse(line);
-      });
     }
   };
   traverse(models);
   return list;
 }
-
+MomoryModelList('ID,name');
 /**
  * 根据模型ID在缓存中查找模型定义
  * yao run scripts.system.model_lib.FindCachedModelById

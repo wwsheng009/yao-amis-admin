@@ -766,17 +766,17 @@ export function column2AmisFormEditColumn(column: AmisModelColumn) {
       break;
     case 'URL':
       newColumn.type = 'input-text';
-      newColumn.validations = newColumn.validations || {};
+      newColumn.validations = newColumn.validations || [];
       newColumn.validations['isUrl'] = true;
       break;
     case 'PHONE':
       newColumn.type = 'input-text';
-      newColumn.validations = newColumn.validations || {};
+      newColumn.validations = newColumn.validations || [];
       newColumn.validations['isPhoneNumber'] = true;
       break;
     case 'EMAIL':
       newColumn.type = 'input-text';
-      newColumn.validations = newColumn.validations || {};
+      newColumn.validations = newColumn.validations || [];
       newColumn.validations['isEmail'] = true;
       break;
     case 'COLOR':

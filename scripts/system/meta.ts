@@ -4,12 +4,12 @@ import { GetColumnTypeList } from '@scripts/system/col_type';
 
 import { Process } from '@yao/yao';
 
-function GetColumnOptions2() {
+export function GetColumnOptions2() {
   return GetColumnTypeList();
 }
 
 // scripts.system.meta.GetColumnOptions
-function GetColumnOptions() {
+export function GetColumnOptions() {
   return [
     {
       children: [
@@ -204,7 +204,7 @@ function GetColumnOptions() {
  * yao run scripts.system.meta.saveApis
  * @returns
  */
-function saveApis() {
+export function saveApis() {
   const list = allApi();
 
   const { columns, values } = Process('utils.arr.split', list);
@@ -223,7 +223,7 @@ function saveApis() {
  * @param {object} payload query from payload
  * @returns
  */
-function ApiListPaginate(querysIn, payload) {
+export function ApiListPaginate(querysIn, payload) {
   const list = allApi();
   const { items, total } = PaginateArrayWithQuery(list, querysIn, payload);
 
@@ -259,7 +259,7 @@ function formApis() {
  * get all the yao talbe api list
  * @returns 所有的自定义的API清单列表
  */
-function customApis() {
+export function customApis() {
   const apisList = Process('widget.apis');
   return apiDefinitionList(apisList.filter((x) => x.name == 'apis'));
 }
@@ -274,7 +274,7 @@ function tableApis() {
  * yao run scripts.system.meta.getTableListFromApis
  * @returns
  */
-function getTableListFromApis() {
+export function getTableListFromApis(): string[] {
   const apis = tableApis();
 
   const paths = {};
@@ -293,7 +293,7 @@ function getTableListFromApis() {
     }
   });
 
-  const api2s = Object.values(paths);
+  const api2s = Object.values(paths) as string[];
   return api2s;
 }
 
@@ -302,7 +302,7 @@ function getTableListFromApis() {
  * yao run scripts.system.meta.getFormListFromApis
  * @returns
  */
-function getFormListFromApis() {
+export function getFormListFromApis(): string[] {
   const apis = formApis();
 
   const paths = {};
@@ -321,7 +321,7 @@ function getFormListFromApis() {
     }
   });
 
-  const api2s = Object.values(paths);
+  const api2s = Object.values(paths) as string[];
   return api2s;
 }
 
@@ -387,7 +387,7 @@ function apiDefinitionList(apisList) {
  * @param {string} path
  * @returns
  */
-function cleanPath(path) {
+function cleanPath(path: string): string {
   let newPath = path.replace(/\/\//g, '/');
   newPath = newPath.replace(/\\/g, '/');
   newPath = newPath.replace('/apis', '/api');
@@ -401,17 +401,17 @@ function cleanPath(path) {
  * @returns
  */
 export function modelApiList(modelId: string) {
-  const allApi = Process('scripts.system.meta.allApi');
-  const apilist = allApi.filter((api) => api.group == '/v1/system/model');
+  const apiList = allApi(); //Process('scripts.system.meta.allApi');
+  const apilist = apiList.filter((api) => api.group == '/v1/system/model');
   apilist.forEach((api) => {
     api.fullpath = api.fullpath.replace(':model', modelId);
     api.router = api.router.replace(':model', modelId);
     api.path = api.path.replace(':model', modelId);
   });
-  const tableApis = allApi.filter(
+  const tableApis = apiList.filter(
     (api) => api.group == '/__yao/table' && api.url_params?.id === modelId
   );
-  const formApis = allApi.filter(
+  const formApis = apiList.filter(
     (api) => api.group == '/__yao/form' && api.url_params?.id === modelId
   );
 
