@@ -124,9 +124,6 @@ export function ConvertTableLineToModel(line: AmisModelDB): AmisModel {
     }
 
     const colNew = { ...col };
-    if (colNew.type == 'dateTime') {
-      colNew.type = 'datetime';
-    }
     // 如果存在模板配置，把元素配置复制过来
     if (col.element_id) {
       const ele = Process('models.ddic.model.element.Find', col.element_id, {});

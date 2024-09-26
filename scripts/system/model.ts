@@ -210,6 +210,14 @@ function CompleteModel(modelDsl: AmisModel) {
         col.primary = true;
       }
     }
+    //fix the column datetime type and id type
+    if (colType == 'datetime') {
+      col.type = 'datetime';
+    }
+    if (colType == 'id') {
+      col.type = 'id';
+    }
+
     if (colType == 'json' && col.default != null) {
       if (!(typeof col.default === 'object')) {
         try {
