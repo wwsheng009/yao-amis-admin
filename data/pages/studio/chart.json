@@ -106,6 +106,14 @@
           }
         },
         {
+          "label": "配置地址",
+          "name": "configUrl",
+          "searchable": false,
+          "sortable": false,
+          "type": "text",
+          "value": "/api/v1/chart/data/${id}"
+        },
+        {
           "quickEdit": false,
           "format": "YYYY-MM-DD HH:mm:ss",
           "searchable": true,
@@ -521,6 +529,10 @@
                           {
                             "actionType": "submit",
                             "componentId": "u:704d757cf8ad"
+                          },
+                          {
+                            "actionType": "reload",
+                            "componentId": "u:c276373971b6"
                           }
                         ]
                       }
@@ -874,6 +886,10 @@
                       {
                         "actionType": "submit",
                         "componentId": "u:704d757cf8ad"
+                      },
+                      {
+                        "actionType": "reload",
+                        "componentId": "u:c276373971b6"
                       }
                     ]
                   }

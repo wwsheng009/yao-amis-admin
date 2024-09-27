@@ -23,9 +23,11 @@
               "actions": [
                 {
                   "componentId": "u:5ce017fa279d",
-                  "actionType": "reload",
-                  "data": {
-                    "table": "${value}"
+                  "actionType": "setValue",
+                  "args": {
+                    "value": {
+                      "table": "${value}"
+                    }
                   },
                   "dataMergeMode": "merge"
                 }
