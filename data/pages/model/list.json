@@ -121,13 +121,12 @@
       ],
       "combineNum": 0,
       "filter": {
-        "title": "",
         "wrapWithPanel": false,
         "id": "u:840520b1be91",
         "body": [
           {
             "addOn": {
-              "className": "btn-success",
+              "className": "bg-primary",
               "label": "搜索",
               "type": "submit",
               "id": "u:388252a75959"
@@ -139,8 +138,8 @@
             "id": "u:d7dfac1774c9"
           }
         ],
-        "className": "m-b-sm",
-        "mode": "inline",
+        "className": "",
+        "mode": "",
         "submitText": ""
       },
       "footerClassName": "crud-table-footer",
@@ -149,7 +148,7 @@
     }
   ],
   "name": "model-list",
-  "title": "列表",
+  "title": "模型列表",
   "toolbar": [
     {
       "id": "u:4862440567d8",

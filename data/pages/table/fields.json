@@ -39,7 +39,7 @@
       "source": "get:/api/v1/system/meta/table/name_list",
       "type": "select",
       "id": "u:1aaf7e1e5008",
-      "label": "数据库表"
+      "placeholder": "请选择数据库表"
     },
     {
       "api": {
