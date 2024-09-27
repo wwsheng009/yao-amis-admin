@@ -1,4 +1,4 @@
-import { MomoryModelList } from '@scripts/system/model_lib';
+import { FilterCachedModelList } from '@scripts/system/model_lib';
 
 import { PaginateArrayWithQuery } from '@scripts/amis/data/lib';
 import { Process } from '@yao/yao';
@@ -9,7 +9,7 @@ import { Process } from '@yao/yao';
  * @param {object} payload payload 查询条件，支持post查询
  * @returns
  */
-function TableListSearch(querysIn, payload) {
+export function TableListSearch(querysIn, payload) {
   const list = TableList();
   const { items, total } = PaginateArrayWithQuery(list, querysIn, payload);
 
@@ -43,7 +43,7 @@ function TableListUniq(query?) {
  * 转换成options
  * @returns
  */
-function TableNameList() {
+export function TableNameList() {
   const list = TableListUniq();
 
   return list.map((item) => {
@@ -57,7 +57,7 @@ function TableNameList() {
  */
 function TableList() {
   let dbTables = Process('schemas.default.Tables') || [];
-  const cachedModels = MomoryModelList() || [];
+  const cachedModels = FilterCachedModelList() || [];
   const SavedModels = Process('models.ddic.model.get', {}) || [];
 
   cachedModels.forEach((x) => x.table?.name && dbTables.push(x.table.name));

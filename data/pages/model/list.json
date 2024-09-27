@@ -161,7 +161,7 @@
     },
     {
       "type": "button",
-      "label": "导入模型",
+      "label": "从源码导入模型",
       "onEvent": {
         "click": {
           "actions": [
@@ -174,7 +174,7 @@
                 "className": "app-popover",
                 "id": "u:b39aecfdb5fd",
                 "type": "dialog",
-                "title": "导入模型代码",
+                "title": "导入Yao模型代码-Json格式",
                 "body": [
                   {
                     "type": "form",

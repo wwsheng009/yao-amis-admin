@@ -26,8 +26,8 @@ import { queryToQueryParam, mergeQueryObject } from '@scripts/amis/data/lib';
 
 import {
   FindAndLoadYaoModelById,
-  MomoryModelList,
-  ModelIDList,
+  FilterCachedModelList,
+  CachedModelIDList,
   FindAndLoadDBModelById,
   FindCachedModelById
 } from '@scripts/system/model_lib';
@@ -613,11 +613,7 @@ export function saveModelApi(payload) {
     return Process('scripts.return.ErrorMessage', 403, '保存模型失败');
   }
 
-  return Process(
-    'scripts.return.RSuccess',
-    getModelApi(id as unknown as number),
-    '保存成功'
-  );
+  return Process('scripts.return.RSuccess', getModelApi(id), '保存成功');
 }
 
 /**
@@ -917,6 +913,33 @@ function CheckModel(modelDsl: AmisModel) {
     }
   }
 
+  const cModelList = CachedModelIDList();
+  if (modelDsl.relations != null) {
+    for (const key in modelDsl.relations) {
+      if (Object.prototype.hasOwnProperty.call(modelDsl.relations, key)) {
+        const relation = modelDsl.relations[key];
+        if (relation.model != null) {
+          if (!cModelList.includes(relation.model)) {
+            message.push(`关联模型${relation.model}不存在`);
+          } else if (relation.key != null) {
+            const cmodelDsl = FindCachedModelById(relation.model);
+            const col = cmodelDsl.columns.find((c) => c.name == relation.key);
+            if (col == null) {
+              message.push(
+                `关联模型${relation.model}的字段${relation.key}不存在`
+              );
+            }
+          } else if (relation.foreign != null) {
+            const col = modelDsl.columns.find((c) => c.name == relation.key);
+            if (col == null) {
+              message.push(`模型${modelDsl.ID}的字段${relation.foreign}不存在`);
+            }
+          }
+        }
+      }
+    }
+  }
+
   // 根据表名或是模型名称，检查是否已经存在同样ID的模型，防止误更更新
   const tableName = modelDsl.table.name;
   const wheres = [];
@@ -939,7 +962,7 @@ function CheckModel(modelDsl: AmisModel) {
     message.push(`不存在列定义`);
   }
   if (message.length > 0) {
-    throw message.join('\n');
+    throw new Exception(message.join('\n'));
   }
 }
 /**
@@ -947,7 +970,7 @@ function CheckModel(modelDsl: AmisModel) {
  * @param {object} modelDsl model dsl
  * @returns
  */
-function removeModelColumnIds(modelDsl) {
+function removeModelColumnIds(modelDsl: AmisModel) {
   if (!Array.isArray(modelDsl.columns) || !modelDsl.columns.length) {
     return modelDsl;
   }
@@ -1016,7 +1039,7 @@ export function loadDefaultFormTableFormAllModel() {
  * @returns
  */
 export function allModelIdAndName(): { id: string; name: string }[] {
-  const modelIds = MomoryModelList('ID');
+  const modelIds = FilterCachedModelList('ID');
   const modelsFromDb = DatabaseModelList();
 
   // 使用Map提高性能
@@ -1036,8 +1059,8 @@ export function allModelIdAndName(): { id: string; name: string }[] {
  * 所有模型的ID
  */
 export function allModelIds() {
-  let modelIds = ModelIDList();
-  // const models = MomoryModelList('ID');
+  let modelIds = CachedModelIDList();
+  // const models = FilterCachedModelList('ID');
   // models.forEach((m) => modelIds.push(m.ID));
   const modelsFromDb = DatabaseModelList();
   modelsFromDb.forEach((m) => modelIds.push(m.identity));
@@ -1051,7 +1074,7 @@ export function allModelIds() {
  * yao run scripts.system.model.ImportCachedToDBBatch
  */
 function ImportCachedToDBBatch() {
-  const models = MomoryModelList();
+  const models = FilterCachedModelList();
 
   models.forEach((model) => {
     ImportCachedModelToDB(model);
@@ -1066,7 +1089,7 @@ export function ImportSystemModels() {
  * @returns 返回模型ID列表
  */
 export function modelNameOption() {
-  const list = ModelIDList();
+  const list = CachedModelIDList();
   const models = list.map((model) => {
     return { label: model, value: model };
   });
@@ -1293,7 +1316,7 @@ export function ImportTableStruct(payload) {
     };
   }
   // 先根据表名检查是否缓存中已经有对应的模型，如果存在，加载到数据库，
-  // const models = MomoryModelList();
+  // const models = FilterCachedModelList();
   ImportTableAction(payload);
   return { message: '导入表结构成功' };
 }

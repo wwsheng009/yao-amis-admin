@@ -6,18 +6,18 @@ import { YaoModel } from '@yaoapps/types';
 
 // 读取所有的模型id的列表
 // 缺少一个name属性，所有只能读取到id列表
-// yao run scripts.system.model.ModelIDList
+// yao run scripts.system.model.CachedModelIDList
 // ["admin.user","demo.table"]
 /**
  * get the id of the cached models
  * @returns list of the cached model ids
  */
-export function ModelIDList() {
-  return MomoryModelList('ID').map((item) => item.ID);
+export function CachedModelIDList() {
+  return FilterCachedModelList('ID').map((item) => item.ID);
 }
 
 /**
- * 返回所有模型列表
+ * 返回所有缓存中的模型列表
  * @returns []object
  */
 export function CachedModelList() {
@@ -26,13 +26,13 @@ export function CachedModelList() {
 }
 /**
  * 解析内存中的模型数据,可以使用路径表达式
- * yao run scripts.system.model_lib.MomoryModelList
- * yao run scripts.system.model_lib.MomoryModelList name
- * yao run scripts.system.model_lib.MomoryModelList name,ID
+ * yao run scripts.system.model_lib.FilterCachedModelList
+ * yao run scripts.system.model_lib.FilterCachedModelList name
+ * yao run scripts.system.model_lib.FilterCachedModelList name,ID
  * @param {*} modelData
  * @returns
  */
-export function MomoryModelList(attr?: string[] | string) {
+export function FilterCachedModelList(attr?: string[] | string) {
   const models = Process('widget.models');
   return FlatModelList(models, attr);
 }
@@ -116,7 +116,6 @@ function FlatModelList(models: YaoModelNode[], attr?: string[] | string) {
   traverse(models);
   return list;
 }
-MomoryModelList('ID,name');
 /**
  * 根据模型ID在缓存中查找模型定义
  * yao run scripts.system.model_lib.FindCachedModelById
@@ -229,7 +228,7 @@ export function modelIdListFromMemory(modelData: YaoModelNode) {
 //   FindCachedModelById,
 //   FindAndLoadYaoModelById,
 //   CachedModelList,
-//   MomoryModelList,
-//   ModelIDList,
+//   FilterCachedModelList,
+//   CachedModelIDList,
 //   FindAndLoadDBModelById
 // };

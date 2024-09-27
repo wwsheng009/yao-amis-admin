@@ -1874,7 +1874,7 @@ const models = [
   }
 ];
 
-function MomoryModelList(attr) {
+function FilterCachedModelList(attr) {
   const list = [];
   // console.log(models);
   const getProperty = (object, path) => {
