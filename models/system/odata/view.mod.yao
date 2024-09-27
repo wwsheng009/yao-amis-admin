@@ -72,6 +72,6 @@
   ],
   "name": "Odata视图",
   "table": {
-    "name": "odata_view"
+    "name": "system_odata_view"
   }
 }

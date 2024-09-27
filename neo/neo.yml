@@ -3,7 +3,7 @@ guard: "scripts.auth.token.CheckToken"
 
 conversation:
   connector: default
-  table: yao_neo_conversation
+  table: system_neo_conversation
   max_size: 10
   ttl: 3600
 
