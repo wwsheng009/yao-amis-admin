@@ -107,7 +107,8 @@ export interface AmisUIModel {
 /**
  * UI column used in amis curd/table
  */
-export interface AmisUIColumn extends Omit<AmisModelColumn, 'index'> {
+export interface AmisUIColumn
+  extends Omit<AmisModelColumn, 'index' | 'validations'> {
   validationErrors?: object;
 
   checked?: boolean;
@@ -177,6 +178,8 @@ export interface AmisUIColumn extends Omit<AmisModelColumn, 'index'> {
 
   /**可见条件 */
   visibleOn?: string;
+
+  validations: { [key: string]: any };
 }
 
 export interface YaoModelNode {
