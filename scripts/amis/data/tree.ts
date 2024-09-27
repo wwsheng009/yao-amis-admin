@@ -3,20 +3,18 @@
 import { Process, Exception } from '@yao/yao';
 import { YaoQuery } from '@yaoapps/types';
 
-interface MapObj {
-  [key: string]: MapObj;
-}
-interface TreeObj {
+
+export interface TreeObj {
   [key: string]: string | number | TreeObj | TreeObj[] | string[] | any;
   children?: TreeObj[];
   id?: number;
 }
-interface QueryObject {
+export interface QueryObject {
   _label: string[];
   _value: string[];
   select: string[];
 }
-interface NodeType {
+export interface NodeType {
   parent: string | number;
   id: number;
   children?: NodeType[];
@@ -265,7 +263,7 @@ export function collectTreeFields(data: TreeObj[], field: string) {
  * @param {Array} array
  * @returns
  */
-function flatAndRemoveDuplicate(array) {
+function flatAndRemoveDuplicate(array: any[]) {
   // 将多维数组转换为一维数组
   const flatArray = array.flat();
 

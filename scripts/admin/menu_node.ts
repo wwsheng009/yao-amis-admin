@@ -3,8 +3,10 @@ import {
   GetNodes,
   UpdateNode,
   DeleteNode,
-  CreateNode
+  CreateNode,
+  NodeType
 } from '@scripts/amis/data/tree';
+import { getTableListFromApis } from '@scripts/system/meta';
 
 import { Process } from '@yao/yao';
 // 菜单处理
@@ -34,19 +36,19 @@ export function CreateMenuNode({ idx, parent, ...node }) {
  * @param {*} menuNode 菜单节点，没有携带id信息
  * @returns
  */
-export function UpdateMenuNode(id, menuNode) {
+export function UpdateMenuNode(id: number, menuNode: NodeType) {
   return UpdateNode('admin.menu', id, menuNode);
 }
 //
 // 删除根节点 yao run scripts.admin.menu_node.DeleteMenuNode 3
 // 删除节点与及所有的子节点
-export function DeleteMenuNode(ids) {
+export function DeleteMenuNode(ids: string) {
   return DeleteNode('admin.menu', ids);
 }
 
 // yao run scripts.admin.menu_node.GetMenuNodeItems 1
 // 根据特定的id获取菜单节点以及所有的子节点
-export function GetMenuNodeItems(id) {
+export function GetMenuNodeItems(id: number) {
   return GetNodeItems('admin.menu', id);
 }
 
@@ -55,8 +57,7 @@ export function GetMenuNodeItems(id) {
  * yao run scripts.admin.menu_node.xgenMenu
  */
 export function xgenMenu() {
-  console.log('xgen menu called');
-  const tabs = Process('scripts.system.meta.getTableListFromApis');
+  const tabs = getTableListFromApis(); //Process('scripts.system.meta.getTableListFromApis');
   const menuTab = tabs.map((name, idx) => {
     const setting = Process('yao.table.setting', name);
     const label = setting.name || name;
@@ -94,15 +95,6 @@ export function xgenMenu() {
         icon: 'icon-activity',
         id: 1,
         name: 'AMIS管理'
-      },
-      {
-        parent: null,
-        path: '/iframe?src=/yao/builder/?page=blog/website/index',
-        visible_menu: 0,
-        blocks: 0,
-        icon: 'icon-activity',
-        id: 1,
-        name: 'builder'
       },
       ...nodes
     ],
