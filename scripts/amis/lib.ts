@@ -17,7 +17,7 @@ import {
 import { AmisModel, AmisUIColumn, ModelId } from '@yao/types';
 import { Exception } from '@yao/yao';
 import { YaoModel } from '@yaoapps/types';
-import { getDBModelById } from '@scripts/system/model';
+import { getModelDslById } from '@scripts/system/model';
 /**
  * 读取已经加载在内存中的模型的定义,并根据传入列的类型定义更新模型定义
  *
@@ -32,10 +32,10 @@ export function getModelDefinition(
   columnsIn?: AmisUIColumn[]
 ) {
   // let model = Process(
-  //   'scripts.system.model.getDBModelById', // 优先从数据库中加载，
+  //   'scripts.system.model.getModelDslById', // 优先从数据库中加载，
   //   DotName(modelId)
   // );
-  let model = getDBModelById(modelId);
+  let model = getModelDslById(modelId);
   if (!model) {
     throw new Exception(`模型:${modelId}不存在`);
   }
@@ -45,8 +45,9 @@ export function getModelDefinition(
   } else {
     model.columns = model.columns || [];
   }
-
   model = AddMetaFields(model);
+  model = UpdateMetaFields(model);
+
   return model;
 }
 
@@ -307,7 +308,29 @@ export function getModelFieldsForAmis(modelId, columnsIn?) {
 
   return schemas;
 }
-
+function UpdateMetaFields(modelDsl: YaoModel.ModelDSL): AmisModel {
+  if (!modelDsl.columns || !Array.isArray(modelDsl.columns)) {
+    return modelDsl;
+  }
+  if (!modelDsl.option?.timestamps && !modelDsl.option?.soft_deletes) {
+    return modelDsl;
+  }
+  modelDsl.columns.forEach((c) => {
+    if (modelDsl.option?.timestamps) {
+      if (c.name == 'created_at' && c.label == '::Created At') {
+        c.label = '创建时间';
+      } else if (c.name == 'updated_at' && c.label == '::Updated At') {
+        c.label = '更新时间';
+      }
+    }
+    if (modelDsl.option?.soft_deletes) {
+      if (c.name == 'deleted_at' && c.label == '::Deleted At') {
+        c.label = '删除时间';
+      }
+    }
+  });
+  return modelDsl;
+}
 /**
  * 更新模型，增加元数据字段如果它们不存在，
  *

@@ -356,7 +356,7 @@ function SaveModelToLocal(modelDsl: AmisModel) {
     model_id = modelDsl.table?.name;
   }
   if (!model_id) {
-    console.log(`模型不完成，不保存成文件`);
+    console.log(`模型不完整，不保存成文件！`);
     return;
   }
   const model = ConvertDBmodelToYaoModel(modelDsl);
@@ -704,6 +704,10 @@ function DeleteModelLocalFile(modelId) {
   if (yaoEnv !== 'development') {
     return;
   }
+  const saveFlag = Process('utils.env.Get', 'SAVE_MODEL_FILE_TO_LOCAL');
+  if (saveFlag !== 'true') {
+    return;
+  }
   // @ts-ignore
   __yao_data = { ROOT: true };
   const dsl = new FS('dsl');
@@ -726,7 +730,7 @@ function DeleteModelLocalFile(modelId) {
  * @returns
  */
 export function getModelApi(modelId: string | number) {
-  return ConvertModelToApiObject(getDBModelById(modelId));
+  return ConvertModelToApiObject(getModelDslById(modelId));
 }
 
 /**
@@ -735,7 +739,7 @@ export function getModelApi(modelId: string | number) {
  * @returns
  */
 export function getModelColumnsApi(modelId: string) {
-  const model = ConvertModelToApiObject(getDBModelById(modelId));
+  const model = ConvertModelToApiObject(getModelDslById(modelId));
   if (Array.isArray(model?.columns) && model.columns.length) {
     model?.columns?.forEach((x, idx) => {
       x.checked = true;
@@ -752,11 +756,11 @@ export function getModelColumnsApi(modelId: string) {
 /**
  * 加载模型标识，优先从数据库中加载，找不到再在缓存中加载
  * 数据库的模型信息会更多
- * yao run scripts.system.model.getDBModelById
+ * yao run scripts.system.model.getModelDslById
  * @param {string} modelId 模型标识
  * @returns
  */
-export function getDBModelById(modelId: ModelId) {
+export function getModelDslById(modelId: ModelId) {
   return FindAndLoadDBModelById(modelId);
 }
 
@@ -1502,11 +1506,9 @@ export function CheckAndGuessJson(payload) {
  * @returns
  */
 export function ImportFromTableBatch(payload) {
-  console.log('ImportFromTableBatch', payload);
-
   const items = payload.items;
   if (!Array.isArray(items)) {
-    return { message: '传入数据不正确' };
+    return { message: '传入数据格式不正确，需要传入数组！' };
   }
 
   for (const item of items) {
@@ -1515,10 +1517,10 @@ export function ImportFromTableBatch(payload) {
     if (model != null) {
       return {
         code: 503,
-        message: `模型:${item.model}，表:${item.name} 已经存在，禁止导入`
+        message: `模型:${item.model}，表:${item.name} 已经存在，禁止导入！`
       };
     }
     ImportTableAction(item);
   }
-  return { message: '批量导入表结构成功' };
+  return { message: '批量导入表结构成功。' };
 }

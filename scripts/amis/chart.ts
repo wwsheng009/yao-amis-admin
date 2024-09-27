@@ -1,4 +1,4 @@
-import { getDBModelById } from '@scripts/system/model';
+import { getModelDslById } from '@scripts/system/model';
 import { Exception, log, Process, Query } from '@yao/yao';
 
 interface ChartDBLine {
@@ -129,7 +129,7 @@ function getDbDataFromConfig(payload: ChartDBLine): ChartConfig {
 
   const model = payload.model;
 
-  const modelDsl = getDBModelById(model);
+  const modelDsl = getModelDslById(model);
   if (!modelDsl) {
     throw new Exception(`模型定义不存在${model}`);
   }

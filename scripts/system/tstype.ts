@@ -1,5 +1,6 @@
 import { DotName, SlashName } from '@scripts/system/lib';
-import { Process } from '@yao/yao';
+import { getModelDslById } from './model';
+import { ModelId } from '@yao/types';
 
 // 创建模型对象的ts类型定义。
 
@@ -9,8 +10,8 @@ import { Process } from '@yao/yao';
  * yao run scripts.system.tstype.createModelType admin.user
  * @param {string} modelId 模型id
  */
-function createModelType(modelId, columnsIn) {
-  const model = Process('scripts.system.model.getDBModelById', modelId);
+export function createModelType(modelId: ModelId, columnsIn) {
+  const model = getModelDslById(modelId); //Process('scripts.system.model.getModelDslById', modelId);
 
   if (columnsIn != null && Array.isArray(columnsIn) && columnsIn.length > 0) {
     const columns = columnsIn.filter((col) => col.checked === true);
