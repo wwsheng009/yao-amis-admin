@@ -141,7 +141,7 @@
       "description": "读取设置",
       "path": "/setting",
       "method": "GET",
-      "guard": "scripts.auth.token.Check",
+      "guard": "scripts.auth.token.CheckToken",
       "process": "scripts.admin.user.readSetting",
       "in": [],
       "out": {

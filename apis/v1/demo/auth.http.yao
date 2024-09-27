@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "demo data",
   "group": "",
-  "guard": "scripts.auth.token.Check,scripts.auth.api.check",
+  "guard": "scripts.auth.token.CheckToken,scripts.auth.api.check",
   "paths": [
     {
       // /api/v1/demo/auth/table/demo.table

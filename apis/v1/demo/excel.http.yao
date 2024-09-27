@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "excel data",
   "group": "",
-  "guard": "scripts.auth.token.Check",
+  "guard": "scripts.auth.token.CheckToken",
   "paths": [
     {
       // /api/v1/demo/excel

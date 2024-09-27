@@ -1,5 +1,5 @@
 connector: gpt-3_5-turbo
-guard: "scripts.auth.token.Check"
+guard: "scripts.auth.token.CheckToken"
 
 conversation:
   connector: default

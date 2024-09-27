@@ -22,7 +22,7 @@
       "description": "echart data",
       "path": "/data/:id",
       "method": "get",
-      "guard": "scripts.auth.token.Check",
+      "guard": "scripts.auth.token.CheckToken",
       "process": "scripts.amis.chart.getChartById",
       "in": ["$param.id", ":query"]
     }
