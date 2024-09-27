@@ -593,8 +593,6 @@ function Menu() {
   const pages = Process('scripts.admin.menu.getAmisPageRoutesFromDB');
 
   const siteMenu = {
-    type: 'app',
-    brandName: 'Yao应用',
     pages: [
       ...getHomeMenu(),
       {
@@ -628,8 +626,6 @@ function getSuperUserMenu() {
   // }
 
   const siteMenu = {
-    type: 'app',
-    brandName: 'Yao开发应用',
     pages: [
       ...getHomeMenu(),
       ...getModelMenu(),
