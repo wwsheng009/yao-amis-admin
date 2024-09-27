@@ -53,13 +53,6 @@
       },
       "body": [
         {
-          "id": "u:85816239110d",
-          "inline": false,
-          "tpl": "内容",
-          "type": "tpl",
-          "wrapperComponent": ""
-        },
-        {
           "columns": [
             {
               "type": "static",

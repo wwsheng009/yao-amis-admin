@@ -173,14 +173,20 @@
                 "className": "app-popover",
                 "id": "u:b39aecfdb5fd",
                 "type": "dialog",
-                "title": "导入Yao模型代码-Json格式",
+                "title": "导入Yao模型代码",
                 "body": [
                   {
                     "type": "form",
                     "api": "post:/api/v1/system/meta/model/import_source",
                     "body": [
                       {
-                        "labelClassName": "hidden",
+                        "label": "模型标识",
+                        "name": "ID",
+                        "type": "input-text",
+                        "required": true
+                      },
+                      {
+                        "label": "模型源码",
                         "language": "json",
                         "id": "u:18805e926840",
                         "name": "source",

@@ -918,7 +918,8 @@ function CheckModel(modelDsl: AmisModel) {
     for (const key in modelDsl.relations) {
       if (Object.prototype.hasOwnProperty.call(modelDsl.relations, key)) {
         const relation = modelDsl.relations[key];
-        if (relation.model != null) {
+        // 有可能是自我引用
+        if (relation.model != null && relation.model !== modelDsl.ID) {
           if (!cModelList.includes(relation.model)) {
             message.push(`关联模型${relation.model}不存在`);
           } else if (relation.key != null) {
@@ -984,10 +985,12 @@ function removeModelColumnIds(modelDsl: AmisModel) {
  * @returns
  */
 export function ImportModelFromSource(payload) {
+  const ID = payload.ID;
   let newCode = payload.source;
   newCode = newCode.replace(/\/\/.*$/gm, '');
   newCode = newCode.replace(/\/\*.*?\*\//gs, '');
   let model = JSON.parse(newCode);
+  model.ID = ID || model.ID;
   model = CompleteModel(model);
   CheckModel(model);
   model = removeModelColumnIds(model);

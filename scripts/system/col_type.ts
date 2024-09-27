@@ -587,18 +587,15 @@ export function column2AmisFormEditColumn(column: AmisModelColumn) {
   newColumn.label = column.label;
 
   // 必填项
-  if (column.primary !== true) {
-    if (
-      // 不为空且没有默认值
-      column.nullable !== true &&
-      (column.default === null || column.default === undefined)
-    ) {
-      newColumn.required = true;
-    } else if (column.unique === true || column.index === true) {
-      // 唯值一或是索引
+  if (!column.nullable) {
+    newColumn.required = true;
+  }
+  if (column.type.toLowerCase() !== 'id') {
+    if (column.unique || column.index || column.primary) {
       newColumn.required = true;
     }
   }
+
   if (column.default != null) {
     newColumn.value = column.default;
   }
