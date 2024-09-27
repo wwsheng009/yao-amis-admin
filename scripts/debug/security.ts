@@ -1,4 +1,4 @@
-import { Exception, Process } from './__types/yao';
+import { Exception, Process } from '@yao/yao';
 
 /**
  * api guard

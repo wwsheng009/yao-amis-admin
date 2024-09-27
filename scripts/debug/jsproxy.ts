@@ -1,8 +1,8 @@
 // 代理js api请求
 
-import { Store, Studio, WebSocket } from './__types/yao';
-import { Exception, Process, Query } from './__types/yao';
-import { $L, FS, http, log } from './__types/yao';
+import { Store, Studio, WebSocket } from '@yao/yao';
+import { Process, Query } from '@yao/yao';
+import { $L, FS, http, log } from '@yao/yao';
 
 /**
  * api 代理服务，可以放在yao应用下
