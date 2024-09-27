@@ -1,5 +1,5 @@
 // 使用models*类型的处理，这类处理器是直接对表数据的操作，相对tables*处理器，性能会更好
-import { DotName } from '@scripts/system/lib';
+import { ClearFalsyKeys, DotName } from '@scripts/system/lib';
 import { FindAndLoadYaoModelById } from '@scripts/system/model_lib';
 import {
   queryToQueryParam,
@@ -49,7 +49,6 @@ export function dataSearch(
 
   // 当是post请求是，payload生效
   const queryParam = queryToQueryParam(modelDsl, querys, queryParams) as any;
-
   const withs2 = {};
   if (!modelDsl.relations || Object.keys(modelDsl.relations).length == 0) {
     // reset the withs
@@ -71,7 +70,6 @@ export function dataSearch(
     // }
     queryParam.withs = undefined;
   }
-
   const data = Process(`models.${modelId}.Paginate`, queryParam, page, perPage);
   if (Array.isArray(data.data) && data.data.length) {
     data.data = updateOutputData(modelId, data.data);
@@ -104,7 +102,7 @@ export function dataSearch(
   }
 
   return {
-    items: data.data,
+    items: ClearFalsyKeys(data.data),
     total: data.total
   };
 }

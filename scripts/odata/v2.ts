@@ -80,7 +80,7 @@ export function getMetaFullPath(fullpath, schema, host) {
  * @param {string} host
  * @returns
  */
-export function getBasePath(fullpath, schema, host) {
+export function getBasePath(fullpath: string, schema: string, host: string) {
   const rootpath = fullpath.split('/').slice(0, -1).join('/');
   const fullPath = `${schema}://${host}${rootpath}/`;
   return fullPath;
@@ -94,7 +94,15 @@ export function getBasePath(fullpath, schema, host) {
  * @param {object} query 查询参数
  * @returns
  */
-export function getData(sPathIn, oQueryIn, headers, host, path, schema, fullpath) {
+export function getData(
+  sPathIn: string,
+  oQueryIn: {},
+  headers: any,
+  host: string,
+  path: string,
+  schema: string,
+  fullpath: string
+) {
   // console.log("headers:", headers);
   const oQuery = oQueryIn || {};
   // console.log('pathIn:', sPathIn);

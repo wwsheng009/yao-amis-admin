@@ -587,16 +587,16 @@ export function column2AmisFormEditColumn(column: AmisModelColumn) {
   newColumn.label = column.label;
 
   // 必填项
-  if (column.default == null) {
-    if (!column.nullable) {
+  if (
+    column.default == null &&
+    !column.nullable &&
+    column.type.toLowerCase() !== 'id'
+  ) {
+    if (column.unique || column.index || column.primary) {
       newColumn.required = true;
     }
-    if (column.type.toLowerCase() !== 'id') {
-      if (column.unique || column.index || column.primary) {
-        newColumn.required = true;
-      }
-    }
-  } else {
+  }
+  if (column.default) {
     newColumn.value = column.default;
   }
 
