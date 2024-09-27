@@ -1,4 +1,4 @@
-import { Exception, Process, Query } from '@yao/yao';
+import { Exception } from '@yao/yao';
 
 /**
  * Dyform Loader: load
@@ -6,7 +6,7 @@ import { Exception, Process, Query } from '@yao/yao';
  * @param {*} source
  * @returns
  */
-function Load(id, source) {
+export function Load(id, source: string) {
   const dsl = source || {};
   dsl['id'] = id;
   return dsl;
@@ -19,7 +19,7 @@ function Load(id, source) {
  * @param {*} dsl
  * @returns
  */
-function Reload(id, source, dsl) {
+export function Reload(id: number, source: string, dsl) {
   const newDSL = source || {};
   newDSL['id'] = id;
   // newDSL["tests.reload"] = typeof dsl === "object";
@@ -30,7 +30,7 @@ function Reload(id, source, dsl) {
  * Dyform Loader: unload
  * @param {*} id
  */
-function Unload(id) {
+export function Unload(id: number) {
   if (id == undefined || id == null) {
     throw new Exception('id is required');
   }
@@ -43,13 +43,13 @@ function Unload(id) {
  * @process widgets.dyform.Setting
  * @args [id, dsl]
  */
-function Setting(id, dsl) {
+export function Setting(id: number, dsl) {
   dsl = dsl || {};
   // dsl["tests.id"] = id;
   return dsl;
 }
 
-// function LoadModel() {
+// export function LoadModel() {
 //   var model_dsl = {
 //     columns: [
 //       { comment: "ID", label: "ID", name: "id", primary: true, type: "ID" },

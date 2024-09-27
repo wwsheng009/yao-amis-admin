@@ -1,5 +1,5 @@
 // scripts.return.RSuccess
-function RSuccess(data, message) {
+export function RSuccess(data, message: string) {
   let vmessage = message;
   if (!vmessage) {
     vmessage = '处理成功';
@@ -12,7 +12,7 @@ function RSuccess(data, message) {
 }
 // 显示成功消息
 // scripts.return.RSuccessMessage
-function SuccessMessage(message) {
+export function SuccessMessage(message: string) {
   let vmessage = message;
   if (!vmessage) {
     vmessage = '处理成功';
@@ -24,7 +24,7 @@ function SuccessMessage(message) {
   };
 }
 // scripts.return.RError "密码不正确","403","密码不正确"
-function RError(data, code, message) {
+export function RError(data, code: number, message: string) {
   let vcode = code;
   let vmessage = message;
   if (code == undefined) {
@@ -41,7 +41,7 @@ function RError(data, code, message) {
 }
 
 // scripts.return.ErrorMessage "403","密码不正确"
-function ErrorMessage(code, message) {
+export function ErrorMessage(code: number, message: string) {
   let vcode = code;
   let vmessage = message;
   if (code == undefined) {

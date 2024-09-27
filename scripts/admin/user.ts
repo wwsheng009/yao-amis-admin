@@ -2,7 +2,7 @@
 import { Process } from '@yao/yao';
 
 // scripts.admin.user.saveSetting
-function saveSetting(payload) {
+export function saveSetting(payload) {
   console.log('scripts.admin.user.saveSetting');
   const user_id = Process('session.get', 'user_id');
 
@@ -31,7 +31,7 @@ function saveSetting(payload) {
 }
 
 // scripts.admin.user.readSetting
-function readSetting() {
+export function readSetting() {
   let default_setting = {
     footer: false,
     breadcrumb: true,
@@ -114,7 +114,7 @@ function readSetting() {
  * yao run scripts.admin.user.userList
  * @returns array[]
  */
-function userList() {
+export function userList() {
   const userlist: admin_user[] = Process('models.admin.user.get', {});
 
   const user: User[] = userlist.map((user: admin_user) => {

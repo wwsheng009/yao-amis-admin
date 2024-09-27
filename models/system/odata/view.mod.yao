@@ -1,0 +1,77 @@
+{
+  "columns": [
+    {
+      "comment": "ID",
+      "label": "ID",
+      "name": "id",
+      "type": "id",
+      "primary": true
+    },
+    {
+      "comment": "表格",
+      "index": true,
+      "label": "名称",
+      "name": "name",
+      "type": "string",
+      "unique": true
+    },
+    {
+      "comment": "描述",
+      "label": "描述",
+      "name": "label",
+      "type": "string"
+    },
+    {
+      "comment": "长描述",
+      "label": "长描述",
+      "name": "description",
+      "type": "text",
+      "nullable":true
+    },
+    {
+      "comment": "关联模型",
+      "label": "关联模型",
+      "name": "model_id",//由于无法直接获取table关联的模型，需要手动在这里设置
+      "type": "string"
+    },
+    {
+      "comment": "关联表格",
+      "label": "关联表格",
+      "name": "table_id",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "comment": "可创建",
+      "default": false,
+      "label": "可创建",
+      "name": "creatable",
+      "type": "boolean"
+    },
+    {
+      "comment": "可更新",
+      "default": false,
+      "label": "可更新",
+      "name": "updatable",
+      "type": "boolean"
+    },
+    {
+      "comment": "可删除",
+      "default": false,
+      "label": "可删除",
+      "name": "deletable",
+      "type": "boolean"
+    },
+    {
+      "comment": "禁用",
+      "default": false,
+      "label": "禁用",
+      "name": "disabled",
+      "type": "boolean"
+    }
+  ],
+  "name": "Odata视图",
+  "table": {
+    "name": "odata_view"
+  }
+}

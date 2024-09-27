@@ -7,7 +7,7 @@ import { YaoModel } from '@yaoapps/types';
 // 读取所有的模型id的列表
 // 缺少一个name属性，所有只能读取到id列表
 // yao run scripts.system.model.CachedModelIDList
-// ["admin.user","demo.table"]
+// ["admin.user"]
 /**
  * get the id of the cached models
  * @returns list of the cached model ids

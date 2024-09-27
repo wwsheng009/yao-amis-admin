@@ -344,7 +344,7 @@ function updateOutputDataLine(dbColMap, line) {
  * @param {any} Data 保存到数据库的数据
  * @returns 处理后的Data
  */
-export function updateInputData(model: YaoModel.ModelDSL, Data) {
+export function updateInputData(model: YaoModel.ModelDSL, Data: any) {
   if (typeof Data !== 'object' || Data === null || Data === undefined) {
     return Data;
   }
@@ -473,7 +473,13 @@ export function updateInputData(model: YaoModel.ModelDSL, Data) {
  * @param {string} orderDirection asc / desc
  * @returns Array
  */
-function paginateArray(arr, pageIn, pageSizeIn, orderBy, orderDirection) {
+function paginateArray(
+  arr: any[],
+  pageIn: string,
+  pageSizeIn: string,
+  orderBy: string | number,
+  orderDirection: string
+) {
   if (!Array.isArray(arr) || arr.length == 0) {
     return arr;
   }
@@ -506,7 +512,7 @@ function paginateArray(arr, pageIn, pageSizeIn, orderBy, orderDirection) {
   return arr.slice(startIndex, endIndex);
 }
 
-export function getArrayItem(querys, key) {
+export function getArrayItem(querys: { [x: string]: any; }, key: string) {
   if (typeof querys !== 'object') {
     return;
   }
@@ -526,10 +532,10 @@ export function getArrayItem(querys, key) {
  * @returns 数组
  */
 export function PaginateArrayWithQuery(
-  data,
-  querysIn,
-  payload,
-  searchFields = []
+  data: Array<any>,
+  querysIn: object,
+  payload: object,
+  searchFields: Array<any> = []
 ) {
   const querys = mergeQueryObject(querysIn, payload);
 
@@ -554,7 +560,7 @@ export function PaginateArrayWithQuery(
     total: count
   };
 }
-function FilterArrayWithQuery(list, querysIn, searchFields = []) {
+function FilterArrayWithQuery(list: any[], querysIn: {}, searchFields = []) {
   if (!Array.isArray(list) || list.length == 0) {
     return list;
   }

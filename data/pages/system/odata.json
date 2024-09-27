@@ -1,0 +1,634 @@
+{
+  "body": [
+    {
+      "api": {
+        "data": { "&": "$$" },
+        "method": "post",
+        "url": "/api/v1/system/model/system.odata.view/search"
+      },
+      "autoFillHeight": true,
+      "bulkActions": [
+        {
+          "actionType": "ajax",
+          "api": "delete:/api/v1/system/model/system.odata.view/delete/${ids|raw}",
+          "confirmText": "你确定要批量删除选中行吗?",
+          "label": "批量删除",
+          "type": "button"
+        }
+      ],
+      "columns": [
+        {
+          "label": "ID",
+          "name": "id",
+          "quickEdit": false,
+          "searchable": true,
+          "sortable": true,
+          "type": "number"
+        },
+        {
+          "label": "名称",
+          "name": "name",
+          "quickEdit": {
+            "required": true,
+            "saveImmediately": true,
+            "type": "input-text"
+          },
+          "searchable": true,
+          "sortable": true,
+          "type": "text"
+        },
+        {
+          "label": "描述",
+          "name": "label",
+          "quickEdit": {
+            "required": true,
+            "saveImmediately": true,
+            "type": "input-text"
+          },
+          "searchable": true,
+          "sortable": true,
+          "type": "text"
+        },
+        {
+          "label": "长描述",
+          "name": "description",
+          "quickEdit": { "saveImmediately": true, "type": "textarea" },
+          "searchable": true,
+          "sortable": true,
+          "type": "text"
+        },
+        {
+          "label": "关联模型",
+          "name": "model_id",
+          "quickEdit": {
+            "required": true,
+            "saveImmediately": true,
+            "source": {
+              "data": { "_label": "name", "_value": "identity" },
+              "method": "post",
+              "url": "/api/v1/system/model/ddic.model/select_options"
+            },
+            "type": "select"
+          },
+          "searchable": true,
+          "sortable": true,
+          "type": "tag"
+        },
+        {
+          "label": "关联表格",
+          "name": "table_id",
+          "quickEdit": { "saveImmediately": true, "type": "input-text" },
+          "searchable": true,
+          "sortable": true,
+          "type": "text"
+        },
+        {
+          "label": "可创建",
+          "name": "creatable",
+          "quickEdit": {
+            "saveImmediately": true,
+            "type": "switch",
+            "value": false
+          },
+          "searchable": true,
+          "sortable": true,
+          "type": "status"
+        },
+        {
+          "label": "可更新",
+          "name": "updatable",
+          "quickEdit": {
+            "saveImmediately": true,
+            "type": "switch",
+            "value": false
+          },
+          "searchable": true,
+          "sortable": true,
+          "type": "status"
+        },
+        {
+          "label": "可删除",
+          "name": "deletable",
+          "quickEdit": {
+            "saveImmediately": true,
+            "type": "switch",
+            "value": false
+          },
+          "searchable": true,
+          "sortable": true,
+          "type": "status"
+        },
+        {
+          "label": "禁用",
+          "name": "disabled",
+          "quickEdit": {
+            "saveImmediately": true,
+            "type": "switch",
+            "value": false
+          },
+          "searchable": true,
+          "sortable": true,
+          "type": "status"
+        },
+        {
+          "buttons": [
+            {
+              "actionType": "dialog",
+              "dialog": {
+                "body": {
+                  "body": [
+                    { "label": "ID", "name": "id", "type": "static-number" },
+                    { "label": "名称", "name": "name", "type": "static-text" },
+                    { "label": "描述", "name": "label", "type": "static-text" },
+                    {
+                      "label": "长描述",
+                      "name": "description",
+                      "static": true,
+                      "type": "textarea"
+                    },
+                    {
+                      "label": "关联模型",
+                      "name": "model_id",
+                      "source": {
+                        "cache": 2000,
+                        "data": { "_label": "name", "_value": "identity" },
+                        "method": "post",
+                        "url": "/api/v1/system/model/ddic.model/select_options"
+                      },
+                      "static": true,
+                      "type": "input-tag"
+                    },
+                    {
+                      "label": "关联表格",
+                      "name": "table_id",
+                      "type": "static-text"
+                    },
+                    {
+                      "label": "可创建",
+                      "name": "creatable",
+                      "type": "static-status"
+                    },
+                    {
+                      "label": "可更新",
+                      "name": "updatable",
+                      "type": "static-status"
+                    },
+                    {
+                      "label": "可删除",
+                      "name": "deletable",
+                      "type": "static-status"
+                    },
+                    {
+                      "label": "禁用",
+                      "name": "disabled",
+                      "type": "static-status"
+                    }
+                  ],
+                  "type": "form"
+                },
+                "size": "lg",
+                "title": "查看"
+              },
+              "icon": "fa fa-eye",
+              "tooltip": "查看",
+              "type": "button"
+            },
+            {
+              "actionType": "dialog",
+              "dialog": {
+                "body": {
+                  "api": "post:/api/v1/system/model/system.odata.view/update/$id",
+                  "body": [
+                    {
+                      "isID": true,
+                      "label": "ID",
+                      "name": "id",
+                      "static": true,
+                      "type": "input-number"
+                    },
+                    {
+                      "label": "名称",
+                      "name": "name",
+                      "required": true,
+                      "type": "input-text"
+                    },
+                    {
+                      "label": "描述",
+                      "name": "label",
+                      "required": true,
+                      "type": "input-text"
+                    },
+                    {
+                      "label": "长描述",
+                      "name": "description",
+                      "type": "textarea"
+                    },
+                    {
+                      "label": "关联模型",
+                      "name": "model_id",
+                      "required": true,
+                      "source": {
+                        "data": { "_label": "name", "_value": "identity" },
+                        "method": "post",
+                        "url": "/api/v1/system/model/ddic.model/select_options"
+                      },
+                      "type": "select"
+                    },
+                    {
+                      "label": "关联表格",
+                      "name": "table_id",
+                      "type": "input-text"
+                    },
+                    {
+                      "label": "可创建",
+                      "name": "creatable",
+                      "type": "switch",
+                      "value": false
+                    },
+                    {
+                      "label": "可更新",
+                      "name": "updatable",
+                      "type": "switch",
+                      "value": false
+                    },
+                    {
+                      "label": "可删除",
+                      "name": "deletable",
+                      "type": "switch",
+                      "value": false
+                    },
+                    {
+                      "label": "禁用",
+                      "name": "disabled",
+                      "type": "switch",
+                      "value": false
+                    }
+                  ],
+                  "name": "update",
+                  "silentPolling": false,
+                  "trimValues": true,
+                  "type": "form"
+                },
+                "size": "lg",
+                "title": "更新",
+                "type": "dialog"
+              },
+              "icon": "fa fa-pencil",
+              "tooltip": "更新",
+              "type": "button"
+            },
+            {
+              "actionType": "ajax",
+              "api": "delete:/api/v1/system/model/system.odata.view/delete/$id",
+              "confirmText": "你确定要删除行${id}?",
+              "icon": "fa fa-times text-danger",
+              "tooltip": "删除",
+              "type": "button"
+            }
+          ],
+          "label": "操作",
+          "type": "operation",
+          "width": 100
+        }
+      ],
+      "filter": {
+        "actions": [
+          {
+            "actionType": "clear-and-submit",
+            "label": "清空",
+            "level": "default",
+            "type": "button"
+          },
+          {
+            "actionType": "reset-and-submit",
+            "label": "重置",
+            "level": "default",
+            "type": "button"
+          },
+          {
+            "actionType": "submit",
+            "label": "搜索",
+            "level": "primary",
+            "type": "button"
+          }
+        ],
+        "body": [
+          { "label": "ID", "name": "id", "type": "input-number" },
+          { "label": "名称", "name": "name", "type": "input-text" },
+          { "label": "描述", "name": "label", "type": "input-text" },
+          { "label": "长描述", "name": "description", "type": "textarea" },
+          {
+            "label": "关联模型",
+            "name": "model_id",
+            "source": {
+              "data": { "_label": "name", "_value": "identity" },
+              "method": "post",
+              "url": "/api/v1/system/model/ddic.model/select_options"
+            },
+            "type": "select"
+          },
+          { "label": "关联表格", "name": "table_id", "type": "input-text" },
+          {
+            "label": "可创建",
+            "name": "creatable",
+            "type": "switch",
+            "value": false
+          },
+          {
+            "label": "可更新",
+            "name": "updatable",
+            "type": "switch",
+            "value": false
+          },
+          {
+            "label": "可删除",
+            "name": "deletable",
+            "type": "switch",
+            "value": false
+          },
+          {
+            "label": "禁用",
+            "name": "disabled",
+            "type": "switch",
+            "value": false
+          }
+        ],
+        "mode": "inline",
+        "name": "filter",
+        "silentPolling": false,
+        "title": "",
+        "trimValues": true
+      },
+      "filterDefaultVisible": false,
+      "filterTogglable": true,
+      "footerToolbar": [
+        "statistics",
+        "switch-per-page",
+        "pagination",
+        "load-more",
+        "export-csv",
+        "export-excel"
+      ],
+      "headerToolbar": [
+        { "type": "columns-toggler" },
+        "filter-toggler",
+        "reload",
+        "bulkActions",
+        { "align": "right", "type": "drag-toggler" },
+        {
+          "actionType": "dialog",
+          "align": "right",
+          "dialog": {
+            "body": {
+              "api": "post:/api/v1/system/model/system.odata.view/create",
+              "body": [
+                {
+                  "label": "名称",
+                  "name": "name",
+                  "required": true,
+                  "type": "input-text"
+                },
+                {
+                  "label": "描述",
+                  "name": "label",
+                  "required": true,
+                  "type": "input-text"
+                },
+                {
+                  "label": "长描述",
+                  "name": "description",
+                  "type": "textarea"
+                },
+                {
+                  "label": "关联模型",
+                  "name": "model_id",
+                  "required": true,
+                  "source": {
+                    "data": { "_label": "name", "_value": "identity" },
+                    "method": "post",
+                    "url": "/api/v1/system/model/ddic.model/select_options"
+                  },
+                  "type": "select"
+                },
+                {
+                  "label": "关联表格",
+                  "name": "table_id",
+                  "type": "input-text"
+                },
+                {
+                  "label": "可创建",
+                  "name": "creatable",
+                  "type": "switch",
+                  "value": false
+                },
+                {
+                  "label": "可更新",
+                  "name": "updatable",
+                  "type": "switch",
+                  "value": false
+                },
+                {
+                  "label": "可删除",
+                  "name": "deletable",
+                  "type": "switch",
+                  "value": false
+                },
+                {
+                  "label": "禁用",
+                  "name": "disabled",
+                  "type": "switch",
+                  "value": false
+                }
+              ],
+              "name": "create",
+              "silentPolling": false,
+              "type": "form"
+            },
+            "size": "lg",
+            "title": "新增",
+            "type": "dialog"
+          },
+          "icon": "fa fa-plus pull-left",
+          "label": "新增",
+          "level": "primary",
+          "type": "button"
+        },
+        {
+          "actionType": "dialog",
+          "dialog": {
+            "body": {
+              "api": {
+                "data": {
+                  "batch": {
+                    "&": {
+                      "$excel": {
+                        "creatable": "${creatable}",
+                        "deletable": "${deletable}",
+                        "description": "${description}",
+                        "disabled": "${disabled}",
+                        "label": "${label}",
+                        "model_id": "${model_id}",
+                        "name": "${name}",
+                        "table_id": "${table_id}",
+                        "updatable": "${updatable}"
+                      }
+                    }
+                  }
+                },
+                "method": "post",
+                "url": "/api/v1/system/model/system.odata.view/batch_create"
+              },
+              "body": [
+                {
+                  "tpl": "Excel字段列表：name|label|description|model_id|table_id|creatable|updatable|deletable|disabled",
+                  "type": "tpl"
+                },
+                { "name": "excel", "type": "input-excel" },
+                {
+                  "addable": true,
+                  "columns": [
+                    {
+                      "label": "名称",
+                      "name": "name",
+                      "quickEdit": {
+                        "required": true,
+                        "saveImmediately": true,
+                        "type": "input-text"
+                      },
+                      "searchable": true,
+                      "sortable": true,
+                      "type": "text"
+                    },
+                    {
+                      "label": "描述",
+                      "name": "label",
+                      "quickEdit": {
+                        "required": true,
+                        "saveImmediately": true,
+                        "type": "input-text"
+                      },
+                      "searchable": true,
+                      "sortable": true,
+                      "type": "text"
+                    },
+                    {
+                      "label": "长描述",
+                      "name": "description",
+                      "quickEdit": {
+                        "saveImmediately": true,
+                        "type": "textarea"
+                      },
+                      "searchable": true,
+                      "sortable": true,
+                      "type": "text"
+                    },
+                    {
+                      "label": "关联模型",
+                      "name": "model_id",
+                      "quickEdit": {
+                        "required": true,
+                        "saveImmediately": true,
+                        "source": {
+                          "data": { "_label": "name", "_value": "identity" },
+                          "method": "post",
+                          "url": "/api/v1/system/model/ddic.model/select_options"
+                        },
+                        "type": "select"
+                      },
+                      "searchable": true,
+                      "sortable": true,
+                      "type": "tag"
+                    },
+                    {
+                      "label": "关联表格",
+                      "name": "table_id",
+                      "quickEdit": {
+                        "saveImmediately": true,
+                        "type": "input-text"
+                      },
+                      "searchable": true,
+                      "sortable": true,
+                      "type": "text"
+                    },
+                    {
+                      "label": "可创建",
+                      "name": "creatable",
+                      "quickEdit": {
+                        "saveImmediately": true,
+                        "type": "switch",
+                        "value": false
+                      },
+                      "searchable": true,
+                      "sortable": true,
+                      "type": "status"
+                    },
+                    {
+                      "label": "可更新",
+                      "name": "updatable",
+                      "quickEdit": {
+                        "saveImmediately": true,
+                        "type": "switch",
+                        "value": false
+                      },
+                      "searchable": true,
+                      "sortable": true,
+                      "type": "status"
+                    },
+                    {
+                      "label": "可删除",
+                      "name": "deletable",
+                      "quickEdit": {
+                        "saveImmediately": true,
+                        "type": "switch",
+                        "value": false
+                      },
+                      "searchable": true,
+                      "sortable": true,
+                      "type": "status"
+                    },
+                    {
+                      "label": "禁用",
+                      "name": "disabled",
+                      "quickEdit": {
+                        "saveImmediately": true,
+                        "type": "switch",
+                        "value": false
+                      },
+                      "searchable": true,
+                      "sortable": true,
+                      "type": "status"
+                    }
+                  ],
+                  "copyable": true,
+                  "editable": true,
+                  "name": "excel",
+                  "removable": true,
+                  "showIndex": true,
+                  "type": "input-table"
+                }
+              ],
+              "mode": "normal",
+              "silentPolling": false,
+              "type": "form"
+            },
+            "size": "full",
+            "title": "批量新增",
+            "type": "dialog"
+          },
+          "icon": "fa fa-plus pull-left",
+          "label": "批量新增",
+          "level": "primary",
+          "type": "button"
+        }
+      ],
+      "itemActions": [],
+      "keepItemSelectionOnPageChange": true,
+      "perPage": 10,
+      "primaryField": "id",
+      "quickSaveItemApi": "post:/api/v1/system/model/system.odata.view/update/${id}",
+      "syncLocation": false,
+      "type": "crud"
+    }
+  ],
+  "type": "page"
+}

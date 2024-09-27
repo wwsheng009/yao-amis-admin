@@ -1,4 +1,9 @@
-function getCodeGenerationList() {
+import { curdTemplate } from '@scripts/amis/curd';
+import { curdListPage } from '@scripts/amis/schema';
+import { AmisUIColumn, ModelId } from '@yao/types';
+import { Process } from '@yao/yao';
+
+export function getCodeGenerationList() {
   return [
     {
       label: 'Amis增删改查-页面',
@@ -63,7 +68,7 @@ function getCodeGenerationList() {
  * 返回数据库表列表
  * @returns list
  */
-function getTables() {
+export function getTables() {
   // 跟studio的service不同，services不需要跨域
   //    curl -X POST http://127.0.0.1:5099/api/__yao/app/service/schema \
   //    -H 'Content-Type: application/json' \
@@ -80,7 +85,7 @@ function getTables() {
  * 返回一个适配amis option类控件的数据库表清单
  * @returns list
  */
-function getTables2() {
+export function getTables2() {
   // 跟studio的service不同，services不需要跨域
   //    curl -X POST http://127.0.0.1:5099/api/__yao/app/service/schema \
   //    -H 'Content-Type: application/json' \
@@ -93,15 +98,15 @@ function getTables2() {
 /**
  * 读取一个数据库表的字段配置信息
  *
- * @param {string} table 表名
+ * @param {string} tableName 表名
  * @returns 表的字段定义
  */
-function getTable(table) {
+export function getTable(tableName: string) {
   // 注意不要直接返回`{columns}`,返回columns会改变amis的table 的columns设置
-  const data = Process('schemas.default.TableGet', table);
+  const data = Process('schemas.default.TableGet', tableName);
   return { items: data.columns };
 }
-function CRUDNewTemplate(modelId, columns) {
+export function CRUDNewTemplate(modelId: ModelId, columns?: AmisUIColumn[]) {
   return {
     __code_sources: [
       {
@@ -118,35 +123,27 @@ function CRUDNewTemplate(modelId, columns) {
   };
 }
 
-function CRUDListTemplate(modelId, columns) {
+export function CRUDListTemplate(modelId: ModelId, columns?: AmisUIColumn[]) {
   return {
     __code_sources: [
       {
         language: 'json',
         title: '增删改查-列表',
         can_preview: true,
-        __code_source: Process(
-          'scripts.amis.schema.curdListPage',
-          modelId,
-          columns
-        )
+        __code_source: curdListPage(modelId, columns) // Process('scripts.amis.schema.curdListPage',
       }
     ]
   };
 }
 
-function CRUDAllTemplate(modelId, columns) {
+export function CRUDAllTemplate(modelId: ModelId, columns?: AmisUIColumn[]) {
   return {
     __code_sources: [
       {
         language: 'json',
         title: '增删改查-所有功能',
         can_preview: true,
-        __code_source: Process(
-          'scripts.amis.curd.curdTemplate',
-          modelId,
-          columns
-        )
+        __code_source: curdTemplate(modelId, columns) // Process(       'scripts.amis.curd.curdTemplate',
       }
     ]
   };
@@ -157,7 +154,7 @@ function CRUDAllTemplate(modelId, columns) {
  * @param {string} modelId 模型定义
  * @returns string
  */
-function getTSType(modelId, columns) {
+export function getTSType(modelId: ModelId, columns?: AmisUIColumn[]) {
   return {
     __code_sources: [
       {
@@ -177,7 +174,10 @@ function getTSType(modelId, columns) {
  * @param {string} modelId 模型名称
  * @returns list
  */
-function getTableAmisViewFields(modelId, columns) {
+export function getTableAmisViewFields(
+  modelId: ModelId,
+  columns?: AmisUIColumn[]
+) {
   return {
     __code_sources: [
       {
@@ -198,7 +198,10 @@ function getTableAmisViewFields(modelId, columns) {
  * @param {string} modelId 模型名称
  * @returns list
  */
-function getTableAmisFormFields(modelId, columns) {
+export function getTableAmisFormFields(
+  modelId: ModelId,
+  columns?: AmisUIColumn[]
+) {
   return {
     __code_sources: [
       {
@@ -220,7 +223,10 @@ function getTableAmisFormFields(modelId, columns) {
  * @param {string} modelId 模型名称
  * @returns list
  */
-function getTableAmisFormViewFields(modelId, columns) {
+export function getTableAmisFormViewFields(
+  modelId: ModelId,
+  columns?: AmisUIColumn[]
+) {
   return {
     __code_sources: [
       {
@@ -242,7 +248,10 @@ function getTableAmisFormViewFields(modelId, columns) {
  * @param {string} modelId 模型名称
  * @returns
  */
-function getTableAmisViewFieldsWithQuick(modelId, columns) {
+export function getTableAmisViewFieldsWithQuick(
+  modelId,
+  columns?: AmisUIColumn[]
+) {
   return {
     __code_sources: [
       {
@@ -265,7 +274,7 @@ function getTableAmisViewFieldsWithQuick(modelId, columns) {
  * @param {Array} columns
  * @returns
  */
-function getXgenTable(modelId, columns) {
+export function getXgenTable(modelId: ModelId, columns?: AmisUIColumn[]) {
   let template = Process(
     'scripts.xgen.schema.generateTableView',
     modelId,
@@ -282,8 +291,8 @@ function getXgenTable(modelId, columns) {
  * @param {Array} columns
  * @returns
  */
-function getXgenTableFull(modelId, columns) {
-  let template = Process(
+export function getXgenTableFull(modelId: ModelId, columns?: AmisUIColumn[]) {
+  const template = Process(
     'scripts.xgen.schema.generateTableView',
     modelId,
     columns,
@@ -300,7 +309,7 @@ function getXgenTableFull(modelId, columns) {
  * @param {Array} columns
  * @returns
  */
-function getXgenForm(modelId, columns) {
+export function getXgenForm(modelId: ModelId, columns?: AmisUIColumn[]) {
   return {
     __code_sources: [
       {
@@ -323,7 +332,10 @@ function getXgenForm(modelId, columns) {
  * @param {Array} columns
  * @returns
  */
-function getXgenFormFullView(modelId, columns) {
+export function getXgenFormFullView(
+  modelId: ModelId,
+  columns?: AmisUIColumn[]
+) {
   return {
     __code_sources: Process(
       'scripts.xgen.schema.generateFormView',
@@ -340,7 +352,10 @@ function getXgenFormFullView(modelId, columns) {
  * @param {Array} columns
  * @returns
  */
-function getXgenFormFullEdit(modelId, columns) {
+export function getXgenFormFullEdit(
+  modelId: ModelId,
+  columns?: AmisUIColumn[]
+) {
   return {
     __code_sources: Process(
       'scripts.xgen.schema.generateFormView',
@@ -358,7 +373,7 @@ function getXgenFormFullEdit(modelId, columns) {
  * @param {Array} columns 列定义
  * @returns
  */
-function getXgenObjects(modelId, columns) {
+export function getXgenObjects(modelId: ModelId, columns?: AmisUIColumn[]) {
   const formFullviews = Process(
     'scripts.xgen.schema.generateFormView',
     modelId,

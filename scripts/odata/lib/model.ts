@@ -1,7 +1,7 @@
 import { Process, Exception } from '@yao/yao';
 
 function getModelList() {
-  const viewList = Process('models.odata.view.get', {
+  const viewList = Process('models.system.odata_view.get', {
     wheres: [{ column: 'disabled', value: false }],
     limit: 10000
   });
@@ -94,7 +94,7 @@ export function getModelNameList() {
  * @returns odata view list
  */
 export function getOdataViewList() {
-  const list = Process('models.odata.view.get', {
+  const list = Process('models.system.odata_view.get', {
     wheres: [
       {
         column: 'disabled',
@@ -180,7 +180,7 @@ export function getModel(viewId) {
   if (!viewId) {
     return { columns: [] };
   }
-  const [odataview] = Process('models.odata.view.get', {
+  const [odataview] = Process('models.system.odata_view.get', {
     wheres: [
       {
         column: 'name',
@@ -190,7 +190,7 @@ export function getModel(viewId) {
     limit: 1
   });
   if (!odataview) {
-    throw new Exception(`视图：${viewId}不存在`);
+    throw new Exception(`视图：${viewId}不存在！`);
   }
   const model_id = odataview.model_id;
 

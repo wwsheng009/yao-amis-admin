@@ -1,4 +1,5 @@
-const { FileNameConvert } = Require('system.lib');
+import { FileNameConvert } from '@scripts/system/lib';
+import { FS, Process } from '@yao/yao';
 
 /**
  * 在amis-editor里创建或是修改页面配置后可以先保存成文件，在确定没有问题后再加载到数据库
@@ -9,7 +10,7 @@ const { FileNameConvert } = Require('system.lib');
 const pagesWorking = '/public/amis-admin/pages_working/';
 const pagesFolder = '/public/amis-admin/pages/';
 
-function getUserDir() {
+export function getUserDir() {
   let user_id = Process('session.get', 'user_id');
   if (!user_id) {
     user_id = '1';
@@ -27,12 +28,12 @@ function getUserDir() {
 //    -H 'Content-Type: application/json' \
 //    -H 'Authorization: Bearer <Studio JWT>' \
 //    -d '{"method":"getPages","args":[]}}'
-function getPages(dir) {
+export function getPages(dir: string) {
   if (dir == null) {
     dir = getUserDir();
   }
 
-  const fs = FS('dsl');
+  const fs = new FS('dsl');
   let files = fs.ReadDir(dir, true); // recursive
   // console.log("files:", files);
 
@@ -46,21 +47,21 @@ function getPages(dir) {
     })
     .filter((x) => x);
 
-  let result = {};
+  const result = {};
 
   files.forEach((file) => {
-    dataString = fs.ReadFile(dir + file);
+    const dataString = fs.ReadFile(dir + file);
     try {
       const page = JSON.parse(dataString);
       // 不处理多页应用
       if (page.type && page.type !== 'app') {
-        let filename = file.replace(/\.json$/, '');
+        const filename = file.replace(/\.json$/, '');
         result[filename] = page;
       } else {
         console.log(`AMIS文件格式不正确:${dir + file}`);
       }
     } catch (error) {
-      console.log(`error when parse json:${dir + file}`);
+      console.log(`error when parse json:${dir + file}` + error.message);
     }
   });
 
@@ -68,7 +69,7 @@ function getPages(dir) {
 }
 
 // yao studio run editor.saveFileRecord 1, "xxx/test.json"
-function saveFileRecord(user_id, file_name) {
+export function saveFileRecord(user_id: number, file_name: string) {
   console.log(`saveFileRecord userid:${user_id},filename:${file_name}`);
 
   if (!user_id || !file_name) {
@@ -90,7 +91,7 @@ function saveFileRecord(user_id, file_name) {
   }
 }
 // yao studio run editor.deleteFileRecord 1, "/public/amis-admin/pages_working/1/测试.json"
-function deleteFileRecord(user_id, file_name) {
+export function deleteFileRecord(user_id: number, file_name: string) {
   console.log(`deleteFileRecord userid:${user_id},filename:${file_name}`);
   if (!user_id || !file_name) {
     return;
@@ -103,7 +104,7 @@ function deleteFileRecord(user_id, file_name) {
   });
 }
 // 保存数据
-function savePage(file, payload) {
+export function savePage(file: string, payload: { body: any; type: string }) {
   if (!file || !payload) {
     return;
   }
@@ -139,14 +140,14 @@ function savePage(file, payload) {
   return { message: 'Page Saved' };
 }
 // 删除文件
-function deletePage(file) {
+export function deletePage(file: string) {
   const dir = getUserDir();
 
   let user_id = Process('session.get', 'user_id');
   if (!user_id) {
     user_id = '1';
   }
-  const nfilename = dir + file;
+  let nfilename = dir + file;
   if (!nfilename.toUpperCase().endsWith('.JSON')) {
     nfilename += '.json';
   }
@@ -159,7 +160,7 @@ function deletePage(file) {
 
 // save single page to database
 // yao studio run editor.loadSinglePageToDB site.json
-function loadSinglePageToDB(fname) {
+export function loadSinglePageToDB(fname: string) {
   const dir = getUserDir();
   const fs = new FS('dsl');
   const dataString = fs.ReadFile(dir + fname);
@@ -173,7 +174,7 @@ function loadSinglePageToDB(fname) {
 
 // dump the pages form database to file
 // yao studio run editor.dumpPagesFromDB
-function dumpPagesFromDB() {
+export function dumpPagesFromDB() {
   const pages = Process('scripts.editor.getPages');
   for (const key in pages) {
     const page = pages[key];
@@ -183,7 +184,7 @@ function dumpPagesFromDB() {
   }
 }
 // yao studio run editor.dumpSinglePageFromDB "tables.json"
-function dumpSinglePageFromDB(fname) {
+export function dumpSinglePageFromDB(fname: string) {
   const page = Process('scripts.editor.getPage', fname);
   if (page.type && page.type !== 'app') {
     savePage(fname, page);
@@ -198,7 +199,7 @@ function dumpSinglePageFromDB(fname) {
  * @param file 文件名
  * @param dsl dsl定义对象，会自动的转换成json
  */
-function MoveAndWrite(folder, file, dsl) {
+export function MoveAndWrite(folder: string, file: string, dsl: any) {
   Move(folder, file);
   WriteFile(folder ? `/${folder}/` + file : file, dsl);
 }
@@ -209,7 +210,7 @@ function MoveAndWrite(folder, file, dsl) {
  * @param {string} filename json file name
  * @param {object} data
  */
-function WriteFile(filename, data) {
+export function WriteFile(filename: string, data: any) {
   const fs = new FS('dsl');
   const nfilename = FileNameConvert(filename);
   if (!fs.Exists(nfilename)) {
@@ -230,7 +231,7 @@ function WriteFile(filename, data) {
  * yao studio run editor.Move
  * 文件复制移动逻辑
  */
-function Move(dir, name) {
+export function Move(dir: string, name: string) {
   let fname = name;
   if (!fname.toUpperCase().endsWith('.JSON')) {
     fname = fname + '.json';
@@ -254,7 +255,7 @@ function Move(dir, name) {
     return { message: `文件:${sourceFile}不存在` };
   }
 }
-function Mkdir(name) {
+export function Mkdir(name: string) {
   const fs = new FS('dsl');
   const res = fs.Exists(name);
   if (res !== true) {
@@ -268,10 +269,10 @@ function Mkdir(name) {
 //    -H 'Content-Type: application/json' \
 //    -H 'Authorization: Bearer <Studio JWT>' \
 //    -d '{ "args":["admin.menu"],"method":"createCurdPage"}'
-function createCurdPage(table) {
+export function createCurdPage(table: string) {
   const page = Process('scripts.amis.curd.curdTemplate', table);
 
-  const fs = FS('dsl');
+  const fs = new FS('dsl');
   const fname = pagesWorking + table + '_amis_page.json';
   if (!page.type) {
     // empty page
@@ -287,13 +288,13 @@ function createCurdPage(table) {
  * /api/__yao/widget/amis/crud-list/setting
  * yao studio run editor.loadPageToDB
  */
-function loadPageToDB() {
+export function loadPageToDB() {
   const pages = getPages(pagesFolder);
   for (const key in pages) {
     const page = pages[key];
     let fname = key;
     if (page.type && page.type !== 'app') {
-      let compKey = key.toUpperCase();
+      const compKey = key.toUpperCase();
       if (
         !compKey.endsWith('.JSON') &&
         !compKey.endsWith('.JSONC') &&

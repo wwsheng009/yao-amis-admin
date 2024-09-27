@@ -41,7 +41,9 @@ import {
   AmisModelColumn,
   AmisModel,
   ModelId,
-  CachedModel
+  CachedModel,
+  AmisUIModel,
+  AmisUIColumn
 } from '@yao/types';
 import { YaoModel } from '@yaoapps/types';
 
@@ -368,9 +370,9 @@ function SaveModelToLocal(modelDsl: AmisModel) {
   __yao_data = { ROOT: false };
 }
 
-function SaveModelTableLine(payload, force?): number {
+function SaveModelTableLine(payload: AmisModelDB, force?: boolean): number {
   // 先保存主表，获取id后再保存从表
-  const saveFun = function (payload) {
+  const saveFun = function (payload: AmisModelDB) {
     const res = Process('models.ddic.model.Save', payload);
     if (res && res.code && res.code > 300) {
       throw res;
@@ -380,17 +382,17 @@ function SaveModelTableLine(payload, force?): number {
     }
     return res;
   };
-  return RunTransaction(saveFun, payload) as unknown as number;
+  return RunTransaction(saveFun, payload as undefined) as unknown as number;
 }
 // 保存关联表数据
-function SaveRelations(id: number, payload, force?: boolean) {
+function SaveRelations(id: number, payload: AmisModelDB, force?: boolean) {
   // BeforeDelete(id);
   SaveColumns(id, payload, force);
   return id;
 }
 
 // 删除关联表数据
-export function BeforeDelete(id) {
+export function BeforeDelete(id: number) {
   DeleteModelolumns(id);
 }
 
@@ -473,7 +475,7 @@ function SaveColumns(modelId: number, payload, force?: boolean) {
  * @param {string} modelId
  * @returns
  */
-function DeleteModelolumns(modelId) {
+function DeleteModelolumns(modelId: number) {
   const err = Process('models.ddic.model.column.DeleteWhere', {
     wheres: [{ column: 'model_id', value: modelId }]
   });
@@ -532,20 +534,21 @@ function UpdateRelationFromDsl(
  * 把AmisModel转换成YaoModel
  * @param {object} modelDsl
  */
-function ConvertApiObjectToModel(modelDsl) {
-  const model = { ...modelDsl };
-  model.id = model.header?.id;
-  model.ID = model.header?.identity;
-  model.comment = model.header?.comment;
-  model.name = model.header?.name;
+export function ConvertAmisUIModelToModel(modelDsl: AmisUIModel): AmisModel {
+  const model = { ...modelDsl } as unknown as AmisModel;
+  model.id = modelDsl.header?.id;
+  model.ID = modelDsl.header?.identity;
+  model.comment = modelDsl.header?.comment;
+  model.name = modelDsl.header?.name;
 
   delete model.header;
 
   if (Array.isArray(model.columns)) {
-    model.columns.forEach((col) => {
+    const cols = model.columns as unknown as AmisUIColumn[];
+    cols.forEach((col) => {
       // 兼容处理,amis index字段用于表格索引,使用is_index作替代
       if (Object.prototype.hasOwnProperty.call(col, 'is_index')) {
-        col.index = col.is_index;
+        col.index = col.is_index as unknown as number;
         delete col.is_index;
       }
       if (Object.prototype.hasOwnProperty.call(col, '__index')) {
@@ -559,22 +562,22 @@ function ConvertApiObjectToModel(modelDsl) {
  * 从YaoModel转换成AmisModel
  * @param {object} modelDsl
  */
-function ConvertModelToApiObject(modelDsl) {
-  const model = { ...modelDsl };
+export function ConvertModelToAmisUIModel(modelDsl: AmisModel) {
+  const model = { ...modelDsl } as unknown as AmisUIModel;
 
   model.header = model.header || {};
-  model.columns = model.columns || {};
+  model.columns = model.columns || [];
 
-  model.header.id = model.id;
-  model.header.identity = model.ID;
-  model.header.comment = model.comment;
-  model.header.name = model.name;
+  model.header.id = modelDsl.id;
+  model.header.identity = modelDsl.ID;
+  model.header.comment = modelDsl.comment;
+  model.header.name = modelDsl.name;
 
   if (Array.isArray(model.columns)) {
     model.columns.forEach((col) => {
       // 兼容处理,amis index字段用于表格索引,使用is_index作替代
       if (Object.prototype.hasOwnProperty.call(col, 'index')) {
-        col.is_index = col.index;
+        col.is_index = col.index as unknown as boolean;
         delete col.index;
       }
     });
@@ -587,9 +590,9 @@ function ConvertModelToApiObject(modelDsl) {
  * @param {object} payload 模型定义
  * @returns object
  */
-export function saveModelApi(payload) {
+export function saveModelApi(payload: AmisUIModel) {
   // 处理amis与yao的兼容性
-  let model = ConvertApiObjectToModel(payload);
+  let model = ConvertAmisUIModelToModel(payload);
 
   model = CompleteModel(model);
   CheckModel(model);
@@ -661,7 +664,7 @@ function ImportCachedModelById(modelId: string) {
  * 删除模型
  * @param {number} modelId 模型标识
  */
-export function DeleteModelMetaByIdBatch(modelId) {
+export function DeleteModelMetaByIdBatch(modelId: string) {
   const models = modelId + '';
   const ids = models.split(',');
   ids.forEach((id) => DeleteModelMetaById(id));
@@ -671,13 +674,13 @@ export function DeleteModelMetaByIdBatch(modelId) {
  * @param {string} modelId model id
  * @returns
  */
-function DeleteModelMetaById(modelId) {
+function DeleteModelMetaById(modelId: string) {
   // 检查是否存在，不存在会报错
   Process('models.ddic.model.Find', modelId, {});
 
   DeleteModelLocalFile(modelId);
 
-  const deleteFun = function (modelId) {
+  const deleteFun = function (modelId: string) {
     // 先删除列定义
     let ret = Process('models.ddic.model.column.DeleteWhere', {
       wheres: [{ column: 'model_id', value: modelId }]
@@ -691,7 +694,7 @@ function DeleteModelMetaById(modelId) {
       throw ret;
     }
   };
-  return RunTransaction(deleteFun, modelId);
+  return RunTransaction(deleteFun, modelId as undefined);
 }
 
 /**
@@ -699,7 +702,7 @@ function DeleteModelMetaById(modelId) {
  * @param {string} modelId model id
  * @returns
  */
-function DeleteModelLocalFile(modelId) {
+function DeleteModelLocalFile(modelId: string) {
   const yaoEnv = Process('utils.env.Get', 'YAO_ENV');
   if (yaoEnv !== 'development') {
     return;
@@ -726,11 +729,11 @@ function DeleteModelLocalFile(modelId) {
  * 读取已经加载在内存中的模型的定义，受限里yao的程序解析
  * 数据库中的信息会比内存的信息更加丰富，可以自由扩展
  * yao run scripts.system.model.getModelApi admin.auth.role
- * @param {string/number} modelId
+ * @param {string | number} modelId
  * @returns
  */
 export function getModelApi(modelId: string | number) {
-  return ConvertModelToApiObject(getModelDslById(modelId));
+  return ConvertModelToAmisUIModel(getModelDslById(modelId));
 }
 
 /**
@@ -739,7 +742,7 @@ export function getModelApi(modelId: string | number) {
  * @returns
  */
 export function getModelColumnsApi(modelId: string) {
-  const model = ConvertModelToApiObject(getModelDslById(modelId));
+  const model = ConvertModelToAmisUIModel(getModelDslById(modelId));
   if (Array.isArray(model?.columns) && model.columns.length) {
     model?.columns?.forEach((x, idx) => {
       x.checked = true;
@@ -988,7 +991,7 @@ function removeModelColumnIds(modelDsl: AmisModel) {
  * @param {object} payload 外部传的源代码
  * @returns
  */
-export function ImportModelFromSource(payload) {
+export function ImportModelFromSource(payload: { ID: string; source: string }) {
   const ID = payload.ID;
   let newCode = payload.source;
   newCode = newCode.replace(/\/\/.*$/gm, '');
@@ -1123,7 +1126,7 @@ export function modelNameList() {
  * @param {object} payload 需要导入的模型
  * @returns
  */
-function ImportTableAction(payload) {
+function ImportTableAction(payload: { name: string }) {
   // const ms = cachedModels.filter((m) => m.table.name == payload.name);
   // if (Array.isArray(ms) && ms.length) {
   //   // 如果已经在缓存中存在，不要覆盖
@@ -1131,7 +1134,7 @@ function ImportTableAction(payload) {
   // } else {
   // 如果不存在，把表结构转换成模型，转换成模型，再加载
 
-  let model = Process('schemas.default.TableGet', payload.name);
+  let model = Process('schemas.default.TableGet', payload.name) as AmisModel;
   model.table = model.table || {};
   model.table.name = payload.name;
   model.ID = DotName(payload.name);
@@ -1172,7 +1175,7 @@ function isTextColumn(column) {
  * @param {object} modelDsl
  * @returns
  */
-function guessModelColumnsType(modelDsl) {
+function guessModelColumnsType(modelDsl: AmisModel) {
   modelDsl.columns.forEach((column) => {
     const comment = column.comment ? column.comment.toLowerCase() : '';
     const colName = column.name ? column.name.toLowerCase() : '';
@@ -1222,7 +1225,7 @@ function guessModelColumnsType(modelDsl) {
  * @param {*} payload
  * @returns
  */
-export function LoadToCacheFromDB(payload) {
+export function LoadToCacheFromDB(payload: { model: string }) {
   if (!payload) {
     return Process('scripts.return.ErrorMessage', 500, '数据不正确');
   }
@@ -1239,7 +1242,7 @@ export function LoadToCacheFromDB(payload) {
   return { message: '缓存加载成功' };
 }
 
-function CheckImportModelLine(modelId, tableName) {
+function CheckImportModelLine(modelId: string, tableName: string) {
   // 根据表名或是模型名称，检查是否已经存在同样ID的模型，防止误更更新
   const wheres = [];
   if (tableName) {
@@ -1266,9 +1269,9 @@ function CheckImportModelLine(modelId, tableName) {
  * @param {object} payload 模型对象
  * @returns
  */
-export function ImportFromNeo(payload) {
+export function ImportFromNeo(payload: AmisUIModel) {
   // 处理amis与yao的兼容性
-  let model = ConvertApiObjectToModel(payload);
+  let model = ConvertAmisUIModelToModel(payload);
 
   model = CompleteModel(model);
   CheckModel(model);

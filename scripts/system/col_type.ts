@@ -376,7 +376,7 @@ export function column2AmisTableViewColumn(column: AmisModelColumn) {
  * @param {object} column 数据库表列定义
  * @returns 返回amis formitem定义
  */
-export function column2AmisFormViewColumn(column) {
+export function column2AmisFormViewColumn(column: AmisModelColumn) {
   // 只读字段的处理有两种方式，一种是使用static-类控件，
   // 另外一种是使用input-控件再加上static属性进行组合控制
   // 哪种更好需要测试后才知道
@@ -561,7 +561,7 @@ export function column2AmisFormViewColumn(column) {
   // }
   return newColumn;
 }
-export function isDateTimeType(column) {
+export function isDateTimeType(column: AmisModelColumn) {
   const columnType = column.type?.toUpperCase();
   switch (columnType) {
     case 'DATE':
@@ -587,16 +587,16 @@ export function column2AmisFormEditColumn(column: AmisModelColumn) {
   newColumn.label = column.label;
 
   // 必填项
-  if (!column.nullable) {
-    newColumn.required = true;
-  }
-  if (column.type.toLowerCase() !== 'id') {
-    if (column.unique || column.index || column.primary) {
+  if (column.default == null) {
+    if (!column.nullable) {
       newColumn.required = true;
     }
-  }
-
-  if (column.default != null) {
+    if (column.type.toLowerCase() !== 'id') {
+      if (column.unique || column.index || column.primary) {
+        newColumn.required = true;
+      }
+    }
+  } else {
     newColumn.value = column.default;
   }
 

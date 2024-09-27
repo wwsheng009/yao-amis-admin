@@ -84,10 +84,30 @@ export interface AmisRelation extends YaoModel.Relation {
   name: string;
 }
 
+/**Amis界面维护的模型定义 */
+export interface AmisUIModel {
+  header?: {
+    id?: number;
+    identity?: string;
+    name?: string;
+    comment?: string;
+  };
+  columns?: AmisUIColumn[];
+  option?: {
+    soft_deletes?: boolean;
+    timestamps?: boolean;
+    read_only?: boolean;
+    migrate_force?: boolean;
+  };
+  table?: {
+    name?: string;
+    comment?: string;
+  };
+}
 /**
  * UI column used in amis curd/table
  */
-export interface AmisUIColumn extends YaoModel.ModelColumn {
+export interface AmisUIColumn extends Omit<AmisModelColumn, 'index'> {
   validationErrors?: object;
 
   checked?: boolean;
@@ -127,11 +147,14 @@ export interface AmisUIColumn extends YaoModel.ModelColumn {
   /**语言 */
   language?: string;
   multiple?: boolean;
-  source?: object;
+  source?: object | string;
   required?: boolean;
   value?: object;
   maxLength?: number;
+  /**标注是ID字段 */
   isID?: boolean;
+  /**数据元素 */
+  element_id?: string;
   options?: {
     value: string | number | boolean;
     label: string;
@@ -143,6 +166,17 @@ export interface AmisUIColumn extends YaoModel.ModelColumn {
   useChunk?: boolean;
   /**忽略 */
   __ignore?: boolean | undefined;
+
+  /**在ui上index是索引编号 */
+  index?: number;
+  /**是否索引 */
+  is_index?: boolean;
+
+  /**临时的索引 */
+  __index?: number;
+
+  /**可见条件 */
+  visibleOn?: string;
 }
 
 export interface YaoModelNode {

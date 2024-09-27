@@ -1,6 +1,6 @@
 import { DotName, SlashName } from '@scripts/system/lib';
 import { getModelDslById } from './model';
-import { ModelId } from '@yao/types';
+import { AmisUIColumn, ModelId } from '@yao/types';
 
 // 创建模型对象的ts类型定义。
 
@@ -10,7 +10,7 @@ import { ModelId } from '@yao/types';
  * yao run scripts.system.tstype.createModelType admin.user
  * @param {string} modelId 模型id
  */
-export function createModelType(modelId: ModelId, columnsIn) {
+export function createModelType(modelId: ModelId, columnsIn?: AmisUIColumn[]) {
   const model = getModelDslById(modelId); //Process('scripts.system.model.getModelDslById', modelId);
 
   if (columnsIn != null && Array.isArray(columnsIn) && columnsIn.length > 0) {

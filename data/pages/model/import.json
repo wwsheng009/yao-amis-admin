@@ -53,7 +53,7 @@
           "ignoreError": false,
           "editorState": "default",
           "label": "导入所有的数据库模型到缓存",
-          "confirmText": "确定需要导入所有的数据库模型吗",
+          "confirmText": "确定需要导入所有的数据库模型吗？",
           "actionType": "ajax",
           "type": "button"
         }
@@ -101,7 +101,6 @@
           "id": "u:f805d02eccc5",
           "label": "Yao模型已缓存"
         },
-
         {
           "buttons": [
             {

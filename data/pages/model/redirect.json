@@ -5,7 +5,7 @@
         {
           "actionType": "url",
           "args": {
-            "url": "/admin/x/Table/demo.table"
+            "url": "/admin/x/Table/admin.user"
           }
         }
       ],

@@ -4,9 +4,13 @@ import {
   getFormViewFields,
   getModelFieldsWithQuick
 } from '@scripts/amis/lib';
+import { AmisUIColumn, ModelId } from '@yao/types';
 
 // yao run scripts.amis.schema.generateEditFormFields admin.user
-function generateEditFormFields(modelId, columns) {
+export function generateEditFormFields(
+  modelId: ModelId,
+  columns?: AmisUIColumn[]
+) {
   const fields = getFormFields(modelId, 'update', columns);
   const schema = {
     type: 'form',
@@ -37,7 +41,7 @@ function generateEditFormFields(modelId, columns) {
   };
   return schema;
 }
-function getTableViewBodySchema(modelId, tableName) {
+export function getTableViewBodySchema(modelId: ModelId, tableName) {
   const fields = getModelFieldsForAmis(modelId);
 
   return {
@@ -47,14 +51,20 @@ function getTableViewBodySchema(modelId, tableName) {
   };
 }
 
-function getFormViewBodySchema(modelId, columns) {
+export function getFormViewBodySchema(
+  modelId: ModelId,
+  columns?: AmisUIColumn[]
+) {
   const fields = getFormViewFields(modelId, columns);
 
   return fields;
 }
 
 // yao run scripts.amis.schema.formViewFieldsSchema
-function formViewFieldsSchema(modelId, columns) {
+export function formViewFieldsSchema(
+  modelId: ModelId,
+  columns?: AmisUIColumn[]
+) {
   const fields = getFormViewFields(modelId, columns);
   const schema = {
     type: 'form',
@@ -87,7 +97,7 @@ function formViewFieldsSchema(modelId, columns) {
 }
 
 // yao run scripts.amis.schema.generateViewFields admin.user
-function generateViewFields(modelId, columns) {
+export function generateViewFields(modelId: ModelId, columns?: AmisUIColumn[]) {
   const fields = getModelFieldsForAmis(modelId, columns);
 
   const schema = {
@@ -106,7 +116,10 @@ function generateViewFields(modelId, columns) {
   return schema;
 }
 
-function generateViewFieldsWithQuick(modelId, columns) {
+export function generateViewFieldsWithQuick(
+  modelId: ModelId,
+  columns?: AmisUIColumn[]
+) {
   const fields = getModelFieldsWithQuick(modelId, columns);
   const fieldsForm = getFormFields(modelId, 'create', columns);
   const schema = {
@@ -147,8 +160,8 @@ function generateViewFieldsWithQuick(modelId, columns) {
 //
 
 // yao run scripts.amis.schema.curdListPage
-function curdListPage(table, columns) {
-  const fields = getModelFieldsForAmis(table, columns);
+export function curdListPage(modelId: ModelId, columns?: AmisUIColumn[]) {
+  const fields = getModelFieldsForAmis(modelId, columns);
   const schema = {
     type: 'page',
     title: '列表',
@@ -158,7 +171,7 @@ function curdListPage(table, columns) {
       {
         type: 'button',
         actionType: 'link',
-        link: `/crud/${table}/new`,
+        link: `/crud/${modelId}/new`,
         label: '新增',
         primary: true
       }
@@ -166,13 +179,13 @@ function curdListPage(table, columns) {
     body: [
       {
         type: 'crud',
-        name: `${table}`,
+        name: `${modelId}`,
         syncLocation: false,
         api: {
           method: 'get',
           url:
             '/api/v1/system/model/' +
-            table +
+            modelId +
             '/search?page=${page}&perPage=${perPage}&keywords=${keywords}'
         },
         filter: {
@@ -206,7 +219,8 @@ function curdListPage(table, columns) {
               name: 'sample-bulk-edit',
               body: {
                 type: 'form',
-                api: 'post:/api/v1/system/model/' + table + '/bulkUpdate/$ids',
+                api:
+                  'post:/api/v1/system/model/' + modelId + '/bulkUpdate/$ids',
                 controls: [
                   {
                     type: 'text',
@@ -222,7 +236,7 @@ function curdListPage(table, columns) {
             type: 'button',
             level: 'danger',
             actionType: 'ajax',
-            api: 'delete:/api/v1/system/model/' + table + '/delete/$ids',
+            api: 'delete:/api/v1/system/model/' + modelId + '/delete/$ids',
             confirmText: '确定要批量删除?'
           }
         ],
@@ -242,7 +256,7 @@ function curdListPage(table, columns) {
                     // label: "查看",
                     // level: "primary",
                     actionType: 'link',
-                    link: `/crud/${table}` + '/view/${id}'
+                    link: `/crud/${modelId}` + '/view/${id}'
                   },
                   {
                     type: 'button',
@@ -250,7 +264,7 @@ function curdListPage(table, columns) {
                     // label: "修改",
                     // level: "info",
                     actionType: 'link',
-                    link: `/crud/${table}` + '/edit/${id}'
+                    link: `/crud/${modelId}` + '/edit/${id}'
                   },
                   {
                     type: 'button',
@@ -259,7 +273,7 @@ function curdListPage(table, columns) {
                     // level: "danger",
                     actionType: 'ajax',
                     confirmText: '您确认要删除?',
-                    api: 'post:/api/v1/system/model/' + table + '/delete/$id'
+                    api: 'post:/api/v1/system/model/' + modelId + '/delete/$id'
                   }
                 ]
               }
@@ -285,8 +299,8 @@ function curdListPage(table, columns) {
 }
 
 // yao run scripts.amis.schema.curdNewPage
-function curdNewPage(table, columns) {
-  const fields = getFormFields(table, 'create', columns);
+export function curdNewPage(modelId: ModelId, columns) {
+  const fields = getFormFields(modelId, 'create', columns);
   const schema = {
     type: 'page',
     title: '新增',
@@ -295,7 +309,7 @@ function curdNewPage(table, columns) {
       {
         type: 'button',
         actionType: 'link',
-        link: `/crud/${table}/list`,
+        link: `/crud/${modelId}/list`,
         label: '返回列表'
       }
     ],
@@ -303,10 +317,10 @@ function curdNewPage(table, columns) {
       {
         title: '',
         type: 'form',
-        redirect: `/crud/${table}/list`,
+        redirect: `/crud/${modelId}/list`,
         mode: 'horizontal',
         name: 'sample-edit-form',
-        api: '/api/v1/system/model/' + table + '/create',
+        api: '/api/v1/system/model/' + modelId + '/create',
         controls: [...fields]
       }
     ]
@@ -315,8 +329,8 @@ function curdNewPage(table, columns) {
   // return Process("scripts.return.RSuccess", schema, "数据已成功导入");
 }
 // 查看页面
-function curdViewPage(table) {
-  const fields = getFormViewFields(table);
+export function curdViewPage(modelId: ModelId) {
+  const fields = getFormViewFields(modelId);
   // fields.map((field) => (field.static = true));
   // fields.map((field) => (field.disabled = true));
 
@@ -328,7 +342,7 @@ function curdViewPage(table) {
       {
         type: 'button',
         actionType: 'link',
-        link: `/crud/${table}/list`,
+        link: `/crud/${modelId}/list`,
         label: '返回列表'
       }
     ],
@@ -336,7 +350,7 @@ function curdViewPage(table) {
       {
         type: 'form',
         mode: 'horizontal',
-        initApi: '/api/v1/system/model/' + table + '/find/${params.id}',
+        initApi: '/api/v1/system/model/' + modelId + '/find/${params.id}',
         controls: [...fields]
       }
     ]
@@ -345,8 +359,8 @@ function curdViewPage(table) {
   // return Process("scripts.return.RSuccess", schema, "数据已成功导入");
 }
 // 编辑页面
-function curdEditPage(table, columns) {
-  const fields = getFormFields(table, 'update', columns);
+export function curdEditPage(modelId: ModelId, columns?: AmisUIColumn[]) {
+  const fields = getFormFields(modelId, 'update', columns);
   const schema = {
     type: 'page',
     title: '修改 ${id}',
@@ -355,7 +369,7 @@ function curdEditPage(table, columns) {
       {
         type: 'button',
         actionType: 'link',
-        link: `/crud/${table}/list`,
+        link: `/crud/${modelId}/list`,
         label: '返回列表'
       }
     ],
@@ -363,9 +377,9 @@ function curdEditPage(table, columns) {
       {
         type: 'form',
         mode: 'horizontal',
-        initApi: '/api/v1/system/model/' + table + '/find/${params.id}',
-        api: '/api/v1/system/model/' + table + '/update/$id',
-        redirect: `/crud/${table}/list`,
+        initApi: '/api/v1/system/model/' + modelId + '/find/${params.id}',
+        api: '/api/v1/system/model/' + modelId + '/update/$id',
+        redirect: `/crud/${modelId}/list`,
         controls: [...fields]
       }
     ]

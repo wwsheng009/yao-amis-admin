@@ -6,13 +6,14 @@ import {
   excelMapping,
   getWithsUrl
 } from '@scripts/amis/lib';
+import { AmisUIColumn, ModelId } from '@yao/types';
 
 // 直接生成一个数据库表对应的amis crud单一页面的配置源码
 // 有两个用途：对格式不高的，可以直接在页面中引用生成的模板
 // 对格式有要求的，使用studio命令生成页面后再修改
 
-// yao run scripts.amis.curd.curdTemplate demo.table
-export function curdTemplate(modelId: string, columns) {
+// yao run scripts.amis.curd.curdTemplate
+export function curdTemplate(modelId: ModelId, columns: AmisUIColumn[]) {
   const filterForm = getFilterFormFields(modelId, columns);
 
   const curdColumns = [...getModelFieldsWithQuick(modelId, columns)];

@@ -34,7 +34,7 @@ function checkType(value: string | number) {
  * @param {number | string} modelId 模型ID标识
  * @returns
  */
-export function getModelFromDB(modelId: string | number) {
+export function getModelFromDB(modelId: string | number): AmisModel {
   // 数字ID可能是数据库数据
 
   const wheres = [];
@@ -326,7 +326,8 @@ export function migrateModel(modelId: string, forceIn?: boolean) {
   // console.log("migrate force:", force);
 
   if (modelId.toLowerCase().startsWith('ddic.model') && force) {
-    throw new Exception(`不能删除系统模型:${modelId}`);
+    return;
+    // throw new Exception(`不能删除系统模型:${modelId}`);
   }
   const err = Process(`models.${modelId}.migrate`, force);
   // console.log("migrate err:", err);

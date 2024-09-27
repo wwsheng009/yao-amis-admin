@@ -1,3 +1,4 @@
+import { curdTemplate } from '@scripts/amis/curd';
 import { FileNameConvert } from '@scripts/system/lib';
 import { Process, FS, Exception } from '@yao/yao';
 
@@ -10,7 +11,7 @@ import { Process, FS, Exception } from '@yao/yao';
 const WorkingPagesLocation = '/amis_editor';
 const PagesLocation = '/pages';
 
-function getUserDir() {
+export function getUserDir() {
   let user_id = Process('session.get', 'user_id');
   if (!user_id) {
     user_id = '1';
@@ -21,7 +22,7 @@ function getUserDir() {
   return dir;
 }
 // 读取所有的page列表
-function getPages(dirIn) {
+export function getPages(dirIn: string) {
   let dir = dirIn;
   if (dir == null) {
     dir = getUserDir();
@@ -61,7 +62,7 @@ function getPages(dirIn) {
 }
 
 // yao studio run editor.saveFileRecord 1, "xxx/test.json"
-function saveFileRecord(user_id, file_name) {
+export function saveFileRecord(user_id: number, file_name: string) {
   console.log(`保存文件:${file_name},by userid:${user_id}`);
 
   if (!user_id || !file_name) {
@@ -83,7 +84,7 @@ function saveFileRecord(user_id, file_name) {
   }
 }
 // yao studio run editor.deleteFileRecord 1, "/public/amis-admin/pages_working/1/测试.json"
-function deleteFileRecord(user_id, file_name) {
+export function deleteFileRecord(user_id: number, file_name: string) {
   console.log(`删除文件:${file_name},by user_id:${user_id}`);
   if (!user_id || !file_name) {
     return;
@@ -96,7 +97,7 @@ function deleteFileRecord(user_id, file_name) {
   });
 }
 // 保存数据
-function savePage(file, payload) {
+export function savePage(file: string, payload: { body: any; type: string }) {
   if (!file || !payload) {
     return;
   }
@@ -128,7 +129,7 @@ function savePage(file, payload) {
   return { message: 'Page Saved' };
 }
 // 删除文件
-function deletePage(file) {
+export function deletePage(file: string) {
   const dir = getUserDir();
 
   let user_id = Process('session.get', 'user_id');
@@ -148,7 +149,7 @@ function deletePage(file) {
 
 // save single page to database
 // yao  run scripts.editor.localfile.loadSinglePageToDB site.json
-function loadSinglePageToDB(fname) {
+export function loadSinglePageToDB(fname: string) {
   const dir = getUserDir();
   const fs = new FS('system');
   const dataString = fs.ReadFile(dir + fname);
@@ -162,7 +163,7 @@ function loadSinglePageToDB(fname) {
 
 // dump the pages form database to file
 // yao studio run editor.dumpPagesFromDB
-function dumpPagesFromDB() {
+export function dumpPagesFromDB() {
   const pages = Process('scripts.editor.getPages');
   for (const key in pages) {
     const page = pages[key];
@@ -172,7 +173,7 @@ function dumpPagesFromDB() {
   }
 }
 // yao studio run editor.dumpSinglePageFromDB "tables.json"
-function dumpSinglePageFromDB(fname) {
+export function dumpSinglePageFromDB(fname: string) {
   const page = Process('scripts.editor.getPage', fname);
   if (page.type && page.type !== 'app') {
     savePage(fname, page);
@@ -187,7 +188,7 @@ function dumpSinglePageFromDB(fname) {
  * @param file 文件名
  * @param dsl dsl定义对象，会自动的转换成json
  */
-function MoveAndWrite(folder, file, dsl) {
+export function MoveAndWrite(folder: string, file: string, dsl: any) {
   Move(folder, file);
   WriteFile(folder ? `/${folder}/` + file : file, dsl);
 }
@@ -198,7 +199,7 @@ function MoveAndWrite(folder, file, dsl) {
  * @param {string} filename json file name
  * @param {object} data
  */
-function WriteFile(filename, data) {
+export function WriteFile(filename: string, data: any) {
   const fs = new FS('system');
   const nfilename = FileNameConvert(filename);
   if (!fs.Exists(nfilename)) {
@@ -219,7 +220,7 @@ function WriteFile(filename, data) {
  * yao studio run editor.Move
  * 文件复制移动逻辑
  */
-function Move(dir, name) {
+export function Move(dir: string, name: string) {
   let fname = name;
   if (!fname.toUpperCase().endsWith('.JSON')) {
     fname = fname + '.json';
@@ -243,7 +244,7 @@ function Move(dir, name) {
     return { message: `文件:${sourceFile}不存在` };
   }
 }
-function Mkdir(name) {
+export function Mkdir(name: string) {
   const fs = new FS('system');
   const res = fs.Exists(name);
   if (res !== true) {
@@ -257,11 +258,11 @@ function Mkdir(name) {
 //    -H 'Content-Type: application/json' \
 //    -H 'Authorization: Bearer <Studio JWT>' \
 //    -d '{ "args":["admin.menu"],"method":"createCurdPage"}'
-function createCurdPage(table) {
-  const page = Process('scripts.amis.curd.curdTemplate', table);
+export function createCurdPage(modelId: string) {
+  const page = curdTemplate(modelId, null); //Process('scripts.amis.curd.curdTemplate', table);
 
   const fs = new FS('system');
-  const fname = WorkingPagesLocation + table + '_amis_page.json';
+  const fname = WorkingPagesLocation + '/' + modelId + '_amis_page.json';
   if (!page.type) {
     // empty page
     return;
@@ -276,7 +277,7 @@ function createCurdPage(table) {
  * /api/__yao/widget/amis/crud-list/setting
  * yao studio run editor.loadPageToDB
  */
-function loadPageToDB() {
+export function loadPageToDB() {
   const pages = getPages(PagesLocation);
   for (const key in pages) {
     const page = pages[key];

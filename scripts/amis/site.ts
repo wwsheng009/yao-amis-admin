@@ -718,6 +718,12 @@ function getSystemMenu() {
               url: 'admin.file'
             },
             {
+              label: 'ODATA管理',
+              icon: 'fa fa-file',
+              schemaApi: '/api/v1/amis/pages/system.odata',
+              url: 'odata.view'
+            },
+            {
               label: '分块上传演示',
               icon: 'fa fa-file',
               schemaApi: '/api/v1/amis/pages/demo.fileChunkUpload',

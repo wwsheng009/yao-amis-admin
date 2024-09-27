@@ -1,9 +1,21 @@
 import { getModelDefinition } from '@scripts/amis/lib';
 import { DotName, IsMysql } from '@scripts/system/lib';
-import { AmisModelColumn, AmisViewComponent, AmisModel } from '@yao/types';
+import {
+  AmisModelColumn,
+  AmisViewComponent,
+  AmisModel,
+  AmisUIColumn,
+  ModelId
+} from '@yao/types';
 import { Process, log } from '@yao/yao';
 
-import { YaoForm, YaoModel, YaoQuery } from '@yaoapps/types';
+import {
+  YaoComponent,
+  YaoForm,
+  YaoModel,
+  YaoQuery,
+  YaoTable
+} from '@yaoapps/types';
 /**
  * Generate the menu items for xgen
  *
@@ -11,7 +23,7 @@ import { YaoForm, YaoModel, YaoQuery } from '@yaoapps/types';
  * @param {string} modelId
  * @param {Array} columns
  */
-export function generateMenuConfig(modelId: string, columns) {
+export function generateMenuConfig(modelId: string, columns: AmisUIColumn[]) {
   const modelDsl = getModelDefinition(modelId, columns);
 
   const name = modelDsl.name || modelId;
@@ -39,7 +51,11 @@ export function generateMenuConfig(modelId: string, columns) {
  * @param {Array} columns
  * @param {string} simple 简单模式
  */
-export function generateTableView(modelId: string, columns, simple) {
+export function generateTableView(
+  modelId: string,
+  columns: AmisUIColumn[],
+  simple: string
+) {
   if (simple == 'simple') {
     return [
       {
@@ -70,7 +86,12 @@ export function generateTableView(modelId: string, columns, simple) {
  * @param {Array} columns
  * @param {string} simple 简单模式
  */
-export function generateFormView(modelId: string, columns, simple, type) {
+export function generateFormView(
+  modelId: ModelId,
+  columns: AmisUIColumn[],
+  simple: string,
+  type: string
+) {
   if (simple == 'simple') {
     return [
       {
@@ -191,7 +212,7 @@ function getXgenTableSchema(modelDsl: AmisModel) {
       filter: {},
       table: {}
     }
-  };
+  } as YaoTable.TableDSL;
   columns = MakeColumnOrder(columns);
   columns.forEach((column) => {
     const table = TableColumnCast(column, modelDsl);
@@ -331,7 +352,7 @@ function getXgenFormSchema(modelDsl: YaoModel.ModelDSL, type = 'view') {
     fields: {
       form: {}
     }
-  };
+  } as YaoForm.FormDSL;
   columns = MakeColumnOrder(columns);
   columns.forEach((column) => {
     const form = FormColumnCast(column, modelDsl);
@@ -725,8 +746,8 @@ function IsFile(column, component, modelDsl) {
   };
   return component;
 }
-function GetFileType(column) {
-  let viewType = 'A';
+function GetFileType(column: YaoModel.ModelColumn) {
+  let viewType = 'A' as YaoComponent.ViewComponentEnum;
   let fileType = 'unknown';
 
   if (column.type == 'image' || column.type == 'images') {
@@ -1641,7 +1662,10 @@ function CastListColumn(
  * @param column column
  * @returns new form template
  */
-function AddTabColumn(formTemplate, column) {
+function AddTabColumn(
+  formTemplate: YaoForm.FormDSL,
+  column: { name: string; width?: number }
+) {
   const section = formTemplate.layout.form.sections.find((sec) =>
     sec.columns?.find((col) => col.tabs != null)
   );
@@ -1803,7 +1827,11 @@ function FormColumnCast(
  * @param modelDsl 模型引用
  * @returns
  */
-function IsFormFile(column, component, modelDsl: YaoModel.ModelDSL) {
+function IsFormFile(
+  column: YaoModel.ModelColumn,
+  component: AmisViewComponent,
+  modelDsl: YaoModel.ModelDSL
+) {
   if (!['video', 'image', 'file', 'audio'].includes(column.type)) {
     return component;
   }
@@ -1843,7 +1871,11 @@ function IsFormFile(column, component, modelDsl: YaoModel.ModelDSL) {
  * @param component 新对象
  * @returns 返回新对象
  */
-function EditSelect(column, modelDsl, component) {
+function EditSelect(
+  column: YaoModel.ModelColumn,
+  modelDsl: YaoModel.ModelDSL,
+  component: AmisViewComponent
+) {
   const props = column.props || {};
   const name = column.name;
   const bind = `${name}`;
@@ -1872,7 +1904,7 @@ function EditSelect(column, modelDsl, component) {
             ...props
           }
         }
-      };
+      } as AmisViewComponent;
       return component;
     }
     // component = Withs(component, rel);
