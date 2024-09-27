@@ -106,12 +106,11 @@
           }
         },
         {
-          "label": "配置地址",
+          "label": "Echart配置",
           "name": "configUrl",
-          "searchable": false,
-          "sortable": false,
-          "type": "text",
-          "value": "/api/v1/chart/data/${id}"
+          "type": "link",
+          "href": "/api/v1/chart/data/${id}?token=${cookie:token}",
+          "body": "/api/v1/chart/data/${id}"
         },
         {
           "quickEdit": false,
