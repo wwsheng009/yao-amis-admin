@@ -5,8 +5,9 @@ import {
 import { IsMysql } from '@scripts/system/lib';
 import { isDateTimeType } from '@scripts/system/col_type';
 
-import { Process, Exception } from '@yao/yao';
+import { Process, Exception, log } from '@yao/yao';
 import { YaoModel } from '@yaoapps/types';
+import { ModelId } from '@yao/types';
 
 // 推荐在循环对象属性的时候，使用for...in,
 // 在遍历数组的时候的时候使用for...of。
@@ -51,8 +52,11 @@ export function mergeQueryObject(querysIn, payload) {
  * @param {object} queryParams yao解析的queryParams
  * @returns 返回Yao QueryParam
  */
-export function queryToQueryParam(modelIn, querysIn, queryParams = {}) {
-  let model = modelIn;
+export function queryToQueryParam(
+  modelIn: ModelId | YaoModel.ModelDSL,
+  querysIn,
+  queryParams = {}
+) {
   if (querysIn == null && queryParams == null) {
     return {};
   }
@@ -65,6 +69,8 @@ export function queryToQueryParam(modelIn, querysIn, queryParams = {}) {
   let whereCount = 1;
 
   const columnMap = {};
+  let model = modelIn as YaoModel.ModelDSL;
+
   if (typeof model === 'string') {
     model = FindAndLoadYaoModelById(model);
   }
@@ -242,8 +248,8 @@ export function queryToQueryParam(modelIn, querysIn, queryParams = {}) {
 
   return queryParam;
 }
-function getDbModelColumnMap(model: YaoModel.ModelDSL) {
-  let modelDsl = model;
+function getDbModelColumnMap(model: ModelId | YaoModel.ModelDSL) {
+  let modelDsl = model as YaoModel.ModelDSL;
   if (typeof model === 'string') {
     modelDsl = FindAndLoadDBModelById(model);
   }
@@ -273,7 +279,7 @@ function getYaoModelColumnMap(model: YaoModel.ModelDSL) {
   return columnMap;
 }
 
-export function updateOutputData(model: YaoModel.ModelDSL, Data) {
+export function updateOutputData(model: ModelId | YaoModel.ModelDSL, Data) {
   if (Array.isArray(Data)) {
     let modelDsl = model;
     if (typeof modelDsl === 'string') {
@@ -282,8 +288,7 @@ export function updateOutputData(model: YaoModel.ModelDSL, Data) {
     }
     const dbColmap = getDbModelColumnMap(modelDsl);
 
-    Data = Data.map((line) => updateOutputDataLine(dbColmap, line));
-    return Data;
+    return Data.map((line) => updateOutputDataLine(dbColmap, line));
   }
   return Data;
 }
@@ -322,6 +327,7 @@ function updateOutputDataLine(dbColMap, line) {
               }
             }
           } catch (error) {
+            log.Error('invalid field data' + error.message);
             // Handle error if required
           }
         }
@@ -435,7 +441,9 @@ export function updateInputData(model: YaoModel.ModelDSL, Data) {
       ) {
         try {
           line[key] = JSON.parse(field);
-        } catch (error) {}
+        } catch (error) {
+          log.Error('invalid field data' + error.message);
+        }
       }
     }
 
@@ -600,7 +608,7 @@ function FilterArrayWithQuery(list, querysIn, searchFields = []) {
     }
   }
 
-  function filterArray(queryObject, AndMode) {
+  function filterArray(queryObject, AndMode: boolean) {
     const arr = list.filter((item) => {
       for (const key in queryObject) {
         let value = queryObject[key] + '';
