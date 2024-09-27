@@ -1,7 +1,7 @@
 import { Process } from '@yao/yao';
 
 // yao run scripts.app.blog.site.getPost
-function getPost(post_id) {
+export function getPost(post_id: number) {
   const [b] = Process('models.app.blog.post.get', {
     wheres: [
       {
@@ -25,7 +25,7 @@ function getPost(post_id) {
 }
 
 // yao run scripts.app.blog.site.getPostList
-function getPostList() {
+export function getPostList() {
   const list = Process('models.app.blog.post.get', {
     select: ['title', 'id', 'post_type', 'img', 'description'],
     wheres: [

@@ -1,0 +1,63 @@
+<!DOCTYPE html><html lang="en" class="dark scroll-smooth" dir="ltr"><head>
+  <meta charset="UTF-8"/>
+  <title>
+    Yao Bench
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <meta name="description" content="Tailwind CSS Saas &amp; Software Landing Page Template"/>
+  <meta name="keywords" content="yao, saas, software, tailwind css"/>
+  <meta name="author" content="Shreethemes"/>
+  <meta name="website" content="https://shreethemes.in"/>
+  <meta name="email" content="support@shreethemes.in"/>
+  <meta name="version" content="2.0.0"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  
+
+  <!-- favicon -->
+
+  <!-- CSS -->
+
+  <!-- Main Css -->
+
+  <link rel="stylesheet" href="/entry/assets/css/out.css"/>
+<script s:ns="" s:cn="" src="/entry/assets/libsui.min.js" type="text/javascript" name="libsui"></script>
+</head>
+
+<body s:ns="ns_abdb667fcd79001b" s:public="/entry" s:assets="/entry/assets">
+  <div class="{{ path == &#39;/entry/index&#39; ? &#39;lg:fixed&#39; :&#39;&#39; }} w-full">
+    <nav class="flex items-center justify-center lg:justify-between flex-wrap p-6 lg:px-0 container mx-auto">
+        <!--Logo etc-->
+        <div class="flex items-center">
+            <div class="logo_wrap absolute flex justify_center align_center bg_white"><img class="logo" src="/api/__yao/app/icons/app.png" alt="logo"/></div>
+        </div>
+
+        <!--Toggle button (hidden on large screens)-->
+        <button id="isToggle" onclick="toggleMenu()" type="button" class="navbar-toggle" aria-label="Menu">
+            <svg class="h-6 w-6 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path id="icon-hide" class="hidden" fill-rule="evenodd" clip-rule="evenodd" d="M18.278 16.864a1 1 0 0 1-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 0 1-1.414-1.414l4.828-4.829-4.828-4.828a1 1 0 0 1 1.414-1.414l4.829 4.828 4.828-4.828a1 1 0 1 1 1.414 1.414l-4.828 4.829 4.828 4.828z"></path>
+                <path id="icon-show" class="" fill-rule="evenodd" d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"></path>
+            </svg>
+        </button>
+
+        <!--Menu-->
+        <div id="nav-menu" class="nav-menu hidden" x-show.transition="true">
+
+            <ul s:if="navigation.items != null" class="pt-6 lg:pt-0 list-reset lg:flex justify-end flex-1 items-center">
+                <li s:for="navigation.items" s:for-item="item" s:for-index="idx" class="nav__item mr-3">
+                    <a onclick="showMenu(false)" class="text-ml inline-block text-gray-500 no-underline hover:text-indigo-500 py-2 px-4" href="{{ item.url }}">{{ item.text }}</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+  <!-- JAVASCRIPTS -->
+  <script src="/entry/assets/js/app.js"></script>
+
+
+
+
+<script name="config" type="json">
+{"title":"","guard":"","cacheStore":"","cache":0,"dataCache":0,"api":null,"root":"/entry"}
+</script>
+
+</body></html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="en" class="dark scroll-smooth" dir="ltr"><head>
+  <meta charset="UTF-8"/>
+  <title>
+    Yao Bench
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <meta name="description" content="Tailwind CSS Saas &amp; Software Landing Page Template"/>
+  <meta name="keywords" content="yao, saas, software, tailwind css"/>
+  <meta name="author" content="Shreethemes"/>
+  <meta name="website" content="https://shreethemes.in"/>
+  <meta name="email" content="support@shreethemes.in"/>
+  <meta name="version" content="2.0.0"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  
+
+  <!-- favicon -->
+
+  <!-- CSS -->
+
+  <!-- Main Css -->
+
+  <link rel="stylesheet" href="/entry/assets/css/out.css"/>
+<script s:ns="" s:cn="" src="/entry/assets/libsui.min.js" type="text/javascript" name="libsui"></script>
+</head>
+
+<body s:ns="ns_23a0f395eb0831b0" s:public="/entry" s:assets="/entry/assets">
+  <div class="container mx-auto lg:h-screen flex flex-col justify-center items-center">
+
+
+    <h1>
+        欢迎来到
+        <strong class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
+            {{title}}
+        </strong>
+    </h1>
+
+    <p>
+        Yao Amis-admin，强大灵活的数据管理平台
+    </p>
+
+    <div s:if="quicklinks.links != null" class="w-full max-w-2xl grid grid-cols-1 lg:grid-cols-2 gap-4 my-8 px-4 lg:mx-0">
+        <a s:for="quicklinks.links" s:for-item="item" s:for-index="idx" href="{{item.url}}" target="{{item.target}}" class="p-5 border rounded border-gray-200 hover:border-purple-400">
+            <h3>{{item.title}}
+                →</h3>
+            <p>{{item.desc}}</p>
+        </a>
+    </div>
+</div>
+  <!-- JAVASCRIPTS -->
+  <script src="/entry/assets/js/app.js"></script>
+
+
+
+
+<script name="config" type="json">
+{"cacheStore":"","cache":0,"dataCache":0,"api":null,"root":"/entry","title":"","guard":""}
+</script>
+
+</body></html>

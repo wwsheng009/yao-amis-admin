@@ -1,7 +1,7 @@
-import { Process, Exception } from '@yao/yao';
+import { Process, Exception, log } from '@yao/yao';
 
 function getModelList() {
-  const viewList = Process('models.system.odata_view.get', {
+  const viewList = Process('models.system.odata.view.get', {
     wheres: [{ column: 'disabled', value: false }],
     limit: 10000
   });
@@ -94,7 +94,7 @@ export function getModelNameList() {
  * @returns odata view list
  */
 export function getOdataViewList() {
-  const list = Process('models.system.odata_view.get', {
+  const list = Process('models.system.odata.view.get', {
     wheres: [
       {
         column: 'disabled',
@@ -106,7 +106,7 @@ export function getOdataViewList() {
   return list;
 }
 
-function getModelsEntityset2() {
+export function getModelsEntityset2() {
   const list = getModelList();
   // const modelsList = Process("widget.models");
   // const list = modelDefinitionList(modelsList);
@@ -127,7 +127,11 @@ function getModelsEntityset2() {
  * @param {object} modelData
  * @returns
  */
-function modelDefinitionList(modelData) {
+export function modelDefinitionList(modelData: {
+  children: any[];
+  data: any;
+  forEach: (arg0: (line: any) => void) => void;
+}) {
   let list = [];
 
   if (modelData.children) {
@@ -153,8 +157,12 @@ function modelDefinitionList(modelData) {
  * @param {string} table_id
  * @returns array of model column_id
  */
-function getTableColumns(table_id) {
+function getTableColumns(table_id: string) {
   if (!table_id) {
+    return [];
+  }
+  if (!Process('yao.table.exists', table_id)) {
+    log.Error(`Odata.View设置视图${table_id}不存在`);
     return [];
   }
   const setting = Process('yao.table.setting', table_id);
@@ -176,11 +184,11 @@ function getTableColumns(table_id) {
  * @param {string} viewId
  * @returns
  */
-export function getModel(viewId) {
+export function getModel(viewId: string) {
   if (!viewId) {
     return { columns: [] };
   }
-  const [odataview] = Process('models.system.odata_view.get', {
+  const [odataview] = Process('models.system.odata.view.get', {
     wheres: [
       {
         column: 'name',
@@ -191,6 +199,9 @@ export function getModel(viewId) {
   });
   if (!odataview) {
     throw new Exception(`视图：${viewId}不存在！`);
+  }
+  if (odataview.disabled) {
+    throw new Exception(`视图：${viewId}已被禁用！`);
   }
   const model_id = odataview.model_id;
 
@@ -232,7 +243,10 @@ export function getModel(viewId) {
   }
   return model;
 }
-function findModelById(models, id) {
+function findModelById(
+  models: { children: any; data: { ID: string } },
+  id: string
+) {
   if (typeof models !== 'object' || models === null || models === undefined) {
     return null;
   }

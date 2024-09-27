@@ -57,6 +57,12 @@
         "url": "https://wwsheng009.github.io/yao-docs",
         "desc": "项目使用文档",
         "target": "_blank"
+      },
+      {
+        "title": "Blog",
+        "url": "/blog/index.sui",
+        "desc": "内置博客",
+        "target": "_blank"
       }
     ]
   }

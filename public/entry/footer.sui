@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="en" class="dark scroll-smooth" dir="ltr"><head>
+  <meta charset="UTF-8"/>
+  <title>
+    Yao Bench
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <meta name="description" content="Tailwind CSS Saas &amp; Software Landing Page Template"/>
+  <meta name="keywords" content="yao, saas, software, tailwind css"/>
+  <meta name="author" content="Shreethemes"/>
+  <meta name="website" content="https://shreethemes.in"/>
+  <meta name="email" content="support@shreethemes.in"/>
+  <meta name="version" content="2.0.0"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  
+
+  <!-- favicon -->
+
+  <!-- CSS -->
+
+  <!-- Main Css -->
+
+  <link rel="stylesheet" href="/entry/assets/css/out.css"/>
+<script s:ns="" s:cn="" src="/entry/assets/libsui.min.js" type="text/javascript" name="libsui"></script>
+</head>
+
+<body s:ns="ns_de1dd8821505389e" s:public="/entry" s:assets="/entry/assets">
+  <footer class="{{ path == &#39;/entry/index&#39; ? &#39;lg:fixed&#39; :&#39;&#39; }} bottom-0 text-center w-full py-4">
+    <small class="text-gray-500">Copyright ©
+        {{settings.name}}
+        2023. Made with ❤ by
+        <a href="{{settings.url}}" target="_blank" class="underline">{{settings.author}}</a>
+        •
+        <a href="https://github.com/wwsheng009/yao-amis-admin" class="underline" target="_blank" rel="noopener">View on
+            Github</a>
+    </small>
+</footer>
+  <!-- JAVASCRIPTS -->
+  <script src="/entry/assets/js/app.js"></script>
+
+
+
+
+<script name="config" type="json">
+{"title":"","guard":"","cacheStore":"","cache":0,"dataCache":0,"api":null,"root":"/entry"}
+</script>
+
+</body></html>

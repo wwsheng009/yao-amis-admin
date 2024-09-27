@@ -3,7 +3,7 @@ import { Process } from '@yao/yao';
 
 // scripts.admin.user.saveSetting
 export function saveSetting(payload) {
-  console.log('scripts.admin.user.saveSetting');
+  // console.log('scripts.admin.user.saveSetting');
   const user_id = Process('session.get', 'user_id');
 
   let setting = payload.system_theme_setting;

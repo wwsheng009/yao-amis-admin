@@ -6,6 +6,7 @@
   "guard": "-",
   "paths": [
     {
+      // /api/proxy/call
       "guard": "scripts.debug.security.CheckAccessKey",
       "path": "/call",
       "method": "POST",

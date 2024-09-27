@@ -8,7 +8,7 @@ import { ConvertUrlToQsl } from '@scripts/odata/lib/queryparam';
 import { decodePartsRequest } from '@scripts/odata/lib/decodebatch';
 import { Process } from '@yao/yao';
 
-function postData(
+export function postData(
   pathIn,
   queryIn,
   headers,
@@ -31,7 +31,7 @@ function postData(
   }
 }
 
-function processBatchPost(metaFullPath, headers, parts) {
+export function processBatchPost(metaFullPath, headers, parts) {
   // parts
   const aRequest = decodePartsRequest(headers, parts);
 
@@ -66,7 +66,7 @@ ${sResponse}
   return sResponseBody;
 }
 
-function getMetaFullPath(fullpath, schema, host) {
+export function getMetaFullPath(fullpath, schema, host) {
   const rootpath = fullpath.split('/').slice(0, -1).join('/');
   const metapath = `${rootpath}/$metadata`;
   const metaFullPath = `${schema}://${host}${metapath}`;
@@ -80,7 +80,7 @@ function getMetaFullPath(fullpath, schema, host) {
  * @param {string} host
  * @returns
  */
-function getBasePath(fullpath, schema, host) {
+export function getBasePath(fullpath, schema, host) {
   const rootpath = fullpath.split('/').slice(0, -1).join('/');
   const fullPath = `${schema}://${host}${rootpath}/`;
   return fullPath;
@@ -94,7 +94,7 @@ function getBasePath(fullpath, schema, host) {
  * @param {object} query 查询参数
  * @returns
  */
-function getData(sPathIn, oQueryIn, headers, host, path, schema, fullpath) {
+export function getData(sPathIn, oQueryIn, headers, host, path, schema, fullpath) {
   // console.log("headers:", headers);
   const oQuery = oQueryIn || {};
   // console.log('pathIn:', sPathIn);
@@ -143,7 +143,7 @@ function getData(sPathIn, oQueryIn, headers, host, path, schema, fullpath) {
   }
 }
 
-function getDataFromRequest(oRequest, basePath) {
+export function getDataFromRequest(oRequest, basePath) {
   const metaFullPath = basePath + '$metadata';
   const oQsl = ConvertUrlToQsl(oRequest);
   // console.log('oQsl', oQsl);
@@ -224,7 +224,7 @@ function getDataFromRequest(oRequest, basePath) {
  * @param {string} service 服务
  * @returns
  */
-// function getMetaData() {
+// export function getMetaData() {
 //   return Process("scripts.main.test");
 // }
 
