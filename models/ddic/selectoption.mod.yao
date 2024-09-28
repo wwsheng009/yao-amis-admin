@@ -1,5 +1,4 @@
 {
-    "ID": "ddic.selectoption",
     "columns": [
         {
             "comment": "ID",
@@ -59,7 +58,6 @@
             "type": "boolean"
         }
     ],
-    "id": 4,
     "name": "搜索帮助",
     "option": {
         "timestamps": true
@@ -71,7 +69,7 @@
         "model":{
             "type": "hasOne",
             "model": "ddic.model",
-            "key": "identity",
+            "key": "id",
             "foreign": "model_id",
             "query": {
               "select": []
