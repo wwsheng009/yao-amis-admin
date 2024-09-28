@@ -1,0 +1,139 @@
+{
+  "columns": [
+    {
+      "comment": "ID",
+      "label": "ID",
+      "name": "id",
+      "primary": true,
+      "type": "id"
+    },
+    {
+      "comment": "发件人邮箱地址",
+      "label": "发件人",
+      "length": 255,
+      "name": "sender",
+      "type": "string",
+      "validations": [
+        {
+          "args": ["string"],
+          "message": "{{input}}类型错误, {{label}}应该为字符串",
+          "method": "typeof"
+        },
+        {
+          "message": "{{input}}不是有效的邮箱地址",
+          "method": "email"
+        }
+      ]
+    },
+    {
+      "comment": "收件人邮箱地址",
+      "label": "收件人",
+      "length": 255,
+      "name": "receiver",
+      "type": "json",
+      "validations": [
+        {
+          "args": ["string"],
+          "message": "{{input}}类型错误, {{label}}应该为字符串",
+          "method": "typeof"
+        },
+        {
+          "message": "{{input}}不是有效的邮箱地址",
+          "method": "email"
+        }
+      ]
+    },
+    {
+      "comment": "抄送者邮箱地址, 可为多个，使用逗号分隔",
+      "label": "抄送者",
+      "length": 255,
+      "name": "cc",
+      "nullable": true,
+      "type": "json",
+      "validations": [
+        {
+          "args": ["string"],
+          "message": "{{input}}类型错误, {{label}}应该为字符串",
+          "method": "typeof"
+        },
+        {
+          "args": ["^([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+,?)+$"],
+          "message": "{{input}}不是有效的邮箱地址列表",
+          "method": "pattern"
+        }
+      ]
+    },
+    {
+      "comment": "邮件主题",
+      "label": "主题",
+      "length": 255,
+      "name": "subject",
+      "nullable": true,
+      "type": "string",
+      "validations": [
+        {
+          "args": ["string"],
+          "message": "{{input}}类型错误, {{label}}应该为字符串",
+          "method": "typeof"
+        },
+        {
+          "args": [255],
+          "message": "{{label}}不能超过255个字符",
+          "method": "maxLength"
+        }
+      ]
+    },
+    {
+      "comment": "邮件内容",
+      "label": "内容",
+      "name": "content",
+      "nullable": true,
+      "type": "longText",
+      "validations": [
+        {
+          "args": ["string"],
+          "message": "{{input}}类型错误, {{label}}应该为字符串",
+          "method": "typeof"
+        }
+      ]
+    },
+    {
+      "comment": "邮件状态: sent 已发送, received 已接收, failed 发送失败",
+      "default": "sent",
+      "label": "状态",
+      "name": "status",
+      "option": ["sent", "received", "failed"],
+      "type": "enum",
+      "validations": [
+        {
+          "args": ["sent", "received", "failed"],
+          "message": "{{input}}不在许可范围, {{label}}应该为 sent/received/failed",
+          "method": "enum"
+        }
+      ]
+    },
+    {
+      "comment": "邮件发送时间",
+      "label": "发送时间",
+      "name": "sent_at",
+      "nullable": true,
+      "type": "datetime",
+      "validations": [
+        {
+          "args": ["datetime"],
+          "message": "{{input}}不是有效的日期时间",
+          "method": "typeof"
+        }
+      ]
+    }
+  ],
+  "name": "邮件信息",
+  "option": {
+    "soft_deletes": true,
+    "timestamps": true
+  },
+  "table": {
+    "comment": "邮件发送与接收信息",
+    "name": "app_email_message"
+  }
+}

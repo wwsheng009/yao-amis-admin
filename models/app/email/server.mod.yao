@@ -1,69 +1,98 @@
 {
-  "table": {
-    "name": "app_email_server"
-  },
-  "option": {
-    "soft_deletes": true,
-    "timestamps": true
-  },
   "columns": [
     {
+      "comment": "ID",
       "label": "ID",
       "name": "id",
-      "type": "ID",
-      "comment": "ID",
-      "primary": true
+      "primary": true,
+      "type": "id"
     },
     {
+      "comment": "邮件服务器地址，例如 smtp.qq.com 或 imap.qq.com",
+      "label": "服务器地址",
+      "length": 100,
+      "name": "server",
       "type": "string",
-      "comment": "名称",
-      "label": "名称",
-      "length": 256,
-      "name": "name"
+      "validations": [
+        {
+          "args": ["string"],
+          "message": "{{input}}类型错误, {{label}}应该为字符串",
+          "method": "typeof"
+        }
+      ]
     },
     {
-      "type": "enum",
-      "comment": "类型",
-      "default": "stmp",
-      "label": "类型",
-      "option": [
-        "imap",
-        "stmp"
-      ],
-      "length": 256,
-      "name": "type"
-    },
-    {
-      "comment": "Host",
-      "label": "主机",
-      "type": "string",
-      "length": 256,
-      "name": "host",
-      "index": true
-    },
-    {
+      "comment": "服务器端口号",
       "label": "端口",
       "name": "port",
       "type": "integer",
-      "comment": "Port",
-      "index": true
+      "validations": [
+        {
+          "args": ["\\d*"],
+          "message": "{{input}}类型错误, {{label}}应该为整数",
+          "method": "pattern"
+        },
+        {
+          "args": [1],
+          "message": "{{label}}必须是正整数",
+          "method": "min"
+        }
+      ]
     },
     {
+      "comment": "登录用户名",
+      "label": "用户名",
+      "length": 50,
       "name": "username",
       "type": "string",
-      "label": "用户名",
-      "comment": "Username",
-      "length": 256,
-      "index": true
+      "validations": [
+        {
+          "args": ["string"],
+          "message": "{{input}}类型错误, {{label}}应该为字符串",
+          "method": "typeof"
+        }
+      ]
     },
     {
-      "name": "password",
+      "comment": "邮件服务器协议类型",
+      "label": "协议类型",
+      "name": "type",
+      "option": ["smtp", "imap"],
+      "type": "enum",
+      "validations": [
+        {
+          "args": ["smtp", "imap"],
+          "message": "{{input}}不在许可范围, {{label}}应该为 smtp 或 imap",
+          "method": "enum"
+        }
+      ]
+    },
+    {
+      "comment": "登录密码",
       "label": "密码",
       "length": 256,
+      "name": "password",
       "type": "string",
-      "comment": "Password"
+      "validations": [
+        {
+          "args": ["string"],
+          "message": "{{input}}类型错误, {{label}}应该为字符串",
+          "method": "typeof"
+        },
+        {
+          "args": [6],
+          "message": "{{label}}应该至少包含6位字符",
+          "method": "minLength"
+        }
+      ]
     }
   ],
-  "name": "app.email.server",
-  "relations": {}
+  "name": "邮件服务器账号配置",
+  "option": {
+    "timestamps": true
+  },
+  "table": {
+    "comment": "邮件服务器账号配置表",
+    "name": "app_email_server"
+  }
 }
