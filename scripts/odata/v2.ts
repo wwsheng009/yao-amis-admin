@@ -7,17 +7,18 @@ import {
 import { ConvertUrlToQsl } from '@scripts/odata/lib/queryparam';
 import { decodePartsRequest } from '@scripts/odata/lib/decodebatch';
 import { Process } from '@yao/yao';
+import { QueryObjectIn } from '@yao/request';
 
 export function postData(
-  pathIn,
-  queryIn,
-  headers,
-  host,
-  path,
-  schema,
-  fullpath,
+  pathIn: string,
+  queryIn: QueryObjectIn,
+  headers: QueryObjectIn,
+  host: string,
+  path: string,
+  schema: string,
+  fullpath: string,
   payload,
-  parts
+  parts: string[]
 ) {
   console.log('headers:', headers);
   console.log('>>>>>>>>>>>>>>>>>>>>called post');
@@ -31,7 +32,11 @@ export function postData(
   }
 }
 
-export function processBatchPost(metaFullPath, headers, parts) {
+export function processBatchPost(
+  metaFullPath: string,
+  headers: QueryObjectIn,
+  parts: string[]
+) {
   // parts
   const aRequest = decodePartsRequest(headers, parts);
 
@@ -66,7 +71,11 @@ ${sResponse}
   return sResponseBody;
 }
 
-export function getMetaFullPath(fullpath, schema, host) {
+export function getMetaFullPath(
+  fullpath: string,
+  schema: string,
+  host: string
+) {
   const rootpath = fullpath.split('/').slice(0, -1).join('/');
   const metapath = `${rootpath}/$metadata`;
   const metaFullPath = `${schema}://${host}${metapath}`;
@@ -96,20 +105,21 @@ export function getBasePath(fullpath: string, schema: string, host: string) {
  */
 export function getData(
   sPathIn: string,
-  oQueryIn: {},
-  headers: any,
+  oQueryIn: QueryObjectIn,
+  headers: QueryObjectIn,
   host: string,
   path: string,
   schema: string,
   fullpath: string
 ) {
-  // console.log("headers:", headers);
-  const oQuery = oQueryIn || {};
+  // console.log('headers:', headers);
   // console.log('pathIn:', sPathIn);
 
-  // console.log('query:', oQuery);
+  // console.log('oQueryIn:', oQueryIn);
   // console.log('path:', path);
   // console.log('fullpath', fullpath);
+
+  const oQuery = oQueryIn || {};
 
   let pathParam = sPathIn;
   if (pathParam.startsWith('/')) {
@@ -151,10 +161,15 @@ export function getData(
   }
 }
 
-export function getDataFromRequest(oRequest, basePath) {
+export function getDataFromRequest(
+  oRequest: {
+    headers: QueryObjectIn;
+    URL: { path: string; query: QueryObjectIn };
+  },
+  basePath: string
+) {
   const metaFullPath = basePath + '$metadata';
   const oQsl = ConvertUrlToQsl(oRequest);
-  // console.log('oQsl', oQsl);
   // const q = new Query();
 
   // 计算数量
@@ -205,8 +220,6 @@ export function getDataFromRequest(oRequest, basePath) {
         if (data1 && data1.length) {
           data = data1[0];
           data['@odata.context'] = `${metaFullPath}#${oQsl.entitySet}/$entity`;
-        } else {
-          data = {};
         }
       }
 

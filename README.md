@@ -174,6 +174,16 @@ amis相关的页面配置目录保存在目录/data/pages目录下。
 
 其它的目录请参考Yao引擎的文档说明。
 
+## Scripts Doc
+
+生成typescript文档。
+
+```sh
+pnpm add -g typedoc;
+
+typedoc --out ./dist/docs ./scripts/**/*
+```
+
 ## 参考
 
 amis 框架地址:https://github.com/baidu/amis

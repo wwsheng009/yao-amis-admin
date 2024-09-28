@@ -4,6 +4,7 @@ import { convertJsonToXml, getMetaDataXml2 } from '@scripts/odata/lib/process';
 import { ConvertUrlToQsl } from '@scripts/odata/lib/queryparam';
 import { decodePartsRequest } from '@scripts/odata/lib/decodebatch';
 import { Process, Query } from '@yao/yao';
+import { QueryObjectIn } from '@yao/request';
 
 // function head() { }
 
@@ -78,14 +79,22 @@ function getMetaFullPath(fullpath, schema, host) {
 /**
  * 转换查询参数
  * 注意：golang 不支持在query里带有符号;
- * @param {string} pathIn url path
+ * @param {string} sPathIn url path
  * @param {object} query 查询参数
  * @returns
  */
-function getData(pathIn, queryIn, headers, host, path, schema, fullpath) {
+export function getData(
+  sPathIn: string,
+  oQueryIn: QueryObjectIn,
+  headers: QueryObjectIn,
+  host: string,
+  path: string,
+  schema: string,
+  fullpath: string
+) {
   // console.log('headers:', headers);
 
-  const query = queryIn || {};
+  const oQuery = oQueryIn || {};
   // console.log('pathIn:', pathIn);
 
   // console.log('query:', query);
@@ -94,7 +103,7 @@ function getData(pathIn, queryIn, headers, host, path, schema, fullpath) {
 
   const metaFullPath = getMetaFullPath(fullpath, schema, host);
 
-  let pathParam = pathIn;
+  let pathParam = sPathIn;
   if (pathParam.startsWith('/')) {
     // check if string starts with "/"
     pathParam = pathParam.substring(1); // remove the first character
@@ -117,11 +126,11 @@ function getData(pathIn, queryIn, headers, host, path, schema, fullpath) {
     return data;
   }
 
-  const oRequest = {};
-  oRequest.headers = headers;
-  oRequest.URL = {};
-  oRequest.URL.path = pathIn;
-  oRequest.URL.query = query;
+  const oRequest = { headers, URL: { path: sPathIn, query: oQuery } };
+  // oRequest.headers = headers;
+  // oRequest.URL = {};
+  // oRequest.URL.path = sPathIn;
+  // oRequest.URL.query = oQuery;
   return getDataFromRequest(oRequest, basePath);
 }
 
@@ -173,8 +182,6 @@ function getDataFromRequest(oRequest, basePath) {
         if (data1 && data1.length) {
           data = data1[0];
           data['@odata.context'] = `${metaFullPath}#${oQsl.entitySet}/$entity`;
-        } else {
-          data = {};
         }
       }
 

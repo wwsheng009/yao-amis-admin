@@ -13,6 +13,8 @@ import {
   ssWrite
 } from '@yaoapps/client';
 
+export function Require(script: string) {}
+
 export {
   Process,
   Exception,

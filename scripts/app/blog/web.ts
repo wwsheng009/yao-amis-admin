@@ -1,4 +1,6 @@
-const convert = Require('./xml-js.js');
+import { Exception, FS, log, Process, Require } from '@yao/yao';
+
+const convert = Require('app.blog.xml-js');
 
 // 这里实现了metaweblog的api服务器，可以使用第三方的博客编辑工具把笔记内容推送到系统里。
 // 实现的功能：
@@ -11,31 +13,50 @@ const convert = Require('./xml-js.js');
 
 /**
  * handler the blog request
+ * scripts.app.blog.web.metaWeblogHandler
  * @param {string} blog blog name,you can create multi blog in the system.
  * @param {object} query
  * @param {object} body payload xmlrpc message
  * @returns xml message
  */
-function metaWeblogHandler(blog, query, body) {
+export function metaWeblogHandler(
+  blog: string,
+  query: { methodName: string | any[] },
+  body: string
+) {
   // http://localhost:5099/api/v1/blog/reuest
   // 接口协议可以参考cnblog的系统
   // https://rpc.cnblogs.com/metaweblog/wwsheng009
-
   let method = '';
   if (Array.isArray(query.methodName) && query.methodName.length) {
     method = query.methodName[0];
   }
   let bodyData = null;
   if (body) {
+    // console.log('request body', body);
+    body = body.replace(/^<\?xml[\s\S]*?\?>/, '');
+    // if (body.startsWith('<?xml version="1.0"?>')) {
+    //   body = body.slice('<?xml version="1.0"?>'.length);
+    // }
+    // if (body.startsWith('<?xml version="1.0" encoding="utf-8"?>')) {
+    //   body = body.slice('<?xml version="1.0" encoding="utf-8"?>'.length);
+    // }
+    body = body.replace(/[\n\r]/g, '');
+
+    // console.log('request body after', body);
     const options = { compact: true };
     const jsObject = convert.xml2js(body, options);
     bodyData = convertData(jsObject);
     method = bodyData.methodCall.methodName;
   }
   if (!method) {
-    throw new Exception('错误的请求');
+    throw new Exception('错误的请求,缺少参数：methodCall');
   }
+
   const params = bodyData.methodCall.params;
+
+  // console.log('method', method);
+  // console.log('params', params);
 
   let userNamePos = 1;
   let passwordPos = 2;
@@ -84,7 +105,7 @@ function metaWeblogHandler(blog, query, body) {
  * 创建新的分类
  * @returns new id
  */
-function newCategory(params) {
+export function newCategory(params: any[]) {
   const postId = params[0];
   if (postId == null || postId == '') {
     return getErrorMessage('更新时需要指定id');
@@ -108,7 +129,7 @@ function newCategory(params) {
  * yao run scripts.app.blog.webblog.getUsersBlogs 1 'myblog'
  * @returns Array
  */
-function getUsersBlogs(user_id, blog, params) {
+export function getUsersBlogs(user_id: number, blog: string, params: any) {
   const list = Process('models.app.blog.site.get', {
     wheres: [
       {
@@ -128,7 +149,7 @@ function getUsersBlogs(user_id, blog, params) {
       name: 'myblog'
     });
   }
-  const bloglist = list.map((l) => {
+  const bloglist = list.map((l: { id: number; url: string; name: string }) => {
     return {
       blogid: l.id,
       url: l.url,
@@ -144,7 +165,7 @@ function getUsersBlogs(user_id, blog, params) {
  * @param {object} params
  * @returns
  */
-function getPost(user_id, params) {
+export function getPost(user_id: number, params: any[]) {
   const postId = params[0];
   const user_Id = user_id;
   if (postId == null || postId == '') {
@@ -184,7 +205,7 @@ function getPost(user_id, params) {
     };
     return getRpcResponse(post);
   } catch (error) {
-    return getErrorMessage(`ID:${postId}不存在`);
+    return getErrorMessage(`ID:${postId}不存在` + error.message);
   }
 }
 
@@ -195,7 +216,7 @@ function getPost(user_id, params) {
  * @param {object} params
  * @returns
  */
-function getRecentPosts(user_id, params) {
+export function getRecentPosts(user_id: number, params: string[]) {
   const numberOfPosts = params[3] ? parseInt(params[3]) : 100; // numberOfPosts
   const blogs = Process('models.app.blog.post.get', {
     wheres: [{ column: 'user_id', value: user_id }],
@@ -203,28 +224,41 @@ function getRecentPosts(user_id, params) {
     limit: numberOfPosts
   });
 
-  const blogs2 = blogs.map((b) => {
-    return {
-      dateCreated: b.created_at,
-      description: encodeURIComponent(b.content),
-      title: b.title,
-      categories: b.category || [],
-      enclosure: '',
-      link: '',
-      permalink: '',
-      postid: b.id,
-      source: b.source,
-      userid: b.user_id,
-      mt_allow_comments: '',
-      mt_allow_pings: '',
-      mt_convert_breaks: '',
-      mt_text_more: '',
-      mt_excerpt: '',
-      mt_keywords: b.keywords,
-      wp_slug: b.wp_slug,
-      type: b.type
-    };
-  });
+  const blogs2 = blogs.map(
+    (b: {
+      created_at: string;
+      content: string | number | boolean;
+      title: string;
+      category: string;
+      id: number;
+      source: string;
+      user_id: number;
+      keywords: string;
+      wp_slug: string;
+      type: string;
+    }) => {
+      return {
+        dateCreated: b.created_at,
+        description: encodeURIComponent(b.content),
+        title: b.title,
+        categories: b.category || [],
+        enclosure: '',
+        link: '',
+        permalink: '',
+        postid: b.id,
+        source: b.source,
+        userid: b.user_id,
+        mt_allow_comments: '',
+        mt_allow_pings: '',
+        mt_convert_breaks: '',
+        mt_text_more: '',
+        mt_excerpt: '',
+        mt_keywords: b.keywords,
+        wp_slug: b.wp_slug,
+        type: b.type
+      };
+    }
+  );
   return getRpcResponse(blogs2);
 }
 //
@@ -234,18 +268,20 @@ function getRecentPosts(user_id, params) {
  * yao run scripts.app.blog.webblog.getCategories
  * @returns
  */
-function getCategories() {
+export function getCategories() {
   const categories = Process('models.app.blog.category.get', {});
-  const categories2 = categories.map((c) => {
-    return {
-      description: c.description || c.name,
-      categoryid: c.id,
-      title: c.name
-    };
-  });
+  const categories2 = categories.map(
+    (c: { description: string; name: string; id: number }) => {
+      return {
+        description: c.description || c.name,
+        categoryid: c.id,
+        title: c.name
+      };
+    }
+  );
   return getRpcResponse(categories2);
 }
-function deletePost(user_id, params) {
+export function deletePost(user_id: number, params: any[]) {
   // console.log("deletePost>>>>>>>>>:", params)
   const postId = params[1];
 
@@ -270,7 +306,7 @@ function deletePost(user_id, params) {
   return getRpcResponse(true);
 }
 
-function editPost(user_id, params) {
+export function editPost(user_id: number, params: any[]) {
   let postId = params[0];
   if (postId == null || postId == '') {
     return getErrorMessage('更新时需要指定id');
@@ -291,7 +327,8 @@ function editPost(user_id, params) {
   });
 
   if (!postRow) {
-    return getErrorMessage(`ID:${postId}不存在`);
+    return newPost(user_id, params);
+    // return getErrorMessage(`ID:${postId}不存在`);
   }
 
   const post = params[3];
@@ -306,15 +343,38 @@ function editPost(user_id, params) {
     updated_at: formatDate(post.dateCreated),
     source: post.source,
     type: post.type ? post.type : 'html',
-    categories: post.category || [],
+    category: getCategoryIdsByName(post.categories),
     user_id: user_id
   };
   postId = Process('models.app.blog.post.save', newArticle);
   return getRpcResponse(postId + '');
   // return getPostNewEditMessage(postId)
 }
-function newPost(user_id, params) {
-  // console.log("newPost params", params)
+
+/**
+ * filter the categorys
+ * @param categories the categories for the article
+ * @returns
+ */
+function getCategoryIdsByName(categories: string[]): string[] {
+  const newNames = [];
+  if (!categories || !Array.isArray(categories) || !categories.length) {
+    return newNames;
+  }
+  const categoriesDb = Process('models.app.blog.category.get', {});
+  const map = {};
+  categoriesDb.forEach((c: { name: string | number; id: number }) => {
+    map[c.name] = c.name;
+  });
+
+  categories.forEach((n) => {
+    if (map[n] != null) {
+      newNames.push(map[n]);
+    }
+  });
+  return newNames;
+}
+export function newPost(user_id: number, params: any[]) {
   const post = params[3];
   const content = unicodeToUtf8(post.description);
   const newArticle = {
@@ -325,15 +385,15 @@ function newPost(user_id, params) {
     post_type: post.post_type,
     created_at: formatDate(post.dateCreated),
     user_id: user_id,
-    type: post.type ? post.type : 'html'
+    type: post.type ? post.type : 'html',
+    category: getCategoryIdsByName(post.categories)
   };
   const postId = Process('models.app.blog.post.save', newArticle);
-  // console.log("newPost postId:", postId)
-  return getRpcResponse(postId + '');
+  return getRpcResponse(postId);
   // return getPostNewEditMessage(postId)
 }
 
-function getNormorFileName(fname) {
+export function getNormorFileName(fname: string) {
   let filename = fname;
   const info = {
     fname: '',
@@ -355,8 +415,7 @@ function getNormorFileName(fname) {
   return info.fname + '.' + info.ext;
 }
 
-function newMediaObject(params) {
-  // console.log("newMediaObject", params)
+export function newMediaObject(params: any[]) {
   const upLoadData = params[3];
   let filename = upLoadData.name;
   const type = upLoadData.type;
@@ -367,18 +426,16 @@ function newMediaObject(params) {
   filename = getNormorFileName(filename);
 
   const filePath = `${folder}/${filename}`;
-  // console.log("filename", filename)
 
   const newFileName = `/upload/public/${filePath}`;
   fs.WriteFileBase64(newFileName, bits);
   const fnameEncode = encodeURIComponent(filePath);
   const fileApi = `/api/v1/fs/public/file/download?name=${fnameEncode}`;
-  // console.log("fileApi", fileApi)
 
   return getRpcResponse({ url: fileApi });
   // return getUpdateFileMessage(fileApi)
 }
-function formatDate(dateString) {
+export function formatDate(dateString: string | any[]) {
   if (dateString == null || dateString.length < 10) {
     return dateString;
   }
@@ -390,14 +447,14 @@ function formatDate(dateString) {
   const formattedDate = `${year}-${month}-${day} ${time}`;
   return formattedDate;
 }
-function unicodeToUtf8(unicodeString) {
+export function unicodeToUtf8(unicodeString: string | number | boolean) {
   const encodedURI = encodeURIComponent(unicodeString);
   const utf8String = decodeURIComponent(encodedURI);
 
   return utf8String;
 }
 
-function getErrorMessage(message, code = 500) {
+export function getErrorMessage(message: string, code = 500) {
   return {
     content: `<?xml version="1.0" encoding="utf-8"?>
             <methodResponse>
@@ -423,7 +480,7 @@ function getErrorMessage(message, code = 500) {
   };
 }
 
-const convertData = (obj) => {
+const convertData = (obj: any) => {
   if (typeof obj !== 'object' || obj === null) {
     return obj;
   }
@@ -480,7 +537,7 @@ const convertData = (obj) => {
   return result;
 };
 
-function convertJs2xml(data) {
+export function convertJs2xml(data: any) {
   if (data == null) {
     return '';
   }
@@ -512,7 +569,7 @@ function convertJs2xml(data) {
     return `<value><${type}>${data}</${type}></value>`;
   }
 }
-function isDateTimeOrDate(value) {
+export function isDateTimeOrDate(value: string | number | Date) {
   const date = new Date(value);
   // Check if the date is valid
   if (isNaN(date.getTime())) {
@@ -527,20 +584,58 @@ function isDateTimeOrDate(value) {
   ) {
     return true; // Assuming a datetime
   }
-  return true; // Assuming a date
+  return false; // Assuming a date
 }
-function formatDateIso(dateIn) {
+export function formatDateIso(dateIn: string | number | Date) {
   const date = new Date(dateIn);
   try {
     const isoString = date.toISOString();
     const formattedDate = isoString.replace(/[:-]/g, '').replace('T', '');
     return formattedDate;
   } catch (error) {
-    console.log('format date error:', error.message);
+    log.Error('format date error:', error.message);
     return dateIn;
   }
 }
-function getXmlType(data) {
+
+function isInteger(value: any): boolean {
+  if (typeof value === 'number') {
+    return Number.isInteger(value);
+  }
+  if (typeof value === 'string') {
+    const parsed = Number(value);
+    return !isNaN(parsed) && Number.isInteger(parsed);
+  }
+  return false;
+}
+
+function isFloat(value: any): boolean {
+  if (typeof value === 'number') {
+    return !Number.isInteger(value);
+  }
+  if (typeof value === 'string') {
+    const parsed = Number(value);
+    return !isNaN(parsed) && !Number.isInteger(parsed);
+  }
+  return false;
+}
+
+/**
+ * get the xml type for the data
+ * yao run scripts.app.blog.web.getXmlType
+ * @param data any
+ * @returns
+ */
+export function getXmlType(data: unknown) {
+  if (data == null) {
+    return 'string';
+  }
+  // if (isInteger(data)) {
+  //   return 'int';
+  // }
+  // if (isFloat(data)) {
+  //   return 'double';
+  // }
   const type = typeof data;
   switch (type) {
     case 'bigint':
@@ -561,6 +656,7 @@ function getXmlType(data) {
       if (data.toLowerCase() == 'true' || data.toLowerCase() == 'false') {
         return 'boolean';
       }
+      break;
     case 'undefined':
       return 'string';
   }
@@ -569,11 +665,12 @@ function getXmlType(data) {
   }
   return 'string';
 }
-
-// yao run scripts.app.blog.webblog.convertJson2RpcXml true
-// yao run scripts.app.blog.webblog.convertJson2RpcXml 1
-// yao run scripts.app.blog.webblog.convertJson2RpcXml '::{"name":"test"}'
-function getRpcResponse(data) {
+// const t = getXmlType(1);
+// console.log('t');
+// yao run scripts.app.blog.web.convertJs2xml true
+// yao run scripts.app.blog.web.convertJs2xml 1
+// yao run scripts.app.blog.web.convertJs2xml '::{"name":"test"}'
+export function getRpcResponse(data: any) {
   const xml = `<?xml version="1.0" encoding="utf-8"?><methodResponse><params><param>${convertJs2xml(data)}</param></params></methodResponse>`;
   // console.log("response:", xml)
   return {

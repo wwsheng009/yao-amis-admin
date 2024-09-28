@@ -185,7 +185,7 @@ export class XmlWriter {
   // data根数据。
   // {"document":{}}
   writeXml(data, status) {
-    const xml = this.visitor('document', data, '', '')
+    const xml = this.visitor('document', data, '')
       .replace(/\s*</g, '<')
       .replace(/>\s*/g, '>');
 

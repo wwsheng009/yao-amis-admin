@@ -535,16 +535,17 @@ function UpdateRelationFromDsl(
  * @param {object} modelDsl
  */
 export function ConvertAmisUIModelToModel(modelDsl: AmisUIModel): AmisModel {
-  const model = { ...modelDsl } as unknown as AmisModel;
+  let model = { ...modelDsl } as unknown as AmisModel;
   model.id = modelDsl.header?.id;
   model.ID = modelDsl.header?.identity;
   model.comment = modelDsl.header?.comment;
   model.name = modelDsl.header?.name;
 
-  delete model.header;
+  delete model['header'];
 
   if (Array.isArray(model.columns)) {
     const cols = model.columns as unknown as AmisUIColumn[];
+    /** ui element should the same name as the model column name,but theres is some case */
     cols.forEach((col) => {
       // 兼容处理,amis index字段用于表格索引,使用is_index作替代
       if (Object.prototype.hasOwnProperty.call(col, 'is_index')) {
@@ -556,6 +557,7 @@ export function ConvertAmisUIModelToModel(modelDsl: AmisUIModel): AmisModel {
       }
     });
   }
+  model = CompleteModel(model);
   return model;
 }
 /**
@@ -592,9 +594,8 @@ export function ConvertModelToAmisUIModel(modelDsl: AmisModel) {
  */
 export function saveModelApi(payload: AmisUIModel) {
   // 处理amis与yao的兼容性
-  let model = ConvertAmisUIModelToModel(payload);
+  const model = ConvertAmisUIModelToModel(payload);
 
-  model = CompleteModel(model);
   CheckModel(model);
 
   // 传入的是模型数据，转成表结构后再保存
@@ -1266,14 +1267,13 @@ function CheckImportModelLine(modelId: string, tableName: string) {
 
 /**
  * 从Neo助手生成的模型导入
- * @param {object} payload 模型对象
+ * @param {AmisUIModel} modelDsl 模型对象
  * @returns
  */
-export function ImportFromNeo(payload: AmisUIModel) {
+export function ImportFromNeo(modelDsl: AmisUIModel) {
   // 处理amis与yao的兼容性
-  let model = ConvertAmisUIModelToModel(payload);
+  const model = ConvertAmisUIModelToModel(modelDsl);
 
-  model = CompleteModel(model);
   CheckModel(model);
 
   SaveModelToLocal(model);

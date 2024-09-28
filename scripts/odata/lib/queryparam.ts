@@ -3,6 +3,9 @@ import { getModel } from '@scripts/odata/lib/model';
 import functions from '@scripts/odata/lib/operator';
 
 import { Exception } from '@yao/yao';
+import { QueryObjectIn } from '@yao/request';
+import { convertUrlQueryObj, getFirstConfigByKey } from '@lib/request';
+import { Qsl } from '@yao/odata';
 
 const OPERATORS_KEYS = ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'has'];
 const stringHelper = {
@@ -21,8 +24,8 @@ const stringHelper = {
 };
 
 const validator = {
-  formatValue: (value) => {
-    let val;
+  formatValue: (value: string) => {
+    let val: boolean | number | string;
     if (value === 'true') {
       val = true;
     } else if (value === 'false') {
@@ -43,43 +46,22 @@ const validator = {
   }
 };
 
-/**
- * convert the query object into query string
- * @param {object} oQuery query object
- * @returns string
- */
-function queryObjectToUrl(oQuery) {
-  let sParams = '';
-  for (const key in oQuery) {
-    if (Object.prototype.hasOwnProperty.call(oQuery, key)) {
-      const value = Array.isArray(oQuery[key])
-        ? oQuery[key].join(',')
-        : oQuery[key];
-      // sParams += `${decodeURIComponent(key)}=${decodeURIComponent(value)}&`;
-      sParams += `${key}=${value}&`;
-    }
-  }
-  if (sParams.endsWith('&')) {
-    sParams = sParams.slice(0, -1);
-  }
-  return sParams;
-}
-// function sRequestUrl(sUrl) { }
-
-export function ConvertUrlToQsl(oUrl) {
-  // console.log("oUrl====>", oUrl);
+export function ConvertUrlToQsl(oUrl: {
+  headers: QueryObjectIn;
+  URL: { path: string; query: QueryObjectIn };
+}): Qsl {
   const headers = oUrl.headers;
 
   let pathParam = oUrl.URL.path;
-  const query = oUrl.URL.query;
+  const query = convertUrlQueryObj(oUrl.URL.query);
 
-  let sRequestUrl = queryObjectToUrl(query);
+  // let sRequestUrl = queryObjectToUrl(query);
 
-  if (sRequestUrl !== '') {
-    sRequestUrl = `${pathParam}?${sRequestUrl}`;
-  } else {
-    sRequestUrl = pathParam;
-  }
+  // if (sRequestUrl !== '') {
+  //   sRequestUrl = `${pathParam}?${sRequestUrl}`;
+  // } else {
+  //   sRequestUrl = pathParam;
+  // }
   // const q1 = sRequestUrl(sRequestUrl);
 
   // console.log("sRequestUrl:", sRequestUrl);
@@ -125,21 +107,22 @@ export function ConvertUrlToQsl(oUrl) {
   // }
 
   let format = 'json';
-  if (headers['Accept'] && headers['Accept'].length) {
-    if (headers['Accept'][0].toLowerCase().includes('xml')) {
-      format = 'xml';
-    }
+  if (getFirstConfigByKey(headers, 'Accept').includes('xml')) {
+    format = 'xml';
   }
-  if (query['$format'] && query['$format'].length) {
-    format = query['$format'][0].trim();
+  if (query['$format']) {
+    format = query['$format'];
   }
+
   // 默认json
   if (format != 'json' && format != 'xml') {
     format = 'json';
   }
   // http://host/service/Products?$count=true
   if (query['$count']) {
-    count = query['$count'];
+    if (query['$count'].toLowerCase() == 'true') {
+      count = true;
+    }
   }
   let viewName = entitySet;
   const modelDsl = getModel(viewName);
@@ -155,6 +138,7 @@ export function ConvertUrlToQsl(oUrl) {
     return {
       isCount: true,
       entitySet,
+      format,
       model: modelDsl,
       qsl: {
         // sql: {
@@ -174,30 +158,25 @@ export function ConvertUrlToQsl(oUrl) {
 
   // console.log(`service :${entitySet},id:${id}`); // Output: "some content"
 
-  if (query['$select'] && query['$select'].length) {
-    const selectstr = query['$select'][0].trim();
-    if (selectstr !== '*') {
-      queryDsl['select'] = selectstr.split(',').map((item) => item.trim());
-    }
+  const selectstr = query['$select'];
+  if (selectstr && selectstr !== '*') {
+    queryDsl['select'] = selectstr.split(',').map((item) => item.trim());
   }
-  if (query['$skip'] && query['$skip'].length) {
-    const skip = query['$skip'][0];
-    if (!isNaN(skip)) {
-      queryDsl['offset'] = skip;
-    }
+
+  const skip = query['$skip'];
+  if (!isNaN(Number(skip))) {
+    queryDsl['offset'] = skip;
   }
-  if (query['$top'] && query['$top'].length) {
-    const top = query['$top'][0];
-    if (!isNaN(top)) {
-      queryDsl['limit'] = Number(top);
-    }
+
+  const top = query['$top'];
+  if (!isNaN(Number(top))) {
+    queryDsl['limit'] = Number(top);
   }
 
   // http://host/service/Products?$orderby=ReleaseDate asc, Rating desc
   if (id == '') {
-    if (query['$orderby'] && query['$orderby'].length) {
-      const orderby = query['$orderby'][0].trim();
-
+    const orderby = query['$orderby'];
+    if (orderby) {
       queryDsl['orders'] = orderby.split(',').map((item) => {
         const data = item.trim().split(/\s+/);
 
@@ -217,8 +196,8 @@ export function ConvertUrlToQsl(oUrl) {
     // http://localhost:5099/api/v1/odata/service/table?$filter=grade lt 10.00
     // http://host/service/Categories?$filter=Products/$count lt 10
 
-    if (query['$filter'] && query['$filter'].length) {
-      const filter = query['$filter'][0].trim();
+    if (query['$filter']) {
+      const filter = query['$filter'];
 
       const condition = splitByKeys(filter, ['and', 'or']);
       // const condition = splitByKeys(filter, ["and", "or"]).filter(
@@ -249,7 +228,7 @@ export function ConvertUrlToQsl(oUrl) {
 
         if (key === 'id') key = 'id';
 
-        let val;
+        let val: any;
         if (value !== undefined) {
           const result = validator.formatValue(value);
           if (result.err) {
@@ -406,7 +385,7 @@ function mergeList(list) {
   return list.join(' ').trim();
 }
 
-function splitByKeys(sentence, keys = []) {
+function splitByKeys(sentence: string, keys = []) {
   let keysArray = keys;
   if (!(keysArray instanceof Array)) {
     keysArray = [keysArray];

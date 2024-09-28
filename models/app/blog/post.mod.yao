@@ -30,10 +30,10 @@
     },
     {
       "comment": "状态",
-      "default": true,
+      "default": 0,
       "label": "状态",
       "name": "status",
-      "type": "boolean"
+      "type": "integer"
     },
     {
       "comment": "内容",
@@ -62,10 +62,7 @@
       "name": "type",
       "type": "enum",
       "default": "html",
-      "option": [
-        "html",
-        "md"
-      ],
+      "option": ["html", "md"],
       "nullable": true
     },
     {
@@ -113,4 +110,6 @@
   }
 }
 // yao migrate -n app.blog.post --reset
+
+
 // yao migrate -n system.api --reset

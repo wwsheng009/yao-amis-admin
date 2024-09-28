@@ -40,8 +40,7 @@ export function Unload(id: number) {
 // ========================================
 
 /**
- * @process widgets.dyform.Setting
- * @args [id, dsl]
+ * widgets.dyform.Setting
  */
 export function Setting(id: number, dsl) {
   dsl = dsl || {};

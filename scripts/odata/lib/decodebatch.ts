@@ -1,6 +1,7 @@
 // 参考：https://ui5.sap.com/resources/sap/ui/model/odata/v4/lib/_Batch-dbg.js
 
 import { parseUrl } from '@scripts/odata/lib/url';
+import { QueryObjectIn } from '@yao/request';
 import { Exception } from '@yao/yao';
 /**
  * Extracts value of the parameter with the specified <code>sParameterName</code>
@@ -12,7 +13,7 @@ import { Exception } from '@yao/yao';
  *   Name of HTTP header parameter e.g. "charset"
  * @returns {string} The HTTP header parameter value
  */
-function getHeaderParameterValue(sHeaderValue, sParameterName) {
+function getHeaderParameterValue(sHeaderValue: string, sParameterName: string) {
   const rHeaderParameter = /(\S*?)=(?:"(.+)"|(\S+))/;
   let iParamIndex,
     aHeaderParts = sHeaderValue.split(';'),
@@ -210,8 +211,16 @@ function getHeaderParameterValue(sHeaderValue, sParameterName) {
 
 //   return aResponses;
 // }
-
-export function decodePartsRequest(headers, parts) {
+interface Request {
+  version: string;
+  headers: QueryObjectIn;
+  body: any;
+  URL: { [key: string]: any };
+  requstText: string;
+  method: string;
+  urlText: string;
+}
+export function decodePartsRequest(headers: QueryObjectIn, parts: string[]) {
   // let contentType = "";
   // if (headers["Content-Type"] && headers["Content-Type"].length) {
   //   contentType = headers["Content-Type"][0];
@@ -219,7 +228,7 @@ export function decodePartsRequest(headers, parts) {
 
   const aRequest = [];
   parts.forEach((sBatchPart) => {
-    const oRequest = {};
+    const oRequest = {} as Request;
 
     // 包含两部分，一个是headers,另外是body
     // iMimeHeadersEnd = sBatchPart.indexOf("\r\n\r\n");
@@ -249,11 +258,14 @@ export function decodePartsRequest(headers, parts) {
       const sHeaderValue = sHeader.slice(iColonIndex + 1).trim();
 
       // 解析成数组，与yao保持一致。
-      if (oRequest.headers.hasOwnProperty(sHeaderName)) {
+      if (Object.prototype.hasOwnProperty.call(oRequest.headers, sHeaderName)) {
         if (Array.isArray(oRequest.headers[sHeaderName])) {
           oRequest.headers[sHeaderName].push(sHeaderValue);
         } else {
-          oRequest.headers[sHeaderName] = [query[sHeaderName], sHeaderValue];
+          oRequest.headers[sHeaderName] = [
+            oRequest.headers[sHeaderName],
+            sHeaderValue
+          ];
         }
       } else {
         // 总是设置成数组，与yao的解析保持一致。

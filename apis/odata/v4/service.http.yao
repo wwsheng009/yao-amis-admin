@@ -24,8 +24,8 @@
       ],
       "out": {
         "status": 200,
-        "Body": "{{data}}",
-        "Headers": {
+        "body": "{{data}}",
+        "headers": {
           "Content-Type": "{{type}}",
           "odata-version": "4.0"
         }
@@ -52,12 +52,12 @@
       ],
       "out": {
         "status": 200,
-        "Headers": {
+        "headers": {
           "Content-Type": "multipart/mixed;boundary=batch_foobarbaz",
           "odata-version": "4.0"
         }
       }
-    },
+    }
     // {
     //   // api/v1/odata/
     //   "name": "入口",

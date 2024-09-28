@@ -1,5 +1,13 @@
-export function parseUrl(urlString) {
-  const url = {};
+interface UrlObj {
+  schema: string;
+  hostname: string;
+  port: string;
+  path: string;
+  query: { [key: string]: any };
+}
+
+export function parseUrl(urlString: string) {
+  const url = {} as UrlObj;
 
   // parse query string into query object
   const query = {};

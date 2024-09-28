@@ -33,7 +33,7 @@ import {
 export function getModelDefinition(
   modelId: ModelId,
   columnsIn?: AmisUIColumn[]
-) {
+): AmisModel {
   // let model = Process(
   //   'scripts.system.model.getModelDslById', // 优先从数据库中加载，
   //   DotName(modelId)
@@ -680,7 +680,7 @@ export function getModelFieldsWithQuick(
     let label = column.label;
 
     formColumn = updateAmisFormColFromModel(formColumn, column);
-    formColumn = updateAmisFormColCommon(formColumn, column, model);
+    formColumn = updateAmisFormColCommon(formColumn, column, model, 'create');
     if (formColumn.isID) {
       formColumn.quickEdit = false;
       delete formColumn.isID;

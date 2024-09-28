@@ -1,9 +1,12 @@
-const { SlashName, FileNameConvert } = Require('system.lib');
+import { AmisModel, ModelId } from '@yao/types';
+import { FS, Process } from '@yao/yao';
+
+import { SlashName, FileNameConvert } from '@scripts/system/lib';
 /**
  * yao studio run model.GenerateModelFile
  * @param modelid model id
  */
-function GenerateModelFile(modelid) {
+export function GenerateModelFile(modelid: ModelId) {
   const model = Process('models.ddic.model.Find', modelid, {
     withs: {
       columns: { withs: { element: {} } }
@@ -20,8 +23,8 @@ function GenerateModelFile(modelid) {
   return SaveModelToFile(m);
 }
 
-function SaveModelToFile(model) {
-  let modelName = SlashName(model.name);
+export function SaveModelToFile(model: AmisModel) {
+  const modelName = SlashName(model.name);
   const filename = `/models/${modelName}.mod.json`;
 
   const fs = new FS('dsl');
