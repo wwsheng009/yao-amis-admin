@@ -13,6 +13,8 @@ import { RunTransaction } from '@scripts/system/db';
 
 import { Process, Exception } from '@yao/yao';
 import { ModelId } from '@yao/types';
+import { YaoModel, YaoQuery } from '@yaoapps/types';
+import { QueryObjectIn } from '@yao/request';
 
 /**
  * 查找数据
@@ -30,9 +32,9 @@ export function dataSearch(
   modelId: ModelId,
   pageIn: number,
   perPageIn: number,
-  querysIn,
-  queryParams,
-  payload
+  querysIn: QueryObjectIn,
+  queryParams: YaoQuery.QueryDSL,
+  payload: object
 ) {
   const querys = mergeQueryObject(querysIn, payload);
 
@@ -75,10 +77,10 @@ export function dataSearch(
     data.data = updateOutputData(modelId, data.data);
 
     if (Object.keys(withs2).length > 0) {
-      data.data.forEach((line) => {
+      data.data.forEach((line: { [x: string]: any }) => {
         for (const key in withs2) {
           const element = withs2[key];
-          let query = {} as any;
+          let query = {} as YaoQuery.QueryDSL;
           if (element.query) {
             query = { ...element.query };
           }
@@ -113,7 +115,7 @@ function generateUUID() {
     return v.toString(16);
   });
 }
-function makeFake(modelId) {
+function makeFake(modelId: ModelId) {
   const modelDsl = FindAndLoadYaoModelById(modelId);
 
   const fakeData = {};
@@ -237,9 +239,15 @@ export function getData(modelId: string, id: number) {
   return data;
 }
 
-// 保存记录
-// yao run scripts.amis.data.model.saveData
-function saveData(modelId, payload) {
+/**
+ * 保存记录
+ * save the data for special model
+ * yao run scripts.amis.data.model.saveData 'admin.user' '::{}'
+ * @param modelId ModelId
+ * @param payload data to be saved
+ * @returns id of the data
+ */
+function saveData(modelId: ModelId, payload: { [x: string]: any; id: number }) {
   const modelDsl = FindAndLoadYaoModelById(modelId);
 
   payload = updateInputData(modelDsl, payload);
@@ -286,8 +294,8 @@ function saveData(modelId, payload) {
           wheres: [{ column: w.key, value: payload[w.foreign] }]
         });
         const idsNew = lines.map((l) => l.id);
-        const idsOld = exist.map((l) => l.id);
-        const idsDeleted = idsOld.filter((id) => !idsNew.includes(id));
+        const idsOld = exist.map((l: { id: any }) => l.id);
+        const idsDeleted = idsOld.filter((id: any) => !idsNew.includes(id));
         // console.log(`idsnew`, idsNew);
         // console.log(`idsOld`, idsOld);
         // console.log(`idsDeleted`, idsDeleted);
@@ -314,37 +322,48 @@ function saveData(modelId, payload) {
 
 // 保存记录
 // yao run scripts.amis.data.model.saveDataById
-export function saveDataById(model, id, payload) {
+export function saveDataById(
+  model: ModelId,
+  id: number,
+  payload: { id: number }
+) {
   payload.id = id;
   return saveData(model, payload);
 }
 // 创建新记录
-export function newData(model, payload) {
+export function newData(model: ModelId, payload: any) {
   return saveData(model, payload);
 }
 
 // 批量创建新记录
-export function newBatchData(model, payload) {
+export function newBatchData(
+  model: YaoModel.ModelDSL,
+  payload: { batch: boolean }
+) {
   payload.batch = updateInputData(model, payload.batch);
   Process(`models.${model}.eachSave`, payload.batch);
 }
 
 // 删除记录，支持单条或是批量
-export function deleteData(model, ids) {
+export function deleteData(modelId: string, ids: string) {
   const myArray = ids.split(',');
 
-  myArray.forEach((id) => {
+  myArray.forEach((id: string) => {
     // Process("yao.model.Delete", model, id);
-    Process(`models.${model}.Delete`, id);
+    Process(`models.${modelId}.Delete`, id);
   });
 }
 // 批量更新数据
-export function bulkUpdate(model, ids, payload) {
+export function bulkUpdate(
+  modelId: YaoModel.ModelDSL,
+  ids: string,
+  payload: any
+) {
   const myArray = ids.split(',');
-  myArray.forEach((id) => {
+  myArray.forEach((id: string) => {
     // Process("yao.model.Update", model, id, payload);
-    payload = updateInputData(model, payload);
-    Process(`models.${model}.Update`, id, payload);
+    payload = updateInputData(modelId, payload);
+    Process(`models.${modelId}.Update`, id, payload);
   });
 }
 
@@ -360,9 +379,12 @@ export function dummy() {
  *
  * yao run scripts.amis.data.model.selectOptions model_list
  * @param {string} modelId model id
- * @param {object} querys querys
  */
-export function selectOptions(modelId: ModelId, querysIn, payload) {
+export function selectOptions(
+  modelId: ModelId,
+  querysIn: QueryObjectIn,
+  payload: object
+) {
   if (!modelId) {
     throw new Exception('需要指定模型');
   }
@@ -403,7 +425,7 @@ export function selectOptions(modelId: ModelId, querysIn, payload) {
   }
 
   const data = Process('yao.component.SelectOptions', query);
-  data.forEach((x) => {
+  data.forEach((x: { label: string; value: any }) => {
     const isNull = x.label == null;
     x.label = x.label || x.value;
     if (join && !isNull) {

@@ -6,15 +6,16 @@ import { IsMysql } from '@scripts/system/lib';
 import { isDateTimeType } from '@scripts/system/col_type';
 
 import { Process, Exception, log } from '@yao/yao';
-import { YaoModel } from '@yaoapps/types';
+import { YaoModel, YaoQuery } from '@yaoapps/types';
 import { ModelId } from '@yao/types';
+import { QueryObjectIn } from '@yao/request';
 
 // 推荐在循环对象属性的时候，使用for...in,
 // 在遍历数组的时候的时候使用for...of。
 // for...in循环出的是key，for...of循环出的是value
 // 注意，for...of是ES6新引入的特性。修复了ES5引入的for...in的不足
 // for...of不能循环普通的对象，需要通过和Object.keys()搭配使用
-export function mergeQueryObject(querysIn, payload) {
+export function mergeQueryObject(querysIn: QueryObjectIn, payload: object) {
   // console.log(`types of querysIn${typeof querysIn}`);
   // console.log(`types of payload${typeof payload}`);
 
@@ -47,15 +48,15 @@ export function mergeQueryObject(querysIn, payload) {
 
 /**
  * 转换URL查询对象成YAO的QueryParam对象
- * @param {object} model 模型定义
- * @param {object} querys URL查询对象
+ * @param {object} modelIn 模型定义
+ * @param {object} querysIn URL查询对象
  * @param {object} queryParams yao解析的queryParams
  * @returns 返回Yao QueryParam
  */
 export function queryToQueryParam(
   modelIn: ModelId | YaoModel.ModelDSL,
-  querysIn,
-  queryParams = {}
+  querysIn: QueryObjectIn,
+  queryParams?: YaoQuery.QueryDSL
 ) {
   if (querysIn == null && queryParams == null) {
     return {};
@@ -263,7 +264,9 @@ function getDbModelColumnMap(model: ModelId | YaoModel.ModelDSL) {
   }
   return columnMap;
 }
-function getYaoModelColumnMap(model: YaoModel.ModelDSL) {
+function getYaoModelColumnMap(model: YaoModel.ModelDSL): {
+  [key: string]: YaoModel.ModelColumn;
+} {
   let modelDsl = model;
   if (typeof model === 'string') {
     modelDsl = FindAndLoadYaoModelById(model);
@@ -353,7 +356,7 @@ export function updateInputData(model: YaoModel.ModelDSL, Data: any) {
   const hasUserId = yaoColMap['user_id'] !== null; // columns.some(col=>col.name = 'user_id')
   const user_id = Process('session.get', 'user_id');
 
-  function updateLine(line) {
+  function updateLine(line: { [x: string]: any }) {
     if (typeof line !== 'object') {
       return;
     }
@@ -423,6 +426,11 @@ export function updateInputData(model: YaoModel.ModelDSL, Data: any) {
         case 'LONGTEXT':
           if (typeof field !== 'string') {
             line[key] = line[key] + '';
+          }
+          break;
+        case 'ENUM':
+          if (modelCol.nullable && !modelCol.option?.includes(field)) {
+            line[key] = undefined;
           }
           break;
         default:
@@ -512,7 +520,7 @@ function paginateArray(
   return arr.slice(startIndex, endIndex);
 }
 
-export function getArrayItem(querys: { [x: string]: any; }, key: string) {
+export function getArrayItem(querys: { [x: string]: any }, key: string) {
   if (typeof querys !== 'object') {
     return;
   }
@@ -533,7 +541,7 @@ export function getArrayItem(querys: { [x: string]: any; }, key: string) {
  */
 export function PaginateArrayWithQuery(
   data: Array<any>,
-  querysIn: object,
+  querysIn: QueryObjectIn,
   payload: object,
   searchFields: Array<any> = []
 ) {
@@ -560,7 +568,11 @@ export function PaginateArrayWithQuery(
     total: count
   };
 }
-function FilterArrayWithQuery(list: any[], querysIn: {}, searchFields = []) {
+function FilterArrayWithQuery(
+  list: any[],
+  querysIn: QueryObjectIn,
+  searchFields = []
+) {
   if (!Array.isArray(list) || list.length == 0) {
     return list;
   }
@@ -614,7 +626,7 @@ function FilterArrayWithQuery(list: any[], querysIn: {}, searchFields = []) {
     }
   }
 
-  function filterArray(queryObject, AndMode: boolean) {
+  function filterArray(queryObject: QueryObjectIn, AndMode: boolean) {
     const arr = list.filter((item) => {
       for (const key in queryObject) {
         let value = queryObject[key] + '';

@@ -146,7 +146,7 @@ export function FindCachedModelById(modelId: ModelId): AmisModel {
 }
 
 /**
- * 优先从缓存中加载模型，如果不存在，从数据库中加载并转换成yao模型
+ * 优先从缓存中加载模型，如果不存在，从数据库中加载并转换成yao模型,确保可以找到模型
  * @param {string} modelId
  */
 export function FindAndLoadYaoModelById(modelId: ModelId): YaoModel.ModelDSL {

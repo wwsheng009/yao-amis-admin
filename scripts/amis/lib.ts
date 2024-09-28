@@ -145,7 +145,7 @@ function updateAmisFormColCommon(
           // rel.model.endsWith(model_name)
         ) {
           // found
-          amisColumn.type = 'select';
+          amisColumn.clearable = true;
           amisColumn.source = `/api/v1/system/model/${rel.model}/select_options`;
           if (formType == 'view') {
             amisColumn.static = true;

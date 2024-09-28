@@ -3,7 +3,6 @@
 import { Process, Exception } from '@yao/yao';
 import { YaoQuery } from '@yaoapps/types';
 
-
 export interface TreeObj {
   [key: string]: string | number | TreeObj | TreeObj[] | string[] | any;
   children?: TreeObj[];
@@ -137,7 +136,7 @@ export function DeleteNode(modelId: string, ids: string) {
  * @param {string|number} id
  * @returns
  */
-export function GetNodeItems(modelId: string, id: number): TreeObj {
+export function GetNodeItems(modelId: string, id: number): TreeObj[] {
   const item = Process(`models.${modelId}.find`, id, null);
   let items = [];
   if (item?.id) {

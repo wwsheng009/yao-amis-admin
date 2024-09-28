@@ -714,6 +714,9 @@ export function column2AmisFormEditColumn(column: AmisModelColumn) {
       break;
     case 'ENUM':
       newColumn.type = 'select';
+      if (column.nullable) {
+        newColumn.clearable = true;
+      }
       if (
         column.options != null &&
         Array.isArray(column.options) &&
@@ -807,6 +810,9 @@ export function column2AmisFormEditColumn(column: AmisModelColumn) {
     }
     const labelField = column.check_model_label || 'name';
     newColumn.type = 'select';
+    if (column.nullable) {
+      newColumn.clearable = true;
+    }
     newColumn.source = {
       method: 'post',
       url: `/api/v1/system/model/${column.check_model}/select_options`,

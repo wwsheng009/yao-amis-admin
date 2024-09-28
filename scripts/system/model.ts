@@ -45,19 +45,26 @@ import {
   AmisUIModel,
   AmisUIColumn
 } from '@yao/types';
-import { YaoModel } from '@yaoapps/types';
+import { YaoModel, YaoQuery } from '@yaoapps/types';
+import { QueryObjectIn } from '@yao/request';
 
 /**
  * yao run scripts.system.model.page
  * 模型定义列表分页查询，结果在列表中显示。
- * @param {number} page
- * @param {number} pagesize
+ * @param {number} pageIn
+ * @param {number} pagesizeIn
  * @param {object} querysIn
  * @param {object} queryParams
  * @param {object} payload
  * @returns
  */
-export function page(pageIn, pagesizeIn, querysIn, queryParams, payload) {
+export function page(
+  pageIn: number,
+  pagesizeIn: number,
+  querysIn: QueryObjectIn,
+  queryParams: YaoQuery.QueryDSL,
+  payload: object
+) {
   const page = pageIn || 1;
   const pagesize = pagesizeIn || 10;
   const querys = mergeQueryObject(querysIn, payload);
@@ -231,6 +238,9 @@ function CompleteModel(modelDsl: AmisModel) {
           );
         }
       }
+    }
+    if (col.crypt == '') {
+      col.crypt = undefined;
     }
     if (colType === 'phone' || colType === 'email' || colType === 'url') {
       if (col.validations == null) {
@@ -1304,7 +1314,7 @@ export function ImportFromCached(payload) {
  * @param {object} payload 请求数据
  * @returns
  */
-export function ImportFromCachedBatch(payload) {
+export function ImportFromCachedBatch(payload: { items: any; }) {
   const items = payload.items;
   if (!Array.isArray(items)) {
     return { message: '传入数据不正确' };

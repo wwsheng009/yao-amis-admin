@@ -179,7 +179,9 @@ export interface AmisUIColumn
   /**可见条件 */
   visibleOn?: string;
 
-  validations: { [key: string]: any };
+  validations?: { [key: string]: any };
+
+  clearable?: boolean;
 }
 
 export interface YaoModelNode {

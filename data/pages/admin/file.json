@@ -506,24 +506,39 @@
               "visibleOn": "data.type === 'MS Word'"
             },
             {
-              "className": "text-info",
-              "id": "u:c345fb2a01fb",
-              "label": "预览",
-              "level": "link",
-              "type": "button",
-              "actionType": "dialog",
-              "dialog": {
-                "title": "",
-                "size": "md",
-                "body": {
-                  "type": "image",
-                  "imageMode": "original",
+              "type": "wrapper",
+              "visibleOn": "data.type === 'Image'",
+              "className": "flex flex-col-reverse content-center",
+              "body": [
+                {
+                  "className": "text-info",
+                  "id": "u:c345fb2a01fb",
+                  "label": "预览",
+                  "level": "link",
+                  "type": "button",
+                  "actionType": "dialog",
+                  "dialog": {
+                    "title": "",
+                    "size": "md",
+                    "body": {
+                      "type": "image",
+                      "imageMode": "original",
+                      "src": "${url}",
+                      "title": "${name}"
+                    }
+                  }
+                },
+                {
+                  "label": "图片预览",
                   "src": "${url}",
-                  "title": "${name}"
+                  "originalSrc": "${url}",
+                  "type": "image",
+                  "enlargeAble": true,
+                  "className": "flex flex-nowrap justify-center"
                 }
-              },
-              "visibleOn": "data.type === 'Image'"
+              ]
             },
+
             {
               "className": "text-info",
               "label": "播放",

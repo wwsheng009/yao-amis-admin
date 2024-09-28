@@ -600,28 +600,6 @@ export function formatDateIso(dateIn: string | number | Date) {
   }
 }
 
-function isInteger(value: any): boolean {
-  if (typeof value === 'number') {
-    return Number.isInteger(value);
-  }
-  if (typeof value === 'string') {
-    const parsed = Number(value);
-    return !isNaN(parsed) && Number.isInteger(parsed);
-  }
-  return false;
-}
-
-function isFloat(value: any): boolean {
-  if (typeof value === 'number') {
-    return !Number.isInteger(value);
-  }
-  if (typeof value === 'string') {
-    const parsed = Number(value);
-    return !isNaN(parsed) && !Number.isInteger(parsed);
-  }
-  return false;
-}
-
 /**
  * get the xml type for the data
  * yao run scripts.app.blog.web.getXmlType

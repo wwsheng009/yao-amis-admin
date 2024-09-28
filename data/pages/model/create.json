@@ -413,6 +413,7 @@
                                         "hiddenOn": "data.type != `string`",
                                         "id": "u:348d4522ca85",
                                         "label": "加密方式",
+                                        "clearable": true,
                                         "name": "crypt",
                                         "options": [
                                           {
@@ -1025,6 +1026,7 @@
                                                 "value": "AES"
                                               }
                                             ],
+                                            "clearable": true,
                                             "type": "select"
                                           },
                                           {
