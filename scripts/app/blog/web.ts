@@ -45,6 +45,8 @@ export function metaWeblogHandler(
 
     // console.log('request body after', body);
     const options = { compact: true };
+
+    //@ts-ignore
     const jsObject = convert.xml2js(body, options);
     bodyData = convertData(jsObject);
     method = bodyData.methodCall.methodName;
@@ -569,7 +571,7 @@ export function convertJs2xml(data: any) {
     return `<value><${type}>${data}</${type}></value>`;
   }
 }
-export function isDateTimeOrDate(value: string | number | Date) {
+export function isDateTimeOrDate(value: any) {
   const date = new Date(value);
   // Check if the date is valid
   if (isNaN(date.getTime())) {
@@ -653,7 +655,10 @@ export function getXmlType(data: unknown) {
     case 'object':
       return 'struct';
     case 'string':
-      if (data.toLowerCase() == 'true' || data.toLowerCase() == 'false') {
+      if (
+        String(data).toLowerCase() == 'true' ||
+        String(data).toLowerCase() == 'false'
+      ) {
         return 'boolean';
       }
       break;
