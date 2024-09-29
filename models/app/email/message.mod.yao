@@ -8,62 +8,29 @@
       "type": "id"
     },
     {
+      "label": "收发类型",
+      "name": "type",
+      "type": "string",
+      "default": "out"
+    },
+    {
       "comment": "发件人邮箱地址",
       "label": "发件人",
       "name": "sender",
-      "length": 255,
-      "type": "string",
-      "validations": [
-        {
-          "args": ["string"],
-          "message": "{{input}}类型错误, {{label}}应该为字符串",
-          "method": "typeof"
-        },
-        {
-          "args": [255],
-          "message": "{{label}}不能超过255个字符",
-          "method": "maxLength"
-        }
-      ]
+      "type": "json"
     },
     {
-      "comment": "收件人邮箱地址, 可为多个，使用逗号分隔",
+      "comment": "收件人邮箱地址",
       "label": "收件人",
-      "length": 255,
       "name": "receiver",
-      "type": "string",
-      "validations": [
-        {
-          "args": ["string"],
-          "message": "{{input}}类型错误, {{label}}应该为字符串",
-          "method": "typeof"
-        },
-        {
-          "args": [255],
-          "message": "{{label}}不能超过255个字符",
-          "method": "maxLength"
-        }
-      ]
+      "type": "json"
     },
     {
-      "comment": "抄送者邮箱地址, 可为多个，使用逗号分隔",
+      "comment": "抄送者邮箱地址",
       "label": "抄送者",
-      "length": 255,
       "name": "cc",
       "nullable": true,
-      "type": "string",
-      "validations": [
-        {
-          "args": ["string"],
-          "message": "{{input}}类型错误, {{label}}应该为字符串",
-          "method": "typeof"
-        },
-        {
-          "args": [255],
-          "message": "{{label}}不能超过255个字符",
-          "method": "maxLength"
-        }
-      ]
+      "type": "json"
     },
     {
       "comment": "邮件主题",
@@ -99,6 +66,20 @@
       ]
     },
     {
+      "comment": "纯文本的邮件内容",
+      "label": "纯文本",
+      "name": "plain_text",
+      "nullable": true,
+      "type": "longText",
+      "validations": [
+        {
+          "args": ["string"],
+          "message": "{{input}}类型错误, {{label}}应该为字符串",
+          "method": "typeof"
+        }
+      ]
+    },
+    {
       "comment": "邮件状态: sent 已发送, received 已接收, failed 发送失败",
       "default": "sent",
       "label": "状态",
@@ -116,7 +97,7 @@
     {
       "comment": "邮件发送时间",
       "label": "发送时间",
-      "name": "sent_at",
+      "name": "send_at",
       "nullable": true,
       "type": "datetime",
       "validations": [
@@ -126,11 +107,75 @@
           "method": "typeof"
         }
       ]
-    },{
+    },
+    {
+      "comment": "邮件接收时间",
+      "label": "接收时间",
+      "name": "received_at",
+      "nullable": true,
+      "type": "datetime",
+      "validations": [
+        {
+          "args": ["datetime"],
+          "message": "{{input}}不是有效的日期时间",
+          "method": "typeof"
+        }
+      ]
+    },
+    {
+      "comment": "邮件发出时间",
+      "label": "邮件发出时间",
+      "name": "date",
+      "nullable": true,
+      "type": "string"
+    },
+    {
+      "comment": "邮件错误",
+      "label": "邮件错误",
+      "name": "error",
+      "type": "string",
+      "nullable": true
+    },
+    {
+      "comment": "消息唯一ID",
+      "label": "邮件唯一ID",
+      "name": "message_id",
+      "type": "string",
+      "nullable": true
+    },
+    {
+      "comment": "用户唯一ID",
+      "label": "用户唯一ID",
+      "name": "uid",
+      "type": "string",
+      "nullable": true
+    },
+    {
       "comment": "发送邮件返回的日志",
       "label": "发送日志",
-      "name": "send_log",
+      "name": "message",
       "type": "string",
+      "nullable": true
+    },
+    {
+      "comment": "附件目录",
+      "label": "附件目录",
+      "name": "attachment_folder",
+      "type": "string",
+      "nullable": true
+    },
+    {
+      "comment": "附件列表",
+      "label": "附件列表",
+      "name": "attachments",
+      "type": "json",
+      "nullable": true
+    },
+    {
+      "comment": "附件明细",
+      "label": "附件明细",
+      "name": "attachment_details",
+      "type": "json",
       "nullable": true
     }
   ],
@@ -144,3 +189,6 @@
     "name": "app_email_message"
   }
 }
+
+
+// yao migrate -n app.email.message --reset

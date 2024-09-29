@@ -55,6 +55,10 @@ export function GetColumnTypeList() {
       value: 'text'
     },
     {
+      label: '长文本',
+      value: 'longText'
+    },
+    {
       label: '富文本',
       value: 'richtext'
     },

@@ -27,7 +27,7 @@ function getUserPermission(userId?: number | string) {
   if (!user_id) {
     user_id = Process('session.get', 'user_id');
     if (!user_id) {
-      // user_id = "5";
+      // user_id = 1;
       throw new Exception('缺少用户ID', 500);
     }
   }

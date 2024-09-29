@@ -24,7 +24,7 @@ export function startup(config: object, reload: boolean) {
  * only trigger when reloading,not trigger when first startup
  */
 export function afterLoad(option: {
-  action: string;
+  action: string; //run | watch
   ignoredAfterLoad: boolean;
   reload: boolean;
 }) {

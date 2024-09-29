@@ -2,10 +2,31 @@
     "code": 200,
     "emails": [
         {
+            "attachments": [
+                "d8e4992057f9.jpeg",
+                "data.csv"
+            ],
             "body": [
                 {
                     "attachment": "",
-                    "centent": "",
+                    "centent": "你好呀，今天的任务完成的如何，请查收附件\n[image: 3351df068659b381b93403404e3f1b92.jpeg]\n😄😚😚😂😍🥰",
+                    "charset": "",
+                    "content_id": "",
+                    "content_type": "text/plain",
+                    "content_type_value": {
+                        "charset": "UTF-8"
+                    },
+                    "disposition": "",
+                    "disposition_value": null,
+                    "encoding": "base64",
+                    "file_name": "",
+                    "file_size": 0,
+                    "saved_file_name": "",
+                    "saved_file_path": ""
+                },
+                {
+                    "attachment": "",
+                    "centent": "<div dir=\"ltr\">你好呀，今天的任务完成的如何，请查收附件<div><img src=\"cid:ii_m1njcwji0\" alt=\"3351df068659b381b93403404e3f1b92.jpeg\" width=\"307\" height=\"283\" style=\"margin-right: 0px;\"></div><div><br></div><div>😄😚😚😂😍🥰</div><div><br></div><div><br></div></div>",
                     "charset": "",
                     "content_id": "",
                     "content_type": "text/html",
@@ -14,35 +35,89 @@
                     },
                     "disposition": "",
                     "disposition_value": null,
-                    "encoding": "quoted-printable",
+                    "encoding": "base64",
                     "file_name": "",
                     "file_size": 0,
                     "saved_file_name": "",
                     "saved_file_path": ""
-                }
-            ],
-            "date": "2024-09-29T18:02:39+08:00",
-            "error": "",
-            "folder": "data/emails/1b0f2c3673b32ec4c85b0900d37a6a00",
-            "from": [
-                {
-                    "Address": "wws@qq.com",
-                    "Name": ""
-                }
-            ],
-            "message_id": "tencent_A4F49FB50AA3CD450F2A4CD4AAAC44374908@qq.com",
-            "subject": "袁氏之弟名为袁兴祖",
-            "to": [
-                {
-                    "Address": "vince@gmail.com",
-                    "Name": ""
                 },
                 {
-                    "Address": "vinc1@gmail.com",
+                    "attachment": "",
+                    "centent": "",
+                    "charset": "",
+                    "content_id": "ii_m1njcwji0",
+                    "content_type": "image/jpeg",
+                    "content_type_value": {
+                        "name": "3351df068659b381b93403404e3f1b92.jpeg"
+                    },
+                    "disposition": "inline",
+                    "disposition_value": {
+                        "filename": "3351df068659b381b93403404e3f1b92.jpeg"
+                    },
+                    "encoding": "base64",
+                    "file_name": "",
+                    "file_size": 32865,
+                    "saved_file_name": "ii_m1njcwji0_3351df068659b381b93403404e3f1b92.jpeg",
+                    "saved_file_path": "data/emails/786a8632e792fbc2f1749dfbafb7e270/ii_m1njcwji0_3351df068659b381b93403404e3f1b92.jpeg"
+                },
+                {
+                    "attachment": "d8e4992057f9.jpeg",
+                    "centent": "",
+                    "charset": "",
+                    "content_id": "<f_m1njdjqx1>",
+                    "content_type": "image/jpeg",
+                    "content_type_value": {
+                        "name": "d8e4992057f9.jpeg"
+                    },
+                    "disposition": "attachment",
+                    "disposition_value": {
+                        "filename": "d8e4992057f9.jpeg"
+                    },
+                    "encoding": "base64",
+                    "file_name": "",
+                    "file_size": 84640,
+                    "saved_file_name": "d8e4992057f9.jpeg",
+                    "saved_file_path": "data/emails/786a8632e792fbc2f1749dfbafb7e270/d8e4992057f9.jpeg"
+                },
+                {
+                    "attachment": "data.csv",
+                    "centent": "",
+                    "charset": "",
+                    "content_id": "<f_m1njdsq52>",
+                    "content_type": "text/csv",
+                    "content_type_value": {
+                        "charset": "UTF-8",
+                        "name": "data.csv"
+                    },
+                    "disposition": "attachment",
+                    "disposition_value": {
+                        "filename": "data.csv"
+                    },
+                    "encoding": "base64",
+                    "file_name": "",
+                    "file_size": 31,
+                    "saved_file_name": "data.csv",
+                    "saved_file_path": "data/emails/786a8632e792fbc2f1749dfbafb7e270/data.csv"
+                }
+            ],
+            "date": "2024-09-29T20:11:16+08:00",
+            "error": "",
+            "folder": "data/emails/786a8632e792fbc2f1749dfbafb7e270",
+            "from": [
+                {
+                    "Address": "vincentwwsheng@gmail.com",
+                    "Name": "Vincent Wang"
+                }
+            ],
+            "message_id": "CAHmNp-d4Y40sByOgLzRGHTJH3R6e5m53avMsfOKKTRe-yXAH0g@mail.gmail.com",
+            "subject": "你好呀，今天的任务完成的如何",
+            "to": [
+                {
+                    "Address": "wwsheng@qq.com",
                     "Name": ""
                 }
             ],
-            "uid": 16598
+            "uid": 16599
         }
     ]
 }

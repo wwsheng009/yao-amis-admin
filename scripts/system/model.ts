@@ -46,7 +46,7 @@ import {
   AmisUIModel,
   AmisUIColumn
 } from '@yao/types';
-import { YaoModel, YaoQuery } from '@yaoapps/types';
+import { YaoModel, YaoQueryParam } from '@yaoapps/types';
 import { QueryObjectIn } from '@yao/request';
 
 /**
@@ -63,7 +63,7 @@ export function page(
   pageIn: number,
   pagesizeIn: number,
   querysIn: QueryObjectIn,
-  queryParams: YaoQuery.QueryDSL,
+  queryParams: YaoQueryParam.QueryParam,
   payload: object
 ) {
   const page = pageIn || 1;
@@ -597,13 +597,16 @@ export function ConvertModelToAmisUIModel(modelDsl: AmisModel) {
   return model;
 }
 export function updateModelMetaFields(modelDsl: YaoModel.ModelDSL): AmisModel {
-  if (!modelDsl.columns || !Array.isArray(modelDsl.columns)) {
+  if (!modelDsl) {
+    return modelDsl;
+  }
+  if (!modelDsl?.columns || !Array.isArray(modelDsl?.columns)) {
     return modelDsl;
   }
   if (!modelDsl.option?.timestamps && !modelDsl.option?.soft_deletes) {
     return modelDsl;
   }
-  modelDsl.columns.forEach((c) => {
+  modelDsl?.columns?.forEach((c) => {
     if (modelDsl.option?.timestamps) {
       if (c.name == 'created_at' && c.label == '::Created At') {
         c.label = '创建时间';
@@ -611,7 +614,7 @@ export function updateModelMetaFields(modelDsl: YaoModel.ModelDSL): AmisModel {
         c.label = '更新时间';
       }
     }
-    if (modelDsl.option?.soft_deletes) {
+    if (modelDsl?.option?.soft_deletes) {
       if (c.name == 'deleted_at' && c.label == '::Deleted At') {
         c.label = '删除时间';
       }

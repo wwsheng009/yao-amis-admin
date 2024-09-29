@@ -2,8 +2,11 @@ import { Exception, FS, Process } from '@yao/yao';
 
 import { PaginateArrayWithQuery } from '@scripts/amis/data/lib';
 import { getUserAuthFolderCache, isSuperUser } from '@scripts/auth/lib';
+import { QueryObjectIn } from '@yao/request';
 const uploadDir = '/upload';
 const userDir = '/user';
+const projectDir = '/project';
+const emailDir = '/emails';
 const publicDir = '/public';
 
 interface Folder {
@@ -390,7 +393,10 @@ function getFolder(type: string) {
       filePath = `${uploadDir}${publicDir}`;
       break;
     case 'project':
-      filePath = `${uploadDir}/project`;
+      filePath = `${uploadDir}${projectDir}`;
+      break;
+    case 'email':
+      filePath = `${uploadDir}${emailDir}`;
       break;
     default:
       throw new Exception(`文件类型：${type} 未支持`, 500);
@@ -475,7 +481,7 @@ function saveFile(type: string, file: YaoFile, folder: string) {
 
 /**
  * 根据类型类型获取文件夹列表
- * yao run scripts.fs.file.getFolderList
+ * yao run scripts.fs.file.getFolderList email ''
  * @param type operation type
  * @param parent parent folder
  * @returns
@@ -489,13 +495,14 @@ export function getFolderList(type: string, parent: string) {
 
   const userDir = getFolder(type);
 
-  const uploadFolder =
+  let uploadFolder =
     parentDir != '' ? `${userDir}/${parentDir}/` : `${userDir}/`;
 
   if (!Process('fs.system.Exists', uploadFolder)) {
     return [];
   }
   let list = Process('fs.system.ReadDir', uploadFolder);
+  uploadFolder = uploadFolder.replace(/[\\/]+/g, '/');
   list = list.map((l: string) => l.replace(/[\\/]+/g, '/'));
   let list2 = list.filter((dir: string) => Process('fs.system.isDir', dir));
 
@@ -512,8 +519,7 @@ export function getFolderList(type: string, parent: string) {
   return list2;
   // return convertToNestedArray(list2);
 }
-
-function getTimeFormat(unixTime) {
+function getTimeFormat(unixTime: number) {
   const date = new Date(unixTime * 1000);
 
   // Extract the various date and time components
@@ -550,8 +556,8 @@ function getTimeFormat(unixTime) {
 export function fileSearch(
   type: string,
   parentFolder: string,
-  querysIn,
-  payload
+  querysIn: QueryObjectIn,
+  payload: object
 ) {
   // 没有读取授权
   // if (!checkUserCanReadAuth(type)) {

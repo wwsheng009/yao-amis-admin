@@ -18,8 +18,8 @@ function send(title: string) {
     messages: [
       {
         from: username,
-        to: [{ address: to }, { name: 'vincent1', address: to }],
-        cc: [{ address: username }],
+        to: [{ Address: to }, { Name: 'vincent1', Address: to }],
+        cc: [{ Address: username }],
         subject: title || '小佩奇',
         body: '<h1>新年快乐</h1>',
         attachments: [

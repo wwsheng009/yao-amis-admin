@@ -24,7 +24,7 @@
 
 ## 安装
 
-使用容器运行，已打包编辑器与 soy-admin
+使用容器运行，已打包编辑器与 soy-admin。
 
 ```sh
 docker run -d -p 5099:5099 wwsheng009/yao-amis-admin-amd64:latest
@@ -34,6 +34,24 @@ docker run -d -p 5099:5099 wwsheng009/yao-amis-admin-amd64:latest
 
 管理员用户名：xiang@iqka.com 密码：A123456p+
 
+
+使用已有的配置文件：
+
+```sh
+# for manual config
+touch .env
+# for upload files
+mkdir upload
+
+mkdir logs
+
+docker run -d --name=yao-amis-admin \
+    -v ./.env:/data/.env \
+    -v ./upload:/data/data/upload \
+    -v ./logs:/data/logs \
+    -p 5099:5099 \
+    wwsheng009/yao-amis-admin-amd64:latest
+```
 ## 演示地址：
 
 演示地址：[demo](http://fun.wwsheng.online:5099/)，用户名：xiang@iqka.com 密码：A123456p+

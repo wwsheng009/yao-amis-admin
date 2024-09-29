@@ -27,6 +27,16 @@
       "className": "",
       "link": "/admin/file/project",
       "type": "button"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "actionType": "link",
+      "body": "邮件文件管理",
+      "className": "",
+      "link": "/admin/file/email",
+      "type": "button"
     }
   ]
 }
