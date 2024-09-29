@@ -1,0 +1,7 @@
+{
+  "name": "receive mail",
+  "process": "scripts.app.email.client.receive",
+  "schedule": "0/5 * * * *",
+  "task": "",
+  "args": []
+}
