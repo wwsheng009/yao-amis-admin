@@ -1,8 +1,9 @@
-import { getModelFromDB, loadModeltoMemory } from '@scripts/system/model_db';
+import { getModelFromDB } from '@scripts/system/model_db';
 import { ModelId, AmisModel, YaoModelNode } from '@yao/types';
 
 import { Process, Exception } from '@yao/yao';
 import { YaoModel } from '@yaoapps/types';
+import { loadModeltoMemory } from '@scripts/system/model_load';
 
 // 读取所有的模型id的列表
 // 缺少一个name属性，所有只能读取到id列表

@@ -6,12 +6,13 @@
  */
 import {
   getModelFromDB,
-  loadModeltoMemory,
-  ConvertTableLineToModel,
-  deepCopyObject,
-  migrateModel,
-  checkAndloadDefaultTableForm
+  ConvertTableLineToModel
 } from '@scripts/system/model_db';
+import {
+  loadModeltoMemory,
+  deepCopyObject,
+  migrateModel
+} from '@scripts/system/model_load';
 
 import {
   DotName,
@@ -1041,19 +1042,18 @@ export function importDBModelsToCache() {
 
   list.forEach((m) => {
     const modelDsl = getModelFromDB(m.identity);
-
     loadModeltoMemory(modelDsl);
   });
-  loadDefaultFormTableFormAllModel();
+  // loadDefaultFormTableFormAllModel();
 }
 /**
  * 加载所有的模型关联的form与table定义
  */
-export function loadDefaultFormTableFormAllModel() {
-  // need import the db model first.
-  const list = allModelIds();
-  list.forEach((l) => checkAndloadDefaultTableForm(l));
-}
+// export function loadDefaultFormTableFormAllModel() {
+//   // need import the db model first.
+//   const list = allModelIds();
+//   list.forEach((l) => checkAndloadDefaultTableForm(l));
+// }
 /**
  * return the id and the name info for all models.
  * yao run scripts.system.model.allModelIdAndName
@@ -1314,7 +1314,7 @@ export function ImportFromCached(payload) {
  * @param {object} payload 请求数据
  * @returns
  */
-export function ImportFromCachedBatch(payload: { items: any; }) {
+export function ImportFromCachedBatch(payload: { items: any }) {
   const items = payload.items;
   if (!Array.isArray(items)) {
     return { message: '传入数据不正确' };
@@ -1518,7 +1518,7 @@ export function CheckAndGuessJson(payload) {
  * @param {object} payload 数据库表列表
  * @returns
  */
-export function ImportFromTableBatch(payload: { items: any; }) {
+export function ImportFromTableBatch(payload: { items: any }) {
   const items = payload.items;
   if (!Array.isArray(items)) {
     return { message: '传入数据格式不正确，需要传入数组！' };
