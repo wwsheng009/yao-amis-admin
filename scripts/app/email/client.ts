@@ -136,6 +136,7 @@ function decodeMessage(email: MessageReceived) {
   if (!email) {
     return null;
   }
+  // console.log('email', email);
   const message = {} as any;
   message.type = 'in';
   message.sender = email.from; //发件人
@@ -156,13 +157,13 @@ function decodeMessage(email: MessageReceived) {
   }
 
   const text = email.body?.find((b) => b.content_type == 'text/plain');
-  if (text?.content_type_value['charset'] == 'UTF-8') {
-    message.plain_text = text?.centent;
-  }
+  message.plain_text = text?.centent;
+  // if (text?.content_type_value['charset'].toLowerCase() != 'utf-8') {
+  // }
   const html = email.body?.find((b) => b.content_type == 'text/html');
-  if (html?.content_type_value['charset'] == 'UTF-8') {
-    message.content = html?.centent;
-  }
+  message.content = html?.centent;
+  // if (html?.content_type_value['charset'].toLowerCase() != 'utf-8') {
+  // }
   if (message.plain_text == message.content) {
     message.plain_text = '';
   }
