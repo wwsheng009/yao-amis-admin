@@ -1,0 +1,48 @@
+{
+    "code": 200,
+    "emails": [
+        {
+            "body": [
+                {
+                    "attachment": "",
+                    "centent": "",
+                    "charset": "",
+                    "content_id": "",
+                    "content_type": "text/html",
+                    "content_type_value": {
+                        "charset": "UTF-8"
+                    },
+                    "disposition": "",
+                    "disposition_value": null,
+                    "encoding": "quoted-printable",
+                    "file_name": "",
+                    "file_size": 0,
+                    "saved_file_name": "",
+                    "saved_file_path": ""
+                }
+            ],
+            "date": "2024-09-29T18:02:39+08:00",
+            "error": "",
+            "folder": "data/emails/1b0f2c3673b32ec4c85b0900d37a6a00",
+            "from": [
+                {
+                    "Address": "wws@qq.com",
+                    "Name": ""
+                }
+            ],
+            "message_id": "tencent_A4F49FB50AA3CD450F2A4CD4AAAC44374908@qq.com",
+            "subject": "袁氏之弟名为袁兴祖",
+            "to": [
+                {
+                    "Address": "vince@gmail.com",
+                    "Name": ""
+                },
+                {
+                    "Address": "vinc1@gmail.com",
+                    "Name": ""
+                }
+            ],
+            "uid": 16598
+        }
+    ]
+}

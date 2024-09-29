@@ -126,6 +126,12 @@
           "method": "typeof"
         }
       ]
+    },{
+      "comment": "发送邮件返回的日志",
+      "label": "发送日志",
+      "name": "send_log",
+      "type": "string",
+      "nullable": true
     }
   ],
   "name": "邮件信息",

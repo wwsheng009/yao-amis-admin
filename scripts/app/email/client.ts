@@ -18,6 +18,8 @@ interface app_email_message {
   status?: 'sent' | 'received' | 'failed';
   /**发送时间 */
   sent_at?: Date;
+
+  send_log?: string;
 }
 
 /**
@@ -26,7 +28,7 @@ interface app_email_message {
  * @returns
  */
 export function afterSave(id: number) {
-  const account = Process('models.app.email.server.find', 1, {});
+  const account = Process('models.app.email.account.find', 1, {});
 
   const message = Process(
     'models.app.email.message.find',
@@ -38,39 +40,30 @@ export function afterSave(id: number) {
   if (res.code == 200) {
     Process('models.app.email.message.update', id, {
       status: 'sent',
-      sent_at: CurrentTime()
+      sent_at: CurrentTime(),
+      send_log: res.message
     });
   } else {
     Process('models.app.email.message.update', id, {
-      status: 'failed'
+      status: 'failed',
+      send_log: res.message
     });
+    console.log('res.message', res.message);
   }
   console.log('afterSave', id);
   return id;
 }
 
 function send(emailMessage: app_email_message, account: any) {
-  // const username =
-  //   account.username || Process('utils.env.Get', 'EMAIL_USERNAME');
-  // const password =
-  //   account.password || Process('utils.env.Get', 'EMAIL_PASSWORD');
-
-  // const to = Process('utils.env.Get', 'EMAIL_TO');
-  const cc = emailMessage.cc.split(',')?.map((c) => {
-    return { name: '', address: c };
-  });
-
+  const cc = emailMessage.cc.length
+    ? emailMessage.cc.split(',')?.map((c) => {
+        return { Name: '', Address: c };
+      })
+    : undefined;
   const to = emailMessage.receiver.split(',')?.map((c) => {
-    return { name: '', address: c };
+    return { Name: '', Address: c };
   });
   const message = {
-    // account: {
-    //   server: 'smtp.qq.com',
-    //   port: 587,
-    //   username: username,
-    //   password: password,
-    //   type: 'stmp'
-    // },
     account: {
       ...account
     },
@@ -86,6 +79,21 @@ function send(emailMessage: app_email_message, account: any) {
     ]
   } as EmailMessage;
   return Process('plugins.email.send', message) as EmailPluginResponse;
+}
+
+/**
+ * yao run scripts.app.email.client.receive
+ */
+function receive() {
+  const account = Process('models.app.email.account.find', 2, {});
+  console.log('account', account);
+  const message = {
+    account: {
+      ...account
+    }
+  } as EmailMessage;
+  const res = Process('plugins.email.receive', message) as EmailPluginResponse;
+  console.log('email received', res);
 }
 
 function CurrentTime() {

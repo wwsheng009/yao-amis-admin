@@ -3,9 +3,9 @@
     "bind": {
       "model": "app.email.message"
     },
-    "after:save": "scripts.app.email.mail.afterSave",
+    "after:save": "scripts.app.email.client.afterSave",
     
-    "after:update": "scripts.app.email.mail.afterSave"
+    "after:update": "scripts.app.email.client.afterSave"
   },
   "name": "app.email.message"
 }

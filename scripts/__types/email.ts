@@ -16,12 +16,12 @@ export interface EmailMessage {
   messages?: {
     from: string;
     to: {
-      name?: string;
-      address: string;
+      Name?: string;
+      Address: string;
     }[];
     cc?: {
-      name?: string;
-      address: string;
+      Name?: string;
+      Address: string;
     }[];
     subject: string;
     body: string;

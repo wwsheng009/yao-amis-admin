@@ -87,12 +87,12 @@
       ]
     }
   ],
-  "name": "邮件服务器账号配置",
+  "name": "邮件账号配置",
   "option": {
     "timestamps": true
   },
   "table": {
     "comment": "邮件服务器账号配置表",
-    "name": "app_email_server"
+    "name": "app_email_account"
   }
 }
