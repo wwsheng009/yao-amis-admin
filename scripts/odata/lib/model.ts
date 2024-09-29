@@ -7,7 +7,7 @@ function getModelList() {
   });
   const modelsList = Process('widget.models');
   // 原始的模型列表
-  const model_list = modelDefinitionList(modelsList);
+  const model_list = flattenTreeList(modelsList);
   // model_list = model_list.filter((model) => viewList.find((v) => v.model_id == model.ID));
 
   // // 设置table关联的模型列表
@@ -79,7 +79,7 @@ export function getModelsEntityset() {
 export function getModelNameList() {
   const list = getModelList();
   // const modelsList = Process("widget.models");
-  // const list = modelDefinitionList(modelsList);
+  // const list = flattenTreeList(modelsList);
   // Process("models.system.api.eachsave", list);
   const modelObj = [];
   list.forEach((model) => {
@@ -109,7 +109,7 @@ export function getOdataViewList() {
 export function getModelsEntityset2() {
   const list = getModelList();
   // const modelsList = Process("widget.models");
-  // const list = modelDefinitionList(modelsList);
+  // const list = flattenTreeList(modelsList);
   // Process("models.system.api.eachsave", list);
   const modelObj = [];
   list.forEach((model) => {
@@ -127,7 +127,7 @@ export function getModelsEntityset2() {
  * @param {object} modelData
  * @returns
  */
-export function modelDefinitionList(modelData: {
+export function flattenTreeList(modelData: {
   children: any[];
   data: any;
   forEach: (arg0: (line: any) => void) => void;
@@ -136,7 +136,7 @@ export function modelDefinitionList(modelData: {
 
   if (modelData.children) {
     modelData.children.forEach((line) => {
-      const subLine = modelDefinitionList(line);
+      const subLine = flattenTreeList(line);
       list = list.concat(subLine);
     });
   } else if (modelData.data) {
@@ -145,7 +145,7 @@ export function modelDefinitionList(modelData: {
     }
   } else if (Array.isArray(modelData)) {
     modelData.forEach((line) => {
-      const subLine = modelDefinitionList(line);
+      const subLine = flattenTreeList(line);
       list = list.concat(subLine);
     });
   }

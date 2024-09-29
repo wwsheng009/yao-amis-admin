@@ -92,7 +92,7 @@ export function getTables2() {
   //    -H 'Authorization: Bearer <Studio JWT>' \
   //    -d '{ "args":[],"method":"getTables"}'
 
-  return Process('scripts.system.model.modelNameOption');
+  return Process('scripts.system.model.getCachedModelsNameOptions');
 }
 
 /**

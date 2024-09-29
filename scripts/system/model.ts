@@ -28,7 +28,7 @@ import { queryToQueryParam, mergeQueryObject } from '@scripts/amis/data/lib';
 import {
   FindAndLoadYaoModelById,
   FilterCachedModelList,
-  CachedModelIDList,
+  getCachedModelIDList,
   FindAndLoadDBModelById,
   FindCachedModelById
 } from '@scripts/system/model_lib';
@@ -402,10 +402,10 @@ function SaveRelations(id: number, payload: AmisModelDB, force?: boolean) {
   return id;
 }
 
-// 删除关联表数据
-export function BeforeDelete(id: number) {
-  DeleteModelolumns(id);
-}
+// // 删除关联表数据
+// export function BeforeDelete(id: number) {
+//   DeleteModelolumns(id);
+// }
 
 export function isAscOrder(arr: { id: string }[]) {
   for (let i = 0; i < arr.length - 1; i++) {
@@ -423,7 +423,7 @@ export function isAscOrder(arr: { id: string }[]) {
  * @param {boolean} force 强制保存
  * @returns
  */
-function SaveColumns(modelId: number, payload, force?: boolean) {
+function SaveColumns(modelId: number, payload: AmisModelDB, force?: boolean) {
   if (modelId == null) {
     throw new Exception('无法保存columns,缺少模型主键！');
   }
@@ -932,7 +932,7 @@ function CheckModel(modelDsl: AmisModel) {
     }
   }
 
-  const cModelList = CachedModelIDList();
+  const cModelList = getCachedModelIDList();
   if (modelDsl.relations != null) {
     for (const key in modelDsl.relations) {
       if (Object.prototype.hasOwnProperty.call(modelDsl.relations, key)) {
@@ -1051,15 +1051,16 @@ export function importDBModelsToCache() {
  */
 // export function loadDefaultFormTableFormAllModel() {
 //   // need import the db model first.
-//   const list = allModelIds();
+//   const list = getAllModelIds();
 //   list.forEach((l) => checkAndloadDefaultTableForm(l));
 // }
 /**
  * return the id and the name info for all models.
- * yao run scripts.system.model.allModelIdAndName
+ *
+ * yao run scripts.system.model.getAllModelIdAndName
  * @returns
  */
-export function allModelIdAndName(): { id: string; name: string }[] {
+export function getAllModelIdAndName(): { id: string; name: string }[] {
   const modelIds = FilterCachedModelList('ID');
   const modelsFromDb = DatabaseModelList();
 
@@ -1077,11 +1078,12 @@ export function allModelIdAndName(): { id: string; name: string }[] {
 }
 
 /**
- * 所有模型的ID
+ * 读取所有模型的ID
+ *
+ * yao run scripts.system.model.getAllModelIds
  */
-export function allModelIds() {
-  let modelIds = CachedModelIDList();
-  // const models = FilterCachedModelList('ID');
+export function getAllModelIds() {
+  let modelIds = getCachedModelIDList();
   // models.forEach((m) => modelIds.push(m.ID));
   const modelsFromDb = DatabaseModelList();
   modelsFromDb.forEach((m) => modelIds.push(m.identity));
@@ -1106,11 +1108,12 @@ export function ImportSystemModels() {
   return { message: '导入成功' };
 }
 /**
- * yao run scripts.system.model.modelNameOption
+ * get all model name list as select options only include the cached model.
+ * yao run scripts.system.model.getCachedModelsNameOptions
  * @returns 返回模型ID列表
  */
-export function modelNameOption() {
-  const list = CachedModelIDList();
+export function getCachedModelsNameOptions() {
+  const list = getCachedModelIDList();
   const models = list.map((model) => {
     return { label: model, value: model };
   });
@@ -1118,8 +1121,14 @@ export function modelNameOption() {
   // amis默认会使用items属性
   return { items: models };
 }
-// yao run scripts.system.model.modelNameList
-export function modelNameList() {
+
+/**
+ * get all model name list as select options only include the database model.
+ *
+ * yao run scripts.system.model.getDbModelsNameOptions
+ * @returns
+ */
+export function getDbModelsNameOptions() {
   const list = DatabaseModelList();
   const models = list.map((model) => {
     let label = model.comment ? model.comment : model.name;
@@ -1130,6 +1139,31 @@ export function modelNameList() {
     };
   });
   return { items: models };
+}
+
+/**
+ * get all model name list as select options including the cached and the database.
+ *
+ * yao run scripts.system.model.getAllModelNameOptions
+ * @returns
+ */
+export function getAllModelNameOptions() {
+  const modelIds = getCachedModelIDList();
+
+  const modelsFromDb = getDbModelsNameOptions().items;
+
+  // 使用Map提高性能
+  const modelMap = new Map<string, string>();
+
+  // 处理内存中的模型
+  modelIds.forEach((m) => modelMap.set(m, m));
+
+  // 处理数据库中的模型，优先使用name
+  modelsFromDb.forEach((m) => modelMap.set(m.value, m.label));
+
+  // 将Map转换为数组
+  const items = Array.from(modelMap, ([value, label]) => ({ value, label }));
+  return { items };
 }
 
 /**
@@ -1174,7 +1208,7 @@ function ImportTableAction(payload: { name: string }) {
   // }
 }
 
-function isTextColumn(column) {
+function isTextColumn(column: AmisModelColumn) {
   const ty = column.type.toLowerCase();
   if (ty === 'string' || ty.includes('text') || ty === 'json') {
     return true;
@@ -1381,7 +1415,7 @@ function guessJsonType(value) {
     return 'string';
   }
 }
-function getLastPart(str) {
+function getLastPart(str: string) {
   // Split the string at "-" and get the last part (if "-" exists)
   const parts = str.split('-');
   const lastPart = parts[parts.length - 1];
@@ -1394,7 +1428,7 @@ function getLastPart(str) {
     return str;
   }
 }
-function guessAmisType(typeIn) {
+function guessAmisType(typeIn: string) {
   if (!typeIn) {
     return 'string';
   }

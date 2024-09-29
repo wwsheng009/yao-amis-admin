@@ -153,10 +153,10 @@ export function deleteModelData(modelId: ModelId, ids: string) {
   const myArray = ids.split(',');
   if (isModelTableExist(modelId)) {
     if (ids.includes(',')) {
-      Process(`yao.table.deletein`, ids);
+      Process(`yao.table.deletein`, modelId, ids);
     } else {
       myArray.forEach((id: string) => {
-        Process(`yao.table.delete`, id);
+        Process(`yao.table.delete`, modelId, id);
       });
     }
   } else {

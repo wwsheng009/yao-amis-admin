@@ -38,7 +38,7 @@
       "description": "模型列表",
       "path": "/model_name_list",
       "method": "GET",
-      "process": "scripts.system.model.modelNameList",
+      "process": "scripts.system.model.getAllModelNameOptions",
       "in": [
         ""
       ],

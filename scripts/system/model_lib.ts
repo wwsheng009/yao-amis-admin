@@ -5,15 +5,16 @@ import { Process, Exception } from '@yao/yao';
 import { YaoModel } from '@yaoapps/types';
 import { loadModeltoMemory } from '@scripts/system/model_load';
 
-// 读取所有的模型id的列表
-// 缺少一个name属性，所有只能读取到id列表
-// yao run scripts.system.model.CachedModelIDList
-// ["admin.user"]
 /**
- * get the id of the cached models
+ * get the id of the cached models 读取所有的模型id的列表
+ * 
+ * 缺少一个name属性，所有只能读取到id列表
+
+ *
+ * yao run scripts.system.model_lib.getCachedModelIDList
  * @returns list of the cached model ids
  */
-export function CachedModelIDList() {
+export function getCachedModelIDList(): string[] {
   return FilterCachedModelList('ID').map((item) => item.ID);
 }
 
@@ -21,21 +22,22 @@ export function CachedModelIDList() {
  * 返回所有缓存中的模型列表
  * @returns []object
  */
-export function CachedModelList() {
+export function getCachedModelList() {
   const models = Process('widget.models');
-  return FlatModelList(models);
+  return FilterAndFlatTreeByAttr(models);
 }
 /**
  * 解析内存中的模型数据,可以使用路径表达式
- * yao run scripts.system.model_lib.FilterCachedModelList
- * yao run scripts.system.model_lib.FilterCachedModelList name
+ *
+ * yao run scripts.system.model_lib.FilterCachedModelList 'ID'
+ *
  * yao run scripts.system.model_lib.FilterCachedModelList name,ID
  * @param {*} attr
  * @returns
  */
 export function FilterCachedModelList(attr?: string[] | string) {
   const models = Process('widget.models');
-  return FlatModelList(models, attr);
+  return FilterAndFlatTreeByAttr(models, attr);
 }
 /**
  * 扁平化模型列表
@@ -43,7 +45,10 @@ export function FilterCachedModelList(attr?: string[] | string) {
  * @param {string} attr,使用路径表达式抽取子对象
  * @returns
  */
-function FlatModelList(models: YaoModelNode[], attr?: string[] | string) {
+function FilterAndFlatTreeByAttr(
+  models: YaoModelNode[],
+  attr?: string[] | string
+) {
   const list = [] as AmisModel[];
 
   const getProperty = (object: object, path: string) => {
@@ -230,11 +235,11 @@ export function modelIdListFromMemory(modelData: YaoModelNode) {
 
 // yao run调试前先注释
 // module.exports = {
-//   FlatModelList,
+//   FilterAndFlatTreeByAttr,
 //   FindCachedModelById,
 //   FindAndLoadYaoModelById,
-//   CachedModelList,
+//   getCachedModelList,
 //   FilterCachedModelList,
-//   CachedModelIDList,
+//   getCachedModelIDList,
 //   FindAndLoadDBModelById
 // };
