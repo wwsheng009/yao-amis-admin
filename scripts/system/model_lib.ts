@@ -4,6 +4,7 @@ import { ModelId, AmisModel, YaoModelNode } from '@yao/types';
 import { Process, Exception } from '@yao/yao';
 import { YaoModel } from '@yaoapps/types';
 import { loadModeltoMemory } from '@scripts/system/model_load';
+import { updateModelMetaFields } from './model';
 
 /**
  * get the id of the cached models 读取所有的模型id的列表
@@ -131,7 +132,9 @@ function FilterAndFlatTreeByAttr(
 export function FindCachedModelById(modelId: ModelId): AmisModel {
   const exist = Process(`models.${modelId}.exists`);
   if (exist) {
-    return Process(`models.${modelId}.read`);
+    const model = Process(`models.${modelId}.read`);
+    const modelDsl = updateModelMetaFields(model);
+    return modelDsl;
   }
 
   const models = Process('widget.models') as YaoModelNode[];
@@ -152,8 +155,9 @@ export function FindCachedModelById(modelId: ModelId): AmisModel {
       }
     }
   };
-
-  return traverse(models, modelId + '');
+  const model = traverse(models, modelId + '');
+  const modelDsl = updateModelMetaFields(model);
+  return modelDsl;
 }
 
 /**
@@ -205,6 +209,7 @@ export function FindAndLoadDBModelById(modelId: ModelId): AmisModel {
   if (modelDsl == null) {
     throw new Exception(`模型：${modelId}不存在`);
   }
+
   return modelDsl;
 }
 

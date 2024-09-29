@@ -51,7 +51,6 @@ export function getModelDefinition(
     model.columns = model.columns || [];
   }
   model = AddMetaFields(model);
-  model = UpdateMetaFields(model);
 
   return model;
 }
@@ -320,29 +319,7 @@ export function getModelFieldsForAmis(
 
   return schemas;
 }
-function UpdateMetaFields(modelDsl: YaoModel.ModelDSL): AmisModel {
-  if (!modelDsl.columns || !Array.isArray(modelDsl.columns)) {
-    return modelDsl;
-  }
-  if (!modelDsl.option?.timestamps && !modelDsl.option?.soft_deletes) {
-    return modelDsl;
-  }
-  modelDsl.columns.forEach((c) => {
-    if (modelDsl.option?.timestamps) {
-      if (c.name == 'created_at' && c.label == '::Created At') {
-        c.label = '创建时间';
-      } else if (c.name == 'updated_at' && c.label == '::Updated At') {
-        c.label = '更新时间';
-      }
-    }
-    if (modelDsl.option?.soft_deletes) {
-      if (c.name == 'deleted_at' && c.label == '::Deleted At') {
-        c.label = '删除时间';
-      }
-    }
-  });
-  return modelDsl;
-}
+
 /**
  * 更新模型，增加元数据字段如果它们不存在，
  *

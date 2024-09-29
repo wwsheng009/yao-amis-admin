@@ -1,6 +1,6 @@
 import { DotName, SlashName } from '@scripts/system/lib';
 import { ConvertAmisUIModelToModel, getModelDslById } from './model';
-import { AmisUIColumn, ModelId } from '@yao/types';
+import { AmisModel, AmisUIColumn, ModelId } from '@yao/types';
 
 // 创建模型对象的ts类型定义。
 
@@ -31,7 +31,7 @@ export function createModelType(modelId: ModelId, columnsIn?: AmisUIColumn[]) {
  * @param {object|Array} modelsIn 模型对象或是列表
  * @returns string
  */
-function createTSTypes(modelsIn) {
+function createTSTypes(modelsIn: AmisModel[] | AmisModel) {
   if (!modelsIn) {
     return '';
   }
@@ -69,19 +69,20 @@ function createTSTypes(modelsIn) {
       rels.push(`  /** Relation: ${key}=> ${element.model} */
   ${key}?: ${element.model.replaceAll('.', '_')}${sign}`);
     }
-    return `
-/**
+
+    return `\/**
  * Model=> ${dotName} ${model.name ? '(' + model.name + ')' : ''}
  * 
  * Table=> ${model.table.name} ${
    model.table.comment ? '(' + model.table.comment + ')' : ''
  }
-*/
+*\/
 interface ${last} {
 ${fields}
 ${rels.join('\n')}
 }`;
   });
+  console.log('codes', codes);
   return codes.join('\n');
 }
 

@@ -1,5 +1,6 @@
 import { curdTemplate } from '@scripts/amis/curd';
 import { curdListPage } from '@scripts/amis/schema';
+import { createModelType } from '@scripts/system/tstype';
 import { AmisUIColumn, ModelId } from '@yao/types';
 import { Process } from '@yao/yao';
 
@@ -160,11 +161,12 @@ export function getTSType(modelId: ModelId, columns?: AmisUIColumn[]) {
       {
         language: 'typescript',
         title: 'Ts类型',
-        __code_source: Process(
-          'scripts.system.tstype.createModelType',
-          modelId,
-          columns
-        )
+        __code_source: createModelType(modelId, columns) //
+        // Process(
+        //   'scripts.system.tstype.createModelType',
+        //   modelId,
+        //   columns
+        // )
       }
     ]
   };

@@ -632,8 +632,7 @@
                   "type": "button-toolbar",
                   "buttons": [
                     {
-                      "id": "u:a0e8e92c8ff2",
-                      "label": "复制源码",
+                      "label": "复制Json源码",
                       "level": "primary",
                       "onEvent": {
                         "click": {
@@ -648,6 +647,26 @@
                           ]
                         }
                       },
+                      "visibleOn": "this.language == 'json'",
+                      "type": "button"
+                    },
+                    {
+                      "label": "复制源码",
+                      "level": "primary",
+                      "onEvent": {
+                        "click": {
+                          "actions": [
+                            {
+                              "actionType": "copy",
+                              "args": {
+                                "content": "${__code_source}",
+                                "copyFormat": "text/plain"
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      "visibleOn": "this.language != 'json'",
                       "type": "button"
                     },
                     {

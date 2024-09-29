@@ -79,6 +79,10 @@ export function GetColumnTypeList() {
       value: 'datetime'
     },
     {
+      label: '时间戳',
+      value: 'timestamp'
+    },
+    {
       label: '时间',
       value: 'time'
     },
@@ -587,19 +591,15 @@ export function column2AmisFormEditColumn(column: AmisModelColumn) {
   newColumn.label = column.label;
 
   // 必填项
-  if (
-    column.default == null &&
-    !column.nullable &&
-    column.type.toLowerCase() !== 'id'
-  ) {
-    if (column.unique || column.index || column.primary) {
+  if (column.type.toLowerCase() !== 'id' && column.default == null) {
+    if (!column.nullable || column.unique || column.index || column.primary) {
       newColumn.required = true;
     }
   }
+
   if (column.default) {
     newColumn.value = column.default;
   }
-
   newColumn.type = 'input-text';
 
   let columnType = column.type.toUpperCase();

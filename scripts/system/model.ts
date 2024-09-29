@@ -558,13 +558,12 @@ export function ConvertAmisUIModelToModel(modelDsl: AmisUIModel): AmisModel {
     const cols = model.columns as unknown as AmisUIColumn[];
     /** ui element should the same name as the model column name,but theres is some case */
     cols.forEach((col) => {
+      delete col.index;
+      delete col.__index;
       // 兼容处理,amis index字段用于表格索引,使用is_index作替代
       if (Object.prototype.hasOwnProperty.call(col, 'is_index')) {
         col.index = col.is_index as unknown as number;
         delete col.is_index;
-      }
-      if (Object.prototype.hasOwnProperty.call(col, '__index')) {
-        delete col.__index;
       }
     });
   }
@@ -597,7 +596,29 @@ export function ConvertModelToAmisUIModel(modelDsl: AmisModel) {
   }
   return model;
 }
-
+export function updateModelMetaFields(modelDsl: YaoModel.ModelDSL): AmisModel {
+  if (!modelDsl.columns || !Array.isArray(modelDsl.columns)) {
+    return modelDsl;
+  }
+  if (!modelDsl.option?.timestamps && !modelDsl.option?.soft_deletes) {
+    return modelDsl;
+  }
+  modelDsl.columns.forEach((c) => {
+    if (modelDsl.option?.timestamps) {
+      if (c.name == 'created_at' && c.label == '::Created At') {
+        c.label = '创建时间';
+      } else if (c.name == 'updated_at' && c.label == '::Updated At') {
+        c.label = '更新时间';
+      }
+    }
+    if (modelDsl.option?.soft_deletes) {
+      if (c.name == 'deleted_at' && c.label == '::Deleted At') {
+        c.label = '删除时间';
+      }
+    }
+  });
+  return modelDsl;
+}
 /**
  * 保存模型定义，并返回更新后的模型定义
  * @param {object} payload 模型定义
