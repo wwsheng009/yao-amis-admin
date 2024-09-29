@@ -29,3 +29,8 @@ export interface EmailMessage {
     attachments?: string[];
   }[];
 }
+
+export interface EmailPluginResponse {
+  code: number;
+  message: string;
+}

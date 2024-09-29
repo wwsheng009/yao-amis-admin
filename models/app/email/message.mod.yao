@@ -10,8 +10,8 @@
     {
       "comment": "发件人邮箱地址",
       "label": "发件人",
-      "length": 255,
       "name": "sender",
+      "length": 255,
       "type": "string",
       "validations": [
         {
@@ -20,17 +20,18 @@
           "method": "typeof"
         },
         {
-          "message": "{{input}}不是有效的邮箱地址",
-          "method": "email"
+          "args": [255],
+          "message": "{{label}}不能超过255个字符",
+          "method": "maxLength"
         }
       ]
     },
     {
-      "comment": "收件人邮箱地址",
+      "comment": "收件人邮箱地址, 可为多个，使用逗号分隔",
       "label": "收件人",
       "length": 255,
       "name": "receiver",
-      "type": "json",
+      "type": "string",
       "validations": [
         {
           "args": ["string"],
@@ -38,8 +39,9 @@
           "method": "typeof"
         },
         {
-          "message": "{{input}}不是有效的邮箱地址",
-          "method": "email"
+          "args": [255],
+          "message": "{{label}}不能超过255个字符",
+          "method": "maxLength"
         }
       ]
     },
@@ -49,7 +51,7 @@
       "length": 255,
       "name": "cc",
       "nullable": true,
-      "type": "json",
+      "type": "string",
       "validations": [
         {
           "args": ["string"],
@@ -57,9 +59,9 @@
           "method": "typeof"
         },
         {
-          "args": ["^([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+,?)+$"],
-          "message": "{{input}}不是有效的邮箱地址列表",
-          "method": "pattern"
+          "args": [255],
+          "message": "{{label}}不能超过255个字符",
+          "method": "maxLength"
         }
       ]
     },
@@ -68,7 +70,6 @@
       "label": "主题",
       "length": 255,
       "name": "subject",
-      "nullable": true,
       "type": "string",
       "validations": [
         {

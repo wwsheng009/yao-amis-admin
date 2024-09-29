@@ -1,0 +1,11 @@
+{
+  "action": {
+    "bind": {
+      "model": "app.email.message"
+    },
+    "after:save": "scripts.app.email.mail.afterSave",
+    
+    "after:update": "scripts.app.email.mail.afterSave"
+  },
+  "name": "app.email.message"
+}
