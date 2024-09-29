@@ -177,7 +177,7 @@
               "actionType": "dialog",
               "dialog": {
                 "body": {
-                  "api": "post:/api/v1/system/model/admin.user/bulkUpdate/$id",
+                  "api": "post:/api/v1/system/model/admin.user/update/$id",
                   "body": [
                     {
                       "label": "ID",

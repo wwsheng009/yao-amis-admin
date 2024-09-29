@@ -29,7 +29,7 @@ export function CachedModelList() {
  * yao run scripts.system.model_lib.FilterCachedModelList
  * yao run scripts.system.model_lib.FilterCachedModelList name
  * yao run scripts.system.model_lib.FilterCachedModelList name,ID
- * @param {*} modelData
+ * @param {*} attr
  * @returns
  */
 export function FilterCachedModelList(attr?: string[] | string) {
@@ -123,6 +123,11 @@ function FlatModelList(models: YaoModelNode[], attr?: string[] | string) {
  * @returns YaoModel.ModelDSL | null
  */
 export function FindCachedModelById(modelId: ModelId): AmisModel {
+  const exist = Process(`models.${modelId}.exists`);
+  if (exist) {
+    return Process(`models.${modelId}.read`);
+  }
+
   const models = Process('widget.models') as YaoModelNode[];
 
   const traverse = (node: any, modelId: string) => {

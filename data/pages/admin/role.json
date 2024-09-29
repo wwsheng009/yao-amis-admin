@@ -59,7 +59,7 @@
           "dialog": {
             "type": "dialog",
             "body": {
-              "api": "post:/api/v1/system/model/admin.auth.role/bulkUpdate/$id",
+              "api": "post:/api/v1/system/model/admin.auth.role/update/$id",
               "body": [
                 {
                   "name": "id",

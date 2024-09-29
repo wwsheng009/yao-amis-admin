@@ -6,7 +6,7 @@ import { IsMysql } from '@scripts/system/lib';
 import { isDateTimeType } from '@scripts/system/col_type';
 
 import { Process, Exception, log } from '@yao/yao';
-import { YaoModel, YaoQuery } from '@yaoapps/types';
+import { YaoModel, YaoQueryParam } from '@yaoapps/types';
 import { ModelId } from '@yao/types';
 import { QueryObjectIn } from '@yao/request';
 
@@ -56,7 +56,7 @@ export function mergeQueryObject(querysIn: QueryObjectIn, payload: object) {
 export function queryToQueryParam(
   modelIn: ModelId | YaoModel.ModelDSL,
   querysIn: QueryObjectIn,
-  queryParams?: YaoQuery.QueryDSL
+  queryParams?: YaoQueryParam.QueryParam
 ) {
   if (querysIn == null && queryParams == null) {
     return {};
@@ -264,10 +264,10 @@ function getDbModelColumnMap(model: ModelId | YaoModel.ModelDSL) {
   }
   return columnMap;
 }
-function getYaoModelColumnMap(model: YaoModel.ModelDSL): {
+function getYaoModelColumnMap(model: ModelId | YaoModel.ModelDSL): {
   [key: string]: YaoModel.ModelColumn;
 } {
-  let modelDsl = model;
+  let modelDsl = model as YaoModel.ModelDSL;
   if (typeof model === 'string') {
     modelDsl = FindAndLoadYaoModelById(model);
   }
@@ -283,17 +283,20 @@ function getYaoModelColumnMap(model: YaoModel.ModelDSL): {
 }
 
 export function updateOutputData(model: ModelId | YaoModel.ModelDSL, Data) {
-  if (Array.isArray(Data)) {
-    let modelDsl = model;
-    if (typeof modelDsl === 'string') {
-      // 如果使用yao model定义，无法获取用户定义的类型，比如json类型的数据就可能有多种含义。
-      modelDsl = FindAndLoadDBModelById(model as string);
-    }
-    const dbColmap = getDbModelColumnMap(modelDsl);
+  if (Data == null) {
+    return Data;
+  }
+  let modelDsl = model;
+  if (typeof modelDsl === 'string') {
+    // 如果使用yao model定义，无法获取用户定义的类型，比如json类型的数据就可能有多种含义。
+    modelDsl = FindAndLoadDBModelById(model as string);
+  }
+  const dbColmap = getDbModelColumnMap(modelDsl);
 
+  if (Array.isArray(Data)) {
     return Data.map((line) => updateOutputDataLine(dbColmap, line));
   }
-  return Data;
+  return updateOutputDataLine(dbColmap, Data);
 }
 /**
  * update the data line before output
@@ -301,8 +304,8 @@ export function updateOutputData(model: ModelId | YaoModel.ModelDSL, Data) {
  * @param {object} line
  * @returns
  */
-function updateOutputDataLine(dbColMap, line) {
-  if (typeof line !== 'object') {
+function updateOutputDataLine(dbColMap: object, line: object) {
+  if (line == null || typeof line !== 'object') {
     return line;
   }
   for (const key in dbColMap) {
@@ -347,7 +350,10 @@ function updateOutputDataLine(dbColMap, line) {
  * @param {any} Data 保存到数据库的数据
  * @returns 处理后的Data
  */
-export function updateInputData(model: YaoModel.ModelDSL, Data: any) {
+export function updateInputData(
+  model: ModelId | YaoModel.ModelDSL,
+  Data: object | object[]
+): object | object[] {
   if (typeof Data !== 'object' || Data === null || Data === undefined) {
     return Data;
   }
@@ -358,7 +364,7 @@ export function updateInputData(model: YaoModel.ModelDSL, Data: any) {
 
   function updateLine(line: { [x: string]: any }) {
     if (typeof line !== 'object') {
-      return;
+      return line;
     }
     for (const key in yaoColMap) {
       const modelCol = yaoColMap[key];
@@ -453,6 +459,7 @@ export function updateInputData(model: YaoModel.ModelDSL, Data: any) {
           log.Error('invalid field data' + error.message);
         }
       }
+      return line;
     }
 
     // 存在用户ID定义,但是前台没有明显输入
@@ -466,7 +473,7 @@ export function updateInputData(model: YaoModel.ModelDSL, Data: any) {
   if (Array.isArray(Data)) {
     Data.forEach((line) => updateLine(line));
   } else {
-    updateLine(Data);
+    Data = updateLine(Data);
   }
 
   return Data;
@@ -569,7 +576,7 @@ export function PaginateArrayWithQuery(
   };
 }
 function FilterArrayWithQuery(
-  list: any[],
+  list: object[],
   querysIn: QueryObjectIn,
   searchFields = []
 ) {

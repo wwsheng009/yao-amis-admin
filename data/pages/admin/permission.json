@@ -80,7 +80,7 @@
               "actionType": "dialog",
               "dialog": {
                 "body": {
-                  "api": "post:/api/v1/system/model/admin.auth.permission/bulkUpdate/$id",
+                  "api": "post:/api/v1/system/model/admin.auth.permission/update/$id",
                   "body": [
                     {
                       "label": "名称",

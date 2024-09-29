@@ -209,28 +209,28 @@ export function curdListPage(modelId: ModelId, columns?: AmisUIColumn[]) {
           className: 'm-b-sm'
         },
         bulkActions: [
-          {
-            label: '批量修改',
-            type: 'button',
-            actionType: 'dialog',
-            level: 'primary',
-            dialog: {
-              title: '批量编辑',
-              name: 'sample-bulk-edit',
-              body: {
-                type: 'form',
-                api:
-                  'post:/api/v1/system/model/' + modelId + '/bulkUpdate/$ids',
-                controls: [
-                  {
-                    type: 'text',
-                    name: 'engine',
-                    label: 'Engine'
-                  }
-                ]
-              }
-            }
-          },
+          // {
+          //   label: '批量修改',
+          //   type: 'button',
+          //   actionType: 'dialog',
+          //   level: 'primary',
+          //   dialog: {
+          //     title: '批量编辑',
+          //     name: 'sample-bulk-edit',
+          //     body: {
+          //       type: 'form',
+          //       api:
+          //         'post:/api/v1/system/model/' + modelId + '/bulkUpdate/$ids',
+          //       controls: [
+          //         {
+          //           type: 'text',
+          //           name: 'engine',
+          //           label: 'Engine'
+          //         }
+          //       ]
+          //     }
+          //   }
+          // },
           {
             label: '批量删除',
             type: 'button',

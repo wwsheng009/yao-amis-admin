@@ -805,7 +805,7 @@ export function getModelDslById(modelId: ModelId) {
  * @param {string} modelId 模型ID
  * @returns 返回模型的columns定义
  */
-export function getYaoModelColumnMap(modelId: string) {
+export function getYaoModelColumnMap(modelId: ModelId) {
   const modelDsl = FindAndLoadYaoModelById(modelId);
   const columnMap = {};
   if (modelDsl && modelDsl.columns) {
@@ -1425,7 +1425,7 @@ function guessAmisType(typeIn) {
   }
   return 'string';
 }
-function GuessAmisCols(columns) {
+function GuessAmisCols(columns: any) {
   const cols = [];
   function traverse(node) {
     if (Array.isArray(node)) {
@@ -1518,7 +1518,7 @@ export function CheckAndGuessJson(payload) {
  * @param {object} payload 数据库表列表
  * @returns
  */
-export function ImportFromTableBatch(payload) {
+export function ImportFromTableBatch(payload: { items: any; }) {
   const items = payload.items;
   if (!Array.isArray(items)) {
     return { message: '传入数据格式不正确，需要传入数组！' };

@@ -3,7 +3,6 @@ import { ClearFalsyKeys, DotName } from '@scripts/system/lib';
 import { FindAndLoadYaoModelById } from '@scripts/system/model_lib';
 import {
   queryToQueryParam,
-  updateInputData,
   updateOutputData,
   getArrayItem,
   mergeQueryObject
@@ -13,8 +12,18 @@ import { RunTransaction } from '@scripts/system/db';
 
 import { Process, Exception } from '@yao/yao';
 import { ModelId } from '@yao/types';
-import { YaoModel, YaoQuery } from '@yaoapps/types';
+import { YaoQueryParam } from '@yaoapps/types';
 import { QueryObjectIn } from '@yao/request';
+import {
+  searchModelData,
+  getModelData,
+  findModelData,
+  saveModelData,
+  eachSaveAfterDelete,
+  saveModelDataBatch,
+  deleteModelData,
+  bulkUpdateModelData
+} from './processor';
 
 /**
  * 查找数据
@@ -33,7 +42,7 @@ export function dataSearch(
   pageIn: number,
   perPageIn: number,
   querysIn: QueryObjectIn,
-  queryParams: YaoQuery.QueryDSL,
+  queryParams: YaoQueryParam.QueryParam,
   payload: object
 ) {
   const querys = mergeQueryObject(querysIn, payload);
@@ -72,15 +81,15 @@ export function dataSearch(
     // }
     queryParam.withs = undefined;
   }
-  const data = Process(`models.${modelId}.Paginate`, queryParam, page, perPage);
-  if (Array.isArray(data.data) && data.data.length) {
-    data.data = updateOutputData(modelId, data.data);
+  const modelData = searchModelData(modelId, queryParam, page, perPage);
+  if (Array.isArray(modelData?.data) && modelData?.data.length) {
+    modelData.data = updateOutputData(modelDsl, modelData.data);
 
     if (Object.keys(withs2).length > 0) {
-      data.data.forEach((line: { [x: string]: any }) => {
+      modelData.data.forEach((line: { [x: string]: any }) => {
         for (const key in withs2) {
           const element = withs2[key];
-          let query = {} as YaoQuery.QueryDSL;
+          let query = {} as YaoQueryParam.QueryParam;
           if (element.query) {
             query = { ...element.query };
           }
@@ -90,10 +99,9 @@ export function dataSearch(
             value: line[element.foreign]
           });
           if (element.type === 'hasMany') {
-            line[key] = Process(`models.${element.model}.Get`, query);
+            line[key] = getModelData(element.model, query, true); // Process(`models.${element.model}.Get`, query);
           } else if (element.type === 'hasOne') {
-            const [ele] = Process(`models.${element.model}.Get`, query);
-
+            const [ele] = getModelData(element.model, query, true); //Process(`models.${element.model}.Get`, query);
             if (ele != null) {
               line[key] = ele;
             }
@@ -104,10 +112,11 @@ export function dataSearch(
   }
 
   return {
-    items: ClearFalsyKeys(data.data),
-    total: data.total
+    items: ClearFalsyKeys(modelData.data),
+    total: modelData.total
   };
 }
+
 function generateUUID() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
     const r = (Math.random() * 16) | 0;
@@ -227,7 +236,7 @@ function makeFake(modelId: ModelId) {
 // 表数据预览，可以用于amis curd控件的api接口测试
 export function PreViewtableData(modelId: string) {
   const model_name = DotName(modelId);
-  const data = Process(`models.${model_name}.Get`, { limit: 10 });
+  const data = getModelData(model_name, { limit: 10 }, true); //Process(`models.${model_name}.Get`, { limit: 10 });
   if (data.length === 0) {
     return makeFake(modelId);
   }
@@ -235,8 +244,9 @@ export function PreViewtableData(modelId: string) {
 }
 // 根据id获取记录
 export function getData(modelId: string, id: number) {
-  const data = Process(`models.${DotName(modelId)}.Find`, id, {});
-  return data;
+  return findModelData(modelId, id, {}, true);
+  // const data = Process(`models.${DotName(modelId)}.Find`, id, {});
+  // return data;
 }
 
 /**
@@ -250,7 +260,7 @@ export function getData(modelId: string, id: number) {
 function saveData(modelId: ModelId, payload: { [x: string]: any; id: number }) {
   const modelDsl = FindAndLoadYaoModelById(modelId);
 
-  payload = updateInputData(modelDsl, payload);
+  // payload = updateInputData(modelDsl, payload);
 
   const hasOnes = {};
   const hasManys = {};
@@ -268,7 +278,7 @@ function saveData(modelId: ModelId, payload: { [x: string]: any; id: number }) {
   }
 
   const saveFun = function () {
-    const id = Process(`models.${modelId}.Save`, payload);
+    const id = saveModelData(modelId, payload); //Process(`models.${modelId}.Save`, payload);
     if (id) {
       payload.id = id;
       for (const key in hasOnes) {
@@ -277,7 +287,8 @@ function saveData(modelId: ModelId, payload: { [x: string]: any; id: number }) {
           const w = hasOnes[key];
           // 设置外键
           payload[key][w.key] = payload[w.foreign];
-          Process(`models.${w.model}.Save`, payload[key]);
+          // Process(`models.${w.model}.Save`, payload[key]);
+          saveModelData(w.model, payload[key]);
         }
       }
       for (const key in hasManys) {
@@ -289,10 +300,18 @@ function saveData(modelId: ModelId, payload: { [x: string]: any; id: number }) {
         //   line[w.key] = payload[w.foreign];
         // });
         // 有删除？
-        const exist = Process(`models.${w.model}.Get`, {
-          select: ['id'],
-          wheres: [{ column: w.key, value: payload[w.foreign] }]
-        });
+        const exist = getModelData(
+          w.model,
+          {
+            select: ['id'],
+            wheres: [{ column: w.key, value: payload[w.foreign] }]
+          },
+          false
+        );
+        //  Process(`models.${w.model}.Get`, {
+        //   select: ['id'],
+        //   wheres: [{ column: w.key, value: payload[w.foreign] }]
+        // });
         const idsNew = lines.map((l) => l.id);
         const idsOld = exist.map((l: { id: any }) => l.id);
         const idsDeleted = idsOld.filter((id: any) => !idsNew.includes(id));
@@ -304,13 +323,13 @@ function saveData(modelId: ModelId, payload: { [x: string]: any; id: number }) {
           [w.key]: payload[w.foreign]
         };
         // console.log(`share`, share);
-
-        Process(
-          `models.${w.model}.EachSaveAfterDelete`,
-          idsDeleted,
-          lines,
-          share
-        );
+        eachSaveAfterDelete(w.model, idsDeleted, lines, share);
+        // Process(
+        //   `models.${w.model}.EachSaveAfterDelete`,
+        //   idsDeleted,
+        //   lines,
+        //   share
+        // );
       }
       return { id: id, message: `记录${id}保存成功` };
     } else {
@@ -336,35 +355,37 @@ export function newData(model: ModelId, payload: any) {
 }
 
 // 批量创建新记录
-export function newBatchData(
-  model: YaoModel.ModelDSL,
-  payload: { batch: boolean }
-) {
-  payload.batch = updateInputData(model, payload.batch);
-  Process(`models.${model}.eachSave`, payload.batch);
+export function newBatchData(model: ModelId, payload: { batch: object[] }) {
+  return saveModelDataBatch(model, payload.batch);
+  // const data = updateInputData(model, payload.batch);
+  // Process(`models.${model}.eachSave`, data);
 }
 
 // 删除记录，支持单条或是批量
 export function deleteData(modelId: string, ids: string) {
-  const myArray = ids.split(',');
+  return deleteModelData(modelId, ids);
+  // const myArray = ids.split(',');
 
-  myArray.forEach((id: string) => {
-    // Process("yao.model.Delete", model, id);
-    Process(`models.${modelId}.Delete`, id);
-  });
+  // myArray.forEach((id: string) => {
+  //   // Process("yao.model.Delete", model, id);
+  //   Process(`models.${modelId}.Delete`, id);
+  // });
 }
 // 批量更新数据
-export function bulkUpdate(
-  modelId: YaoModel.ModelDSL,
-  ids: string,
-  payload: any
-) {
-  const myArray = ids.split(',');
-  myArray.forEach((id: string) => {
-    // Process("yao.model.Update", model, id, payload);
-    payload = updateInputData(modelId, payload);
-    Process(`models.${modelId}.Update`, id, payload);
-  });
+/**
+ * yao run scripts.amis.data.model.bulkUpdate
+ * @param modelId model Id
+ * @param ids id
+ * @param payload
+ */
+export function bulkUpdate(modelId: ModelId, ids: string, payload: any) {
+  return bulkUpdateModelData(modelId, ids, payload);
+  // const myArray = ids.split(',');
+  // payload = updateInputData(modelId, payload);
+  // myArray.forEach((id: string) => {
+  //   // Process("yao.model.Update", model, id, payload);
+  //   Process(`models.${modelId}.Update`, id, payload);
+  // });
 }
 
 // scripts.amis.data.model.dummy
@@ -373,7 +394,8 @@ export function dummy() {
 }
 
 /**
- * 可以直接读取表，也可以读取在模型model.selectOptions中定义的条件，如果没有表中没有定义，使用模型读取。
+ * 可以直接读取表，也可以读取在模型model.selectOptions中定义的条件，
+ * 如果没有表中没有定义，使用模型读取。
  *
  * yao run scripts.amis.data.model.selectOptions ddic.model
  *
@@ -392,10 +414,12 @@ export function selectOptions(
   const [row] = Process('models.ddic.selectoption.get', {
     wheres: [{ column: 'name', value: modelId }],
     limit: 1
-  });
+  } as YaoQueryParam.QueryParam);
 
   const query = { model: modelId } as any;
-  let wheres = undefined;
+  let wheres = undefined as
+    | YaoQueryParam.QueryWhere
+    | YaoQueryParam.QueryWhere[];
   let join = false;
   if (row != null) {
     query.model = row.model_id;
@@ -414,14 +438,14 @@ export function selectOptions(
     query.label = querys['_label'][0];
   }
 
-  const queryParam = queryToQueryParam(query.model, querys) as any;
+  const queryParam = queryToQueryParam(query.model, querys);
   wheres = queryParam?.wheres;
   if (wheres != null) {
     query.wheres = wheres;
   }
   // 传入原始搜索
   if (querys['__wheres']) {
-    query.wheres = querys['__wheres'][0];
+    query.wheres = querys['__wheres'];
   }
 
   const data = Process('yao.component.SelectOptions', query);
