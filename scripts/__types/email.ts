@@ -49,6 +49,7 @@ export interface app_email_message {
   /**发送时间 */
   sent_at?: Date;
 
+  attachment_folder?: string;
   send_log?: string;
 }
 

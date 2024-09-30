@@ -3,9 +3,13 @@
     "bind": {
       "model": "app.email.message"
     },
-    "after:save": "scripts.app.email.client.afterSave",
-    
-    "after:update": "scripts.app.email.client.afterSave"
+    "after:save": "scripts.app.email.hook.afterSave",
+
+    "after:update": "scripts.app.email.hook.afterSave",
+    "after:delete": "scripts.app.email.hook.afterDelete",
+    "after:delete-in": "scripts.app.email.hook.afterDeleteIn",
+    "before:delete": "scripts.app.email.hook.beforeDelete",
+    "before:delete-in": "scripts.app.email.hook.beforeDeleteIn"
   },
   "name": "app.email.message"
 }

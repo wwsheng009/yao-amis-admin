@@ -8,9 +8,25 @@
       "type": "id"
     },
     {
+      "comment": "账户类型，发送或是接收",
+      "label": "账户类型",
+      "name": "type",
+      "option": ["receive", "send"],
+      "default": "send",
+      "type": "enum",
+      "validations": [
+        {
+          "args": ["receive", "send"],
+          "message": "{{input}}不在许可范围, {{label}}应该为 receive 或 send",
+          "method": "enum"
+        }
+      ]
+    },
+    {
       "comment": "邮件服务器地址，例如 smtp.qq.com 或 imap.qq.com",
       "label": "服务器地址",
       "length": 100,
+      "default": "smtp.qq.com",
       "name": "server",
       "type": "string",
       "validations": [
@@ -26,6 +42,7 @@
       "label": "端口",
       "name": "port",
       "type": "integer",
+      "default": "587",
       "validations": [
         {
           "args": ["\\d*"],
@@ -53,10 +70,12 @@
         }
       ]
     },
+
     {
       "comment": "邮件服务器协议类型",
       "label": "协议类型",
-      "name": "type",
+      "name": "protocol",
+      "default": "smtp",
       "option": ["smtp", "imap"],
       "type": "enum",
       "validations": [
@@ -96,3 +115,4 @@
     "name": "app_email_account"
   }
 }
+// yao migrate -n app.email.account --reset

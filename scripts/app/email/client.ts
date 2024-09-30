@@ -8,45 +8,83 @@ import { Exception, FS, Process } from '@yao/yao';
 import { YaoQueryParam } from '@yaoapps/types';
 
 const uploadFolder = 'data/upload/emails';
+
+export function getSendAccount() {
+  const [account] = Process('models.app.email.account.get', {
+    wheres: [
+      {
+        column: 'type',
+        value: 'send'
+      }
+    ],
+    limit: 1
+  } as YaoQueryParam.QueryParam);
+
+  return account;
+}
+
+export function getReceiveAccount() {
+  const [account] = Process('models.app.email.account.get', {
+    wheres: [
+      {
+        column: 'type',
+        value: 'receive'
+      }
+    ],
+    limit: 1
+  } as YaoQueryParam.QueryParam);
+  return account;
+}
 /**
- * trig by the table after:save hook
+ * yao run scripts.app.email.client.checkEmailAccount
+ */
+export function checkEmailAccount() {
+  const accounts = [getSendAccount(), getReceiveAccount()].filter((c) => !!c);
+  if (accounts.length <= 1) {
+    Process('schedules.email.stop');
+    console.log(`邮件账户未配置,请配置发送与接收邮件的账号`);
+    return false;
+  }
+  return true;
+}
+/**
+ * yao run scripts.app.email.client.deleteMessageFolder
  * @param id message id
  * @returns
  */
-export function afterSave(id: number) {
-  const account = Process('models.app.email.account.find', 1, {});
-
+export function deleteMessageFolder(id: number | string) {
   const message = Process(
     'models.app.email.message.find',
-    id,
+    Number(id),
     {}
   ) as app_email_message;
 
-  const res = send(message, account);
-  if (res.code == 200) {
-    Process('models.app.email.message.update', id, {
-      status: 'sent',
-      sent_at: CurrentTime(),
-      send_log: res.message
-    });
-  } else {
-    Process('models.app.email.message.update', id, {
-      status: 'failed',
-      send_log: res.message
-    });
+  if (message == null || !message.attachment_folder) {
+    console.log('消息不存在', message);
+    return;
   }
-  return id;
+  const folder = message.attachment_folder.replace('data', '');
+  const fs = new FS('system');
+  const exist = fs.Exists(folder);
+  if (exist) {
+    fs.RemoveAll(folder);
+  }
 }
 
-function send(emailMessage: app_email_message, account: any) {
-  const cc = emailMessage.cc.length
-    ? emailMessage.cc.split(',')?.map((c) => {
-        return { Name: '', Address: c };
-      })
-    : undefined;
-  const to = emailMessage.receiver.split(',')?.map((c) => {
-    return { Name: '', Address: c };
-  });
+export function sendEmail(emailMessage: app_email_message, account: any) {
+  console.log('开始发送邮件');
+
+  const cc =
+    Array.isArray(emailMessage.cc) && emailMessage.cc?.length
+      ? emailMessage.cc.split(',')?.map((c) => {
+          return { Name: '', Address: c };
+        })
+      : undefined;
+  const to =
+    Array.isArray(emailMessage.receiver) &&
+    emailMessage.receiver?.split(',')?.map((c) => {
+      return { Name: '', Address: c };
+    });
   const message = {
     account: {
       ...account
@@ -62,20 +100,61 @@ function send(emailMessage: app_email_message, account: any) {
       }
     ]
   } as EmailMessage;
-  return Process('plugins.email.send', message) as EmailPluginResponse;
+  const resp = Process('plugins.email.send', message) as EmailPluginResponse;
+  if (resp.code !== 200) {
+    console.log(`邮件发送失败` + resp.message);
+  } else {
+    console.log(`邮件发送成功` + resp.message);
+  }
+  return { code: resp.code, message: resp.message };
 }
-
+export function sendMessage(id: number) {
+  const account = getSendAccount();
+  if (!account) {
+    throw new Exception(`发送邮件的账户未配置`);
+  }
+  const message = Process(
+    'models.app.email.message.find',
+    id,
+    {}
+  ) as app_email_message;
+  const sender = message?.sender as unknown as {
+    Name?: string;
+    Address: string;
+  };
+  if (typeof sender != 'object' || !sender?.Address) {
+    console.log('发送者信息不正确');
+    return;
+  }
+  const res = sendEmail(message, account);
+  if (res.code == 200) {
+    Process('models.app.email.message.update', id, {
+      status: 'sent',
+      sent_at: CurrentTime(),
+      send_log: res.message
+    });
+  } else {
+    Process('models.app.email.message.update', id, {
+      status: 'failed',
+      send_log: res.message
+    });
+  }
+  return id;
+}
 /**
  * yao run scripts.app.email.client.receive
  *
  * yao run schedules.mail.start
+ *
+ * yao run tasks.email.add()
+ *
+ * yao run tasks.email.get(1)
  */
 function receive() {
   console.log('开始接收邮件');
-  const account = Process('models.app.email.account.find', 2, {});
+  const account = getReceiveAccount();
   if (!account) {
-    console.log('邮件账号未配置');
-    return;
+    throw new Exception(`接收邮件的账户未配置`);
   }
   const message = {
     account: {
@@ -86,7 +165,11 @@ function receive() {
   const res = Process('plugins.email.receive', message) as EmailPluginResponse;
   if (res.code == 200) {
     saveReceivedEmails(res.emails);
+  } else {
+    throw new Exception(`邮件收取失败${res.message}`);
+    // console.log(`邮件收取失败` + res.message);
   }
+  return { code: res.code, message: res.message };
 }
 /**
  * yao run scripts.app.email.client.saveReceivedEmails
@@ -199,7 +282,7 @@ function decodeMessage(email: MessageReceived) {
   return message;
 }
 // decodeMessage();
-function CurrentTime() {
+export function CurrentTime() {
   const date = new Date();
   // utc时间整时区
   const newDate = new Date(

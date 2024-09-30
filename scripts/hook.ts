@@ -1,4 +1,5 @@
 import { importDBModelsToCache } from '@scripts/system/model';
+import { Process } from '@yaoapps/client';
 /**
  * 在应用启动时自动加载模型，这个特性需要修改版的yao才支持，非官方功能
  *
@@ -18,6 +19,8 @@ export function startup(config: object, reload: boolean) {
     console.log('启动-加载所有数据库模型到缓存');
     importDBModelsToCache();
   }
+  //检查邮件配置
+  Process('scripts.app.email.client.checkEmailAccount');
 }
 
 /**
