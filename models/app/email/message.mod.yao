@@ -137,17 +137,17 @@
       "nullable": true
     },
     {
-      "comment": "消息唯一ID",
-      "label": "邮件唯一ID",
+      "comment": "消息标识",
+      "label": "消息标识",
       "name": "message_id",
       "type": "string",
       "nullable": true
     },
     {
-      "comment": "用户唯一ID",
-      "label": "用户唯一ID",
+      "comment": "消息唯一ID",
+      "label": "消息唯一ID",
       "name": "uid",
-      "type": "string",
+      "type": "integer",
       "nullable": true
     },
     {

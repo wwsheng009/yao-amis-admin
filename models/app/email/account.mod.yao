@@ -10,7 +10,7 @@
     {
       "comment": "账户类型，发送或是接收",
       "label": "账户类型",
-      "name": "type",
+      "name": "category",
       "option": ["receive", "send"],
       "default": "send",
       "type": "enum",
@@ -74,7 +74,7 @@
     {
       "comment": "邮件服务器协议类型",
       "label": "协议类型",
-      "name": "protocol",
+      "name": "type",
       "default": "smtp",
       "option": ["smtp", "imap"],
       "type": "enum",

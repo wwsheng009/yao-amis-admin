@@ -3,9 +3,9 @@ import { Process } from '@yao/yao';
 
 //yao run scripts.app.email.test.send
 function send(title: string) {
-  const username = Process('utils.env.Get', 'EMAIL_USERNAME');
+  const username = Process('utils.env.Get', 'EMAIL_SEND_USERNAME');
   const to = Process('utils.env.Get', 'EMAIL_TO');
-  const password = Process('utils.env.Get', 'EMAIL_PASSWORD');
+  const password = Process('utils.env.Get', 'EMAIL_SEND_PASSWORD');
 
   const message = {
     account: {

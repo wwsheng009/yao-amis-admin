@@ -1,4 +1,24 @@
 /**
+ * Model=> app.email.account (邮件账号配置)
+ *
+ * Table=> app_email_account (邮件服务器账号配置表)
+ */
+export interface app_email_account {
+  /**账户类型 */
+  category?: 'receive' | 'send';
+  /**服务器地址 */
+  server?: string;
+  /**端口 */
+  port?: number;
+  /**用户名 */
+  username: string;
+  /**协议类型 */
+  type: 'smtp' | 'imap';
+  /**密码 */
+  password: string;
+}
+
+/**
  * Email Message for email plugin
  */
 export interface EmailMessage {

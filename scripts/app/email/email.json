@@ -105,7 +105,7 @@
             "folder": "data/emails/786a8632e792fbc2f1749dfbafb7e270",
             "from": [
                 {
-                    "Address": "vincentwwsheng@gmail.com",
+                    "Address": "123@gmail.com",
                     "Name": "Vincent Wang"
                 }
             ],
@@ -113,7 +113,7 @@
             "subject": "你好呀，今天的任务完成的如何",
             "to": [
                 {
-                    "Address": "wwsheng@qq.com",
+                    "Address": "123@qq.com",
                     "Name": ""
                 }
             ],

@@ -1,4 +1,5 @@
 import {
+  app_email_account,
   app_email_message,
   EmailMessage,
   EmailPluginResponse,
@@ -9,30 +10,71 @@ import { YaoQueryParam } from '@yaoapps/types';
 
 const uploadFolder = 'data/upload/emails';
 
-export function getSendAccount() {
-  const [account] = Process('models.app.email.account.get', {
+export function getSendAccount(): app_email_account {
+  let [account] = Process('models.app.email.account.get', {
     wheres: [
       {
-        column: 'type',
+        column: 'category',
         value: 'send'
       }
     ],
     limit: 1
-  } as YaoQueryParam.QueryParam);
+  } as YaoQueryParam.QueryParam) as app_email_account[];
 
+  if (!account) {
+    const envs = Process(
+      'utils.env.GetMany',
+      'EMAIL_SEND_SERVER',
+      'EMAIL_SEND_PORT',
+      'EMAIL_SEND_USERNAME',
+      'EMAIL_SEND_PROTOCAL',
+      'EMAIL_SEND_PASSWORD'
+    );
+    if (Object.values(envs).every((x) => x == '')) {
+      return null;
+    }
+    account = {
+      server: envs['EMAIL_SEND_SERVER'],
+      port: Number(envs['EMAIL_SEND_PORT']) || 587,
+      username: envs['EMAIL_SEND_USERNAME'],
+      type: envs['EMAIL_SEND_PROTOCAL'] || 'smtp',
+      password: envs['EMAIL_SEND_PASSWORD']
+    };
+  }
   return account;
 }
 
-export function getReceiveAccount() {
-  const [account] = Process('models.app.email.account.get', {
+export function getReceiveAccount(): app_email_account {
+  let [account] = Process('models.app.email.account.get', {
     wheres: [
       {
-        column: 'type',
+        column: 'category',
         value: 'receive'
       }
     ],
     limit: 1
-  } as YaoQueryParam.QueryParam);
+  } as YaoQueryParam.QueryParam) as app_email_account[];
+
+  if (!account) {
+    const envs = Process(
+      'utils.env.GetMany',
+      'EMAIL_RECEIVE_SERVER',
+      'EMAIL_RECEIVE_PORT',
+      'EMAIL_RECEIVE_USERNAME',
+      'EMAIL_RECEIVE_PROTOCAL',
+      'EMAIL_RECEIVE_PASSWORD'
+    );
+    if (Object.values(envs).every((x) => x == '')) {
+      return null;
+    }
+    account = {
+      server: envs['EMAIL_RECEIVE_SERVER'],
+      port: Number(envs['EMAIL_RECEIVE_PORT']) || 993,
+      username: envs['EMAIL_RECEIVE_USERNAME'],
+      type: envs['EMAIL_RECEIVE_PROTOCAL'] || 'imap',
+      password: envs['EMAIL_RECEIVE_PASSWORD']
+    };
+  }
   return account;
 }
 /**
@@ -142,7 +184,7 @@ export function sendMessage(id: number) {
   return id;
 }
 /**
- * yao run scripts.app.email.client.receive
+ * yao run scripts.app.email.client.receiveEmail
  *
  * yao run schedules.mail.start
  *
@@ -150,7 +192,7 @@ export function sendMessage(id: number) {
  *
  * yao run tasks.email.get(1)
  */
-function receive() {
+export function receiveEmail() {
   console.log('开始接收邮件');
   const account = getReceiveAccount();
   if (!account) {
@@ -227,12 +269,8 @@ function decodeMessage(email: MessageReceived) {
   message.subject = email.subject; //主题
 
   message.date = email.date;
-
   message.message_id = email.message_id;
   message.uid = email.uid;
-  // 附件列表
-  message.attachments = email.attachments;
-  message.attachment_folder = email.folder;
 
   message.error = email.error;
   if (message.error) {
@@ -276,9 +314,14 @@ function decodeMessage(email: MessageReceived) {
     }
     attachmentList.push(attachment);
   });
+  if (attachmentList.length) {
+    // 附件列表
+    message.attachments = email.attachments;
+    message.attachment_folder = email.folder;
+    // 附件清细
+    message.attachment_details = attachmentList;
+  }
 
-  // 附件清细
-  message.attachment_details = attachmentList;
   return message;
 }
 // decodeMessage();
