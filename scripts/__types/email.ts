@@ -18,42 +18,47 @@ export interface app_email_account {
   password: string;
 }
 
+export interface EmailAddress {
+  Name?: string;
+  Address: string;
+}
+export interface EmailMessage {
+  from: string;
+  to: EmailAddress[];
+  cc?: EmailAddress[];
+  subject: string;
+  body: string;
+  /** attachment file path */
+  attachments?: string[];
+}
+export interface EmailAccount {
+  server: string;
+  /** email server port */
+  port: number;
+  username: string;
+  password: string;
+  /** stmp for send email,imap for receive email*/
+  type: 'stmp' | 'imap';
+}
 /**
  * Email Message for email plugin
  */
-export interface EmailMessage {
+export interface EmailConfig {
   /** email server config */
-  account: {
-    server: string;
-    /** email server port */
-    port: number;
-    username: string;
-    password: string;
-    /** stmp for send email,imap for receive email*/
-    type: 'stmp' | 'imap';
-  };
+  account: EmailAccount;
   /** messages for send */
-  messages?: {
-    from: string;
-    to: {
-      Name?: string;
-      Address: string;
-    }[];
-    cc?: {
-      Name?: string;
-      Address: string;
-    }[];
-    subject: string;
-    body: string;
-    /** attachment file path */
-    attachments?: string[];
-  }[];
+  messages?: EmailMessage[];
   folder?: string;
 }
 
+/**
+ * Model=> app.email.message (邮件信息)
+ *
+ * Table=> app_email_message (邮件发送与接收信息)
+ */
 export interface app_email_message {
-  /**ID */
-  id?: number;
+  /**收发类型 */
+  type?: string;
   /**发件人 */
   sender: string;
   /**收件人 */
@@ -64,13 +69,30 @@ export interface app_email_message {
   subject: string;
   /**内容 */
   content?: string;
+  /**纯文本 */
+  plain_text?: string;
   /**状态 */
   status?: 'sent' | 'received' | 'failed';
   /**发送时间 */
-  sent_at?: Date;
-
+  send_at?: Date;
+  /**接收时间 */
+  received_at?: Date;
+  /**邮件发出时间 */
+  date?: string;
+  /**邮件错误 */
+  error?: string;
+  /**邮件唯一ID */
+  message_id?: string;
+  /**用户唯一ID */
+  uid?: string;
+  /**发送日志 */
+  message?: string;
+  /**附件目录 */
   attachment_folder?: string;
-  send_log?: string;
+  /**附件列表 */
+  attachments?: string[];
+  /**附件明细 */
+  attachment_details?: object[];
 }
 
 interface BodyPart {

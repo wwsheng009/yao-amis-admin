@@ -1,6 +1,8 @@
 import {
   app_email_account,
   app_email_message,
+  EmailAccount,
+  EmailConfig,
   EmailMessage,
   EmailPluginResponse,
   MessageReceived
@@ -10,7 +12,7 @@ import { YaoQueryParam } from '@yaoapps/types';
 
 const uploadFolder = 'data/upload/emails';
 
-export function getSendAccount(): app_email_account {
+export function getSendAccount(): EmailAccount {
   let [account] = Process('models.app.email.account.get', {
     wheres: [
       {
@@ -41,10 +43,13 @@ export function getSendAccount(): app_email_account {
       password: envs['EMAIL_SEND_PASSWORD']
     };
   }
-  return account;
+  if (account && account.type !== 'smtp') {
+    throw new Exception(`Send account type ${account.type} not supported`);
+  }
+  return account as EmailAccount;
 }
 
-export function getReceiveAccount(): app_email_account {
+export function getReceiveAccount(): EmailAccount {
   let [account] = Process('models.app.email.account.get', {
     wheres: [
       {
@@ -75,7 +80,11 @@ export function getReceiveAccount(): app_email_account {
       password: envs['EMAIL_RECEIVE_PASSWORD']
     };
   }
-  return account;
+
+  if (account && account.type !== 'imap') {
+    throw new Exception(`Receive account type ${account.type} not supported`);
+  }
+  return account as EmailAccount;
 }
 /**
  * yao run scripts.app.email.client.checkEmailAccount
@@ -113,35 +122,15 @@ export function deleteMessageFolder(id: number | string) {
   }
 }
 
-export function sendEmail(emailMessage: app_email_message, account: any) {
+export function sendEmail(emailMessage: EmailMessage, account: EmailAccount) {
   console.log('开始发送邮件');
 
-  const cc =
-    Array.isArray(emailMessage.cc) && emailMessage.cc?.length
-      ? emailMessage.cc.split(',')?.map((c) => {
-          return { Name: '', Address: c };
-        })
-      : undefined;
-  const to =
-    Array.isArray(emailMessage.receiver) &&
-    emailMessage.receiver?.split(',')?.map((c) => {
-      return { Name: '', Address: c };
-    });
   const message = {
     account: {
       ...account
     },
-    messages: [
-      {
-        from: emailMessage.sender,
-        to: to, //[{ address: to }, { name: 'vincent1', address: to }],
-        cc: cc, //[{ address: username }],
-        subject: emailMessage.subject,
-        body: emailMessage.content,
-        attachments: []
-      }
-    ]
-  } as EmailMessage;
+    messages: [emailMessage]
+  } as EmailConfig;
   const resp = Process('plugins.email.send', message) as EmailPluginResponse;
   if (resp.code !== 200) {
     console.log(`邮件发送失败` + resp.message);
@@ -150,6 +139,11 @@ export function sendEmail(emailMessage: app_email_message, account: any) {
   }
   return { code: resp.code, message: resp.message };
 }
+/**
+ * yao run scripts.app.email.client.sendMessage
+ * @param id
+ * @returns
+ */
 export function sendMessage(id: number) {
   const account = getSendAccount();
   if (!account) {
@@ -160,15 +154,51 @@ export function sendMessage(id: number) {
     id,
     {}
   ) as app_email_message;
-  const sender = message?.sender as unknown as {
-    Name?: string;
-    Address: string;
-  };
-  if (typeof sender != 'object' || !sender?.Address) {
-    console.log('发送者信息不正确');
-    return;
+
+  const m = {} as EmailMessage;
+  m.from = account.username;
+  let tos = null;
+  if (typeof message.receiver == 'string') {
+    tos = message.receiver.split(',');
+  } else if (Array.isArray(message.receiver)) {
+    tos = message.receiver as string[];
   }
-  const res = sendEmail(message, account);
+  if (tos) {
+    m.to = tos.map((e) => {
+      if (typeof e == 'object') {
+        return e;
+      }
+      return {
+        Name: '',
+        Address: e
+      };
+    });
+  }
+  let ccs = null;
+
+  if (typeof message.cc == 'string') {
+    ccs = message.cc.split(',');
+  } else if (Array.isArray(message.receiver)) {
+    ccs = message.cc as string[];
+  }
+  if (ccs) {
+    m.cc = ccs.map((e) => {
+      if (typeof e == 'object') {
+        return e;
+      }
+      return {
+        Name: '',
+        Address: e
+      };
+    });
+  }
+
+  m.subject = message.subject;
+  m.body = message.content;
+  //这里需要优化。
+  m.attachments = message.attachments;
+
+  const res = sendEmail(m, account);
   if (res.code == 200) {
     Process('models.app.email.message.update', id, {
       status: 'sent',
@@ -203,7 +233,7 @@ export function receiveEmail() {
       ...account
     },
     folder: uploadFolder
-  } as EmailMessage;
+  } as EmailConfig;
   const res = Process('plugins.email.receive', message) as EmailPluginResponse;
   if (res.code == 200) {
     saveReceivedEmails(res.emails);
@@ -230,6 +260,7 @@ function saveReceivedEmails(emails: MessageReceived[]) {
     console.log('邮件还没收到');
     return;
   }
+  console.log(`邮件数量：${emails.length}`);
   emails.forEach((mail) => {
     const record = decodeMessage(mail);
     if (record) {

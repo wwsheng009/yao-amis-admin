@@ -1,4 +1,4 @@
-import { EmailMessage } from '@yao/email';
+import { EmailConfig } from '@yao/email';
 import { Process } from '@yao/yao';
 
 //yao run scripts.app.email.test.send
@@ -28,7 +28,7 @@ function send(title: string) {
         ]
       }
     ]
-  } as EmailMessage;
+  } as EmailConfig;
   const resp = Process('plugins.email.send', message);
   console.log(resp);
 }
@@ -47,7 +47,7 @@ function receive() {
       password: password,
       type: 'imap'
     }
-  } as EmailMessage;
+  } as EmailConfig;
   const resp = Process('plugins.email.receive', message);
   console.log(resp);
 }
