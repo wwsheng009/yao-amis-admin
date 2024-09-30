@@ -1,23 +1,24 @@
-import { getModelsEntityset } from '@scripts/odata/lib/model';
-import { convertJsonToXml, getMetaDataXml2 } from '@scripts/odata/lib/process';
+import {
+  getEntryMetaDataXml,
+  getMetaDataXml2,
+  convertJsonToXml
+} from '@scripts/app/odata/lib/process';
 
-import { ConvertUrlToQsl } from '@scripts/odata/lib/queryparam';
-import { decodePartsRequest } from '@scripts/odata/lib/decodebatch';
-import { Process, Query } from '@yao/yao';
+import { ConvertUrlToQsl } from '@scripts/app/odata/lib/queryparam';
+import { decodePartsRequest } from '@scripts/app/odata/lib/decodebatch';
+import { Process } from '@yao/yao';
 import { QueryObjectIn } from '@yao/request';
 
-// function head() { }
-
-function postData(
-  pathIn,
-  queryIn,
-  headers,
-  host,
-  path,
-  schema,
-  fullpath,
+export function postData(
+  pathIn: string,
+  queryIn: QueryObjectIn,
+  headers: QueryObjectIn,
+  host: string,
+  path: string,
+  schema: string,
+  fullpath: string,
   payload,
-  parts
+  parts: string[]
 ) {
   console.log('headers:', headers);
   console.log('>>>>>>>>>>>>>>>>>>>>called post');
@@ -31,7 +32,11 @@ function postData(
   }
 }
 
-function processBatchPost(metaFullPath, headers, parts) {
+export function processBatchPost(
+  metaFullPath: string,
+  headers: QueryObjectIn,
+  parts: string[]
+) {
   // parts
   const aRequest = decodePartsRequest(headers, parts);
 
@@ -65,21 +70,36 @@ ${sResponse}
   sResponseBody = sResponseBody.replace(/\n/g, '\r\n');
   return sResponseBody;
 }
-function getBasePath(fullpath, schema, host) {
-  const rootpath = fullpath.split('/').slice(0, -1).join('/');
-  const fullPath = `${schema}://${host}${rootpath}/`;
-  return fullPath;
-}
-function getMetaFullPath(fullpath, schema, host) {
+
+export function getMetaFullPath(
+  fullpath: string,
+  schema: string,
+  host: string
+) {
   const rootpath = fullpath.split('/').slice(0, -1).join('/');
   const metapath = `${rootpath}/$metadata`;
   const metaFullPath = `${schema}://${host}${metapath}`;
   return metaFullPath;
 }
+
+/**
+ * odata请求的形式一般是 /xx_table/$format=xx
+ * @param {string} fullpath
+ * @param {string} schema http| https
+ * @param {string} host
+ * @returns
+ */
+export function getBasePath(fullpath: string, schema: string, host: string) {
+  const rootpath = fullpath.split('/').slice(0, -1).join('/');
+  const fullPath = `${schema}://${host}${rootpath}/`;
+  return fullPath;
+}
+
 /**
  * 转换查询参数
  * 注意：golang 不支持在query里带有符号;
  * @param {string} sPathIn url path
+ * @param {string} path 原始请求的地址，不包含查询参数
  * @param {object} query 查询参数
  * @returns
  */
@@ -93,15 +113,13 @@ export function getData(
   fullpath: string
 ) {
   // console.log('headers:', headers);
+  // console.log('pathIn:', sPathIn);
 
-  const oQuery = oQueryIn || {};
-  // console.log('pathIn:', pathIn);
-
-  // console.log('query:', query);
+  // console.log('oQueryIn:', oQueryIn);
   // console.log('path:', path);
   // console.log('fullpath', fullpath);
 
-  const metaFullPath = getMetaFullPath(fullpath, schema, host);
+  const oQuery = oQueryIn || {};
 
   let pathParam = sPathIn;
   if (pathParam.startsWith('/')) {
@@ -110,18 +128,17 @@ export function getData(
   }
   const basePath = getBasePath(fullpath, schema, host);
 
-  // 元数据
+  // 不是请求元数据，而是/$，请求模型列表
   if (pathParam == '$' || pathParam == '') {
     return {
-      data: {
-        '@odata.context': `${metaFullPath}`,
-        value: getModelsEntityset()
-      },
-      type: 'application/json;charset=utf-8',
+      // 获取模型列表
+      data: getEntryMetaDataXml(basePath),
+      type: 'application/xml;charset=utf-8',
       status: 200
     };
   }
-  if (pathParam == '$metadata' || pathParam == '') {
+  // 查询元数据的请求
+  if (pathParam == '$metadata') {
     const data = getMetaDataXml2();
     return data;
   }
@@ -131,19 +148,34 @@ export function getData(
   // oRequest.URL = {};
   // oRequest.URL.path = sPathIn;
   // oRequest.URL.query = oQuery;
-  return getDataFromRequest(oRequest, basePath);
+  try {
+    return getDataFromRequest(oRequest, basePath);
+  } catch (e) {
+    console.log('error message', e.message);
+    // 这里应该优化返回xml
+    return {
+      type: 'application/json;charset=utf-8',
+      status: e.code,
+      data: { message: e.message }
+    };
+  }
 }
 
-function getDataFromRequest(oRequest, basePath) {
+export function getDataFromRequest(
+  oRequest: {
+    headers: QueryObjectIn;
+    URL: { path: string; query: QueryObjectIn };
+  },
+  basePath: string
+) {
   const metaFullPath = basePath + '$metadata';
   const oQsl = ConvertUrlToQsl(oRequest);
-
-  const q = new Query();
+  // const q = new Query();
 
   // 计算数量
   if (oQsl.isCount) {
     let total = 0;
-    // console.log("oQsl.model?.table_id",oQsl.model?.table_id)
+
     if (oQsl.model?.table_id) {
       total = Process('yao.table.search', oQsl.model.table_id, {}, 1, 1)?.total;
     } else if (oQsl.model?.model_id) {
@@ -161,15 +193,21 @@ function getDataFromRequest(oRequest, basePath) {
       data: { total: total }
     };
   } else {
-    if (oQsl.qsl.limit) {
+    if (!oQsl.qsl?.limit) {
       oQsl.qsl.limit = 100000;
     }
+    oQsl.qsl.limit = Number(oQsl.qsl.limit);
     // const data1 = q.Get(oQsl.qsl);
     let data1 = null;
+    // console.log('oQsl.qsl', oQsl.qsl);
     if (oQsl.model?.table_id) {
+      // console.log('oQsl.model?.table_id', oQsl.model?.table_id);
+      // console.log('oQsl.model.model_id', oQsl.model.model_id);
+
       data1 = Process('yao.table.get', oQsl.model.table_id, oQsl.qsl);
     } else {
-      data1 = q.Get(oQsl.qsl);
+      // data1 = q.Get(oQsl.qsl);
+      data1 = Process(`models.${oQsl.model.model_id}.get`, oQsl.qsl);
     }
 
     if (oQsl.format == 'json') {
@@ -202,20 +240,20 @@ function getDataFromRequest(oRequest, basePath) {
   }
 }
 
-// /**
-//  * 查询服务的元数据。
-//  * @param {string} service 服务
-//  * @returns
-//  */
-// function getMetaData() {
-//     return Process("scripts.main.test");
+/**
+ * 查询服务的元数据。
+ * @param {string} service 服务
+ * @returns
+ */
+// export function getMetaData() {
+//   return Process("scripts.main.test");
 // }
 
 // const query = {
-//     $select: ["Rating,ReleaseDate"],
-//     $orderby: ["engine asc, browser desc"],
-//     // $count: true,
-//     $filter: ["grade lt 10.00"],
+//   $select: ["Rating,ReleaseDate"],
+//   $orderby: ["engine asc, browser desc"],
+//   // $count: true,
+//   $filter: ["grade lt 10.00"],
 // };
 // getData("/table/", query);
 

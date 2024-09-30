@@ -12,7 +12,7 @@
       "path": "/*path",
       "method": "GET",
       "guard": "scripts.auth.basic.Check",
-      "process": "scripts.odata.v4.getData",
+      "process": "scripts.app.odata.v4.getData",
       "in": [
         "$param.path",
         ":query",
@@ -38,7 +38,7 @@
       "path": "/*path",
       "method": "POST",
       "guard": "scripts.auth.basic.Check",
-      "process": "scripts.odata.v4.postData",
+      "process": "scripts.app.odata.v4.postData",
       "in": [
         "$param.path",
         ":query",
@@ -65,7 +65,7 @@
     //   "path": "/*path",
     //   "method": "OPTIONS",
     //   "guard": "cross-origin",
-    //   "process": "scripts.odata.head",
+    //   "process": "scripts.app.odata.head",
     //   "in": [],
     //   "out": {
     //     "status": 200
@@ -78,7 +78,7 @@
     //   "path": "/",
     //   "method": "HEAD",
     //   "guard": "cross-origin",
-    //   "process": "scripts.odata.head",
+    //   "process": "scripts.app.odata.head",
     //   "in": [],
     //   "out": {
     //     "status": 200,

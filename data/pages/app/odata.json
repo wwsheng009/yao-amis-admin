@@ -353,7 +353,7 @@
                   "silentPolling": false,
                   "trimValues": true,
                   "type": "form",
-                  "api": "post:/api/v1/system/model/system.odata.view/update/$id",
+                  "api": "post:/api/v1/system/model/app.odata.view/update/$id",
                   "body": [
                     {
                       "label": "ID",
@@ -433,7 +433,7 @@
             },
             {
               "actionType": "ajax",
-              "api": "delete:/api/v1/system/model/system.odata.view/delete/$id",
+              "api": "delete:/api/v1/system/model/app.odata.view/delete/$id",
               "confirmText": "你确定要删除行${id}?",
               "icon": "fa fa-times text-danger",
               "tooltip": "删除",
@@ -459,7 +459,7 @@
           "type": "button",
           "id": "u:2b8553421b97",
           "actionType": "ajax",
-          "api": "delete:/api/v1/system/model/system.odata.view/delete/${ids|raw}",
+          "api": "delete:/api/v1/system/model/app.odata.view/delete/${ids|raw}",
           "confirmText": "你确定要批量删除选中行吗?",
           "label": "批量删除"
         }
@@ -473,9 +473,9 @@
           "&": "$$"
         },
         "method": "post",
-        "url": "/api/v1/system/model/system.odata.view/search"
+        "url": "/api/v1/system/model/app.odata.view/search"
       },
-      "quickSaveItemApi": "post:/api/v1/system/model/system.odata.view/update/${id}",
+      "quickSaveItemApi": "post:/api/v1/system/model/app.odata.view/update/${id}",
       "headerToolbar": [
         {
           "type": "columns-toggler"
@@ -494,7 +494,7 @@
             "body": {
               "silentPolling": false,
               "type": "form",
-              "api": "post:/api/v1/system/model/system.odata.view/create",
+              "api": "post:/api/v1/system/model/app.odata.view/create",
               "body": [
                 {
                   "label": "名称",
@@ -577,7 +577,7 @@
               "silentPolling": false,
               "type": "form",
               "api": {
-                "url": "/api/v1/system/model/system.odata.view/batch_create",
+                "url": "/api/v1/system/model/app.odata.view/batch_create",
                 "data": {
                   "batch": {
                     "&": {

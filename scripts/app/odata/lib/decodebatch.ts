@@ -1,6 +1,6 @@
 // 参考：https://ui5.sap.com/resources/sap/ui/model/odata/v4/lib/_Batch-dbg.js
 
-import { parseUrl } from '@scripts/odata/lib/url';
+import { parseUrl } from '@scripts/app/odata/lib/url';
 import { QueryObjectIn } from '@yao/request';
 import { Exception } from '@yao/yao';
 /**

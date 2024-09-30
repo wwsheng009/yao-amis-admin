@@ -1,10 +1,10 @@
 import {
   getOdataViewList,
-  getModels,
+  getOdataModels,
   getModel
-} from '@scripts/odata/lib/model';
-import { Metadata, getEdmType } from '@scripts/odata/lib/meta';
-import { XmlWriter } from '@scripts/odata/lib/xml';
+} from '@scripts/app/odata/lib/model';
+import { Metadata, getEdmType } from '@scripts/app/odata/lib/meta';
+import { XmlWriter } from '@scripts/app/odata/lib/xml';
 
 /**
  * 获取模型列表
@@ -32,11 +32,11 @@ export function getEntryMetaDataXml(base) {
 
 /**
  * 获取所有模型的元数据信息
- * scripts.odata.lib.process.getMetaDataXml2
+ * scripts.app.odata.lib.process.getMetaDataXml2
  * @returns
  */
 export function getMetaDataXml2() {
-  const models = getModels();
+  const models = getOdataModels();
   const meta = new Metadata(models);
   const data = meta.ctrl();
   // console.log("data=============>", data)

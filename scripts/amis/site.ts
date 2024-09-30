@@ -720,7 +720,7 @@ function getSystemMenu() {
             {
               label: 'ODATA管理',
               icon: 'fa fa-file',
-              schemaApi: '/api/v1/amis/pages/system.odata',
+              schemaApi: '/api/v1/amis/pages/app.odata',
               url: 'odata.view'
             },
             {

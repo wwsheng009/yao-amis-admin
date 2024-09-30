@@ -1,7 +1,7 @@
 import { Process, Exception, log } from '@yao/yao';
 
-function getModelList() {
-  const viewList = Process('models.system.odata.view.get', {
+function getOdataModelList() {
+  const viewList = Process('models.app.odata.view.get', {
     wheres: [{ column: 'disabled', value: false }],
     limit: 10000
   });
@@ -45,9 +45,9 @@ function getModelList() {
   return viewModelList;
 }
 
-// yao run scripts.odata.lib.model.getModels
-export function getModels() {
-  const list = getModelList();
+// yao run scripts.app.odata.lib.model.getOdataModels
+export function getOdataModels() {
+  const list = getOdataModelList();
   // Process("models.system.api.eachsave", list);
   const modelObj = {};
   list.forEach((model) => {
@@ -63,7 +63,7 @@ export function getModels() {
 }
 
 export function getModelsEntityset() {
-  const list = getModelList();
+  const list = getOdataModelList();
   // Process("models.system.api.eachsave", list);
   const modelObj = [];
   list.forEach((model) => {
@@ -76,8 +76,8 @@ export function getModelsEntityset() {
   return modelObj;
 }
 
-export function getModelNameList() {
-  const list = getModelList();
+export function getOdataModelNameList() {
+  const list = getOdataModelList();
   // const modelsList = Process("widget.models");
   // const list = flattenTreeList(modelsList);
   // Process("models.system.api.eachsave", list);
@@ -94,7 +94,7 @@ export function getModelNameList() {
  * @returns odata view list
  */
 export function getOdataViewList() {
-  const list = Process('models.system.odata.view.get', {
+  const list = Process('models.app.odata.view.get', {
     wheres: [
       {
         column: 'disabled',
@@ -106,8 +106,8 @@ export function getOdataViewList() {
   return list;
 }
 
-export function getModelsEntityset2() {
-  const list = getModelList();
+export function getOdataModelsEntityset2() {
+  const list = getOdataModelList();
   // const modelsList = Process("widget.models");
   // const list = flattenTreeList(modelsList);
   // Process("models.system.api.eachsave", list);
@@ -153,7 +153,7 @@ export function flattenTreeList(modelData: {
 }
 /**
  * get the column ids from table setting
- * yao run scripts.odata.lib.model.getTableColumns 'admin.user'
+ * yao run scripts.app.odata.lib.model.getTableColumns 'admin.user'
  * @param {string} table_id
  * @returns array of model column_id
  */
@@ -188,7 +188,7 @@ export function getModel(viewId: string) {
   if (!viewId) {
     return { columns: [] };
   }
-  const [odataview] = Process('models.system.odata.view.get', {
+  const [odataview] = Process('models.app.odata.view.get', {
     wheres: [
       {
         column: 'name',
@@ -210,7 +210,7 @@ export function getModel(viewId: string) {
   // 如果数据库里没有，从内存中加载定义
   // 只有加载到内存的才能获取的了
   const models = Process('widget.models');
-  const model = findModelById(models, model_id);
+  const model = findOdataModelById(models, model_id);
   if (model) {
     model.model_id = model_id;
     if (model_cols.length) {
@@ -243,7 +243,7 @@ export function getModel(viewId: string) {
   }
   return model;
 }
-function findModelById(
+function findOdataModelById(
   models: { children: any; data: { ID: string } },
   id: string
 ) {
@@ -253,7 +253,7 @@ function findModelById(
 
   if (models.children) {
     for (const item of models.children) {
-      const obj = findModelById(item, id);
+      const obj = findOdataModelById(item, id);
       if (obj) {
         return obj;
       }
@@ -264,7 +264,7 @@ function findModelById(
     }
   } else if (Array.isArray(models)) {
     for (const item of models) {
-      const obj = findModelById(item, id);
+      const obj = findOdataModelById(item, id);
       if (obj) {
         return obj;
       }
@@ -274,9 +274,9 @@ function findModelById(
   return null;
 }
 // module.exports = {
-//   getModels,
+//   getOdataModels,
 //   getModelsEntityset,
 //   getModel,
-//   getModelNameList,
+//   getOdataModelNameList,
 //   getOdataViewList
 // };

@@ -1,6 +1,6 @@
-import { getModel } from '@scripts/odata/lib/model';
+import { getModel } from '@scripts/app/odata/lib/model';
 
-import functions from '@scripts/odata/lib/operator';
+import functions from '@scripts/app/odata/lib/operator';
 
 import { Exception } from '@yao/yao';
 import { QueryObjectIn } from '@yao/request';
