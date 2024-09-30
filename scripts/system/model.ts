@@ -859,18 +859,8 @@ export function getYaoModelColumnMap(modelId: ModelId) {
  * @param {string} modelId
  * @returns
  */
-export function ExportModelSource(modelId: string) {
-  const model = Process('models.ddic.model.Find', modelId, {
-    withs: {
-      columns: { withs: { element: {} } }
-    }
-  });
-
-  const m = ConvertTableLineToModel(model);
-
-  // m = ConvertDBmodelToYaoModel(m);
-
-  return { source: m };
+export function ExportModelSource(modelId: ModelId) {
+  return { source: getModelFromDB(modelId) };
 }
 
 /**
@@ -879,18 +869,11 @@ export function ExportModelSource(modelId: string) {
  * @param {string} modelId
  * @returns
  */
-export function ExportModelYaoSource(modelId: string) {
-  const model = Process('models.ddic.model.Find', modelId, {
-    withs: {
-      columns: { withs: { element: {} } }
-    }
-  });
+export function ExportModelYaoSource(modelId: ModelId) {
+  let model = getModelFromDB(modelId);
+  model = ConvertDBmodelToYaoModel(model);
 
-  let m = ConvertTableLineToModel(model);
-
-  m = ConvertDBmodelToYaoModel(m);
-
-  return { source: m };
+  return { source: model };
 }
 
 /**

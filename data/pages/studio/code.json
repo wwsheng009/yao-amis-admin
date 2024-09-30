@@ -308,10 +308,41 @@
                                             "type": "picker"
                                           },
                                           {
-                                            "id": "u:3e88c759b11d",
+                                            "type": "select",
                                             "label": "数据元素",
                                             "name": "element_id",
-                                            "type": "input-number"
+                                            "source": {
+                                              "method": "post",
+                                              "url": "/api/v1/system/model/ddic.model.element/select_options",
+                                              "data": {
+                                                "_label": "name",
+                                                "_value": "id"
+                                              }
+                                            },
+                                            "onEvent": {
+                                              "change": {
+                                                "actions": [
+                                                  {
+                                                    "actionType": "ajax",
+                                                    "api": {
+                                                      "url": "/api/v1/system/model/ddic.model.element/find/${event.data.value}",
+                                                      "silent": true
+                                                    }
+                                                  },
+                                                  {
+                                                    "actionType": "custom",
+                                                    "script": "delete event.data.responseData.id;delete event.data.responseData.name"
+                                                  },
+                                                  {
+                                                    "actionType": "setValue",
+                                                    "componentId": "u:194e3149f60d",
+                                                    "args": {
+                                                      "value": "${event.data.responseData}"
+                                                    }
+                                                  }
+                                                ]
+                                              }
+                                            }
                                           }
                                         ]
                                       },

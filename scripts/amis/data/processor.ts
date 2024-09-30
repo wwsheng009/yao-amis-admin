@@ -3,6 +3,7 @@ import { ModelId } from '@yao/types';
 import { Exception, Process } from '@yao/yao';
 import { YaoQueryParam } from '@yaoapps/types';
 import { updateOutputData, updateInputData } from './lib';
+import { ClearFalsyKeys } from '@scripts/system/lib';
 
 /**
  * get the data from model using the query object
@@ -46,6 +47,7 @@ export function findModelData(
   if (updateOutput && data != null) {
     data = updateOutputData(modelId, data);
   }
+  data = ClearFalsyKeys(data);
   return data;
 }
 

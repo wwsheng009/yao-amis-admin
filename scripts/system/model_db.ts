@@ -2,7 +2,7 @@
 
 import { ClearFalsyKeys } from '@scripts/system/lib';
 import { Process, log } from '@yao/yao';
-import { AmisModelDB, AmisRelation, AmisModel } from '@yao/types';
+import { AmisModelDB, AmisRelation, AmisModel, ModelId } from '@yao/types';
 
 /**
  * yao run scripts.system.model_db.checkType
@@ -29,7 +29,7 @@ function checkType(value: string | number) {
  * @param {number | string} modelId 模型ID标识
  * @returns
  */
-export function getModelFromDB(modelId: string | number): AmisModel {
+export function getModelFromDB(modelId: ModelId): AmisModel {
   // 数字ID可能是数据库数据
 
   const wheres = [];
@@ -47,8 +47,9 @@ export function getModelFromDB(modelId: string | number): AmisModel {
   const [line] = Process('models.ddic.model.get', {
     wheres: wheres,
     withs: {
-      columns: {}
-    }
+      columns: { withs: { element: {} } }
+    },
+    limit: 1
   });
   if (line != null) {
     // 数据库表信息转成模型定义
@@ -59,7 +60,7 @@ export function getModelFromDB(modelId: string | number): AmisModel {
 /**
  * 从数据库转成到Yao模型配置
  * scripts.system.model.ConvertTableLineToModel
- * @param {*} line
+ * @param {AmisModelDB} line
  * @returns
  */
 export function ConvertTableLineToModel(line: AmisModelDB): AmisModel {

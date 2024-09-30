@@ -1,26 +1,15 @@
 import { AmisModel, ModelId } from '@yao/types';
-import { FS, Process } from '@yao/yao';
+import { FS } from '@yao/yao';
 
 import { SlashName, FileNameConvert } from '@scripts/system/lib';
+import { ExportModelYaoSource } from '@scripts/system/model';
 /**
  * yao studio run model.GenerateModelFile
  * @param modelid model id
  */
 export function GenerateModelFile(modelid: ModelId) {
-  const model = Process('models.ddic.model.Find', modelid, {
-    withs: {
-      columns: { withs: { element: {} } }
-    }
-  });
-
-  const m = Process('scripts.system.model.ConvertTableLineToModel', model);
-  m.columns.forEach((col) => {
-    delete col.id;
-    delete col.model_id;
-    delete col.element_id;
-  });
-  delete m.id;
-  return SaveModelToFile(m);
+  const m = ExportModelYaoSource(modelid);
+  return SaveModelToFile(m.source);
 }
 
 export function SaveModelToFile(model: AmisModel) {
