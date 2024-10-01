@@ -2,7 +2,7 @@ import { Process } from '@yao/yao';
 
 // yao run scripts.editor.getPages
 export function getPages() {
-  const amisdsl = Process('models.system.amis.get', null);
+  const amisdsl = Process('models.system.amis.widget.get', null);
   const result = {};
   amisdsl.forEach((line) => {
     const page = line.source;
@@ -15,7 +15,7 @@ export function getPages() {
 
 // scripts.editor.getPage "404.json"
 export function getPage(file: string) {
-  const [amisdsl] = Process('models.system.amis.get', {
+  const [amisdsl] = Process('models.system.amis.widget.get', {
     // https://wwsheng009.github.io/yao-docs/YaoDSL/Query/QueryDsl.html
     // 在flow Query或是js Query中才使用query qsl语法
     // wheres: [{ ":file": "文件", "=": file }],

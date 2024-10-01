@@ -1,3 +1,4 @@
+import { getAmisEditorPages } from '@scripts/admin/menu';
 import { Process } from '@yao/yao';
 // site.js
 // scripts.amis.site.MenuSoybean
@@ -611,7 +612,7 @@ function Menu() {
  * @returns
  */
 function getSuperUserMenu() {
-  const editorPages = Process('scripts.admin.menu.getAmisEditorPages');
+  const editorPages = getAmisEditorPages(); //Process('scripts.admin.menu.getAmisEditorPages');
 
   const user = Process('session.get', 'user');
   let pages_in = [];

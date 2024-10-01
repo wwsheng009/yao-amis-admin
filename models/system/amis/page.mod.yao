@@ -2,7 +2,7 @@
   "name": "保存amis源代码",
   "comment": "保存amis页面的源代码",
   "table": {
-    "name": "system_amis"
+    "name": "system_amis_page"
   },
   "columns": [
     {
@@ -23,9 +23,9 @@
       "label": "源代码"
     },
     {
-      "name": "expired_at",
-      "type": "timestamp",
-      "label": "失效时间"
+      "name": "user_id",
+      "type": "integer",
+      "label": "用户标识"
     }
   ],
   "option": {
@@ -33,3 +33,6 @@
     "timestamps": true
   }
 }
+
+
+//   yao migrate -n system.amis.page

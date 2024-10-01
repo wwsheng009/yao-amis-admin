@@ -12,7 +12,7 @@
   // If table not set, the default name is __yao_dsl_<Widget ID>
   "remote": {
     "connector": "default",
-    "table": "system_amis",
+    "table": "system_amis_widget",
     "reload": true
   },
   // Widget DSL loader

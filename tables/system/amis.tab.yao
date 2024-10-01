@@ -2,7 +2,7 @@
   "name": "amis source code table",
   "action": {
     "bind": {
-      "model": "system.amis"
+      "model": "system.amis.widget"
     }
   }
 }

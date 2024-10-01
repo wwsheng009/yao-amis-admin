@@ -74,7 +74,9 @@ function getSoySuperUserMenu() {
   if (routes.length === 0) {
     const routesSoy = Process('scripts.amis.site.MenuSoybean')['routes'];
     const routesLocal = getAmisLocalPageAsSoyRoutes();
-    const localRoutes = [...routesSoy, ...routesLocal];
+    const editor_routes = getAmisEditorSoyRoute(); //Process('scripts.admin.menu.getAmisEditorSoyRoute');
+
+    const localRoutes = [...routesSoy, ...routesLocal, ...editor_routes];
 
     return cleanUpRouteMenu(localRoutes);
   }
@@ -82,7 +84,7 @@ function getSoySuperUserMenu() {
   routes = Process(`utils.arr.Tree`, routes, { parent: 'parent', empty: 0 });
 
   // 导入正在编辑的页面
-  const editor_routes = Process('scripts.admin.menu.getAmisEditorSoyRoute');
+  const editor_routes = getAmisEditorSoyRoute(); //Process('scripts.admin.menu.getAmisEditorSoyRoute');
   routes = routes.concat(editor_routes);
 
   return cleanUpRouteMenu(routes);
@@ -254,56 +256,12 @@ export function getAmisPageSchema(pageId: string) {
  * @returns
  */
 export function getAmisEditorPageSource(pageId: string) {
-  return Process('scripts.editor.localfile.getAmisEditorPageSource', pageId);
-  // const user_id = Process('session.get', 'user_id');
-  // let dir = `${WorkingPagesLocation}/${user_id}/`;
-  // dir = dir.replace(/\\/g, '/');
-  // dir = dir.replace(/\/\//g, '/');
-
-  // pageId = pageId.replace(/^amis_editor\./, '');
-  // const page = pageId.replace('.', '/') + '.json';
-
-  // const fpath = dir + page;
-  // const isExist = Process('fs.system.Exists', fpath);
-  // if (!isExist) {
-  //   throw new Exception(`文件不存在：${fpath}`);
-  // }
-  // const str = Process('fs.system.ReadFile', fpath);
-  // const source = JSON.parse(str);
-  // if (source.type === 'app') {
-  //   return {
-  //     type: 'tpl',
-  //     tpl: '不能显示类型为app的页面'
-  //   };
-  // }
-  // return JSON.parse(str);
+  return Process('scripts.editor.entry.getAmisEditorPageSource', pageId);
 }
 
 // yao run scripts.admin.menu.getAmisEditorSoyRoute
-function getAmisEditorSoyRoute() {
-  // let user_id = Process('session.get', 'user_id');
-  // if (!user_id) {
-  //   // return [];
-  //   user_id = '1';
-  // }
-  // let dir = `${WorkingPagesLocation}/${user_id}/`;
-  // dir = dir.replace(/\\/g, '/');
-  // dir = dir.replace(/\/\//g, '/');
-
-  // const fs = new FS('system');
-  // let files = [] as string[];
-
-  // if (fs.Exists(dir)) {
-  //   files = fs.ReadDir(dir, true); // recursive
-  //   files = files.filter((x) => x.length > 5 && x.endsWith('.json'));
-  //   const regex = new RegExp(`^${dir}`, 'i');
-  //   files = files.map((f) => {
-  //     f = f.replace(/\\/g, '/');
-  //     return f.replace(regex, '/amis_editor/');
-  //   });
-
-  // }
-  const files = Process('scripts.editor.localfile.getEditorPagesFileList');
+export function getAmisEditorSoyRoute() {
+  const files = Process('scripts.editor.entry.getEditorPagesFileList');
   // 这里包装了一个顶层
   const rootRoutes = [
     {
@@ -333,7 +291,10 @@ function getAmisEditorSoyRoute() {
  * @param {string[]} list 文件路径列表
  * @returns []Route
  */
-function convertListToSoyRoute(list: string[]): Route {
+export function convertListToSoyRoute(
+  list: string[],
+  sep: string = '/'
+): Route {
   let order = 1000;
   const result = {
     name: '',
@@ -344,23 +305,32 @@ function convertListToSoyRoute(list: string[]): Route {
     meta: { title: '', order: order, requiresAuth: true }
   };
 
-  const getPath = (url: string) =>
-    url
-      .split('/')
+  const getPath = (url: string) => {
+    //remove file extension
+    url = url.replace(/\\+/g, sep);
+    url = url.replace(/\/+/g, sep);
+    const dotIndex = url.lastIndexOf('.');
+    url = dotIndex > -1 ? url.substring(0, dotIndex) : url;
+    return url
+      .split(sep)
       .filter((path) => path !== '')
       .map((path, index) => {
         if (index === 0 && path.startsWith('.')) {
           return path.substring(1);
         }
-        const dotIndex = path.lastIndexOf('.');
-        return dotIndex > -1 ? path.substring(0, dotIndex) : path;
+        return path;
+        // const dotIndex = path.lastIndexOf('.');
+        // return dotIndex > -1 ? path.substring(0, dotIndex) : path;
       })
-      .join('/');
+      .join(sep);
+  };
 
+  //给路由对象增加子节点。
   const addSubPath = (obj: Route, subPathArr: string[]) => {
     let tempObj = obj as Route;
     for (let i = 0; i < subPathArr.length; i++) {
       const subPath = subPathArr[i];
+      //检查是否已经存在
       const existingObj = tempObj.children.find(
         (child) => child.subPath === subPath
       );
@@ -384,18 +354,18 @@ function convertListToSoyRoute(list: string[]): Route {
 
   list.forEach((url) => {
     const path = getPath(url);
-    addSubPath(result, path.split('/'));
+    addSubPath(result, path.split(sep));
   });
   return result;
 }
 
-function convertFileListToSoyRoute(list: string[]): Route[] {
+export function convertFileListToSoyRoute(list: string[]): Route[] {
   const result = convertListToSoyRoute(list);
   //   小心处理层级
   removeEmptyChildren(result);
   return result.children || [];
 }
-function removeEmptyChildren(node: Route) {
+export function removeEmptyChildren(node: Route) {
   if (node.children?.length === 0) {
     delete node.children;
     if (Object.keys(node.meta).length === 0) {
@@ -417,7 +387,7 @@ function removeEmptyChildren(node: Route) {
  * @param parent 上级节点
  * @returns
  */
-function updateSoyRoutePath(
+export function updateSoyRoutePath(
   api: string,
   route: Route | Route[],
   parent: Route | undefined

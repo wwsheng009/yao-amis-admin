@@ -8,11 +8,11 @@ import { Process } from '@yao/yao';
 //    -H 'Content-Type: application/json' \
 //    -H 'Authorization: Bearer <Studio JWT>' \
 //    -d '{ "args":[],"method":"getPages"}'
-// const mode = `localfile`;
-const mode = `widget`;
+
+// const mode = `widget`;
 
 export function getPages() {
-  return Process(`scripts.editor.${mode}.getPages`);
+  return Process(`scripts.editor.entry.getPages`);
 }
 // 保存数据
 //    curl -X POST http://127.0.0.1:5099/api/__yao/app/service/editor \
@@ -20,14 +20,14 @@ export function getPages() {
 //    -H 'Authorization: Bearer <Studio JWT>' \
 //    -d '{ "args":[file,payload],"method":"savePage"}'
 
-export function savePage(file, payload) {
-  return Process(`scripts.editor.${mode}.savePage`, file, payload);
+export function savePage(file: string, payload) {
+  return Process(`scripts.editor.entry.savePage`, file, payload);
 }
 // 删除页面
 //    curl -X POST http://127.0.0.1:5099/api/__yao/app/service/editor \
 //    -H 'Content-Type: application/json' \
 //    -H 'Authorization: Bearer <Studio JWT>' \
 //    -d '{ "args":[file],"method":"deletePage"}'
-export function deletePage(file) {
-  return Process(`scripts.editor.${mode}.deletePage`, file);
+export function deletePage(file: string) {
+  return Process(`scripts.editor.entry.deletePage`, file);
 }

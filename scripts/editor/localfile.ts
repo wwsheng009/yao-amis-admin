@@ -304,13 +304,17 @@ export function getAmisPageSchema(pageId: string) {
  * @param {*} pageId page id
  * @returns
  */
-export function getAmisEditorPageSource(pageId: string) {
+export function getAmisEditorPageSource(pageId: string, userId?: number) {
   const user_id = Process('session.get', 'user_id');
-  let dir = `${WorkingPagesLocation}/${user_id}/`;
+  if (user_id) {
+    userId = user_id;
+  }
+  let dir = `${WorkingPagesLocation}/${userId}/`;
   dir = dir.replace(/\\/g, '/');
   dir = dir.replace(/\/\//g, '/');
 
   pageId = pageId.replace(/^amis_editor\./, '');
+  //page的id转换成文件路径
   const page = pageId.replace('.', '/') + '.json';
 
   const fpath = dir + page;
@@ -348,13 +352,13 @@ export function getPagesFileList() {
  * yao run scripts.editor.localfile.getEditorPagesFileList
  * @returns
  */
-export function getEditorPagesFileList() {
-  let user_id = Process('session.get', 'user_id');
-  if (!user_id) {
+export function getEditorPagesFileList(userId: string) {
+  const user_id = Process('session.get', 'user_id');
+  if (user_id) {
     // return [];
-    user_id = '1';
+    userId = user_id;
   }
-  let dir = `${WorkingPagesLocation}/${user_id}/`;
+  let dir = `${WorkingPagesLocation}/${userId}/`;
   dir = dir.replace(/\\/g, '/');
   dir = dir.replace(/\/\//g, '/');
 
