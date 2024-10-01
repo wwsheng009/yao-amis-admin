@@ -40,6 +40,17 @@
         "status": 200,
         "type": "application/json"
       }
+    },{
+      "path": "/:model/crud-list-view",
+      "method": "get",
+      "process": "scripts.amis.schema.curdListViewPage",
+      "in": [
+        "$param.model"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
     },
     {
       "path": "/:model/crud-new",

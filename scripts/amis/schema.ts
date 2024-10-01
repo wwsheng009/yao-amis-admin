@@ -190,7 +190,7 @@ export function curdListPage(modelId: ModelId, columns?: AmisUIColumn[]) {
         },
         filter: {
           title: '',
-          mode: 'inline',
+          mode: '',
           wrapWithPanel: false,
           submitText: '',
           controls: [
@@ -281,6 +281,88 @@ export function curdListPage(modelId: ModelId, columns?: AmisUIColumn[]) {
             placeholder: '-',
             fixed: 'right'
           }
+        ],
+        affixHeader: true,
+        columnsTogglable: 'auto',
+        placeholder: '暂无数据',
+        tableClassName: 'table-db table-striped',
+        headerClassName: 'crud-table-header',
+        footerClassName: 'crud-table-footer',
+        toolbarClassName: 'crud-table-toolbar',
+        combineNum: 0,
+        bodyClassName: 'panel-default'
+      }
+    ]
+  };
+  return schema;
+  // return Process("scripts.return.RSuccess", schema, "数据已成功导入");
+}
+
+// yao run scripts.amis.schema.curdListViewPage
+export function curdListViewPage(modelId: ModelId, columns?: AmisUIColumn[]) {
+  const fields = getModelFieldsForAmis(modelId, columns);
+  const schema = {
+    type: 'page',
+    title: `模型${modelId}数据`,
+    remark: null,
+    name: 'model-table-data-view',
+    toolbar: [],
+    body: [
+      {
+        type: 'crud',
+        name: `${modelId}`,
+        syncLocation: false,
+        api: {
+          method: 'get',
+          url:
+            '/api/v1/system/model/' +
+            modelId +
+            '/search?page=${page}&perPage=${perPage}&keywords=${keywords}'
+        },
+        filter: {
+          title: '',
+          mode: '',
+          wrapWithPanel: false,
+          submitText: '',
+          controls: [
+            {
+              type: 'text',
+              name: 'keywords',
+              placeholder: '通过关键字搜索',
+              addOn: {
+                label: '搜索',
+                type: 'submit',
+                className: 'bg-primary'
+              },
+              clearable: true
+            }
+          ]
+        },
+        bulkActions: [],
+        columns: [
+          ...fields
+          // {
+          //   type: 'operation',
+          //   label: '操作',
+          //   width: '',
+          //   buttons: [
+          //     {
+          //       type: 'button-group',
+          //       buttons: [
+          //         {
+          //           type: 'button',
+          //           icon: 'fa fa-eye',
+          //           // label: "查看",
+          //           // level: "primary",
+          //           actionType: 'link',
+          //           link: `/crud/${modelId}` + '/view/${id}'
+          //         }
+          //       ]
+          //     }
+          //   ],
+          //   placeholder: '-',
+          //   fixed: 'right'
+          // }
         ],
         affixHeader: true,
         columnsTogglable: 'auto',

@@ -8,6 +8,9 @@
       "mode": "horizontal",
       "target": "api_list",
       "submitText": "搜索",
+      "data": {
+        "model": "${__query.model}"
+      },
       "body": [
         {
           "name": "model",
@@ -28,8 +31,7 @@
                   "args": {
                     "model": "${value}"
                   },
-                  "componentName": "api_list",
-                  "type": "action"
+                  "componentName": "api_list"
                 }
               ],
               "weight": 0
@@ -140,7 +142,7 @@
       "id": "u:319bcd86da4d",
       "name": "api_list",
       "itemActions": [],
-      "initFetch": false,
+      "initFetch": true,
       "api": {
         "method": "get",
         "url": "/api/v1/system/meta/model/model_api_list?model=${model}"

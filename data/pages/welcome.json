@@ -3,9 +3,75 @@
   "body": [
     {
       "type": "flex",
-      "alignItems": "center",
+      "direction": "column",
+      "justify": "flex-start",
       "className": "h-full",
       "items": [
+        {
+          "type": "flex",
+          "className": "w-full",
+          "items": [
+            {
+              "type": "wrapper",
+              "body": {
+                "actionType": "link",
+                "body": "模型管理",
+                "className": "",
+                "link": "/model/list",
+                "type": "button"
+              },
+              "className": "b m-9 bg-blue-200 w-full text-center rounded"
+            },
+            {
+              "type": "wrapper",
+              "body": {
+                "actionType": "link",
+                "body": "表数据维护",
+                "className": "",
+                "link": "/table_maintain",
+                "type": "button"
+              },
+              "className": "b m-9 bg-blue-200 w-full text-center rounded"
+            },
+            {
+              "type": "wrapper",
+              "body": {
+                "actionType": "link",
+                "body": "文件管理",
+                "className": "",
+                "link": "/system/admin.file",
+                "type": "button"
+              },
+              "className": "b m-9 bg-blue-200 w-full text-center rounded"
+            },
+            {
+              "type": "wrapper",
+              "body": {
+                "actionType": "link",
+                "body": "博客管理",
+                "className": "",
+                "link": "/app/blog/post",
+                "type": "button"
+              },
+              "className": "b m-9 bg-blue-200 w-full text-center rounded"
+            }
+          ]
+        },
+        {
+          "type": "flex",
+          "justify": "center",
+          "className": "w-full",
+          "items": [
+            {
+              "type": "chart",
+              "api": "/api/v1/chart/data/1"
+            },
+            {
+              "type": "chart",
+              "api": "/api/v1/chart/data/2"
+            }
+          ]
+        },
         {
           "type": "flex",
           "justify": "center",
@@ -14,56 +80,14 @@
             {
               "type": "wrapper",
               "body": {
-                "actionType": "link",
-                "body": "用户文件管理",
-                "className": "",
-                "link": "/admin/file/user",
-                "type": "button"
+                "schemaApi": {
+                  "url": "/api/v1/system/schema/ddic.model/crud-list-view",
+                  "method": "get"
+                },
+                "initFetchSchema": true,
+                "type": "service"
               },
-              "className": "b m-9 bg-blue-200 w-full text-center rounded"
-            },
-            {
-              "type": "wrapper",
-              "body": {
-                "actionType": "link",
-                "body": "公共文件管理",
-                "className": "",
-                "link": "/admin/file/public",
-                "type": "button"
-              },
-              "className": "b m-9 bg-blue-200 w-full text-center rounded"
-            },
-            {
-              "type": "wrapper",
-              "body": {
-                "actionType": "link",
-                "body": "项目文件管理",
-                "className": "",
-                "link": "/admin/file/project",
-                "type": "button"
-              },
-              "className": "b m-9 bg-blue-200 w-full text-center rounded"
-            },
-            {
-              "type": "wrapper",
-              "body": {
-                "actionType": "link",
-                "body": "项目文件管理",
-                "className": "",
-                "link": "/admin/file/project",
-                "type": "button"
-              },
-              "className": "b m-9 bg-blue-200 w-full text-center rounded"
-            },{
-              "type": "wrapper",
-              "body": {
-                "actionType": "link",
-                "body": "邮件附件管理",
-                "className": "",
-                "link": "/admin/file/email",
-                "type": "button"
-              },
-              "className": "b m-9 bg-blue-200 w-full text-center rounded"
+              "className": "m-1"
             }
           ]
         }

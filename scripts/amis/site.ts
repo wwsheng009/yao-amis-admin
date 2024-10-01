@@ -649,17 +649,7 @@ function getHomeMenu() {
     {
       url: '/',
       label: 'Home',
-      schema: [
-        {
-          type: 'page',
-          body: [
-            {
-              type: 'tpl',
-              tpl: '欢迎使用管理平台'
-            }
-          ]
-        }
-      ]
+      schemaApi: '/api/v1/amis/pages/welcome'
     }
   ];
 }
@@ -710,7 +700,7 @@ function getSystemMenu() {
               label: '文件管理',
               icon: 'fa fa-file',
               schemaApi: '/api/v1/amis/pages/admin.file',
-              url: '/admin/file/:file_type'
+              url: '/admin/file/:category'
             },
             {
               label: '文件管理',

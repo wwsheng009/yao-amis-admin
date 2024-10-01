@@ -3,6 +3,9 @@
     "disabled": true
   },
   "regions": ["body", "toolbar"],
+  "data": {
+    "table": "${__query.table}"
+  },
   "toolbar": [
     {
       "type": "container",
@@ -10,7 +13,7 @@
         {
           "size": "md",
           "labelAlign": "right",
-          "name": "model",
+          "name": "table",
           "id": "u:fc6740e2cc60",
           "source": {
             "url": "/api/v1/system/meta/model/model_name_list",
@@ -56,9 +59,10 @@
     {
       "schemaApi": {
         "url": "/api/v1/system/schema/${table}/crud-all",
-        "method": "get"
+        "method": "get",
+        "sendOn": "data.table"
       },
-      "initFetchSchema": false,
+      "initFetchSchema": true,
       "type": "service",
       "body": [],
       "id": "u:5ce017fa279d",
