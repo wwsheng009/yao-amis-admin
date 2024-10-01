@@ -2,41 +2,62 @@
   "type": "page",
   "body": [
     {
-      "actionType": "link",
-      "body": "用户文件管理",
-      "className": "",
-      "link": "/admin/file/user",
-      "type": "button"
-    },
-    {
-      "type": "divider"
-    },
-    {
-      "actionType": "link",
-      "body": "公共文件管理",
-      "className": "",
-      "link": "/admin/file/public",
-      "type": "button"
-    },
-    {
-      "type": "divider"
-    },
-    {
-      "actionType": "link",
-      "body": "项目文件管理",
-      "className": "",
-      "link": "/admin/file/project",
-      "type": "button"
-    },
-    {
-      "type": "divider"
-    },
-    {
-      "actionType": "link",
-      "body": "邮件文件管理",
-      "className": "",
-      "link": "/admin/file/email",
-      "type": "button"
+      "type": "flex",
+      "alignItems": "center",
+      "className": "h-full",
+      "items": [
+        {
+          "type": "flex",
+          "justify": "center",
+          "className": "w-full",
+          "items": [
+            {
+              "type": "wrapper",
+              "body": {
+                "actionType": "link",
+                "body": "用户文件管理",
+                "className": "",
+                "link": "/admin/file/user",
+                "type": "button"
+              },
+              "className": "b m-9 bg-gray-400"
+            },
+            {
+              "type": "wrapper",
+              "body": {
+                "actionType": "link",
+                "body": "公共文件管理",
+                "className": "",
+                "link": "/admin/file/public",
+                "type": "button"
+              },
+              "className": "b m-9 bg-gray-400"
+            },
+            {
+              "type": "wrapper",
+              "body": {
+                "actionType": "link",
+                "body": "项目文件管理",
+                "className": "",
+                "link": "/admin/file/project",
+                "type": "button"
+              },
+              "className": "b m-9 bg-gray-400"
+            },
+            {
+              "type": "wrapper",
+              "body": {
+                "actionType": "link",
+                "body": "项目文件管理",
+                "className": "",
+                "link": "/admin/file/project",
+                "type": "button"
+              },
+              "className": "b m-9 bg-gray-400"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
