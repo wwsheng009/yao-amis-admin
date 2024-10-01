@@ -8,7 +8,9 @@ import { Process } from '@yao/yao';
 //    -H 'Content-Type: application/json' \
 //    -H 'Authorization: Bearer <Studio JWT>' \
 //    -d '{ "args":[],"method":"getPages"}'
-const mode = `localfile`;
+// const mode = `localfile`;
+const mode = `widget`;
+
 export function getPages() {
   return Process(`scripts.editor.${mode}.getPages`);
 }

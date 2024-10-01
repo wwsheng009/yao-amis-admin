@@ -3,7 +3,7 @@ import { ClearFalsyKeys } from '@scripts/system/lib';
 import { updateSoyRouteComponent } from '@scripts/admin/menu_lib';
 import { filterTreeDataWithFunc } from '@scripts/amis/data/tree';
 import { getUserAuthMenuIds } from '@scripts/auth/lib';
-import { Process, Exception, FS } from '@yao/yao';
+import { Process } from '@yao/yao';
 
 /**
  * 处理用户的菜单
@@ -13,8 +13,8 @@ import { Process, Exception, FS } from '@yao/yao';
  *
  * */
 
-const PagesLocation = '/pages';
-const WorkingPagesLocation = '/amis_editor';
+// const PagesLocation = '/pages';
+// const WorkingPagesLocation = '/amis_editor';
 
 /**
  * get user auth menus
@@ -192,13 +192,14 @@ function saveSoyRoutesToDB() {
  * @returns []
  */
 function getAmisLocalPageAsSoyRoutes() {
-  const fs = new FS('system');
-  let files: string[] = fs.ReadDir(PagesLocation, true); // recursive
-  files = files.filter((x) => x.length > 5 && x.endsWith('.json'));
-  files = files.map((f) => {
-    f = f.replace(/\\/g, '/');
-    return f.substring(PagesLocation.length);
-  });
+  // const fs = new FS('system');
+  // let files: string[] = fs.ReadDir(PagesLocation, true); // recursive
+  // files = files.filter((x) => x.length > 5 && x.endsWith('.json'));
+  // files = files.map((f) => {
+  //   f = f.replace(/\\/g, '/');
+  //   return f.substring(PagesLocation.length);
+  // });
+  const files = Process('scripts.editor.localfile.getPagesFileList');
   const routes = convertFileListToSoyRoute(files);
 
   updateSoyRoutePath('/api/v1/amis/pages/', routes, undefined);
@@ -226,23 +227,24 @@ function getAmisLocalPageAsSoyRoutes() {
  * @returns
  */
 export function getAmisPageSchema(pageId: string) {
-  const page = pageId.replace('.', '/') + '.json';
+  return Process('scripts.editor.localfile.getAmisPageSchema', pageId);
+  // const page = pageId.replace('.', '/') + '.json';
 
-  const fpath = PagesLocation + '/' + page;
-  const isExist = Process('fs.system.Exists', fpath);
-  if (!isExist) {
-    throw new Exception(`文件不存在：${fpath}`);
-  }
+  // const fpath = PagesLocation + '/' + page;
+  // const isExist = Process('fs.system.Exists', fpath);
+  // if (!isExist) {
+  //   throw new Exception(`文件不存在：${fpath}`);
+  // }
 
-  const str = Process('fs.system.ReadFile', fpath);
-  const source = JSON.parse(str);
-  if (source.type === 'app') {
-    return {
-      type: 'tpl',
-      tpl: '不能显示类型为app的页面'
-    };
-  }
-  return JSON.parse(str);
+  // const str = Process('fs.system.ReadFile', fpath);
+  // const source = JSON.parse(str);
+  // if (source.type === 'app') {
+  //   return {
+  //     type: 'tpl',
+  //     tpl: '不能显示类型为app的页面'
+  //   };
+  // }
+  // return JSON.parse(str);
 }
 
 /**
@@ -252,44 +254,56 @@ export function getAmisPageSchema(pageId: string) {
  * @returns
  */
 export function getAmisEditorPageSource(pageId: string) {
-  const user_id = Process('session.get', 'user_id');
-  let dir = `${WorkingPagesLocation}/${user_id}/`;
-  dir = dir.replace(/\\/g, '/');
-  dir = dir.replace(/\/\//g, '/');
+  return Process('scripts.editor.localfile.getAmisEditorPageSource', pageId);
+  // const user_id = Process('session.get', 'user_id');
+  // let dir = `${WorkingPagesLocation}/${user_id}/`;
+  // dir = dir.replace(/\\/g, '/');
+  // dir = dir.replace(/\/\//g, '/');
 
-  pageId = pageId.replace(/^amis_editor\./, '');
-  const page = pageId.replace('.', '/') + '.json';
+  // pageId = pageId.replace(/^amis_editor\./, '');
+  // const page = pageId.replace('.', '/') + '.json';
 
-  const fpath = dir + page;
-  const isExist = Process('fs.system.Exists', fpath);
-  if (!isExist) {
-    throw new Exception(`文件不存在：${fpath}`);
-  }
-  const str = Process('fs.system.ReadFile', fpath);
-  const source = JSON.parse(str);
-  if (source.type === 'app') {
-    return {
-      type: 'tpl',
-      tpl: '不能显示类型为app的页面'
-    };
-  }
-  return JSON.parse(str);
+  // const fpath = dir + page;
+  // const isExist = Process('fs.system.Exists', fpath);
+  // if (!isExist) {
+  //   throw new Exception(`文件不存在：${fpath}`);
+  // }
+  // const str = Process('fs.system.ReadFile', fpath);
+  // const source = JSON.parse(str);
+  // if (source.type === 'app') {
+  //   return {
+  //     type: 'tpl',
+  //     tpl: '不能显示类型为app的页面'
+  //   };
+  // }
+  // return JSON.parse(str);
 }
 
 // yao run scripts.admin.menu.getAmisEditorSoyRoute
 function getAmisEditorSoyRoute() {
-  let user_id = Process('session.get', 'user_id');
-  if (!user_id) {
-    // return [];
-    user_id = '1';
-  }
-  let dir = `${WorkingPagesLocation}/${user_id}/`;
-  dir = dir.replace(/\\/g, '/');
-  dir = dir.replace(/\/\//g, '/');
+  // let user_id = Process('session.get', 'user_id');
+  // if (!user_id) {
+  //   // return [];
+  //   user_id = '1';
+  // }
+  // let dir = `${WorkingPagesLocation}/${user_id}/`;
+  // dir = dir.replace(/\\/g, '/');
+  // dir = dir.replace(/\/\//g, '/');
 
-  const fs = new FS('system');
-  let files = [] as string[];
+  // const fs = new FS('system');
+  // let files = [] as string[];
 
+  // if (fs.Exists(dir)) {
+  //   files = fs.ReadDir(dir, true); // recursive
+  //   files = files.filter((x) => x.length > 5 && x.endsWith('.json'));
+  //   const regex = new RegExp(`^${dir}`, 'i');
+  //   files = files.map((f) => {
+  //     f = f.replace(/\\/g, '/');
+  //     return f.replace(regex, '/amis_editor/');
+  //   });
+
+  // }
+  const files = Process('scripts.editor.localfile.getEditorPagesFileList');
   // 这里包装了一个顶层
   const rootRoutes = [
     {
@@ -302,20 +316,14 @@ function getAmisEditorSoyRoute() {
     }
   ] as Route[];
 
-  if (fs.Exists(dir)) {
-    files = fs.ReadDir(dir, true); // recursive
-    files = files.filter((x) => x.length > 5 && x.endsWith('.json'));
-    const regex = new RegExp(`^${dir}`, 'i');
-    files = files.map((f) => {
-      f = f.replace(/\\/g, '/');
-      return f.replace(regex, '/amis_editor/');
-    });
+  if (files.length) {
     const routes = convertFileListToSoyRoute(files);
 
     // 这里比较特殊，不要更新amis_editor节点
     updateSoyRoutePath('/api/v1/amis/edit_pages/', routes, undefined);
     rootRoutes[0].children = routes[0]?.children || [];
   }
+
   updateSoyRouteComponent(rootRoutes);
   return rootRoutes;
 }

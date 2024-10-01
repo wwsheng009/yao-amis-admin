@@ -273,6 +273,107 @@ export function createCurdPage(modelId: string) {
 }
 
 /**
+ *根据页面ID，获取Amis的页面源代码
+ * yao run scripts.editor.localfile.getAmisPageSchema
+ * @param pageId
+ * @returns
+ */
+export function getAmisPageSchema(pageId: string) {
+  const page = pageId.replace('.', '/') + '.json';
+
+  const fpath = PagesLocation + '/' + page;
+  const isExist = Process('fs.system.Exists', fpath);
+  if (!isExist) {
+    throw new Exception(`文件不存在：${fpath}`);
+  }
+
+  const str = Process('fs.system.ReadFile', fpath);
+  const source = JSON.parse(str);
+  if (source.type === 'app') {
+    return {
+      type: 'tpl',
+      tpl: '不能显示类型为app的页面'
+    };
+  }
+  return JSON.parse(str);
+}
+
+/**
+ * yao run scripts.editor.localfile.getAmisEditorPageSource
+ * 读取当前用户下的编辑器页面的源代码
+ * @param {*} pageId page id
+ * @returns
+ */
+export function getAmisEditorPageSource(pageId: string) {
+  const user_id = Process('session.get', 'user_id');
+  let dir = `${WorkingPagesLocation}/${user_id}/`;
+  dir = dir.replace(/\\/g, '/');
+  dir = dir.replace(/\/\//g, '/');
+
+  pageId = pageId.replace(/^amis_editor\./, '');
+  const page = pageId.replace('.', '/') + '.json';
+
+  const fpath = dir + page;
+  const isExist = Process('fs.system.Exists', fpath);
+  if (!isExist) {
+    throw new Exception(`文件不存在：${fpath}`);
+  }
+  const str = Process('fs.system.ReadFile', fpath);
+  const source = JSON.parse(str);
+  if (source.type === 'app') {
+    return {
+      type: 'tpl',
+      tpl: '不能显示类型为app的页面'
+    };
+  }
+  return JSON.parse(str);
+}
+
+/**
+ * yao run scripts.editor.localfile.getPagesFileList
+ * @returns
+ */
+export function getPagesFileList() {
+  const fs = new FS('system');
+  let files: string[] = fs.ReadDir(PagesLocation, true); // recursive
+  files = files.filter((x) => x.length > 5 && x.endsWith('.json'));
+  files = files.map((f) => {
+    f = f.replace(/\\/g, '/');
+    return f.substring(PagesLocation.length);
+  });
+  return files;
+}
+
+/**
+ * yao run scripts.editor.localfile.getEditorPagesFileList
+ * @returns
+ */
+export function getEditorPagesFileList() {
+  let user_id = Process('session.get', 'user_id');
+  if (!user_id) {
+    // return [];
+    user_id = '1';
+  }
+  let dir = `${WorkingPagesLocation}/${user_id}/`;
+  dir = dir.replace(/\\/g, '/');
+  dir = dir.replace(/\/\//g, '/');
+
+  const fs = new FS('system');
+  let files = [] as string[];
+
+  if (fs.Exists(dir)) {
+    files = fs.ReadDir(dir, true); // recursive
+    files = files.filter((x) => x.length > 5 && x.endsWith('.json'));
+    const regex = new RegExp(`^${dir}`, 'i');
+    files = files.map((f) => {
+      f = f.replace(/\\/g, '/');
+      // return f;
+      return f.replace(regex, `${WorkingPagesLocation}/`);
+    });
+  }
+  return files;
+}
+/**
  * 保存并加载设计的页面到数据库中后，才能使用以下的请求
  * /api/__yao/widget/amis/crud-list/setting
  * yao studio run editor.loadPageToDB

@@ -29,10 +29,10 @@ export function getPage(file: string) {
 }
 
 export function savePage(file: string, payload) {
-  if (!file.endsWith('.json')) {
-    return;
+  if (!file.toLowerCase().endsWith('.json')) {
+    file = file + '.json';
   }
-  if (!payload.type) {
+  if (!payload || !payload.type) {
     // empty page
     return;
   }
