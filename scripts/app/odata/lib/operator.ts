@@ -1,7 +1,10 @@
 import { Exception } from '@yao/yao';
 
-const convertToOperator = (odataOperator) => {
-  let operator;
+// 还存在问题。请参考：
+// https://github.com/zackyang000/node-odata/tree/master
+
+const convertToOperator = (odataOperator: string) => {
+  let operator: string;
   switch (odataOperator) {
     case 'eq':
       operator = '==';
@@ -30,7 +33,10 @@ const convertToOperator = (odataOperator) => {
 };
 
 // contains(CompanyName,'icrosoft')
-export const contains = (query, fnKey) => {
+export const contains = (
+  query: { $where: (arg0: string) => void },
+  fnKey: string
+) => {
   let [key, target] = fnKey
     .substring(fnKey.indexOf('(') + 1, fnKey.indexOf(')'))
     .split(',');
@@ -39,7 +45,12 @@ export const contains = (query, fnKey) => {
 };
 
 // indexof(CompanyName,'X') eq 1
-export const indexof = (query, fnKey, odataOperator, value) => {
+export const indexof = (
+  query: { $where: (arg0: string) => void },
+  fnKey: string,
+  odataOperator: string,
+  value: any
+) => {
   let [key, target] = fnKey
     .substring(fnKey.indexOf('(') + 1, fnKey.indexOf(')'))
     .split(',');
@@ -49,7 +60,27 @@ export const indexof = (query, fnKey, odataOperator, value) => {
 };
 
 // year(publish_date) eq 2000
-export const year = (query, fnKey, odataOperator, value) => {
+export const year = (
+  query: {
+    where: (arg0: any) => {
+      (): any;
+      new (): any;
+      gte: {
+        (arg0: Date): {
+          (): any;
+          new (): any;
+          lt: { (arg0: Date): void; new (): any };
+        };
+        new (): any;
+      };
+      lt: { (arg0: Date): void; new (): any };
+    };
+    or: (arg0: {}[]) => void;
+  },
+  fnKey: string,
+  odataOperator: string,
+  value: string | number
+) => {
   const key = fnKey.substring(fnKey.indexOf('(') + 1, fnKey.indexOf(')'));
 
   const start = new Date(+value, 0, 1);

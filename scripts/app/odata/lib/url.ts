@@ -1,9 +1,9 @@
-interface UrlObj {
+export interface UrlObj {
   schema: string;
   hostname: string;
   port: string;
   path: string;
-  query: { [key: string]: any };
+  query: { [key: string]: undefined };
 }
 
 export function parseUrl(urlString: string) {

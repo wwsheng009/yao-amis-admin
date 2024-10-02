@@ -1,3 +1,7 @@
+import { OdataModelColumnMap, OdataModelMap } from './model';
+
+type FunSetValue = (name: string, value: any) => void;
+
 /**
  * 根据yao模型字段信息，获取edm模型字段的类型定义
  * @param {object} column
@@ -91,13 +95,13 @@ export function getEdmType(typeIn) {
 }
 
 export class Metadata {
-  models: any;
+  models: OdataModelMap;
   private _count: number;
-  constructor(models) {
+  constructor(models: OdataModelMap) {
     this.models = models;
   }
 
-  visitProperty(node, root) {
+  visitProperty(node, root: FunSetValue) {
     const result = {} as { $Collection: boolean; $Type: string };
 
     const type = node.type.toUpperCase();
@@ -133,7 +137,7 @@ export class Metadata {
     return result;
   }
 
-  visitEntityType(node, root) {
+  visitEntityType(node: OdataModelColumnMap, root: FunSetValue) {
     const properties = Object.keys(node)
       .filter((path) => path !== 'id')
       .reduce((previousProperty, curentProperty) => {
@@ -156,7 +160,7 @@ export class Metadata {
     };
   }
 
-  visitComplexType(node, root) {
+  visitComplexType(node, root: FunSetValue) {
     const properties = Object.keys(node)
       .filter((item) => item !== 'id')
       .reduce((previousProperty, curentProperty) => {
@@ -195,7 +199,7 @@ export class Metadata {
     };
   }
 
-  visitor(type, node, root) {
+  visitor(type: string, node: any, root: FunSetValue) {
     switch (type) {
       case 'Property':
         return this.visitProperty(node, root);
@@ -221,7 +225,7 @@ export class Metadata {
       (previousResource, currentResource) => {
         const resource = this.models[currentResource];
         const result = { ...previousResource };
-        const attachToRoot = (name, value) => {
+        const attachToRoot = (name: string, value: any) => {
           result[name] = value;
         };
 

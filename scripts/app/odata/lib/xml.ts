@@ -1,7 +1,7 @@
 import { Exception } from '@yao/yao';
 
 export class XmlWriter {
-  visitor(type, node, name) {
+  visitor(type: string, node: any, name: string) {
     switch (type) {
       // 根节点
       case 'document':
@@ -39,7 +39,11 @@ export class XmlWriter {
     }
   }
 
-  visitDocument(node) {
+  visitDocument(node: {
+    [x: string]: any;
+    $Version?: string;
+    $EntityContainer?: string;
+  }) {
     let body = '';
 
     Object.keys(node).forEach((subnode) => {
@@ -57,13 +61,13 @@ export class XmlWriter {
 </edmx:Edmx>`;
   }
 
-  static visitEntitySet(node, name) {
+  static visitEntitySet(node: { $Type: string }, name: string) {
     return `<EntitySet Name="${name}" EntityType="${node.$Type}"/>`;
   }
 
   // 所有表类型定义。
   // node {}
-  visitEntityContainter(node) {
+  visitEntityContainter(node: { [x: string]: any }) {
     let entitySets = '';
     let functions = '';
 
@@ -83,7 +87,15 @@ export class XmlWriter {
 
   // node 字段对象{}
   // name 字段名称
-  static visitProperty(node, name) {
+  static visitProperty(
+    node: {
+      $Nullable: boolean;
+      $MaxLength: number;
+      $Collection: string;
+      $Type: string;
+    },
+    name: string
+  ) {
     let attributes = '';
 
     if (node.$Nullable === false) {
@@ -101,7 +113,7 @@ export class XmlWriter {
 
   // node表类型，对象{}
   // name表名
-  visitEntityType(node, name) {
+  visitEntityType(node: { [x: string]: any; $Key?: string }, name: string) {
     let properties = '';
 
     Object.keys(node)
@@ -119,7 +131,10 @@ export class XmlWriter {
     </EntityType>`;
   }
 
-  static visitTypeDefinition(node, name) {
+  static visitTypeDefinition(
+    node: { $MaxLength: number; $UnderlyingType: string },
+    name: string
+  ) {
     let attributes = '';
 
     if (node.$MaxLength) {
@@ -130,7 +145,7 @@ export class XmlWriter {
       </TypeDefinition>`;
   }
 
-  visitComplexType(node, name) {
+  visitComplexType(node: { [x: string]: any }, name: string) {
     let properties = '';
 
     Object.keys(node)
@@ -145,19 +160,24 @@ export class XmlWriter {
     </ComplexType>`;
   }
 
-  static visitAction(node, name) {
+  static visitAction(
+    node: { $IsBound: boolean; $Parameter: any[] },
+    name: string
+  ) {
     const isBound = node.$IsBound ? ' IsBound="true"' : '';
-    const parameter = node.$Parameter.map((item) => {
-      let type = '';
+    const parameter = node.$Parameter.map(
+      (item: { $Collection: any; $Type: string; $Name: string }) => {
+        let type = '';
 
-      if (item.$Collection) {
-        type = ` Type="Collection(${item.$Type})"`;
-      } else if (item.$Type) {
-        type = ` Type="${item.$Type}"`;
+        if (item.$Collection) {
+          type = ` Type="Collection(${item.$Type})"`;
+        } else if (item.$Type) {
+          type = ` Type="${item.$Type}"`;
+        }
+
+        return `<Parameter Name="${item.$Name}"${type}/>`;
       }
-
-      return `<Parameter Name="${item.$Name}"${type}/>`;
-    });
+    );
 
     return `
     <Action Name="${name}"${isBound}>
@@ -166,7 +186,10 @@ export class XmlWriter {
     `;
   }
 
-  static visitFunction(node, name) {
+  static visitFunction(
+    node: { $ReturnType: { $Collection: any; $Type: string } },
+    name: string
+  ) {
     const collection = node.$ReturnType.$Collection ? ' Collection="true"' : '';
 
     return `
@@ -176,7 +199,7 @@ export class XmlWriter {
     `;
   }
 
-  static visitFunctionImport(node, name) {
+  static visitFunctionImport(node: { $Function: string }, name: string) {
     return `
     <FunctionImport Name="${name}" Function="${node.$Function}"/>
     `;
@@ -184,7 +207,14 @@ export class XmlWriter {
 
   // data根数据。
   // {"document":{}}
-  writeXml(data, status) {
+  writeXml(
+    data: {
+      $EntityContainer: string;
+      OdataService: { $Kind: string };
+      $Version: string;
+    },
+    status: number
+  ) {
     const xml = this.visitor('document', data, '')
       .replace(/\s*</g, '<')
       .replace(/>\s*/g, '>');

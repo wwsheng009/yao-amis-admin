@@ -137,7 +137,13 @@ export function getData(
   return getDataFromRequest(oRequest, basePath);
 }
 
-function getDataFromRequest(oRequest, basePath) {
+function getDataFromRequest(
+  oRequest: {
+    headers: QueryObjectIn;
+    URL: { path: string; query: QueryObjectIn };
+  },
+  basePath: string
+) {
   const metaFullPath = basePath + '$metadata';
   const oQsl = ConvertUrlToQsl(oRequest);
 

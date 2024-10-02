@@ -1,13 +1,36 @@
+import { FindCachedModelById } from '@scripts/system/model_lib';
+import { app_odata_view } from '@yao/odata';
+import { CachedModel } from '@yao/types';
 import { Process, Exception, log } from '@yao/yao';
+import { YaoModel } from '@yaoapps/types';
+
+export interface OdataModel extends Omit<CachedModel, 'columns'> {
+  actions?: { [key: string]: any };
+  model_id?: string;
+  table_id?: string;
+  odata_view_name: string;
+  columns: YaoModel.ModelColumn[];
+}
+
+export interface OdataModelObj extends Omit<CachedModel, 'columns'> {
+  actions?: { [key: string]: any };
+  model_id?: string;
+  table_id?: string;
+  odata_view_name: string;
+  columns: OdataModelColumnMap;
+}
+export type OdataModelColumnMap = { [key: string]: YaoModel.ModelColumn };
+
+export type OdataModelMap = { [key: string]: OdataModelObj };
 
 function getOdataModelList() {
   const viewList = Process('models.app.odata.view.get', {
     wheres: [{ column: 'disabled', value: false }],
     limit: 10000
-  });
-  const modelsList = Process('widget.models');
+  }) as app_odata_view[];
+  // const modelsList = Process('widget.models');
   // 原始的模型列表
-  const model_list = flattenTreeList(modelsList);
+  // const model_list = getCachedModelList();
   // model_list = model_list.filter((model) => viewList.find((v) => v.model_id == model.ID));
 
   // // 设置table关联的模型列表
@@ -25,39 +48,50 @@ function getOdataModelList() {
   // });
 
   const viewModelList = viewList.reduce((arry, v) => {
-    const model = model_list.find((m) => m.ID === v.model_id);
-    if (model) {
-      model.model_id = v.model_id;
-      const m = { ...model }; // copy object
-      if (v.table_id) {
-        model.table_id = v.table_id;
-        const model_cols = getTableColumns(v.table_id);
-        m.columns = m.columns.filter((column) => {
-          return model_cols.includes(column.name);
-        });
-      }
-      m.odata_view_name = v.name;
+    const m = getOdataModelById(v);
+    if (m != null) {
       arry.push(m);
-      return arry;
     }
-  }, []);
+    return arry;
+    // // const model = model_list.find((m) => m.ID === v.model_id);
+    // const model = FindCachedModelById(v.model_id);
+    // if (model) {
+    //   const m = { ...model } as OdataModel; // copy object
+    //   m.model_id = v.model_id;
+    //   if (v.table_id) {
+    //     m.table_id = v.table_id;
+    //     const model_cols = getTableColumns(v.table_id);
+    //     if (model_cols.length) {
+    //       const cols = m.columns as YaoModel.ModelColumn[];
+    //       m.columns = cols.filter((column) => {
+    //         return model_cols.includes(column.name);
+    //       });
+    //     }
+    //   }
+    //   m.odata_view_name = v.name;
+    //   arry.push(m);
+    //   return arry;
+    // }
+  }, [] as OdataModel[]);
 
   return viewModelList;
 }
 
-// yao run scripts.app.odata.lib.model.getOdataModels
-export function getOdataModels() {
+// yao run scripts.app.odata.lib.model.getOdataModelsWithColMap
+export function getOdataModelsWithColMap() {
   const list = getOdataModelList();
   // Process("models.system.api.eachsave", list);
-  const modelObj = {};
+  const modelObj = {} as OdataModelMap;
   list.forEach((model) => {
+    const m = { ...model } as unknown as OdataModelObj;
     delete model.values;
-    const colObj = {};
+    const colObj = {} as OdataModelColumnMap;
+    //convert the list to the map object
     model.columns.forEach((col) => {
       colObj[col.name] = col;
     });
-    model.columns = colObj;
-    modelObj[model.odata_view_name] = model;
+    m.columns = colObj;
+    modelObj[model.odata_view_name] = m;
   });
   return modelObj;
 }
@@ -78,9 +112,6 @@ export function getModelsEntityset() {
 
 export function getOdataModelNameList() {
   const list = getOdataModelList();
-  // const modelsList = Process("widget.models");
-  // const list = flattenTreeList(modelsList);
-  // Process("models.system.api.eachsave", list);
   const modelObj = [];
   list.forEach((model) => {
     modelObj.push(model.odata_view_name);
@@ -108,9 +139,6 @@ export function getOdataViewList() {
 
 export function getOdataModelsEntityset2() {
   const list = getOdataModelList();
-  // const modelsList = Process("widget.models");
-  // const list = flattenTreeList(modelsList);
-  // Process("models.system.api.eachsave", list);
   const modelObj = [];
   list.forEach((model) => {
     modelObj.push(model.odata_view_name);
@@ -123,41 +151,12 @@ export function getOdataModelsEntityset2() {
 }
 
 /**
- * 转换嵌套的对象结构成扁平的列表结构
- * @param {object} modelData
- * @returns
- */
-export function flattenTreeList(modelData: {
-  children: any[];
-  data: any;
-  forEach: (arg0: (line: any) => void) => void;
-}) {
-  let list = [];
-
-  if (modelData.children) {
-    modelData.children.forEach((line) => {
-      const subLine = flattenTreeList(line);
-      list = list.concat(subLine);
-    });
-  } else if (modelData.data) {
-    if (modelData.data) {
-      list.push(modelData.data);
-    }
-  } else if (Array.isArray(modelData)) {
-    modelData.forEach((line) => {
-      const subLine = flattenTreeList(line);
-      list = list.concat(subLine);
-    });
-  }
-  return list;
-}
-/**
  * get the column ids from table setting
  * yao run scripts.app.odata.lib.model.getTableColumns 'admin.user'
  * @param {string} table_id
  * @returns array of model column_id
  */
-function getTableColumns(table_id: string) {
+function getTableColumns(table_id: string): string[] {
   if (!table_id) {
     return [];
   }
@@ -167,26 +166,26 @@ function getTableColumns(table_id: string) {
   }
   const setting = Process('yao.table.setting', table_id);
   // output columns
-  const cols = setting.table.columns.reduce((arr, col) => {
+  const cols = setting?.table?.columns?.reduce((arr, col) => {
     arr.push(col.name);
     return arr;
   }, []);
 
   // model column id
-  const col_ids = cols.reduce((arry, col) => {
-    arry.push(setting.fields.table[col].bind);
+  const col_ids = cols?.reduce((arry: string[], col: string) => {
+    arry.push(setting.fields?.table[col]?.bind);
     return arry;
   }, []);
-  return col_ids;
+  return col_ids || [];
 }
 /**
  * 根据视图名称获取模型定义
  * @param {string} viewId
  * @returns
  */
-export function getModel(viewId: string) {
+export function getOdataModel(viewId: string): OdataModel {
   if (!viewId) {
-    return { columns: [] };
+    return { odata_view_name: viewId, columns: [] };
   }
   const [odataview] = Process('models.app.odata.view.get', {
     wheres: [
@@ -203,78 +202,93 @@ export function getModel(viewId: string) {
   if (odataview.disabled) {
     throw new Exception(`视图：${viewId}已被禁用！`);
   }
-  const model_id = odataview.model_id;
 
-  const model_cols = getTableColumns(odataview.table_id);
+  const m = getOdataModelById(odataview);
+  if (!m) {
+    throw new Exception(`模型：${odataview.model_id}不存在`);
+  }
 
-  // 如果数据库里没有，从内存中加载定义
-  // 只有加载到内存的才能获取的了
-  const models = Process('widget.models');
-  const model = findOdataModelById(models, model_id);
+  // const model_id = odataview.model_id;
+
+  // const model_cols = getTableColumns(odataview.table_id);
+
+  // // 如果数据库里没有，从内存中加载定义
+  // // 只有加载到内存的才能获取的了
+  // // const models = Process('widget.models');
+  // // const model = findOdataModelById(models, model_id);
+  // const model = FindCachedModelById(model_id) as OdataModel;
+  // if (model) {
+  //   model.model_id = model_id;
+  //   if (model_cols.length) {
+  //     model.table_id = odataview.table_id;
+  //     model.columns = model.columns.filter((column) => {
+  //       return model_cols.includes(column.name);
+  //     });
+  //   } else {
+  //     // 过滤隐藏的字段
+  //     model.columns = model.columns.filter((column) => {
+  //       if (model.option != null) {
+  //         if (model.option?.timestamps) {
+  //           if (column.name == 'updated_at' || column.name == 'created_at') {
+  //             return false;
+  //           }
+  //         }
+  //         if (model.option?.soft_deletes) {
+  //           if (column.name == 'deleted_at') {
+  //             return false;
+  //           }
+  //         }
+  //       }
+  //       return true;
+  //     });
+  //   }
+
+  //   model.name = model.ID;
+  // } else {
+  //   throw new Exception(`模型：${model_id}不存在`);
+  // }
+  return m;
+}
+
+function getOdataModelById(odataview: app_odata_view) {
+  const model = FindCachedModelById(odataview.model_id);
   if (model) {
-    model.model_id = model_id;
-    if (model_cols.length) {
-      model.table_id = odataview.table_id;
-      model.columns = model.columns.filter((column) => {
-        return model_cols.includes(column.name);
-      });
-    } else {
-      // 过滤隐藏的字段
-      model.columns = model.columns.filter((column) => {
-        if (model.optionb != null) {
-          if (model.option?.timestamps) {
-            if (column.name == 'updated_at' || column.name == 'created_at') {
-              return false;
+    const m = { ...model } as OdataModel; // copy object
+    m.model_id = odataview.model_id;
+    m.odata_view_name = odataview.name;
+    if (odataview.table_id) {
+      m.table_id = odataview.table_id;
+      const model_cols = getTableColumns(odataview.table_id);
+      if (model_cols.length) {
+        const cols = m.columns as YaoModel.ModelColumn[];
+        m.columns = cols.filter((column) => {
+          return model_cols.includes(column.name);
+        });
+      } else {
+        // 过滤隐藏的字段
+        m.columns = model.columns.filter((column) => {
+          if (model.option != null) {
+            if (model.option?.timestamps) {
+              if (column.name == 'updated_at' || column.name == 'created_at') {
+                return false;
+              }
+            }
+            if (model.option?.soft_deletes) {
+              if (column.name == 'deleted_at') {
+                return false;
+              }
             }
           }
-          if (model.option?.soft_deletes) {
-            if (column.name == 'deleted_at') {
-              return false;
-            }
-          }
-        }
-        return true;
-      });
-    }
-
-    model.name = model.ID;
-  } else {
-    throw new Exception(`模型：${model_id}不存在`);
-  }
-  return model;
-}
-function findOdataModelById(
-  models: { children: any; data: { ID: string } },
-  id: string
-) {
-  if (typeof models !== 'object' || models === null || models === undefined) {
-    return null;
-  }
-
-  if (models.children) {
-    for (const item of models.children) {
-      const obj = findOdataModelById(item, id);
-      if (obj) {
-        return obj;
+          return true;
+        });
       }
     }
-  } else if (models.data) {
-    if (models.data.ID == id) {
-      return models.data;
-    }
-  } else if (Array.isArray(models)) {
-    for (const item of models) {
-      const obj = findOdataModelById(item, id);
-      if (obj) {
-        return obj;
-      }
-    }
+    return m;
   }
-
-  return null;
 }
+
 // module.exports = {
-//   getOdataModels,
+//   getOdataModelsWithColMap,
 //   getModelsEntityset,
 //   getModel,
 //   getOdataModelNameList,

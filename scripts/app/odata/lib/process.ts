@@ -1,10 +1,11 @@
 import {
   getOdataViewList,
-  getOdataModels,
-  getModel
+  getOdataModelsWithColMap,
+  getOdataModel
 } from '@scripts/app/odata/lib/model';
 import { Metadata, getEdmType } from '@scripts/app/odata/lib/meta';
 import { XmlWriter } from '@scripts/app/odata/lib/xml';
+import { YaoModel } from '@yaoapps/types';
 
 /**
  * 获取模型列表
@@ -36,7 +37,7 @@ export function getEntryMetaDataXml(base) {
  * @returns
  */
 export function getMetaDataXml2() {
-  const models = getOdataModels();
+  const models = getOdataModelsWithColMap();
   const meta = new Metadata(models);
   const data = meta.ctrl();
   // console.log("data=============>", data)
@@ -52,7 +53,11 @@ export function getMetaDataXml2() {
  * @param {string} sBaseUrl
  * @returns
  */
-export function convertJsonToXml(json, viewId, sBaseUrl) {
+export function convertJsonToXml(
+  json: { [key: string]: any }[],
+  viewId: string,
+  sBaseUrl: string
+) {
   const entrys = convertEntrys(json, viewId, sBaseUrl);
 
   const xml = `<?xml version="1.0" encoding="utf-8" standalone="yes"?>
@@ -72,14 +77,19 @@ export function convertJsonToXml(json, viewId, sBaseUrl) {
  * @param {string} sBaseUrl
  * @returns
  */
-function convertEntrys(json, viewId, sBaseUrl) {
-  const model = getModel(viewId);
+function convertEntrys(
+  json: { [key: string]: any }[],
+  viewId: string,
+  sBaseUrl: string
+) {
+  const model = getOdataModel(viewId);
 
   const entrys = [];
   for (const item of json) {
     let colXmlstr = '';
     // 不要直接循环item对象，那个索引是随机的。
-    model.columns.forEach((col) => {
+    const cols = model.columns as YaoModel.ModelColumn[];
+    cols.forEach((col) => {
       const key = col.name;
       if (Object.hasOwnProperty.call(item, key)) {
         // column info

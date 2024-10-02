@@ -1,4 +1,4 @@
-import { getModel } from '@scripts/app/odata/lib/model';
+import { getOdataModel } from '@scripts/app/odata/lib/model';
 
 import functions from '@scripts/app/odata/lib/operator';
 
@@ -9,13 +9,14 @@ import { Qsl } from '@yao/odata';
 
 const OPERATORS_KEYS = ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'has'];
 const stringHelper = {
-  has: (str, key) => str.indexOf(key) >= 0,
+  has: (str: string, key: string) => str.indexOf(key) >= 0,
 
-  isBeginWith: (str, key) => str.indexOf(key) === 0,
+  isBeginWith: (str: string, key: string) => str.indexOf(key) === 0,
 
-  isEndWith: (str, key) => str.lastIndexOf(key) === str.length - key.length,
+  isEndWith: (str: string, key: string) =>
+    str.lastIndexOf(key) === str.length - key.length,
 
-  removeEndOf: (str, key) => {
+  removeEndOf: (str: string, key: string) => {
     if (stringHelper.isEndWith(str, key)) {
       return str.substr(0, str.length - key.length);
     }
@@ -125,7 +126,7 @@ export function ConvertUrlToQsl(oUrl: {
     }
   }
   let viewName = entitySet;
-  const modelDsl = getModel(viewName);
+  const modelDsl = getOdataModel(viewName);
   if (modelDsl.table?.name) {
     viewName = modelDsl.table?.name;
   }
@@ -228,7 +229,7 @@ export function ConvertUrlToQsl(oUrl: {
 
         if (key === 'id') key = 'id';
 
-        let val: any;
+        let val = null;
         if (value !== undefined) {
           const result = validator.formatValue(value);
           if (result.err) {
@@ -239,120 +240,120 @@ export function ConvertUrlToQsl(oUrl: {
         }
 
         // function query
-        const functionKey = key.substring(0, key.indexOf('('));
-        if (['indexof', 'year', 'contains'].indexOf(functionKey) > -1) {
-          functions[functionKey](query, key, odataOperator, val);
-        } else {
-          if (conditionArr.length === 1) {
-            throw new Exception(`语法错误 '${item}'.`, 404);
-          }
-          if (value === 'null') {
-            switch (odataOperator) {
-              case 'eq':
-                wheres.push({
-                  column: key,
-                  op: 'null'
-                });
-                break;
-              // wheres.push({
-              //   field: key,
-              //   op: "is",
-              //   value: "null",
-              // });
-              case 'ne': {
-                wheres.push({
-                  column: key,
-                  op: 'notnull'
-                });
-                break;
-              }
-              // wheres.push({
-              //   field: key,
-              //   op: "is",
-              //   value: "not null",
-              // });
-              default:
-                break;
-            }
-          }
-          // operator query
+        // const functionKey = key.substring(0, key.indexOf('('));
+        // if (['indexof', 'year', 'contains'].indexOf(functionKey) > -1) {
+        //   functions[functionKey](query, key, odataOperator, val);
+        // } else {
+        if (conditionArr.length === 1) {
+          throw new Exception(`语法错误 '${item}'.`, 404);
+        }
+        if (value === 'null') {
           switch (odataOperator) {
             case 'eq':
               wheres.push({
                 column: key,
-                op: 'eq',
-                value: val
+                op: 'null'
               });
-              // wheres.push({
-              //   field: key,
-              //   op: "=",
-              //   value: val,
-              // });
               break;
-            case 'ne':
+            // wheres.push({
+            //   field: key,
+            //   op: "is",
+            //   value: "null",
+            // });
+            case 'ne': {
               wheres.push({
                 column: key,
-                op: 'ne',
-                value: val
+                op: 'notnull'
               });
-              // wheres.push({
-              //   field: key,
-              //   op: "<>",
-              //   value: val,
-              // });
               break;
-            case 'gt':
-              wheres.push({
-                column: key,
-                op: 'gt',
-                value: val
-              });
-              // wheres.push({
-              //   field: key,
-              //   op: ">",
-              //   value: val,
-              // });
-              break;
-            case 'ge':
-              wheres.push({
-                column: key,
-                op: 'ge',
-                value: val
-              });
-              // wheres.push({
-              //   field: key,
-              //   op: ">=",
-              //   value: val,
-              // });
-              break;
-            case 'lt':
-              wheres.push({
-                column: key,
-                op: 'lt',
-                value: val
-              });
-              // wheres.push({
-              //   field: key,
-              //   op: "<",
-              //   value: val,
-              // });
-              break;
-            case 'le':
-              wheres.push({
-                column: key,
-                op: 'le',
-                value: val
-              });
-              // wheres.push({
-              //   field: key,
-              //   op: "<=",
-              //   value: val,
-              // });
-              break;
+            }
+            // wheres.push({
+            //   field: key,
+            //   op: "is",
+            //   value: "not null",
+            // });
             default:
-              throw new Exception(`Incorrect operator at '${item}'.`, 404);
+              break;
           }
         }
+        // operator query
+        switch (odataOperator) {
+          case 'eq':
+            wheres.push({
+              column: key,
+              op: 'eq',
+              value: val
+            });
+            // wheres.push({
+            //   field: key,
+            //   op: "=",
+            //   value: val,
+            // });
+            break;
+          case 'ne':
+            wheres.push({
+              column: key,
+              op: 'ne',
+              value: val
+            });
+            // wheres.push({
+            //   field: key,
+            //   op: "<>",
+            //   value: val,
+            // });
+            break;
+          case 'gt':
+            wheres.push({
+              column: key,
+              op: 'gt',
+              value: val
+            });
+            // wheres.push({
+            //   field: key,
+            //   op: ">",
+            //   value: val,
+            // });
+            break;
+          case 'ge':
+            wheres.push({
+              column: key,
+              op: 'ge',
+              value: val
+            });
+            // wheres.push({
+            //   field: key,
+            //   op: ">=",
+            //   value: val,
+            // });
+            break;
+          case 'lt':
+            wheres.push({
+              column: key,
+              op: 'lt',
+              value: val
+            });
+            // wheres.push({
+            //   field: key,
+            //   op: "<",
+            //   value: val,
+            // });
+            break;
+          case 'le':
+            wheres.push({
+              column: key,
+              op: 'le',
+              value: val
+            });
+            // wheres.push({
+            //   field: key,
+            //   op: "<=",
+            //   value: val,
+            // });
+            break;
+          default:
+            throw new Exception(`Incorrect operator at '${item}'.`, 404);
+        }
+        // }
       }
       if (wheres.length) {
         queryDsl['wheres'] = wheres;
@@ -381,7 +382,7 @@ export function ConvertUrlToQsl(oUrl: {
 }
 
 // getData("/service/$metadata", query);
-function mergeList(list) {
+function mergeList(list: any[]) {
   return list.join(' ').trim();
 }
 
