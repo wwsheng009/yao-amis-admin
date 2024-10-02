@@ -75,9 +75,9 @@ export interface app_email_message {
   /**状态 */
   status?: 'sent' | 'received' | 'failed';
   /**发送时间 */
-  send_at?: Date;
+  send_at?: Date | string;
   /**接收时间 */
-  received_at?: Date;
+  received_at?: Date | string;
   /**邮件发出时间 */
   date?: string;
   /**邮件错误 */

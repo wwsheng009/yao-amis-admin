@@ -470,10 +470,10 @@ export function updateInputData(
  * @returns Array
  */
 function paginateArray(
-  arr: object[],
-  pageIn: string,
-  pageSizeIn: string,
-  orderBy: string | number,
+  arr: any[],
+  pageIn: number,
+  pageSizeIn: number,
+  orderBy: string,
   orderDirection: string
 ) {
   if (!Array.isArray(arr) || arr.length == 0) {
@@ -483,8 +483,8 @@ function paginateArray(
   //   `====>paginateArray1,page:${pageIn},perage:${pageSizeIn},orderBy${orderBy},orderDir:${orderDirection}`
   // );
 
-  const page = pageIn ? parseInt(pageIn) : 1;
-  const pageSize = pageSizeIn ? parseInt(pageSizeIn) : 10;
+  const page = pageIn ? pageIn : 1;
+  const pageSize = pageSizeIn ? pageSizeIn : 10;
 
   // console.log(
   //   `====>paginateArray2,page:${page},perage:${pageSize},orderBy${orderBy},orderDir:${orderDirection}`
@@ -508,14 +508,17 @@ function paginateArray(
   return arr.slice(startIndex, endIndex);
 }
 
-export function getArrayItem(querys: { [x: string]: string[] }, key: string) {
+export function getArrayItem(
+  querys: { [x: string]: string[] },
+  key: string
+): string {
   if (typeof querys !== 'object') {
     return;
   }
   if (Array.isArray(querys[key]) && querys[key].length) {
     return querys[key][0];
   } else {
-    return querys[key];
+    return String(querys[key]);
   }
 }
 
@@ -528,18 +531,18 @@ export function getArrayItem(querys: { [x: string]: string[] }, key: string) {
  * @returns 数组
  */
 export function PaginateArrayWithQuery(
-  data: Array<undefined>,
+  data: Array<any>,
   querysIn: QueryObjectIn,
   payload: object,
-  searchFields: Array<undefined> = []
+  searchFields: Array<any> = []
 ) {
   const querys = mergeQueryObject(querysIn, payload);
 
   const orderBy = getArrayItem(querys, 'orderBy');
   const orderDir = getArrayItem(querys, 'orderDir');
 
-  const page = getArrayItem(querys, 'page') || 1;
-  const perPage = getArrayItem(querys, 'perPage') || 10;
+  const page = parseInt(getArrayItem(querys, 'page')) || 1;
+  const perPage = parseInt(getArrayItem(querys, 'perPage')) || 10;
 
   // console.log(
   //   `querys:${querys},page:${page},perage:${perPage},orderBy${orderBy},orderDir:${orderDir}`

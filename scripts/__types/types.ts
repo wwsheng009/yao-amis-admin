@@ -102,7 +102,7 @@ export interface AmisUIModel {
  * amis 库本身的相关类型
  */
 export interface AmisValidation {
-  [key: string]: never | undefined | null | boolean | string | number;
+  [key: string]: any;
   matchRegexp?: string; //正则
   isEmail?: boolean;
   isTelNumber?: boolean;
