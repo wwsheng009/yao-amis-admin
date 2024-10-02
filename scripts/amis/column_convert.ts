@@ -905,26 +905,26 @@ export function column2AmisFormEditColumn(
       break;
     case 'FILE':
       newColumn.type = 'input-file';
-      newColumn.receiver = '/api/v1/fs/public/file/upload';
+      newColumn.receiver = '/api/v1/fs/user/file/upload';
       newColumn.useChunk = false; // 暂时关闭，分块还不知怎么处理
       break;
     case 'IMAGE':
       newColumn.type = 'input-image';
-      newColumn.receiver = '/api/v1/fs/public/file/upload';
+      newColumn.receiver = '/api/v1/fs/user/file/upload';
       break;
     case 'IMAGES':
       newColumn.type = 'input-image';
-      newColumn.receiver = '/api/v1/fs/public/file/upload';
+      newColumn.receiver = '/api/v1/fs/user/file/upload';
       newColumn.multiple = true;
       break;
     case 'VIDEO':
       newColumn.type = 'input-file';
-      newColumn.receiver = '/api/v1/fs/public/file/upload';
+      newColumn.receiver = '/api/v1/fs/user/file/upload';
       newColumn.useChunk = false; // 暂时关闭，分块还不知怎么处理
       break;
     case 'RICHTEXT':
       newColumn.type = 'input-rich-text';
-      newColumn.receiver = '/api/v1/fs/public/file/upload';
+      newColumn.receiver = '/api/v1/fs/user/file/upload';
       newColumn.useChunk = false; // 暂时关闭，分块还不知怎么处理
       break;
     case 'CODE':
