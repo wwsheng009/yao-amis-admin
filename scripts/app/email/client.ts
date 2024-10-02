@@ -49,18 +49,21 @@ export function getSendAccount(): EmailAccount {
   return account as EmailAccount;
 }
 
-export function getReceiveAccount(): EmailAccount {
-  let [account] = Process('models.app.email.account.get', {
+export function getReceiveAccounts(): EmailAccount[] {
+  const accounts = Process('models.app.email.account.get', {
     wheres: [
       {
         column: 'category',
         value: 'receive'
+      },
+      {
+        column: 'type',
+        value: 'imap'
       }
-    ],
-    limit: 1
+    ]
   } as YaoQueryParam.QueryParam) as app_email_account[];
 
-  if (!account) {
+  if (!accounts.length) {
     const envs = Process(
       'utils.env.GetMany',
       'EMAIL_RECEIVE_SERVER',
@@ -69,28 +72,25 @@ export function getReceiveAccount(): EmailAccount {
       'EMAIL_RECEIVE_PROTOCAL',
       'EMAIL_RECEIVE_PASSWORD'
     );
-    if (Object.values(envs).every((x) => x == '')) {
-      return null;
+    if (!Object.values(envs).every((x) => x == '')) {
+      const account = {
+        server: envs['EMAIL_RECEIVE_SERVER'],
+        port: Number(envs['EMAIL_RECEIVE_PORT']) || 993,
+        username: envs['EMAIL_RECEIVE_USERNAME'],
+        type: envs['EMAIL_RECEIVE_PROTOCAL'] || 'imap',
+        password: envs['EMAIL_RECEIVE_PASSWORD']
+      };
+      accounts.push(account);
     }
-    account = {
-      server: envs['EMAIL_RECEIVE_SERVER'],
-      port: Number(envs['EMAIL_RECEIVE_PORT']) || 993,
-      username: envs['EMAIL_RECEIVE_USERNAME'],
-      type: envs['EMAIL_RECEIVE_PROTOCAL'] || 'imap',
-      password: envs['EMAIL_RECEIVE_PASSWORD']
-    };
   }
 
-  if (account && account.type !== 'imap') {
-    throw new Exception(`Receive account type ${account.type} not supported`);
-  }
-  return account as EmailAccount;
+  return accounts as EmailAccount[];
 }
 /**
  * yao run scripts.app.email.client.checkEmailAccount
  */
 export function checkEmailAccount() {
-  const accounts = [getSendAccount(), getReceiveAccount()].filter((c) => !!c);
+  const accounts = [getSendAccount(), getReceiveAccounts()].filter((c) => !!c);
   if (accounts.length <= 1) {
     Process('schedules.email.stop');
     console.log(`邮件账户未配置,请配置发送与接收邮件的账号`);
@@ -213,8 +213,12 @@ export function sendMessage(id: number) {
   }
   return id;
 }
+
 /**
- * yao run scripts.app.email.client.receiveEmail
+ *
+ * 接收所有的账户的邮件
+ *
+ * yao run scripts.app.email.client.receiveAllEmail
  *
  * yao run schedules.mail.start
  *
@@ -222,12 +226,20 @@ export function sendMessage(id: number) {
  *
  * yao run tasks.email.get(1)
  */
-export function receiveEmail() {
-  console.log('开始接收邮件');
-  const account = getReceiveAccount();
+export function receiveAllEmail() {
+  const accounts = getReceiveAccounts();
+  accounts.forEach((c) => receiveEmail(c));
+}
+
+export function receiveEmail(account: EmailAccount) {
   if (!account) {
     throw new Exception(`接收邮件的账户未配置`);
   }
+  if (account && account.type !== 'imap') {
+    throw new Exception(`Receive account type ${account.type} not supported`);
+  }
+  console.log(`开始接收邮件:${account.server}`);
+
   const message = {
     account: {
       ...account
@@ -248,15 +260,12 @@ export function receiveEmail() {
  * @param emails
  */
 function saveReceivedEmails(emails: MessageReceived[]) {
-  if (!emails) {
-    console.log('邮件还没收到');
-    return;
-    // const fs = new FS('system');
-    // const data = fs.ReadFile('/upload/email.json');
-    // const res = JSON.parse(data);
-    // emails = res.emails;
-  }
-  if (!Array.isArray(emails) || !emails.length) {
+  // const fs = new FS('system');
+  // const data = fs.ReadFile('/upload/email.json');
+  // const res = JSON.parse(data);
+  // emails = res.emails;
+
+  if (!emails || !Array.isArray(emails) || !emails.length) {
     console.log('邮件还没收到');
     return;
   }

@@ -5,7 +5,7 @@
     "attempt_after": 200,
     "timeout": 2,
     "size": 1000,
-    "process": "scripts.app.email.client.receiveEmail",//必须的
+    "process": "scripts.app.email.client.receiveAllEmail",//必须的
     "event": {
       "next": "", //需要返回一个整型的数字，用来生成任务的标识,返回值一定要保持唯一，要不就留空
       "add": "scripts.app.email.task.OnAdd",
