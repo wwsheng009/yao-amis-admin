@@ -185,6 +185,7 @@ function updateAmisFormColFromModel(
   amisColumn.label = amisColumn.label || yaoColumn.label;
 
   if (Array.isArray(yaoColumn.validations) && yaoColumn.validations.length) {
+    amisColumn.validations = amisColumn.validations || {};
     amisColumn.validationErrors = amisColumn.validationErrors || {};
     let regexCount = 0;
     for (const validation of yaoColumn.validations) {
