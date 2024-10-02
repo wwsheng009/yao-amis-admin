@@ -1,8 +1,9 @@
 // model db operations
 
-import { ClearFalsyKeys } from '@scripts/system/lib';
-import { Process, log } from '@yao/yao';
-import { AmisModelDB, AmisRelation, AmisModel, ModelId } from '@yao/types';
+import { Exception, Process } from '@yao/yao';
+import { AmisModel, AmisModelDB, ModelId } from '@yao/types';
+import { amisModelToAmisModel } from './model_convert';
+import { RunTransaction } from './db';
 
 /**
  * yao run scripts.system.model_db.checkType
@@ -53,136 +54,108 @@ export function getModelFromDB(modelId: ModelId): AmisModel {
   });
   if (line != null) {
     // 数据库表信息转成模型定义
-    return ConvertTableLineToModel(line);
+    return amisModelToAmisModel(line);
+  }
+}
+
+export function saveAmisModel(payload: AmisModelDB, force?: boolean): number {
+  // 先保存主表，获取id后再保存从表
+  const saveFun = function (payload: AmisModelDB) {
+    const res = Process('models.ddic.model.Save', payload);
+    if (res && res.code && res.code > 300) {
+      throw res;
+    }
+    if (res != null) {
+      SaveRelations(res, payload, force);
+    }
+    return res;
+  };
+  return RunTransaction(saveFun, payload as undefined) as unknown as number;
+}
+// 保存关联表数据
+function SaveRelations(id: number, payload: AmisModelDB, force?: boolean) {
+  // BeforeDelete(id);
+  SaveColumns(id, payload, force);
+  return id;
+}
+
+/**
+ * 保存ddic.model.column
+ * @param {string} modelId
+ * @param {object} payload
+ * @param {boolean} force 强制保存
+ * @returns
+ */
+function SaveColumns(modelId: number, payload: AmisModelDB, force?: boolean) {
+  if (modelId == null) {
+    throw new Exception('无法保存columns,缺少模型主键！');
+  }
+  const cols = payload.columns || [];
+
+  if (force == true) {
+    force = true;
+  }
+  if (!cols.length) {
+    return;
+  }
+  // let needDelete = force;
+
+  // let hasOneColId = false;
+  // //检查记录中至少有一个主键。如果都没有ID，说明是新记录
+  // cols.forEach((col) => {
+  //   if (col.id != null) {
+  //     hasOneColId = true;
+  //   }
+  // });
+  // //一个主键都没有，新对象
+  // if (hasOneColId === false) {
+  //   needDelete = true;
+  // }
+  // // 排序有变化
+  // if (!needDelete) {
+  //   if (!isAscOrder(cols)) {
+  //     // console.log("排序有变化", cols);
+  //     needDelete = true;
+  //   }
+  // }
+  // if (!needDelete) {
+  //   // 如果导入的列的数量比数据库中的少，需要先删除。
+  //   const columns = Process("models.ddic.model.column.get", {
+  //     wheres: [{ column: "model_id", value: modelId }],
+  //   });
+  //   if (columns.length > cols.length) {
+  //     needDelete = true;
+  //   }
+  // }
+  // let needDelete = true;
+  // if (needDelete) {
+  // cols.forEach((col) => delete col.id);
+  DeleteModelolumns(modelId);
+  cols.forEach((col, idx) => (col.id = modelId * 10000 + idx));
+  // }
+  // 保存列清单
+  const res = Process('models.ddic.model.column.EachSave', cols, {
+    model_id: modelId
+  });
+  if (res?.code && res.message) {
+    throw res;
+  } else {
+    return modelId;
   }
 }
 
 /**
- * 从数据库转成到Yao模型配置
- * scripts.system.model.ConvertTableLineToModel
- * @param {AmisModelDB} line
+ * 删除模型的列定义，删除ddic.model.column == model_id
+ * @param {string} modelId
  * @returns
  */
-export function ConvertTableLineToModel(line: AmisModelDB): AmisModel {
-  let model = {
-    table: {},
-    option: {},
-    relations: {},
-    columns: []
-  } as AmisModel;
-  model.id = line.id;
-  model.ID = line.identity;
-  model.name = line.name;
-  model.comment = line.comment;
-  model.table.name = line.table_name;
-  // option
-  model.table.comment = line.table_comment;
-
-  if (line.soft_deletes != null && line.soft_deletes) {
-    model.option.soft_deletes = true;
-  }
-  if (line.timestamps != null && line.timestamps) {
-    model.option.timestamps = true;
-  }
-  if (line.read_only != null && line.read_only) {
-    model.option.read_only = true;
-  }
-  line.relations?.forEach((rel: AmisRelation) => {
-    model.relations[rel.name] = rel;
-    //
-    if (typeof rel.query == 'string') {
-      try {
-        model.relations[rel.name].query = JSON.parse(rel.query);
-      } catch (error) {
-        log.Error(error.message);
-        model.relations[rel.name].query = {};
-      }
-    }
+function DeleteModelolumns(modelId: number) {
+  const err = Process('models.ddic.model.column.DeleteWhere', {
+    wheres: [{ column: 'model_id', value: modelId }]
   });
-  line.columns?.forEach((col) => {
-    ['index', 'nullable', 'unique', 'primary'].forEach((key) => {
-      if (Object.prototype.hasOwnProperty.call(col, key)) {
-        if (col[key] !== false && col[key] > 0) {
-          col[key] = true;
-        } else {
-          col[key] = false;
-        }
-      }
-    });
-    // 复制options到option,option只保存了值列表
-    if (Array.isArray(col.options) && col.option == null) {
-      col.option = [];
-      col.options.forEach((opt) => {
-        col.option.push(opt.value);
-      });
-      // don't delete it
-      // delete col.options;
-    }
-
-    const colNew = { ...col };
-    // 如果存在模板配置，把元素配置复制过来
-    if (col.element_id) {
-      const ele = Process('models.ddic.model.element.Find', col.element_id, {});
-      ['type', 'length', 'scale', 'precision'].forEach((field) => {
-        if (
-          col[field] == null &&
-          Object.prototype.hasOwnProperty.call(ele, field)
-        ) {
-          col[field] = ele[field];
-        }
-      });
-      if (colNew.validations == null) {
-        colNew.validations = ele?.validations;
-      }
-
-      if (colNew.option == null && Array.isArray(ele?.options)) {
-        colNew.option = [];
-        ele.options.forEach((opt) => {
-          colNew.option.push(opt.value);
-        });
-      }
-
-      // delete col.element_id;
-    }
-    // 非浮点类型不需要scale属性。
-    const type = colNew.type?.toUpperCase();
-    if (
-      type &&
-      !type.includes('DOUBLE') &&
-      !type.includes('DEMICAL') &&
-      !type.includes('FLOAT')
-    ) {
-      delete colNew.scale;
-      delete colNew.precision;
-    }
-
-    if (col.default != null && col.type == 'boolean') {
-      if (col.default > 0 || col.default?.toLowerCase() == 'true') {
-        colNew.default = true;
-      } else {
-        colNew.default = false;
-      }
-    }
-
-    model.columns.push(colNew);
-  });
-
-  // 如果配置了时间戳或是软删除，不需要输出两列
-  model.columns = model.columns.filter((column) => {
-    if (model.option?.timestamps) {
-      if (column.name == 'updated_at' || column.name == 'created_at') {
-        return false;
-      }
-    }
-    if (model.option?.soft_deletes) {
-      if (column.name == 'deleted_at') {
-        return false;
-      }
-    }
-    return true;
-  });
-
-  model = ClearFalsyKeys(model);
-
-  return model;
+  if (err?.message) {
+    throw new Exception(err.message, err.code);
+  }
+  // remembe to return the id in array format
+  return [modelId];
 }

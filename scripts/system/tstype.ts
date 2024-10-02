@@ -1,6 +1,7 @@
 import { DotName, SlashName } from '@scripts/system/lib';
-import { ConvertAmisUIModelToModel, getModelDslById } from './model';
+import { getModelDslById } from './model';
 import { AmisModel, AmisUIColumn, ModelId } from '@yao/types';
+import { amisUIModelToAmisModel } from './model_convert';
 
 // 创建模型对象的ts类型定义。
 
@@ -15,7 +16,7 @@ export function createModelType(modelId: ModelId, columnsIn?: AmisUIColumn[]) {
 
   if (columnsIn != null && Array.isArray(columnsIn) && columnsIn.length > 0) {
     const columns = columnsIn.filter((col) => col.checked === true);
-    const model2 = ConvertAmisUIModelToModel({ columns });
+    const model2 = amisUIModelToAmisModel({ columns });
     model.columns =
       model2.columns.length > 0 ? model2.columns : model.columns || [];
   } else {
@@ -82,7 +83,6 @@ ${fields}
 ${rels.join('\n')}
 }`;
   });
-  console.log('codes', codes);
   return codes.join('\n');
 }
 

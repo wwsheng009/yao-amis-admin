@@ -1,55 +1,5 @@
 import { YaoField, YaoModel } from '@yaoapps/types';
 
-export interface AmisUIValidation {
-  matchRegexp?: string; //正则
-  isEmail?: boolean;
-  isTelNumber?: boolean;
-  maxLength?: number;
-  minLength?: number;
-}
-export interface AmisModelColumn extends YaoModel.ModelColumn {
-  /**可选项 */
-  options?: {
-    value: string | number | boolean;
-    label: string;
-  }[];
-  /**元素模板 */
-  element_id?: string;
-
-  /**检查模型 */
-  check_model?: string;
-
-  check_model_label?: string;
-  check_model_value?: string;
-  id?: number;
-  model_id?: string;
-  model_identity?: string;
-  check_model_multi?: boolean;
-  language?: string;
-  static?: boolean;
-  format?: string;
-}
-
-export interface CachedModel extends YaoModel.ModelDSL {
-  ID?: string;
-}
-
-/** 增强的Yao 模型定义 */
-export interface AmisModel extends Omit<YaoModel.ModelDSL, 'columns'> {
-  /** 内部标识 */
-  ID?: string;
-
-  /** 编号，数据库id */
-  id?: number;
-
-  columns?: AmisModelColumn[];
-  option?: YaoModel.ModelOption & {
-    migrate_force?: boolean;
-  };
-  /** yao内部的yao 模型是嵌套的 */
-  // children?: AmisModel[];
-}
-
 /**在数据中保存的yao模型信息 */
 export interface AmisModelDB extends Omit<YaoModel.ModelDSL, 'relations'> {
   /** 内部标识 */
@@ -73,10 +23,53 @@ export interface AmisModelDB extends Omit<YaoModel.ModelDSL, 'relations'> {
 
   read_only?: boolean;
 
-  /** */
+  /** 完全映射数据库字段*/
   columns?: AmisModelColumn[];
 
   relations?: AmisRelation[];
+}
+
+export interface AmisModelColumn extends YaoModel.ModelColumn {
+  /**可选项 */
+  options?: {
+    value: string | number | boolean;
+    label: string;
+  }[];
+  /**元素模板 */
+  element_id?: string;
+
+  /**检查模型 */
+  check_model?: string;
+
+  check_model_label?: string;
+  check_model_value?: string;
+  /** 唯一标识 */
+  id?: number;
+  model_id?: string;
+  model_identity?: string;
+  check_model_multi?: boolean;
+  language?: string;
+  static?: boolean;
+  format?: string;
+}
+
+/** 增强的Yao 模型定义 */
+export interface AmisModel extends Omit<YaoModel.ModelDSL, 'columns'> {
+  /** 内部标识 */
+  ID?: string;
+
+  /** 编号，数据库id */
+  id?: number;
+
+  /** 列信息 */
+  columns?: AmisModelColumn[];
+
+  /** 模型选项 */
+  option?: YaoModel.ModelOption & {
+    migrate_force?: boolean;
+  };
+  /** yao内部的yao 模型是嵌套的 */
+  // children?: AmisModel[];
 }
 
 export interface AmisRelation extends YaoModel.Relation {
@@ -104,6 +97,19 @@ export interface AmisUIModel {
     comment?: string;
   };
 }
+
+/**
+ * amis 库本身的相关类型
+ */
+export interface AmisValidation {
+  [key: string]: never | undefined | null | boolean | string | number;
+  matchRegexp?: string; //正则
+  isEmail?: boolean;
+  isTelNumber?: boolean;
+  maxLength?: number;
+  minLength?: number;
+}
+
 /**
  * UI column used in amis curd/table
  */
@@ -179,14 +185,28 @@ export interface AmisUIColumn
   /**可见条件 */
   visibleOn?: string;
 
-  validations?: { [key: string]: any };
+  validations?: AmisValidation;
 
+  /**控件输入值是否可以清空 */
   clearable?: boolean;
 }
 
 export interface YaoModelNode {
   children?: { data?: AmisModel }[];
   data?: AmisModel;
+}
+
+/**
+ * Yao缓存中的模型定义
+ */
+export interface CachedModel extends YaoModel.ModelDSL {
+  ID?: string;
+  DSL?: string;
+}
+
+export interface CachedModelTree {
+  children?: { data?: CachedModel }[];
+  data?: CachedModel;
 }
 
 export interface AmisViewComponent extends YaoField.ColumnDSL {

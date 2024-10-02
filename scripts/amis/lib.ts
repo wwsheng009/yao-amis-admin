@@ -13,14 +13,12 @@ import {
   column2AmisTableViewColumn,
   column2AmisFormViewColumn,
   column2AmisFormEditColumn
-} from '@scripts/system/col_type';
+} from '@scripts/amis/column_convert';
 import { AmisModel, AmisUIColumn, ModelId } from '@yao/types';
 import { Exception } from '@yao/yao';
 import { YaoModel } from '@yaoapps/types';
-import {
-  ConvertAmisUIModelToModel,
-  getModelDslById
-} from '@scripts/system/model';
+import { getModelDslById } from '@scripts/system/model';
+import { amisUIModelToAmisModel } from '@scripts/system/model_convert';
 /**
  * 读取已经加载在内存中的模型的定义,并根据传入列的类型定义更新模型定义
  *
@@ -46,7 +44,7 @@ export function getModelDefinition(
   }
   if (Array.isArray(columnsIn) && columnsIn.length > 0) {
     const columns = columnsIn.filter((col) => col.checked === true);
-    const model2 = ConvertAmisUIModelToModel({ columns });
+    const model2 = amisUIModelToAmisModel({ columns });
     model.columns =
       model2.columns.length > 0 ? model2.columns : model.columns || [];
   } else {
@@ -64,7 +62,7 @@ export function getModelDefinition(
  * @returns amis字段定义
  */
 function updateAmisViewColFromModel(
-  amisColumn,
+  amisColumn: AmisUIColumn,
   column: YaoModel.ModelColumn,
   modelDsl: YaoModel.ModelDSL
 ) {
@@ -309,7 +307,7 @@ export function getModelFieldsForAmis(
 
   const schemas = [];
   columns.forEach((column) => {
-    let { newColumn: col } = column2AmisTableViewColumn(column);
+    let col = column2AmisTableViewColumn(column);
     col = updateAmisViewColFromModel(col, column, model);
 
     if (col.__ignore !== true) {
@@ -399,7 +397,6 @@ export function getFormViewFields(
   columns.forEach((column) => {
     let col = column2AmisFormViewColumn(column);
     col = updateAmisFormColCommon(col, column, model, 'view');
-    delete col.displayOnly;
     schemas.push(col);
   });
   // 避免递归
@@ -652,8 +649,7 @@ export function getModelFieldsWithQuick(
   // yao的原始字段设置
   const newFields = [];
   for (const column of columns) {
-    let { newColumn: viewColumn, displayOnly } =
-      column2AmisTableViewColumn(column);
+    let viewColumn = column2AmisTableViewColumn(column);
     let formColumn = column2AmisFormEditColumn(column);
     let label = column.label;
 
@@ -683,8 +679,9 @@ export function getModelFieldsWithQuick(
       },
       ...viewColumn
     };
-    if (displayOnly) {
+    if (fieldNew.displayOnly) {
       fieldNew.quickEdit = false;
+      delete fieldNew.displayOnly;
     }
     if (model.option?.timestamps) {
       if (column.name == 'updated_at' || column.name == 'created_at') {

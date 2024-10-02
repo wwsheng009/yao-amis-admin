@@ -10,7 +10,7 @@
       "description": "字段类型列表",
       "path": "/col_type_options2", //api/v1/system/meta/model/col_type_options2
       "method": "GET",
-      "process": "scripts.system.meta.GetColumnOptions2",
+      "process": "scripts.amis.column_convert.GetColumnTypeList",
       "in": [
         ""
       ],
@@ -212,7 +212,7 @@
       "description": "模型源码",
       "path": "/source_yao_model/:id",
       "method": "GET",
-      "process": "scripts.system.model.ExportModelYaoSource",
+      "process": "scripts.system.model.exportAmisModelToYao",
       "in": [
         "$param.id"
       ],
@@ -227,7 +227,7 @@
       "description": "模型源码",
       "path": "/source/:id",
       "method": "GET",
-      "process": "scripts.system.model.ExportModelSource",
+      "process": "scripts.system.model.exportAmisModelSource",
       "in": [
         "$param.id"
       ],

@@ -1,8 +1,8 @@
 import { AmisModel, ModelId } from '@yao/types';
 import { Exception, Process } from '@yaoapps/client';
 import { FileNameConvert, IsSqlite } from './lib';
-import { convertColTypeToYao } from './col_type';
 import { YaoModel } from '@yaoapps/types';
+import { convertAmisColToYaoCol } from './model_convert';
 
 /**
  * 把模型定义加载到模型缓存中。
@@ -22,8 +22,8 @@ export function loadModeltoMemory(
   }
 
   const modelYao = deepCopyObject(modelDsl) as AmisModel;
-  modelYao.columns.forEach((col) => {
-    convertColTypeToYao(col);
+  modelYao.columns.forEach((col, ix) => {
+    modelYao.columns[ix] = convertAmisColToYaoCol(col);
   });
   if (modelYao.table?.name && modelYao.ID && modelYao.columns?.length) {
     let fname = `${modelYao.ID}.mod.json`;
@@ -65,12 +65,16 @@ export function migrateModel(modelId: string, forceIn?: boolean) {
   const err = Process(`models.${modelId}.migrate`, force);
   // console.log("migrate err:", err);
   if (err?.Message && err?.Number) {
-    const sqlStateString = bytesToString(err.SQLState);
+    if (IsSqlite()) {
+      const sqlStateString = bytesToString(err.SQLState);
 
-    throw new Exception(
-      `Message:${err.Message},Number:${err.Number},SQLState:${sqlStateString}`,
-      500
-    );
+      throw new Exception(
+        `Message:${err.Message},Number:${err.Number},SQLState:${sqlStateString}`,
+        500
+      );
+    } else {
+      throw new Exception(`Message:${err.Message},Number:${err.Number}`, 500);
+    }
   }
 
   return err;

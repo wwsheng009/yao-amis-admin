@@ -1,10 +1,10 @@
 import { getModelFromDB } from '@scripts/system/model_db';
-import { ModelId, AmisModel, YaoModelNode } from '@yao/types';
+import { ModelId, AmisModel, CachedModelTree, CachedModel } from '@yao/types';
 
 import { Process, Exception } from '@yao/yao';
 import { YaoModel } from '@yaoapps/types';
 import { loadModeltoMemory } from '@scripts/system/model_load';
-import { updateModelMetaFields } from './model';
+import { updateModelMetaFields } from './model_convert';
 
 /**
  * get the id of the cached models 读取所有的模型id的列表
@@ -16,16 +16,20 @@ import { updateModelMetaFields } from './model';
  * @returns list of the cached model ids
  */
 export function getCachedModelIDList(): string[] {
-  return FilterCachedModelList('ID').map((item) => item.ID);
+  const models = Process('widget.models');
+
+  return modelIdListFromMemory(models);
 }
 
 /**
  * 返回所有缓存中的模型列表
+ *
+ * yao run scripts.system.model_lib.getCachedModelList
  * @returns []object
  */
-export function getCachedModelList() {
+export function getCachedModelList(): CachedModel[] {
   const models = Process('widget.models');
-  return FilterAndFlatTreeByAttr(models);
+  return modelListFromMemory(models);
 }
 /**
  * 解析内存中的模型数据,可以使用路径表达式
@@ -36,7 +40,7 @@ export function getCachedModelList() {
  * @param {*} attr
  * @returns
  */
-export function FilterCachedModelList(attr?: string[] | string) {
+function FilterCachedModelList(attr?: string[] | string) {
   const models = Process('widget.models');
   return FilterAndFlatTreeByAttr(models, attr);
 }
@@ -47,10 +51,10 @@ export function FilterCachedModelList(attr?: string[] | string) {
  * @returns
  */
 function FilterAndFlatTreeByAttr(
-  models: YaoModelNode[],
+  models: CachedModelTree[],
   attr?: string[] | string
 ) {
-  const list = [] as AmisModel[];
+  const list = [] as CachedModel[];
 
   const getProperty = (object: object, path: string) => {
     const properties = path.split('.');
@@ -135,29 +139,31 @@ export function FindCachedModelById(modelId: ModelId): AmisModel {
     const model = Process(`models.${modelId}.read`);
     const modelDsl = updateModelMetaFields(model);
     return modelDsl;
+  } else {
+    return null;
   }
 
-  const models = Process('widget.models') as YaoModelNode[];
+  // const models = Process('widget.models') as YaoModelNode[];
 
-  const traverse = (node: any, modelId: string) => {
-    if (node.children) {
-      return traverse(node.children, modelId);
-    } else if (node.data) {
-      if (node.data.ID == modelId) {
-        return node.data;
-      }
-    } else if (Array.isArray(node)) {
-      for (const item of node) {
-        const obj = traverse(item, modelId);
-        if (obj) {
-          return obj;
-        }
-      }
-    }
-  };
-  const model = traverse(models, modelId + '');
-  const modelDsl = updateModelMetaFields(model);
-  return modelDsl;
+  // const traverse = (node: any, modelId: string) => {
+  //   if (node.children) {
+  //     return traverse(node.children, modelId);
+  //   } else if (node.data) {
+  //     if (node.data.ID == modelId) {
+  //       return node.data;
+  //     }
+  //   } else if (Array.isArray(node)) {
+  //     for (const item of node) {
+  //       const obj = traverse(item, modelId);
+  //       if (obj) {
+  //         return obj;
+  //       }
+  //     }
+  //   }
+  // };
+  // const model = traverse(models, modelId + '');
+  // const modelDsl = updateModelMetaFields(model);
+  // return modelDsl;
 }
 
 /**
@@ -186,39 +192,11 @@ export function FindAndLoadYaoModelById(modelId: ModelId): YaoModel.ModelDSL {
 }
 
 /**
- * 加载模型标识，优先从数据库中加载，找不到再在缓存中加载
- * 数据库的模型信息会更多
- *
- * yao run scripts.system.model.FindAndLoadDBModelById
- * @param {string} modelId 模型标识
- * @returns
- */
-export function FindAndLoadDBModelById(modelId: ModelId): AmisModel {
-  if (!modelId) {
-    throw new Exception(`缺少模型标识`);
-  }
-  let modelDsl = getModelFromDB(modelId);
-  const modelDsl2 = FindCachedModelById(modelId);
-
-  if (modelDsl != null && modelDsl2 == null) {
-    loadModeltoMemory(modelDsl, false);
-  }
-  if (modelDsl == null && modelDsl2 != null) {
-    modelDsl = modelDsl2;
-  }
-  if (modelDsl == null) {
-    throw new Exception(`模型：${modelId}不存在`);
-  }
-
-  return modelDsl;
-}
-
-/**
  * 解析内存中的模型数据
  * @param {*} modelData
  * @returns
  */
-export function modelIdListFromMemory(modelData: YaoModelNode) {
+export function modelIdListFromMemory(modelData: CachedModelTree) {
   let idList = [];
   if (modelData.children) {
     modelData.children.forEach((line) => {
@@ -226,9 +204,7 @@ export function modelIdListFromMemory(modelData: YaoModelNode) {
       idList = idList.concat(subLine);
     });
   } else if (modelData.data) {
-    if (modelData.data) {
-      idList.push(modelData.data.ID);
-    }
+    idList.push(modelData.data.ID);
   } else if (Array.isArray(modelData)) {
     modelData.forEach((line) => {
       const subLine = modelIdListFromMemory(line);
@@ -238,13 +214,20 @@ export function modelIdListFromMemory(modelData: YaoModelNode) {
   return idList;
 }
 
-// yao run调试前先注释
-// module.exports = {
-//   FilterAndFlatTreeByAttr,
-//   FindCachedModelById,
-//   FindAndLoadYaoModelById,
-//   getCachedModelList,
-//   FilterCachedModelList,
-//   getCachedModelIDList,
-//   FindAndLoadDBModelById
-// };
+export function modelListFromMemory(modelData: CachedModelTree) {
+  let modelList = [];
+  if (modelData.children) {
+    modelData.children.forEach((line) => {
+      const subLine = modelListFromMemory(line);
+      modelList = modelList.concat(subLine);
+    });
+  } else if (modelData.data != null) {
+    modelList.push(modelData.data);
+  } else if (Array.isArray(modelData)) {
+    modelData.forEach((line) => {
+      const subLine = modelListFromMemory(line);
+      modelList = modelList.concat(subLine);
+    });
+  }
+  return modelList;
+}

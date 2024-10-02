@@ -1,14 +1,12 @@
-import {
-  FindAndLoadYaoModelById,
-  FindAndLoadDBModelById
-} from '@scripts/system/model_lib';
+import { FindAndLoadYaoModelById } from '@scripts/system/model_lib';
 import { IsMysql } from '@scripts/system/lib';
-import { isDateTimeType } from '@scripts/system/col_type';
+import { isDateTimeType } from '@scripts/amis/column_convert';
 
 import { Process, Exception, log } from '@yao/yao';
 import { YaoModel, YaoQueryParam } from '@yaoapps/types';
 import { ModelId } from '@yao/types';
 import { QueryObjectIn } from '@yao/request';
+import { getModelDslById, getYaoModelColumnMap } from '@scripts/system/model';
 
 // 推荐在循环对象属性的时候，使用for...in,
 // 在遍历数组的时候的时候使用for...of。
@@ -252,24 +250,7 @@ export function queryToQueryParam(
 function getDbModelColumnMap(model: ModelId | YaoModel.ModelDSL) {
   let modelDsl = model as YaoModel.ModelDSL;
   if (typeof model === 'string') {
-    modelDsl = FindAndLoadDBModelById(model);
-  }
-
-  const columnMap = {};
-  modelDsl.columns?.forEach((col) => {
-    columnMap[col.name] = col;
-  });
-  if (Object.keys(columnMap).length == 0) {
-    throw new Exception('模型定义不正确，缺少字段定义', 500);
-  }
-  return columnMap;
-}
-function getYaoModelColumnMap(model: ModelId | YaoModel.ModelDSL): {
-  [key: string]: YaoModel.ModelColumn;
-} {
-  let modelDsl = model as YaoModel.ModelDSL;
-  if (typeof model === 'string') {
-    modelDsl = FindAndLoadYaoModelById(model);
+    modelDsl = getModelDslById(model);
   }
 
   const columnMap = {};
@@ -289,7 +270,7 @@ export function updateOutputData(model: ModelId | YaoModel.ModelDSL, Data) {
   let modelDsl = model;
   if (typeof modelDsl === 'string') {
     // 如果使用yao model定义，无法获取用户定义的类型，比如json类型的数据就可能有多种含义。
-    modelDsl = FindAndLoadDBModelById(model as string);
+    modelDsl = getModelDslById(model as string);
   }
   const dbColmap = getDbModelColumnMap(modelDsl);
 
@@ -347,7 +328,7 @@ function updateOutputDataLine(dbColMap: object, line: object) {
  * amis form控件会自动的把json数据作stringfly处理，需要在保存时反向操作
  * 拦截处理json格式的数据
  * @param {string} model 模型名称
- * @param {any} Data 保存到数据库的数据
+ * @param {object | object[]} Data 保存到数据库的数据
  * @returns 处理后的Data
  */
 export function updateInputData(
@@ -489,7 +470,7 @@ export function updateInputData(
  * @returns Array
  */
 function paginateArray(
-  arr: any[],
+  arr: object[],
   pageIn: string,
   pageSizeIn: string,
   orderBy: string | number,
@@ -527,7 +508,7 @@ function paginateArray(
   return arr.slice(startIndex, endIndex);
 }
 
-export function getArrayItem(querys: { [x: string]: any }, key: string) {
+export function getArrayItem(querys: { [x: string]: string[] }, key: string) {
   if (typeof querys !== 'object') {
     return;
   }
@@ -547,10 +528,10 @@ export function getArrayItem(querys: { [x: string]: any }, key: string) {
  * @returns 数组
  */
 export function PaginateArrayWithQuery(
-  data: Array<any>,
+  data: Array<undefined>,
   querysIn: QueryObjectIn,
   payload: object,
-  searchFields: Array<any> = []
+  searchFields: Array<undefined> = []
 ) {
   const querys = mergeQueryObject(querysIn, payload);
 

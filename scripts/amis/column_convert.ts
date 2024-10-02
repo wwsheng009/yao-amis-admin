@@ -4,46 +4,200 @@ import { AmisUIColumn, AmisModelColumn } from '@yao/types';
 
 // 集中管理类型字段类型转换处理
 
+// scripts.system.meta.GetColumnOptions
+export function GetColumnOptions() {
+  return [
+    {
+      children: [
+        {
+          label: '字符串',
+          value: 'string'
+        },
+        {
+          label: '字符',
+          value: 'char'
+        },
+        {
+          label: '文本',
+          value: 'text'
+        },
+        {
+          label: '中文本',
+          value: 'mediumText'
+        },
+        {
+          label: '长文本',
+          value: 'longText'
+        },
+        {
+          label: 'JSON文本',
+          value: 'json'
+        },
+        {
+          label: 'JSON二进制',
+          value: 'jsonb'
+        },
+        {
+          label: 'UUID',
+          value: 'UUID'
+        },
+        {
+          label: '二进制数据',
+          value: 'binary'
+        }
+      ],
+      label: '文本'
+    },
+    {
+      children: [
+        {
+          label: '日期',
+          value: 'date'
+        },
+        {
+          label: '日期时间',
+          value: 'datetime'
+        },
+        {
+          label: '带时区的日期时间',
+          value: 'datetimeTz'
+        },
+        {
+          label: '时间',
+          value: 'time'
+        },
+        {
+          label: '带时区的时间',
+          value: 'timeTz'
+        },
+        {
+          label: '时间戳',
+          value: 'timestamp'
+        },
+        {
+          label: '带时区的时间戳',
+          value: 'timestampTz'
+        }
+      ],
+      label: '日期时间'
+    },
+    {
+      children: [
+        {
+          label: '长整型+自增',
+          value: 'id'
+        },
+        {
+          label: '无符号微整型+自增',
+          value: 'tinyIncrements'
+        },
+        {
+          label: '无符号小整型+自增',
+          value: 'smallIncrements'
+        },
+        {
+          label: '无符号整型+自增',
+          value: 'increments'
+        },
+        {
+          label: '无符号长整型+自增',
+          value: 'bigIncrements'
+        }
+      ],
+      label: '自增'
+    },
+    {
+      children: [
+        {
+          label: '微整型',
+          value: 'tinyInteger'
+        },
+        {
+          label: '无符号微整型',
+          value: 'unsignedTinyInteger'
+        },
+        {
+          label: '小整型',
+          value: 'smallInteger'
+        },
+        {
+          label: '无符号小整型',
+          value: 'unsignedSmallInteger'
+        },
+        {
+          label: '整型',
+          value: 'integer'
+        },
+        {
+          label: '无符号整型',
+          value: 'unsignedInteger'
+        },
+        {
+          label: '长整型',
+          value: 'bigInteger'
+        },
+        {
+          label: '无符号长整型',
+          value: 'unsignedBigInteger'
+        }
+      ],
+      label: '整型'
+    },
+    {
+      children: [
+        {
+          label: '浮点数',
+          value: 'float'
+        },
+        {
+          label: '无符号浮点数',
+          value: 'unsignedFloat'
+        },
+        {
+          label: '双精度',
+          value: 'double'
+        },
+        {
+          label: '无符号双精度',
+          value: 'unsignedDouble'
+        },
+        {
+          label: '小数(一般用于存储货币)',
+          value: 'decimal'
+        },
+        {
+          label: '无符号小数',
+          value: 'unsignedDecimal'
+        }
+      ],
+      label: '小数'
+    },
+    {
+      label: '布尔型',
+      value: 'boolean'
+    },
+    {
+      label: '枚举型',
+      value: 'enum'
+    },
+    {
+      label: 'IP',
+      value: 'ipAddress'
+    },
+    {
+      label: '网卡地址',
+      value: 'macAddress'
+    },
+    {
+      label: '年份',
+      value: 'year'
+    }
+  ];
+}
 /**
- * column 类型定义,把meta字段类型转换成yao模型字段类型
- * @param {object} col
+ * yao run scripts.amis.column_convert.GetColumnTypeList
  * @returns
  */
-export function convertColTypeToYao(col: AmisModelColumn): AmisModelColumn {
-  switch (col.type?.toLowerCase()) {
-    case 'image':
-    case 'video':
-    case 'images':
-    case 'file':
-      col.type = 'longText';
-      col.length = undefined;
-      break;
-    case 'richtext':
-      col.type = 'longText';
-      col.length = undefined;
-      break;
-    case 'url':
-      col.type = 'string';
-      break;
-    case 'code':
-      col.type = 'longText';
-      col.length = undefined;
-      break;
-    case 'phone':
-      col.type = 'string';
-      break;
-    case 'email':
-      col.type = 'string';
-      break;
-    case 'color':
-      col.type = 'string';
-      break;
-    default:
-      break;
-  }
-  return col;
-}
-
 export function GetColumnTypeList() {
   return [
     {
@@ -123,6 +277,10 @@ export function GetColumnTypeList() {
       value: 'id'
     },
     {
+      label: 'UUID',
+      value: 'uuid'
+    },
+    {
       label: '整型',
       value: 'integer'
     },
@@ -155,12 +313,13 @@ export function GetColumnTypeList() {
  * @param {object} column 数据库表列定义
  * @returns 返回amis formitem定义
  */
-export function column2AmisTableViewColumn(column: AmisModelColumn) {
+export function column2AmisTableViewColumn(
+  column: AmisModelColumn
+): AmisUIColumn {
   // 只读字段的处理有两种方式，一种是使用static-类控件，
   // 不要使用input-控件再加上static属性进行组合控制，会使用quickEdit失效
   // 哪种更好需要测试后才知道
   // const name = column.name.toUpperCase();
-  let displayOnly = false;
   const newColumn = {} as AmisUIColumn;
   newColumn.name = column.name;
   newColumn.label = column.label;
@@ -260,7 +419,7 @@ export function column2AmisTableViewColumn(column: AmisModelColumn) {
     case 'SMALLINCREMENTS':
     case 'INCREMENTS':
       newColumn.type = 'number'; // "input-number";
-      displayOnly = true; // 主键列只显示
+      newColumn.displayOnly = true; // 主键列只显示
       newColumn.searchable = true;
       newColumn.sortable = true;
       break;
@@ -375,7 +534,7 @@ export function column2AmisTableViewColumn(column: AmisModelColumn) {
     //   }
     // }
   }
-  return { newColumn, displayOnly };
+  return newColumn;
 }
 
 /**
@@ -384,7 +543,9 @@ export function column2AmisTableViewColumn(column: AmisModelColumn) {
  * @param {object} column 数据库表列定义
  * @returns 返回amis formitem定义
  */
-export function column2AmisFormViewColumn(column: AmisModelColumn) {
+export function column2AmisFormViewColumn(
+  column: AmisModelColumn
+): AmisUIColumn {
   // 只读字段的处理有两种方式，一种是使用static-类控件，
   // 另外一种是使用input-控件再加上static属性进行组合控制
   // 哪种更好需要测试后才知道
@@ -588,7 +749,9 @@ export function isDateTimeType(column: AmisModelColumn) {
  * @param {object} column 数据库表列定义
  * @returns amis form item 定义
  */
-export function column2AmisFormEditColumn(column: AmisModelColumn) {
+export function column2AmisFormEditColumn(
+  column: AmisModelColumn
+): AmisUIColumn {
   //   const name = column.name.toUpperCase();
   const newColumn = {} as AmisUIColumn;
   newColumn.name = column.name;
@@ -828,12 +991,3 @@ export function column2AmisFormEditColumn(column: AmisModelColumn) {
   }
   return newColumn;
 }
-
-// module.exports = {
-//   convertColTypeToYao,
-//   GetColumnTypeList,
-//   column2AmisFormViewColumn,
-//   column2AmisTableViewColumn,
-//   column2AmisFormEditColumn,
-//   isDateTimeType,
-// };
