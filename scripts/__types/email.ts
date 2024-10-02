@@ -57,14 +57,15 @@ export interface EmailConfig {
  * Table=> app_email_message (邮件发送与接收信息)
  */
 export interface app_email_message {
+  id: number;
   /**收发类型 */
   type?: string;
   /**发件人 */
-  sender: string;
+  sender: string | object;
   /**收件人 */
-  receiver: string;
+  receiver: string | object;
   /**抄送者 */
-  cc?: string;
+  cc?: string | object;
   /**主题 */
   subject: string;
   /**内容 */
@@ -84,7 +85,7 @@ export interface app_email_message {
   /**邮件唯一ID */
   message_id?: string;
   /**用户唯一ID */
-  uid?: string;
+  uid?: number;
   /**发送日志 */
   message?: string;
   /**附件目录 */
@@ -92,7 +93,15 @@ export interface app_email_message {
   /**附件列表 */
   attachments?: string[];
   /**附件明细 */
-  attachment_details?: object[];
+  attachment_details?: AttachmentDetail[];
+}
+export interface AttachmentDetail {
+  content_type: string;
+  saved_file_name: string;
+  category: string;
+  filename: string;
+  encoding: string;
+  download_url: string;
 }
 
 interface BodyPart {
@@ -123,7 +132,7 @@ export interface MessageReceived {
   subject: string;
   body: BodyPart[];
   attachments?: string[]; // Optional field
-  date: Date; // Use JavaScript's Date object for timestamps
+  date: string; // Use JavaScript's Date object for timestamps
   error: string;
   message_id: string;
   folder: string;

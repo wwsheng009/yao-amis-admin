@@ -26,9 +26,9 @@ export function OnProgress(
 /**
  * OnSuccess
  * @param {number} id task id,任务ID
- * @param {any} res
+ * @param {undefined} res
  */
-export function OnSuccess(id: number, res: any) {
+export function OnSuccess(id: number, res: undefined) {
   console.log(`OnSuccess: #${id} ${JSON.stringify(res)}`);
 }
 /**

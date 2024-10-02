@@ -1,6 +1,7 @@
 import {
   app_email_account,
   app_email_message,
+  AttachmentDetail,
   EmailAccount,
   EmailConfig,
   EmailMessage,
@@ -302,7 +303,7 @@ function decodeMessage(email: MessageReceived) {
     return null;
   }
   // console.log('email', email);
-  const message = {} as any;
+  const message = {} as app_email_message;
   message.type = 'in';
   message.sender = email.from; //发件人
   message.receiver = email.to; //
@@ -333,7 +334,7 @@ function decodeMessage(email: MessageReceived) {
   const attachmentList = [];
 
   attachments.forEach((a) => {
-    const attachment = {} as any;
+    const attachment = {} as AttachmentDetail;
     // attachment.content_id = a.content_id;
     attachment.content_type = a.content_type;
     attachment.saved_file_name = a.saved_file_name;
