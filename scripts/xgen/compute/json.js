@@ -11,7 +11,7 @@ function View(data) {
 }
 /**
  * scripts.ddic.compute.json.Edit
- * @param {any} data
+ * @param {object} data
  * @returns
  */
 function Edit(data) {

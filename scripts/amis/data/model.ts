@@ -50,16 +50,16 @@ export function dataSearch(
   let page = pageIn;
   let perPage = perPageIn;
   if (!page || page == null) {
-    page = getArrayItem(querys, 'page') || 1;
+    page = Number(getArrayItem(querys, 'page')) || 1;
   }
   if (!perPage || perPage == null) {
-    perPage = getArrayItem(querys, 'perPage') || 10;
+    perPage = Number(getArrayItem(querys, 'perPage')) || 10;
   }
 
   const modelDsl = FindAndLoadYaoModelById(modelId);
 
   // 当是post请求是，payload生效
-  const queryParam = queryToQueryParam(modelDsl, querys, queryParams) as any;
+  const queryParam = queryToQueryParam(modelDsl, querys, queryParams);
   const withs2 = {};
   if (!modelDsl.relations || Object.keys(modelDsl.relations).length == 0) {
     // reset the withs
@@ -313,8 +313,8 @@ function saveData(modelId: ModelId, payload: { [x: string]: any; id: number }) {
         //   wheres: [{ column: w.key, value: payload[w.foreign] }]
         // });
         const idsNew = lines.map((l) => l.id);
-        const idsOld = exist.map((l: { id: any }) => l.id);
-        const idsDeleted = idsOld.filter((id: any) => !idsNew.includes(id));
+        const idsOld = exist.map((l: { id: number }) => l.id);
+        const idsDeleted = idsOld.filter((id: number) => !idsNew.includes(id));
         // console.log(`idsnew`, idsNew);
         // console.log(`idsOld`, idsOld);
         // console.log(`idsDeleted`, idsDeleted);
@@ -378,7 +378,7 @@ export function deleteData(modelId: string, ids: string) {
  * @param ids id
  * @param payload
  */
-export function bulkUpdate(modelId: ModelId, ids: string, payload: any) {
+export function bulkUpdate(modelId: ModelId, ids: string, payload: object) {
   return bulkUpdateModelData(modelId, ids, payload);
   // const myArray = ids.split(',');
   // payload = updateInputData(modelId, payload);
@@ -449,7 +449,7 @@ export function selectOptions(
   }
 
   const data = Process('yao.component.SelectOptions', query);
-  data.forEach((x: { label: string; value: any }) => {
+  data.forEach((x: { label: string; value: string }) => {
     const isNull = x.label == null;
     x.label = x.label || x.value;
     if (join && !isNull) {

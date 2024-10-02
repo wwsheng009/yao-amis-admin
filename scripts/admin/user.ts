@@ -185,7 +185,7 @@ export interface admin_user {
   /** API 密钥 */
   secret?: string;
   /** 扩展信息 */
-  extra?: object | any;
+  extra?: object;
   /** 用户状态 enabled 有效, disabled 无效 */
   status?: string;
 }

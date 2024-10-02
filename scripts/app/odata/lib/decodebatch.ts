@@ -1,6 +1,6 @@
 // 参考：https://ui5.sap.com/resources/sap/ui/model/odata/v4/lib/_Batch-dbg.js
 
-import { parseUrl } from '@scripts/app/odata/lib/url';
+import { parseUrl, UrlObj } from '@scripts/app/odata/lib/url';
 import { QueryObjectIn } from '@yao/request';
 import { Exception } from '@yao/yao';
 /**
@@ -15,15 +15,16 @@ import { Exception } from '@yao/yao';
  */
 function getHeaderParameterValue(sHeaderValue: string, sParameterName: string) {
   const rHeaderParameter = /(\S*?)=(?:"(.+)"|(\S+))/;
-  let iParamIndex,
-    aHeaderParts = sHeaderValue.split(';'),
-    aMatches;
-
+  const aHeaderParts = sHeaderValue.split(';');
   sParameterName = sParameterName.toLowerCase();
-  for (iParamIndex = 1; iParamIndex < aHeaderParts.length; iParamIndex += 1) {
+  for (
+    let iParamIndex = 1;
+    iParamIndex < aHeaderParts.length;
+    iParamIndex += 1
+  ) {
     // remove possible quotes via reg exp
     // RFC7231: parameter = token "=" ( token / quoted-string )
-    aMatches = rHeaderParameter.exec(aHeaderParts[iParamIndex]);
+    const aMatches = rHeaderParameter.exec(aHeaderParts[iParamIndex]);
     if (aMatches[1].toLowerCase() === sParameterName) {
       return aMatches[2] || aMatches[3];
     }
@@ -214,8 +215,8 @@ function getHeaderParameterValue(sHeaderValue: string, sParameterName: string) {
 interface Request {
   version: string;
   headers: QueryObjectIn;
-  body: any;
-  URL: { [key: string]: any };
+  body: string;
+  URL: UrlObj;
   requstText: string;
   method: string;
   urlText: string;

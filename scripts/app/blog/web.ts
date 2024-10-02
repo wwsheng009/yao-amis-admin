@@ -21,7 +21,7 @@ const convert = Require('app.blog.xml-js');
  */
 export function metaWeblogHandler(
   blog: string,
-  query: { methodName: string | any[] },
+  query: { methodName: string },
   body: string
 ) {
   // http://localhost:5099/api/v1/blog/reuest
@@ -131,7 +131,7 @@ export function newCategory(params: any[]) {
  * yao run scripts.app.blog.webblog.getUsersBlogs 1 'myblog'
  * @returns Array
  */
-export function getUsersBlogs(user_id: number, blog: string, params: any) {
+export function getUsersBlogs(user_id: number, blog: string, params: any[]) {
   const list = Process('models.app.blog.site.get', {
     wheres: [
       {

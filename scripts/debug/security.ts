@@ -10,10 +10,10 @@ import { Exception, Process } from '@yao/yao';
  */
 export function CheckAccessKey(
   path: string,
-  params: any,
-  queries: { [x: string]: any[] },
-  payload: any,
-  headers: { [x: string]: any }
+  params: never,
+  queries: { [x: string]: undefined[] },
+  payload: never,
+  headers: { [x: string]: string }
 ) {
   let token;
   const auth = headers['Authorization'];

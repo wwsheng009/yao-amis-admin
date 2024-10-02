@@ -262,7 +262,7 @@ export function collectTreeFields(data: TreeObj[], field: string) {
  * @param {Array} array
  * @returns
  */
-function flatAndRemoveDuplicate(array: any[]) {
+function flatAndRemoveDuplicate(array: object[]) {
   // 将多维数组转换为一维数组
   const flatArray = array.flat();
 
@@ -281,7 +281,7 @@ function flatAndRemoveDuplicate(array: any[]) {
  * @returns
  */
 export function collectAndCombineData(
-  data: TreeObj[],
+  data: TreeObj,
   key: string,
   key2: string,
   defaultKey?: string

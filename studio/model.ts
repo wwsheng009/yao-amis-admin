@@ -2,17 +2,17 @@ import { AmisModel, ModelId } from '@yao/types';
 import { FS } from '@yao/yao';
 
 import { SlashName, FileNameConvert } from '@scripts/system/lib';
-import { ExportModelYaoSource } from '@scripts/system/model';
+import { exportAmisModelToYao } from '@scripts/system/model';
 /**
  * yao studio run model.GenerateModelFile
  * @param modelid model id
  */
 export function GenerateModelFile(modelid: ModelId) {
-  const m = ExportModelYaoSource(modelid);
-  return SaveModelToFile(m.source);
+  const m = exportAmisModelToYao(modelid);
+  return saveModelToFile(m.source);
 }
 
-export function SaveModelToFile(model: AmisModel) {
+export function saveModelToFile(model: AmisModel) {
   const modelName = SlashName(model.name);
   const filename = `/models/${modelName}.mod.json`;
 

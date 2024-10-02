@@ -1,7 +1,8 @@
-import { FilterCachedModelList } from '@scripts/system/model_lib';
+import { getCachedModelList } from '@scripts/system/model_lib';
 
 import { PaginateArrayWithQuery } from '@scripts/amis/data/lib';
 import { Process } from '@yao/yao';
+import { QueryObjectIn } from '@yao/request';
 
 /**
  * yao run scripts.system.table.TableListSearch  '::{"created":[false]}'
@@ -9,7 +10,7 @@ import { Process } from '@yao/yao';
  * @param {object} payload payload 查询条件，支持post查询
  * @returns
  */
-export function TableListSearch(querysIn, payload) {
+export function TableListSearch(querysIn: QueryObjectIn, payload: object) {
   const list = TableList();
   const { items, total } = PaginateArrayWithQuery(list, querysIn, payload);
 
@@ -21,7 +22,7 @@ export function TableListSearch(querysIn, payload) {
  * yao run scripts.system.table.TableListUniq
  * @returns
  */
-function TableListUniq(query?) {
+function TableListUniq(query?: { name: string }) {
   const list = TableList();
 
   let result = Object.values(
@@ -57,7 +58,7 @@ export function TableNameList() {
  */
 function TableList() {
   let dbTables = Process('schemas.default.Tables') || [];
-  const cachedModels = FilterCachedModelList() || [];
+  const cachedModels = getCachedModelList() || [];
   const SavedModels = Process('models.ddic.model.get', {}) || [];
 
   cachedModels.forEach((x) => x.table?.name && dbTables.push(x.table.name));

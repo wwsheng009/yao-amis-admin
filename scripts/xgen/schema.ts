@@ -970,7 +970,13 @@ function GetRules(column: AmisModelColumn, component: AmisViewComponent) {
     image: 'array'
   };
   const rules = [];
-  const rule = {} as any;
+  const rule = {} as {
+    type: string;
+    enum: YaoModel.ColumnOption[];
+    required: boolean;
+    min: number;
+    max: number;
+  };
   const {
     unique,
     nullable,

@@ -104,7 +104,10 @@ export function deleteFileRecord(user_id: number, file_name: string) {
   });
 }
 // 保存数据
-export function savePage(file: string, payload: { body: any; type: string }) {
+export function savePage(
+  file: string,
+  payload: { body: object; type: string }
+) {
   if (!file || !payload) {
     return;
   }
@@ -199,7 +202,7 @@ export function dumpSinglePageFromDB(fname: string) {
  * @param file 文件名
  * @param dsl dsl定义对象，会自动的转换成json
  */
-export function MoveAndWrite(folder: string, file: string, dsl: any) {
+export function MoveAndWrite(folder: string, file: string, dsl: object) {
   Move(folder, file);
   WriteFile(folder ? `/${folder}/` + file : file, dsl);
 }
@@ -210,7 +213,7 @@ export function MoveAndWrite(folder: string, file: string, dsl: any) {
  * @param {string} filename json file name
  * @param {object} data
  */
-export function WriteFile(filename: string, data: any) {
+export function WriteFile(filename: string, data: object) {
   const fs = new FS('dsl');
   const nfilename = FileNameConvert(filename);
   if (!fs.Exists(nfilename)) {

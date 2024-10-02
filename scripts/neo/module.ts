@@ -1,6 +1,34 @@
 import { DotName, UnderscoreName, SlashName } from '@scripts/system/lib';
+import { AmisViewComponent } from '@yao/types';
 import { Exception, FS, Process, ssWrite } from '@yao/yao';
+import { YaoForm, YaoModel, YaoTable } from '@yaoapps/types';
 
+interface AiModelColumn {
+  label: string;
+  name: string;
+  type: string;
+  length?: number;
+  index?: boolean;
+  nullable?: boolean;
+  Searchable?: boolean;
+  Component?: {
+    table?: {
+      view?: string;
+      edit?: string;
+    };
+    form?: {
+      view?: string;
+      edit?: string;
+    };
+  };
+}
+interface AiModel {
+  name: string;
+  table: {
+    name: string;
+  };
+  columns: AiModelColumn[];
+}
 /**
  * Template module
  */
@@ -24,7 +52,7 @@ const Template = {
         }
       }
     ]
-  },
+  } as AiModel,
   explain: `
       - The above content is the JSON template.
       - The JSON template is used to generate the module.
@@ -52,7 +80,7 @@ const Template = {
  * @param {*} context
  * @param {*} messages
  */
-function CreateBefore(context, messages) {
+export function CreateBefore(context, messages) {
   return { template: Template.data, explain: Template.explain };
 }
 
@@ -61,9 +89,9 @@ function CreateBefore(context, messages) {
  * Prepare Hook: After
  * @param {*} content
  */
-function CreateAfter(content) {
+export function CreateAfter(content: string) {
   // console.log("DataAfter:", content);
-  const response = JSON.parse(content);
+  const response = JSON.parse(content) as AiModel;
   const columns = response.columns || [];
   // console.log(columns);
 
@@ -155,7 +183,7 @@ const testData = {
  * yao studio run module.create
  * @param {*} payload
  */
-function Create(payload) {
+function Create(payload: AiModel) {
   // payload = testData;
   validate(payload);
   // @ts-ignore
@@ -192,7 +220,7 @@ function Create(payload) {
  * Validate the payload
  * @param {*} data
  */
-function validate(data) {
+function validate(data: YaoModel.ModelDSL) {
   if (!data) {
     throw new Exception('Error: data is empty.', 500);
   }
@@ -219,7 +247,7 @@ function validate(data) {
   // ...
 }
 
-function saveModel(data) {
+function saveModel(data: AiModel) {
   let model_id = data.table?.name;
   const option = { timestamps: true, soft_deletes: true };
 
@@ -251,7 +279,7 @@ function saveModel(data) {
   dsl.WriteFile(`/models/${model_id}.mod.yao`, JSON.stringify(model));
 }
 
-function saveTable(data) {
+function saveTable(data: AiModel) {
   const id = data.table.name;
   const filterActions = [
     {
@@ -321,7 +349,7 @@ function saveTable(data) {
       table: { columns: [], operation: operation, props: {} }
     },
     fields: { filter: {}, table: {} }
-  };
+  } as YaoTable.TableDSL;
 
   // data foreach
   data.columns.forEach((item) => {
@@ -357,12 +385,15 @@ function saveTable(data) {
   dsl.WriteFile(`/tables/${SlashName(id)}.tab.yao`, JSON.stringify(table));
 }
 
-function TableComponent(item, component) {
+function TableComponent(
+  item: AiModelColumn,
+  component: { view?: string; edit?: string }
+) {
   const default_component = {
     bind: item.name,
     view: { type: component.view, props: {} },
-    edit: { type: component.edit, props: { placeholder: item.label } as any }
-  };
+    edit: { type: component.edit, props: { placeholder: item.label } }
+  } as AmisViewComponent;
   switch (item.type) {
     case 'string':
       return default_component;
@@ -402,7 +433,7 @@ function TableComponent(item, component) {
   }
 }
 
-function saveForm(data) {
+function saveForm(data: AiModel) {
   const id = data.table.name;
   const actions = [
     {
@@ -451,7 +482,7 @@ function saveForm(data) {
       form: { props: {}, sections: [{ columns: [] }] }
     },
     fields: { form: {} }
-  };
+  } as YaoForm.FormDSL;
 
   // data foreach
   data.columns.forEach((item) => {
@@ -478,7 +509,7 @@ function saveForm(data) {
  * Reload
  * @param {*} id
  */
-function load(idIn) {
+function load(idIn: string) {
   const id = SlashName(idIn);
   let err = Process(`models.${idIn}.Load`, `/models/${id}.mod.yao`);
   if (err) {
@@ -500,6 +531,6 @@ function load(idIn) {
  * Migrate model
  * @param {*} id
  */
-function migrateModel(id) {
+export function migrateModel(id: string) {
   return Process(`models.${id}.migrate`);
 }

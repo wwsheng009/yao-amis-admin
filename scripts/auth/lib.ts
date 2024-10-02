@@ -88,8 +88,8 @@ function getUserAuthObjectIds(objkey: string) {
   return objIds;
 }
 // yao run scripts.auth.lib.getUserAuthMenuIds
-export function getUserAuthMenuIds() {
-  return getUserAuthObjectIds('menus');
+export function getUserAuthMenuIds(): number[] {
+  return getUserAuthObjectIds('menus') as unknown as number[];
 }
 
 /**
@@ -348,7 +348,7 @@ export function getUserAuthObjects(userId: number): AuthObject {
 
   fillFolderOpertion(folder_auth.method_with_folder);
 
-  const menus = collectTreeFields(permissions, 'menus') as number[];
+  const menus = collectTreeFields(permissions, 'menus') as unknown as number[];
 
   return { api: api_auth, model: model_auth, folder: folder_auth, menus };
 }

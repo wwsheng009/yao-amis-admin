@@ -651,8 +651,8 @@ interface AmisAppPage extends SpinnerExtraProps {
   /**
    * 二选一，如果配置了 url 一定要配置。否则不知道如何渲染。
    */
-  schema?: any;
-  schemaApi?: any;
+  schema?: object;
+  schemaApi?: string;
 
   /**
    * 单纯的地址。可以设置外部链接。
@@ -790,7 +790,7 @@ interface admin_menu {
   /** 默认页面 */
   is_default_page?: boolean;
   /** 页面的配置 */
-  schema?: any;
+  schema?: object;
   /** 配置接口 */
   schema_api?: string;
   /** 是否可见 */
