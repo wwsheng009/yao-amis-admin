@@ -19,6 +19,8 @@ import { Exception } from '@yao/yao';
 import { YaoModel } from '@yaoapps/types';
 import { getModelDslById } from '@scripts/system/model';
 import { amisUIModelToAmisModel } from '@scripts/system/model_convert';
+
+type ActionType = 'view' | 'create' | 'update';
 /**
  * 读取已经加载在内存中的模型的定义,并根据传入列的类型定义更新模型定义
  *
@@ -61,7 +63,7 @@ export function getModelDefinition(
  * @param {object} modelDsl yao模型定义
  * @returns amis字段定义
  */
-function updateAmisViewColFromModel(
+function updateAmisViewColMetaFields(
   amisColumn: AmisUIColumn,
   column: YaoModel.ModelColumn,
   modelDsl: YaoModel.ModelDSL
@@ -94,7 +96,7 @@ function updateAmisViewColFromModel(
  * @param {object} modelDsl yao模型定义
  * @returns amis字段定义
  */
-function updateAmisFormColCommon(
+function updateAmisFormMetaFields(
   amisColumn: AmisUIColumn,
   column: YaoModel.ModelColumn,
   modelDsl: YaoModel.ModelDSL,
@@ -174,7 +176,7 @@ function updateValidationMessage(text: string, col: { label: string }) {
  * @param {object} yaoColumn yao模型字段定义
  * @returns 返回更新后的amis字段定义
  */
-function updateAmisFormColFromModel(
+function updateAmisFormValidations(
   amisColumn: AmisUIColumn,
   yaoColumn: YaoModel.ModelColumn
 ): AmisUIColumn {
@@ -308,7 +310,7 @@ export function getModelFieldsForAmis(
   const schemas = [];
   columns.forEach((column) => {
     let col = column2AmisTableViewColumn(column);
-    col = updateAmisViewColFromModel(col, column, model);
+    col = updateAmisViewColMetaFields(col, column, model);
 
     if (col.__ignore !== true) {
       col.__ignore = undefined;
@@ -379,6 +381,8 @@ export function getWithsUrl(modelId: ModelId) {
 }
 
 /**
+ *  模型对应的表单显示界面配置
+ *
  *  yao run scripts.amis.lib.getFormViewFields
  * @param {*} modelId
  * @param {*} columnsIn
@@ -393,27 +397,31 @@ export function getFormViewFields(
   // 模型定义
   const model = getModelDefinition(modelId, columnsIn);
   const columns = model.columns;
-  const schemas = [];
+  const schemaColumns = [] as AmisUIColumn[];
   columns.forEach((column) => {
     let col = column2AmisFormViewColumn(column);
-    col = updateAmisFormColCommon(col, column, model, 'view');
-    schemas.push(col);
+    col = updateAmisFormMetaFields(col, column, model, 'view');
+    schemaColumns.push(col);
   });
   // 避免递归
   if (!noRelation) {
-    updateFormRelations(schemas, model, 'view');
+    updateFormRelations(schemaColumns, model, 'view');
   }
-  return schemas;
+  return schemaColumns;
 }
 
 /**
  * 更新表单中的模型关联关系
- * @param {Array} schemas form schema
+ * @param {Array} columns form schema
  * @param {object} model modelDsl object
  * @param {string} actionType 'view' |'update'
  * @returns
  */
-function updateFormRelations(schemas, model, actionType) {
+function updateFormRelations(
+  columns: AmisUIColumn[],
+  model: AmisModel,
+  actionType: ActionType
+) {
   const hasOnes = {};
   const hasManys = {};
   if (model.relations) {
@@ -438,7 +446,7 @@ function updateFormRelations(schemas, model, actionType) {
       fields = getFormFields(element.model, actionType, null, null, true);
     }
     fields = fields.filter((col) => col.name !== element.key);
-    schemas.push({
+    columns.push({
       type: 'input-sub-form',
       name: key,
       label: label,
@@ -504,7 +512,7 @@ function updateFormRelations(schemas, model, actionType) {
     for (const tab of tabList) {
       tabs.tabs.push(tab);
     }
-    schemas.push(tabs);
+    columns.push(tabs);
   } else if (tabList.length == 1) {
     const table = tabList[0].body;
     delete table.labelClassName;
@@ -512,9 +520,9 @@ function updateFormRelations(schemas, model, actionType) {
     if (actionType === 'view') {
       table.type = 'static-table';
     }
-    schemas.push(table);
+    columns.push(table);
   }
-  return schemas;
+  return columns;
 }
 /**
  * 转换表字段清单成amis的form schema
@@ -527,7 +535,7 @@ function updateFormRelations(schemas, model, actionType) {
  */
 export function getFormFields(
   modelId: ModelId,
-  actionType: 'view' | 'create' | 'update',
+  actionType: ActionType,
   columnsIn?: AmisUIColumn[],
   excludeFields?: string[],
   noRelation: boolean = false
@@ -536,26 +544,30 @@ export function getFormFields(
   const columns = model.columns;
 
   const formType = actionType ? actionType.toLowerCase() : 'view';
-  let schemas = [];
+  let outputCols = [];
 
   for (const column of columns) {
     let output = true;
     let col = column2AmisFormEditColumn(column);
-    // if (col.isID) {
-    //   col.isID = undefined;
-    // }
+
+    // form表单字段在不同的场景下有不同的展现方式。
     switch (formType) {
       case 'view':
-        if (col.isID) {
+        if (col.isID || col.displayOnly) {
           col.static = true;
         }
         break;
       case 'update':
-        if (col.isID) {
+        if (col.isID || col.displayOnly) {
+          col.static = true;
+        }
+        if (col.type.toLowerCase() == 'uuid') {
+          col.type = 'static-text';
           col.static = true;
         }
         break;
       case 'create':
+        //创建数据时，不需要输出id字段。
         if (col.isID) {
           output = false;
         }
@@ -563,23 +575,25 @@ export function getFormFields(
       default:
         break;
     }
-
-    col = updateAmisFormColFromModel(col, column);
-    col = updateAmisFormColCommon(col, column, model, actionType);
-    if (output) {
-      schemas.push(col);
+    if (!output) {
+      continue;
     }
+    col = updateAmisFormValidations(col, column);
+    col = updateAmisFormMetaFields(col, column, model, actionType);
+    outputCols.push(col);
   }
   if (Array.isArray(excludeFields)) {
     excludeFields.forEach((exclude) => {
-      schemas = schemas.filter((col) => col.name !== exclude);
+      outputCols = outputCols.filter(
+        (col) => col.name.toLowerCase() !== exclude.toLowerCase()
+      );
     });
   }
   if (!noRelation) {
-    updateFormRelations(schemas, model, actionType);
+    updateFormRelations(outputCols, model, actionType);
   }
 
-  return schemas;
+  return outputCols;
 }
 
 // 转换表字段清单成amis的form filter
@@ -594,8 +608,8 @@ export function getFilterFormFields(
   const schemas = [];
   for (const column of columns) {
     let col = column2AmisFormEditColumn(column);
-    col = updateAmisFormColFromModel(col, column);
-    col = updateAmisFormColCommon(col, column, model, 'update');
+    col = updateAmisFormValidations(col, column);
+    col = updateAmisFormMetaFields(col, column, model, 'update');
 
     if (col.isID) {
       col.type = 'input-number';
@@ -649,21 +663,25 @@ export function getModelFieldsWithQuick(
   // yao的原始字段设置
   const newFields = [];
   for (const column of columns) {
-    let viewColumn = column2AmisTableViewColumn(column);
     let formColumn = column2AmisFormEditColumn(column);
     let label = column.label;
 
-    formColumn = updateAmisFormColFromModel(formColumn, column);
-    formColumn = updateAmisFormColCommon(formColumn, column, model, 'create');
-    if (formColumn.isID) {
-      formColumn.quickEdit = false;
-      delete formColumn.isID;
-    }
-    viewColumn = updateAmisViewColFromModel(viewColumn, column, model);
+    formColumn = updateAmisFormValidations(formColumn, column);
+    formColumn = updateAmisFormMetaFields(formColumn, column, model, 'create');
+
+    let viewColumn = column2AmisTableViewColumn(column);
+    viewColumn = updateAmisViewColMetaFields(viewColumn, column, model);
     if (viewColumn.__ignore) {
       viewColumn.__ignore = undefined;
       continue;
     }
+
+    const noQuickEdit =
+      formColumn.displayOnly ||
+      formColumn.isID ||
+      viewColumn.isID ||
+      formColumn.type.toLowerCase() == 'uuid';
+    delete formColumn.displayOnly;
 
     label = viewColumn.label;
     delete formColumn.name;
@@ -679,7 +697,7 @@ export function getModelFieldsWithQuick(
       },
       ...viewColumn
     };
-    if (fieldNew.displayOnly) {
+    if (fieldNew.displayOnly || noQuickEdit) {
       fieldNew.quickEdit = false;
       delete fieldNew.displayOnly;
     }
@@ -757,14 +775,3 @@ export function excelMapping(modelId: ModelId, columnsIn?: AmisUIColumn[]) {
   //   return {};
   // }
 }
-// 如果是使用yao run 的调试方法，需要先把module.exports注释掉
-// module.exports = {
-//   getFormViewFields,
-//   excelMapping,
-//   getModelFieldsForAmis,
-//   getModelFieldsWithQuick,
-//   getFilterFormFields,
-//   getFormFields,
-//   getWithsUrl,
-//   getModelDefinition,
-// };

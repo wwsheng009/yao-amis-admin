@@ -114,14 +114,14 @@ export interface AmisValidation {
  * UI column used in amis curd/table
  */
 export interface AmisUIColumn
-  extends Omit<AmisModelColumn, 'index' | 'validations'> {
+  extends Omit<AmisModelColumn, 'index' | 'validations' | 'name'> {
   validationErrors?: object;
 
   checked?: boolean;
   /**快速编辑 */
   quickEdit?: boolean;
   /**名称 */
-  name: string;
+  name?: string;
   /**标签 */
   label: string;
   /**控件类型 */
@@ -132,7 +132,7 @@ export interface AmisUIColumn
   searchable?: boolean;
   /**是否排序 */
   sortable?: boolean;
-  levelExpand: 0 | 1;
+  levelExpand?: 0 | 1;
   format?: string;
   /**最小值 */
   min?: number;
@@ -143,9 +143,9 @@ export interface AmisUIColumn
   /**步 */
   step?: number;
   /**true显示值 */
-  trueValue: number | boolean;
+  trueValue?: number | boolean;
   /**false显示值 */
-  falseValue: number | boolean;
+  falseValue?: number | boolean;
   href?: string;
   body?: string;
   toggled?: boolean;
@@ -189,6 +189,10 @@ export interface AmisUIColumn
 
   /**控件输入值是否可以清空 */
   clearable?: boolean;
+
+  btnLabel?: string;
+
+  form?: { [key: string]: any };
 }
 
 export interface YaoModelNode {

@@ -419,9 +419,9 @@ export function column2AmisTableViewColumn(
     case 'SMALLINCREMENTS':
     case 'INCREMENTS':
       newColumn.type = 'number'; // "input-number";
-      newColumn.displayOnly = true; // 主键列只显示
       newColumn.searchable = true;
       newColumn.sortable = true;
+      newColumn.isID = true;
       break;
     case 'BIGINCREMENTS':
       newColumn.type = 'number';
@@ -458,7 +458,7 @@ export function column2AmisTableViewColumn(
       newColumn.sortable = true;
       break;
     case 'UUID':
-      newColumn.type = 'uuid';
+      newColumn.type = 'text'; //uuid默认不显示
       newColumn.searchable = true;
       newColumn.sortable = true;
       break;
@@ -627,7 +627,6 @@ export function column2AmisFormViewColumn(
     case 'SMALLINCREMENTS':
     case 'INCREMENTS':
       newColumn.type = 'static-number';
-      newColumn.displayOnly = true;
       break;
     case 'BIGINCREMENTS':
       newColumn.type = 'static-number';
@@ -656,7 +655,8 @@ export function column2AmisFormViewColumn(
       }
       break;
     case 'UUID':
-      newColumn.type = 'static-uuid';
+      // uuid默认是不显示的
+      newColumn.type = 'static-text';
       break;
     case 'ENUM':
       // input-tag
