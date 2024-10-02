@@ -41,6 +41,8 @@ export function getModelDefinition(
   let model = getModelDslById(modelId);
   if (!model) {
     throw new Exception(`模型:${modelId}不存在`);
+  } else {
+    model = AddMetaFields(model);
   }
   if (Array.isArray(columnsIn) && columnsIn.length > 0) {
     const columns = columnsIn.filter((col) => col.checked === true);
@@ -50,7 +52,6 @@ export function getModelDefinition(
   } else {
     model.columns = model.columns || [];
   }
-  model = AddMetaFields(model);
 
   return model;
 }
