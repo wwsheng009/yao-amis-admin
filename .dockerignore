@@ -1,3 +1,11 @@
 /.git/
 /.vscode/
 /.github/
+node_modules
+db
+dist
+logs
+.env
+outdir
+package-lock.json
+pnpm-lock.yaml

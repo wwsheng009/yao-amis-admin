@@ -52,6 +52,12 @@ RUN curl -fsSL "https://github.com/wwsheng009/yao-plugin-psutil/releases/downloa
 RUN curl -fsSL "https://github.com/wwsheng009/yao-plugin-email/releases/download/email-linux-plugin/email-linux-${ARCH}.so" -o /data/plugins/email.so && \
     chmod +x /data/plugins/email.so
 
+RUN apk add --no-cache nodejs npm
+
+WORKDIR /data
+RUN npm i yarn -g
+RUN yarn install --production
+
 USER root
 VOLUME [ "/data" ]
 WORKDIR /data

@@ -13,6 +13,8 @@
   "author": "vincentwwsheng@gmail.com",
   "license": "MIT",
   "devDependencies": {
+    "@yaoapps/client": "npm:yao-node-client@^1.1.2",
+    "@yaoapps/types": "npm:yao-app-ts-types@^1.0.8",
     "@eslint/js": "^9.10.0",
     "@stylistic/eslint-plugin": "^2.8.0",
     "@types/jest": "^29.5.13",
@@ -28,11 +30,9 @@
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript-eslint": "^8.5.0"
+    "typescript-eslint": "^8.5.0",
+    "typescript": "^5.6.2"
   },
   "dependencies": {
-    "@yaoapps/client": "npm:yao-node-client@^1.1.2",
-    "@yaoapps/types": "npm:yao-app-ts-types@^1.0.8",
-    "lodash-es": "^4.17.21"
   }
 }
