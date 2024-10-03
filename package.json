@@ -1,6 +1,6 @@
 {
   "name": "yao-init",
-  "type": "commonjs",
+  "type": "module",
   "version": "1.0.0",
   "description": "yao application for nodejs usage",
   "main": "index.js",
@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "@yaoapps/client": "npm:yao-node-client@^1.1.2",
-    "@yaoapps/types": "npm:yao-app-ts-types@^1.0.8"
+    "@yaoapps/types": "npm:yao-app-ts-types@^1.0.8",
+    "lodash-es": "^4.17.21"
   }
 }
