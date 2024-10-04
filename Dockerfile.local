@@ -6,34 +6,34 @@ FROM wwsheng009/yao-${ARCH}:latest
 
 ARG ARCH
 ARG VERSION
-WORKDIR /data
+WORKDIR /data/app
 
 
 RUN addgroup -S -g 1000 yao && adduser -S -G yao -u 999 yao
-# RUN mkdir -p /data && curl -fsSL "https://github.com/wwsheng009/yao-amis-admin/releases/download/yao-amis-admin-${VERSION}/yao-amis-admin-${VERSION}.zip" > /data/latest.zip && \
-#     unzip /data/latest.zip && rm /data/latest.zip && \
-#     rm -rf /data/.git && \
-#     chown -R yao:yao /data && \
-#     chmod +x /data/init.sh && \
+# RUN mkdir -p /data/app && curl -fsSL "https://github.com/wwsheng009/yao-amis-admin/releases/download/yao-amis-admin-${VERSION}/yao-amis-admin-${VERSION}.zip" > /data/app/latest.zip && \
+#     unzip /data/app/latest.zip && rm /data/app/latest.zip && \
+#     rm -rf /data/app/.git && \
+#     chown -R yao:yao /data/app && \
+#     chmod +x /data/app/init.sh && \
 #     chmod +x /usr/local/bin/yao && \
-#     # cp /data/docker.env /data/.env && \
-#     # cp /data/app.sample.yao /data/app.yao && \
-#     mkdir -p /data/plugins && \
-#     mkdir -p /data/db
-RUN mkdir -p /data
+#     # cp /data/app/docker.env /data/app/.env && \
+#     # cp /data/app/app.sample.yao /data/app/app.yao && \
+#     mkdir -p /data/app/plugins && \
+#     mkdir -p /data/app/db
+RUN mkdir -p /data/app
 
-ADD . /data
+ADD . /data/app
 
-RUN rm -rf /data/.git && \
-    rm -rf /data/.env* && \
-    chown -R yao:yao /data && \
-    chmod +x /data/init.sh && \
+RUN rm -rf /data/app/.git && \
+    rm -rf /data/app/.env* && \
+    chown -R yao:yao /data/app && \
+    chmod +x /data/app/init.sh && \
     chmod +x /usr/local/bin/yao && \
-    mkdir -p /data/plugins && \
-    mkdir -p /data/db
+    mkdir -p /data/app/plugins && \
+    mkdir -p /data/app/db
 
 USER root
-VOLUME [ "/data" ]
-WORKDIR /data
+VOLUME [ "/data/app" ]
+WORKDIR /data/app
 EXPOSE 5099
 CMD ["sh", "init.sh"]

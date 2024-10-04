@@ -6,60 +6,60 @@ FROM wwsheng009/yao-${ARCH}:latest
 
 ARG ARCH
 ARG VERSION
-WORKDIR /data
+WORKDIR /data/app
 
 
 RUN addgroup -S -g 1000 yao && adduser -S -G yao -u 999 yao
-RUN mkdir -p /data && curl -fsSL "https://github.com/wwsheng009/yao-amis-admin/releases/download/yao-amis-admin-${VERSION}/yao-amis-admin-${VERSION}.zip" > /data/latest.zip && \
-    unzip /data/latest.zip && rm /data/latest.zip && \
-    rm -rf /data/.git && \
-    chown -R yao:yao /data && \
-    chmod +x /data/init.sh && \
+RUN mkdir -p /data/app && curl -fsSL "https://github.com/wwsheng009/yao-amis-admin/releases/download/yao-amis-admin-${VERSION}/yao-amis-admin-${VERSION}.zip" > /data/app/latest.zip && \
+    unzip /data/app/latest.zip && rm /data/app/latest.zip && \
+    rm -rf /data/app/.git && \
+    chown -R yao:yao /data/app && \
+    chmod +x /data/app/init.sh && \
     chmod +x /usr/local/bin/yao && \
-    cp /data/app.sample.yao /data/app.yao && \
-    mkdir -p /data/plugins && \
-    mkdir -p /data/db
+    cp /data/app/app.sample.yao /data/app/app.yao && \
+    mkdir -p /data/app/plugins && \
+    mkdir -p /data/app/db
 
-# RUN mkdir -p /data
+# RUN mkdir -p /data/app
 
-# ADD . /data
+# ADD . /data/app
 
-# RUN rm -rf /data/.git && \
-#     rm -rf /data/.env* && \
-#     rm -rf /data/Dockerfile* && \
-#     chown -R yao:yao /data && \
-#     chmod +x /data/init.sh && \
+# RUN rm -rf /data/app/.git && \
+#     rm -rf /data/app/.env* && \
+#     rm -rf /data/app/Dockerfile* && \
+#     chown -R yao:yao /data/app && \
+#     chmod +x /data/app/init.sh && \
 #     chmod +x /usr/local/bin/yao && \
-#     mkdir -p /data/plugins && \
-#     mkdir -p /data/db
+#     mkdir -p /data/app/plugins && \
+#     mkdir -p /data/app/db
 
-RUN mkdir -p /data/public/amis-editor && \
-    curl -fsSL "https://github.com/wwsheng009/amis-editor-yao/releases/download/1.1.0/amis-editor-1.1.0.zip" > /data/public/amis-editor/latest.zip && \
-    unzip /data/public/amis-editor/latest.zip -d /data/public/amis-editor/ && \
-    rm /data/public/amis-editor/latest.zip
+RUN mkdir -p /data/app/public/amis-editor && \
+    curl -fsSL "https://github.com/wwsheng009/amis-editor-yao/releases/download/1.1.0/amis-editor-1.1.0.zip" > /data/app/public/amis-editor/latest.zip && \
+    unzip /data/app/public/amis-editor/latest.zip -d /data/app/public/amis-editor/ && \
+    rm /data/app/public/amis-editor/latest.zip
 
-RUN mkdir -p /data/public/soy-admin && \
-    curl -fsSL "https://github.com/wwsheng009/soybean-admin-amis-yao/releases/download/0.10.4/soy-yao-admin-0.10.4.zip" > /data/public/soy-admin/latest.zip && \
-    unzip /data/public/soy-admin/latest.zip -d /data/public/soy-admin/ && \
-    rm /data/public/soy-admin/latest.zip
+RUN mkdir -p /data/app/public/soy-admin && \
+    curl -fsSL "https://github.com/wwsheng009/soybean-admin-amis-yao/releases/download/0.10.4/soy-yao-admin-0.10.4.zip" > /data/app/public/soy-admin/latest.zip && \
+    unzip /data/app/public/soy-admin/latest.zip -d /data/app/public/soy-admin/ && \
+    rm /data/app/public/soy-admin/latest.zip
 
-RUN curl -fsSL "https://github.com/wwsheng009/yao-plugin-command/releases/download/command-linux-plugin/command-linux-${ARCH}.so" -o /data/plugins/command.so && \
-    chmod +x /data/plugins/command.so
+RUN curl -fsSL "https://github.com/wwsheng009/yao-plugin-command/releases/download/command-linux-plugin/command-linux-${ARCH}.so" -o /data/app/plugins/command.so && \
+    chmod +x /data/app/plugins/command.so
 
-RUN curl -fsSL "https://github.com/wwsheng009/yao-plugin-psutil/releases/download/psutil-linux-plugin/psutil-linux-${ARCH}.so" -o /data/plugins/psutil.so && \
-    chmod +x /data/plugins/psutil.so
+RUN curl -fsSL "https://github.com/wwsheng009/yao-plugin-psutil/releases/download/psutil-linux-plugin/psutil-linux-${ARCH}.so" -o /data/app/plugins/psutil.so && \
+    chmod +x /data/app/plugins/psutil.so
 
-RUN curl -fsSL "https://github.com/wwsheng009/yao-plugin-email/releases/download/email-linux-plugin/email-linux-${ARCH}.so" -o /data/plugins/email.so && \
-    chmod +x /data/plugins/email.so
+RUN curl -fsSL "https://github.com/wwsheng009/yao-plugin-email/releases/download/email-linux-plugin/email-linux-${ARCH}.so" -o /data/app/plugins/email.so && \
+    chmod +x /data/app/plugins/email.so
 
 RUN apk add --no-cache nodejs npm
 
-WORKDIR /data
+WORKDIR /data/app
 RUN npm i yarn -g
 RUN yarn install --production
 
 USER root
-VOLUME [ "/data" ]
-WORKDIR /data
+VOLUME [ "/data/app" ]
+WORKDIR /data/app
 EXPOSE 5099
 CMD ["sh", "init.sh"]
