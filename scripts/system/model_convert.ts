@@ -381,15 +381,22 @@ export function completeAmisModel(modelDsl: AmisModel): AmisModel {
       }
     });
     // 非浮点类型不需要scale属性。
-    const type = col.type?.toUpperCase();
+    const colType = col.type.toLowerCase();
     if (
-      type &&
-      !type.includes('DOUBLE') &&
-      !type.includes('DEMICAL') &&
-      !type.includes('FLOAT')
+      colType &&
+      !colType.includes('double') &&
+      !colType.includes('demical') &&
+      !colType.includes('float')
     ) {
       delete col.scale;
       delete col.precision;
+    }
+
+    if (['longtext', 'json', 'text'].includes(colType)) {
+      delete col.length;
+    }
+    if (colType == 'MEDIUMINT') {
+      col.type = 'integer';
     }
 
     if (Array.isArray(col.options) && col.options.length > 0) {
@@ -416,7 +423,7 @@ export function completeAmisModel(modelDsl: AmisModel): AmisModel {
       }
     }
 
-    if (col.type == 'boolean' && typeof col.default === 'string') {
+    if (colType == 'boolean' && typeof col.default === 'string') {
       if (col.default.toLowerCase() == 'true') {
         col.default = true;
       } else if (col.default.toLowerCase() == 'false') {
@@ -428,7 +435,6 @@ export function completeAmisModel(modelDsl: AmisModel): AmisModel {
       delete col.length;
     }
     // add the primary attribute for id field
-    const colType = col.type.toLowerCase();
     if (colType == 'id' || col.name.toLowerCase() == 'id') {
       if (col.primary == null) {
         col.primary = true;
