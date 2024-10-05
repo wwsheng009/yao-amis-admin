@@ -458,16 +458,7 @@ export function importDBModelsToCache() {
     const modelDsl = getModelFromDB(m.identity);
     loadModeltoMemory(modelDsl);
   });
-  // loadDefaultFormTableFormAllModel();
 }
-/**
- * 加载所有的模型关联的form与table定义
- */
-// export function loadDefaultFormTableFormAllModel() {
-//   // need import the db model first.
-//   const list = getAllModelIds();
-//   list.forEach((l) => checkAndloadDefaultTableForm(l));
-// }
 /**
  * return the id and the name info for all models.
  *
