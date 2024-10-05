@@ -147,6 +147,7 @@ function updateAmisFormMetaFields(
         // found
         amisColumn.clearable = true;
         amisColumn.type = 'select';
+        amisColumn.searchable = true;
         amisColumn.source = `/api/v1/system/model/${rel.model}/select_options`;
         if (formType == 'view') {
           amisColumn.static = true;

@@ -975,6 +975,7 @@ export function column2AmisFormEditColumn(
     }
     const labelField = column.check_model_label || 'name';
     newColumn.type = 'select';
+    newColumn.searchable = true;
     if (column.nullable) {
       newColumn.clearable = true;
     }
