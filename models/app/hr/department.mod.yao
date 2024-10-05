@@ -1,0 +1,80 @@
+{
+  "name": "部门",
+  "table": {
+    "name": "app_hr_department",
+    "comment": "部门"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "label": "部门名称",
+      "name": "name",
+      "type": "string",
+      "length": 50,
+      "comment": "部门名称"
+    },
+    {
+      "label": "第三方接口部门id",
+      "name": "department_id",
+      "type": "string",
+      "length": 50,
+      "comment": "第三方接口部门id",
+      "nullable": true
+    },
+    {
+      "label": "上级部门id",
+      "name": "parent_id",
+      "type": "integer",
+      "comment": "上级部门id,department表主键id",
+      "nullable": true
+    },
+    {
+      "label": "排序",
+      "name": "order",
+      "type": "integer",
+      "comment": "排序越大越靠前",
+      "default": 1
+    },
+    {
+      "label": "部门领导id",
+      "name": "user_id",
+      "type": "integer",
+      "comment": "部门领导id",
+      "nullable": true
+    }
+  ],
+  "relations": {
+    "children": {
+      "type": "hasMany",
+      "model": "app.hr.department",
+      "key": "parent_id",
+      "foreign": "id",
+      "query": {}
+    },
+    "parent": {
+      "type": "hasOne",
+      "model": "app.hr.department",
+      "key": "id",
+      "foreign": "parent_id",
+      "query": {}
+    },
+    "leader": {
+      "type": "hasOne",
+      "model": "app.hr.staff",
+      "key": "id",
+      "foreign": "user_id",
+      "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "values": []
+}

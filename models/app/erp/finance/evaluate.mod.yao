@@ -1,0 +1,85 @@
+{
+  "name": "财务评价",
+  "table": {
+    "name": "app_erp_finance_evaluate",
+    "comment": "财务评价"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "label": "类型",
+      "name": "type",
+      "type": "string",
+      "comment": "类型:企业盈利能力评价"
+    },
+    {
+      "label": "盈利毛利率",
+      "name": "profit_rate",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "盈利毛利率",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "销售净利率",
+      "name": "sale_rate",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "销售净利率",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "资产净利率",
+      "name": "property_rate",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "资产净利率",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "净值报酬率",
+      "name": "award_rate",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "净值报酬率",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "市盈率",
+      "name": "market_rate",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "市盈率",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "年月月份",
+      "name": "add_time",
+      "type": "datetime",
+      "comment": "年月月份",
+      "nullable": true
+    }
+  ],
+  "relations": {},
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "values": []
+}

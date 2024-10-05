@@ -1,0 +1,84 @@
+{
+  "name": "人员计划",
+  "table": {
+    "name": "app_project_member",
+    "comment": "人员计划"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "label": "项目id",
+      "name": "project_id",
+      "type": "integer",
+      "comment": "项目id"
+    },
+    {
+      "label": "任务名称",
+      "name": "name",
+      "type": "string",
+      "comment": "任务名称"
+    },
+    {
+      "label": "排序",
+      "name": "order",
+      "type": "integer",
+      "comment": "排序越大越靠前",
+      "default": 1
+    },
+    {
+      "label": "状态",
+      "name": "status",
+      "type": "string",
+      "comment": "状态:进行中,已完成",
+      "nullable": true
+    },
+    {
+      "label": "负责人",
+      "name": "user_id",
+      "type": "integer",
+      "comment": "负责人",
+      "nullable": true
+    },
+    {
+      "label": "备注",
+      "name": "remark",
+      "type": "text",
+      "comment": "备注",
+      "nullable": true
+    },
+    {
+      "label": "部门",
+      "name": "department",
+      "type": "json",
+      "comment": "部门",
+      "nullable": true
+    }
+  ],
+  "relations": {
+    "user": {
+      "type": "hasOne",
+      "model": "admin.user",
+      "key": "id",
+      "foreign": "user_id",
+      "query": {}
+    },
+    "project": {
+      "type": "hasOne",
+      "model": "app.project.project",
+      "key": "id",
+      "foreign": "project_id",
+      "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "values": []
+}

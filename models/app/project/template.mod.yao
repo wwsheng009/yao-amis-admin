@@ -1,0 +1,36 @@
+{
+  "name": "::Project Templates",
+  "table": {
+    "name": "app_project_template",
+    "comment": "::Project Templates"
+  },
+  "columns": [
+    {
+      "label": "::ID",
+      "name": "id",
+      "type": "ID"
+    },
+    {
+      "label": "::Template Name",
+      "name": "name",
+      "type": "string",
+      "index": true,
+      "length": 200,
+      "comment": "::Template Name"
+    },
+    {
+      "label": "::Data",
+      "name": "data",
+      "type": "JSON",
+      "nullable": true,
+      "comment": "::Data"
+    }
+  ],
+  "relations": {},
+  "values": [],
+  "indexes": [],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  }
+}

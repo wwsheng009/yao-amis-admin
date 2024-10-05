@@ -1,0 +1,117 @@
+{
+  "name": "物料采购订单",
+  "table": {
+    "name": "app_erp_purchase_order",
+    "comment": "物料采购订单"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "label": "项目名称",
+      "name": "project_id",
+      "type": "integer",
+      "length": 50,
+      "comment": "项目名称"
+    },
+    {
+      "label": "采购员",
+      "name": "user_id",
+      "type": "integer",
+      "comment": "采购员"
+    },
+    {
+      "label": "采购日期",
+      "name": "order_date",
+      "type": "datetime",
+      "comment": "采购日期"
+    },
+    {
+      "label": "订单编号",
+      "name": "order_sn",
+      "type": "string",
+      "comment": "订单编号",
+      "nullable": true
+    },
+    {
+      "label": "供应商",
+      "name": "company_id",
+      "type": "integer",
+      "comment": "供应商",
+      "nullable": true
+    },
+    {
+      "label": "采购总量",
+      "name": "total_number",
+      "type": "decimal",
+      "comment": "采购总量",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "采购总金额",
+      "name": "total_money",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "采购总量",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "状态",
+      "name": "status",
+      "type": "string",
+      "comment": "已申请,已通过,未通过",
+      "default": "已通过",
+      "nullable": true
+    },
+    {
+      "label": "备注",
+      "name": "remark",
+      "type": "text",
+      "comment": "备注",
+      "nullable": true
+    },
+    {
+      "label": "临时数据",
+      "name": "material_data",
+      "type": "json",
+      "comment": "临时数据",
+      "nullable": true
+    }
+  ],
+  "relations": {
+    "user": {
+      "type": "hasOne",
+      "model": "admin.user",
+      "key": "id",
+      "foreign": "user_id",
+      "query": {}
+    },
+    "project": {
+      "type": "hasOne",
+      "model": "app.project.project",
+      "key": "id",
+      "foreign": "project_id",
+      "query": {}
+    },
+    "company": {
+      "type": "hasOne",
+      "model": "app.erp.company",
+      "key": "id",
+      "foreign": "company_id",
+      "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "values": []
+}

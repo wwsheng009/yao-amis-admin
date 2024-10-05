@@ -1,0 +1,100 @@
+{
+  "name": "项目表",
+  "table": {
+    "name": "app_project_project",
+    "comment": "项目表"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "label": "项目名称",
+      "name": "name",
+      "type": "string",
+      "length": 50,
+      "comment": "项目名称"
+    },
+    {
+      "label": "项目编号",
+      "name": "project_sn",
+      "type": "string",
+      "length": 50,
+      "comment": "项目编号"
+    },
+    {
+      "label": "报备人",
+      "name": "user_id",
+      "type": "integer",
+      "comment": "报备人"
+    },
+    {
+      "label": "报备人手机号码",
+      "name": "mobile",
+      "type": "string",
+      "comment": "报备人手机号码",
+      "nullable": true
+    },
+    {
+      "label": "所属部门",
+      "name": "department_nanme",
+      "type": "string",
+      "comment": "所属部门",
+      "nullable": true
+    },
+    {
+      "label": "状态",
+      "name": "status",
+      "type": "string",
+      "comment": "已通过,已中标,已立项",
+      "default": "已通过",
+      "nullable": true
+    },
+    {
+      "label": "项目地址",
+      "name": "address",
+      "type": "string",
+      "comment": "项目地址",
+      "nullable": true
+    },
+    {
+      "label": "备注",
+      "name": "remark",
+      "type": "text",
+      "comment": "备注",
+      "nullable": true
+    },
+    {
+      "label": "项目简介",
+      "name": "introduction",
+      "type": "text",
+      "comment": "项目简介",
+      "nullable": true
+    },
+    {
+      "label": "附件",
+      "name": "file",
+      "type": "json",
+      "comment": "附件",
+      "nullable": true
+    }
+  ],
+  "relations": {
+    "user": {
+      "type": "hasOne",
+      "model": "admin.user",
+      "key": "id",
+      "foreign": "user_id",
+      "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "values": []
+}

@@ -1,0 +1,200 @@
+{
+  "name": "员工工资",
+  "table": {
+    "name": "app_hr_salary",
+    "comment": "员工工资"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "label": "用户id",
+      "name": "user_id",
+      "type": "integer",
+      "comment": "用户id"
+    },
+    {
+      "label": "所属部门",
+      "name": "department_name",
+      "type": "string",
+      "comment": "所属部门",
+      "nullable": true
+    },
+    {
+      "label": "税前工资",
+      "name": "pre_tax",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "税前工资",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "社保",
+      "name": "social_money",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "社保",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "公积金",
+      "name": "acc_money",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "公积金",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "个税",
+      "name": "pperson_tax",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "个税",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "税后基本工资",
+      "name": "after_tax",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "个税",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "月奖",
+      "name": "month_award",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "月奖",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "加班",
+      "name": "work_time",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "加班",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "补助",
+      "name": "subsidy",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "补助",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "年终奖",
+      "name": "year_bonus",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "年终奖",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "年终奖个税",
+      "name": "year_tax",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "年终奖个税",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "课题奖",
+      "name": "topic_money",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "课题奖",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "请假",
+      "name": "leave",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "请假",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "其他",
+      "name": "other",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "其他",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "实发工资",
+      "name": "total_money",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "实发工资",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "考勤天数",
+      "name": "days",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "考勤天数",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "年月月份",
+      "name": "add_time",
+      "type": "datetime",
+      "comment": "年月月份",
+      "nullable": true
+    }
+  ],
+  "relations": {
+    "user": {
+      "type": "hasOne",
+      "model": "app.hr.staff",
+      "key": "id",
+      "foreign": "user_id",
+      "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "values": []
+}

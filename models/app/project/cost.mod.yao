@@ -1,0 +1,80 @@
+{
+  "name": "项目成本预算",
+  "table": {
+    "name": "app_contract_cost",
+    "comment": "项目成本预算"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "label": "项目id",
+      "name": "project_id",
+      "type": "integer",
+      "comment": "项目id"
+    },
+    {
+      "label": "制定日期",
+      "name": "sign_date",
+      "type": "datetime",
+      "comment": "制定日期",
+      "nullable": true
+    },
+    {
+      "label": "预算条款",
+      "name": "name",
+      "type": "string",
+      "length": 255,
+      "comment": "预算条款"
+    },
+    {
+      "label": "预算制定人",
+      "name": "user_id",
+      "type": "integer",
+      "comment": "预算制定人"
+    },
+    {
+      "label": "预算金额",
+      "name": "total_money",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "预算金额",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "备注",
+      "name": "remark",
+      "type": "text",
+      "comment": "备注",
+      "nullable": true
+    }
+  ],
+  "relations": {
+    "project": {
+      "type": "hasOne",
+      "model": "app.project.project",
+      "key": "id",
+      "foreign": "project_id",
+      "query": {}
+    },
+    "user": {
+      "type": "hasOne",
+      "model": "admin.user",
+      "key": "id",
+      "foreign": "user_id",
+      "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "values": []
+}

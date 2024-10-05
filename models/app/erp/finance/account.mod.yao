@@ -1,0 +1,103 @@
+{
+  "name": "账户资金",
+  "table": {
+    "name": "app_erp_finance_account",
+    "comment": "账户资金"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "label": "账户名称",
+      "name": "name",
+      "type": "string",
+      "comment": "账户名称",
+      "nullable": true
+    },
+    {
+      "label": "开户行",
+      "name": "bank",
+      "type": "string",
+      "comment": "开户行",
+      "nullable": true
+    },
+    {
+      "label": "收款账户账号",
+      "name": "account",
+      "type": "string",
+      "comment": "收款账户账号",
+      "nullable": true
+    },
+    {
+      "label": "开户行地址",
+      "name": "address",
+      "type": "string",
+      "comment": "开户行地址",
+      "nullable": true
+    },
+    {
+      "label": "网点地址",
+      "name": "detail",
+      "type": "string",
+      "comment": "网点地址",
+      "nullable": true
+    },
+    {
+      "label": "银行号",
+      "name": "bank_no",
+      "type": "string",
+      "comment": "银行号",
+      "nullable": true
+    },
+    {
+      "label": "账户余额",
+      "name": "total_money",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "账户余额",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "开户日期",
+      "name": "add_time",
+      "type": "datetime",
+      "comment": "开户日期",
+      "nullable": true
+    },
+    {
+      "label": "附件",
+      "name": "file",
+      "type": "json",
+      "comment": "附件",
+      "nullable": true
+    },
+    {
+      "label": "状态",
+      "name": "status",
+      "type": "string",
+      "default": "已申请",
+      "comment": "状态:正常,停用",
+      "nullable": true
+    },
+    {
+      "label": "开户类型",
+      "name": "type",
+      "type": "string",
+      "comment": "开户类型",
+      "nullable": true
+    }
+  ],
+  "relations": {},
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "values": []
+}

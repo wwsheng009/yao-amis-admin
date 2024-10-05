@@ -1,0 +1,149 @@
+{
+  "name": "项目计划",
+  "table": {
+    "name": "app_project_plan",
+    "comment": "项目计划"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "label": "项目id",
+      "name": "project_id",
+      "type": "integer",
+      "comment": "项目id"
+    },
+    {
+      "label": "任务名称",
+      "name": "name",
+      "type": "string",
+      "comment": "任务名称"
+    },
+    {
+      "label": "任务编号",
+      "name": "plan_sn",
+      "type": "string",
+      "length": 50,
+      "comment": "项目编号"
+    },
+    {
+      "label": "类型",
+      "name": "type",
+      "type": "string",
+      "comment": "类型"
+    },
+    {
+      "label": "部门",
+      "name": "department",
+      "type": "json",
+      "comment": "部门",
+      "nullable": true
+    },
+    {
+      "label": "工程数/产品数",
+      "name": "total_number",
+      "type": "decimal",
+      "comment": "工程数/产品数",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "排序",
+      "name": "order",
+      "type": "integer",
+      "comment": "排序越大越靠前",
+      "default": 1
+    },
+    {
+      "label": "状态",
+      "name": "status",
+      "type": "string",
+      "comment": "状态:进行中,已完成",
+      "nullable": true
+    },
+    {
+      "label": "负责人",
+      "name": "user_id",
+      "type": "integer",
+      "comment": "负责人",
+      "nullable": true
+    },
+    {
+      "label": "负责人多个",
+      "name": "users",
+      "type": "json",
+      "comment": "负责人多个",
+      "nullable": true
+    },
+    {
+      "label": "预算金额",
+      "name": "total_money",
+      "type": "decimal",
+      "comment": "预算金额",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "计划开始时间",
+      "name": "start_time",
+      "type": "datetime",
+      "comment": "计划开始时间",
+      "nullable": true
+    },
+    {
+      "label": "计划结束时间",
+      "name": "end_time",
+      "type": "datetime",
+      "comment": "计划结束时间",
+      "nullable": true
+    },
+    {
+      "label": "实际结束时间",
+      "name": "actual_time",
+      "type": "datetime",
+      "comment": "实际结束时间",
+      "nullable": true
+    },
+    {
+      "label": "上级id",
+      "name": "parent_id",
+      "type": "integer",
+      "comment": "上级id,plan表主键id",
+      "nullable": true
+    },
+    {
+      "label": "计划进度",
+      "name": "progress",
+      "type": "decimal",
+      "comment": "计划进度",
+      "default": 0,
+      "nullable": true
+    }
+  ],
+  "relations": {
+    "user": {
+      "type": "hasOne",
+      "model": "admin.user",
+      "key": "id",
+      "foreign": "user_id",
+      "query": {}
+    },
+    "parent": {
+      "type": "hasOne",
+      "model": "app.project.plan",
+      "key": "id",
+      "foreign": "parent_id",
+      "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "values": []
+}

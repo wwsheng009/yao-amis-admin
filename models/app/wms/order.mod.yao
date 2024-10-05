@@ -1,0 +1,111 @@
+{
+  "name": "物料采购入库订单",
+  "table": {
+    "name": "app_wms_order",
+    "comment": "物料采购入库订单"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "label": "项目名称",
+      "name": "project_id",
+      "type": "integer",
+      "length": 50,
+      "comment": "项目名称"
+    },
+    {
+      "label": "采购订单id",
+      "name": "purchase_order_id",
+      "type": "integer",
+      "length": 50,
+      "comment": "项目名称"
+    },
+    {
+      "label": "审核人员",
+      "name": "user_id",
+      "type": "integer",
+      "comment": "审核人员",
+      "nullable": true
+    },
+    {
+      "label": "入库日期",
+      "name": "order_date",
+      "type": "datetime",
+      "comment": "入库日期"
+    },
+    {
+      "label": "本次入库总量",
+      "name": "total_number",
+      "type": "decimal",
+      "comment": "本次入库总量",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "本次总金额",
+      "name": "total_money",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "本次总金额",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "状态",
+      "name": "status",
+      "type": "string",
+      "comment": "已申请,已通过,未通过",
+      "default": "已申请",
+      "nullable": true
+    },
+    {
+      "label": "备注",
+      "name": "remark",
+      "type": "text",
+      "comment": "备注",
+      "nullable": true
+    },
+    {
+      "label": "入库的物料数据",
+      "name": "material_data",
+      "type": "json",
+      "comment": "入库的物料数据",
+      "nullable": true
+    }
+  ],
+  "relations": {
+    "user": {
+      "type": "hasOne",
+      "model": "admin.user",
+      "key": "id",
+      "foreign": "user_id",
+      "query": {}
+    },
+    "project": {
+      "type": "hasOne",
+      "model": "app.project.project",
+      "key": "id",
+      "foreign": "project_id",
+      "query": {}
+    },
+    "purchase_order": {
+      "type": "hasOne",
+      "model": "app.erp.purchase.order",
+      "key": "id",
+      "foreign": "purchase_order_id",
+      "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "values": []
+}

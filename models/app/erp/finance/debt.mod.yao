@@ -1,0 +1,92 @@
+{
+  "name": "债权债务",
+  "table": {
+    "name": "app_erp_finance_debt",
+    "comment": "债权债务"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "label": "项目id",
+      "name": "project_id",
+      "type": "integer",
+      "comment": "项目id"
+    },
+    {
+      "label": "项目负责人id",
+      "name": "user_id",
+      "type": "integer",
+      "comment": "项目负责人id"
+    },
+    {
+      "label": "负债人/单位",
+      "name": "company_id",
+      "type": "integer",
+      "comment": "负债人/单位"
+    },
+    {
+      "label": "债权人/单位",
+      "name": "debt_company_id",
+      "type": "integer",
+      "comment": "债权人/单位"
+    },
+    {
+      "label": "未回款类型",
+      "name": "type",
+      "type": "string",
+      "comment": "未回款类型",
+      "nullable": true
+    },
+    {
+      "label": "未回款金额",
+      "name": "total_money",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "未回款金额",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "类型",
+      "name": "kind",
+      "type": "string",
+      "comment": "类型:债权/债务",
+      "nullable": true
+    }
+  ],
+  "relations": {
+    "project": {
+      "type": "hasOne",
+      "model": "app.project.project",
+      "key": "id",
+      "foreign": "project_id",
+      "query": {}
+    },
+    "user": {
+      "type": "hasOne",
+      "model": "admin.user",
+      "key": "id",
+      "foreign": "user_id",
+      "query": {}
+    },
+    "company": {
+      "type": "hasOne",
+      "model": "app.erp.company",
+      "key": "id",
+      "foreign": "company_id",
+      "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "values": []
+}

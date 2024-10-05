@@ -1,0 +1,122 @@
+{
+  "name": "项目核心报表",
+  "table": {
+    "name": "aopp_project_finance",
+    "comment": "项目核心报表"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "label": "合同名称",
+      "name": "contract_id",
+      "type": "integer",
+      "comment": "合同名称"
+    },
+    {
+      "label": "记账单位",
+      "name": "in_company_id",
+      "type": "integer",
+      "comment": "记账单位"
+    },
+    {
+      "label": "往来单位",
+      "name": "out_company_id",
+      "type": "integer",
+      "comment": "记账单位"
+    },
+    {
+      "label": "预算产值",
+      "name": "budget_money",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "预算产值",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "累计产值",
+      "name": "acu_money",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "累计产值",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "累计收款",
+      "name": "collect_money",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "累计收款",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "累计欠款",
+      "name": "owe_money",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "累计欠款",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "合同比例",
+      "name": "contract_scale",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "合同比例",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "按比例欠款",
+      "name": "contract_owe",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "按比例欠款",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "备注",
+      "name": "remark",
+      "type": "text",
+      "comment": "备注",
+      "nullable": true
+    }
+  ],
+  "relations": {
+    "contract": {
+      "type": "hasOne",
+      "model": "app.contract.contract",
+      "key": "id",
+      "foreign": "contract_id",
+      "query": {}
+    },
+    "company": {
+      "type": "hasOne",
+      "model": "app.erp.company",
+      "key": "id",
+      "foreign": "in_company_id",
+      "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "values": []
+}

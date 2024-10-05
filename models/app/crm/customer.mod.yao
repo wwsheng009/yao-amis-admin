@@ -1,0 +1,247 @@
+{
+  "name": "Customer",
+  "table": {
+    "name": "app_crm_customer",
+    "comment": "客户表",
+    "engine": "InnoDB"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID"
+    },
+    {
+      "label": "渠道",
+      "name": "channel_id",
+      "type": "bigInteger",
+      "comment": "客户渠道"
+    },
+    {
+      "label": "公司",
+      "name": "name",
+      "type": "string",
+      "length": 200,
+      "comment": "公司",
+      "unique": true
+    },
+    {
+      "label": "公司简称",
+      "name": "short_name",
+      "type": "string",
+      "length": 200,
+      "comment": "公司简称",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "name": "credit_no",
+      "type": "string",
+      "length": 200,
+      "comment": "信用代码",
+      "nullable": true,
+      "unique": true
+    },
+    {
+      "name": "oper_name",
+      "type": "string",
+      "length": 50,
+      "comment": "法人代表",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "注册资本",
+      "name": "reg_capi",
+      "type": "decimal",
+      "comment": "注册资本",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "成立时间",
+      "name": "opened_at",
+      "type": "date",
+      "comment": "成立时间",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "省份",
+      "name": "province",
+      "type": "string",
+      "length": 50,
+      "comment": "省份",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "城市",
+      "name": "city",
+      "type": "string",
+      "length": 100,
+      "comment": "城市",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "地址",
+      "name": "address",
+      "type": "string",
+      "length": 255,
+      "comment": "地址",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "经度",
+      "name": "lng",
+      "type": "unsignedDecimal",
+      "precision": 12,
+      "scale": 6,
+      "comment": "经度",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "纬度",
+      "name": "lat",
+      "type": "unsignedDecimal",
+      "comment": "纬度",
+      "precision": 12,
+      "scale": 6,
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "公司状态",
+      "name": "company_status",
+      "type": "string",
+      "length": 255,
+      "comment": "公司状态",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "LOGO",
+      "name": "logo",
+      "type": "json",
+      "comment": "LOGO",
+      "nullable": true
+    },
+    {
+      "label": "简介",
+      "name": "summary",
+      "type": "string",
+      "length": 600,
+      "comment": "简介",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "主页",
+      "name": "link",
+      "type": "string",
+      "length": 200,
+      "comment": "主页",
+      "nullable": true
+    },
+    {
+      "label": "联系人",
+      "name": "contact_name",
+      "type": "string",
+      "length": 200,
+      "comment": "联系人",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "职位",
+      "name": "contact_title",
+      "type": "string",
+      "length": 200,
+      "comment": "职位",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "手机号",
+      "name": "contact_mobile",
+      "type": "string",
+      "comment": "手机号",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "微信",
+      "name": "contact_wechat",
+      "type": "string",
+      "comment": "微信",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "描述",
+      "name": "desc",
+      "type": "text",
+      "comment": "描述",
+      "nullable": true
+    },
+    {
+      "label": "领域",
+      "name": "fields",
+      "type": "json",
+      "comment": "领域",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "行业",
+      "name": "industries",
+      "type": "json",
+      "comment": "行业",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "标签",
+      "name": "tags",
+      "type": "json",
+      "comment": "标签",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "关系",
+      "name": "relation",
+      "type": "enum",
+      "default": "Connecting",
+      "option": [
+        "Regular",
+        "Connecting",
+        "Potential"
+      ],
+      "comment": "关系：Regular, Connecting, Potential",
+      "index": true
+    }
+  ],
+  "relations": {
+    "channel": {
+      "type": "hasOne",
+      "model": "app.crm.channel",
+      "key": "id",
+      "foreign": "channel_id",
+      "query": {
+        "select": [
+          "id",
+          "name"
+        ]
+      }
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  }
+}

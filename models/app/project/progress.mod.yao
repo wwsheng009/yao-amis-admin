@@ -1,0 +1,70 @@
+{
+  "name": "工程进度",
+  "table": {
+    "name": "app_project_progress",
+    "comment": "工程进度"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "label": "项目id",
+      "name": "contract_id",
+      "type": "integer",
+      "comment": "项目id"
+    },
+    {
+      "label": "进度",
+      "name": "progress",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "进度",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "完成度",
+      "name": "complete",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "完成度",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "状态",
+      "name": "status",
+      "type": "string",
+      "length": 255,
+      "comment": "进行中,已完工,已验收"
+    },
+    {
+      "label": "备注",
+      "name": "remark",
+      "type": "text",
+      "comment": "备注",
+      "nullable": true
+    }
+  ],
+  "relations": {
+    "contract": {
+      "type": "hasOne",
+      "model": "app.project.project",
+      "key": "id",
+      "foreign": "contract_id",
+      "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "values": []
+}

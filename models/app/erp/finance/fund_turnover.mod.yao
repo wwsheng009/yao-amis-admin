@@ -1,0 +1,156 @@
+{
+  "name": "资金流水",
+  "table": {
+    "name": "app_erp_finance_fund_turnover",
+    "comment": "资金流水"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "label": "供应商/客户",
+      "name": "company_id",
+      "type": "integer",
+      "comment": "供应商",
+      "nullable": true
+    },
+    {
+      "label": "单据编号",
+      "name": "order_sn",
+      "type": "string",
+      "comment": "单据编号"
+    },
+    {
+      "label": "付款日期",
+      "name": "pay_at",
+      "type": "datetime",
+      "comment": "付款日期"
+    },
+    {
+      "label": "账户id",
+      "name": "account_id",
+      "type": "integer",
+      "comment": "账户id"
+    },
+    {
+      "label": "摘要",
+      "name": "summary",
+      "type": "string",
+      "comment": "摘要"
+    },
+    {
+      "label": "支出/收入金额",
+      "name": "total_money",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "支出金额",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "人民币大写",
+      "name": "rmb_string",
+      "type": "string",
+      "comment": "人民币大写",
+      "nullable": true
+    },
+    {
+      "label": "经办人",
+      "name": "user_id",
+      "type": "integer",
+      "comment": "经办人",
+      "nullable": true
+    },
+    {
+      "label": "审核人",
+      "name": "audit_id",
+      "type": "integer",
+      "comment": "审核人",
+      "nullable": true
+    },
+    {
+      "label": "审核日期",
+      "name": "audit_time",
+      "type": "datetime",
+      "comment": "审核日期",
+      "nullable": true
+    },
+    {
+      "label": "发票状态",
+      "name": "status",
+      "type": "string",
+      "default": "未收",
+      "comment": "状态:未收,已收,无需发票",
+      "nullable": true
+    },
+    {
+      "label": "资金种类",
+      "name": "type",
+      "type": "string",
+      "comment": "资金种类:收入,支出,借用",
+      "nullable": true
+    },
+    {
+      "label": "分类1",
+      "name": "type1",
+      "type": "string",
+      "comment": "分类1",
+      "nullable": true
+    },
+    {
+      "label": "分类2",
+      "name": "type2",
+      "type": "string",
+      "comment": "分类2",
+      "nullable": true
+    },
+    {
+      "label": "分类3",
+      "name": "type3",
+      "type": "string",
+      "comment": "分类3",
+      "nullable": true
+    },
+    {
+      "label": "附件",
+      "name": "file",
+      "type": "json",
+      "comment": "附件",
+      "nullable": true
+    }
+  ],
+  "relations": {
+    "account": {
+      "type": "hasOne",
+      "model": "app.erp.finance.account",
+      "key": "id",
+      "foreign": "account_id",
+      "query": {}
+    },
+    "user": {
+      "type": "hasOne",
+      "model": "app.hr.user",
+      "key": "id",
+      "foreign": "user_id",
+      "query": {}
+    },
+    "company": {
+      "type": "hasOne",
+      "model": "app.erp.company",
+      "key": "id",
+      "foreign": "company_id",
+      "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "values": []
+}

@@ -1,0 +1,116 @@
+{
+  "name": "项目立项",
+  "table": {
+    "name": "app_project_establish",
+    "comment": "项目立项"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "label": "项目名称",
+      "name": "project_id",
+      "type": "integer",
+      "comment": "项目名称"
+    },
+    {
+      "label": "项目经理",
+      "name": "user_id",
+      "type": "integer",
+      "comment": "项目经理",
+      "nullable": true
+    },
+    {
+      "label": "立项日期",
+      "name": "es_date",
+      "type": "datetime",
+      "comment": "立项日期",
+      "nullable": true
+    },
+    {
+      "label": "建设单位",
+      "name": "company_id",
+      "type": "integer",
+      "comment": "建设单位",
+      "nullable": true
+    },
+    {
+      "label": "监理单位",
+      "name": "monitor_company",
+      "type": "string",
+      "comment": "监理单位",
+      "nullable": true
+    },
+    {
+      "label": "预计合同金额",
+      "name": "total_money",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "预计合同金额",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "成员清单",
+      "name": "material_data",
+      "type": "json",
+      "comment": "成员清单",
+      "nullable": true
+    },
+    {
+      "label": "类型",
+      "name": "type",
+      "type": "string",
+      "comment": "投标,立项",
+      "nullable": true
+    },
+    {
+      "label": "备注",
+      "name": "remark",
+      "type": "text",
+      "comment": "备注",
+      "nullable": true
+    },
+    {
+      "label": "附件",
+      "name": "file",
+      "type": "json",
+      "comment": "附件",
+      "nullable": true
+    }
+  ],
+  "relations": {
+    "project": {
+      "type": "hasOne",
+      "model": "app.project.project",
+      "key": "id",
+      "foreign": "project_id",
+      "query": {}
+    },
+    "company": {
+      "type": "hasOne",
+      "model": "app.project.company",
+      "key": "id",
+      "foreign": "company_id",
+      "query": {}
+    },
+    "user": {
+      "type": "hasOne",
+      "model": "admin.user",
+      "key": "id",
+      "foreign": "user_id",
+      "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "values": []
+}

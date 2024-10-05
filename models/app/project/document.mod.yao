@@ -1,0 +1,57 @@
+{
+  "name": "文件资料管理",
+  "table": {
+    "name": "app_contract_document",
+    "comment": "文件资料管理"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "label": "物品名称",
+      "name": "name",
+      "type": "string",
+      "length": 50,
+      "comment": "物品名称"
+    },
+    {
+      "label": "项目id",
+      "name": "project_id",
+      "type": "integer",
+      "comment": "项目id"
+    },
+    {
+      "label": "附件",
+      "name": "file",
+      "type": "json",
+      "comment": "附件",
+      "nullable": true
+    },
+    {
+      "label": "备注",
+      "name": "remark",
+      "type": "text",
+      "comment": "备注",
+      "nullable": true
+    }
+  ],
+  "relations": {
+    "project": {
+      "type": "hasOne",
+      "model": "app.project.project",
+      "key": "id",
+      "foreign": "project_id",
+      "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "values": []
+}

@@ -1,0 +1,122 @@
+{
+  "name": "任务",
+  "table": {
+    "name": "app_crm_task",
+    "comment": "任务",
+    "engine": "InnoDB"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID"
+    },
+    {
+      "label": "项目",
+      "name": "project_id",
+      "type": "bigInteger",
+      "comment": "项目",
+      "index": true
+    },
+    {
+      "label": "负责人",
+      "name": "user_id",
+      "type": "bigInteger",
+      "comment": "负责人",
+      "index": true
+    },
+    {
+      "label": "任务名称",
+      "name": "name",
+      "type": "string",
+      "length": 600,
+      "comment": "任务名称",
+      "index": true
+    },
+    {
+      "label": "摘要",
+      "name": "summary",
+      "type": "string",
+      "length": 600,
+      "comment": "摘要",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "描述",
+      "name": "desc",
+      "type": "text",
+      "comment": "描述",
+      "nullable": true
+    },
+    {
+      "label": "文件",
+      "name": "files",
+      "type": "json",
+      "comment": "文件",
+      "nullable": true
+    },
+    {
+      "label": "报告",
+      "name": "report",
+      "type": "text",
+      "comment": "报告",
+      "nullable": true
+    },
+    {
+      "label": "计划时间",
+      "name": "plan",
+      "type": "datetime",
+      "comment": "计划时间",
+      "nullable": true
+    },
+    {
+      "label": "优先级",
+      "name": "priority",
+      "type": "enum",
+      "default": "C",
+      "option": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "comment": "优先级：A、B、C、D",
+      "index": true
+    },
+    {
+      "label": "状态",
+      "name": "status",
+      "type": "enum",
+      "default": "Create",
+      "option": [
+        "Completed",
+        "Pending",
+        "Create"
+      ],
+      "comment": "状态：Completed（完成），Pending（待处理），Create（新建）",
+      "index": true
+    }
+  ],
+  "relations": {
+    "project": {
+      "type": "hasOne",
+      "model": "app.project.project",
+      "key": "id",
+      "foreign": "project_id",
+      "query": {}
+    },
+    "user": {
+      "type": "hasOne",
+      "model": "admin.user",
+      "key": "id",
+      "foreign": "user_id",
+      "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  }
+}

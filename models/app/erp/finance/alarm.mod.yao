@@ -1,0 +1,75 @@
+{
+  "name": "未来6个月资金预警",
+  "table": {
+    "name": "app_erp_finance_alarm",
+    "comment": "未来6个月资金预警"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "label": "资金名称",
+      "name": "name",
+      "type": "string",
+      "comment": "资金名称",
+      "default": "未来6个月预计金额合计",
+      "nullable": true
+    },
+    {
+      "label": "分类",
+      "name": "type",
+      "type": "string",
+      "comment": "分类",
+      "nullable": true
+    },
+    {
+      "label": "事项",
+      "name": "kind",
+      "type": "string",
+      "comment": "事项:",
+      "nullable": true
+    },
+    {
+      "label": "本年已发生金额",
+      "name": "total_money",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "本年已发生金额",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "最后添加的日期",
+      "name": "add_time",
+      "type": "datetime",
+      "comment": "最后添加的日期",
+      "nullable": true
+    },
+    {
+      "label": "每个月的详情",
+      "name": "detail",
+      "type": "json",
+      "comment": "详情",
+      "nullable": true
+    },
+    {
+      "label": "备注",
+      "name": "remark",
+      "type": "text",
+      "comment": "备注",
+      "nullable": true
+    }
+  ],
+  "relations": {},
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "values": []
+}

@@ -1,0 +1,166 @@
+{
+  "name": "保证金申请",
+  "table": {
+    "name": "app_project_bond",
+    "comment": "保证金申请"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "label": "项目名称",
+      "name": "project_id",
+      "type": "integer",
+      "comment": "项目名称"
+    },
+    {
+      "label": "保证金名称",
+      "name": "name",
+      "type": "string",
+      "comment": "保证金名称",
+      "nullable": true
+    },
+    {
+      "label": "保证金类型",
+      "name": "type",
+      "type": "string",
+      "comment": "类型:投标保证金,履约保证金,质量保证金,其他",
+      "nullable": true
+    },
+    {
+      "label": "申请人",
+      "name": "user_id",
+      "type": "integer",
+      "comment": "申请人",
+      "nullable": true
+    },
+    {
+      "label": "申请日期",
+      "name": "apply_date",
+      "type": "datetime",
+      "comment": "申请日期",
+      "nullable": true
+    },
+    {
+      "label": "收款账户户名",
+      "name": "in_name",
+      "type": "string",
+      "comment": "收款账户户名",
+      "nullable": true
+    },
+    {
+      "label": "收款账户开户行",
+      "name": "in_bank",
+      "type": "string",
+      "comment": "收款账户开户行",
+      "nullable": true
+    },
+    {
+      "label": "收款账户账号",
+      "name": "in_account",
+      "type": "string",
+      "comment": "收款账户账号",
+      "nullable": true
+    },
+    {
+      "label": "预计付款日期",
+      "name": "pre_date",
+      "type": "datetime",
+      "comment": "预计付款日期",
+      "nullable": true
+    },
+    {
+      "label": "实际付款日期",
+      "name": "pay_date",
+      "type": "datetime",
+      "comment": "预计付款日期",
+      "nullable": true
+    },
+    {
+      "label": "预计账款周期(天)",
+      "name": "pay_day",
+      "type": "integer",
+      "comment": "预计账款周期",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "申请金额",
+      "name": "total_money",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "申请金额",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "退回金额",
+      "name": "back_money",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "退回金额",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "剩余金额",
+      "name": "left_money",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "剩余金额",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "退款日期",
+      "name": "back_date",
+      "type": "datetime",
+      "comment": "退款日期",
+      "nullable": true
+    },
+    {
+      "label": "备注",
+      "name": "remark",
+      "type": "text",
+      "comment": "备注",
+      "nullable": true
+    },
+    {
+      "label": "状态",
+      "name": "status",
+      "type": "string",
+      "default": "已申请",
+      "comment": "状态:已申请,已通过,已退还",
+      "nullable": true
+    }
+  ],
+  "relations": {
+    "project": {
+      "type": "hasOne",
+      "model": "app.project.project",
+      "key": "id",
+      "foreign": "project_id",
+      "query": {}
+    },
+    "user": {
+      "type": "hasOne",
+      "model": "admin.user",
+      "key": "id",
+      "foreign": "user_id",
+      "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "values": []
+}

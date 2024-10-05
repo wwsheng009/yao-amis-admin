@@ -1,0 +1,87 @@
+{
+  "name": "Channel",
+  "table": {
+    "name": "app_crm_channel",
+    "comment": "Channel Table",
+    "engine": "InnoDB"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID"
+    },
+    {
+      "label": "Name",
+      "name": "name",
+      "type": "string",
+      "length": 100,
+      "comment": "Channel Name",
+      "index": true
+    },
+    {
+      "label": "Homepage",
+      "name": "link",
+      "type": "string",
+      "length": 200,
+      "comment": "Homepage",
+      "nullable": true
+    },
+    {
+      "label": "Contact",
+      "name": "contact_name",
+      "type": "string",
+      "length": 200,
+      "comment": "Contact",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "Contact Title",
+      "name": "contact_title",
+      "type": "string",
+      "length": 200,
+      "comment": "Contact Title",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "Mobile",
+      "name": "contact_mobile",
+      "type": "string",
+      "comment": "Mobile",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "Wechat",
+      "name": "contact_wechat",
+      "type": "string",
+      "comment": "Wechat",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "Summary",
+      "name": "summary",
+      "type": "string",
+      "length": 600,
+      "comment": "Summary",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "Description",
+      "name": "desc",
+      "type": "text",
+      "comment": "Description",
+      "nullable": true
+    }
+  ],
+  "relations": {},
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  }
+}

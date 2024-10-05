@@ -1,0 +1,201 @@
+{
+  "name": "合同管理",
+  "table": {
+    "name": "app_contract_contract",
+    "comment": "项目合同"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "label": "项目id",
+      "name": "project_id",
+      "type": "integer",
+      "comment": "项目id"
+    },
+    {
+      "label": "状态",
+      "name": "status",
+      "type": "string",
+      "comment": "已签订,执行中,已完成",
+      "default": "已签订",
+      "nullable": true
+    },
+    {
+      "label": "合同名称",
+      "name": "name",
+      "type": "string",
+      "comment": "合同名称"
+    },
+    {
+      "label": "合同编号",
+      "name": "contract_sn",
+      "type": "string",
+      "length": 50,
+      "comment": "合同编号"
+    },
+    {
+      "label": "类型",
+      "name": "type",
+      "type": "string",
+      "comment": "类型:总包合同,分包合同"
+    },
+    {
+      "label": "签订日期",
+      "name": "sign_date",
+      "type": "datetime",
+      "comment": "签订日期",
+      "nullable": true
+    },
+    {
+      "label": "到期时间",
+      "name": "end_date",
+      "type": "datetime",
+      "comment": "到期时间",
+      "nullable": true
+    },
+    {
+      "label": "甲方名称",
+      "name": "first_company_id",
+      "type": "integer",
+      "comment": "甲方名称",
+      "nullable": true
+    },
+    {
+      "label": "乙方方名称",
+      "name": "second_company_id",
+      "type": "integer",
+      "comment": "甲方名称",
+      "nullable": true
+    },
+    {
+      "label": "甲方负责人",
+      "name": "first_user",
+      "type": "string",
+      "comment": "甲方负责人",
+      "nullable": true
+    },
+    {
+      "label": "甲方负责人电话",
+      "name": "first_mobile",
+      "type": "string",
+      "comment": "甲方负责人电话",
+      "nullable": true
+    },
+    {
+      "label": "乙方负责人",
+      "name": "second_user",
+      "type": "string",
+      "comment": "乙方负责人",
+      "nullable": true
+    },
+    {
+      "label": "乙方负责人电话",
+      "name": "second_mobile",
+      "type": "string",
+      "comment": "乙方负责人电话",
+      "nullable": true
+    },
+    {
+      "label": "合同金额",
+      "name": "total_money",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "合同金额",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "税率",
+      "name": "rate",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "税率",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "合同主要内容",
+      "name": "content",
+      "type": "text",
+      "comment": "合同主要内容",
+      "nullable": true
+    },
+    {
+      "label": "收款条件",
+      "name": "condition",
+      "type": "text",
+      "comment": "收款条件",
+      "nullable": true
+    },
+    {
+      "label": "附件",
+      "name": "file",
+      "type": "json",
+      "comment": "附件",
+      "nullable": true
+    },
+    {
+      "label": "备注",
+      "name": "remark",
+      "type": "text",
+      "comment": "备注",
+      "nullable": true
+    },
+    {
+      "label": "合同首付",
+      "name": "first_money",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "合同首付",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "合同尾款",
+      "name": "final_money",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "合同尾款",
+      "default": 0,
+      "nullable": true
+    }
+  ],
+  "relations": {
+    "project": {
+      "type": "hasOne",
+      "model": "app.project.project",
+      "key": "id",
+      "foreign": "project_id",
+      "query": {}
+    },
+    "first": {
+      "type": "hasOne",
+      "model": "app.erp.company",
+      "key": "id",
+      "foreign": "first_company_id",
+      "query": {}
+    },
+    "second": {
+      "type": "hasOne",
+      "model": "app.erp.company",
+      "key": "id",
+      "foreign": "second_company_id",
+      "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "values": []
+}

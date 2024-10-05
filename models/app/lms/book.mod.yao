@@ -1,0 +1,94 @@
+{
+  "name": "书籍",
+  "table": {
+    "name": "app_lms_book",
+    "comment": "书籍"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "label": "分类id",
+      "name": "category_id",
+      "type": "integer",
+      "nullable": true
+    },
+    {
+      "label": "书籍名称",
+      "name": "name",
+      "type": "string",
+      "length": 128,
+      "index": true
+    },
+    {
+      "label": "作者",
+      "name": "author",
+      "type": "string",
+      "index": true
+    },
+    {
+      "label": "出版社",
+      "name": "press",
+      "type": "string",
+      "nullable": true
+    },
+    {
+      "label": "价格",
+      "name": "price",
+      "type": "decimal",
+      "default": 0
+    }
+  ],
+  "relations": {
+    "category": {
+      "type": "hasOne",
+      "model": "app.lms.category",
+      "key": "id",
+      "foreign": "category_id",
+      "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "values": [
+    {
+      "id": 1,
+      "category_id": 2,
+      "name": "《世界历史》",
+      "author": "张XX,李XX",
+      "press": "XXX出版社",
+      "price": 79
+    },
+    {
+      "id": 2,
+      "category_id": 2,
+      "name": "《时间简史》",
+      "author": "斯蒂芬·威廉·霍金",
+      "press": "XXX出版社",
+      "price": 99
+    },
+    {
+      "id": 3,
+      "category_id": 5,
+      "name": "《小学数学》",
+      "author": "王XX",
+      "press": "XXX出版社",
+      "price": 39
+    },
+    {
+      "id": 4,
+      "category_id": 5,
+      "name": "《高中必修一》",
+      "author": "王XX",
+      "press": "XXX出版社",
+      "price": 60
+    }
+  ]
+}

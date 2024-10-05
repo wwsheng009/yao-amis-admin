@@ -1,0 +1,106 @@
+{
+  "name": "::Supplier",
+  "table": {
+    "name": "app_plm_supplier",
+    "comment": "::Supplier"
+  },
+  "columns": [
+    {
+      "label": "::ID",
+      "name": "id",
+      "type": "ID"
+    },
+    {
+      "label": "供应商编号",
+      "name": "sn",
+      "type": "string",
+      "length": 80,
+      "comment": "::Supplier SN",
+      "unique": true,
+      "nullable": true,
+      "validations": [
+        {
+          "method": "typeof",
+          "args": [
+            "string"
+          ],
+          "message": "::{{input}} Error"
+        }
+      ]
+    },
+    {
+      "label": "供应商名称",
+      "name": "name",
+      "type": "string",
+      "length": 200,
+      "comment": "::Supplier Name",
+      "index": true,
+      "nullable": true,
+      "validations": [
+        {
+          "method": "typeof",
+          "args": [
+            "string"
+          ],
+          "message": "::{{input}} Error"
+        }
+      ]
+    },
+    {
+      "label": "省份",
+      "name": "province",
+      "type": "string",
+      "length": 100,
+      "comment": "::City",
+      "index": true,
+      "nullable": true,
+      "validations": []
+    },
+    {
+      "label": "城市",
+      "name": "city",
+      "type": "string",
+      "length": 100,
+      "comment": "::City",
+      "index": true,
+      "nullable": true,
+      "validations": []
+    },
+    {
+      "label": "状态",
+      "comment": "::Status",
+      "name": "status",
+      "type": "enum",
+      "default": "enabled",
+      "option": [
+        "enabled",
+        "disabled"
+      ],
+      "index": true,
+      "validations": [
+        {
+          "method": "typeof",
+          "args": [
+            "string"
+          ],
+          "message": "::{{input}} Error, {{label}} should be string"
+        },
+        {
+          "method": "enum",
+          "args": [
+            "enabled",
+            "disabled"
+          ],
+          "message": "::{{input}} Error, {{label}} should be enabled/disabled"
+        }
+      ]
+    }
+  ],
+  "relations": {},
+  "values": [],
+  "indexes": [],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  }
+}

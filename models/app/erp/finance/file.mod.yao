@@ -1,0 +1,50 @@
+{
+  "name": "财务资料管理",
+  "table": {
+    "name": "app_erp_finance_file",
+    "comment": "财务资料管理"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "label": "物品名称",
+      "name": "name",
+      "type": "string",
+      "length": 50,
+      "comment": "物品名称"
+    },
+    {
+      "label": "描述",
+      "name": "content",
+      "type": "string",
+      "length": 255,
+      "comment": "描述"
+    },
+    {
+      "label": "附件",
+      "name": "file",
+      "type": "json",
+      "comment": "附件",
+      "nullable": true
+    },
+    {
+      "label": "备注",
+      "name": "remark",
+      "type": "text",
+      "comment": "备注",
+      "nullable": true
+    }
+  ],
+  "relations": {},
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "values": []
+}

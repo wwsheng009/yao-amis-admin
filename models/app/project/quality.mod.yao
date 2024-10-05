@@ -1,0 +1,105 @@
+{
+  "name": "质量策划",
+  "table": {
+    "name": "app_project_quality",
+    "comment": "质量策划"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "label": "项目名称",
+      "name": "project_id",
+      "type": "integer",
+      "comment": "项目名称"
+    },
+    {
+      "label": "执行部门",
+      "name": "department_id",
+      "type": "integer",
+      "comment": "执行部门"
+    },
+    {
+      "label": "执行情况",
+      "name": "content",
+      "type": "text",
+      "comment": "执行情况",
+      "nullable": true
+    },
+    {
+      "label": "检查结论",
+      "name": "result",
+      "type": "text",
+      "comment": "检查结论",
+      "nullable": true
+    },
+    {
+      "label": "检查人",
+      "name": "user_id",
+      "type": "integer",
+      "nullable": true,
+      "comment": "检查人"
+    },
+    {
+      "label": "检查日期",
+      "name": "check_date",
+      "type": "datetime",
+      "comment": "检查日期",
+      "nullable": true
+    },
+    {
+      "label": "改进要求",
+      "name": "change",
+      "type": "text",
+      "comment": "改进要求",
+      "nullable": true
+    },
+    {
+      "label": "备注",
+      "name": "remark",
+      "type": "text",
+      "comment": "备注",
+      "nullable": true
+    },
+    {
+      "label": "附件",
+      "name": "file",
+      "type": "json",
+      "comment": "附件",
+      "nullable": true
+    }
+  ],
+  "relations": {
+    "project": {
+      "type": "hasOne",
+      "model": "app.project.project",
+      "key": "id",
+      "foreign": "project_id",
+      "query": {}
+    },
+    "department": {
+      "type": "hasOne",
+      "model": "admin.dept",
+      "key": "id",
+      "foreign": "department_id",
+      "query": {}
+    },
+    "user": {
+      "type": "hasOne",
+      "model": "admin.user",
+      "key": "id",
+      "foreign": "user_id",
+      "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "values": []
+}

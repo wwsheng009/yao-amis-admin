@@ -1,0 +1,137 @@
+{
+  "name": "::Product",
+  "table": {
+    "name": "app_plm_product",
+    "comment": "::Product"
+  },
+  "columns": [
+    {
+      "label": "::ID",
+      "name": "id",
+      "type": "ID"
+    },
+    {
+      "label": "::Product SN",
+      "name": "sn",
+      "type": "string",
+      "length": 80,
+      "comment": "::Product SN",
+      "index": true,
+      "nullable": true,
+      "validations": [
+        {
+          "method": "typeof",
+          "args": [
+            "string"
+          ],
+          "message": "::{{input}} Error"
+        }
+      ]
+    },
+    {
+      "label": "::Product Name",
+      "name": "name",
+      "type": "string",
+      "length": 100,
+      "comment": "::Product Name",
+      "index": true,
+      "nullable": true,
+      "validations": [
+        {
+          "method": "typeof",
+          "args": [
+            "string"
+          ],
+          "message": "::{{input}} Error"
+        }
+      ]
+    },
+    {
+      "label": "::Supplier ID",
+      "name": "supplier_id",
+      "type": "bigInteger",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "::Product Type",
+      "comment": "::Product Type",
+      "name": "type",
+      "type": "enum",
+      "default": "finished",
+      "option": [
+        "finished",
+        "component",
+        "standard",
+        "utils",
+        "dashboard"
+      ],
+      "index": true,
+      "validations": [
+        {
+          "method": "typeof",
+          "args": [
+            "string"
+          ],
+          "message": "::{{input}} Error, {{label}} should be string"
+        },
+        {
+          "method": "enum",
+          "args": [
+            "finished",
+            "component",
+            "standard",
+            "utils",
+            "dashboard"
+          ],
+          "message": "::{{input}} Error, {{label}} should be enabled/disabled"
+        }
+      ]
+    },
+    {
+      "label": "::Remark",
+      "name": "remark",
+      "type": "string",
+      "length": 300,
+      "comment": "::Remark",
+      "nullable": true,
+      "validations": []
+    },
+    {
+      "label": "::Status",
+      "comment": "::Status",
+      "name": "status",
+      "type": "enum",
+      "default": "enabled",
+      "option": [
+        "enabled",
+        "disabled"
+      ],
+      "index": true,
+      "validations": [
+        {
+          "method": "typeof",
+          "args": [
+            "string"
+          ],
+          "message": "::{{input}} Error, {{label}} should be string"
+        },
+        {
+          "method": "enum",
+          "args": [
+            "enabled",
+            "disabled"
+          ],
+          "message": "::{{input}} Error, {{label}} should be enabled/disabled"
+        }
+      ]
+    }
+  ],
+  "relations": {},
+  "values": [],
+  "indexes": [],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  }
+}

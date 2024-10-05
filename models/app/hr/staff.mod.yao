@@ -1,0 +1,172 @@
+{
+  "name": "用户表",
+  "table": {
+    "name": "app_hr_staff",
+    "comment": "用户表"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "label": "用户名字",
+      "name": "name",
+      "type": "string",
+      "length": 50,
+      "comment": "用户名字"
+    },
+    {
+      "label": "英文名",
+      "name": "en_name",
+      "type": "string",
+      "length": 255,
+      "comment": "英文名",
+      "nullable": true
+    },
+    {
+      "label": "工号",
+      "name": "job_number",
+      "type": "string",
+      "length": 255,
+      "comment": "工号",
+      "nullable": true
+    },
+    {
+      "label": "用户union_id",
+      "name": "union_id",
+      "type": "string",
+      "length": 50,
+      "comment": "用户union_id",
+      "nullable": true
+    },
+    {
+      "label": "用户open_id",
+      "name": "open_id",
+      "type": "string",
+      "length": 50,
+      "comment": "用户open_id",
+      "nullable": true
+    },
+    {
+      "label": "第三方userid",
+      "name": "userid",
+      "type": "string",
+      "length": 50,
+      "comment": "第三方userid",
+      "nullable": true
+    },
+    {
+      "label": "电子邮箱",
+      "name": "email",
+      "type": "string",
+      "length": 100,
+      "comment": "电子邮箱",
+      "unique": true
+    },
+    {
+      "label": "组织电子邮箱",
+      "name": "org_email",
+      "type": "string",
+      "length": 100,
+      "comment": "电子邮箱",
+      "nullable": true
+    },
+    {
+      "label": "电话号码",
+      "name": "mobile",
+      "type": "string",
+      "length": 30,
+      "comment": "电话号码",
+      "unique": true
+    },
+    {
+      "label": "座机号码",
+      "name": "telephone",
+      "type": "string",
+      "length": 50,
+      "comment": "电话号码",
+      "nullable": true
+    },
+    {
+      "label": "头像",
+      "name": "avatar",
+      "type": "json",
+      "comment": "头像",
+      "nullable": true
+    },
+    {
+      "label": "工作职位",
+      "name": "position",
+      "type": "string",
+      "length": 255,
+      "comment": "职位",
+      "nullable": true
+    },
+    {
+      "label": "工作地点",
+      "name": "work_place",
+      "type": "string",
+      "length": 255,
+      "comment": "工作地点",
+      "nullable": true
+    },
+    {
+      "label": "密码",
+      "name": "password",
+      "type": "string",
+      "length": 256,
+      "comment": "密码",
+      "crypt": "PASSWORD"
+    },
+    {
+      "label": "状态",
+      "comment": "状态",
+      "name": "status",
+      "type": "enum",
+      "default": "启用",
+      "option": [
+        "启用",
+        "停用"
+      ],
+      "index": true
+    },
+    {
+      "label": "性别",
+      "comment": "性别",
+      "name": "gender",
+      "type": "enum",
+      "default": "未知",
+      "option": [
+        "男",
+        "女",
+        "未知"
+      ],
+      "index": true
+    },
+    {
+      "label": "所属部门",
+      "name": "department_id",
+      "type": "integer",
+      "comment": "所属部门",
+      "nullable": true
+    }
+  ],
+  "relations": {
+    "departments": {
+      "type": "hasOne",
+      "model": "app.hr.department",
+      "key": "id",
+      "foreign": "department_id",
+      "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "values": []
+}

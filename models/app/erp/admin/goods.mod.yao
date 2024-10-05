@@ -1,0 +1,51 @@
+{
+  "name": "行政物品管理",
+  "table": {
+    "name": "app_erp_admin_goods",
+    "comment": "行政物品管理"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "label": "物品名称",
+      "name": "name",
+      "type": "string",
+      "length": 50,
+      "comment": "物品名称"
+    },
+    {
+      "label": "状态",
+      "name": "status",
+      "type": "string",
+      "comment": "状态:闲置,外借",
+      "nullable": true
+    },
+    {
+      "label": "用户id",
+      "name": "user_id",
+      "type": "integer",
+      "comment": "外借的用户id",
+      "nullable": true
+    }
+  ],
+  "relations": {
+    "user": {
+      "type": "hasOne",
+      "model": "admin.user",
+      "key": "id",
+      "foreign": "user_id",
+      "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "values": []
+}

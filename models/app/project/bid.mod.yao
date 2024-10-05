@@ -1,0 +1,81 @@
+{
+  "name": "投标结果",
+  "table": {
+    "name": "app_project_bid",
+    "comment": "投标结果"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "label": "项目名称",
+      "name": "project_id",
+      "type": "integer",
+      "comment": "项目名称"
+    },
+    {
+      "label": "登记日期",
+      "name": "sign_date",
+      "type": "datetime",
+      "comment": "登记日期",
+      "nullable": true
+    },
+    {
+      "label": "登记人",
+      "name": "user_id",
+      "type": "integer",
+      "comment": "登记人",
+      "nullable": true
+    },
+    {
+      "label": "状态",
+      "name": "status",
+      "type": "string",
+      "comment": "已中标,已流标",
+      "nullable": true
+    },
+    {
+      "label": "备注",
+      "name": "remark",
+      "type": "text",
+      "comment": "备注",
+      "nullable": true
+    },
+    {
+      "label": "保证金",
+      "name": "bond",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "保证金",
+      "default": 0,
+      "nullable": true
+    }
+  ],
+  "relations": {
+    "project": {
+      "type": "hasOne",
+      "model": "app.project.project",
+      "key": "id",
+      "foreign": "project_id",
+      "query": {}
+    },
+    "user": {
+      "type": "hasOne",
+      "model": "admin.user",
+      "key": "id",
+      "foreign": "user_id",
+      "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "values": []
+}

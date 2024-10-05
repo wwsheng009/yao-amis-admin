@@ -1,0 +1,105 @@
+{
+  "name": "税务核算",
+  "table": {
+    "name": "app_erp_finance_tax",
+    "comment": "税务核算"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "label": "项目id",
+      "name": "project_id",
+      "type": "integer",
+      "comment": "项目id"
+    },
+    {
+      "label": "合同类型",
+      "name": "contract_type",
+      "type": "string",
+      "comment": "合同类型:销售合同,采购合同",
+      "nullable": true
+    },
+    {
+      "label": "类型",
+      "name": "type",
+      "type": "string",
+      "comment": "类型:主机,外购件",
+      "nullable": true
+    },
+    {
+      "label": "销项税发票预计数据库",
+      "name": "pre_sale_tax",
+      "type": "json",
+      "comment": "销项税发票预计数据库",
+      "nullable": true
+    },
+    {
+      "label": "进项税发票预计数据库",
+      "name": "pre_import_tax",
+      "type": "json",
+      "comment": "进项税发票预计数据库",
+      "nullable": true
+    },
+    {
+      "label": "付款方式",
+      "name": "pay_way",
+      "type": "string",
+      "comment": "付款方式:贷款,自有资金",
+      "nullable": true
+    },
+    {
+      "label": "进项税发票实际数据库",
+      "name": "import_tax",
+      "type": "json",
+      "comment": "进项税发票实际数据库",
+      "nullable": true
+    },
+    {
+      "label": "预计增值税额",
+      "name": "pre_incr_tax",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "预计增值税额",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "预计附加税额",
+      "name": "pre_add_tax",
+      "type": "decimal",
+      "precision": 15,
+      "scale": 2,
+      "comment": "预计附加税额",
+      "default": 0,
+      "nullable": true
+    },
+    {
+      "label": "年月月份",
+      "name": "add_time",
+      "type": "datetime",
+      "comment": "年月月份",
+      "nullable": true
+    }
+  ],
+  "relations": {
+    "project": {
+      "type": "hasOne",
+      "model": "app.project.project",
+      "key": "id",
+      "foreign": "project_id",
+      "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "values": []
+}

@@ -1,0 +1,57 @@
+{
+  "name": "单位表",
+  "table": {
+    "name": "app.erp.company",
+    "comment": "单位表"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "label": "公司名称",
+      "name": "name",
+      "type": "string",
+      "length": 50,
+      "comment": "公司名称"
+    },
+    {
+      "label": "单位类型",
+      "name": "kind",
+      "type": "string",
+      "comment": "单位类型:建设单位,总包单位,劳务公司,工程公司,建材公司,专业分包",
+      "nullable": true
+    },
+    {
+      "label": "单位类型",
+      "name": "type",
+      "type": "string",
+      "comment": "内部,外部",
+      "nullable": true
+    },
+    {
+      "label": "负责人名字",
+      "name": "user_name",
+      "type": "string",
+      "comment": "负责人名字",
+      "nullable": true
+    },
+    {
+      "label": "负责人联系电话",
+      "name": "mobile",
+      "type": "string",
+      "comment": "负责人联系电话",
+      "nullable": true
+    }
+  ],
+  "relations": {},
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "values": []
+}
