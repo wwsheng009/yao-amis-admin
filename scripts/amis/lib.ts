@@ -416,7 +416,7 @@ export function getFormViewFields(
  * 更新表单中的模型关联关系
  * @param {Array} columns form schema
  * @param {object} model modelDsl object
- * @param {string} actionType 'view' |'update'
+ * @param {ActionType} actionType
  * @returns
  */
 function updateFormRelations(
@@ -442,14 +442,14 @@ function updateFormRelations(
     const element = hasOnes[key];
     const label = element.label || key;
     let fields = [];
-    if (actionType === 'view') {
+    if (actionType == 'view') {
       fields = getFormViewFields(element.model, null, true);
     } else {
       fields = getFormFields(element.model, actionType, null, null, true);
     }
     fields = fields.filter((col) => col.name !== element.key);
     columns.push({
-      visibleOn: `!!this.${element.foreign}`,
+      visibleOn: `typeof this.${key} == 'object' && Object.keys(this.${key}).length > 0`,
       type: 'input-sub-form',
       name: key,
       label: label,
@@ -475,7 +475,7 @@ function updateFormRelations(
       fields = fields.filter((col) => col.name !== element.key);
 
       tableSchema = {
-        visibleOn: `!!this.${element.foreign}`,
+        visibleOn: `Array.isArray(this.${key})`,
         columns: fields,
         source: '${' + key + '}',
         type: 'table'
