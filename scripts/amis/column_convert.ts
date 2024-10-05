@@ -331,11 +331,9 @@ export function column2AmisTableViewColumn(
   //   }
   // }
   newColumn.type = 'text';
-  let type = column.type.toUpperCase();
-  if (column.primary === true) {
-    type = 'ID';
-  }
-  switch (type) {
+  const colType = column.type.toUpperCase();
+
+  switch (colType) {
     case 'STRING':
     case 'CHAR':
       newColumn.type = 'text';
@@ -507,7 +505,7 @@ export function column2AmisTableViewColumn(
   }
   // 布尔
   if (
-    type === 'TINYINTEGER' &&
+    colType === 'TINYINTEGER' &&
     (column.default === 0 || column.default === 1)
   ) {
     newColumn.type = 'status';
@@ -772,10 +770,7 @@ export function column2AmisFormEditColumn(
   }
   newColumn.type = 'input-text';
 
-  let columnType = column.type.toUpperCase();
-  if (column.primary === true) {
-    columnType = 'ID';
-  }
+  const columnType = column.type.toUpperCase();
   switch (columnType) {
     case 'STRING':
     case 'CHAR':

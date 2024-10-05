@@ -392,19 +392,24 @@ export function completeAmisModel(modelDsl: AmisModel): AmisModel {
       delete col.precision;
     }
 
-    if (['longtext', 'json', 'text'].includes(colType)) {
+    if (['longtext', 'json', 'text', 'mediumtext'].includes(colType)) {
       delete col.length;
     }
     if (colType == 'mediumint') {
       col.type = 'integer';
-    }
-    if (colType == 'datetime') {
+    } else if (colType == 'datetime') {
       if (col.default?.toString().indexOf('(') > -1) {
         delete col.default;
       }
-    }
-    if (colType == 'bit') {
-      col.type = 'tinyInteger';
+    } else if (colType == 'bit') {
+      col.type = 'bool';
+      if (col.default == false || col.default.toString() == '0') {
+        col.default = false;
+      } else if (col.default == "b'1" || col.default.toString() == '1') {
+        col.default = true;
+      }
+    } else if (colType == 'mediumblob') {
+      col.type = 'binary';
     }
 
     if (Array.isArray(col.options) && col.options.length > 0) {

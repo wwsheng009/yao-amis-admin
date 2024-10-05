@@ -584,6 +584,7 @@ export function getFormFields(
     }
     col = updateAmisFormValidations(col, column);
     col = updateAmisFormMetaFields(col, column, model, actionType);
+    delete col.isID;
     outputCols.push({ ...col });
   }
   if (Array.isArray(excludeFields)) {
@@ -618,7 +619,7 @@ export function getFilterFormFields(
     if (col.isID) {
       col.type = 'input-number';
     }
-    delete col.isID;
+
     // 筛选框不强制输入
     delete col.required;
 
@@ -646,6 +647,7 @@ export function getFilterFormFields(
         break;
     }
     if (output) {
+      delete col.isID;
       schemas.push({ ...col });
     }
   }
@@ -690,6 +692,8 @@ export function getModelFieldsWithQuick(
     label = viewColumn.label;
     delete formColumn.name;
     delete formColumn.label;
+    delete formColumn.isID;
+    delete viewColumn.isID;
     viewColumn.label = label;
 
     const fieldNew = {
@@ -732,10 +736,7 @@ export function excelMapping(modelId: ModelId, columnsIn?: AmisUIColumn[]) {
   // const columns = schema.columns;
   const obj = {};
   columns.forEach((column) => {
-    let type = column.type.toUpperCase();
-    if (column.primary === true) {
-      type = 'ID';
-    }
+    const type = column.type.toUpperCase();
     let ignore = false;
     switch (type) {
       // 自增长的不要
@@ -778,4 +779,30 @@ export function excelMapping(modelId: ModelId, columnsIn?: AmisUIColumn[]) {
   // } catch (error) {
   //   return {};
   // }
+}
+
+export function getPrimaryField(modelId: ModelId, columnsIn?: AmisUIColumn[]) {
+  const model = getModelDefinition(modelId, columnsIn);
+
+  if (!model || !Array.isArray(model.columns)) {
+    return 'id';
+  }
+  for (const col of model.columns) {
+    if (col.primary) {
+      return col.name;
+    }
+    const colType = col.type.toLowerCase();
+    switch (colType) {
+      // 自增长的不要
+      case 'ID':
+      case 'TINYINCREMENTS':
+      case 'SMALLINCREMENTS':
+      case 'INCREMENTS':
+        return col.name;
+        break;
+      default:
+        break;
+    }
+  }
+  return 'id';
 }

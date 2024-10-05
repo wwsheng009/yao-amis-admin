@@ -22,7 +22,8 @@ import {
   eachSaveAfterDelete,
   saveModelDataBatch,
   deleteModelData,
-  bulkUpdateModelData
+  bulkUpdateModelData,
+  TableAction
 } from './processor';
 
 /**
@@ -257,7 +258,11 @@ export function getData(modelId: string, id: number) {
  * @param payload data to be saved
  * @returns id of the data
  */
-function saveData(modelId: ModelId, payload: { [x: string]: any; id: number }) {
+function saveData(
+  modelId: ModelId,
+  payload: { [x: string]: any; id: number },
+  action: TableAction
+) {
   const modelDsl = FindAndLoadYaoModelById(modelId);
 
   // payload = updateInputData(modelDsl, payload);
@@ -278,7 +283,7 @@ function saveData(modelId: ModelId, payload: { [x: string]: any; id: number }) {
   }
 
   const saveFun = function () {
-    const id = saveModelData(modelId, payload); //Process(`models.${modelId}.Save`, payload);
+    const id = saveModelData(modelId, payload, action); //Process(`models.${modelId}.Save`, payload);
     if (id) {
       payload.id = id;
       for (const key in hasOnes) {
@@ -288,7 +293,7 @@ function saveData(modelId: ModelId, payload: { [x: string]: any; id: number }) {
           // 设置外键
           payload[key][w.key] = payload[w.foreign];
           // Process(`models.${w.model}.Save`, payload[key]);
-          saveModelData(w.model, payload[key]);
+          saveModelData(w.model, payload[key], action);
         }
       }
       for (const key in hasManys) {
@@ -347,11 +352,11 @@ export function saveDataById(
   payload: { id: number }
 ) {
   payload.id = id;
-  return saveData(model, payload);
+  return saveData(model, payload, 'update');
 }
 // 创建新记录
 export function newData(model: ModelId, payload: any) {
-  return saveData(model, payload);
+  return saveData(model, payload, 'create');
 }
 
 // 批量创建新记录
@@ -364,12 +369,6 @@ export function newBatchData(model: ModelId, payload: { batch: object[] }) {
 // 删除记录，支持单条或是批量
 export function deleteData(modelId: string, ids: string) {
   return deleteModelData(modelId, ids);
-  // const myArray = ids.split(',');
-
-  // myArray.forEach((id: string) => {
-  //   // Process("yao.model.Delete", model, id);
-  //   Process(`models.${modelId}.Delete`, id);
-  // });
 }
 // 批量更新数据
 /**

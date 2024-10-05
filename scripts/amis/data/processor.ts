@@ -5,6 +5,7 @@ import { YaoQueryParam } from '@yaoapps/types';
 import { updateOutputData, updateInputData } from './lib';
 import { ClearFalsyKeys } from '@scripts/system/lib';
 
+export type TableAction = 'create' | 'update';
 /**
  * get the data from model using the query object
  * yao run scripts.amis.data.model.getModelData
@@ -80,16 +81,21 @@ export function searchModelData(
   return modelData;
 }
 
-export function saveModelData(modelId: ModelId, payload: any) {
+export function saveModelData(
+  modelId: ModelId,
+  payload: any,
+  action: TableAction
+) {
   if (payload == null) {
     return;
   }
-  payload = updateInputData(modelId, payload);
 
+  payload = updateInputData(modelId, payload);
+  const dbAction = action == 'create' ? 'create' : 'save';
   if (isModelTableExist(modelId)) {
-    return Process(`yao.table.save`, modelId, payload);
+    return Process(`yao.table.${dbAction}`, modelId, payload);
   }
-  return Process(`models.${modelId}.Save`, payload);
+  return Process(`models.${modelId}.${dbAction}`, payload);
 }
 
 export function saveModelDataBatch(modelId: ModelId, payload: any) {

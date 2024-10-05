@@ -1938,25 +1938,25 @@ function FilterCachedModelList(attr) {
   return list;
 }
 
-function FindAndLoadYaoModelById(id) {
-  const traverse = (node, id) => {
-    if (node.children) {
-      return traverse(node.children, id);
-    } else if (node.data) {
-      if (node.data.ID == id) {
-        return node.data;
-      }
-    } else if (Array.isArray(node)) {
-      for (const item of node) {
-        const obj = traverse(item, id);
-        if (obj) {
-          return obj;
-        }
-      }
-    }
-  };
-  return traverse(models, id);
-}
+// function FindAndLoadYaoModelById(id) {
+//   const traverse = (node, id) => {
+//     if (node.children) {
+//       return traverse(node.children, id);
+//     } else if (node.data) {
+//       if (node.data.ID == id) {
+//         return node.data;
+//       }
+//     } else if (Array.isArray(node)) {
+//       for (const item of node) {
+//         const obj = traverse(item, id);
+//         if (obj) {
+//           return obj;
+//         }
+//       }
+//     }
+//   };
+//   return traverse(models, id);
+// }
 
 // const data = FindAndLoadYaoModelById("system.api");
 // console.log(data);

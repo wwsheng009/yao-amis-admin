@@ -4,7 +4,8 @@ import {
   getFormViewFields,
   getModelFieldsWithQuick,
   excelMapping,
-  getWithsUrl
+  getWithsUrl,
+  getPrimaryField
 } from '@scripts/amis/lib';
 import { AmisUIColumn, ModelId } from '@yao/types';
 
@@ -46,6 +47,7 @@ export function curdTemplate(modelId: ModelId, columns: AmisUIColumn[]) {
   const updateFormSchema = getFormFields(modelId, 'update', columns);
   const viewFormSchema = getFormViewFields(modelId, columns);
   const withUrl = getWithsUrl(modelId);
+  const primaryField = getPrimaryField(modelId);
   const template = {
     body: [
       {
@@ -80,7 +82,7 @@ export function curdTemplate(modelId: ModelId, columns: AmisUIColumn[]) {
         filterDefaultVisible: false,
         keepItemSelectionOnPageChange: true,
         perPage: 10,
-        primaryField: 'id',
+        primaryField: primaryField,
         api: {
           method: 'post',
           url:
@@ -122,7 +124,7 @@ export function curdTemplate(modelId: ModelId, columns: AmisUIColumn[]) {
                   type: 'dialog',
                   size: 'lg',
                   body: {
-                    api: `post:/api/v1/system/model/${modelId}/update/$id`,
+                    api: `post:/api/v1/system/model/${modelId}/update/$\{${primaryField}}`,
                     body: updateFormSchema,
                     name: 'update',
                     silentPolling: false,
@@ -132,8 +134,8 @@ export function curdTemplate(modelId: ModelId, columns: AmisUIColumn[]) {
                 }
               },
               {
-                api: `delete:/api/v1/system/model/${modelId}/delete/$id`,
-                confirmText: '你确定要删除行${id}?',
+                api: `delete:/api/v1/system/model/${modelId}/delete/$\{${primaryField}}`,
+                confirmText: `你确定要删除行$\{${primaryField}}?`,
                 icon: 'fa fa-times text-danger',
                 tooltip: '删除',
                 type: 'button',
@@ -173,7 +175,6 @@ export function curdTemplate(modelId: ModelId, columns: AmisUIColumn[]) {
               body: {
                 api: `post:/api/v1/system/model/${modelId}/create`,
                 body: newForm,
-                name: 'create',
                 silentPolling: false,
                 type: 'form'
               },
@@ -258,7 +259,8 @@ export function curdTemplate(modelId: ModelId, columns: AmisUIColumn[]) {
           'export-excel'
         ],
         quickSaveItemApi:
-          `post:/api/v1/system/model/${modelId}` + '/update/${id}',
+          `post:/api/v1/system/model/${modelId}` +
+          `/update/$\{${primaryField}}`,
         syncLocation: false
       }
     ],
