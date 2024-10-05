@@ -757,10 +757,13 @@ export function column2AmisFormEditColumn(
   newColumn.name = column.name;
   newColumn.label = column.label;
 
-  // 必填项
-  if (column.type.toLowerCase() !== 'id' && column.default == null) {
-    if (!column.nullable || column.unique || column.index || column.primary) {
-      newColumn.required = true;
+  // nullable的优先级最高
+  if (!column.nullable) {
+    // 必填项
+    if (column.type.toLowerCase() !== 'id' && column.default == null) {
+      if (column.unique || column.index || column.primary) {
+        newColumn.required = true;
+      }
     }
   }
 
