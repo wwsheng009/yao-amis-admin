@@ -20,7 +20,6 @@
           "ignoreError": false,
           "outputVar": "responseResult",
           "id": "u:722e200d5547",
-          "editorState": "default",
           "label": "批量导入本地缓存",
           "confirmText": "确定需要批量导入本地缓存吗",
           "actionType": "ajax"
