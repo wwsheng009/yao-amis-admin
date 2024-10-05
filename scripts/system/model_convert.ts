@@ -400,7 +400,7 @@ export function completeAmisModel(modelDsl: AmisModel): AmisModel {
     }
     if (colType == 'datetime') {
       if (col.default?.toString().indexOf('(') > -1) {
-        col.default = '';
+        delete col.default;
       }
     }
     if (colType == 'bit') {

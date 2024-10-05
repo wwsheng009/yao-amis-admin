@@ -126,8 +126,7 @@ function saveModelToFile(modelDsl: AmisModel) {
   }
 
   // hacked,don't do this in production envirement
-  // @ts-ignore
-  __yao_data = { ROOT: true };
+  // __yao_data = { ROOT: true };
   let model_id = modelDsl.ID;
   if (!model_id) {
     model_id = modelDsl.table?.name;
@@ -138,11 +137,10 @@ function saveModelToFile(modelDsl: AmisModel) {
   }
   const model = amisModelToYaoModel(modelDsl);
 
-  const dsl = new FS('dsl');
+  const dsl = new FS('system');
   model_id = SlashName(model_id);
-  dsl.WriteFile(`/models/${model_id}.mod.yao`, JSON.stringify(model));
-  // @ts-ignore
-  __yao_data = { ROOT: false };
+  dsl.WriteFile(`/dev/models/${model_id}.mod.yao`, JSON.stringify(model));
+  // __yao_data = { ROOT: false };
 }
 
 // // 删除关联表数据
@@ -284,16 +282,14 @@ function DeleteModelLocalFile(modelId: string) {
   if (saveFlag !== 'true') {
     return;
   }
-  // @ts-ignore
-  __yao_data = { ROOT: true };
-  const dsl = new FS('dsl');
+  // __yao_data = { ROOT: true };
+  const dsl = new FS('system');
   const model_id = SlashName(modelId);
-  const fname = `/models/${model_id}.mod.yao`;
+  const fname = `/dev/models/${model_id}.mod.yao`;
   if (dsl.Exists(fname)) {
     dsl.Remove(fname);
   }
-  // @ts-ignore
-  __yao_data = { ROOT: false };
+  // __yao_data = { ROOT: false };
 }
 
 /**
