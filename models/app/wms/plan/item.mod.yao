@@ -1,0 +1,65 @@
+{
+  "name": "计划清单",
+  "table": {
+    "name": "app_wms_plan_item",
+    "comment": "计划清单"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID"
+    },
+    {
+      "label": "计划",
+      "name": "plan_id",
+      "type": "bigInteger",
+      "comment": "所属计划",
+      "index": true,
+      "nullable": true
+    },
+    {
+      "label": "单品",
+      "name": "sku_id",
+      "type": "bigInteger",
+      "comment": "单品",
+      "index": true,
+      "nullable": true
+    },
+    {
+      "label": "计划数量",
+      "name": "amount_plan",
+      "type": "integer",
+      "index": true
+    },
+    {
+      "label": "实际数量",
+      "name": "amount",
+      "type": "integer",
+      "default": 0,
+      "index": true
+    },
+    {
+      "label": "更新时间",
+      "name": "uptime",
+      "type": "datetime",
+      "nullable": true,
+      "comment": "更新时间",
+      "index": true
+    }
+  ],
+  "indexes": [
+    {
+      "name": "plan_id_sku_id_unique",
+      "type": "unique",
+      "columns": [
+        "plan_id",
+        "sku_id"
+      ]
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  }
+}

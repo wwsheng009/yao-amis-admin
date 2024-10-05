@@ -1,0 +1,63 @@
+{
+  "name": "标签",
+  "table": {
+    "name": "app_wms_rfid",
+    "comment": "标签管理"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID"
+    },
+    {
+      "label": "标签",
+      "name": "sn",
+      "type": "string",
+      "length": 64,
+      "unique": true,
+      "comment": "标签: 类目(0-6)-SKU(7-14)-计划(14-20)-Item(20-29)"
+    },
+    {
+      "label": "仓库",
+      "name": "node_id",
+      "type": "string",
+      "index": true,
+      "nullable": true,
+      "comment": "仓库节点ID"
+    },
+    {
+      "label": "状态",
+      "name": "status",
+      "type": "enum",
+      "default": "空闲",
+      "option": [
+        "空闲",
+        "入库",
+        "异常"
+      ],
+      "index": true,
+      "comment": "状态: 空闲, 入库, 异常"
+    },
+    {
+      "label": "扫描码",
+      "name": "s_code",
+      "type": "string",
+      "length": 64,
+      "comment": "扫描码,与sn绑定用于扫码枪"
+    }
+  ],
+  "relations": {
+    "warehouse": {
+      "type": "hasOne",
+      "model": "app.wms.warehouse",
+      "key": "id",
+      "foreign": "node_id",
+      "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  }
+}

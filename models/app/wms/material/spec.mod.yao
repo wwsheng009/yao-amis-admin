@@ -1,0 +1,74 @@
+{
+  "name": "规格",
+  "table": {
+    "name": "app_wms_spec",
+    "comment": "物资规格"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID"
+    },
+    {
+      "label": "物资",
+      "name": "material_id",
+      "type": "bigInteger",
+      "comment": "所属物资",
+      "index": true,
+      "nullable": true
+    },
+    {
+      "label": "名称",
+      "name": "name",
+      "type": "string",
+      "nullable": true,
+      "index": true,
+      "comment": "规格名称"
+    },
+    {
+      "label": "数值类型",
+      "name": "type",
+      "type": "enum",
+      "default": "文本",
+      "option": [
+        "文本",
+        "数字",
+        "单选",
+        "多选"
+      ],
+      "index": true,
+      "comment": "数值类型"
+    },
+    {
+      "label": "数值范围",
+      "name": "values",
+      "type": "json",
+      "nullable": true,
+      "comment": "规格数值范围(单选/多选有效)"
+    }
+  ],
+  "relations": {
+    "material": {
+      "type": "hasOne",
+      "model": "app.wms.material",
+      "key": "id",
+      "foreign": "material_id",
+      "query": {}
+    }
+  },
+  "indexes": [
+    {
+      "name": "material_id_name_unique",
+      "type": "unique",
+      "columns": [
+        "material_id",
+        "name"
+      ]
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  }
+}

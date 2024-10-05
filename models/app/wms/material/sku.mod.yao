@@ -1,0 +1,127 @@
+{
+  "name": "物资单品",
+  "table": {
+    "name": "app_wms_sku",
+    "comment": "物资单品"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID"
+    },
+    {
+      "label": "物资",
+      "name": "material_id",
+      "type": "bigInteger",
+      "index": true,
+      "comment": "所属物资"
+    },
+    {
+      "label": "编码",
+      "name": "sku_sn",
+      "type": "string",
+      "length": 32,
+      "nullable": true,
+      "unique": true,
+      "comment": "SKU编码",
+      "__comment": "对应RFID单品信息"
+    },
+    {
+      "label": "单位",
+      "name": "unit",
+      "type": "string",
+      "nullable": true,
+      "comment": "计量单位"
+    },
+    {
+      "label": "单价",
+      "name": "price",
+      "type": "decimal",
+      "index": true,
+      "nullable": true,
+      "comment": "无税单价"
+    },
+    {
+      "label": "税率",
+      "name": "tax_rate",
+      "type": "decimal",
+      "index": true,
+      "nullable": true,
+      "comment": "税率"
+    },
+    {
+      "label": "含税单价",
+      "name": "tax_price",
+      "type": "decimal",
+      "index": true,
+      "nullable": true,
+      "comment": "含税单价"
+    },
+    {
+      "label": "列账单价",
+      "name": "fin_price",
+      "type": "decimal",
+      "index": true,
+      "nullable": true,
+      "comment": "列账单价"
+    },
+    {
+      "label": "规格",
+      "name": "specs",
+      "type": "json",
+      "nullable": true,
+      "comment": "规格数值(KEY-VALUE)"
+    },
+    {
+      "label": "预警库存",
+      "name": "stock",
+      "type": "bigInteger",
+      "index": true,
+      "default": 100,
+      "comment": "预警库存"
+    },
+    {
+      "label": "图片",
+      "name": "images",
+      "type": "json",
+      "nullable": true
+    },
+    {
+      "label": "介绍",
+      "name": "detail",
+      "type": "text",
+      "nullable": true
+    },
+    {
+      "label": "状态",
+      "name": "status",
+      "type": "enum",
+      "default": "在产",
+      "option": [
+        "在产",
+        "停产"
+      ],
+      "index": true,
+      "comment": "状态: 在产, 停产"
+    }
+  ],
+  "relations": {
+    "material": {
+      "type": "hasOne",
+      "model": "app.wms.material",
+      "key": "id",
+      "foreign": "material_id",
+      "query": {
+        "withs": {
+          "category": {},
+          "supplier": {}
+        }
+      }
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "name": "同步",
+  "table": {
+    "name": "app_wms_synclog",
+    "comment": "同步"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID"
+    },
+    {
+      "label": "仓库",
+      "name": "warehouse_id",
+      "type": "integer",
+      "comment": "所在仓库",
+      "index": true
+    },
+    {
+      "label": "同步时间",
+      "name": "sync_at",
+      "type": "datetime",
+      "comment": "发生时刻",
+      "index": true
+    },
+    {
+      "label": "数据",
+      "name": "data",
+      "type": "json",
+      "comment": "数据",
+      "nullable": true
+    },
+    {
+      "label": "事件",
+      "name": "event",
+      "type": "enum",
+      "default": "User",
+      "option": [
+        "User",
+        "Data"
+      ],
+      "index": true,
+      "comment": "事件: User, Data"
+    }
+  ],
+  "relations": {
+    "warehouse": {
+      "type": "hasOne",
+      "model": "app.wms.warehouse",
+      "key": "id",
+      "foreign": "warehouse_id",
+      "query": {}
+    }
+  }
+}

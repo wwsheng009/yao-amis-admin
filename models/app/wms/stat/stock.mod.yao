@@ -1,0 +1,59 @@
+{
+  "name": "库存统计",
+  "table": {
+    "name": "app_wms_stat_sku",
+    "comment": "每日库存快照"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID"
+    },
+    {
+      "label": "日期",
+      "name": "day",
+      "type": "date",
+      "comment": "统计日期",
+      "index": true
+    },
+    {
+      "label": "单品",
+      "name": "sku_id",
+      "type": "integer",
+      "comment": "单品",
+      "index": true,
+      "nullable": true
+    },
+    {
+      "label": "库存",
+      "name": "stock",
+      "type": "bigInteger",
+      "index": true,
+      "comment": "库存"
+    },
+    {
+      "label": "库存预警",
+      "name": "stock_alert",
+      "type": "bigInteger",
+      "default": 100,
+      "index": true,
+      "comment": "库存预警阀值"
+    }
+  ],
+  "relations": {},
+  "indexes": [
+    {
+      "name": "day_sku_id_unique",
+      "type": "unique",
+      "columns": [
+        "day",
+        "sku_id"
+      ]
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  }
+}

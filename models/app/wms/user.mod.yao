@@ -1,0 +1,127 @@
+{
+  "name": "用户",
+  "table": {
+    "name": "app_wms_user",
+    "comment": "用户"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID"
+    },
+    {
+      "label": "编码",
+      "name": "user_sn",
+      "type": "string",
+      "length": 64,
+      "nullable": true,
+      "unique": true,
+      "comment": "用于对接外部系统"
+    },
+    {
+      "label": "供应商",
+      "name": "supplier_id",
+      "type": "bigInteger",
+      "index": true,
+      "nullable": true,
+      "comment": "所属供应商"
+    },
+    {
+      "label": "姓名",
+      "name": "name",
+      "type": "string",
+      "length": 64,
+      "nullable": true,
+      "index": true,
+      "comment": "用户姓名"
+    },
+    {
+      "label": "身份证",
+      "name": "idcard",
+      "type": "string",
+      "length": 64,
+      "nullable": true,
+      "index": true,
+      "comment": "身份证号码"
+    },
+    {
+      "label": "照片",
+      "name": "photo",
+      "type": "json",
+      "nullable": true,
+      "comment": "用于人脸识别"
+    },
+    {
+      "label": "类型",
+      "name": "type",
+      "type": "enum",
+      "default": "内部员工",
+      "option": [
+        "供应商",
+        "内部员工"
+      ],
+      "index": true,
+      "comment": "类型: 供应商, 内部员工"
+    },
+    {
+      "label": "状态",
+      "name": "status",
+      "type": "enum",
+      "default": "启用",
+      "option": [
+        "启用",
+        "停用"
+      ],
+      "index": true,
+      "comment": "类型: 启用, 停用"
+    },
+    {
+      "label": "进入门禁",
+      "name": "face_in",
+      "type": "enum",
+      "default": "待同步",
+      "option": [
+        "已同步",
+        "待同步",
+        "同步中",
+        "同步失败"
+      ],
+      "index": true,
+      "comment": "类型: 已同步, 待同步, 同步中, 同步失败"
+    },
+    {
+      "label": "离开门禁",
+      "name": "face_out",
+      "type": "enum",
+      "default": "待同步",
+      "option": [
+        "已同步",
+        "待同步",
+        "同步中",
+        "同步失败"
+      ],
+      "index": true,
+      "comment": "类型: 已同步, 待同步, 同步中, 同步失败"
+    }
+  ],
+  "relations": {
+    "supplier": {
+      "type": "hasOne",
+      "model": "app.wms.supplier",
+      "key": "id",
+      "foreign": "supplier_id",
+      "query": {
+        "select": [
+          "id",
+          "name",
+          "short"
+        ]
+      }
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  }
+}

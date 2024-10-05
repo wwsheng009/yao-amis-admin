@@ -1,0 +1,191 @@
+{
+  "name": "单据",
+  "table": {
+    "name": "app_wms_ticket",
+    "comment": "单据凭证"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID"
+    },
+    {
+      "label": "名称",
+      "name": "name",
+      "type": "string",
+      "index": true,
+      "length": 40,
+      "comment": "名称"
+    },
+    {
+      "label": "仓库",
+      "name": "warehouse_id",
+      "type": "integer",
+      "comment": "所在仓库",
+      "index": true
+    },
+    {
+      "label": "单号",
+      "name": "ticket_sn",
+      "type": "string",
+      "length": 64,
+      "nullable": true,
+      "unique": true,
+      "comment": "凭据单号",
+      "__comment": "凭据单号(自动生成)"
+    },
+    {
+      "label": "单位",
+      "name": "company",
+      "type": "string",
+      "length": 200,
+      "nullable": true,
+      "index": true,
+      "comment": "供货/领料单位",
+      "__comment": "供货/领料单位"
+    },
+    {
+      "label": "主管",
+      "name": "manager",
+      "type": "string",
+      "length": 200,
+      "nullable": true,
+      "index": true,
+      "comment": "主管"
+    },
+    {
+      "label": "收料人",
+      "name": "receive",
+      "type": "string",
+      "length": 200,
+      "nullable": true,
+      "index": true,
+      "comment": "收料人",
+      "__comment": "收料人"
+    },
+    {
+      "label": "发料人",
+      "name": "send",
+      "type": "string",
+      "length": 200,
+      "nullable": true,
+      "index": true,
+      "comment": "收料人",
+      "__comment": "收料人"
+    },
+    {
+      "label": "工号",
+      "name": "uno",
+      "type": "string",
+      "length": 200,
+      "nullable": true,
+      "index": true,
+      "comment": "工号",
+      "__comment": "工号"
+    },
+    {
+      "label": "类型",
+      "name": "type",
+      "type": "enum",
+      "option": [
+        "入库",
+        "出库"
+      ],
+      "index": true,
+      "comment": "类型: 出库, 入库"
+    },
+    {
+      "label": "来料凭证",
+      "name": "invoice",
+      "type": "enum",
+      "default": "点收单",
+      "option": [
+        "点收单",
+        "领料单",
+        "专票",
+        "普票"
+      ],
+      "index": true,
+      "comment": "类型: 点收单, 普票, 专票"
+    },
+    {
+      "label": "计划",
+      "name": "plan_id",
+      "type": "integer",
+      "comment": "计划",
+      "index": true,
+      "nullable": true
+    },
+    {
+      "label": "用户",
+      "name": "user_id",
+      "type": "integer",
+      "comment": "用户ID",
+      "index": true,
+      "nullable": true
+    },
+    {
+      "label": "记录",
+      "name": "records",
+      "type": "json",
+      "comment": "相关出/入库记录",
+      "nullable": true
+    },
+    {
+      "label": "发生时刻",
+      "name": "uptime",
+      "type": "datetime",
+      "comment": "发生时刻",
+      "index": true
+    },
+    {
+      "label": "备注",
+      "name": "remark",
+      "type": "string",
+      "length": 200,
+      "comment": "备注",
+      "nullable": true
+    },
+    {
+      "label": "状态",
+      "name": "status",
+      "type": "enum",
+      "default": "录入",
+      "option": [
+        "录入",
+        "生效",
+        "作废"
+      ],
+      "index": true,
+      "comment": "状态: 录入, 生效, 作废"
+    }
+  ],
+  "relations": {
+    "user": {
+      "type": "hasOne",
+      "model": "app.wms.user",
+      "key": "id",
+      "foreign": "user_id",
+      "query": {}
+    },
+    "plan": {
+      "type": "hasOne",
+      "model": "app.wms.plan",
+      "key": "id",
+      "foreign": "plan_id",
+      "query": {}
+    },
+    "warehouse": {
+      "type": "hasOne",
+      "model": "app.wms.warehouse",
+      "key": "id",
+      "foreign": "warehouse_id",
+      "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  }
+}

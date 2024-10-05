@@ -1,0 +1,80 @@
+{
+  "name": "计划",
+  "table": {
+    "name": "app_wms_plan",
+    "comment": "计划"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID"
+    },
+    {
+      "label": "名称",
+      "name": "name",
+      "type": "string",
+      "unique": true,
+      "length": 40,
+      "comment": "名称"
+    },
+    {
+      "label": "开始时间",
+      "name": "start",
+      "type": "datetime",
+      "comment": "开始时间",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "结束时间",
+      "name": "end",
+      "type": "datetime",
+      "comment": "结束时间",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "编码",
+      "name": "plan_sn",
+      "type": "string",
+      "length": 32,
+      "unique": true,
+      "nullable": true,
+      "comment": "编码"
+    },
+    {
+      "label": "状态",
+      "name": "status",
+      "type": "enum",
+      "default": "草稿",
+      "option": [
+        "草稿",
+        "进行中",
+        "已完成"
+      ],
+      "index": true,
+      "comment": "状态: 草稿, 进行中, 已完成"
+    }
+  ],
+  "relations": {
+    "items": {
+      "type": "hasMany",
+      "model": "app.wms.plan.item",
+      "key": "plan_id",
+      "foreign": "id",
+      "query": {
+        "select": [
+          "id",
+          "sku_id",
+          "amount",
+          "amount_plan"
+        ]
+      }
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  }
+}

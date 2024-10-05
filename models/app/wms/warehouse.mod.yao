@@ -1,0 +1,101 @@
+{
+  "name": "仓库",
+  "table": {
+    "name": "app_wms_warehouse",
+    "comment": "仓库"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID"
+    },
+    {
+      "label": "节点",
+      "name": "node_id",
+      "type": "string",
+      "unique": true,
+      "comment": "节点ID"
+    },
+    {
+      "label": "名称",
+      "name": "name",
+      "type": "string",
+      "unique": true,
+      "comment": "仓库名称"
+    },
+    {
+      "label": "位置",
+      "name": "location",
+      "type": "string",
+      "index": true,
+      "nullable": true,
+      "comment": "仓库位置"
+    },
+    {
+      "label": "项目部",
+      "name": "dept",
+      "type": "string",
+      "index": true,
+      "nullable": true,
+      "comment": "项目部"
+    },
+    {
+      "label": "IP地址",
+      "name": "ip",
+      "type": "string",
+      "nullable": true,
+      "index": true,
+      "comment": "IP地址"
+    },
+    {
+      "label": "端口",
+      "name": "port",
+      "type": "string",
+      "nullable": true,
+      "index": true,
+      "comment": "服务端口"
+    },
+    {
+      "label": "密钥",
+      "name": "secret",
+      "type": "string",
+      "nullable": true,
+      "index": true,
+      "crypt": "AES",
+      "comment": "密钥"
+    },
+    {
+      "label": "活跃时间",
+      "name": "uptime",
+      "type": "datetime",
+      "comment": "活跃时间",
+      "default": null,
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "公章",
+      "name": "photo",
+      "type": "json",
+      "nullable": true,
+      "comment": "公章"
+    },
+    {
+      "label": "状态",
+      "name": "status",
+      "type": "enum",
+      "default": "离线",
+      "option": [
+        "离线",
+        "在线"
+      ],
+      "index": true,
+      "comment": "状态: 离线, 在线"
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  }
+}

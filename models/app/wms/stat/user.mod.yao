@@ -1,0 +1,59 @@
+{
+  "name": "用户统计",
+  "table": {
+    "name": "app_wms_stat_user",
+    "comment": "用户进出快照"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID"
+    },
+    {
+      "label": "日期",
+      "name": "day",
+      "type": "date",
+      "comment": "统计日期",
+      "index": true
+    },
+    {
+      "label": "用户",
+      "name": "user_id",
+      "type": "integer",
+      "comment": "用户",
+      "index": true,
+      "nullable": true
+    },
+    {
+      "label": "进入",
+      "name": "enter",
+      "type": "bigInteger",
+      "index": true,
+      "comment": "进入次数"
+    },
+    {
+      "label": "离开",
+      "name": "leave",
+      "type": "bigInteger",
+      "default": 100,
+      "index": true,
+      "comment": "离开次数"
+    }
+  ],
+  "relations": {},
+  "indexes": [
+    {
+      "name": "day_user_id_unique",
+      "type": "unique",
+      "columns": [
+        "day",
+        "user_id"
+      ]
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  }
+}

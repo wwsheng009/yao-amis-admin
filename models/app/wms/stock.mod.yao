@@ -1,0 +1,72 @@
+{
+  "name": "库存",
+  "table": {
+    "name": "app_wms_stock",
+    "comment": "库存"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID"
+    },
+    {
+      "label": "单品",
+      "name": "sku_id",
+      "type": "bigInteger",
+      "index": true,
+      "comment": "所属单品"
+    },
+    {
+      "label": "仓库",
+      "name": "warehouse_id",
+      "type": "bigInteger",
+      "index": true,
+      "comment": "所在仓库"
+    },
+    {
+      "label": "库存",
+      "name": "stock",
+      "type": "bigInteger",
+      "index": true,
+      "comment": "单品库存"
+    },
+    {
+      "label": "最后更新",
+      "name": "day",
+      "type": "datetime",
+      "comment": "最后更新",
+      "index": true
+    }
+  ],
+  "indexes": [
+    {
+      "name": "warehouse_id_sku_id_unique",
+      "type": "unique",
+      "columns": [
+        "warehouse_id",
+        "sku_id"
+      ]
+    }
+  ],
+  "relations": {
+    "warehouse": {
+      "type": "hasOne",
+      "model": "app.wms.warehouse",
+      "key": "id",
+      "foreign": "warehouse_id",
+      "query": {}
+    },
+    "sku": {
+      "type": "hasOne",
+      "model": "app.wms.material.sku",
+      "key": "id",
+      "foreign": "sku_id",
+      "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  }
+}

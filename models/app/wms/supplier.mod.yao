@@ -1,0 +1,65 @@
+{
+  "name": "单位",
+  "table": {
+    "name": "app_wms_supplier",
+    "comment": "单位"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID"
+    },
+    {
+      "label": "名称",
+      "name": "name",
+      "type": "string",
+      "length": 200,
+      "unique": true
+    },
+    {
+      "label": "简称",
+      "name": "short",
+      "type": "string",
+      "length": 200,
+      "index": true,
+      "nullable": true
+    },
+    {
+      "label": "技证号",
+      "name": "sn",
+      "type": "string",
+      "length": 200,
+      "index": true,
+      "nullable": true
+    },
+    {
+      "label": "状态",
+      "name": "status",
+      "type": "enum",
+      "default": "启用",
+      "option": [
+        "启用",
+        "停用"
+      ],
+      "index": true,
+      "comment": "类型: 启用, 停用"
+    },
+    {
+      "label": "类型",
+      "name": "type",
+      "type": "enum",
+      "default": "供应商",
+      "option": [
+        "供应商",
+        "领料单位"
+      ],
+      "index": true,
+      "comment": "类型: 供应商, 领料单位"
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  }
+}

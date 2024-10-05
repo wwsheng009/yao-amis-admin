@@ -1,0 +1,52 @@
+{
+  "name": "类目",
+  "table": {
+    "name": "app_wms_category",
+    "comment": "类目"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID"
+    },
+    {
+      "label": "名称",
+      "name": "name",
+      "type": "string",
+      "length": 200,
+      "index": true
+    },
+    {
+      "label": "编码",
+      "name": "category_sn",
+      "type": "string",
+      "length": 32,
+      "nullable": true,
+      "unique": true,
+      "comment": "类目编码",
+      "__comment": "对应RFID种类信息"
+    },
+    {
+      "label": "上级类目",
+      "name": "parent_id",
+      "type": "integer",
+      "comment": "⽤来关联上级/下级",
+      "index": true,
+      "nullable": true
+    }
+  ],
+  "relations": {
+    "parent": {
+      "type": "hasOne",
+      "model": "app.wms.material.category",
+      "key": "id",
+      "foreign": "parent_id",
+      "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  }
+}

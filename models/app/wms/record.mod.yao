@@ -1,0 +1,182 @@
+{
+  "name": "记录",
+  "table": {
+    "name": "app_wms_record",
+    "comment": "记录"
+  },
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "ID"
+    },
+    {
+      "label": "仓库",
+      "name": "warehouse_id",
+      "type": "integer",
+      "comment": "所在仓库",
+      "index": true
+    },
+    {
+      "label": "类型",
+      "name": "type",
+      "type": "enum",
+      "option": [
+        "入库",
+        "出库",
+        "进入",
+        "离开"
+      ],
+      "index": true,
+      "comment": "类型: 出库, 入库, 进入, 离开"
+    },
+    {
+      "label": "计划",
+      "name": "plan_id",
+      "type": "integer",
+      "comment": "计划",
+      "index": true,
+      "nullable": true
+    },
+    {
+      "label": "单品",
+      "name": "sku_id",
+      "type": "integer",
+      "comment": "单品",
+      "index": true,
+      "nullable": true
+    },
+    {
+      "label": "编码",
+      "name": "sn",
+      "type": "string",
+      "length": 64,
+      "comment": "物品标签编码",
+      "index": true,
+      "nullable": true,
+      "__comment": "编码规则: 单品编码(8位) + 批次编码(6位) + 物品编码(10位)"
+    },
+    {
+      "label": "用户",
+      "name": "user_id",
+      "type": "integer",
+      "comment": "用户ID",
+      "index": true,
+      "nullable": true
+    },
+    {
+      "label": "凭据",
+      "name": "ticket_id",
+      "type": "integer",
+      "comment": "所属凭据",
+      "index": true,
+      "nullable": true
+    },
+    {
+      "label": "单品编码",
+      "name": "sku_sn",
+      "type": "string",
+      "length": 8,
+      "comment": "单品编码(冗余字段)",
+      "index": true,
+      "nullable": true
+    },
+    {
+      "label": "计划编码",
+      "name": "plan_sn",
+      "type": "string",
+      "length": 6,
+      "comment": "计划编码(冗余字段)",
+      "index": true,
+      "nullable": true
+    },
+    {
+      "label": "发生时刻",
+      "name": "uptime",
+      "type": "datetime",
+      "comment": "发生时刻",
+      "index": true
+    },
+    {
+      "label": "批次",
+      "name": "batch",
+      "type": "string",
+      "length": 200,
+      "comment": "批次",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "备注",
+      "name": "remark",
+      "type": "string",
+      "length": 200,
+      "comment": "备注",
+      "nullable": true
+    },
+    {
+      "label": "状态",
+      "name": "status",
+      "type": "enum",
+      "default": "录入",
+      "option": [
+        "录入",
+        "生效",
+        "异常",
+        "归档"
+      ],
+      "index": true,
+      "comment": "状态: 录入, 生效, 异常, 归档"
+    },
+    {
+      "label": "唯一字段",
+      "name": "unique_id",
+      "type": "string",
+      "length": 254,
+      "comment": "唯一字段",
+      "unique": true,
+      "nullable": true
+    }
+  ],
+  "relations": {
+    "user": {
+      "type": "hasOne",
+      "model": "app.wms.user",
+      "key": "id",
+      "foreign": "user_id",
+      "query": {}
+    },
+    "sku": {
+      "type": "hasOne",
+      "model": "app.wms.material.sku",
+      "key": "id",
+      "foreign": "sku_id",
+      "query": {}
+    },
+    "plan": {
+      "type": "hasOne",
+      "model": "app.wms.plan",
+      "key": "id",
+      "foreign": "plan_id",
+      "query": {}
+    },
+    "ticket": {
+      "type": "hasOne",
+      "model": "app.wms.ticket",
+      "key": "id",
+      "foreign": "ticket_id",
+      "query": {}
+    },
+    "warehouse": {
+      "type": "hasOne",
+      "model": "app.wms.warehouse",
+      "key": "id",
+      "foreign": "warehouse_id",
+      "query": {}
+    }
+  },
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  }
+}
