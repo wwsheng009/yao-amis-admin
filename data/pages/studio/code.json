@@ -46,6 +46,7 @@
                 "url": "/api/v1/system/meta/model/model_name_list",
                 "cache": 2000
               },
+              "searchable": true,
               "type": "select",
               "id": "u:f464af1bea51",
               "label": "模型",
