@@ -46,6 +46,7 @@ import {
   completeAmisModel,
   guessModelColumnsType
 } from './model_convert';
+import { ErrorMessage, SuccessMessage } from '@scripts/return';
 
 /**
  * yao run scripts.system.model.page
@@ -614,12 +615,12 @@ function ImportTableAction(payload: { name: string }) {
   if (id) {
     const err = loadModeltoMemory(model, false);
     if (err && err.Message) {
-      return Process('scripts.return.ErrorMessage', err.Code, err.Message);
+      return ErrorMessage(err.Code, err.Message);
     }
   } else {
-    return Process('scripts.return.ErrorMessage', 403, '保存模型失败');
+    return ErrorMessage(403, '保存模型失败');
   }
-  // }
+  return SuccessMessage('保存模型成功');
 }
 
 /**
@@ -727,8 +728,7 @@ export function ImportTableStruct(payload) {
     };
   }
   // 先根据表名检查是否缓存中已经有对应的模型，如果存在，加载到数据库，
-  ImportTableAction(payload);
-  return { message: '导入表结构成功' };
+  return ImportTableAction(payload);
 }
 
 function guessJsonType(value) {
@@ -913,7 +913,7 @@ export function ImportFromTableBatch(payload: {
 }) {
   const items = payload.items;
   if (!Array.isArray(items)) {
-    return { message: '传入数据格式不正确，需要传入数组！' };
+    return { code: 503, message: '传入数据格式不正确，需要传入数组！' };
   }
 
   for (const item of items) {
@@ -925,7 +925,10 @@ export function ImportFromTableBatch(payload: {
         message: `模型:${item.model}，表:${item.name} 已经存在，禁止导入！`
       };
     }
-    ImportTableAction(item);
+    const { status, msg } = ImportTableAction(item);
+    if (status !== 0) {
+      return { message: msg, code: status };
+    }
   }
   return { message: '批量导入表结构成功。' };
 }

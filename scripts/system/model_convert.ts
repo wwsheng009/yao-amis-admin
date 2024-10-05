@@ -369,7 +369,7 @@ export function completeAmisModel(modelDsl: AmisModel): AmisModel {
     }
     return true;
   });
-  modelDsl.columns.forEach((col) => {
+  modelDsl.columns.forEach((col, idx) => {
     // 传换成bool类型
     ['index', 'nullable', 'unique', 'primary'].forEach((key) => {
       if (col[key] !== null && col[key] !== undefined) {
@@ -395,8 +395,16 @@ export function completeAmisModel(modelDsl: AmisModel): AmisModel {
     if (['longtext', 'json', 'text'].includes(colType)) {
       delete col.length;
     }
-    if (colType == 'MEDIUMINT') {
+    if (colType == 'mediumint') {
       col.type = 'integer';
+    }
+    if (colType == 'datetime') {
+      if (col.default?.toString().indexOf('(') > -1) {
+        col.default = '';
+      }
+    }
+    if (colType == 'bit') {
+      col.type = 'tinyInteger';
     }
 
     if (Array.isArray(col.options) && col.options.length > 0) {
@@ -491,11 +499,11 @@ export function completeAmisModel(modelDsl: AmisModel): AmisModel {
         }
       }
     }
-
     if (!col.check_model) {
       delete col.check_model_label;
       delete col.check_model_value;
     }
+    modelDsl.columns[idx] = col;
   });
 
   if (modelDsl.relations != null) {
