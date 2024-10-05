@@ -120,13 +120,13 @@ function updateAmisFormMetaFields(
   if (modelDsl.option?.timestamps) {
     if (column.name == 'updated_at') {
       amisColumn.type = 'static-datetime';
-      amisColumn.visibleOn = '!!this.updated_at';
+      amisColumn.visibleOn = '!!this.updated_at && this.id';
       if (amisColumn.required != null) {
         delete amisColumn.required;
       }
     } else if (column.name == 'created_at') {
       amisColumn.type = 'static-datetime';
-      amisColumn.visibleOn = '!!this.created_at';
+      amisColumn.visibleOn = '!!this.created_at && this.id';
       if (amisColumn.required != null) {
         delete amisColumn.required;
       }
@@ -134,26 +134,28 @@ function updateAmisFormMetaFields(
   }
 
   // 检查是否存在外键
-  if (/.*_id/i.test(amisColumn.name)) {
-    // let model_name = amisColumn.name.split("_")[0];
-    if (modelDsl.relations) {
-      for (const key in modelDsl.relations) {
-        const rel = modelDsl.relations[key];
-        if (
-          rel.type == 'hasOne' &&
-          rel.foreign == amisColumn.name
-          // rel.model.endsWith(model_name)
-        ) {
-          // found
-          amisColumn.clearable = true;
-          amisColumn.source = `/api/v1/system/model/${rel.model}/select_options`;
-          if (formType == 'view') {
-            amisColumn.static = true;
-          }
+  // if (/.*_id/i.test(amisColumn.name)) {
+  // let model_name = amisColumn.name.split("_")[0];
+  if (modelDsl.relations) {
+    for (const key in modelDsl.relations) {
+      const rel = modelDsl.relations[key];
+      if (
+        rel.type == 'hasOne' &&
+        amisColumn.name == rel.foreign
+        // rel.model.endsWith(model_name)
+      ) {
+        // found
+        amisColumn.clearable = true;
+        amisColumn.type = 'select';
+        amisColumn.source = `/api/v1/system/model/${rel.model}/select_options`;
+        if (formType == 'view') {
+          amisColumn.static = true;
         }
+        break;
       }
     }
   }
+  // }
 
   return amisColumn;
 }
@@ -401,7 +403,7 @@ export function getFormViewFields(
   columns.forEach((column) => {
     let col = column2AmisFormViewColumn(column);
     col = updateAmisFormMetaFields(col, column, model, 'view');
-    schemaColumns.push(col);
+    schemaColumns.push({ ...col });
   });
   // 避免递归
   if (!noRelation) {
@@ -422,8 +424,8 @@ function updateFormRelations(
   model: AmisModel,
   actionType: ActionType
 ) {
-  const hasOnes = {};
-  const hasManys = {};
+  const hasOnes = {} as { [key: string]: YaoModel.Relation };
+  const hasManys = {} as { [key: string]: YaoModel.Relation };
   if (model.relations) {
     for (const key in model.relations) {
       if (Object.hasOwnProperty.call(model.relations, key)) {
@@ -447,6 +449,7 @@ function updateFormRelations(
     }
     fields = fields.filter((col) => col.name !== element.key);
     columns.push({
+      visibleOn: `!!this.${element.foreign}`,
       type: 'input-sub-form',
       name: key,
       label: label,
@@ -472,6 +475,7 @@ function updateFormRelations(
       fields = fields.filter((col) => col.name !== element.key);
 
       tableSchema = {
+        visibleOn: `!!this.${element.foreign}`,
         columns: fields,
         source: '${' + key + '}',
         type: 'table'
@@ -580,7 +584,7 @@ export function getFormFields(
     }
     col = updateAmisFormValidations(col, column);
     col = updateAmisFormMetaFields(col, column, model, actionType);
-    outputCols.push(col);
+    outputCols.push({ ...col });
   }
   if (Array.isArray(excludeFields)) {
     excludeFields.forEach((exclude) => {
@@ -642,7 +646,7 @@ export function getFilterFormFields(
         break;
     }
     if (output) {
-      schemas.push(col);
+      schemas.push({ ...col });
     }
   }
 
