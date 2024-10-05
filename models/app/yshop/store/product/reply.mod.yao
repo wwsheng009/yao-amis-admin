@@ -1,0 +1,103 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "评论ID",
+            "type": "id",
+            "comment": "评论ID",
+            "primary": true
+        },
+        {
+            "name": "uid",
+            "label": "用户ID",
+            "type": "bigInteger",
+            "comment": "用户ID"
+        },
+        {
+            "name": "oid",
+            "label": "订单ID",
+            "type": "bigInteger",
+            "comment": "订单ID"
+        },
+        {
+            "name": "unique",
+            "label": "唯一id",
+            "type": "char",
+            "comment": "唯一id",
+            "length": 32
+        },
+        {
+            "name": "product_id",
+            "label": "产品id",
+            "type": "bigInteger",
+            "comment": "产品id"
+        },
+        {
+            "name": "reply_type",
+            "label": "某种商品类型(普通商品、秒杀商品）",
+            "type": "string",
+            "comment": "某种商品类型(普通商品、秒杀商品）",
+            "length": 32,
+            "default": "product",
+            "index": true
+        },
+        {
+            "name": "product_score",
+            "label": "商品分数",
+            "type": "tinyInteger",
+            "comment": "商品分数",
+            "index": true
+        },
+        {
+            "name": "service_score",
+            "label": "服务分数",
+            "type": "tinyInteger",
+            "comment": "服务分数",
+            "index": true
+        },
+        {
+            "name": "comment",
+            "label": "评论内容",
+            "type": "string",
+            "comment": "评论内容",
+            "length": 512
+        },
+        {
+            "name": "pics",
+            "label": "评论图片",
+            "type": "text",
+            "comment": "评论图片"
+        },
+        {
+            "name": "merchant_reply_content",
+            "label": "管理员回复内容",
+            "type": "string",
+            "comment": "管理员回复内容",
+            "length": 300,
+            "nullable": true
+        },
+        {
+            "name": "merchant_reply_time",
+            "label": "管理员回复时间",
+            "type": "datetime",
+            "comment": "管理员回复时间",
+            "nullable": true
+        },
+        {
+            "name": "is_reply",
+            "label": "0未回复1已回复",
+            "type": "tinyInteger",
+            "comment": "0未回复1已回复",
+            "default": 0
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_yshop_store_product_reply"
+    },
+    "name": "app_yshop_store_product_reply",
+    "relations": {}
+}

@@ -1,0 +1,31 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "rule_name",
+            "label": "规格名称",
+            "type": "string",
+            "comment": "规格名称",
+            "length": 32
+        },
+        {
+            "name": "rule_value",
+            "label": "规格值",
+            "type": "longText",
+            "comment": "规格值"
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_yshop_store_product_rule"
+    },
+    "name": "app_yshop_store_product_rule",
+    "relations": {}
+}

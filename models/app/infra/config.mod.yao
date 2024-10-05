@@ -1,0 +1,89 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "参数主键",
+            "type": "id",
+            "comment": "参数主键",
+            "primary": true
+        },
+        {
+            "name": "category",
+            "label": "参数分组",
+            "type": "string",
+            "comment": "参数分组",
+            "length": 50
+        },
+        {
+            "name": "type",
+            "label": "参数类型",
+            "type": "tinyInteger",
+            "comment": "参数类型"
+        },
+        {
+            "name": "name",
+            "label": "参数名称",
+            "type": "string",
+            "comment": "参数名称",
+            "length": 100,
+            "default": ""
+        },
+        {
+            "name": "config_key",
+            "label": "参数键名",
+            "type": "string",
+            "comment": "参数键名",
+            "length": 100,
+            "default": ""
+        },
+        {
+            "name": "value",
+            "label": "参数键值",
+            "type": "string",
+            "comment": "参数键值",
+            "length": 500,
+            "default": ""
+        },
+        {
+            "name": "visible",
+            "label": "是否可见",
+            "type": "tinyInteger",
+            "comment": "是否可见"
+        },
+        {
+            "name": "remark",
+            "label": "备注",
+            "type": "string",
+            "comment": "备注",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_infra_config"
+    },
+    "name": "app_infra_config",
+    "relations": {}
+}

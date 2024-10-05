@@ -1,0 +1,313 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "用户id",
+            "type": "id",
+            "comment": "用户id",
+            "primary": true
+        },
+        {
+            "name": "username",
+            "label": "用户账户(跟accout一样)",
+            "type": "string",
+            "comment": "用户账户(跟accout一样)",
+            "length": 255,
+            "nullable": true,
+            "unique": true
+        },
+        {
+            "name": "password",
+            "label": "用户密码（跟pwd）",
+            "type": "string",
+            "comment": "用户密码（跟pwd）",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "real_name",
+            "label": "真实姓名",
+            "type": "string",
+            "comment": "真实姓名",
+            "length": 25,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "birthday",
+            "label": "生日",
+            "type": "string",
+            "comment": "生日",
+            "length": 100,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "card_id",
+            "label": "身份证号码",
+            "type": "string",
+            "comment": "身份证号码",
+            "length": 20,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "mark",
+            "label": "用户备注",
+            "type": "string",
+            "comment": "用户备注",
+            "length": 255,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "partner_id",
+            "label": "合伙人id",
+            "type": "integer",
+            "comment": "合伙人id",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "group_id",
+            "label": "用户分组id",
+            "type": "integer",
+            "comment": "用户分组id",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "nickname",
+            "label": "用户昵称",
+            "type": "string",
+            "comment": "用户昵称",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "avatar",
+            "label": "用户头像",
+            "type": "string",
+            "comment": "用户头像",
+            "length": 256,
+            "nullable": true
+        },
+        {
+            "name": "mobile",
+            "label": "手机号码",
+            "type": "char",
+            "comment": "手机号码",
+            "length": 15,
+            "nullable": true
+        },
+        {
+            "name": "login_date",
+            "type": "datetime",
+            "nullable": true
+        },
+        {
+            "name": "login_ip",
+            "type": "string",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "register_ip",
+            "label": "注册ip",
+            "type": "string",
+            "comment": "注册ip",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "add_ip",
+            "label": "添加ip",
+            "type": "string",
+            "comment": "添加ip",
+            "length": 100,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "last_ip",
+            "label": "最后一次登录ip",
+            "type": "string",
+            "comment": "最后一次登录ip",
+            "length": 100,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "now_money",
+            "label": "用户余额",
+            "type": "decimal",
+            "comment": "用户余额",
+            "default": 0
+        },
+        {
+            "name": "brokerage_price",
+            "label": "佣金金额",
+            "type": "decimal",
+            "comment": "佣金金额",
+            "default": 0
+        },
+        {
+            "name": "integral",
+            "label": "用户剩余积分",
+            "type": "decimal",
+            "comment": "用户剩余积分",
+            "default": 0
+        },
+        {
+            "name": "sign_num",
+            "label": "连续签到天数",
+            "type": "integer",
+            "comment": "连续签到天数",
+            "default": 0
+        },
+        {
+            "name": "status",
+            "label": "1为正常，0为禁止",
+            "type": "tinyInteger",
+            "comment": "1为正常，0为禁止",
+            "default": 1,
+            "index": true
+        },
+        {
+            "name": "level",
+            "label": "等级",
+            "type": "tinyInteger",
+            "comment": "等级",
+            "default": 0,
+            "index": true
+        },
+        {
+            "name": "spread_uid",
+            "label": "推广元id",
+            "type": "bigInteger",
+            "comment": "推广元id",
+            "nullable": true,
+            "default": 0,
+            "index": true
+        },
+        {
+            "name": "spread_time",
+            "label": "推广员关联时间",
+            "type": "datetime",
+            "comment": "推广员关联时间",
+            "nullable": true
+        },
+        {
+            "name": "user_type",
+            "label": "用户类型",
+            "type": "string",
+            "comment": "用户类型",
+            "length": 32,
+            "default": ""
+        },
+        {
+            "name": "is_promoter",
+            "label": "是否为推广员",
+            "type": "tinyInteger",
+            "comment": "是否为推广员",
+            "default": 0,
+            "index": true
+        },
+        {
+            "name": "pay_count",
+            "label": "用户购买次数",
+            "type": "integer",
+            "comment": "用户购买次数",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "spread_count",
+            "label": "下级人数",
+            "type": "integer",
+            "comment": "下级人数",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "addres",
+            "label": "详细地址",
+            "type": "string",
+            "comment": "详细地址",
+            "length": 255,
+            "default": ""
+        },
+        {
+            "name": "adminid",
+            "label": "管理员编号 ",
+            "type": "integer",
+            "comment": "管理员编号 ",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "login_type",
+            "label": "用户登陆类型，h5,wechat,routine",
+            "type": "string",
+            "comment": "用户登陆类型，h5,wechat,routine",
+            "length": 36,
+            "default": ""
+        },
+        {
+            "name": "wx_profile",
+            "label": "微信用户json信息",
+            "type": "longText",
+            "comment": "微信用户json信息",
+            "nullable": true
+        },
+        {
+            "name": "openid",
+            "label": "公众号openid",
+            "type": "string",
+            "comment": "公众号openid",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "routine_openid",
+            "label": "小程序openid",
+            "type": "string",
+            "comment": "小程序openid",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "gender",
+            "label": "性别0-男1-女",
+            "type": "tinyInteger",
+            "comment": "性别0-男1-女",
+            "nullable": true,
+            "default": 0
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_yshop_user"
+    },
+    "name": "app_yshop_user",
+    "relations": {}
+}

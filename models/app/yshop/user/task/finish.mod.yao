@@ -1,0 +1,39 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "type": "id",
+      "primary": true
+    },
+    {
+      "name": "task_id",
+      "label": "任务id",
+      "type": "integer",
+      "comment": "任务id",
+      "default": 0
+    },
+    {
+      "name": "uid",
+      "label": "用户id",
+      "type": "bigInteger",
+      "comment": "用户id",
+      "default": 0
+    },
+    {
+      "name": "status",
+      "label": "是否有效",
+      "type": "tinyInteger",
+      "comment": "是否有效",
+      "default": 0
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_user_task_finish"
+  },
+  "name": "app_yshop_user_task_finish",
+  "relations": {}
+}

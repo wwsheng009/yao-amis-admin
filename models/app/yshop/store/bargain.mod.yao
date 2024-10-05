@@ -1,0 +1,218 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "label": "砍价产品ID",
+      "type": "id",
+      "comment": "砍价产品ID",
+      "primary": true
+    },
+    {
+      "name": "product_id",
+      "label": "关联产品ID",
+      "type": "bigInteger",
+      "comment": "关联产品ID"
+    },
+    {
+      "name": "title",
+      "label": "砍价活动名称",
+      "type": "string",
+      "comment": "砍价活动名称",
+      "length": 255
+    },
+    {
+      "name": "image",
+      "label": "砍价活动图片",
+      "type": "string",
+      "comment": "砍价活动图片",
+      "length": 150
+    },
+    {
+      "name": "unit_name",
+      "label": "单位名称",
+      "type": "string",
+      "comment": "单位名称",
+      "length": 16,
+      "nullable": true
+    },
+    {
+      "name": "stock",
+      "label": "库存",
+      "type": "integer",
+      "comment": "库存",
+      "nullable": true
+    },
+    {
+      "name": "sales",
+      "label": "销量",
+      "type": "integer",
+      "comment": "销量",
+      "nullable": true
+    },
+    {
+      "name": "images",
+      "label": "砍价产品轮播图",
+      "type": "string",
+      "comment": "砍价产品轮播图",
+      "length": 2000
+    },
+    {
+      "name": "start_time",
+      "label": "砍价开启时间",
+      "type": "datetime",
+      "comment": "砍价开启时间"
+    },
+    {
+      "name": "stop_time",
+      "label": "砍价结束时间",
+      "type": "datetime",
+      "comment": "砍价结束时间"
+    },
+    {
+      "name": "store_name",
+      "label": "砍价产品名称",
+      "type": "string",
+      "comment": "砍价产品名称",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "price",
+      "label": "砍价金额",
+      "type": "decimal",
+      "comment": "砍价金额",
+      "nullable": true
+    },
+    {
+      "name": "min_price",
+      "label": "砍价商品最低价",
+      "type": "decimal",
+      "comment": "砍价商品最低价",
+      "nullable": true
+    },
+    {
+      "name": "num",
+      "label": "每次购买的砍价产品数量",
+      "type": "integer",
+      "comment": "每次购买的砍价产品数量",
+      "nullable": true
+    },
+    {
+      "name": "bargain_max_price",
+      "label": "用户每次砍价的最大金额",
+      "type": "decimal",
+      "comment": "用户每次砍价的最大金额",
+      "nullable": true
+    },
+    {
+      "name": "bargain_min_price",
+      "label": "用户每次砍价的最小金额",
+      "type": "decimal",
+      "comment": "用户每次砍价的最小金额",
+      "nullable": true
+    },
+    {
+      "name": "bargain_num",
+      "label": "用户每次砍价的次数",
+      "type": "integer",
+      "comment": "用户每次砍价的次数",
+      "default": 1
+    },
+    {
+      "name": "status",
+      "label": "砍价状态 0(到砍价时间不自动开启)  1(到砍价时间自动开启时间)",
+      "type": "tinyInteger",
+      "comment": "砍价状态 0(到砍价时间不自动开启)  1(到砍价时间自动开启时间)",
+      "default": 1
+    },
+    {
+      "name": "description",
+      "label": "砍价详情",
+      "type": "text",
+      "comment": "砍价详情",
+      "nullable": true
+    },
+    {
+      "name": "give_integral",
+      "label": "反多少积分",
+      "type": "decimal",
+      "comment": "反多少积分",
+      "default": 0
+    },
+    {
+      "name": "info",
+      "label": "砍价活动简介",
+      "type": "string",
+      "comment": "砍价活动简介",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "cost",
+      "label": "成本价",
+      "type": "decimal",
+      "comment": "成本价",
+      "nullable": true
+    },
+    {
+      "name": "sort",
+      "label": "排序",
+      "type": "integer",
+      "comment": "排序",
+      "default": 0
+    },
+    {
+      "name": "is_hot",
+      "label": "是否推荐0不推荐1推荐",
+      "type": "tinyInteger",
+      "comment": "是否推荐0不推荐1推荐",
+      "default": 0
+    },
+    {
+      "name": "is_postage",
+      "label": "是否包邮 0不包邮 1包邮",
+      "type": "tinyInteger",
+      "comment": "是否包邮 0不包邮 1包邮",
+      "default": 1
+    },
+    {
+      "name": "postage",
+      "label": "邮费",
+      "type": "decimal",
+      "comment": "邮费",
+      "nullable": true
+    },
+    {
+      "name": "rule",
+      "label": "砍价规则",
+      "type": "text",
+      "comment": "砍价规则",
+      "nullable": true
+    },
+    {
+      "name": "look",
+      "label": "砍价产品浏览量",
+      "type": "integer",
+      "comment": "砍价产品浏览量",
+      "nullable": true,
+      "default": 0
+    },
+    {
+      "name": "share",
+      "label": "砍价产品分享量",
+      "type": "integer",
+      "comment": "砍价产品分享量",
+      "nullable": true,
+      "default": 0
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_store_bargain"
+  },
+  "name": "app_yshop_store_bargain",
+  "relations": {}
+}

@@ -1,0 +1,84 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "label": "ID",
+      "type": "id",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "name": "delete_url",
+      "label": "删除的URL",
+      "type": "string",
+      "comment": "删除的URL",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "filename",
+      "label": "图片名称",
+      "type": "string",
+      "comment": "图片名称",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "height",
+      "label": "图片高度",
+      "type": "string",
+      "comment": "图片高度",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "size",
+      "label": "图片大小",
+      "type": "string",
+      "comment": "图片大小",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "url",
+      "label": "图片地址",
+      "type": "string",
+      "comment": "图片地址",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "username",
+      "label": "用户名称",
+      "type": "string",
+      "comment": "用户名称",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "width",
+      "label": "图片宽度",
+      "type": "string",
+      "comment": "图片宽度",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "md5code",
+      "label": "文件的MD5值",
+      "type": "string",
+      "comment": "文件的MD5值",
+      "length": 255,
+      "nullable": true
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_storage_picture"
+  },
+  "name": "tools_picture",
+  "relations": {}
+}

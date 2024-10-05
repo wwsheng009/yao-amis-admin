@@ -1,0 +1,203 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "主键",
+            "type": "id",
+            "comment": "主键",
+            "primary": true
+        },
+        {
+            "name": "account_id",
+            "label": "微信公众号ID",
+            "type": "bigInteger",
+            "comment": "微信公众号ID"
+        },
+        {
+            "name": "app_id",
+            "label": "微信公众号 appid",
+            "type": "string",
+            "comment": "微信公众号 appid",
+            "length": 128
+        },
+        {
+            "name": "name",
+            "label": "菜单名称",
+            "type": "string",
+            "comment": "菜单名称",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "menu_key",
+            "label": "菜单标识",
+            "type": "string",
+            "comment": "菜单标识",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "parent_id",
+            "label": "父ID",
+            "type": "string",
+            "comment": "父ID",
+            "length": 32,
+            "nullable": true
+        },
+        {
+            "name": "type",
+            "label": "按钮类型",
+            "type": "string",
+            "comment": "按钮类型",
+            "length": 32,
+            "default": ""
+        },
+        {
+            "name": "url",
+            "label": "网页链接",
+            "type": "string",
+            "comment": "网页链接",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "mini_program_app_id",
+            "label": "小程序appid",
+            "type": "string",
+            "comment": "小程序appid",
+            "length": 32,
+            "nullable": true
+        },
+        {
+            "name": "mini_program_page_path",
+            "label": "小程序页面路径",
+            "type": "string",
+            "comment": "小程序页面路径",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "article_id",
+            "label": "跳转图文的媒体编号",
+            "type": "string",
+            "comment": "跳转图文的媒体编号",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "reply_message_type",
+            "label": "消息类型",
+            "type": "string",
+            "comment": "消息类型",
+            "length": 32,
+            "nullable": true
+        },
+        {
+            "name": "reply_content",
+            "label": "回复的消息内容",
+            "type": "string",
+            "comment": "回复的消息内容",
+            "length": 1024,
+            "nullable": true
+        },
+        {
+            "name": "reply_media_id",
+            "label": "回复的媒体文件 id",
+            "type": "string",
+            "comment": "回复的媒体文件 id",
+            "length": 128,
+            "nullable": true
+        },
+        {
+            "name": "reply_media_url",
+            "label": "回复的媒体文件 URL",
+            "type": "string",
+            "comment": "回复的媒体文件 URL",
+            "length": 1024,
+            "nullable": true
+        },
+        {
+            "name": "reply_title",
+            "label": "回复的标题",
+            "type": "string",
+            "comment": "回复的标题",
+            "length": 128,
+            "nullable": true
+        },
+        {
+            "name": "reply_description",
+            "label": "回复的描述",
+            "type": "string",
+            "comment": "回复的描述",
+            "length": 256,
+            "nullable": true
+        },
+        {
+            "name": "reply_thumb_media_id",
+            "label": "回复的缩略图的媒体 id",
+            "type": "string",
+            "comment": "回复的缩略图的媒体 id",
+            "length": 128,
+            "nullable": true
+        },
+        {
+            "name": "reply_thumb_media_url",
+            "label": "回复的缩略图的媒体 URL",
+            "type": "string",
+            "comment": "回复的缩略图的媒体 URL",
+            "length": 1024,
+            "nullable": true
+        },
+        {
+            "name": "reply_articles",
+            "label": "回复的图文消息数组",
+            "type": "string",
+            "comment": "回复的图文消息数组",
+            "length": 1024,
+            "nullable": true
+        },
+        {
+            "name": "reply_music_url",
+            "label": "回复的音乐链接",
+            "type": "string",
+            "comment": "回复的音乐链接",
+            "length": 1024,
+            "nullable": true
+        },
+        {
+            "name": "reply_hq_music_url",
+            "label": "回复的高质量音乐链接",
+            "type": "string",
+            "comment": "回复的高质量音乐链接",
+            "length": 1024,
+            "nullable": true
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_mp_menu"
+    },
+    "name": "app_mp_menu",
+    "relations": {}
+}

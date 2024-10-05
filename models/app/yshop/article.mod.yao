@@ -1,0 +1,159 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "label": "文章管理ID",
+      "type": "id",
+      "comment": "文章管理ID",
+      "primary": true
+    },
+    {
+      "name": "cid",
+      "label": "分类id",
+      "type": "string",
+      "comment": "分类id",
+      "length": 255,
+      "nullable": true,
+      "default": "1"
+    },
+    {
+      "name": "title",
+      "label": "文章标题",
+      "type": "string",
+      "comment": "文章标题",
+      "length": 255
+    },
+    {
+      "name": "author",
+      "label": "文章作者",
+      "type": "string",
+      "comment": "文章作者",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "image_input",
+      "label": "文章图片",
+      "type": "string",
+      "comment": "文章图片",
+      "length": 255
+    },
+    {
+      "name": "synopsis",
+      "label": "文章简介",
+      "type": "string",
+      "comment": "文章简介",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "content",
+      "type": "text",
+      "nullable": true
+    },
+    {
+      "name": "share_title",
+      "label": "文章分享标题",
+      "type": "string",
+      "comment": "文章分享标题",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "share_synopsis",
+      "label": "文章分享简介",
+      "type": "string",
+      "comment": "文章分享简介",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "visit",
+      "label": "浏览次数",
+      "type": "string",
+      "comment": "浏览次数",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "sort",
+      "label": "排序",
+      "type": "integer",
+      "comment": "排序",
+      "nullable": true,
+      "default": 0
+    },
+    {
+      "name": "url",
+      "label": "原文链接",
+      "type": "string",
+      "comment": "原文链接",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "status",
+      "label": "状态",
+      "type": "tinyInteger",
+      "comment": "状态",
+      "nullable": true
+    },
+    {
+      "name": "hide",
+      "label": "是否隐藏",
+      "type": "tinyInteger",
+      "comment": "是否隐藏",
+      "nullable": true,
+      "default": 0
+    },
+    {
+      "name": "admin_id",
+      "label": "管理员id",
+      "type": "integer",
+      "comment": "管理员id",
+      "nullable": true,
+      "default": 0
+    },
+    {
+      "name": "mer_id",
+      "label": "商户id",
+      "type": "integer",
+      "comment": "商户id",
+      "nullable": true,
+      "default": 0
+    },
+    {
+      "name": "product_id",
+      "label": "产品关联id",
+      "type": "integer",
+      "comment": "产品关联id",
+      "nullable": true,
+      "default": 0
+    },
+    {
+      "name": "is_hot",
+      "label": "是否热门(小程序)",
+      "type": "tinyInteger",
+      "comment": "是否热门(小程序)",
+      "nullable": true,
+      "default": 0
+    },
+    {
+      "name": "is_banner",
+      "label": "是否轮播图(小程序)",
+      "type": "tinyInteger",
+      "comment": "是否轮播图(小程序)",
+      "nullable": true,
+      "default": 0
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_article"
+  },
+  "name": "app_yshop_article",
+  "relations": {}
+}

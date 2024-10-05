@@ -1,0 +1,181 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "编号",
+            "type": "id",
+            "comment": "编号",
+            "primary": true
+        },
+        {
+            "name": "trace_id",
+            "label": "链路追踪编号\n     *\n     * 一般来说，通过链路追踪编号，可以将访问日志，错误日志，链路追踪日志，logger 打印日志等，结合在一起，从而进行排错。",
+            "type": "string",
+            "comment": "链路追踪编号\n     *\n     * 一般来说，通过链路追踪编号，可以将访问日志，错误日志，链路追踪日志，logger 打印日志等，结合在一起，从而进行排错。",
+            "length": 64
+        },
+        {
+            "name": "user_id",
+            "label": "用户编号",
+            "type": "integer",
+            "comment": "用户编号",
+            "default": 0
+        },
+        {
+            "name": "user_type",
+            "label": "用户类型",
+            "type": "tinyInteger",
+            "comment": "用户类型",
+            "default": 0
+        },
+        {
+            "name": "application_name",
+            "label": "应用名\n     *\n     * 目前读取 spring.application.name",
+            "type": "string",
+            "comment": "应用名\n     *\n     * 目前读取 spring.application.name",
+            "length": 50
+        },
+        {
+            "name": "request_method",
+            "label": "请求方法名",
+            "type": "string",
+            "comment": "请求方法名",
+            "length": 16
+        },
+        {
+            "name": "request_url",
+            "label": "请求地址",
+            "type": "string",
+            "comment": "请求地址",
+            "length": 255
+        },
+        {
+            "name": "request_params",
+            "label": "请求参数",
+            "type": "string",
+            "comment": "请求参数",
+            "length": 8000
+        },
+        {
+            "name": "user_ip",
+            "label": "用户 IP",
+            "type": "string",
+            "comment": "用户 IP",
+            "length": 50
+        },
+        {
+            "name": "user_agent",
+            "label": "浏览器 UA",
+            "type": "string",
+            "comment": "浏览器 UA",
+            "length": 512
+        },
+        {
+            "name": "exception_time",
+            "label": "异常发生时间",
+            "type": "datetime",
+            "comment": "异常发生时间"
+        },
+        {
+            "name": "exception_name",
+            "label": "异常名\n     *\n     * {@link Throwable#getClass()} 的类全名",
+            "type": "string",
+            "comment": "异常名\n     *\n     * {@link Throwable#getClass()} 的类全名",
+            "length": 128,
+            "default": ""
+        },
+        {
+            "name": "exception_message",
+            "label": "异常导致的消息\n     *\n     * {@link cn.iocoder.common.framework.util.ExceptionUtil#getMessage(Throwable)}",
+            "type": "text",
+            "comment": "异常导致的消息\n     *\n     * {@link cn.iocoder.common.framework.util.ExceptionUtil#getMessage(Throwable)}"
+        },
+        {
+            "name": "exception_root_cause_message",
+            "label": "异常导致的根消息\n     *\n     * {@link cn.iocoder.common.framework.util.ExceptionUtil#getRootCauseMessage(Throwable)}",
+            "type": "text",
+            "comment": "异常导致的根消息\n     *\n     * {@link cn.iocoder.common.framework.util.ExceptionUtil#getRootCauseMessage(Throwable)}"
+        },
+        {
+            "name": "exception_stack_trace",
+            "label": "异常的栈轨迹\n     *\n     * {@link cn.iocoder.common.framework.util.ExceptionUtil#getServiceException(Exception)}",
+            "type": "text",
+            "comment": "异常的栈轨迹\n     *\n     * {@link cn.iocoder.common.framework.util.ExceptionUtil#getServiceException(Exception)}"
+        },
+        {
+            "name": "exception_class_name",
+            "label": "异常发生的类全名\n     *\n     * {@link StackTraceElement#getClassName()}",
+            "type": "string",
+            "comment": "异常发生的类全名\n     *\n     * {@link StackTraceElement#getClassName()}",
+            "length": 512
+        },
+        {
+            "name": "exception_file_name",
+            "label": "异常发生的类文件\n     *\n     * {@link StackTraceElement#getFileName()}",
+            "type": "string",
+            "comment": "异常发生的类文件\n     *\n     * {@link StackTraceElement#getFileName()}",
+            "length": 512
+        },
+        {
+            "name": "exception_method_name",
+            "label": "异常发生的方法名\n     *\n     * {@link StackTraceElement#getMethodName()}",
+            "type": "string",
+            "comment": "异常发生的方法名\n     *\n     * {@link StackTraceElement#getMethodName()}",
+            "length": 512
+        },
+        {
+            "name": "exception_line_number",
+            "label": "异常发生的方法所在行\n     *\n     * {@link StackTraceElement#getLineNumber()}",
+            "type": "integer",
+            "comment": "异常发生的方法所在行\n     *\n     * {@link StackTraceElement#getLineNumber()}"
+        },
+        {
+            "name": "process_status",
+            "label": "处理状态",
+            "type": "tinyInteger",
+            "comment": "处理状态"
+        },
+        {
+            "name": "process_time",
+            "label": "处理时间",
+            "type": "datetime",
+            "comment": "处理时间",
+            "nullable": true
+        },
+        {
+            "name": "process_user_id",
+            "label": "处理用户编号",
+            "type": "integer",
+            "comment": "处理用户编号",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_infra_api_error_log"
+    },
+    "name": "app_infra_api_error_log",
+    "relations": {}
+}

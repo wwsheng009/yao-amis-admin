@@ -1,0 +1,88 @@
+{
+  "columns": [
+    {
+      "name": "goods_id",
+      "label": "直播商品id",
+      "type": "id",
+      "comment": "直播商品id",
+      "primary": true
+    },
+    {
+      "name": "product_id",
+      "label": "关联商品id",
+      "type": "bigInteger",
+      "comment": "关联商品id",
+      "nullable": true
+    },
+    {
+      "name": "cover_imge_url",
+      "label": "商品图片",
+      "type": "string",
+      "comment": "商品图片",
+      "length": 255
+    },
+    {
+      "name": "url",
+      "label": "商品小程序路径",
+      "type": "string",
+      "comment": "商品小程序路径",
+      "length": 64
+    },
+    {
+      "name": "price_type",
+      "label": "价格类型",
+      "type": "string",
+      "comment": "价格类型 1：一口价（只需要传入price，price2不传） 2：价格区间（price字段为左边界，price2字段为右边界，price和price2必传） 3：显示折扣价（price字段为原价，price2字段为现价， price和price2必传）",
+      "length": 255
+    },
+    {
+      "name": "price",
+      "type": "string",
+      "length": 64
+    },
+    {
+      "name": "price2",
+      "type": "string",
+      "length": 64,
+      "nullable": true
+    },
+    {
+      "name": "name",
+      "label": "商品名称",
+      "type": "string",
+      "comment": "商品名称",
+      "length": 255
+    },
+    {
+      "name": "third_party_tag",
+      "label": "1, 2：表示是为api添加商品，否则是直播控制台添加的商品",
+      "type": "string",
+      "comment": "1, 2：表示是为api添加商品，否则是直播控制台添加的商品",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "audit_id",
+      "label": "审核单id",
+      "type": "bigInteger",
+      "comment": "审核单id",
+      "nullable": true
+    },
+    {
+      "name": "audit_status",
+      "label": "审核状态 0：未审核，1：审核中，2:审核通过，3审核失败",
+      "type": "integer",
+      "comment": "审核状态 0：未审核，1：审核中，2:审核通过，3审核失败",
+      "nullable": true
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_wechat_live_goods"
+  },
+  "name": "app_yshop_wechat_live_goods",
+  "relations": {}
+}

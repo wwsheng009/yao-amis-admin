@@ -1,0 +1,114 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "type": "id",
+      "primary": true
+    },
+    {
+      "name": "uid",
+      "label": "用户id",
+      "type": "bigInteger",
+      "comment": "用户id"
+    },
+    {
+      "name": "order_id",
+      "label": "订单id 生成",
+      "type": "string",
+      "comment": "订单id 生成",
+      "length": 32
+    },
+    {
+      "name": "order_id_key",
+      "label": "订单id  数据库",
+      "type": "integer",
+      "comment": "订单id  数据库"
+    },
+    {
+      "name": "total_num",
+      "label": "购买商品个数",
+      "type": "integer",
+      "comment": "购买商品个数"
+    },
+    {
+      "name": "total_price",
+      "label": "购买总金额",
+      "type": "decimal",
+      "comment": "购买总金额"
+    },
+    {
+      "name": "cid",
+      "label": "拼团产品id",
+      "type": "bigInteger",
+      "comment": "拼团产品id"
+    },
+    {
+      "name": "pid",
+      "label": "产品id",
+      "type": "bigInteger",
+      "comment": "产品id"
+    },
+    {
+      "name": "people",
+      "label": "拼团总人数",
+      "type": "integer",
+      "comment": "拼团总人数"
+    },
+    {
+      "name": "price",
+      "label": "拼团产品单价",
+      "type": "decimal",
+      "comment": "拼团产品单价"
+    },
+    {
+      "name": "stop_time",
+      "type": "datetime",
+      "nullable": true
+    },
+    {
+      "name": "k_id",
+      "label": "团长id 0为团长",
+      "type": "bigInteger",
+      "comment": "团长id 0为团长",
+      "default": 0
+    },
+    {
+      "name": "is_tpl",
+      "label": "是否发送模板消息0未发送1已发送",
+      "type": "tinyInteger",
+      "comment": "是否发送模板消息0未发送1已发送",
+      "default": 0
+    },
+    {
+      "name": "is_refund",
+      "label": "是否退款 0未退款 1已退款",
+      "type": "tinyInteger",
+      "comment": "是否退款 0未退款 1已退款",
+      "default": 0
+    },
+    {
+      "name": "status",
+      "label": "状态1进行中2已完成3未完成",
+      "type": "tinyInteger",
+      "comment": "状态1进行中2已完成3未完成",
+      "default": 1
+    },
+    {
+      "name": "unique_id",
+      "label": "库存唯一值",
+      "type": "string",
+      "comment": "库存唯一值",
+      "length": 128,
+      "nullable": true
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_store_pink"
+  },
+  "name": "app_yshop_store_pink",
+  "relations": {}
+}

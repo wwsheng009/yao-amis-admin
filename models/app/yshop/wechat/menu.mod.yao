@@ -1,0 +1,33 @@
+{
+  "columns": [
+    {
+      "name": "key",
+      "type": "string",
+      "length": 32,
+      "primary": true
+    },
+    {
+      "name": "result",
+      "label": "缓存数据",
+      "type": "text",
+      "comment": "缓存数据",
+      "nullable": true
+    },
+    {
+      "name": "add_time",
+      "label": "缓存时间",
+      "type": "integer",
+      "comment": "缓存时间",
+      "nullable": true
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_wechat_menu"
+  },
+  "name": "app.yshop.wechat.menu",
+  "relations": {}
+}

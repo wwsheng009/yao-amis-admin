@@ -1,0 +1,94 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "label": "购物车表ID",
+      "type": "id",
+      "comment": "购物车表ID",
+      "primary": true
+    },
+    {
+      "name": "uid",
+      "label": "用户ID",
+      "type": "bigInteger",
+      "comment": "用户ID",
+      "index": true
+    },
+    {
+      "name": "type",
+      "label": "类型",
+      "type": "string",
+      "comment": "类型",
+      "length": 32,
+      "default": "product",
+      "index": true
+    },
+    {
+      "name": "product_id",
+      "label": "商品ID",
+      "type": "bigInteger",
+      "comment": "商品ID",
+      "index": true
+    },
+    {
+      "name": "product_attr_unique",
+      "label": "商品属性",
+      "type": "string",
+      "comment": "商品属性",
+      "length": 50,
+      "default": ""
+    },
+    {
+      "name": "cart_num",
+      "label": "商品数量",
+      "type": "smallInteger",
+      "comment": "商品数量",
+      "default": 0
+    },
+    {
+      "name": "is_pay",
+      "label": "0 = 未购买 1 = 已购买",
+      "type": "tinyInteger",
+      "comment": "0 = 未购买 1 = 已购买",
+      "default": 0
+    },
+    {
+      "name": "is_new",
+      "label": "是否为立即购买",
+      "type": "tinyInteger",
+      "comment": "是否为立即购买",
+      "default": 0
+    },
+    {
+      "name": "combination_id",
+      "label": "拼团id",
+      "type": "integer",
+      "comment": "拼团id",
+      "nullable": true,
+      "default": 0
+    },
+    {
+      "name": "seckill_id",
+      "label": "秒杀产品ID",
+      "type": "integer",
+      "comment": "秒杀产品ID",
+      "default": 0
+    },
+    {
+      "name": "bargain_id",
+      "label": "砍价id",
+      "type": "integer",
+      "comment": "砍价id",
+      "default": 0
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_store_cart"
+  },
+  "name": "app_yshop_store_cart",
+  "relations": {}
+}

@@ -1,7 +1,7 @@
 {
   "name": "项目核心报表",
   "table": {
-    "name": "aopp_project_finance",
+    "name": "app_project_finance",
     "comment": "项目核心报表"
   },
   "columns": [

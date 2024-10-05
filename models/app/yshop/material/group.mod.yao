@@ -1,0 +1,43 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "label": "编号",
+      "type": "id",
+      "comment": "编号",
+      "primary": true
+    },
+    {
+      "name": "created_by",
+      "label": "创建者",
+      "type": "string",
+      "comment": "创建者",
+      "length": 32,
+      "nullable": true
+    },
+    {
+      "name": "name",
+      "label": "分组名",
+      "type": "string",
+      "comment": "分组名",
+      "length": 200
+    },
+    {
+      "name": "updated_by",
+      "label": "更新者",
+      "type": "string",
+      "comment": "更新者",
+      "length": 64,
+      "nullable": true
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_material_group"
+  },
+  "name": "app_yshop_material_group",
+  "relations": {}
+}

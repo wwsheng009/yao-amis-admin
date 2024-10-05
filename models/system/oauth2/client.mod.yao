@@ -1,0 +1,146 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "编号",
+            "type": "id",
+            "comment": "编号",
+            "primary": true
+        },
+        {
+            "name": "client_id",
+            "label": "客户端编号",
+            "type": "string",
+            "comment": "客户端编号",
+            "length": 255
+        },
+        {
+            "name": "secret",
+            "label": "客户端密钥",
+            "type": "string",
+            "comment": "客户端密钥",
+            "length": 255
+        },
+        {
+            "name": "name",
+            "label": "应用名",
+            "type": "string",
+            "comment": "应用名",
+            "length": 255
+        },
+        {
+            "name": "logo",
+            "label": "应用图标",
+            "type": "string",
+            "comment": "应用图标",
+            "length": 255
+        },
+        {
+            "name": "description",
+            "label": "应用描述",
+            "type": "string",
+            "comment": "应用描述",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "status",
+            "label": "状态",
+            "type": "tinyInteger",
+            "comment": "状态"
+        },
+        {
+            "name": "access_token_validity_seconds",
+            "label": "访问令牌的有效期",
+            "type": "integer",
+            "comment": "访问令牌的有效期"
+        },
+        {
+            "name": "refresh_token_validity_seconds",
+            "label": "刷新令牌的有效期",
+            "type": "integer",
+            "comment": "刷新令牌的有效期"
+        },
+        {
+            "name": "redirect_uris",
+            "label": "可重定向的 URI 地址",
+            "type": "string",
+            "comment": "可重定向的 URI 地址",
+            "length": 255
+        },
+        {
+            "name": "authorized_grant_types",
+            "label": "授权类型",
+            "type": "string",
+            "comment": "授权类型",
+            "length": 255
+        },
+        {
+            "name": "scopes",
+            "label": "授权范围",
+            "type": "string",
+            "comment": "授权范围",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "auto_approve_scopes",
+            "label": "自动通过的授权范围",
+            "type": "string",
+            "comment": "自动通过的授权范围",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "authorities",
+            "label": "权限",
+            "type": "string",
+            "comment": "权限",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "resource_ids",
+            "label": "资源",
+            "type": "string",
+            "comment": "资源",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "additional_information",
+            "label": "附加信息",
+            "type": "string",
+            "comment": "附加信息",
+            "length": 4096,
+            "nullable": true
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "system_oauth2_client"
+    },
+    "name": "system_oauth2_client",
+    "relations": {}
+}

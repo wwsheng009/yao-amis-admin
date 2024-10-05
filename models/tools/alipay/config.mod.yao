@@ -1,0 +1,98 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "label": "主键",
+      "type": "id",
+      "comment": "主键",
+      "primary": true
+    },
+    {
+      "name": "app_id",
+      "label": "应用ID",
+      "type": "string",
+      "comment": "应用ID",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "charset",
+      "label": "编码",
+      "type": "string",
+      "comment": "编码",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "format",
+      "label": "类型 固定格式json",
+      "type": "string",
+      "comment": "类型 固定格式json",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "gateway_url",
+      "label": "网关地址",
+      "type": "string",
+      "comment": "网关地址",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "notify_url",
+      "label": "异步回调",
+      "type": "string",
+      "comment": "异步回调",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "private_key",
+      "label": "私钥",
+      "type": "text",
+      "comment": "私钥",
+      "nullable": true
+    },
+    {
+      "name": "public_key",
+      "label": "公钥",
+      "type": "text",
+      "comment": "公钥",
+      "nullable": true
+    },
+    {
+      "name": "return_url",
+      "label": "回调地址",
+      "type": "string",
+      "comment": "回调地址",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "sign_type",
+      "label": "签名方式",
+      "type": "string",
+      "comment": "签名方式",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "sys_service_provider_id",
+      "label": "商户号",
+      "type": "string",
+      "comment": "商户号",
+      "length": 255,
+      "nullable": true
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "tools_alipay_config"
+  },
+  "name": "tools_alipay_config",
+  "relations": {}
+}

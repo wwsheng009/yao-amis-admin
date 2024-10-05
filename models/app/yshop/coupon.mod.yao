@@ -1,0 +1,155 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "id",
+            "type": "id",
+            "comment": "id",
+            "primary": true
+        },
+        {
+            "name": "shop_id",
+            "label": "店铺id,0表示通用",
+            "type": "string",
+            "comment": "店铺id,0表示通用",
+            "length": 500,
+            "default": "0"
+        },
+        {
+            "name": "shop_name",
+            "label": "店铺名称逗号隔开",
+            "type": "string",
+            "comment": "店铺名称逗号隔开",
+            "length": 1000,
+            "nullable": true
+        },
+        {
+            "name": "title",
+            "label": "优惠券名称",
+            "type": "string",
+            "comment": "优惠券名称",
+            "length": 50
+        },
+        {
+            "name": "is_switch",
+            "label": "是否上架",
+            "type": "tinyInteger",
+            "comment": "是否上架",
+            "default": 0
+        },
+        {
+            "name": "least",
+            "label": "消费多少可用",
+            "type": "decimal",
+            "comment": "消费多少可用"
+        },
+        {
+            "name": "value",
+            "label": "优惠券金额",
+            "type": "decimal",
+            "comment": "优惠券金额"
+        },
+        {
+            "name": "start_time",
+            "label": "开始时间",
+            "type": "datetime",
+            "comment": "开始时间"
+        },
+        {
+            "name": "end_time",
+            "label": "结束时间",
+            "type": "datetime",
+            "comment": "结束时间"
+        },
+        {
+            "name": "weigh",
+            "label": "权重",
+            "type": "integer",
+            "comment": "权重",
+            "default": 0
+        },
+        {
+            "name": "type",
+            "label": "可用类型:0=通用,1=自取,2=外卖",
+            "type": "tinyInteger",
+            "comment": "可用类型:0=通用,1=自取,2=外卖",
+            "default": 0
+        },
+        {
+            "name": "exchange_code",
+            "label": "兑换码",
+            "type": "string",
+            "comment": "兑换码",
+            "length": 32,
+            "nullable": true
+        },
+        {
+            "name": "receive",
+            "label": "已领取",
+            "type": "integer",
+            "comment": "已领取",
+            "default": 0
+        },
+        {
+            "name": "distribute",
+            "label": "发行数量",
+            "type": "integer",
+            "comment": "发行数量",
+            "default": 0
+        },
+        {
+            "name": "score",
+            "label": "所需积分",
+            "type": "integer",
+            "comment": "所需积分",
+            "default": 0
+        },
+        {
+            "name": "instructions",
+            "label": "使用说明",
+            "type": "text",
+            "comment": "使用说明"
+        },
+        {
+            "name": "image",
+            "label": "图片",
+            "type": "string",
+            "comment": "图片",
+            "length": 150,
+            "default": ""
+        },
+        {
+            "name": "limit",
+            "label": "限领数量",
+            "type": "integer",
+            "comment": "限领数量",
+            "nullable": true,
+            "default": 1
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_yshop_coupon"
+    },
+    "name": "app_yshop_coupon",
+    "relations": {}
+}

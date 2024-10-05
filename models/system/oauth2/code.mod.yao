@@ -1,0 +1,95 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "编号",
+            "type": "id",
+            "comment": "编号",
+            "primary": true
+        },
+        {
+            "name": "user_id",
+            "label": "用户编号",
+            "type": "bigInteger",
+            "comment": "用户编号"
+        },
+        {
+            "name": "user_type",
+            "label": "用户类型",
+            "type": "tinyInteger",
+            "comment": "用户类型"
+        },
+        {
+            "name": "code",
+            "label": "授权码",
+            "type": "string",
+            "comment": "授权码",
+            "length": 32
+        },
+        {
+            "name": "client_id",
+            "label": "客户端编号",
+            "type": "string",
+            "comment": "客户端编号",
+            "length": 255
+        },
+        {
+            "name": "scopes",
+            "label": "授权范围",
+            "type": "string",
+            "comment": "授权范围",
+            "length": 255,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "expires_time",
+            "label": "过期时间",
+            "type": "datetime",
+            "comment": "过期时间"
+        },
+        {
+            "name": "redirect_uri",
+            "label": "可重定向的 URI 地址",
+            "type": "string",
+            "comment": "可重定向的 URI 地址",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "state",
+            "label": "状态",
+            "type": "string",
+            "comment": "状态",
+            "length": 255,
+            "default": ""
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "system_oauth2_code"
+    },
+    "name": "system_oauth2_code",
+    "relations": {}
+}

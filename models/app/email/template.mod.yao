@@ -1,0 +1,101 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "编号",
+            "type": "id",
+            "comment": "编号",
+            "primary": true
+        },
+        {
+            "name": "name",
+            "label": "模板名称",
+            "type": "string",
+            "comment": "模板名称",
+            "length": 63
+        },
+        {
+            "name": "code",
+            "label": "模板编码",
+            "type": "string",
+            "comment": "模板编码",
+            "length": 63
+        },
+        {
+            "name": "account_id",
+            "label": "发送的邮箱账号编号",
+            "type": "bigInteger",
+            "comment": "发送的邮箱账号编号"
+        },
+        {
+            "name": "nickname",
+            "label": "发送人名称",
+            "type": "string",
+            "comment": "发送人名称",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "title",
+            "label": "模板标题",
+            "type": "string",
+            "comment": "模板标题",
+            "length": 255
+        },
+        {
+            "name": "content",
+            "label": "模板内容",
+            "type": "string",
+            "comment": "模板内容",
+            "length": 10240
+        },
+        {
+            "name": "params",
+            "label": "参数数组",
+            "type": "string",
+            "comment": "参数数组",
+            "length": 255
+        },
+        {
+            "name": "status",
+            "label": "开启状态",
+            "type": "tinyInteger",
+            "comment": "开启状态"
+        },
+        {
+            "name": "remark",
+            "label": "备注",
+            "type": "string",
+            "comment": "备注",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        },
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_email_template"
+    },
+    "name": "app_email_template",
+    "relations": {}
+}

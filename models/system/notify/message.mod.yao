@@ -1,0 +1,103 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "用户ID",
+            "type": "id",
+            "comment": "用户ID",
+            "primary": true
+        },
+        {
+            "name": "user_id",
+            "label": "用户id",
+            "type": "bigInteger",
+            "comment": "用户id"
+        },
+        {
+            "name": "user_type",
+            "label": "用户类型",
+            "type": "tinyInteger",
+            "comment": "用户类型"
+        },
+        {
+            "name": "template_id",
+            "label": "模版编号",
+            "type": "bigInteger",
+            "comment": "模版编号"
+        },
+        {
+            "name": "template_code",
+            "label": "模板编码",
+            "type": "string",
+            "comment": "模板编码",
+            "length": 64
+        },
+        {
+            "name": "template_nickname",
+            "label": "模版发送人名称",
+            "type": "string",
+            "comment": "模版发送人名称",
+            "length": 63
+        },
+        {
+            "name": "template_content",
+            "label": "模版内容",
+            "type": "string",
+            "comment": "模版内容",
+            "length": 1024
+        },
+        {
+            "name": "template_type",
+            "label": "模版类型",
+            "type": "integer",
+            "comment": "模版类型"
+        },
+        {
+            "name": "template_params",
+            "label": "模版参数",
+            "type": "string",
+            "comment": "模版参数",
+            "length": 255
+        },
+        {
+            "name": "read_status",
+            "label": "是否已读",
+            "type": "tinyInteger",
+            "comment": "是否已读"
+        },
+        {
+            "name": "read_time",
+            "label": "阅读时间",
+            "type": "datetime",
+            "comment": "阅读时间",
+            "nullable": true
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "system_notify_message"
+    },
+    "name": "system_notify_message",
+    "relations": {}
+}

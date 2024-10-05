@@ -1,0 +1,94 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "type": "id",
+      "primary": true
+    },
+    {
+      "name": "cname",
+      "type": "string",
+      "length": 50,
+      "nullable": true,
+      "default": ""
+    },
+    {
+      "name": "cid",
+      "label": "优惠券ID",
+      "type": "integer",
+      "comment": "优惠券ID",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "name": "ctype",
+      "label": "优惠券类型 0-通用 1-商品券",
+      "type": "tinyInteger",
+      "comment": "优惠券类型 0-通用 1-商品券",
+      "nullable": true
+    },
+    {
+      "name": "start_time",
+      "label": "优惠券领取开启时间",
+      "type": "datetime",
+      "comment": "优惠券领取开启时间",
+      "nullable": true
+    },
+    {
+      "name": "end_time",
+      "label": "优惠券领取结束时间",
+      "type": "datetime",
+      "comment": "优惠券领取结束时间",
+      "nullable": true
+    },
+    {
+      "name": "total_count",
+      "label": "优惠券领取数量",
+      "type": "integer",
+      "comment": "优惠券领取数量",
+      "nullable": true
+    },
+    {
+      "name": "remain_count",
+      "label": "优惠券剩余领取数量",
+      "type": "integer",
+      "comment": "优惠券剩余领取数量",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "name": "is_permanent",
+      "label": "是否无限张数",
+      "type": "tinyInteger",
+      "comment": "是否无限张数",
+      "default": 0
+    },
+    {
+      "name": "status",
+      "label": "1 正常 0 未开启 -1 已无效",
+      "type": "tinyInteger",
+      "comment": "1 正常 0 未开启 -1 已无效",
+      "default": 1,
+      "index": true
+    }
+  ],
+  "indexes": [
+    {
+      "name": "start_time",
+      "columns": [
+        "start_time",
+        "end_time"
+      ],
+      "type": "index"
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_store_coupon_issue"
+  },
+  "name": "app_yshop_store_coupon_issue",
+  "relations": {}
+}

@@ -1,0 +1,87 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "label": "优惠券表ID",
+      "type": "id",
+      "comment": "优惠券表ID",
+      "primary": true
+    },
+    {
+      "name": "title",
+      "label": "优惠券名称",
+      "type": "string",
+      "comment": "优惠券名称",
+      "length": 64
+    },
+    {
+      "name": "integral",
+      "label": "兑换消耗积分值",
+      "type": "integer",
+      "comment": "兑换消耗积分值",
+      "default": 0
+    },
+    {
+      "name": "coupon_price",
+      "label": "兑换的优惠券面值",
+      "type": "decimal",
+      "comment": "兑换的优惠券面值",
+      "default": 0
+    },
+    {
+      "name": "use_min_price",
+      "label": "最低消费多少金额可用优惠券",
+      "type": "decimal",
+      "comment": "最低消费多少金额可用优惠券",
+      "default": 0
+    },
+    {
+      "name": "coupon_time",
+      "label": "优惠券有效期限（单位：天）",
+      "type": "integer",
+      "comment": "优惠券有效期限（单位：天）",
+      "default": 0,
+      "index": true
+    },
+    {
+      "name": "sort",
+      "label": "排序",
+      "type": "integer",
+      "comment": "排序",
+      "default": 1
+    },
+    {
+      "name": "status",
+      "label": "状态（0：关闭，1：开启）",
+      "type": "tinyInteger",
+      "comment": "状态（0：关闭，1：开启）",
+      "default": 0,
+      "index": true
+    },
+    {
+      "name": "product_id",
+      "label": "商品ids",
+      "type": "string",
+      "comment": "商品ids",
+      "length": 200,
+      "nullable": true
+    },
+    {
+      "name": "type",
+      "label": "优惠券类型 0-通用 1-商品券",
+      "type": "tinyInteger",
+      "comment": "优惠券类型 0-通用 1-商品券",
+      "nullable": true,
+      "default": 0
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_store_coupon"
+  },
+  "name": "app_yshop_store_coupon",
+  "relations": {}
+}

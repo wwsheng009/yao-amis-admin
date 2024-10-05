@@ -1,0 +1,57 @@
+{
+  "columns": [
+    {
+      "name": "canvas_id",
+      "label": "画布id",
+      "type": "id",
+      "comment": "画布id",
+      "primary": true
+    },
+    {
+      "name": "terminal",
+      "label": "终端 1-小程序 2-H5 3-APP 4-PC",
+      "type": "tinyInteger",
+      "comment": "终端 1-小程序 2-H5 3-APP 4-PC"
+    },
+    {
+      "name": "json",
+      "label": "画布json数据",
+      "type": "text",
+      "comment": "画布json数据",
+      "nullable": true
+    },
+    {
+      "name": "type",
+      "label": "类型 1-系统画布 2-自定义页面 3-商家店铺装修",
+      "type": "tinyInteger",
+      "comment": "类型 1-系统画布 2-自定义页面 3-商家店铺装修",
+      "nullable": true,
+      "default": 1
+    },
+    {
+      "name": "name",
+      "label": "名称",
+      "type": "string",
+      "comment": "名称",
+      "length": 255,
+      "default": ""
+    },
+    {
+      "name": "shop_id",
+      "label": "店铺id，当type=3的时候，值为具体的店铺id，其它情况为0",
+      "type": "bigInteger",
+      "comment": "店铺id，当type=3的时候，值为具体的店铺id，其它情况为0",
+      "nullable": true,
+      "default": 0
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_store_canvas"
+  },
+  "name": "app_yshop_store_canvas",
+  "relations": {}
+}

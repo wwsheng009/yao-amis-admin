@@ -1,0 +1,61 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "label": "微信关键字回复id",
+      "type": "id",
+      "comment": "微信关键字回复id",
+      "primary": true
+    },
+    {
+      "name": "key",
+      "label": "关键字",
+      "type": "string",
+      "comment": "关键字",
+      "length": 64,
+      "default": "",
+      "unique": true
+    },
+    {
+      "name": "type",
+      "label": "回复类型",
+      "type": "string",
+      "comment": "回复类型",
+      "length": 32,
+      "default": "",
+      "index": true
+    },
+    {
+      "name": "data",
+      "label": "回复数据",
+      "type": "text",
+      "comment": "回复数据"
+    },
+    {
+      "name": "status",
+      "label": "0=不可用  1 =可用",
+      "type": "tinyInteger",
+      "comment": "0=不可用  1 =可用",
+      "default": 1,
+      "index": true
+    },
+    {
+      "name": "hide",
+      "label": "是否隐藏",
+      "type": "tinyInteger",
+      "comment": "是否隐藏",
+      "nullable": true,
+      "default": 0,
+      "index": true
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_wechat_reply"
+  },
+  "name": "app_yshop_wechat_reply",
+  "relations": {}
+}

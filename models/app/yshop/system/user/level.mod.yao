@@ -1,0 +1,104 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "type": "id",
+      "primary": true
+    },
+    {
+      "name": "mer_id",
+      "label": "商户id",
+      "type": "integer",
+      "comment": "商户id",
+      "default": 0
+    },
+    {
+      "name": "name",
+      "label": "会员名称",
+      "type": "string",
+      "comment": "会员名称",
+      "length": 255,
+      "default": ""
+    },
+    {
+      "name": "money",
+      "label": "购买金额",
+      "type": "decimal",
+      "comment": "购买金额",
+      "default": 0
+    },
+    {
+      "name": "valid_date",
+      "label": "有效时间",
+      "type": "integer",
+      "comment": "有效时间",
+      "default": 0
+    },
+    {
+      "name": "is_forever",
+      "label": "是否为永久会员",
+      "type": "tinyInteger",
+      "comment": "是否为永久会员",
+      "default": 0
+    },
+    {
+      "name": "is_pay",
+      "label": "是否购买,1=购买,0=不购买",
+      "type": "tinyInteger",
+      "comment": "是否购买,1=购买,0=不购买",
+      "default": 0
+    },
+    {
+      "name": "is_show",
+      "label": "是否显示 1=显示,0=隐藏",
+      "type": "tinyInteger",
+      "comment": "是否显示 1=显示,0=隐藏",
+      "default": 0
+    },
+    {
+      "name": "grade",
+      "label": "会员等级",
+      "type": "integer",
+      "comment": "会员等级",
+      "default": 0
+    },
+    {
+      "name": "discount",
+      "label": "享受折扣",
+      "type": "decimal",
+      "comment": "享受折扣",
+      "default": 0
+    },
+    {
+      "name": "image",
+      "label": "会员卡背景",
+      "type": "string",
+      "comment": "会员卡背景",
+      "length": 255,
+      "default": ""
+    },
+    {
+      "name": "icon",
+      "label": "会员图标",
+      "type": "string",
+      "comment": "会员图标",
+      "length": 255,
+      "default": ""
+    },
+    {
+      "name": "explain",
+      "label": "说明",
+      "type": "text",
+      "comment": "说明"
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_system_user_level"
+  },
+  "name": "app_yshop_system_user_level",
+  "relations": {}
+}

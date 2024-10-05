@@ -1,0 +1,103 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "主键(自增策略)",
+            "type": "id",
+            "comment": "主键(自增策略)",
+            "primary": true
+        },
+        {
+            "name": "type",
+            "label": "社交平台的类型",
+            "type": "tinyInteger",
+            "comment": "社交平台的类型"
+        },
+        {
+            "name": "openid",
+            "label": "社交 openid",
+            "type": "string",
+            "comment": "社交 openid",
+            "length": 32
+        },
+        {
+            "name": "token",
+            "label": "社交 token",
+            "type": "string",
+            "comment": "社交 token",
+            "length": 256,
+            "nullable": true
+        },
+        {
+            "name": "raw_token_info",
+            "label": "原始 Token 数据，一般是 JSON 格式",
+            "type": "string",
+            "comment": "原始 Token 数据，一般是 JSON 格式",
+            "length": 1024
+        },
+        {
+            "name": "nickname",
+            "label": "用户昵称",
+            "type": "string",
+            "comment": "用户昵称",
+            "length": 32
+        },
+        {
+            "name": "avatar",
+            "label": "用户头像",
+            "type": "string",
+            "comment": "用户头像",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "raw_user_info",
+            "label": "原始用户数据，一般是 JSON 格式",
+            "type": "string",
+            "comment": "原始用户数据，一般是 JSON 格式",
+            "length": 1024
+        },
+        {
+            "name": "code",
+            "label": "最后一次的认证 code",
+            "type": "string",
+            "comment": "最后一次的认证 code",
+            "length": 256
+        },
+        {
+            "name": "state",
+            "label": "最后一次的认证 state",
+            "type": "string",
+            "comment": "最后一次的认证 state",
+            "length": 256,
+            "nullable": true
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "system_social_user"
+    },
+    "name": "system_social_user",
+    "relations": {}
+}

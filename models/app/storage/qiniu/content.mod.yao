@@ -1,0 +1,66 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "label": "ID",
+      "type": "id",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "name": "bucket",
+      "label": "Bucket 识别符",
+      "type": "string",
+      "comment": "Bucket 识别符",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "name",
+      "label": "文件名称",
+      "type": "string",
+      "comment": "文件名称",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "size",
+      "label": "文件大小",
+      "type": "string",
+      "comment": "文件大小",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "type",
+      "label": "文件类型：私有或公开",
+      "type": "string",
+      "comment": "文件类型：私有或公开",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "url",
+      "label": "文件url",
+      "type": "string",
+      "comment": "文件url",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "suffix",
+      "type": "string",
+      "length": 255,
+      "nullable": true
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_storage_qiniu_content"
+  },
+  "name": "",
+  "relations": {}
+}

@@ -1,0 +1,156 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "id",
+            "type": "id",
+            "comment": "id",
+            "primary": true
+        },
+        {
+            "name": "name",
+            "label": "店铺名称",
+            "type": "string",
+            "comment": "店铺名称",
+            "length": 100
+        },
+        {
+            "name": "mobile",
+            "label": "店铺电话",
+            "type": "string",
+            "comment": "店铺电话",
+            "length": 20
+        },
+        {
+            "name": "image",
+            "label": "图片",
+            "type": "string",
+            "comment": "图片",
+            "length": 255,
+            "default": ""
+        },
+        {
+            "name": "images",
+            "label": "多张图片",
+            "type": "text",
+            "comment": "多张图片"
+        },
+        {
+            "name": "address",
+            "label": "详细地址",
+            "type": "string",
+            "comment": "详细地址",
+            "length": 255
+        },
+        {
+            "name": "address_map",
+            "label": "地图定位地址",
+            "type": "string",
+            "comment": "地图定位地址",
+            "length": 255
+        },
+        {
+            "name": "start_time",
+            "label": "营业开始时间",
+            "type": "datetime",
+            "comment": "营业开始时间"
+        },
+        {
+            "name": "end_time",
+            "label": "营业结束时间",
+            "type": "datetime",
+            "comment": "营业结束时间"
+        },
+        {
+            "name": "lng",
+            "label": "经度",
+            "type": "string",
+            "comment": "经度",
+            "length": 30
+        },
+        {
+            "name": "lat",
+            "label": "纬度",
+            "type": "string",
+            "comment": "纬度",
+            "length": 30
+        },
+        {
+            "name": "distance",
+            "label": "外卖配送距离,单位为千米。0表示不送外卖",
+            "type": "integer",
+            "comment": "外卖配送距离,单位为千米。0表示不送外卖",
+            "default": 0
+        },
+        {
+            "name": "min_price",
+            "label": "起送价钱",
+            "type": "decimal",
+            "comment": "起送价钱",
+            "default": 0
+        },
+        {
+            "name": "delivery_price",
+            "label": "配送价格",
+            "type": "decimal",
+            "comment": "配送价格",
+            "default": 0
+        },
+        {
+            "name": "notice",
+            "label": "公告",
+            "type": "string",
+            "comment": "公告",
+            "length": 255,
+            "default": ""
+        },
+        {
+            "name": "status",
+            "label": "是否营业:0=否,1=是",
+            "type": "tinyInteger",
+            "comment": "是否营业:0=否,1=是",
+            "default": 0
+        },
+        {
+            "name": "admin_id",
+            "label": "管理员id",
+            "type": "string",
+            "comment": "管理员id",
+            "length": 100,
+            "default": ""
+        },
+        {
+            "name": "uniprint_id",
+            "label": "打印机id",
+            "type": "string",
+            "comment": "打印机id",
+            "length": 100,
+            "default": ""
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_yshop_store_shop"
+    },
+    "name": "app_yshop_store_shop",
+    "relations": {}
+}

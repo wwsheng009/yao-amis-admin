@@ -1,0 +1,65 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "label": "ID",
+      "type": "id",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "name": "access_key",
+      "label": "accessKey",
+      "type": "text",
+      "comment": "accessKey",
+      "nullable": true
+    },
+    {
+      "name": "bucket",
+      "label": "Bucket 识别符",
+      "type": "string",
+      "comment": "Bucket 识别符",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "host",
+      "label": "外链域名",
+      "type": "string",
+      "comment": "外链域名",
+      "length": 255
+    },
+    {
+      "name": "secret_key",
+      "label": "secretKey",
+      "type": "text",
+      "comment": "secretKey",
+      "nullable": true
+    },
+    {
+      "name": "type",
+      "label": "空间类型",
+      "type": "string",
+      "comment": "空间类型",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "zone",
+      "label": "机房",
+      "type": "string",
+      "comment": "机房",
+      "length": 255,
+      "nullable": true
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_storage_qiniu_config"
+  },
+  "name": "tools_qiniu_config",
+  "relations": {}
+}

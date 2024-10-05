@@ -1,0 +1,150 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "编号",
+            "type": "id",
+            "comment": "编号",
+            "primary": true
+        },
+        {
+            "name": "openid",
+            "label": "用户标识",
+            "type": "string",
+            "comment": "用户标识",
+            "length": 100
+        },
+        {
+            "name": "subscribe_status",
+            "label": "关注状态",
+            "type": "tinyInteger",
+            "comment": "关注状态"
+        },
+        {
+            "name": "subscribe_time",
+            "label": "关注时间",
+            "type": "datetime",
+            "comment": "关注时间"
+        },
+        {
+            "name": "nickname",
+            "label": "昵称",
+            "type": "string",
+            "comment": "昵称",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "head_image_url",
+            "label": "头像地址",
+            "type": "string",
+            "comment": "头像地址",
+            "length": 1024,
+            "nullable": true
+        },
+        {
+            "name": "unsubscribe_time",
+            "label": "取消关注时间",
+            "type": "datetime",
+            "comment": "取消关注时间",
+            "nullable": true
+        },
+        {
+            "name": "language",
+            "label": "语言",
+            "type": "string",
+            "comment": "语言",
+            "length": 30,
+            "nullable": true
+        },
+        {
+            "name": "country",
+            "label": "国家",
+            "type": "string",
+            "comment": "国家",
+            "length": 30,
+            "nullable": true
+        },
+        {
+            "name": "province",
+            "label": "省份",
+            "type": "string",
+            "comment": "省份",
+            "length": 30,
+            "nullable": true
+        },
+        {
+            "name": "city",
+            "label": "城市",
+            "type": "string",
+            "comment": "城市",
+            "length": 30,
+            "nullable": true
+        },
+        {
+            "name": "remark",
+            "label": "备注",
+            "type": "string",
+            "comment": "备注",
+            "length": 128,
+            "nullable": true
+        },
+        {
+            "name": "tag_ids",
+            "label": "标签编号数组",
+            "type": "string",
+            "comment": "标签编号数组",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "union_id",
+            "label": "unionId",
+            "type": "string",
+            "comment": "unionId",
+            "length": 255,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "account_id",
+            "label": "微信公众号ID",
+            "type": "bigInteger",
+            "comment": "微信公众号ID"
+        },
+        {
+            "name": "app_id",
+            "label": "微信公众号 appid",
+            "type": "string",
+            "comment": "微信公众号 appid",
+            "length": 128
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_mp_user"
+    },
+    "name": "app_mp_user",
+    "relations": {}
+}

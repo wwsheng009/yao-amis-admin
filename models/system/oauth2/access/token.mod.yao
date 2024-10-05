@@ -1,0 +1,100 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "编号",
+            "type": "id",
+            "comment": "编号",
+            "primary": true
+        },
+        {
+            "name": "user_id",
+            "label": "用户编号",
+            "type": "bigInteger",
+            "comment": "用户编号"
+        },
+        {
+            "name": "user_type",
+            "label": "用户类型",
+            "type": "tinyInteger",
+            "comment": "用户类型"
+        },
+        {
+            "name": "user_info",
+            "label": "用户信息",
+            "type": "string",
+            "comment": "用户信息",
+            "length": 512
+        },
+        {
+            "name": "access_token",
+            "label": "访问令牌",
+            "type": "string",
+            "comment": "访问令牌",
+            "length": 255
+        },
+        {
+            "name": "refresh_token",
+            "label": "刷新令牌",
+            "type": "string",
+            "comment": "刷新令牌",
+            "length": 32
+        },
+        {
+            "name": "client_id",
+            "label": "客户端编号",
+            "type": "string",
+            "comment": "客户端编号",
+            "length": 255
+        },
+        {
+            "name": "scopes",
+            "label": "授权范围",
+            "type": "string",
+            "comment": "授权范围",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "expires_time",
+            "label": "过期时间",
+            "type": "datetime",
+            "comment": "过期时间"
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "shop_id",
+            "label": "门店id",
+            "type": "bigInteger",
+            "comment": "门店id",
+            "nullable": true,
+            "default": 0
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "system_oauth2_access_token"
+    },
+    "name": "system_oauth2_access_token",
+    "relations": {}
+}

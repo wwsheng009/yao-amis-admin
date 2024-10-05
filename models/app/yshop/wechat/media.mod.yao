@@ -1,0 +1,76 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "label": "微信视频音频id",
+      "type": "id",
+      "comment": "微信视频音频id",
+      "primary": true
+    },
+    {
+      "name": "type",
+      "label": "回复类型",
+      "type": "string",
+      "comment": "回复类型",
+      "length": 16,
+      "default": "",
+      "index": true
+    },
+    {
+      "name": "path",
+      "label": "文件路径",
+      "type": "string",
+      "comment": "文件路径",
+      "length": 128,
+      "default": ""
+    },
+    {
+      "name": "media_id",
+      "label": "微信服务器返回的id",
+      "type": "string",
+      "comment": "微信服务器返回的id",
+      "length": 64,
+      "default": ""
+    },
+    {
+      "name": "url",
+      "label": "地址",
+      "type": "string",
+      "comment": "地址",
+      "length": 256,
+      "default": ""
+    },
+    {
+      "name": "temporary",
+      "label": "是否永久或者临时 0永久1临时",
+      "type": "tinyInteger",
+      "comment": "是否永久或者临时 0永久1临时",
+      "default": 0
+    },
+    {
+      "name": "add_time",
+      "label": "添加时间",
+      "type": "integer",
+      "comment": "添加时间"
+    }
+  ],
+  "indexes": [
+    {
+      "name": "type",
+      "columns": [
+        "type",
+        "media_id"
+      ],
+      "type": "unique"
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_wechat_media"
+  },
+  "name": "app_yshop_wechat_media",
+  "relations": {}
+}

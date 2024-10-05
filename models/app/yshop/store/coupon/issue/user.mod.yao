@@ -1,0 +1,42 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "type": "id",
+      "primary": true
+    },
+    {
+      "name": "uid",
+      "label": "领取优惠券用户ID",
+      "type": "bigInteger",
+      "comment": "领取优惠券用户ID",
+      "nullable": true
+    },
+    {
+      "name": "issue_coupon_id",
+      "label": "优惠券前台领取ID",
+      "type": "integer",
+      "comment": "优惠券前台领取ID",
+      "nullable": true
+    }
+  ],
+  "indexes": [
+    {
+      "name": "uid",
+      "columns": [
+        "uid",
+        "issue_coupon_id"
+      ],
+      "type": "unique"
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_store_coupon_issue_user"
+  },
+  "name": "app_yshop_store_coupon_issue_user",
+  "relations": {}
+}

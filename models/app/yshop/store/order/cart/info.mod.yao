@@ -1,0 +1,122 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "type": "id",
+      "primary": true
+    },
+    {
+      "name": "oid",
+      "label": "订单id",
+      "type": "bigInteger",
+      "comment": "订单id"
+    },
+    {
+      "name": "order_id",
+      "label": "订单号",
+      "type": "string",
+      "comment": "订单号",
+      "length": 32,
+      "nullable": true
+    },
+    {
+      "name": "cart_id",
+      "label": "购物车id",
+      "type": "bigInteger",
+      "comment": "购物车id",
+      "default": 0,
+      "index": true
+    },
+    {
+      "name": "product_id",
+      "label": "商品ID",
+      "type": "bigInteger",
+      "comment": "商品ID",
+      "default": 0,
+      "index": true
+    },
+    {
+      "name": "cart_info",
+      "label": "购买东西的详细信息",
+      "type": "text",
+      "comment": "购买东西的详细信息"
+    },
+    {
+      "name": "unique",
+      "label": "唯一id",
+      "type": "string",
+      "comment": "唯一id",
+      "length": 50,
+      "default": ""
+    },
+    {
+      "name": "is_after_sales",
+      "label": "是否能售后0不能1能",
+      "type": "tinyInteger",
+      "comment": "是否能售后0不能1能",
+      "nullable": true,
+      "default": 0
+    },
+    {
+      "name": "title",
+      "label": "商品名称",
+      "type": "string",
+      "comment": "商品名称",
+      "length": 100,
+      "nullable": true,
+      "default": ""
+    },
+    {
+      "name": "image",
+      "label": "商品图片",
+      "type": "string",
+      "comment": "商品图片",
+      "length": 500,
+      "nullable": true,
+      "default": ""
+    },
+    {
+      "name": "number",
+      "label": "数量",
+      "type": "integer",
+      "comment": "数量",
+      "nullable": true,
+      "default": 0
+    },
+    {
+      "name": "price",
+      "label": "价格",
+      "type": "decimal",
+      "comment": "价格",
+      "nullable": true
+    },
+    {
+      "name": "spec",
+      "label": "规格",
+      "type": "string",
+      "comment": "规格",
+      "length": 500,
+      "nullable": true,
+      "default": ""
+    }
+  ],
+  "indexes": [
+    {
+      "name": "oid",
+      "columns": [
+        "oid",
+        "unique"
+      ],
+      "type": "unique"
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_store_order_cart_info"
+  },
+  "name": "app_yshop_store_order_cart_info",
+  "relations": {}
+}

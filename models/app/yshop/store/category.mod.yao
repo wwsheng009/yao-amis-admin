@@ -1,0 +1,60 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "label": "商品分类表ID",
+      "type": "integer",
+      "comment": "商品分类表ID",
+      "primary": true
+    },
+    {
+      "name": "pid",
+      "label": "父id",
+      "type": "integer",
+      "comment": "父id",
+      "index": true
+    },
+    {
+      "name": "cate_name",
+      "label": "分类名称",
+      "type": "string",
+      "comment": "分类名称",
+      "length": 100
+    },
+    {
+      "name": "sort",
+      "label": "排序",
+      "type": "integer",
+      "comment": "排序",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "name": "pic",
+      "label": "图标",
+      "type": "string",
+      "comment": "图标",
+      "length": 128,
+      "nullable": true,
+      "default": ""
+    },
+    {
+      "name": "is_show",
+      "label": "是否推荐",
+      "type": "tinyInteger",
+      "comment": "是否推荐",
+      "nullable": true,
+      "default": 1,
+      "index": true
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_store_category"
+  },
+  "name": "app_yshop_store_category",
+  "relations": {}
+}

@@ -1,0 +1,100 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "租户编号",
+            "type": "id",
+            "comment": "租户编号",
+            "primary": true
+        },
+        {
+            "name": "name",
+            "label": "租户名",
+            "type": "string",
+            "comment": "租户名",
+            "length": 30
+        },
+        {
+            "name": "contact_user_id",
+            "label": "联系人的用户编号",
+            "type": "bigInteger",
+            "comment": "联系人的用户编号",
+            "nullable": true
+        },
+        {
+            "name": "contact_name",
+            "label": "联系人",
+            "type": "string",
+            "comment": "联系人",
+            "length": 30
+        },
+        {
+            "name": "contact_mobile",
+            "label": "联系手机",
+            "type": "string",
+            "comment": "联系手机",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "status",
+            "label": "租户状态（0正常 1停用）",
+            "type": "tinyInteger",
+            "comment": "租户状态（0正常 1停用）",
+            "default": 0
+        },
+        {
+            "name": "domain",
+            "label": "绑定域名",
+            "type": "string",
+            "comment": "绑定域名",
+            "length": 256,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "package_id",
+            "label": "租户套餐编号",
+            "type": "bigInteger",
+            "comment": "租户套餐编号"
+        },
+        {
+            "name": "expire_time",
+            "label": "过期时间",
+            "type": "datetime",
+            "comment": "过期时间"
+        },
+        {
+            "name": "account_count",
+            "label": "账号数量",
+            "type": "integer",
+            "comment": "账号数量"
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 64,
+            "default": ""
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "system_tenant"
+    },
+    "name": "system_tenant",
+    "relations": {}
+}

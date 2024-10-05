@@ -1,0 +1,60 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "uid",
+            "label": "用户ID",
+            "type": "bigInteger",
+            "comment": "用户ID"
+        },
+        {
+            "name": "product_id",
+            "label": "商品ID",
+            "type": "bigInteger",
+            "comment": "商品ID"
+        },
+        {
+            "name": "type",
+            "label": "类型(收藏(collect）、点赞(like))",
+            "type": "string",
+            "comment": "类型(收藏(collect）、点赞(like))",
+            "length": 32,
+            "nullable": true,
+            "index": true
+        },
+        {
+            "name": "category",
+            "label": "某种类型的商品(普通商品、秒杀商品)",
+            "type": "string",
+            "comment": "某种类型的商品(普通商品、秒杀商品)",
+            "length": 32,
+            "nullable": true,
+            "index": true
+        }
+    ],
+    "indexes": [
+        {
+            "name": "uid",
+            "columns": [
+                "uid",
+                "product_id",
+                "type",
+                "category"
+            ],
+            "type": "unique"
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_yshop_store_product_relation"
+    },
+    "name": "app_yshop_store_product_relation",
+    "relations": {}
+}

@@ -1,0 +1,84 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "id",
+            "type": "id",
+            "comment": "id",
+            "primary": true
+        },
+        {
+            "name": "image",
+            "label": "图片",
+            "type": "string",
+            "comment": "图片",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "is_switch",
+            "label": "是否显现",
+            "type": "tinyInteger",
+            "comment": "是否显现",
+            "default": 0
+        },
+        {
+            "name": "weigh",
+            "label": "权重",
+            "type": "integer",
+            "comment": "权重",
+            "default": 0
+        },
+        {
+            "name": "shop_id",
+            "label": "所支持的店铺id",
+            "type": "string",
+            "comment": "所支持的店铺id用','区分，0代表全部",
+            "length": 500,
+            "default": "0"
+        },
+        {
+            "name": "shop_name",
+            "label": "店铺名称逗号隔开",
+            "type": "string",
+            "comment": "店铺名称逗号隔开",
+            "length": 1000,
+            "nullable": true
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true
+        }
+    ],
+    "indexes": [
+        {
+            "name": "weigh",
+            "columns": [
+                "weigh",
+                "id"
+            ],
+            "type": "index"
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_yshop_shop_ads"
+    },
+    "name": "app_yshop_shop_ads",
+    "relations": {}
+}

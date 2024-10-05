@@ -1,0 +1,81 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "type": "id",
+      "primary": true
+    },
+    {
+      "name": "uid",
+      "label": "微信用户id",
+      "type": "bigInteger",
+      "comment": "微信用户id"
+    },
+    {
+      "name": "nickname",
+      "type": "string",
+      "length": 50
+    },
+    {
+      "name": "avatar",
+      "label": "店员头像",
+      "type": "string",
+      "comment": "店员头像",
+      "length": 255,
+      "default": ""
+    },
+    {
+      "name": "store_id",
+      "label": "门店id",
+      "type": "integer",
+      "comment": "门店id"
+    },
+    {
+      "name": "store_name",
+      "type": "string",
+      "length": 50,
+      "nullable": true
+    },
+    {
+      "name": "staff_name",
+      "label": "店员名称",
+      "type": "string",
+      "comment": "店员名称",
+      "length": 64,
+      "nullable": true,
+      "default": ""
+    },
+    {
+      "name": "phone",
+      "label": "手机号码",
+      "type": "char",
+      "comment": "手机号码",
+      "length": 15,
+      "nullable": true
+    },
+    {
+      "name": "verify_status",
+      "label": "核销开关",
+      "type": "tinyInteger",
+      "comment": "核销开关",
+      "default": 0
+    },
+    {
+      "name": "status",
+      "label": "状态",
+      "type": "tinyInteger",
+      "comment": "状态",
+      "nullable": true,
+      "default": 1
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_system_store_staff"
+  },
+  "name": "app_yshop_system_store_staff",
+  "relations": {}
+}

@@ -1,0 +1,31 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "type": "id",
+      "primary": true
+    },
+    {
+      "name": "product_id",
+      "label": "商品ID",
+      "type": "bigInteger",
+      "comment": "商品ID",
+      "index": true
+    },
+    {
+      "name": "result",
+      "label": "商品属性参数",
+      "type": "text",
+      "comment": "商品属性参数"
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_store_product_attr_result"
+  },
+  "name": "app_yshop_store_product_attr_result",
+  "relations": {}
+}

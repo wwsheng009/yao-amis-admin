@@ -1,0 +1,167 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "主键",
+            "type": "id",
+            "comment": "主键",
+            "primary": true
+        },
+        {
+            "name": "account_id",
+            "label": "公众号账号的编号",
+            "type": "bigInteger",
+            "comment": "公众号账号的编号"
+        },
+        {
+            "name": "app_id",
+            "label": "公众号 appId",
+            "type": "string",
+            "comment": "公众号 appId",
+            "length": 128
+        },
+        {
+            "name": "type",
+            "label": "回复类型",
+            "type": "tinyInteger",
+            "comment": "回复类型"
+        },
+        {
+            "name": "request_keyword",
+            "label": "请求的关键字",
+            "type": "string",
+            "comment": "请求的关键字",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "request_match",
+            "label": "请求的关键字的匹配",
+            "type": "tinyInteger",
+            "comment": "请求的关键字的匹配",
+            "nullable": true
+        },
+        {
+            "name": "request_message_type",
+            "label": "请求的消息类型",
+            "type": "string",
+            "comment": "请求的消息类型",
+            "length": 32,
+            "nullable": true
+        },
+        {
+            "name": "response_message_type",
+            "label": "回复的消息类型",
+            "type": "string",
+            "comment": "回复的消息类型",
+            "length": 32
+        },
+        {
+            "name": "response_content",
+            "label": "回复的消息内容",
+            "type": "string",
+            "comment": "回复的消息内容",
+            "length": 1024,
+            "nullable": true
+        },
+        {
+            "name": "response_media_id",
+            "label": "回复的媒体文件 id",
+            "type": "string",
+            "comment": "回复的媒体文件 id",
+            "length": 128,
+            "nullable": true
+        },
+        {
+            "name": "response_media_url",
+            "label": "回复的媒体文件 URL",
+            "type": "string",
+            "comment": "回复的媒体文件 URL",
+            "length": 1024,
+            "nullable": true
+        },
+        {
+            "name": "response_title",
+            "label": "回复的标题",
+            "type": "string",
+            "comment": "回复的标题",
+            "length": 128,
+            "nullable": true
+        },
+        {
+            "name": "response_description",
+            "label": "回复的描述",
+            "type": "string",
+            "comment": "回复的描述",
+            "length": 256,
+            "nullable": true
+        },
+        {
+            "name": "response_thumb_media_id",
+            "label": "回复的缩略图的媒体 id",
+            "type": "string",
+            "comment": "回复的缩略图的媒体 id",
+            "length": 128,
+            "nullable": true
+        },
+        {
+            "name": "response_thumb_media_url",
+            "label": "回复的缩略图的媒体 URL",
+            "type": "string",
+            "comment": "回复的缩略图的媒体 URL",
+            "length": 1024,
+            "nullable": true
+        },
+        {
+            "name": "response_articles",
+            "label": "回复的图文消息数组",
+            "type": "string",
+            "comment": "回复的图文消息数组",
+            "length": 1024,
+            "nullable": true
+        },
+        {
+            "name": "response_music_url",
+            "label": "回复的音乐链接",
+            "type": "string",
+            "comment": "回复的音乐链接",
+            "length": 1024,
+            "nullable": true
+        },
+        {
+            "name": "response_hq_music_url",
+            "label": "回复的高质量音乐链接",
+            "type": "string",
+            "comment": "回复的高质量音乐链接",
+            "length": 1024,
+            "nullable": true
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_mp_auto_reply"
+    },
+    "name": "app_mp_auto_reply",
+    "relations": {}
+}

@@ -1,7 +1,7 @@
 {
   "name": "单位表",
   "table": {
-    "name": "app.erp.company",
+    "name": "app_erp_company",
     "comment": "单位表"
   },
   "columns": [

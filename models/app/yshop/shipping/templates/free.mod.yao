@@ -1,0 +1,70 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "label": "编号",
+      "type": "id",
+      "comment": "编号",
+      "primary": true
+    },
+    {
+      "name": "province_id",
+      "label": "省ID",
+      "type": "integer",
+      "comment": "省ID",
+      "default": 0
+    },
+    {
+      "name": "temp_id",
+      "label": "模板ID",
+      "type": "integer",
+      "comment": "模板ID",
+      "default": 0
+    },
+    {
+      "name": "city_id",
+      "label": "城市ID",
+      "type": "integer",
+      "comment": "城市ID",
+      "default": 0
+    },
+    {
+      "name": "number",
+      "label": "包邮件数",
+      "type": "decimal",
+      "comment": "包邮件数",
+      "default": 0
+    },
+    {
+      "name": "price",
+      "label": "包邮金额",
+      "type": "decimal",
+      "comment": "包邮金额",
+      "default": 0
+    },
+    {
+      "name": "type",
+      "label": "计费方式",
+      "type": "tinyInteger",
+      "comment": "计费方式",
+      "default": 1
+    },
+    {
+      "name": "uniqid",
+      "label": "分组唯一值",
+      "type": "string",
+      "comment": "分组唯一值",
+      "length": 32,
+      "default": ""
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_shipping_templates_free"
+  },
+  "name": "app_yshop_shipping_templates_free",
+  "relations": {}
+}

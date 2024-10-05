@@ -1,0 +1,26 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "type": "id",
+      "primary": true
+    },
+    {
+      "name": "group_name",
+      "label": "用户分组名称",
+      "type": "string",
+      "comment": "用户分组名称",
+      "length": 64,
+      "nullable": true
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_user_group"
+  },
+  "name": "app_yshop_user_group",
+  "relations": {}
+}

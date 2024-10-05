@@ -1,0 +1,40 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "label": "主键id",
+      "type": "id",
+      "comment": "主键id",
+      "primary": true
+    },
+    {
+      "name": "store_after_sales_id",
+      "label": "售后id",
+      "type": "bigInteger",
+      "comment": "售后id",
+      "nullable": true
+    },
+    {
+      "name": "product_id",
+      "label": "商品id",
+      "type": "bigInteger",
+      "comment": "商品id",
+      "nullable": true
+    },
+    {
+      "name": "cart_info",
+      "label": "退货东西的详情信息",
+      "type": "text",
+      "comment": "退货东西的详情信息"
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_store_after_sales_item"
+  },
+  "name": "app_yshop_store_after_sales_item",
+  "relations": {}
+}

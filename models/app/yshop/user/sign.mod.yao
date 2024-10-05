@@ -1,0 +1,48 @@
+{
+  "columns": [
+    {
+      "name": "int",
+      "type": "id",
+      "primary": true
+    },
+    {
+      "name": "uid",
+      "label": "用户uid",
+      "type": "bigInteger",
+      "comment": "用户uid",
+      "default": 0,
+      "index": true
+    },
+    {
+      "name": "title",
+      "label": "签到说明",
+      "type": "string",
+      "comment": "签到说明",
+      "length": 255,
+      "default": ""
+    },
+    {
+      "name": "number",
+      "label": "获得积分",
+      "type": "integer",
+      "comment": "获得积分",
+      "default": 0
+    },
+    {
+      "name": "balance",
+      "label": "剩余积分",
+      "type": "integer",
+      "comment": "剩余积分",
+      "default": 0
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_user_sign"
+  },
+  "name": "app_yshop_user_sign",
+  "relations": {}
+}

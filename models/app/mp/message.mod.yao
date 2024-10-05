@@ -1,0 +1,236 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "主键",
+            "type": "id",
+            "comment": "主键",
+            "primary": true
+        },
+        {
+            "name": "msg_id",
+            "label": "微信公众号的消息编号",
+            "type": "bigInteger",
+            "comment": "微信公众号的消息编号",
+            "nullable": true
+        },
+        {
+            "name": "account_id",
+            "label": "公众号账号的编号",
+            "type": "bigInteger",
+            "comment": "公众号账号的编号"
+        },
+        {
+            "name": "app_id",
+            "label": "公众号 appId",
+            "type": "string",
+            "comment": "公众号 appId",
+            "length": 128
+        },
+        {
+            "name": "user_id",
+            "label": "公众号粉丝的编号",
+            "type": "bigInteger",
+            "comment": "公众号粉丝的编号"
+        },
+        {
+            "name": "openid",
+            "label": "公众号粉丝标志",
+            "type": "string",
+            "comment": "公众号粉丝标志",
+            "length": 100
+        },
+        {
+            "name": "type",
+            "label": "消息类型",
+            "type": "string",
+            "comment": "消息类型",
+            "length": 32
+        },
+        {
+            "name": "send_from",
+            "label": "消息来源",
+            "type": "tinyInteger",
+            "comment": "消息来源"
+        },
+        {
+            "name": "content",
+            "label": "消息内容",
+            "type": "string",
+            "comment": "消息内容",
+            "length": 1024,
+            "nullable": true
+        },
+        {
+            "name": "media_id",
+            "label": "媒体文件 id",
+            "type": "string",
+            "comment": "媒体文件 id",
+            "length": 128,
+            "nullable": true
+        },
+        {
+            "name": "media_url",
+            "label": "媒体文件 URL",
+            "type": "string",
+            "comment": "媒体文件 URL",
+            "length": 1024,
+            "nullable": true
+        },
+        {
+            "name": "recognition",
+            "label": "语音识别后文本",
+            "type": "string",
+            "comment": "语音识别后文本",
+            "length": 1024,
+            "nullable": true
+        },
+        {
+            "name": "format",
+            "label": "语音格式",
+            "type": "string",
+            "comment": "语音格式",
+            "length": 16,
+            "nullable": true
+        },
+        {
+            "name": "title",
+            "label": "标题",
+            "type": "string",
+            "comment": "标题",
+            "length": 128,
+            "nullable": true
+        },
+        {
+            "name": "description",
+            "label": "描述",
+            "type": "string",
+            "comment": "描述",
+            "length": 256,
+            "nullable": true
+        },
+        {
+            "name": "thumb_media_id",
+            "label": "缩略图的媒体 id",
+            "type": "string",
+            "comment": "缩略图的媒体 id",
+            "length": 128,
+            "nullable": true
+        },
+        {
+            "name": "thumb_media_url",
+            "label": "缩略图的媒体 URL",
+            "type": "string",
+            "comment": "缩略图的媒体 URL",
+            "length": 1024,
+            "nullable": true
+        },
+        {
+            "name": "url",
+            "label": "点击图文消息跳转链接",
+            "type": "string",
+            "comment": "点击图文消息跳转链接",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "location_x",
+            "label": "地理位置维度",
+            "type": "double",
+            "comment": "地理位置维度",
+            "precision": 22,
+            "nullable": true
+        },
+        {
+            "name": "location_y",
+            "label": "地理位置经度",
+            "type": "double",
+            "comment": "地理位置经度",
+            "precision": 22,
+            "nullable": true
+        },
+        {
+            "name": "scale",
+            "label": "地图缩放大小",
+            "type": "double",
+            "comment": "地图缩放大小",
+            "precision": 22,
+            "nullable": true
+        },
+        {
+            "name": "label",
+            "label": "详细地址",
+            "type": "string",
+            "comment": "详细地址",
+            "length": 128,
+            "nullable": true
+        },
+        {
+            "name": "articles",
+            "label": "图文消息数组",
+            "type": "string",
+            "comment": "图文消息数组",
+            "length": 1024,
+            "nullable": true
+        },
+        {
+            "name": "music_url",
+            "label": "音乐链接",
+            "type": "string",
+            "comment": "音乐链接",
+            "length": 1024,
+            "nullable": true
+        },
+        {
+            "name": "hq_music_url",
+            "label": "高质量音乐链接",
+            "type": "string",
+            "comment": "高质量音乐链接",
+            "length": 1024,
+            "nullable": true
+        },
+        {
+            "name": "event",
+            "label": "事件类型",
+            "type": "string",
+            "comment": "事件类型",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "event_key",
+            "label": "事件 Key",
+            "type": "string",
+            "comment": "事件 Key",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_mp_message"
+    },
+    "name": "app_mp_message",
+    "relations": {}
+}

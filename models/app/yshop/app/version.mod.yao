@@ -1,0 +1,63 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "type": "id",
+      "primary": true
+    },
+    {
+      "name": "version_code",
+      "label": "版本code",
+      "type": "string",
+      "comment": "版本code",
+      "length": 64,
+      "nullable": true
+    },
+    {
+      "name": "version_name",
+      "label": "版本名称",
+      "type": "string",
+      "comment": "版本名称",
+      "length": 64,
+      "nullable": true
+    },
+    {
+      "name": "version_info",
+      "label": "版本描述",
+      "type": "string",
+      "comment": "版本描述",
+      "length": 600,
+      "nullable": true
+    },
+    {
+      "name": "ios_url",
+      "label": "ios store应用商店链接",
+      "type": "string",
+      "comment": "ios store应用商店链接",
+      "nullable": true
+    },
+    {
+      "name": "android_url",
+      "label": "安卓下载链接",
+      "type": "string",
+      "comment": "安卓下载链接",
+      "nullable": true
+    },
+    {
+      "name": "force_update",
+      "label": "是否强制升级",
+      "type": "tinyInteger",
+      "comment": "是否强制升级",
+      "nullable": true
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_app_version"
+  },
+  "name": "app_yshop_app_version",
+  "relations": {}
+}

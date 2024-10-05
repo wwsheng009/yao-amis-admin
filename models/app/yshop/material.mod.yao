@@ -1,0 +1,67 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "编号",
+            "type": "id",
+            "comment": "编号",
+            "primary": true
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "type",
+            "label": "类型1、图片；2、视频",
+            "type": "char",
+            "comment": "类型1、图片；2、视频",
+            "length": 2
+        },
+        {
+            "name": "group_id",
+            "label": "分组ID",
+            "type": "string",
+            "comment": "分组ID",
+            "length": 32,
+            "nullable": true
+        },
+        {
+            "name": "name",
+            "label": "素材名",
+            "type": "string",
+            "comment": "素材名",
+            "length": 200
+        },
+        {
+            "name": "url",
+            "label": "素材链接",
+            "type": "string",
+            "comment": "素材链接",
+            "length": 500,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_yshop_material"
+    },
+    "name": "app_yshop_material",
+    "relations": {}
+}

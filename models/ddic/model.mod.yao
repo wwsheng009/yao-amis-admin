@@ -122,5 +122,9 @@
       "foreign": "id"
     }
   },
-  "option": {}
+  "option": {
+    "timestamps": false,
+    "read_only": false,
+    "soft_deletes": false
+  }
 }

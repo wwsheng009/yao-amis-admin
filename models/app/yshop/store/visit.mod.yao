@@ -1,0 +1,77 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "type": "id",
+      "primary": true
+    },
+    {
+      "name": "product_id",
+      "label": "产品ID",
+      "type": "bigInteger",
+      "comment": "产品ID",
+      "nullable": true
+    },
+    {
+      "name": "product_type",
+      "label": "产品类型",
+      "type": "string",
+      "comment": "产品类型",
+      "length": 32,
+      "nullable": true
+    },
+    {
+      "name": "cate_id",
+      "label": "产品分类ID",
+      "type": "integer",
+      "comment": "产品分类ID",
+      "nullable": true
+    },
+    {
+      "name": "type",
+      "label": "产品类型",
+      "type": "char",
+      "comment": "产品类型",
+      "length": 50,
+      "nullable": true
+    },
+    {
+      "name": "uid",
+      "label": "用户ID",
+      "type": "bigInteger",
+      "comment": "用户ID",
+      "nullable": true
+    },
+    {
+      "name": "count",
+      "label": "访问次数",
+      "type": "integer",
+      "comment": "访问次数",
+      "nullable": true
+    },
+    {
+      "name": "content",
+      "label": "备注描述",
+      "type": "string",
+      "comment": "备注描述",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "add_time",
+      "label": "添加时间",
+      "type": "integer",
+      "comment": "添加时间",
+      "nullable": true
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_store_visit"
+  },
+  "name": "app_yshop_store_visit",
+  "relations": {}
+}

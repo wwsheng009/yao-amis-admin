@@ -1,0 +1,67 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "label": "快递公司id",
+      "type": "integer",
+      "comment": "快递公司id",
+      "primary": true
+    },
+    {
+      "name": "code",
+      "label": "快递公司简称",
+      "type": "string",
+      "comment": "快递公司简称",
+      "length": 50,
+      "default": ""
+    },
+    {
+      "name": "name",
+      "label": "快递公司全称",
+      "type": "string",
+      "comment": "快递公司全称",
+      "length": 50,
+      "default": ""
+    },
+    {
+      "name": "sort",
+      "label": "排序",
+      "type": "integer",
+      "comment": "排序",
+      "default": 0
+    },
+    {
+      "name": "is_show",
+      "label": "是否显示",
+      "type": "tinyInteger",
+      "comment": "是否显示",
+      "default": 0,
+      "index": true
+    },
+    {
+      "name": "created_by",
+      "label": "创建者",
+      "type": "string",
+      "comment": "创建者",
+      "length": 64,
+      "nullable": true
+    },
+    {
+      "name": "updated_by",
+      "label": "更新者",
+      "type": "string",
+      "comment": "更新者",
+      "length": 64,
+      "nullable": true
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_express"
+  },
+  "name": "app_yshop_express",
+  "relations": {}
+}

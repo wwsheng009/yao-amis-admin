@@ -1,0 +1,89 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "type": "id",
+      "primary": true
+    },
+    {
+      "name": "uid",
+      "label": "充值用户UID",
+      "type": "bigInteger",
+      "comment": "充值用户UID",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "name": "nickname",
+      "type": "string",
+      "length": 50,
+      "nullable": true,
+      "default": ""
+    },
+    {
+      "name": "order_id",
+      "label": "订单号",
+      "type": "string",
+      "comment": "订单号",
+      "length": 32,
+      "nullable": true,
+      "unique": true
+    },
+    {
+      "name": "price",
+      "label": "充值金额",
+      "type": "decimal",
+      "comment": "充值金额",
+      "nullable": true
+    },
+    {
+      "name": "give_price",
+      "label": "购买赠送金额",
+      "type": "decimal",
+      "comment": "购买赠送金额",
+      "nullable": true,
+      "default": 0
+    },
+    {
+      "name": "recharge_type",
+      "label": "充值类型",
+      "type": "string",
+      "comment": "充值类型",
+      "length": 32,
+      "nullable": true,
+      "index": true
+    },
+    {
+      "name": "paid",
+      "label": "是否充值",
+      "type": "tinyInteger",
+      "comment": "是否充值",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "name": "pay_time",
+      "label": "充值支付时间",
+      "type": "datetime",
+      "comment": "充值支付时间",
+      "nullable": true
+    },
+    {
+      "name": "refund_price",
+      "label": "退款金额",
+      "type": "decimal",
+      "comment": "退款金额",
+      "nullable": true,
+      "default": 0
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_user_recharge"
+  },
+  "name": "app_yshop_user_recharge",
+  "relations": {}
+}

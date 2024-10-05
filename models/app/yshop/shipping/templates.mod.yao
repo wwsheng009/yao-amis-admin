@@ -1,0 +1,79 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "模板ID",
+            "type": "id",
+            "comment": "模板ID",
+            "primary": true
+        },
+        {
+            "name": "name",
+            "label": "模板名称",
+            "type": "string",
+            "comment": "模板名称",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "type",
+            "label": "计费方式",
+            "type": "tinyInteger",
+            "comment": "计费方式",
+            "nullable": true
+        },
+        {
+            "name": "region_info",
+            "label": "地域以及费用",
+            "type": "text",
+            "comment": "地域以及费用",
+            "nullable": true
+        },
+        {
+            "name": "appoint",
+            "label": "指定包邮开关",
+            "type": "tinyInteger",
+            "comment": "指定包邮开关",
+            "nullable": true
+        },
+        {
+            "name": "appoint_info",
+            "label": "指定包邮内容",
+            "type": "text",
+            "comment": "指定包邮内容",
+            "nullable": true
+        },
+        {
+            "name": "sort",
+            "label": "排序",
+            "type": "integer",
+            "comment": "排序",
+            "nullable": true
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_yshop_shipping_templates"
+    },
+    "name": "app_yshop_shipping_templates",
+    "relations": {}
+}

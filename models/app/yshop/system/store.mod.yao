@@ -1,0 +1,126 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "type": "id",
+      "primary": true
+    },
+    {
+      "name": "name",
+      "label": "门店名称",
+      "type": "string",
+      "comment": "门店名称",
+      "length": 100,
+      "default": ""
+    },
+    {
+      "name": "introduction",
+      "label": "简介",
+      "type": "string",
+      "comment": "简介",
+      "length": 1000,
+      "default": ""
+    },
+    {
+      "name": "phone",
+      "label": "手机号码",
+      "type": "char",
+      "comment": "手机号码",
+      "length": 25,
+      "default": "",
+      "index": true
+    },
+    {
+      "name": "address",
+      "label": "省市区",
+      "type": "string",
+      "comment": "省市区",
+      "length": 255,
+      "default": ""
+    },
+    {
+      "name": "detailed_address",
+      "label": "详细地址",
+      "type": "string",
+      "comment": "详细地址",
+      "length": 255,
+      "default": ""
+    },
+    {
+      "name": "image",
+      "label": "门店logo",
+      "type": "string",
+      "comment": "门店logo",
+      "length": 255,
+      "default": ""
+    },
+    {
+      "name": "latitude",
+      "label": "纬度",
+      "type": "char",
+      "comment": "纬度",
+      "length": 25,
+      "default": ""
+    },
+    {
+      "name": "longitude",
+      "label": "经度",
+      "type": "char",
+      "comment": "经度",
+      "length": 25,
+      "default": ""
+    },
+    {
+      "name": "valid_time",
+      "label": "核销有效日期",
+      "type": "string",
+      "comment": "核销有效日期",
+      "length": 100,
+      "default": ""
+    },
+    {
+      "name": "day_time",
+      "label": "每日营业开关时间",
+      "type": "string",
+      "comment": "每日营业开关时间",
+      "length": 100,
+      "default": ""
+    },
+    {
+      "name": "is_show",
+      "label": "是否显示",
+      "type": "tinyInteger",
+      "comment": "是否显示",
+      "default": 0
+    },
+    {
+      "name": "day_time_end",
+      "type": "datetime",
+      "nullable": true
+    },
+    {
+      "name": "day_time_start",
+      "type": "datetime",
+      "nullable": true
+    },
+    {
+      "name": "valid_time_end",
+      "type": "datetime",
+      "nullable": true
+    },
+    {
+      "name": "valid_time_start",
+      "type": "datetime",
+      "nullable": true
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_system_store"
+  },
+  "name": "app_yshop_system_store",
+  "relations": {}
+}

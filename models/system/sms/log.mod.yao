@@ -1,0 +1,203 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "编号",
+            "type": "id",
+            "comment": "编号",
+            "primary": true
+        },
+        {
+            "name": "channel_id",
+            "label": "短信渠道编号",
+            "type": "bigInteger",
+            "comment": "短信渠道编号"
+        },
+        {
+            "name": "channel_code",
+            "label": "短信渠道编码",
+            "type": "string",
+            "comment": "短信渠道编码",
+            "length": 63
+        },
+        {
+            "name": "template_id",
+            "label": "模板编号",
+            "type": "bigInteger",
+            "comment": "模板编号"
+        },
+        {
+            "name": "template_code",
+            "label": "模板编码",
+            "type": "string",
+            "comment": "模板编码",
+            "length": 63
+        },
+        {
+            "name": "template_type",
+            "label": "短信类型",
+            "type": "tinyInteger",
+            "comment": "短信类型"
+        },
+        {
+            "name": "template_content",
+            "label": "短信内容",
+            "type": "string",
+            "comment": "短信内容",
+            "length": 255
+        },
+        {
+            "name": "template_params",
+            "label": "短信参数",
+            "type": "string",
+            "comment": "短信参数",
+            "length": 255
+        },
+        {
+            "name": "api_template_id",
+            "label": "短信 API 的模板编号",
+            "type": "string",
+            "comment": "短信 API 的模板编号",
+            "length": 63
+        },
+        {
+            "name": "mobile",
+            "label": "手机号",
+            "type": "string",
+            "comment": "手机号",
+            "length": 11
+        },
+        {
+            "name": "user_id",
+            "label": "用户编号",
+            "type": "bigInteger",
+            "comment": "用户编号",
+            "nullable": true
+        },
+        {
+            "name": "user_type",
+            "label": "用户类型",
+            "type": "tinyInteger",
+            "comment": "用户类型",
+            "nullable": true
+        },
+        {
+            "name": "send_status",
+            "label": "发送状态",
+            "type": "tinyInteger",
+            "comment": "发送状态",
+            "default": 0
+        },
+        {
+            "name": "send_time",
+            "label": "发送时间",
+            "type": "datetime",
+            "comment": "发送时间",
+            "nullable": true
+        },
+        {
+            "name": "send_code",
+            "label": "发送结果的编码",
+            "type": "integer",
+            "comment": "发送结果的编码",
+            "nullable": true
+        },
+        {
+            "name": "send_msg",
+            "label": "发送结果的提示",
+            "type": "string",
+            "comment": "发送结果的提示",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "api_send_code",
+            "label": "短信 API 发送结果的编码",
+            "type": "string",
+            "comment": "短信 API 发送结果的编码",
+            "length": 63,
+            "nullable": true
+        },
+        {
+            "name": "api_send_msg",
+            "label": "短信 API 发送失败的提示",
+            "type": "string",
+            "comment": "短信 API 发送失败的提示",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "api_request_id",
+            "label": "短信 API 发送返回的唯一请求 ID",
+            "type": "string",
+            "comment": "短信 API 发送返回的唯一请求 ID",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "api_serial_no",
+            "label": "短信 API 发送返回的序号",
+            "type": "string",
+            "comment": "短信 API 发送返回的序号",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "receive_status",
+            "label": "接收状态",
+            "type": "tinyInteger",
+            "comment": "接收状态",
+            "default": 0
+        },
+        {
+            "name": "receive_time",
+            "label": "接收时间",
+            "type": "datetime",
+            "comment": "接收时间",
+            "nullable": true
+        },
+        {
+            "name": "api_receive_code",
+            "label": "API 接收结果的编码",
+            "type": "string",
+            "comment": "API 接收结果的编码",
+            "length": 63,
+            "nullable": true
+        },
+        {
+            "name": "api_receive_msg",
+            "label": "API 接收结果的说明",
+            "type": "string",
+            "comment": "API 接收结果的说明",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "system_sms_log"
+    },
+    "name": "system_sms_log",
+    "relations": {}
+}

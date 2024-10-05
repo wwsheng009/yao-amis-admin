@@ -1,0 +1,62 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "label": "用户参与砍价表ID",
+      "type": "id",
+      "comment": "用户参与砍价表ID",
+      "primary": true
+    },
+    {
+      "name": "uid",
+      "label": "用户ID",
+      "type": "bigInteger",
+      "comment": "用户ID",
+      "nullable": true
+    },
+    {
+      "name": "bargain_id",
+      "label": "砍价产品id",
+      "type": "bigInteger",
+      "comment": "砍价产品id",
+      "nullable": true
+    },
+    {
+      "name": "bargain_price_min",
+      "label": "砍价的最低价",
+      "type": "decimal",
+      "comment": "砍价的最低价",
+      "nullable": true
+    },
+    {
+      "name": "bargain_price",
+      "label": "砍价金额",
+      "type": "decimal",
+      "comment": "砍价金额",
+      "nullable": true
+    },
+    {
+      "name": "price",
+      "label": "砍掉的价格",
+      "type": "decimal",
+      "comment": "砍掉的价格",
+      "nullable": true
+    },
+    {
+      "name": "status",
+      "label": "状态 1参与中 2 活动结束参与失败 3活动结束参与成功",
+      "type": "tinyInteger",
+      "comment": "状态 1参与中 2 活动结束参与失败 3活动结束参与成功",
+      "default": 0
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_store_bargain_user"
+  },
+  "name": "app_yshop_store_bargain_user",
+  "relations": {}
+}

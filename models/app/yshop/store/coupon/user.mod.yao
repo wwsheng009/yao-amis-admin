@@ -1,0 +1,95 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "label": "优惠券发放记录id",
+      "type": "id",
+      "comment": "优惠券发放记录id",
+      "primary": true
+    },
+    {
+      "name": "cid",
+      "label": "兑换的项目id",
+      "type": "integer",
+      "comment": "兑换的项目id",
+      "default": 0,
+      "index": true
+    },
+    {
+      "name": "uid",
+      "label": "优惠券所属用户",
+      "type": "bigInteger",
+      "comment": "优惠券所属用户",
+      "default": 0,
+      "index": true
+    },
+    {
+      "name": "coupon_title",
+      "label": "优惠券名称",
+      "type": "string",
+      "comment": "优惠券名称",
+      "length": 32
+    },
+    {
+      "name": "coupon_price",
+      "label": "优惠券的面值",
+      "type": "decimal",
+      "comment": "优惠券的面值",
+      "default": 0
+    },
+    {
+      "name": "use_min_price",
+      "label": "最低消费多少金额可用优惠券",
+      "type": "decimal",
+      "comment": "最低消费多少金额可用优惠券",
+      "default": 0
+    },
+    {
+      "name": "end_time",
+      "label": "优惠券结束时间",
+      "type": "datetime",
+      "comment": "优惠券结束时间",
+      "index": true
+    },
+    {
+      "name": "use_time",
+      "label": "使用时间",
+      "type": "datetime",
+      "comment": "使用时间",
+      "nullable": true
+    },
+    {
+      "name": "type",
+      "label": "获取方式",
+      "type": "string",
+      "comment": "获取方式",
+      "length": 32,
+      "default": "send"
+    },
+    {
+      "name": "status",
+      "label": "状态（0：未使用，1：已使用, 2:已过期）",
+      "type": "tinyInteger",
+      "comment": "状态（0：未使用，1：已使用, 2:已过期）",
+      "default": 0,
+      "index": true
+    },
+    {
+      "name": "is_fail",
+      "label": "是否有效",
+      "type": "tinyInteger",
+      "comment": "是否有效",
+      "default": 0,
+      "index": true
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_store_coupon_user"
+  },
+  "name": "app_yshop_store_coupon_user",
+  "relations": {}
+}

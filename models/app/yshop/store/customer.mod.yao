@@ -1,0 +1,52 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "label": "id",
+      "type": "id",
+      "comment": "id",
+      "primary": true
+    },
+    {
+      "name": "nick_name",
+      "label": "用户昵称",
+      "type": "string",
+      "comment": "用户昵称",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "open_id",
+      "label": "openId",
+      "type": "string",
+      "comment": "openId",
+      "length": 32,
+      "nullable": true
+    },
+    {
+      "name": "remark",
+      "label": "备注",
+      "type": "string",
+      "comment": "备注",
+      "length": 128,
+      "nullable": true
+    },
+    {
+      "name": "is_enable",
+      "label": "是否启用",
+      "type": "tinyInteger",
+      "comment": "是否启用",
+      "nullable": true,
+      "default": 1
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_store_customer"
+  },
+  "name": "app_yshop_store_customer",
+  "relations": {}
+}

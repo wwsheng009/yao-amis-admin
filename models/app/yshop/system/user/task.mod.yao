@@ -1,0 +1,85 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "type": "id",
+      "primary": true
+    },
+    {
+      "name": "name",
+      "label": "任务名称",
+      "type": "string",
+      "comment": "任务名称",
+      "length": 255,
+      "default": ""
+    },
+    {
+      "name": "real_name",
+      "label": "配置原名",
+      "type": "string",
+      "comment": "配置原名",
+      "length": 255,
+      "default": ""
+    },
+    {
+      "name": "task_type",
+      "label": "任务类型",
+      "type": "string",
+      "comment": "任务类型",
+      "length": 50,
+      "default": ""
+    },
+    {
+      "name": "number",
+      "label": "限定数",
+      "type": "integer",
+      "comment": "限定数",
+      "default": 0
+    },
+    {
+      "name": "level_id",
+      "label": "等级id",
+      "type": "integer",
+      "comment": "等级id",
+      "default": 0
+    },
+    {
+      "name": "sort",
+      "label": "排序",
+      "type": "integer",
+      "comment": "排序",
+      "default": 0
+    },
+    {
+      "name": "is_show",
+      "label": "是否显示",
+      "type": "tinyInteger",
+      "comment": "是否显示",
+      "default": 0
+    },
+    {
+      "name": "is_must",
+      "label": "是否务必达成任务,1务必达成,0=满足其一",
+      "type": "tinyInteger",
+      "comment": "是否务必达成任务,1务必达成,0=满足其一",
+      "default": 0
+    },
+    {
+      "name": "illustrate",
+      "label": "任务说明",
+      "type": "string",
+      "comment": "任务说明",
+      "length": 255,
+      "default": ""
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_system_user_task"
+  },
+  "name": "app_yshop_system_user_task",
+  "relations": {}
+}

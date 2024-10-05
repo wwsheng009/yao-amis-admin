@@ -1,0 +1,96 @@
+{
+  "columns": [
+    {
+      "name": "att_id",
+      "type": "id",
+      "primary": true
+    },
+    {
+      "name": "name",
+      "label": "附件名称",
+      "type": "string",
+      "comment": "附件名称",
+      "length": 100,
+      "default": ""
+    },
+    {
+      "name": "att_dir",
+      "label": "附件路径",
+      "type": "string",
+      "comment": "附件路径",
+      "length": 200,
+      "default": ""
+    },
+    {
+      "name": "satt_dir",
+      "label": "压缩图片路径",
+      "type": "string",
+      "comment": "压缩图片路径",
+      "length": 200,
+      "nullable": true
+    },
+    {
+      "name": "att_size",
+      "label": "附件大小",
+      "type": "char",
+      "comment": "附件大小",
+      "length": 30,
+      "default": ""
+    },
+    {
+      "name": "att_type",
+      "label": "附件类型",
+      "type": "char",
+      "comment": "附件类型",
+      "length": 30,
+      "default": ""
+    },
+    {
+      "name": "pid",
+      "label": "分类ID0编辑器,1产品图片,2拼团图片,3砍价图片,4秒杀图片,5文章图片,6组合数据图",
+      "type": "integer",
+      "comment": "分类ID0编辑器,1产品图片,2拼团图片,3砍价图片,4秒杀图片,5文章图片,6组合数据图",
+      "default": 0
+    },
+    {
+      "name": "image_type",
+      "label": "图片上传类型 1本地 2七牛云 3OSS 4COS ",
+      "type": "tinyInteger",
+      "comment": "图片上传类型 1本地 2七牛云 3OSS 4COS ",
+      "default": 1
+    },
+    {
+      "name": "module_type",
+      "label": "图片上传模块类型 1 后台上传 2 用户生成",
+      "type": "tinyInteger",
+      "comment": "图片上传模块类型 1 后台上传 2 用户生成",
+      "default": 1
+    },
+    {
+      "name": "uid",
+      "label": "用户id",
+      "type": "bigInteger",
+      "comment": "用户id",
+      "nullable": true,
+      "default": 0
+    },
+    {
+      "name": "invite_code",
+      "label": "邀请码",
+      "type": "string",
+      "comment": "邀请码",
+      "length": 50,
+      "nullable": true,
+      "default": ""
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_system_attachment"
+  },
+  "name": "app_yshop_system_attachment",
+  "relations": {}
+}

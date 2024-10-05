@@ -1,0 +1,196 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "type": "id",
+      "primary": true
+    },
+    {
+      "name": "product_id",
+      "label": "商品id",
+      "type": "bigInteger",
+      "comment": "商品id"
+    },
+    {
+      "name": "mer_id",
+      "label": "商户id",
+      "type": "integer",
+      "comment": "商户id",
+      "nullable": true,
+      "default": 0
+    },
+    {
+      "name": "image",
+      "label": "推荐图",
+      "type": "string",
+      "comment": "推荐图",
+      "length": 255
+    },
+    {
+      "name": "images",
+      "label": "轮播图",
+      "type": "string",
+      "comment": "轮播图",
+      "length": 2000
+    },
+    {
+      "name": "title",
+      "label": "活动标题",
+      "type": "string",
+      "comment": "活动标题",
+      "length": 255
+    },
+    {
+      "name": "attr",
+      "label": "活动属性",
+      "type": "string",
+      "comment": "活动属性",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "people",
+      "label": "参团人数",
+      "type": "integer",
+      "comment": "参团人数"
+    },
+    {
+      "name": "info",
+      "label": "简介",
+      "type": "string",
+      "comment": "简介",
+      "length": 255
+    },
+    {
+      "name": "price",
+      "label": "价格",
+      "type": "decimal",
+      "comment": "价格",
+      "nullable": true
+    },
+    {
+      "name": "product_price",
+      "label": "商品原价",
+      "type": "decimal",
+      "comment": "商品原价",
+      "nullable": true
+    },
+    {
+      "name": "sort",
+      "label": "排序",
+      "type": "integer",
+      "comment": "排序"
+    },
+    {
+      "name": "sales",
+      "label": "销量",
+      "type": "integer",
+      "comment": "销量",
+      "default": 0
+    },
+    {
+      "name": "stock",
+      "label": "库存",
+      "type": "integer",
+      "comment": "库存",
+      "nullable": true
+    },
+    {
+      "name": "is_host",
+      "label": "推荐",
+      "type": "tinyInteger",
+      "comment": "推荐",
+      "default": 0
+    },
+    {
+      "name": "is_show",
+      "label": "产品状态",
+      "type": "tinyInteger",
+      "comment": "产品状态"
+    },
+    {
+      "name": "combination",
+      "type": "tinyInteger",
+      "default": 1
+    },
+    {
+      "name": "mer_use",
+      "label": "商户是否可用1可用0不可用",
+      "type": "tinyInteger",
+      "comment": "商户是否可用1可用0不可用",
+      "nullable": true
+    },
+    {
+      "name": "description",
+      "label": "拼团内容",
+      "type": "text",
+      "comment": "拼团内容"
+    },
+    {
+      "name": "start_time",
+      "label": "拼团开始时间",
+      "type": "datetime",
+      "comment": "拼团开始时间"
+    },
+    {
+      "name": "stop_time",
+      "label": "拼团结束时间",
+      "type": "datetime",
+      "comment": "拼团结束时间"
+    },
+    {
+      "name": "effective_time",
+      "label": "拼团订单有效时间",
+      "type": "integer",
+      "comment": "拼团订单有效时间",
+      "default": 0
+    },
+    {
+      "name": "cost",
+      "label": "拼团产品成本",
+      "type": "integer",
+      "comment": "拼团产品成本",
+      "default": 0
+    },
+    {
+      "name": "browse",
+      "label": "浏览量",
+      "type": "integer",
+      "comment": "浏览量",
+      "nullable": true,
+      "default": 0
+    },
+    {
+      "name": "unit_name",
+      "label": "单位名",
+      "type": "string",
+      "comment": "单位名",
+      "length": 32,
+      "nullable": true,
+      "default": ""
+    },
+    {
+      "name": "spec_type",
+      "label": "规格 0单 1多",
+      "type": "tinyInteger",
+      "comment": "规格 0单 1多",
+      "nullable": true
+    },
+    {
+      "name": "temp_id",
+      "label": "运费模板ID",
+      "type": "integer",
+      "comment": "运费模板ID",
+      "nullable": true
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_store_combination"
+  },
+  "name": "app_yshop_store_combination",
+  "relations": {}
+}

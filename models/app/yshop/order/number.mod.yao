@@ -1,0 +1,27 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "取餐号",
+            "type": "id",
+            "comment": "取餐号",
+            "primary": true
+        },
+        {
+            "name": "order_id",
+            "label": "订单号",
+            "type": "string",
+            "comment": "订单号",
+            "length": 100
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_yshop_order_number"
+    },
+    "name": "app_yshop_order_number",
+    "relations": {}
+}

@@ -1,0 +1,171 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "type": "id",
+      "primary": true
+    },
+    {
+      "name": "product_id",
+      "label": "商品ID",
+      "type": "bigInteger",
+      "comment": "商品ID"
+    },
+    {
+      "name": "sku",
+      "label": "商品属性索引值 (attr_value|attr_value[|....])",
+      "type": "string",
+      "comment": "商品属性索引值 (attr_value|attr_value[|....])",
+      "length": 128
+    },
+    {
+      "name": "stock",
+      "label": "属性对应的库存",
+      "type": "integer",
+      "comment": "属性对应的库存"
+    },
+    {
+      "name": "sales",
+      "label": "销量",
+      "type": "integer",
+      "comment": "销量",
+      "nullable": true,
+      "default": 0
+    },
+    {
+      "name": "price",
+      "label": "属性金额",
+      "type": "decimal",
+      "comment": "属性金额"
+    },
+    {
+      "name": "image",
+      "label": "图片",
+      "type": "string",
+      "comment": "图片",
+      "length": 128,
+      "nullable": true
+    },
+    {
+      "name": "unique",
+      "label": "唯一值",
+      "type": "string",
+      "comment": "唯一值",
+      "length": 100,
+      "default": ""
+    },
+    {
+      "name": "cost",
+      "label": "成本价",
+      "type": "decimal",
+      "comment": "成本价"
+    },
+    {
+      "name": "bar_code",
+      "label": "商品条码",
+      "type": "string",
+      "comment": "商品条码",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "ot_price",
+      "label": "原价",
+      "type": "decimal",
+      "comment": "原价",
+      "nullable": true,
+      "default": 0
+    },
+    {
+      "name": "weight",
+      "label": "重量",
+      "type": "decimal",
+      "comment": "重量",
+      "default": 0
+    },
+    {
+      "name": "volume",
+      "label": "体积",
+      "type": "decimal",
+      "comment": "体积",
+      "default": 0
+    },
+    {
+      "name": "brokerage",
+      "label": "一级返佣",
+      "type": "decimal",
+      "comment": "一级返佣",
+      "default": 0
+    },
+    {
+      "name": "brokerage_two",
+      "label": "二级返佣",
+      "type": "decimal",
+      "comment": "二级返佣",
+      "default": 0
+    },
+    {
+      "name": "pink_price",
+      "label": "拼团价",
+      "type": "decimal",
+      "comment": "拼团价",
+      "default": 0
+    },
+    {
+      "name": "pink_stock",
+      "label": "拼团库存",
+      "type": "integer",
+      "comment": "拼团库存",
+      "default": 0
+    },
+    {
+      "name": "seckill_price",
+      "label": "秒杀价",
+      "type": "decimal",
+      "comment": "秒杀价",
+      "default": 0
+    },
+    {
+      "name": "seckill_stock",
+      "label": "秒杀库存",
+      "type": "integer",
+      "comment": "秒杀库存",
+      "default": 0
+    },
+    {
+      "name": "integral",
+      "label": "需要多少积分兑换",
+      "type": "integer",
+      "comment": "需要多少积分兑换",
+      "nullable": true,
+      "default": 0
+    }
+  ],
+  "indexes": [
+    {
+      "name": "unique",
+      "columns": [
+        "unique",
+        "sku"
+      ],
+      "type": "unique"
+    },
+    {
+      "name": "store_id",
+      "columns": [
+        "product_id",
+        "sku"
+      ],
+      "type": "index"
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_store_product_attr_value"
+  },
+  "name": "app_yshop_store_product_attr_value",
+  "relations": {}
+}

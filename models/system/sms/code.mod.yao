@@ -1,0 +1,93 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "编号",
+            "type": "id",
+            "comment": "编号",
+            "primary": true
+        },
+        {
+            "name": "mobile",
+            "label": "手机号",
+            "type": "string",
+            "comment": "手机号",
+            "length": 11,
+            "index": true
+        },
+        {
+            "name": "code",
+            "label": "验证码",
+            "type": "string",
+            "comment": "验证码",
+            "length": 6
+        },
+        {
+            "name": "create_ip",
+            "label": "创建 IP",
+            "type": "string",
+            "comment": "创建 IP",
+            "length": 15
+        },
+        {
+            "name": "scene",
+            "label": "发送场景",
+            "type": "tinyInteger",
+            "comment": "发送场景"
+        },
+        {
+            "name": "today_index",
+            "label": "今日发送的第几条",
+            "type": "tinyInteger",
+            "comment": "今日发送的第几条"
+        },
+        {
+            "name": "used",
+            "label": "是否使用",
+            "type": "tinyInteger",
+            "comment": "是否使用"
+        },
+        {
+            "name": "used_time",
+            "label": "使用时间",
+            "type": "datetime",
+            "comment": "使用时间",
+            "nullable": true
+        },
+        {
+            "name": "used_ip",
+            "label": "使用 IP",
+            "type": "string",
+            "comment": "使用 IP",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "system_sms_code"
+    },
+    "name": "system_sms_code",
+    "relations": {}
+}

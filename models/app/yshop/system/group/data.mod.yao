@@ -1,0 +1,49 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "label": "组合数据详情ID",
+      "type": "id",
+      "comment": "组合数据详情ID",
+      "primary": true
+    },
+    {
+      "name": "group_name",
+      "label": "对应的数据名称",
+      "type": "string",
+      "comment": "对应的数据名称",
+      "length": 100,
+      "default": ""
+    },
+    {
+      "name": "value",
+      "label": "数据组对应的数据值（json数据）",
+      "type": "text",
+      "comment": "数据组对应的数据值（json数据）"
+    },
+    {
+      "name": "sort",
+      "label": "数据排序",
+      "type": "integer",
+      "comment": "数据排序",
+      "nullable": true,
+      "default": 0
+    },
+    {
+      "name": "status",
+      "label": "状态（1：开启；2：关闭；）",
+      "type": "tinyInteger",
+      "comment": "状态（1：开启；2：关闭；）",
+      "default": 1
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_system_group_data"
+  },
+  "name": "app_yshop_system_group_data",
+  "relations": {}
+}

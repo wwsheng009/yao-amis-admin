@@ -1,0 +1,55 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "type": "id",
+      "primary": true
+    },
+    {
+      "name": "store_after_sales_id",
+      "label": "售后id",
+      "type": "bigInteger",
+      "comment": "售后id",
+      "nullable": true
+    },
+    {
+      "name": "change_type",
+      "label": "操作类型",
+      "type": "tinyInteger",
+      "comment": "操作类型",
+      "nullable": true
+    },
+    {
+      "name": "change_message",
+      "label": "操作备注",
+      "type": "string",
+      "comment": "操作备注",
+      "length": 128,
+      "nullable": true
+    },
+    {
+      "name": "change_time",
+      "label": "操作时间",
+      "type": "datetime",
+      "comment": "操作时间",
+      "nullable": true
+    },
+    {
+      "name": "operator",
+      "label": "操作人",
+      "type": "string",
+      "comment": "操作人",
+      "length": 32,
+      "nullable": true
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_store_after_sales_status"
+  },
+  "name": "app_yshop_store_after_sales_status",
+  "relations": {}
+}

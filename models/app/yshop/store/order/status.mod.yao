@@ -1,0 +1,46 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "type": "id",
+      "primary": true
+    },
+    {
+      "name": "oid",
+      "label": "订单id",
+      "type": "bigInteger",
+      "comment": "订单id",
+      "index": true
+    },
+    {
+      "name": "change_type",
+      "label": "操作类型",
+      "type": "string",
+      "comment": "操作类型",
+      "length": 32,
+      "index": true
+    },
+    {
+      "name": "change_message",
+      "label": "操作备注",
+      "type": "string",
+      "comment": "操作备注",
+      "length": 256
+    },
+    {
+      "name": "change_time",
+      "label": "操作时间",
+      "type": "datetime",
+      "comment": "操作时间",
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_store_order_status"
+  },
+  "name": "app_yshop_store_order_status",
+  "relations": {}
+}

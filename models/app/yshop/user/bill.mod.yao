@@ -1,0 +1,134 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "用户账单id",
+            "type": "id",
+            "comment": "用户账单id",
+            "primary": true
+        },
+        {
+            "name": "uid",
+            "label": "用户uid",
+            "type": "bigInteger",
+            "comment": "用户uid",
+            "default": 0,
+            "index": true
+        },
+        {
+            "name": "link_id",
+            "label": "关联id",
+            "type": "string",
+            "comment": "关联id",
+            "length": 32,
+            "default": "0"
+        },
+        {
+            "name": "pm",
+            "label": "0 = 支出 1 = 获得",
+            "type": "tinyInteger",
+            "comment": "0 = 支出 1 = 获得",
+            "default": 0,
+            "index": true
+        },
+        {
+            "name": "title",
+            "label": "账单标题",
+            "type": "string",
+            "comment": "账单标题",
+            "length": 64,
+            "default": ""
+        },
+        {
+            "name": "category",
+            "label": "明细种类",
+            "type": "string",
+            "comment": "明细种类",
+            "length": 64,
+            "default": ""
+        },
+        {
+            "name": "type",
+            "label": "明细类型",
+            "type": "string",
+            "comment": "明细类型",
+            "length": 64,
+            "default": ""
+        },
+        {
+            "name": "number",
+            "label": "明细数字",
+            "type": "decimal",
+            "comment": "明细数字",
+            "default": 0
+        },
+        {
+            "name": "balance",
+            "label": "剩余",
+            "type": "decimal",
+            "comment": "剩余",
+            "default": 0
+        },
+        {
+            "name": "mark",
+            "label": "备注",
+            "type": "string",
+            "comment": "备注",
+            "length": 512,
+            "default": ""
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "status",
+            "label": "0 = 带确定 1 = 有效 -1 = 无效",
+            "type": "tinyInteger",
+            "comment": "0 = 带确定 1 = 有效 -1 = 无效",
+            "default": 1,
+            "index": true
+        },
+        {
+            "name": "extend_field",
+            "label": "扩展字段",
+            "type": "string",
+            "comment": "扩展字段",
+            "length": 255,
+            "nullable": true,
+            "default": ""
+        }
+    ],
+    "indexes": [
+        {
+            "name": "type",
+            "columns": [
+                "category",
+                "type",
+                "link_id"
+            ],
+            "type": "index"
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_yshop_user_bill"
+    },
+    "name": "app_yshop_user_bill",
+    "relations": {}
+}

@@ -1,0 +1,86 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "type": "id",
+      "primary": true
+    },
+    {
+      "name": "city_id",
+      "label": "城市id",
+      "type": "integer",
+      "comment": "城市id",
+      "default": 0
+    },
+    {
+      "name": "level",
+      "label": "省市级别",
+      "type": "integer",
+      "comment": "省市级别",
+      "default": 0
+    },
+    {
+      "name": "parent_id",
+      "label": "父级id",
+      "type": "integer",
+      "comment": "父级id",
+      "default": 0
+    },
+    {
+      "name": "area_code",
+      "label": "区号",
+      "type": "string",
+      "comment": "区号",
+      "length": 30,
+      "default": ""
+    },
+    {
+      "name": "name",
+      "label": "名称",
+      "type": "string",
+      "comment": "名称",
+      "length": 100,
+      "default": ""
+    },
+    {
+      "name": "merger_name",
+      "label": "合并名称",
+      "type": "string",
+      "comment": "合并名称",
+      "length": 255,
+      "default": ""
+    },
+    {
+      "name": "lng",
+      "label": "经度",
+      "type": "string",
+      "comment": "经度",
+      "length": 50,
+      "default": ""
+    },
+    {
+      "name": "lat",
+      "label": "纬度",
+      "type": "string",
+      "comment": "纬度",
+      "length": 50,
+      "default": ""
+    },
+    {
+      "name": "is_show",
+      "label": "是否展示",
+      "type": "tinyInteger",
+      "comment": "是否展示",
+      "default": 1
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_system_city"
+  },
+  "name": "app_yshop_system_city",
+  "relations": {}
+}

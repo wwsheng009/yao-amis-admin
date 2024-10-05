@@ -1,0 +1,48 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "label": "砍价用户帮助表ID",
+      "type": "id",
+      "comment": "砍价用户帮助表ID",
+      "primary": true
+    },
+    {
+      "name": "uid",
+      "label": "帮助的用户id",
+      "type": "bigInteger",
+      "comment": "帮助的用户id",
+      "nullable": true
+    },
+    {
+      "name": "bargain_id",
+      "label": "砍价产品ID",
+      "type": "bigInteger",
+      "comment": "砍价产品ID",
+      "nullable": true
+    },
+    {
+      "name": "bargain_user_id",
+      "label": "用户参与砍价表id",
+      "type": "bigInteger",
+      "comment": "用户参与砍价表id",
+      "nullable": true
+    },
+    {
+      "name": "price",
+      "label": "帮助砍价多少金额",
+      "type": "decimal",
+      "comment": "帮助砍价多少金额",
+      "nullable": true
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_store_bargain_user_help"
+  },
+  "name": "app_yshop_store_bargain_user_help",
+  "relations": {}
+}

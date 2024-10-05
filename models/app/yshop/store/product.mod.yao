@@ -1,0 +1,344 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "商品id",
+            "type": "id",
+            "comment": "商品id",
+            "primary": true
+        },
+        {
+            "name": "shop_id",
+            "label": "店铺id用'",
+            "type": "integer",
+            "comment": "店铺id用'",
+            "nullable": true
+        },
+        {
+            "name": "shop_name",
+            "label": "店铺名称",
+            "type": "string",
+            "comment": "店铺名称",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "image",
+            "label": "商品图片",
+            "type": "string",
+            "comment": "商品图片",
+            "length": 256
+        },
+        {
+            "name": "slider_image",
+            "label": "轮播图",
+            "type": "string",
+            "comment": "轮播图",
+            "length": 2000
+        },
+        {
+            "name": "store_name",
+            "label": "商品名称",
+            "type": "string",
+            "comment": "商品名称",
+            "length": 128
+        },
+        {
+            "name": "store_info",
+            "label": "商品简介",
+            "type": "string",
+            "comment": "商品简介",
+            "length": 256
+        },
+        {
+            "name": "keyword",
+            "label": "关键字",
+            "type": "string",
+            "comment": "关键字",
+            "length": 256
+        },
+        {
+            "name": "bar_code",
+            "label": "产品条码（一维码）",
+            "type": "string",
+            "comment": "产品条码（一维码）",
+            "length": 15,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "brand_id",
+            "label": "品牌",
+            "type": "bigInteger",
+            "comment": "品牌",
+            "nullable": true
+        },
+        {
+            "name": "cate_id",
+            "label": "分类id",
+            "type": "string",
+            "comment": "分类id",
+            "length": 64
+        },
+        {
+            "name": "price",
+            "label": "商品价格",
+            "type": "decimal",
+            "comment": "商品价格",
+            "default": 0,
+            "index": true
+        },
+        {
+            "name": "vip_price",
+            "label": "会员价格",
+            "type": "decimal",
+            "comment": "会员价格",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "ot_price",
+            "label": "市场价",
+            "type": "decimal",
+            "comment": "市场价",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "postage",
+            "label": "邮费",
+            "type": "decimal",
+            "comment": "邮费",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "unit_name",
+            "label": "单位名",
+            "type": "string",
+            "comment": "单位名",
+            "length": 32,
+            "nullable": true
+        },
+        {
+            "name": "sort",
+            "label": "排序",
+            "type": "smallInteger",
+            "comment": "排序",
+            "nullable": true,
+            "default": 0,
+            "index": true
+        },
+        {
+            "name": "sales",
+            "label": "销量",
+            "type": "integer",
+            "comment": "销量",
+            "nullable": true,
+            "default": "0",
+            "index": true
+        },
+        {
+            "name": "stock",
+            "label": "库存",
+            "type": "integer",
+            "comment": "库存",
+            "nullable": true,
+            "default": "0"
+        },
+        {
+            "name": "is_show",
+            "label": "状态（0：未上架，1：上架）",
+            "type": "tinyInteger",
+            "comment": "状态（0：未上架，1：上架）",
+            "nullable": true,
+            "default": 1,
+            "index": true
+        },
+        {
+            "name": "is_hot",
+            "label": "是否热卖",
+            "type": "tinyInteger",
+            "comment": "是否热卖",
+            "nullable": true,
+            "default": 0,
+            "index": true
+        },
+        {
+            "name": "is_benefit",
+            "label": "是否优惠",
+            "type": "tinyInteger",
+            "comment": "是否优惠",
+            "nullable": true,
+            "default": 0,
+            "index": true
+        },
+        {
+            "name": "is_best",
+            "label": "是否精品",
+            "type": "tinyInteger",
+            "comment": "是否精品",
+            "nullable": true,
+            "default": 0,
+            "index": true
+        },
+        {
+            "name": "is_new",
+            "label": "是否新品",
+            "type": "tinyInteger",
+            "comment": "是否新品",
+            "nullable": true,
+            "default": 0,
+            "index": true
+        },
+        {
+            "name": "description",
+            "label": "产品描述",
+            "type": "text",
+            "comment": "产品描述",
+            "nullable": true
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "is_postage",
+            "label": "是否包邮",
+            "type": "tinyInteger",
+            "comment": "是否包邮",
+            "nullable": true,
+            "default": 0,
+            "index": true
+        },
+        {
+            "name": "mer_use",
+            "label": "商户是否代理 0不可代理1可代理",
+            "type": "tinyInteger",
+            "comment": "商户是否代理 0不可代理1可代理",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "give_integral",
+            "label": "获得积分",
+            "type": "decimal",
+            "comment": "获得积分",
+            "nullable": true
+        },
+        {
+            "name": "cost",
+            "label": "成本价",
+            "type": "decimal",
+            "comment": "成本价",
+            "nullable": true
+        },
+        {
+            "name": "is_seckill",
+            "label": "秒杀状态 0 未开启 1已开启",
+            "type": "tinyInteger",
+            "comment": "秒杀状态 0 未开启 1已开启",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "is_bargain",
+            "label": "砍价状态 0未开启 1开启",
+            "type": "tinyInteger",
+            "comment": "砍价状态 0未开启 1开启",
+            "nullable": true
+        },
+        {
+            "name": "is_good",
+            "label": "是否优品推荐",
+            "type": "tinyInteger",
+            "comment": "是否优品推荐",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "ficti",
+            "label": "虚拟销量",
+            "type": "integer",
+            "comment": "虚拟销量",
+            "nullable": true,
+            "default": "100"
+        },
+        {
+            "name": "browse",
+            "label": "浏览量",
+            "type": "integer",
+            "comment": "浏览量",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "code_path",
+            "label": "产品二维码地址(用户小程序海报)",
+            "type": "string",
+            "comment": "产品二维码地址(用户小程序海报)",
+            "length": 64,
+            "default": ""
+        },
+        {
+            "name": "is_sub",
+            "label": "是否单独分佣",
+            "type": "tinyInteger",
+            "comment": "是否单独分佣",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "temp_id",
+            "label": "运费模板ID",
+            "type": "integer",
+            "comment": "运费模板ID",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "spec_type",
+            "label": "规格 0单 1多",
+            "type": "tinyInteger",
+            "comment": "规格 0单 1多",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "is_integral",
+            "label": "是开启积分兑换",
+            "type": "tinyInteger",
+            "comment": "是开启积分兑换",
+            "nullable": true
+        },
+        {
+            "name": "integral",
+            "label": "需要多少积分兑换 只在开启积分兑换时生效",
+            "type": "integer",
+            "comment": "需要多少积分兑换 只在开启积分兑换时生效",
+            "nullable": true,
+            "default": 0
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_yshop_store_product"
+    },
+    "name": "app_yshop_store_product",
+    "relations": {}
+}

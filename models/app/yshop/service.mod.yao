@@ -1,0 +1,121 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "id",
+            "type": "id",
+            "comment": "id",
+            "primary": true
+        },
+        {
+            "name": "name",
+            "label": "标题",
+            "type": "string",
+            "comment": "标题",
+            "length": 100
+        },
+        {
+            "name": "image",
+            "label": "图标",
+            "type": "string",
+            "comment": "图标",
+            "length": 255
+        },
+        {
+            "name": "type",
+            "label": "类型:pages=页面,miniprogram=跳转小程序,menu=菜单,content=内容,call=电话",
+            "type": "string",
+            "comment": "类型:pages=页面,miniprogram=跳转小程序,menu=菜单,content=内容,call=电话",
+            "length": 30
+        },
+        {
+            "name": "content",
+            "label": "详情",
+            "type": "text",
+            "comment": "详情",
+            "nullable": true
+        },
+        {
+            "name": "pid",
+            "label": "父级id",
+            "type": "integer",
+            "comment": "父级id",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "app_id",
+            "label": "小程序app_id",
+            "type": "string",
+            "comment": "小程序app_id",
+            "length": 50,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "pages",
+            "label": "页面路径",
+            "type": "string",
+            "comment": "页面路径",
+            "length": 100,
+            "default": ""
+        },
+        {
+            "name": "phone",
+            "label": "电话",
+            "type": "string",
+            "comment": "电话",
+            "length": 30,
+            "default": ""
+        },
+        {
+            "name": "weigh",
+            "label": "权重",
+            "type": "integer",
+            "comment": "权重",
+            "default": 0
+        },
+        {
+            "name": "status",
+            "label": "状态:0=下架,1=上架",
+            "type": "tinyInteger",
+            "comment": "状态:0=下架,1=上架",
+            "default": 0
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true
+        }
+    ],
+    "indexes": [
+        {
+            "name": "weigh",
+            "columns": [
+                "weigh",
+                "id"
+            ],
+            "type": "index"
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_yshop_service"
+    },
+    "name": "app_yshop_service",
+    "relations": {}
+}

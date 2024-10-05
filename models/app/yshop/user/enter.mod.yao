@@ -1,0 +1,152 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "label": "商户申请ID",
+      "type": "id",
+      "comment": "商户申请ID",
+      "primary": true
+    },
+    {
+      "name": "uid",
+      "label": "用户ID",
+      "type": "integer",
+      "comment": "用户ID",
+      "default": 0,
+      "unique": true
+    },
+    {
+      "name": "province",
+      "label": "商户所在省",
+      "type": "string",
+      "comment": "商户所在省",
+      "length": 32,
+      "default": ""
+    },
+    {
+      "name": "city",
+      "label": "商户所在市",
+      "type": "string",
+      "comment": "商户所在市",
+      "length": 32,
+      "default": ""
+    },
+    {
+      "name": "district",
+      "label": "商户所在区",
+      "type": "string",
+      "comment": "商户所在区",
+      "length": 32,
+      "default": ""
+    },
+    {
+      "name": "address",
+      "label": "商户详细地址",
+      "type": "string",
+      "comment": "商户详细地址",
+      "length": 256,
+      "default": ""
+    },
+    {
+      "name": "merchant_name",
+      "label": "商户名称",
+      "type": "string",
+      "comment": "商户名称",
+      "length": 256,
+      "default": ""
+    },
+    {
+      "name": "link_user",
+      "type": "string",
+      "length": 32,
+      "default": ""
+    },
+    {
+      "name": "link_tel",
+      "label": "商户电话",
+      "type": "string",
+      "comment": "商户电话",
+      "length": 16,
+      "default": ""
+    },
+    {
+      "name": "charter",
+      "label": "商户证书",
+      "type": "string",
+      "comment": "商户证书",
+      "length": 512,
+      "default": ""
+    },
+    {
+      "name": "add_time",
+      "label": "添加时间",
+      "type": "integer",
+      "comment": "添加时间",
+      "default": 0
+    },
+    {
+      "name": "apply_time",
+      "label": "审核时间",
+      "type": "integer",
+      "comment": "审核时间",
+      "default": 0
+    },
+    {
+      "name": "success_time",
+      "label": "通过时间",
+      "type": "integer",
+      "comment": "通过时间"
+    },
+    {
+      "name": "fail_message",
+      "label": "未通过原因",
+      "type": "string",
+      "comment": "未通过原因",
+      "length": 256,
+      "default": ""
+    },
+    {
+      "name": "fail_time",
+      "label": "未通过时间",
+      "type": "integer",
+      "comment": "未通过时间",
+      "default": 0
+    },
+    {
+      "name": "status",
+      "label": "-1 审核未通过 0未审核 1审核通过",
+      "type": "tinyInteger",
+      "comment": "-1 审核未通过 0未审核 1审核通过",
+      "default": 0,
+      "index": true
+    },
+    {
+      "name": "is_lock",
+      "label": "0 = 开启 1= 关闭",
+      "type": "tinyInteger",
+      "comment": "0 = 开启 1= 关闭",
+      "default": 0,
+      "index": true
+    }
+  ],
+  "indexes": [
+    {
+      "name": "province",
+      "columns": [
+        "province",
+        "city",
+        "district"
+      ],
+      "type": "index"
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_user_enter"
+  },
+  "name": "app_yshop_user_enter",
+  "relations": {}
+}

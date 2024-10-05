@@ -1,0 +1,152 @@
+{
+  "columns": [
+    {
+      "name": "room_id",
+      "label": "直播间id",
+      "type": "id",
+      "comment": "直播间id",
+      "primary": true
+    },
+    {
+      "name": "name",
+      "label": "直播间标题",
+      "type": "string",
+      "comment": "直播间标题",
+      "length": 255
+    },
+    {
+      "name": "cover_imge",
+      "label": "背景图",
+      "type": "string",
+      "comment": "背景图",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "share_imge",
+      "label": "分享图片",
+      "type": "string",
+      "comment": "分享图片",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "live_status",
+      "label": "直播间状态",
+      "type": "integer",
+      "comment": "直播间状态",
+      "nullable": true
+    },
+    {
+      "name": "start_time",
+      "label": "开始时间",
+      "type": "bigInteger",
+      "comment": "开始时间",
+      "nullable": true
+    },
+    {
+      "name": "end_time",
+      "label": "预计结束时间",
+      "type": "bigInteger",
+      "comment": "预计结束时间",
+      "nullable": true
+    },
+    {
+      "name": "anchor_name",
+      "label": "主播昵称",
+      "type": "string",
+      "comment": "主播昵称",
+      "length": 64,
+      "nullable": true
+    },
+    {
+      "name": "anchor_wechat",
+      "label": "主播微信号",
+      "type": "string",
+      "comment": "主播微信号",
+      "length": 32,
+      "nullable": true
+    },
+    {
+      "name": "anchor_imge",
+      "label": "主播头像",
+      "type": "string",
+      "comment": "主播头像",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "type",
+      "label": "直播间类型",
+      "type": "tinyInteger",
+      "comment": "直播间类型 1：推流 0：手机直播",
+      "nullable": true
+    },
+    {
+      "name": "screen_type",
+      "label": "横屏、竖屏",
+      "type": "tinyInteger",
+      "comment": "横屏、竖屏 【1：横屏，0：竖屏】",
+      "nullable": true
+    },
+    {
+      "name": "close_like",
+      "label": "是否关闭点赞",
+      "type": "tinyInteger",
+      "comment": "是否关闭点赞 【0：开启，1：关闭】",
+      "nullable": true
+    },
+    {
+      "name": "close_comment",
+      "label": "是否关闭评论",
+      "type": "tinyInteger",
+      "comment": "是否关闭评论 【0：开启，1：关闭】",
+      "nullable": true
+    },
+    {
+      "name": "close_goods",
+      "label": "是否关闭货架",
+      "type": "tinyInteger",
+      "comment": "是否关闭货架 【0：开启，1：关闭】",
+      "nullable": true
+    },
+    {
+      "name": "product_id",
+      "label": "商品id 多个,分割",
+      "type": "string",
+      "comment": "商品id 多个,分割",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "close_replay",
+      "label": "是否关闭回放",
+      "type": "tinyInteger",
+      "comment": "是否关闭回放【0：开启，1：关闭】",
+      "nullable": true
+    },
+    {
+      "name": "close_share",
+      "label": "是否关闭分享",
+      "type": "tinyInteger",
+      "comment": "是否关闭分享【0：开启，1：关闭】",
+      "nullable": true
+    },
+    {
+      "name": "close_kf",
+      "label": "是否关闭客服",
+      "type": "tinyInteger",
+      "comment": "是否关闭客服【0：开启，1：关闭】",
+      "nullable": true
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_wechat_live"
+  },
+  "name": "app_yshop_wechat_live",
+  "relations": {}
+}

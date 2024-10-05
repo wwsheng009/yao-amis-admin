@@ -57,6 +57,21 @@
       ]
     },
     {
+      "name": "ssl_enable",
+      "label": "是否开启 SSL",
+      "type": "boolean",
+      "comment": "是否开启 SSL",
+      "default": false
+    },
+    {
+      "name": "starttls_enable",
+      "label": "是否开启 STARTTLS",
+      "type": "boolean",
+      "comment": "是否开启 STARTTLS",
+      "nullable": true,
+      "default": false
+  },
+    {
       "comment": "登录用户名",
       "label": "用户名",
       "length": 50,

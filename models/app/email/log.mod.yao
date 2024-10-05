@@ -1,0 +1,144 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "编号",
+            "type": "id",
+            "comment": "编号",
+            "primary": true
+        },
+        {
+            "name": "user_id",
+            "label": "用户编号",
+            "type": "bigInteger",
+            "comment": "用户编号",
+            "nullable": true
+        },
+        {
+            "name": "user_type",
+            "label": "用户类型",
+            "type": "tinyInteger",
+            "comment": "用户类型",
+            "nullable": true
+        },
+        {
+            "name": "to_mail",
+            "label": "接收邮箱地址",
+            "type": "string",
+            "comment": "接收邮箱地址",
+            "length": 255
+        },
+        {
+            "name": "account_id",
+            "label": "邮箱账号编号",
+            "type": "bigInteger",
+            "comment": "邮箱账号编号"
+        },
+        {
+            "name": "from_mail",
+            "label": "发送邮箱地址",
+            "type": "string",
+            "comment": "发送邮箱地址",
+            "length": 255
+        },
+        {
+            "name": "template_id",
+            "label": "模板编号",
+            "type": "bigInteger",
+            "comment": "模板编号"
+        },
+        {
+            "name": "template_code",
+            "label": "模板编码",
+            "type": "string",
+            "comment": "模板编码",
+            "length": 63
+        },
+        {
+            "name": "template_nickname",
+            "label": "模版发送人名称",
+            "type": "string",
+            "comment": "模版发送人名称",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "template_title",
+            "label": "邮件标题",
+            "type": "string",
+            "comment": "邮件标题",
+            "length": 255
+        },
+        {
+            "name": "template_content",
+            "label": "邮件内容",
+            "type": "string",
+            "comment": "邮件内容",
+            "length": 10240
+        },
+        {
+            "name": "template_params",
+            "label": "邮件参数",
+            "type": "string",
+            "comment": "邮件参数",
+            "length": 255
+        },
+        {
+            "name": "send_status",
+            "label": "发送状态",
+            "type": "tinyInteger",
+            "comment": "发送状态",
+            "default": 0
+        },
+        {
+            "name": "send_time",
+            "label": "发送时间",
+            "type": "datetime",
+            "comment": "发送时间",
+            "nullable": true
+        },
+        {
+            "name": "send_message_id",
+            "label": "发送返回的消息 ID",
+            "type": "string",
+            "comment": "发送返回的消息 ID",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "send_exception",
+            "label": "发送异常",
+            "type": "string",
+            "comment": "发送异常",
+            "length": 4096,
+            "nullable": true
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_email_log"
+    },
+    "name": "app_email_log",
+    "relations": {}
+}

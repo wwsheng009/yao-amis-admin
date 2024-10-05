@@ -1,0 +1,462 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "订单ID",
+            "type": "id",
+            "comment": "订单ID",
+            "primary": true
+        },
+        {
+            "name": "order_id",
+            "label": "订单号",
+            "type": "string",
+            "comment": "订单号",
+            "length": 32
+        },
+        {
+            "name": "shop_id",
+            "label": "门店id",
+            "type": "bigInteger",
+            "comment": "门店id",
+            "nullable": true
+        },
+        {
+            "name": "shop_name",
+            "label": "店铺名称",
+            "type": "string",
+            "comment": "店铺名称",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "extend_order_id",
+            "label": "额外订单号",
+            "type": "string",
+            "comment": "额外订单号",
+            "length": 32,
+            "nullable": true
+        },
+        {
+            "name": "uid",
+            "label": "用户id",
+            "type": "bigInteger",
+            "comment": "用户id",
+            "index": true
+        },
+        {
+            "name": "real_name",
+            "label": "用户姓名",
+            "type": "string",
+            "comment": "用户姓名",
+            "length": 32,
+            "default": ""
+        },
+        {
+            "name": "user_phone",
+            "label": "用户电话",
+            "type": "string",
+            "comment": "用户电话",
+            "length": 18,
+            "default": ""
+        },
+        {
+            "name": "user_address",
+            "label": "详细地址",
+            "type": "string",
+            "comment": "详细地址",
+            "length": 100,
+            "default": ""
+        },
+        {
+            "name": "cart_id",
+            "label": "购物车id",
+            "type": "string",
+            "comment": "购物车id",
+            "length": 256,
+            "default": "[]"
+        },
+        {
+            "name": "freight_price",
+            "label": "运费金额",
+            "type": "decimal",
+            "comment": "运费金额",
+            "default": 0
+        },
+        {
+            "name": "total_num",
+            "label": "订单商品总数",
+            "type": "integer",
+            "comment": "订单商品总数",
+            "default": 0
+        },
+        {
+            "name": "total_price",
+            "label": "订单总价",
+            "type": "decimal",
+            "comment": "订单总价",
+            "default": 0
+        },
+        {
+            "name": "total_postage",
+            "label": "邮费",
+            "type": "decimal",
+            "comment": "邮费",
+            "default": 0
+        },
+        {
+            "name": "pay_price",
+            "label": "实际支付金额",
+            "type": "decimal",
+            "comment": "实际支付金额",
+            "default": 0,
+            "index": true
+        },
+        {
+            "name": "pay_postage",
+            "label": "支付邮费",
+            "type": "decimal",
+            "comment": "支付邮费",
+            "default": 0
+        },
+        {
+            "name": "deduction_price",
+            "label": "抵扣金额",
+            "type": "decimal",
+            "comment": "抵扣金额",
+            "default": 0
+        },
+        {
+            "name": "coupon_id",
+            "label": "优惠券id",
+            "type": "integer",
+            "comment": "优惠券id",
+            "default": 0,
+            "index": true
+        },
+        {
+            "name": "coupon_price",
+            "label": "优惠券金额",
+            "type": "decimal",
+            "comment": "优惠券金额",
+            "default": 0
+        },
+        {
+            "name": "paid",
+            "label": "支付状态",
+            "type": "tinyInteger",
+            "comment": "支付状态",
+            "default": 0,
+            "index": true
+        },
+        {
+            "name": "pay_time",
+            "label": "支付时间",
+            "type": "datetime",
+            "comment": "支付时间",
+            "nullable": true,
+            "index": true
+        },
+        {
+            "name": "pay_type",
+            "label": "支付方式",
+            "type": "string",
+            "comment": "支付方式",
+            "length": 32,
+            "index": true
+        },
+        {
+            "name": "status",
+            "label": "订单状态（-1 : 申请退款 -2 : 退货成功 0：待发货；1：待收货；2：已收货；3：已完成；-1：已退款）",
+            "type": "tinyInteger",
+            "comment": "订单状态（-1 : 申请退款 -2 : 退货成功 0：待发货；1：待收货；2：已收货；3：已完成；-1：已退款）",
+            "default": 0,
+            "index": true
+        },
+        {
+            "name": "refund_status",
+            "label": "0 未退款 1 申请中 2 已退款",
+            "type": "tinyInteger",
+            "comment": "0 未退款 1 申请中 2 已退款",
+            "default": 0
+        },
+        {
+            "name": "refund_reason_wap_img",
+            "label": "退款图片",
+            "type": "string",
+            "comment": "退款图片",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "refund_reason_wap_explain",
+            "label": "退款用户说明",
+            "type": "string",
+            "comment": "退款用户说明",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "refund_reason_time",
+            "label": "退款时间",
+            "type": "datetime",
+            "comment": "退款时间",
+            "nullable": true
+        },
+        {
+            "name": "refund_reason_wap",
+            "label": "前台退款原因",
+            "type": "string",
+            "comment": "前台退款原因",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "refund_reason",
+            "label": "不退款的理由",
+            "type": "string",
+            "comment": "不退款的理由",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "refund_price",
+            "label": "退款金额",
+            "type": "decimal",
+            "comment": "退款金额",
+            "default": 0
+        },
+        {
+            "name": "delivery_sn",
+            "label": "快递公司编号",
+            "type": "string",
+            "comment": "快递公司编号",
+            "length": 100,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "delivery_name",
+            "label": "快递名称/送货人姓名",
+            "type": "string",
+            "comment": "快递名称/送货人姓名",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "delivery_type",
+            "label": "发货类型normal-手动填写 ｜face-电子面单",
+            "type": "string",
+            "comment": "发货类型normal-手动填写 ｜face-电子面单",
+            "length": 32,
+            "nullable": true,
+            "default": "normal"
+        },
+        {
+            "name": "delivery_time",
+            "label": "发货时间",
+            "type": "datetime",
+            "comment": "发货时间",
+            "nullable": true
+        },
+        {
+            "name": "order_type",
+            "label": "购买类型:takein=自取,takeout=外卖\n",
+            "type": "string",
+            "comment": "购买类型:takein=自取,takeout=外卖\n",
+            "length": 50,
+            "nullable": true,
+            "default": "send"
+        },
+        {
+            "name": "delivery_id",
+            "label": "快递单号/手机号",
+            "type": "string",
+            "comment": "快递单号/手机号",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "gain_integral",
+            "label": "消费赚取积分",
+            "type": "decimal",
+            "comment": "消费赚取积分",
+            "default": 0
+        },
+        {
+            "name": "use_integral",
+            "label": "使用积分",
+            "type": "decimal",
+            "comment": "使用积分",
+            "default": 0
+        },
+        {
+            "name": "pay_integral",
+            "label": "实际支付积分",
+            "type": "decimal",
+            "comment": "实际支付积分",
+            "default": 0
+        },
+        {
+            "name": "back_integral",
+            "label": "给用户退了多少积分",
+            "type": "decimal",
+            "comment": "给用户退了多少积分",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "mark",
+            "label": "备注",
+            "type": "string",
+            "comment": "备注",
+            "length": 512
+        },
+        {
+            "name": "unique",
+            "label": "唯一id(md5加密)类似id",
+            "type": "char",
+            "comment": "唯一id(md5加密)类似id",
+            "length": 32,
+            "default": ""
+        },
+        {
+            "name": "remark",
+            "label": "管理员备注",
+            "type": "string",
+            "comment": "管理员备注",
+            "length": 512,
+            "nullable": true
+        },
+        {
+            "name": "mer_id",
+            "label": "商户ID",
+            "type": "integer",
+            "comment": "商户ID",
+            "default": 0
+        },
+        {
+            "name": "combination_id",
+            "label": "拼团产品id0一般产品",
+            "type": "bigInteger",
+            "comment": "拼团产品id0一般产品",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "pink_id",
+            "label": "拼团id 0没有拼团",
+            "type": "bigInteger",
+            "comment": "拼团id 0没有拼团",
+            "default": 0
+        },
+        {
+            "name": "cost",
+            "label": "成本价",
+            "type": "decimal",
+            "comment": "成本价"
+        },
+        {
+            "name": "seckill_id",
+            "label": "秒杀产品ID",
+            "type": "bigInteger",
+            "comment": "秒杀产品ID",
+            "default": 0
+        },
+        {
+            "name": "bargain_id",
+            "label": "砍价id",
+            "type": "integer",
+            "comment": "砍价id",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "verify_code",
+            "label": "核销码",
+            "type": "string",
+            "comment": "核销码",
+            "length": 50,
+            "default": ""
+        },
+        {
+            "name": "store_id",
+            "label": "门店id",
+            "type": "integer",
+            "comment": "门店id",
+            "default": 0
+        },
+        {
+            "name": "shipping_type",
+            "label": "配送方式 1=快递 ，2=门店自提",
+            "type": "tinyInteger",
+            "comment": "配送方式 1=快递 ，2=门店自提",
+            "default": 1
+        },
+        {
+            "name": "is_channel",
+            "label": "支付渠道(0微信公众号1微信小程序)",
+            "type": "tinyInteger",
+            "comment": "支付渠道(0微信公众号1微信小程序)",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "is_system_del",
+            "label": "系统删除",
+            "type": "tinyInteger",
+            "comment": "系统删除",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "get_time",
+            "label": "取餐时间",
+            "type": "datetime",
+            "comment": "取餐时间",
+            "nullable": true
+        },
+        {
+            "name": "number_id",
+            "label": "取餐号",
+            "type": "integer",
+            "comment": "取餐号",
+            "nullable": true
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true
+        }
+    ],
+    "indexes": [
+        {
+            "name": "order_id_2",
+            "columns": [
+                "order_id",
+                "uid"
+            ],
+            "type": "unique"
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_yshop_store_order"
+    },
+    "name": "app_yshop_store_order",
+    "relations": {}
+}

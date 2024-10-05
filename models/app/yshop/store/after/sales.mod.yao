@@ -1,0 +1,130 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "type": "id",
+      "primary": true
+    },
+    {
+      "name": "order_code",
+      "label": "订单号",
+      "type": "string",
+      "comment": "订单号",
+      "length": 32,
+      "nullable": true
+    },
+    {
+      "name": "refund_amount",
+      "label": "退款金额",
+      "type": "decimal",
+      "comment": "退款金额",
+      "nullable": true
+    },
+    {
+      "name": "service_type",
+      "label": "服务类型0仅退款1退货退款",
+      "type": "tinyInteger",
+      "comment": "服务类型0仅退款1退货退款",
+      "nullable": true
+    },
+    {
+      "name": "reasons",
+      "label": "申请原因",
+      "type": "text",
+      "comment": "申请原因",
+      "nullable": true
+    },
+    {
+      "name": "explains",
+      "label": "说明",
+      "type": "text",
+      "comment": "说明",
+      "nullable": true
+    },
+    {
+      "name": "explain_img",
+      "label": "说明图片->多个用逗号分割",
+      "type": "text",
+      "comment": "说明图片->多个用逗号分割",
+      "nullable": true
+    },
+    {
+      "name": "shipper_code",
+      "label": "物流公司编码",
+      "type": "string",
+      "comment": "物流公司编码",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "delivery_sn",
+      "label": "物流单号",
+      "type": "string",
+      "comment": "物流单号",
+      "length": 32,
+      "nullable": true
+    },
+    {
+      "name": "delivery_name",
+      "label": "物流名称",
+      "type": "string",
+      "comment": "物流名称",
+      "length": 32,
+      "nullable": true
+    },
+    {
+      "name": "state",
+      "label": "状态 0已提交等待平台审核 1平台已审核 等待用户发货/退款 2 用户已发货 3退款成功",
+      "type": "tinyInteger",
+      "comment": "状态 0已提交等待平台审核 1平台已审核 等待用户发货/退款 2 用户已发货 3退款成功",
+      "nullable": true
+    },
+    {
+      "name": "sales_state",
+      "label": "售后状态-0正常1用户取消2商家拒绝",
+      "type": "tinyInteger",
+      "comment": "售后状态-0正常1用户取消2商家拒绝",
+      "nullable": true
+    },
+    {
+      "name": "user_id",
+      "label": "用户id",
+      "type": "bigInteger",
+      "comment": "用户id",
+      "nullable": true
+    },
+    {
+      "name": "consignee",
+      "label": "商家收货人",
+      "type": "string",
+      "comment": "商家收货人",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "phone_number",
+      "label": "商家手机号",
+      "type": "string",
+      "comment": "商家手机号",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "address",
+      "label": "商家地址",
+      "type": "string",
+      "comment": "商家地址",
+      "length": 255,
+      "nullable": true
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_store_after_sales"
+  },
+  "name": "app_yshop_store_after_sales",
+  "relations": {}
+}

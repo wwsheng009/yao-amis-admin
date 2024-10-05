@@ -1,0 +1,51 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "label": "配置id",
+      "type": "id",
+      "comment": "配置id",
+      "primary": true
+    },
+    {
+      "name": "menu_name",
+      "label": "字段名称",
+      "type": "string",
+      "comment": "字段名称",
+      "length": 255
+    },
+    {
+      "name": "value",
+      "label": "默认值",
+      "type": "string",
+      "comment": "默认值",
+      "length": 5000,
+      "nullable": true
+    },
+    {
+      "name": "sort",
+      "label": "排序",
+      "type": "integer",
+      "comment": "排序",
+      "nullable": true,
+      "default": 0
+    },
+    {
+      "name": "status",
+      "label": "是否隐藏",
+      "type": "tinyInteger",
+      "comment": "是否隐藏",
+      "nullable": true,
+      "default": 0
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_system_config"
+  },
+  "name": "app_yshop_system_config",
+  "relations": {}
+}

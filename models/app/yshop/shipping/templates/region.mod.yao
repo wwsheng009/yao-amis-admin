@@ -1,0 +1,84 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "label": "编号",
+      "type": "id",
+      "comment": "编号",
+      "primary": true
+    },
+    {
+      "name": "province_id",
+      "label": "省ID",
+      "type": "integer",
+      "comment": "省ID",
+      "default": 0
+    },
+    {
+      "name": "temp_id",
+      "label": "模板ID",
+      "type": "integer",
+      "comment": "模板ID",
+      "default": 0
+    },
+    {
+      "name": "city_id",
+      "label": "城市ID",
+      "type": "integer",
+      "comment": "城市ID",
+      "default": 0
+    },
+    {
+      "name": "first",
+      "label": "首件",
+      "type": "decimal",
+      "comment": "首件",
+      "default": 0
+    },
+    {
+      "name": "first_price",
+      "label": "首件运费",
+      "type": "decimal",
+      "comment": "首件运费",
+      "default": 0
+    },
+    {
+      "name": "continues",
+      "label": "续件",
+      "type": "decimal",
+      "comment": "续件",
+      "default": 0
+    },
+    {
+      "name": "continue_price",
+      "label": "续件运费",
+      "type": "decimal",
+      "comment": "续件运费",
+      "default": 0
+    },
+    {
+      "name": "type",
+      "label": "计费方式",
+      "type": "tinyInteger",
+      "comment": "计费方式",
+      "default": 1
+    },
+    {
+      "name": "uniqid",
+      "label": "分组唯一值",
+      "type": "string",
+      "comment": "分组唯一值",
+      "length": 50,
+      "default": ""
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_shipping_templates_region"
+  },
+  "name": "app_yshop_shipping_templates_region",
+  "relations": {}
+}

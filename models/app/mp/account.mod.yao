@@ -1,0 +1,110 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "编号",
+            "type": "id",
+            "comment": "编号",
+            "primary": true
+        },
+        {
+            "name": "name",
+            "label": "公众号名称",
+            "type": "string",
+            "comment": "公众号名称",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "account",
+            "label": "公众号账号",
+            "type": "string",
+            "comment": "公众号账号",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "app_id",
+            "label": "公众号appid",
+            "type": "string",
+            "comment": "公众号appid",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "app_secret",
+            "label": "公众号密钥",
+            "type": "string",
+            "comment": "公众号密钥",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "url",
+            "label": "公众号url",
+            "type": "string",
+            "comment": "公众号url",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "token",
+            "label": "公众号token",
+            "type": "string",
+            "comment": "公众号token",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "aes_key",
+            "label": "加密密钥",
+            "type": "string",
+            "comment": "加密密钥",
+            "length": 300,
+            "nullable": true
+        },
+        {
+            "name": "qr_code_url",
+            "label": "二维码图片URL",
+            "type": "string",
+            "comment": "二维码图片URL",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "remark",
+            "label": "备注",
+            "type": "string",
+            "comment": "备注",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_mp_account"
+    },
+    "name": "app_mp_account",
+    "relations": {}
+}

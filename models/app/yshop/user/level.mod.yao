@@ -1,0 +1,89 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "type": "id",
+      "primary": true
+    },
+    {
+      "name": "uid",
+      "label": "用户uid",
+      "type": "bigInteger",
+      "comment": "用户uid",
+      "default": 0
+    },
+    {
+      "name": "level_id",
+      "label": "等级vip",
+      "type": "integer",
+      "comment": "等级vip",
+      "default": 0
+    },
+    {
+      "name": "grade",
+      "label": "会员等级",
+      "type": "integer",
+      "comment": "会员等级",
+      "default": 0
+    },
+    {
+      "name": "valid_time",
+      "label": "过期时间",
+      "type": "integer",
+      "comment": "过期时间",
+      "default": 0
+    },
+    {
+      "name": "is_forever",
+      "label": "是否永久",
+      "type": "tinyInteger",
+      "comment": "是否永久",
+      "default": 0
+    },
+    {
+      "name": "mer_id",
+      "label": "商户id",
+      "type": "integer",
+      "comment": "商户id",
+      "default": 0
+    },
+    {
+      "name": "status",
+      "label": "0:禁止,1:正常",
+      "type": "tinyInteger",
+      "comment": "0:禁止,1:正常",
+      "default": 0
+    },
+    {
+      "name": "mark",
+      "label": "备注",
+      "type": "string",
+      "comment": "备注",
+      "length": 255,
+      "default": ""
+    },
+    {
+      "name": "remind",
+      "label": "是否已通知",
+      "type": "tinyInteger",
+      "comment": "是否已通知",
+      "default": 0
+    },
+    {
+      "name": "discount",
+      "label": "享受折扣",
+      "type": "integer",
+      "comment": "享受折扣",
+      "default": 0
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_user_level"
+  },
+  "name": "app_yshop_user_level",
+  "relations": {}
+}

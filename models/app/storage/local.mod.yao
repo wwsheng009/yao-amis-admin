@@ -1,0 +1,74 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "type": "id",
+      "primary": true
+    },
+    {
+      "name": "real_name",
+      "label": "文件真实的名称",
+      "type": "string",
+      "comment": "文件真实的名称",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "name",
+      "label": "文件名",
+      "type": "string",
+      "comment": "文件名",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "suffix",
+      "label": "后缀",
+      "type": "string",
+      "comment": "后缀",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "path",
+      "label": "路径",
+      "type": "string",
+      "comment": "路径",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "type",
+      "label": "类型",
+      "type": "string",
+      "comment": "类型",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "size",
+      "label": "大小",
+      "type": "string",
+      "comment": "大小",
+      "length": 100,
+      "nullable": true
+    },
+    {
+      "name": "operate",
+      "label": "操作人",
+      "type": "string",
+      "comment": "操作人",
+      "length": 255,
+      "nullable": true
+    }
+  ],
+  "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+  "table": {
+    "name": "app_storage_local"
+  },
+  "name": "tools_local_storage",
+  "relations": {}
+}

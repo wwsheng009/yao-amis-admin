@@ -1,7 +1,11 @@
 {
   "description": "数据元素",
   "name": "模型数据元素",
-  "option": {},
+  "option": {
+    "timestamps": false,
+    "read_only": false,
+    "soft_deletes": false
+  },
   "table": {
     "name": "ddic_model_element",
     "comment": "数据元素"

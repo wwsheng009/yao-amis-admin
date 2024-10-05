@@ -1,0 +1,138 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "用户地址id",
+            "type": "id",
+            "comment": "用户地址id",
+            "primary": true
+        },
+        {
+            "name": "uid",
+            "label": "用户id",
+            "type": "bigInteger",
+            "comment": "用户id",
+            "index": true
+        },
+        {
+            "name": "real_name",
+            "label": "收货人姓名",
+            "type": "string",
+            "comment": "收货人姓名",
+            "length": 32,
+            "default": ""
+        },
+        {
+            "name": "address",
+            "label": "地址",
+            "type": "string",
+            "comment": "地址",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "phone",
+            "label": "收货人电话",
+            "type": "string",
+            "comment": "收货人电话",
+            "length": 16,
+            "default": ""
+        },
+        {
+            "name": "province",
+            "label": "收货人所在省",
+            "type": "string",
+            "comment": "收货人所在省",
+            "length": 64,
+            "default": ""
+        },
+        {
+            "name": "city",
+            "label": "收货人所在市",
+            "type": "string",
+            "comment": "收货人所在市",
+            "length": 64,
+            "default": ""
+        },
+        {
+            "name": "city_id",
+            "label": "城市id",
+            "type": "integer",
+            "comment": "城市id",
+            "nullable": true
+        },
+        {
+            "name": "district",
+            "label": "收货人所在区",
+            "type": "string",
+            "comment": "收货人所在区",
+            "length": 64,
+            "default": ""
+        },
+        {
+            "name": "detail",
+            "label": "收货人详细地址",
+            "type": "string",
+            "comment": "收货人详细地址",
+            "length": 256,
+            "default": ""
+        },
+        {
+            "name": "post_code",
+            "label": "邮编",
+            "type": "string",
+            "comment": "邮编",
+            "length": 20,
+            "default": ""
+        },
+        {
+            "name": "longitude",
+            "label": "经度",
+            "type": "string",
+            "comment": "经度",
+            "length": 50,
+            "default": "0"
+        },
+        {
+            "name": "latitude",
+            "label": "纬度",
+            "type": "string",
+            "comment": "纬度",
+            "length": 50,
+            "default": "0"
+        },
+        {
+            "name": "is_default",
+            "label": "是否默认",
+            "type": "tinyInteger",
+            "comment": "是否默认",
+            "default": 0,
+            "index": true
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_yshop_user_address"
+    },
+    "name": "app_yshop_user_address",
+    "relations": {}
+}

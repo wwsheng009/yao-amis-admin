@@ -1,0 +1,64 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "公告ID",
+            "type": "id",
+            "comment": "公告ID",
+            "primary": true
+        },
+        {
+            "name": "title",
+            "label": "公告标题",
+            "type": "string",
+            "comment": "公告标题",
+            "length": 50
+        },
+        {
+            "name": "content",
+            "label": "公告内容",
+            "type": "text",
+            "comment": "公告内容"
+        },
+        {
+            "name": "type",
+            "label": "公告类型（1通知 2公告）",
+            "type": "tinyInteger",
+            "comment": "公告类型（1通知 2公告）"
+        },
+        {
+            "name": "status",
+            "label": "公告状态（0正常 1关闭）",
+            "type": "tinyInteger",
+            "comment": "公告状态（0正常 1关闭）",
+            "default": 0
+        },
+        {
+            "name": "created_by",
+            "label": "创建者",
+            "type": "string",
+            "comment": "创建者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "updated_by",
+            "label": "更新者",
+            "type": "string",
+            "comment": "更新者",
+            "length": 64,
+            "nullable": true,
+            "default": ""
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "system_notice"
+    },
+    "name": "system_notice",
+    "relations": {}
+}

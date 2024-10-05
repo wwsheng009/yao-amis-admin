@@ -1,0 +1,40 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "type": "id",
+      "primary": true
+    },
+    {
+      "name": "product_id",
+      "label": "商品ID",
+      "type": "bigInteger",
+      "comment": "商品ID",
+      "default": 0,
+      "index": true
+    },
+    {
+      "name": "attr_name",
+      "label": "属性名",
+      "type": "string",
+      "comment": "属性名",
+      "length": 32
+    },
+    {
+      "name": "attr_values",
+      "label": "属性值",
+      "type": "string",
+      "comment": "属性值",
+      "length": 256
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "app_yshop_store_product_attr"
+  },
+  "name": "app_yshop_store_product_attr",
+  "relations": {}
+}
