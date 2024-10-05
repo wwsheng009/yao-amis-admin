@@ -8,7 +8,8 @@ import { getModelFromDB, saveAmisModel } from '@scripts/system/model_db';
 import {
   loadModeltoMemory,
   deepCopyObject,
-  migrateModel
+  migrateModel,
+  checkAndloadDefaultTableForm
 } from '@scripts/system/model_load';
 
 import { DotName, SlashName } from '@scripts/system/lib';
@@ -91,10 +92,10 @@ export function page(
 
 /**
  * 读取所有的模型id的列表
- * yao run scripts.system.model.DatabaseModelList
+ * yao run scripts.system.model.getDatabaseModelList
  * @returns array
  */
-function DatabaseModelList(): AmisModelDB[] {
+function getDatabaseModelList(): AmisModelDB[] {
   const list = Process('models.ddic.model.get', {
     select: ['identity', 'name', 'comment']
   });
@@ -452,11 +453,19 @@ export function ImportModelFromSource(payload: { ID: string; source: string }) {
  * yao run scripts.system.model.importDBModelsToCache
  */
 export function importDBModelsToCache() {
-  const list = DatabaseModelList();
+  const list = getDatabaseModelList();
 
   list.forEach((m) => {
     const modelDsl = getModelFromDB(m.identity);
     loadModeltoMemory(modelDsl);
+  });
+
+  //load the default table and form config for model if not exist;
+  const cachedMList = getCachedModelIDList();
+  cachedMList.forEach((l) => {
+    if (!Process('yao.table.exists', l)) {
+      checkAndloadDefaultTableForm(l);
+    }
   });
 }
 /**
@@ -467,7 +476,7 @@ export function importDBModelsToCache() {
  */
 export function getAllModelIdAndName(): { id: string; name: string }[] {
   const modelIds = getCachedModelIDList();
-  const modelsFromDb = DatabaseModelList();
+  const modelsFromDb = getDatabaseModelList();
 
   // 使用Map提高性能
   const modelMap = new Map<string, string>();
@@ -490,7 +499,7 @@ export function getAllModelIdAndName(): { id: string; name: string }[] {
 export function getAllModelIds() {
   let modelIds = getCachedModelIDList();
   // models.forEach((m) => modelIds.push(m.ID));
-  const modelsFromDb = DatabaseModelList();
+  const modelsFromDb = getDatabaseModelList();
   modelsFromDb.forEach((m) => modelIds.push(m.identity));
 
   modelIds = [...new Set(modelIds)];
@@ -534,7 +543,7 @@ export function getCachedModelsNameOptions() {
  * @returns
  */
 export function getDbModelsNameOptions() {
-  const list = DatabaseModelList();
+  const list = getDatabaseModelList();
   const models = list.map((model) => {
     let label = model.comment ? model.comment : model.name;
     label = label ? label : model.identity;

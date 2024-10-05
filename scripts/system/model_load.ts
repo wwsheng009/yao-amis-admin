@@ -91,7 +91,7 @@ function bytesToString(bytes: number[]) {
  * load default form and table config
  * @param modelId model id
  */
-function checkAndloadDefaultTableForm(modelId: string) {
+export function checkAndloadDefaultTableForm(modelId: string) {
   if (Process('yao.form.exists', modelId)) {
     if (checkIsDefaultForm(modelId)) {
       loadDefaultFormForModel(modelId);
