@@ -359,8 +359,7 @@
                       "label": "ID",
                       "name": "id",
                       "static": true,
-                      "type": "input-number",
-                      "isID": true
+                      "type": "input-number"
                     },
                     {
                       "label": "名称",
