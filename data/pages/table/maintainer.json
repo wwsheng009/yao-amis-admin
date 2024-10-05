@@ -11,7 +11,6 @@
       "type": "container",
       "body": [
         {
-          "size": "md",
           "labelAlign": "right",
           "name": "table",
           "id": "u:fc6740e2cc60",
@@ -42,15 +41,27 @@
             "right": 11
           },
           "type": "select",
+          "searchable": true,
           "label": "模型：",
-          "multiple": false
+          "multiple": false,
+          "selectMode": "table",
+          "columns": [
+            {
+              "name": "label",
+              "label": "描述"
+            },
+            {
+              "name": "value",
+              "label": "表名"
+            }
+          ]
         }
       ],
       "style": {
         "position": "static",
         "display": "block"
       },
-      "wrapperBody": false,
+      "wrapperBody": true,
       "id": "u:ad562680664e"
     }
   ],
