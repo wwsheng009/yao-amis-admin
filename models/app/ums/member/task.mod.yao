@@ -1,0 +1,42 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "name",
+            "type": "string",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "growth",
+            "label": "赠送成长值",
+            "type": "integer",
+            "comment": "赠送成长值",
+            "nullable": true
+        },
+        {
+            "name": "intergration",
+            "label": "赠送积分",
+            "type": "integer",
+            "comment": "赠送积分",
+            "nullable": true
+        },
+        {
+            "name": "type",
+            "label": "任务类型：0->新手任务；1->日常任务",
+            "type": "integer",
+            "comment": "任务类型：0->新手任务；1->日常任务",
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_ums_member_task"
+    },
+    "name": "app_ums_member_task",
+    "relations": {}
+}

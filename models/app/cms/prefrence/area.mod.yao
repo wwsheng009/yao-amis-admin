@@ -1,0 +1,45 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "name",
+            "type": "string",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "sub_title",
+            "type": "string",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "pic",
+            "label": "展示图片",
+            "type": "binary",
+            "comment": "展示图片",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "sort",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "show_status",
+            "type": "integer",
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_cms_prefrence_area"
+    },
+    "name": "app_cms_prefrence_area",
+    "relations": {}
+}

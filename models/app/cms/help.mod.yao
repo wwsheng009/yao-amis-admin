@@ -1,0 +1,50 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "category_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "icon",
+            "type": "string",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "title",
+            "type": "string",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "show_status",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "read_count",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "content",
+            "type": "text",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_cms_help"
+    },
+    "name": "app_cms_help",
+    "relations": {}
+}

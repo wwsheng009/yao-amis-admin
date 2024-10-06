@@ -1,0 +1,36 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "brand_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "brand_name",
+            "type": "string",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "recommend_status",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "sort",
+            "type": "integer",
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_sms_home_brand"
+    },
+    "name": "app_sms_home_brand",
+    "relations": {}
+}

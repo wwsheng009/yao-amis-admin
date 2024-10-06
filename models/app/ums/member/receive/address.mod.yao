@@ -1,0 +1,81 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "member_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "name",
+            "label": "收货人名称",
+            "type": "string",
+            "comment": "收货人名称",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "phone_number",
+            "type": "string",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "default_status",
+            "label": "是否为默认",
+            "type": "integer",
+            "comment": "是否为默认",
+            "nullable": true
+        },
+        {
+            "name": "post_code",
+            "label": "邮政编码",
+            "type": "string",
+            "comment": "邮政编码",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "province",
+            "label": "省份/直辖市",
+            "type": "string",
+            "comment": "省份/直辖市",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "city",
+            "label": "城市",
+            "type": "string",
+            "comment": "城市",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "region",
+            "label": "区",
+            "type": "string",
+            "comment": "区",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "detail_address",
+            "label": "详细地址(街道)",
+            "type": "string",
+            "comment": "详细地址(街道)",
+            "length": 128,
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_ums_member_receive_address"
+    },
+    "name": "app_ums_member_receive_address",
+    "relations": {}
+}

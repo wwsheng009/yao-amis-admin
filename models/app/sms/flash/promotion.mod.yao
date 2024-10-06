@@ -1,0 +1,47 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "title",
+            "label": "秒杀时间段名称",
+            "type": "string",
+            "comment": "秒杀时间段名称",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "start_date",
+            "label": "开始日期",
+            "type": "date",
+            "comment": "开始日期",
+            "nullable": true
+        },
+        {
+            "name": "end_date",
+            "label": "结束日期",
+            "type": "date",
+            "comment": "结束日期",
+            "nullable": true
+        },
+        {
+            "name": "status",
+            "label": "上下线状态",
+            "type": "integer",
+            "comment": "上下线状态",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_sms_flash_promotion"
+    },
+    "name": "app_sms_flash_promotion",
+    "relations": {}
+}

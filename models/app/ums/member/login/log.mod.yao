@@ -1,0 +1,48 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "member_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "ip",
+            "type": "string",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "city",
+            "type": "string",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "login_type",
+            "label": "登录类型：0->PC；1->android;2->ios;3->小程序",
+            "type": "integer",
+            "comment": "登录类型：0->PC；1->android;2->ios;3->小程序",
+            "nullable": true
+        },
+        {
+            "name": "province",
+            "type": "string",
+            "length": 64,
+            "nullable": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_ums_member_login_log"
+    },
+    "name": "app_ums_member_login_log",
+    "relations": {}
+}

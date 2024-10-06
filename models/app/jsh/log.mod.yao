@@ -1,0 +1,66 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "主键",
+            "type": "id",
+            "comment": "主键",
+            "primary": true
+        },
+        {
+            "name": "user_id",
+            "label": "用户id",
+            "type": "bigInteger",
+            "comment": "用户id",
+            "nullable": true,
+            "index": true
+        },
+        {
+            "name": "operation",
+            "label": "操作模块名称",
+            "type": "string",
+            "comment": "操作模块名称",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "client_ip",
+            "label": "客户端IP",
+            "type": "string",
+            "comment": "客户端IP",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "status",
+            "label": "操作状态 0==成功，1==失败",
+            "type": "tinyInteger",
+            "comment": "操作状态 0==成功，1==失败",
+            "nullable": true
+        },
+        {
+            "name": "content",
+            "label": "详情",
+            "type": "string",
+            "comment": "详情",
+            "length": 5000,
+            "nullable": true
+        },
+        {
+            "name": "tenant_id",
+            "label": "租户id",
+            "type": "bigInteger",
+            "comment": "租户id",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_jsh_log"
+    },
+    "name": "app_jsh_log",
+    "relations": {}
+}

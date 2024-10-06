@@ -1,0 +1,29 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "role_id",
+            "label": "角色ID",
+            "type": "bigInteger",
+            "comment": "角色ID",
+            "nullable": true
+        },
+        {
+            "name": "resource_id",
+            "label": "资源ID",
+            "type": "bigInteger",
+            "comment": "资源ID",
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_ums_role_resource_relation"
+    },
+    "name": "app_ums_role_resource_relation",
+    "relations": {}
+}

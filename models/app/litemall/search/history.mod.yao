@@ -1,0 +1,39 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "user_id",
+            "label": "用户表的用户ID",
+            "type": "integer",
+            "comment": "用户表的用户ID"
+        },
+        {
+            "name": "keyword",
+            "label": "搜索关键字",
+            "type": "string",
+            "comment": "搜索关键字",
+            "length": 63
+        },
+        {
+            "name": "from",
+            "label": "搜索来源，如pc、wx、app",
+            "type": "string",
+            "comment": "搜索来源，如pc、wx、app",
+            "length": 63,
+            "default": ""
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_litemall_search_history"
+    },
+    "name": "app_litemall_search_history",
+    "relations": {}
+}

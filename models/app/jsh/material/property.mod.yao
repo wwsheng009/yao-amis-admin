@@ -1,0 +1,51 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "主键",
+            "type": "id",
+            "comment": "主键",
+            "primary": true
+        },
+        {
+            "name": "native_name",
+            "label": "原始名称",
+            "type": "string",
+            "comment": "原始名称",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "enabled",
+            "label": "是否启用",
+            "type": "tinyInteger",
+            "comment": "是否启用",
+            "nullable": true
+        },
+        {
+            "name": "sort",
+            "label": "排序",
+            "type": "string",
+            "comment": "排序",
+            "length": 10,
+            "nullable": true
+        },
+        {
+            "name": "another_name",
+            "label": "别名",
+            "type": "string",
+            "comment": "别名",
+            "length": 50,
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_jsh_material_property"
+    },
+    "name": "app_jsh_material_property",
+    "relations": {}
+}

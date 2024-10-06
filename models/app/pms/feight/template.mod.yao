@@ -1,0 +1,60 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "name",
+            "type": "string",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "charge_type",
+            "label": "计费类型:0->按重量；1->按件数",
+            "type": "integer",
+            "comment": "计费类型:0->按重量；1->按件数",
+            "nullable": true
+        },
+        {
+            "name": "first_weight",
+            "label": "首重kg",
+            "type": "decimal",
+            "comment": "首重kg",
+            "nullable": true
+        },
+        {
+            "name": "first_fee",
+            "label": "首费（元）",
+            "type": "decimal",
+            "comment": "首费（元）",
+            "nullable": true
+        },
+        {
+            "name": "continue_weight",
+            "type": "decimal",
+            "nullable": true
+        },
+        {
+            "name": "continme_fee",
+            "type": "decimal",
+            "nullable": true
+        },
+        {
+            "name": "dest",
+            "label": "目的地（省、市）",
+            "type": "string",
+            "comment": "目的地（省、市）",
+            "length": 255,
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_pms_feight_template"
+    },
+    "name": "app_pms_feight_template",
+    "relations": {}
+}

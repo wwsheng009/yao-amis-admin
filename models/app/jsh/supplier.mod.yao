@@ -1,0 +1,194 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "主键",
+            "type": "id",
+            "comment": "主键",
+            "primary": true
+        },
+        {
+            "name": "supplier",
+            "label": "供应商名称",
+            "type": "string",
+            "comment": "供应商名称",
+            "length": 255
+        },
+        {
+            "name": "contacts",
+            "label": "联系人",
+            "type": "string",
+            "comment": "联系人",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "phone_num",
+            "label": "联系电话",
+            "type": "string",
+            "comment": "联系电话",
+            "length": 30,
+            "nullable": true
+        },
+        {
+            "name": "email",
+            "label": "电子邮箱",
+            "type": "string",
+            "comment": "电子邮箱",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "description",
+            "label": "备注",
+            "type": "string",
+            "comment": "备注",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "isystem",
+            "label": "是否系统自带 0==系统 1==非系统",
+            "type": "tinyInteger",
+            "comment": "是否系统自带 0==系统 1==非系统",
+            "nullable": true
+        },
+        {
+            "name": "type",
+            "label": "类型",
+            "type": "string",
+            "comment": "类型",
+            "length": 20,
+            "nullable": true
+        },
+        {
+            "name": "enabled",
+            "label": "启用",
+            "type": "tinyInteger",
+            "comment": "启用",
+            "nullable": true
+        },
+        {
+            "name": "advance_in",
+            "label": "预收款",
+            "type": "decimal",
+            "comment": "预收款",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "begin_need_get",
+            "label": "期初应收",
+            "type": "decimal",
+            "comment": "期初应收",
+            "nullable": true
+        },
+        {
+            "name": "begin_need_pay",
+            "label": "期初应付",
+            "type": "decimal",
+            "comment": "期初应付",
+            "nullable": true
+        },
+        {
+            "name": "all_need_get",
+            "label": "累计应收",
+            "type": "decimal",
+            "comment": "累计应收",
+            "nullable": true
+        },
+        {
+            "name": "all_need_pay",
+            "label": "累计应付",
+            "type": "decimal",
+            "comment": "累计应付",
+            "nullable": true
+        },
+        {
+            "name": "fax",
+            "label": "传真",
+            "type": "string",
+            "comment": "传真",
+            "length": 30,
+            "nullable": true
+        },
+        {
+            "name": "telephone",
+            "label": "手机",
+            "type": "string",
+            "comment": "手机",
+            "length": 30,
+            "nullable": true
+        },
+        {
+            "name": "address",
+            "label": "地址",
+            "type": "string",
+            "comment": "地址",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "tax_num",
+            "label": "纳税人识别号",
+            "type": "string",
+            "comment": "纳税人识别号",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "bank_name",
+            "label": "开户行",
+            "type": "string",
+            "comment": "开户行",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "account_number",
+            "label": "账号",
+            "type": "string",
+            "comment": "账号",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "tax_rate",
+            "label": "税率",
+            "type": "decimal",
+            "comment": "税率",
+            "nullable": true
+        },
+        {
+            "name": "sort",
+            "label": "排序",
+            "type": "string",
+            "comment": "排序",
+            "length": 10,
+            "nullable": true
+        },
+        {
+            "name": "created_by",
+            "label": "操作员",
+            "type": "bigInteger",
+            "comment": "操作员",
+            "nullable": true
+        },
+        {
+            "name": "tenant_id",
+            "label": "租户id",
+            "type": "bigInteger",
+            "comment": "租户id",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_jsh_supplier"
+    },
+    "name": "app_jsh_supplier",
+    "relations": {}
+}

@@ -1,0 +1,46 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "member_nick_name",
+            "type": "string",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "topic_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "member_icon",
+            "type": "string",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "content",
+            "type": "string",
+            "length": 1000,
+            "nullable": true
+        },
+        {
+            "name": "show_status",
+            "type": "integer",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_cms_topic_comment"
+    },
+    "name": "app_cms_topic_comment",
+    "relations": {}
+}

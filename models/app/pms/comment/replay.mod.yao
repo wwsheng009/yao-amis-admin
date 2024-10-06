@@ -1,0 +1,48 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "comment_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "member_nick_name",
+            "type": "string",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "member_icon",
+            "type": "string",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "content",
+            "type": "string",
+            "length": 1000,
+            "nullable": true
+        },
+        {
+            "name": "type",
+            "label": "评论人员类型；0->会员；1->管理员",
+            "type": "integer",
+            "comment": "评论人员类型；0->会员；1->管理员",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_pms_comment_replay"
+    },
+    "name": "app_pms_comment_replay",
+    "relations": {}
+}

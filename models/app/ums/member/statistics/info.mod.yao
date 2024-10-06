@@ -1,0 +1,108 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "member_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "consume_amount",
+            "label": "累计消费金额",
+            "type": "decimal",
+            "comment": "累计消费金额",
+            "nullable": true
+        },
+        {
+            "name": "order_count",
+            "label": "订单数量",
+            "type": "integer",
+            "comment": "订单数量",
+            "nullable": true
+        },
+        {
+            "name": "coupon_count",
+            "label": "优惠券数量",
+            "type": "integer",
+            "comment": "优惠券数量",
+            "nullable": true
+        },
+        {
+            "name": "comment_count",
+            "label": "评价数",
+            "type": "integer",
+            "comment": "评价数",
+            "nullable": true
+        },
+        {
+            "name": "return_order_count",
+            "label": "退货数量",
+            "type": "integer",
+            "comment": "退货数量",
+            "nullable": true
+        },
+        {
+            "name": "login_count",
+            "label": "登录次数",
+            "type": "integer",
+            "comment": "登录次数",
+            "nullable": true
+        },
+        {
+            "name": "attend_count",
+            "label": "关注数量",
+            "type": "integer",
+            "comment": "关注数量",
+            "nullable": true
+        },
+        {
+            "name": "fans_count",
+            "label": "粉丝数量",
+            "type": "integer",
+            "comment": "粉丝数量",
+            "nullable": true
+        },
+        {
+            "name": "collect_product_count",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "collect_subject_count",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "collect_topic_count",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "collect_comment_count",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "invite_friend_count",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "recent_order_time",
+            "label": "最后一次下订单时间",
+            "type": "datetime",
+            "comment": "最后一次下订单时间",
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_ums_member_statistics_info"
+    },
+    "name": "app_ums_member_statistics_info",
+    "relations": {}
+}

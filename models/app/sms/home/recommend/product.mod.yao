@@ -1,0 +1,36 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "product_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "product_name",
+            "type": "string",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "recommend_status",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "sort",
+            "type": "integer",
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_sms_home_recommend_product"
+    },
+    "name": "app_sms_home_recommend_product",
+    "relations": {}
+}

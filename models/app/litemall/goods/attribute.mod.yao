@@ -1,0 +1,40 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "goods_id",
+            "label": "商品表的商品ID",
+            "type": "integer",
+            "comment": "商品表的商品ID",
+            "default": 0,
+            "index": true
+        },
+        {
+            "name": "attribute",
+            "label": "商品参数名称",
+            "type": "string",
+            "comment": "商品参数名称",
+            "length": 255
+        },
+        {
+            "name": "value",
+            "label": "商品参数值",
+            "type": "string",
+            "comment": "商品参数值",
+            "length": 255
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_litemall_goods_attribute"
+    },
+    "name": "app_litemall_goods_attribute",
+    "relations": {}
+}

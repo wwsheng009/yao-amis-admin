@@ -1,0 +1,29 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "role_id",
+            "label": "角色ID",
+            "type": "bigInteger",
+            "comment": "角色ID",
+            "nullable": true
+        },
+        {
+            "name": "menu_id",
+            "label": "菜单ID",
+            "type": "bigInteger",
+            "comment": "菜单ID",
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_ums_role_menu_relation"
+    },
+    "name": "app_ums_role_menu_relation",
+    "relations": {}
+}

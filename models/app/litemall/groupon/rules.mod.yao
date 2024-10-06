@@ -1,0 +1,67 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "goods_id",
+            "label": "商品表的商品ID",
+            "type": "integer",
+            "comment": "商品表的商品ID",
+            "index": true
+        },
+        {
+            "name": "goods_name",
+            "label": "商品名称",
+            "type": "string",
+            "comment": "商品名称",
+            "length": 127
+        },
+        {
+            "name": "pic_url",
+            "label": "商品图片或者商品货品图片",
+            "type": "string",
+            "comment": "商品图片或者商品货品图片",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "discount",
+            "label": "优惠金额",
+            "type": "decimal",
+            "comment": "优惠金额"
+        },
+        {
+            "name": "discount_member",
+            "label": "达到优惠条件的人数",
+            "type": "integer",
+            "comment": "达到优惠条件的人数"
+        },
+        {
+            "name": "expire_time",
+            "label": "团购过期时间",
+            "type": "datetime",
+            "comment": "团购过期时间",
+            "nullable": true
+        },
+        {
+            "name": "status",
+            "label": "团购规则状态，正常上线则0，到期自动下线则1，管理手动下线则2",
+            "type": "smallInteger",
+            "comment": "团购规则状态，正常上线则0，到期自动下线则1，管理手动下线则2",
+            "nullable": true,
+            "default": 0
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_litemall_groupon_rules"
+    },
+    "name": "app_litemall_groupon_rules",
+    "relations": {}
+}

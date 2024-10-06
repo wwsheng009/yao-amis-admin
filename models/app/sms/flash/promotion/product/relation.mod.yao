@@ -1,0 +1,62 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "编号",
+            "type": "id",
+            "comment": "编号",
+            "primary": true
+        },
+        {
+            "name": "flash_promotion_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "flash_promotion_session_id",
+            "label": "编号",
+            "type": "bigInteger",
+            "comment": "编号",
+            "nullable": true
+        },
+        {
+            "name": "product_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "flash_promotion_price",
+            "label": "限时购价格",
+            "type": "decimal",
+            "comment": "限时购价格",
+            "nullable": true
+        },
+        {
+            "name": "flash_promotion_count",
+            "label": "限时购数量",
+            "type": "integer",
+            "comment": "限时购数量",
+            "nullable": true
+        },
+        {
+            "name": "flash_promotion_limit",
+            "label": "每人限购数量",
+            "type": "integer",
+            "comment": "每人限购数量",
+            "nullable": true
+        },
+        {
+            "name": "sort",
+            "label": "排序",
+            "type": "integer",
+            "comment": "排序",
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_sms_flash_promotion_product_relation"
+    },
+    "name": "app_sms_flash_promotion_product_relation",
+    "relations": {}
+}

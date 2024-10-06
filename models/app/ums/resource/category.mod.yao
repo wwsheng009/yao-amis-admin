@@ -1,0 +1,33 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "name",
+            "label": "分类名称",
+            "type": "string",
+            "comment": "分类名称",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "sort",
+            "label": "排序",
+            "type": "integer",
+            "comment": "排序",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_ums_resource_category"
+    },
+    "name": "app_ums_resource_category",
+    "relations": {}
+}

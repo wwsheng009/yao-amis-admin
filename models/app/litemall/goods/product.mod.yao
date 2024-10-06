@@ -1,0 +1,55 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "goods_id",
+            "label": "商品表的商品ID",
+            "type": "integer",
+            "comment": "商品表的商品ID",
+            "default": 0,
+            "index": true
+        },
+        {
+            "name": "specifications",
+            "label": "商品规格值列表，采用JSON数组格式",
+            "type": "string",
+            "comment": "商品规格值列表，采用JSON数组格式",
+            "length": 1023
+        },
+        {
+            "name": "price",
+            "label": "商品货品价格",
+            "type": "decimal",
+            "comment": "商品货品价格",
+            "default": 0
+        },
+        {
+            "name": "number",
+            "label": "商品货品数量",
+            "type": "integer",
+            "comment": "商品货品数量",
+            "default": 0
+        },
+        {
+            "name": "url",
+            "label": "商品货品图片",
+            "type": "string",
+            "comment": "商品货品图片",
+            "length": 125,
+            "nullable": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_litemall_goods_product"
+    },
+    "name": "app_litemall_goods_product",
+    "relations": {}
+}

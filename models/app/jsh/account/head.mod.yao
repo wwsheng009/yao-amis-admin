@@ -1,0 +1,135 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "主键",
+            "type": "id",
+            "comment": "主键",
+            "primary": true
+        },
+        {
+            "name": "type",
+            "label": "类型(支出/收入/收款/付款/转账)",
+            "type": "string",
+            "comment": "类型(支出/收入/收款/付款/转账)",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "organ_id",
+            "label": "单位Id(收款/付款单位)",
+            "type": "bigInteger",
+            "comment": "单位Id(收款/付款单位)",
+            "nullable": true,
+            "index": true
+        },
+        {
+            "name": "hands_person_id",
+            "label": "经手人id",
+            "type": "bigInteger",
+            "comment": "经手人id",
+            "nullable": true,
+            "index": true
+        },
+        {
+            "name": "created_by",
+            "label": "操作员",
+            "type": "bigInteger",
+            "comment": "操作员",
+            "nullable": true
+        },
+        {
+            "name": "change_amount",
+            "label": "变动金额(优惠/收款/付款/实付)",
+            "type": "decimal",
+            "comment": "变动金额(优惠/收款/付款/实付)",
+            "nullable": true
+        },
+        {
+            "name": "discount_money",
+            "label": "优惠金额",
+            "type": "decimal",
+            "comment": "优惠金额",
+            "nullable": true
+        },
+        {
+            "name": "total_price",
+            "label": "合计金额",
+            "type": "decimal",
+            "comment": "合计金额",
+            "nullable": true
+        },
+        {
+            "name": "account_id",
+            "label": "账户(收款/付款)",
+            "type": "bigInteger",
+            "comment": "账户(收款/付款)",
+            "nullable": true,
+            "index": true
+        },
+        {
+            "name": "bill_no",
+            "label": "单据编号",
+            "type": "string",
+            "comment": "单据编号",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "bill_time",
+            "label": "单据日期",
+            "type": "datetime",
+            "comment": "单据日期",
+            "nullable": true
+        },
+        {
+            "name": "remark",
+            "label": "备注",
+            "type": "string",
+            "comment": "备注",
+            "length": 1000,
+            "nullable": true
+        },
+        {
+            "name": "file_name",
+            "label": "附件名称",
+            "type": "string",
+            "comment": "附件名称",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "status",
+            "label": "状态，0未审核、1已审核、9审核中",
+            "type": "string",
+            "comment": "状态，0未审核、1已审核、9审核中",
+            "length": 1,
+            "nullable": true
+        },
+        {
+            "name": "source",
+            "label": "单据来源，0-pc，1-手机",
+            "type": "string",
+            "comment": "单据来源，0-pc，1-手机",
+            "length": 1,
+            "nullable": true,
+            "default": "0"
+        },
+        {
+            "name": "tenant_id",
+            "label": "租户id",
+            "type": "bigInteger",
+            "comment": "租户id",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_jsh_account_head"
+    },
+    "name": "app_jsh_account_head",
+    "relations": {}
+}

@@ -1,0 +1,156 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "goods_sn",
+            "label": "商品编号",
+            "type": "string",
+            "comment": "商品编号",
+            "length": 63,
+            "default": "",
+            "index": true
+        },
+        {
+            "name": "name",
+            "label": "商品名称",
+            "type": "string",
+            "comment": "商品名称",
+            "length": 127,
+            "default": ""
+        },
+        {
+            "name": "category_id",
+            "label": "商品所属类目ID",
+            "type": "integer",
+            "comment": "商品所属类目ID",
+            "nullable": true,
+            "default": 0,
+            "index": true
+        },
+        {
+            "name": "brand_id",
+            "type": "integer",
+            "nullable": true,
+            "default": 0,
+            "index": true
+        },
+        {
+            "name": "gallery",
+            "label": "商品宣传图片列表，采用JSON数组格式",
+            "type": "string",
+            "comment": "商品宣传图片列表，采用JSON数组格式",
+            "length": 1023,
+            "nullable": true
+        },
+        {
+            "name": "keywords",
+            "label": "商品关键字，采用逗号间隔",
+            "type": "string",
+            "comment": "商品关键字，采用逗号间隔",
+            "length": 255,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "brief",
+            "label": "商品简介",
+            "type": "string",
+            "comment": "商品简介",
+            "length": 255,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "is_on_sale",
+            "label": "是否上架",
+            "type": "tinyInteger",
+            "comment": "是否上架",
+            "nullable": true,
+            "default": 1
+        },
+        {
+            "name": "sort_order",
+            "type": "smallInteger",
+            "nullable": true,
+            "default": 100,
+            "index": true
+        },
+        {
+            "name": "pic_url",
+            "label": "商品页面商品图片",
+            "type": "string",
+            "comment": "商品页面商品图片",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "share_url",
+            "label": "商品分享海报",
+            "type": "string",
+            "comment": "商品分享海报",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "is_new",
+            "label": "是否新品首发，如果设置则可以在新品首发页面展示",
+            "type": "tinyInteger",
+            "comment": "是否新品首发，如果设置则可以在新品首发页面展示",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "is_hot",
+            "label": "是否人气推荐，如果设置则可以在人气推荐页面展示",
+            "type": "tinyInteger",
+            "comment": "是否人气推荐，如果设置则可以在人气推荐页面展示",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "unit",
+            "label": "商品单位，例如件、盒",
+            "type": "string",
+            "comment": "商品单位，例如件、盒",
+            "length": 31,
+            "nullable": true,
+            "default": "’件‘"
+        },
+        {
+            "name": "counter_price",
+            "label": "专柜价格",
+            "type": "decimal",
+            "comment": "专柜价格",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "retail_price",
+            "label": "零售价格",
+            "type": "decimal",
+            "comment": "零售价格",
+            "nullable": true,
+            "default": 100000
+        },
+        {
+            "name": "detail",
+            "label": "商品详细介绍，是富文本格式",
+            "type": "text",
+            "comment": "商品详细介绍，是富文本格式",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_litemall_goods"
+    },
+    "name": "app_litemall_goods",
+    "relations": {}
+}

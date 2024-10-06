@@ -1,0 +1,86 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "主键",
+            "type": "id",
+            "comment": "主键",
+            "primary": true
+        },
+        {
+            "name": "header_id",
+            "label": "表头Id",
+            "type": "bigInteger",
+            "comment": "表头Id",
+            "index": true
+        },
+        {
+            "name": "account_id",
+            "label": "账户Id",
+            "type": "bigInteger",
+            "comment": "账户Id",
+            "nullable": true,
+            "index": true
+        },
+        {
+            "name": "in_out_item_id",
+            "label": "收支项目Id",
+            "type": "bigInteger",
+            "comment": "收支项目Id",
+            "nullable": true,
+            "index": true
+        },
+        {
+            "name": "bill_id",
+            "label": "单据id",
+            "type": "bigInteger",
+            "comment": "单据id",
+            "nullable": true
+        },
+        {
+            "name": "need_debt",
+            "label": "应收欠款",
+            "type": "decimal",
+            "comment": "应收欠款",
+            "nullable": true
+        },
+        {
+            "name": "finish_debt",
+            "label": "已收欠款",
+            "type": "decimal",
+            "comment": "已收欠款",
+            "nullable": true
+        },
+        {
+            "name": "each_amount",
+            "label": "单项金额",
+            "type": "decimal",
+            "comment": "单项金额",
+            "nullable": true
+        },
+        {
+            "name": "remark",
+            "label": "单据备注",
+            "type": "string",
+            "comment": "单据备注",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "tenant_id",
+            "label": "租户id",
+            "type": "bigInteger",
+            "comment": "租户id",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_jsh_account_item"
+    },
+    "name": "app_jsh_account_item",
+    "relations": {}
+}

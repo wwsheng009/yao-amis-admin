@@ -1,0 +1,41 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "user_id",
+            "label": "用户表的用户ID",
+            "type": "integer",
+            "comment": "用户表的用户ID",
+            "default": 0,
+            "index": true
+        },
+        {
+            "name": "value_id",
+            "label": "如果type=0，则是商品ID；如果type=1，则是专题ID",
+            "type": "integer",
+            "comment": "如果type=0，则是商品ID；如果type=1，则是专题ID",
+            "default": 0,
+            "index": true
+        },
+        {
+            "name": "type",
+            "label": "收藏类型，如果type=0，则是商品ID；如果type=1，则是专题ID",
+            "type": "tinyInteger",
+            "comment": "收藏类型，如果type=0，则是商品ID；如果type=1，则是专题ID",
+            "default": 0
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_litemall_collect"
+    },
+    "name": "app_litemall_collect",
+    "relations": {}
+}

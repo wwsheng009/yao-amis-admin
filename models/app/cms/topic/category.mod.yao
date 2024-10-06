@@ -1,0 +1,46 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "name",
+            "type": "string",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "icon",
+            "label": "分类图标",
+            "type": "string",
+            "comment": "分类图标",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "subject_count",
+            "label": "专题数量",
+            "type": "integer",
+            "comment": "专题数量",
+            "nullable": true
+        },
+        {
+            "name": "show_status",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "sort",
+            "type": "integer",
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_cms_topic_category"
+    },
+    "name": "app_cms_topic_category",
+    "relations": {}
+}

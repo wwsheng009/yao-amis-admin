@@ -1,0 +1,25 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "admin_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "role_id",
+            "type": "bigInteger",
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_ums_admin_role_relation"
+    },
+    "name": "app_ums_admin_role_relation",
+    "relations": {}
+}

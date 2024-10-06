@@ -1,0 +1,208 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "order_id",
+            "label": "订单id",
+            "type": "bigInteger",
+            "comment": "订单id",
+            "nullable": true
+        },
+        {
+            "name": "company_address_id",
+            "label": "收货地址表id",
+            "type": "bigInteger",
+            "comment": "收货地址表id",
+            "nullable": true
+        },
+        {
+            "name": "product_id",
+            "label": "退货商品id",
+            "type": "bigInteger",
+            "comment": "退货商品id",
+            "nullable": true
+        },
+        {
+            "name": "order_sn",
+            "label": "订单编号",
+            "type": "string",
+            "comment": "订单编号",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "member_username",
+            "label": "会员用户名",
+            "type": "string",
+            "comment": "会员用户名",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "return_amount",
+            "label": "退款金额",
+            "type": "decimal",
+            "comment": "退款金额",
+            "nullable": true
+        },
+        {
+            "name": "return_name",
+            "label": "退货人姓名",
+            "type": "string",
+            "comment": "退货人姓名",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "return_phone",
+            "label": "退货人电话",
+            "type": "string",
+            "comment": "退货人电话",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "status",
+            "label": "申请状态：0->待处理；1->退货中；2->已完成；3->已拒绝",
+            "type": "integer",
+            "comment": "申请状态：0->待处理；1->退货中；2->已完成；3->已拒绝",
+            "nullable": true
+        },
+        {
+            "name": "handle_time",
+            "label": "处理时间",
+            "type": "datetime",
+            "comment": "处理时间",
+            "nullable": true
+        },
+        {
+            "name": "product_pic",
+            "label": "商品图片",
+            "type": "string",
+            "comment": "商品图片",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "product_name",
+            "label": "商品名称",
+            "type": "string",
+            "comment": "商品名称",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "product_brand",
+            "label": "商品品牌",
+            "type": "string",
+            "comment": "商品品牌",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "product_attr",
+            "label": "商品销售属性：颜色：红色；尺码：xl;",
+            "type": "string",
+            "comment": "商品销售属性：颜色：红色；尺码：xl;",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "product_count",
+            "label": "退货数量",
+            "type": "integer",
+            "comment": "退货数量",
+            "nullable": true
+        },
+        {
+            "name": "product_price",
+            "label": "商品单价",
+            "type": "decimal",
+            "comment": "商品单价",
+            "nullable": true
+        },
+        {
+            "name": "product_real_price",
+            "label": "商品实际支付单价",
+            "type": "decimal",
+            "comment": "商品实际支付单价",
+            "nullable": true
+        },
+        {
+            "name": "reason",
+            "label": "原因",
+            "type": "string",
+            "comment": "原因",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "description",
+            "label": "描述",
+            "type": "string",
+            "comment": "描述",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "proof_pics",
+            "label": "凭证图片，以逗号隔开",
+            "type": "string",
+            "comment": "凭证图片，以逗号隔开",
+            "length": 1000,
+            "nullable": true
+        },
+        {
+            "name": "handle_note",
+            "label": "处理备注",
+            "type": "string",
+            "comment": "处理备注",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "handle_man",
+            "label": "处理人员",
+            "type": "string",
+            "comment": "处理人员",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "receive_man",
+            "label": "收货人",
+            "type": "string",
+            "comment": "收货人",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "receive_time",
+            "label": "收货时间",
+            "type": "datetime",
+            "comment": "收货时间",
+            "nullable": true
+        },
+        {
+            "name": "receive_note",
+            "label": "收货备注",
+            "type": "string",
+            "comment": "收货备注",
+            "length": 500,
+            "nullable": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_oms_order_return_apply"
+    },
+    "name": "app_oms_order_return_apply",
+    "relations": {}
+}

@@ -1,0 +1,74 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "主键",
+            "type": "id",
+            "comment": "主键",
+            "primary": true
+        },
+        {
+            "name": "name",
+            "label": "名称",
+            "type": "string",
+            "comment": "名称",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "category_level",
+            "label": "等级",
+            "type": "smallInteger",
+            "comment": "等级",
+            "nullable": true
+        },
+        {
+            "name": "parent_id",
+            "label": "上级id",
+            "type": "bigInteger",
+            "comment": "上级id",
+            "nullable": true,
+            "index": true
+        },
+        {
+            "name": "sort",
+            "label": "显示顺序",
+            "type": "string",
+            "comment": "显示顺序",
+            "length": 10,
+            "nullable": true
+        },
+        {
+            "name": "serial_no",
+            "label": "编号",
+            "type": "string",
+            "comment": "编号",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "remark",
+            "label": "备注",
+            "type": "string",
+            "comment": "备注",
+            "length": 1024,
+            "nullable": true
+        },
+        {
+            "name": "tenant_id",
+            "label": "租户id",
+            "type": "bigInteger",
+            "comment": "租户id",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_jsh_material_category"
+    },
+    "name": "app_jsh_material_category",
+    "relations": {}
+}

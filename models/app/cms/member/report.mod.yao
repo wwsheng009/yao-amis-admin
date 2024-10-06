@@ -1,0 +1,60 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "bigInteger",
+            "nullable": true,
+            "primary": true
+        },
+        {
+            "name": "report_type",
+            "label": "举报类型：0->商品评价；1->话题内容；2->用户评论",
+            "type": "integer",
+            "comment": "举报类型：0->商品评价；1->话题内容；2->用户评论",
+            "nullable": true
+        },
+        {
+            "name": "report_member_name",
+            "label": "举报人",
+            "type": "string",
+            "comment": "举报人",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "report_object",
+            "type": "string",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "report_status",
+            "label": "举报状态：0->未处理；1->已处理",
+            "type": "integer",
+            "comment": "举报状态：0->未处理；1->已处理",
+            "nullable": true
+        },
+        {
+            "name": "handle_status",
+            "label": "处理结果：0->无效；1->有效；2->恶意",
+            "type": "integer",
+            "comment": "处理结果：0->无效；1->有效；2->恶意",
+            "nullable": true
+        },
+        {
+            "name": "note",
+            "type": "string",
+            "length": 200,
+            "nullable": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_cms_member_report"
+    },
+    "name": "app_cms_member_report",
+    "relations": {}
+}

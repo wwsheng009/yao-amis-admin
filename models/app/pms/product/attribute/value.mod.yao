@@ -1,0 +1,33 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "product_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "product_attribute_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "value",
+            "label": "手动添加规格或参数的值，参数单值，规格有多个时以逗号隔开",
+            "type": "string",
+            "comment": "手动添加规格或参数的值，参数单值，规格有多个时以逗号隔开",
+            "length": 64,
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_pms_product_attribute_value"
+    },
+    "name": "app_pms_product_attribute_value",
+    "relations": {}
+}

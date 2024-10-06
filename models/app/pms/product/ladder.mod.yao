@@ -1,0 +1,41 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "product_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "count",
+            "label": "满足的商品数量",
+            "type": "integer",
+            "comment": "满足的商品数量",
+            "nullable": true
+        },
+        {
+            "name": "discount",
+            "label": "折扣",
+            "type": "decimal",
+            "comment": "折扣",
+            "nullable": true
+        },
+        {
+            "name": "price",
+            "label": "折后价格",
+            "type": "decimal",
+            "comment": "折后价格",
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_pms_product_ladder"
+    },
+    "name": "app_pms_product_ladder",
+    "relations": {}
+}

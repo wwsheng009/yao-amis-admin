@@ -1,0 +1,133 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "product_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "product_sku_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "member_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "quantity",
+            "label": "购买数量",
+            "type": "integer",
+            "comment": "购买数量",
+            "nullable": true
+        },
+        {
+            "name": "price",
+            "label": "添加到购物车的价格",
+            "type": "decimal",
+            "comment": "添加到购物车的价格",
+            "nullable": true
+        },
+        {
+            "name": "product_pic",
+            "label": "商品主图",
+            "type": "string",
+            "comment": "商品主图",
+            "length": 1000,
+            "nullable": true
+        },
+        {
+            "name": "product_name",
+            "label": "商品名称",
+            "type": "string",
+            "comment": "商品名称",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "product_sub_title",
+            "label": "商品副标题（卖点）",
+            "type": "string",
+            "comment": "商品副标题（卖点）",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "product_sku_code",
+            "label": "商品sku条码",
+            "type": "string",
+            "comment": "商品sku条码",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "member_nickname",
+            "label": "会员昵称",
+            "type": "string",
+            "comment": "会员昵称",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "create_date",
+            "label": "创建时间",
+            "type": "datetime",
+            "comment": "创建时间",
+            "nullable": true
+        },
+        {
+            "name": "modify_date",
+            "label": "修改时间",
+            "type": "datetime",
+            "comment": "修改时间",
+            "nullable": true
+        },
+        {
+            "name": "delete_status",
+            "label": "是否删除",
+            "type": "integer",
+            "comment": "是否删除",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "product_category_id",
+            "label": "商品分类",
+            "type": "bigInteger",
+            "comment": "商品分类",
+            "nullable": true
+        },
+        {
+            "name": "product_brand",
+            "type": "string",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "product_sn",
+            "type": "string",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "product_attr",
+            "label": "商品销售属性:[{\"key\":\"颜色\",\"value\":\"颜色\"},{\"key\":\"容量\",\"value\":\"4G\"}]",
+            "type": "string",
+            "comment": "商品销售属性:[{\"key\":\"颜色\",\"value\":\"颜色\"},{\"key\":\"容量\",\"value\":\"4G\"}]",
+            "length": 500,
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_oms_cart_item"
+    },
+    "name": "app_oms_cart_item",
+    "relations": {}
+}

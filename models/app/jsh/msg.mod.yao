@@ -1,0 +1,66 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "主键",
+            "type": "id",
+            "comment": "主键",
+            "primary": true
+        },
+        {
+            "name": "msg_title",
+            "label": "消息标题",
+            "type": "string",
+            "comment": "消息标题",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "msg_content",
+            "label": "消息内容",
+            "type": "string",
+            "comment": "消息内容",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "type",
+            "label": "消息类型",
+            "type": "string",
+            "comment": "消息类型",
+            "length": 20,
+            "nullable": true
+        },
+        {
+            "name": "user_id",
+            "label": "接收人id",
+            "type": "bigInteger",
+            "comment": "接收人id",
+            "nullable": true
+        },
+        {
+            "name": "status",
+            "label": "状态，1未读 2已读",
+            "type": "string",
+            "comment": "状态，1未读 2已读",
+            "length": 1,
+            "nullable": true
+        },
+        {
+            "name": "tenant_id",
+            "label": "租户id",
+            "type": "bigInteger",
+            "comment": "租户id",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_jsh_msg"
+    },
+    "name": "app_jsh_msg",
+    "relations": {}
+}

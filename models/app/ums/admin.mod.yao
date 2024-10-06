@@ -1,0 +1,77 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "username",
+            "type": "string",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "password",
+            "type": "string",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "icon",
+            "label": "头像",
+            "type": "string",
+            "comment": "头像",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "email",
+            "label": "邮箱",
+            "type": "string",
+            "comment": "邮箱",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "nick_name",
+            "label": "昵称",
+            "type": "string",
+            "comment": "昵称",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "note",
+            "label": "备注信息",
+            "type": "string",
+            "comment": "备注信息",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "login_time",
+            "label": "最后登录时间",
+            "type": "datetime",
+            "comment": "最后登录时间",
+            "nullable": true
+        },
+        {
+            "name": "status",
+            "label": "帐号启用状态：0->禁用；1->启用",
+            "type": "integer",
+            "comment": "帐号启用状态：0->禁用；1->启用",
+            "nullable": true,
+            "default": 1
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_ums_admin"
+    },
+    "name": "app_ums_admin",
+    "relations": {}
+}

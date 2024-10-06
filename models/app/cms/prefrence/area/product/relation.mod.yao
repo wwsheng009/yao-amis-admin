@@ -1,0 +1,25 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "prefrence_area_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "product_id",
+            "type": "bigInteger",
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_cms_prefrence_area_product_relation"
+    },
+    "name": "app_cms_prefrence_area_product_relation",
+    "relations": {}
+}

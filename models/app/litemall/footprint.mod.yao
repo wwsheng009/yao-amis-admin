@@ -1,0 +1,32 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "user_id",
+            "label": "用户表的用户ID",
+            "type": "integer",
+            "comment": "用户表的用户ID",
+            "default": 0
+        },
+        {
+            "name": "goods_id",
+            "label": "浏览商品ID",
+            "type": "integer",
+            "comment": "浏览商品ID",
+            "default": 0
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_litemall_footprint"
+    },
+    "name": "app_litemall_footprint",
+    "relations": {}
+}

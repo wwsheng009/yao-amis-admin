@@ -1,0 +1,38 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "name",
+            "label": "退货类型",
+            "type": "string",
+            "comment": "退货类型",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "sort",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "status",
+            "label": "状态：0->不启用；1->启用",
+            "type": "integer",
+            "comment": "状态：0->不启用；1->启用",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_oms_order_return_reason"
+    },
+    "name": "app_oms_order_return_reason",
+    "relations": {}
+}

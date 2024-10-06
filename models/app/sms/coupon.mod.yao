@@ -1,0 +1,131 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "type",
+            "label": "优惠券类型；0->全场赠券；1->会员赠券；2->购物赠券；3->注册赠券",
+            "type": "integer",
+            "comment": "优惠券类型；0->全场赠券；1->会员赠券；2->购物赠券；3->注册赠券",
+            "nullable": true
+        },
+        {
+            "name": "name",
+            "type": "string",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "platform",
+            "label": "使用平台：0->全部；1->移动；2->PC",
+            "type": "integer",
+            "comment": "使用平台：0->全部；1->移动；2->PC",
+            "nullable": true
+        },
+        {
+            "name": "count",
+            "label": "数量",
+            "type": "integer",
+            "comment": "数量",
+            "nullable": true
+        },
+        {
+            "name": "amount",
+            "label": "金额",
+            "type": "decimal",
+            "comment": "金额",
+            "nullable": true
+        },
+        {
+            "name": "per_limit",
+            "label": "每人限领张数",
+            "type": "integer",
+            "comment": "每人限领张数",
+            "nullable": true
+        },
+        {
+            "name": "min_point",
+            "label": "使用门槛；0表示无门槛",
+            "type": "decimal",
+            "comment": "使用门槛；0表示无门槛",
+            "nullable": true
+        },
+        {
+            "name": "start_time",
+            "type": "datetime",
+            "nullable": true
+        },
+        {
+            "name": "end_time",
+            "type": "datetime",
+            "nullable": true
+        },
+        {
+            "name": "use_type",
+            "label": "使用类型：0->全场通用；1->指定分类；2->指定商品",
+            "type": "integer",
+            "comment": "使用类型：0->全场通用；1->指定分类；2->指定商品",
+            "nullable": true
+        },
+        {
+            "name": "note",
+            "label": "备注",
+            "type": "string",
+            "comment": "备注",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "publish_count",
+            "label": "发行数量",
+            "type": "integer",
+            "comment": "发行数量",
+            "nullable": true
+        },
+        {
+            "name": "use_count",
+            "label": "已使用数量",
+            "type": "integer",
+            "comment": "已使用数量",
+            "nullable": true
+        },
+        {
+            "name": "receive_count",
+            "label": "领取数量",
+            "type": "integer",
+            "comment": "领取数量",
+            "nullable": true
+        },
+        {
+            "name": "enable_time",
+            "label": "可以领取的日期",
+            "type": "datetime",
+            "comment": "可以领取的日期",
+            "nullable": true
+        },
+        {
+            "name": "code",
+            "label": "优惠码",
+            "type": "string",
+            "comment": "优惠码",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "member_level",
+            "label": "可领取的会员类型：0->无限时",
+            "type": "integer",
+            "comment": "可领取的会员类型：0->无限时",
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_sms_coupon"
+    },
+    "name": "app_sms_coupon",
+    "relations": {}
+}

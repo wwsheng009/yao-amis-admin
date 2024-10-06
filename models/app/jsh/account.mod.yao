@@ -1,0 +1,87 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "主键",
+            "type": "id",
+            "comment": "主键",
+            "primary": true
+        },
+        {
+            "name": "name",
+            "label": "名称",
+            "type": "string",
+            "comment": "名称",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "serial_no",
+            "label": "编号",
+            "type": "string",
+            "comment": "编号",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "initial_amount",
+            "label": "期初金额",
+            "type": "decimal",
+            "comment": "期初金额",
+            "nullable": true
+        },
+        {
+            "name": "current_amount",
+            "label": "当前余额",
+            "type": "decimal",
+            "comment": "当前余额",
+            "nullable": true
+        },
+        {
+            "name": "remark",
+            "label": "备注",
+            "type": "string",
+            "comment": "备注",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "enabled",
+            "label": "启用",
+            "type": "tinyInteger",
+            "comment": "启用",
+            "nullable": true
+        },
+        {
+            "name": "sort",
+            "label": "排序",
+            "type": "string",
+            "comment": "排序",
+            "length": 10,
+            "nullable": true
+        },
+        {
+            "name": "is_default",
+            "label": "是否默认",
+            "type": "tinyInteger",
+            "comment": "是否默认",
+            "nullable": true
+        },
+        {
+            "name": "tenant_id",
+            "label": "租户id",
+            "type": "bigInteger",
+            "comment": "租户id",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_jsh_account"
+    },
+    "name": "app_jsh_account",
+    "relations": {}
+}

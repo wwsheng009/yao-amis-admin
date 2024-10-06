@@ -1,0 +1,85 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "address_name",
+            "label": "地址名称",
+            "type": "string",
+            "comment": "地址名称",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "send_status",
+            "label": "默认发货地址：0->否；1->是",
+            "type": "integer",
+            "comment": "默认发货地址：0->否；1->是",
+            "nullable": true
+        },
+        {
+            "name": "receive_status",
+            "label": "是否默认收货地址：0->否；1->是",
+            "type": "integer",
+            "comment": "是否默认收货地址：0->否；1->是",
+            "nullable": true
+        },
+        {
+            "name": "name",
+            "label": "收发货人姓名",
+            "type": "string",
+            "comment": "收发货人姓名",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "phone",
+            "label": "收货人电话",
+            "type": "string",
+            "comment": "收货人电话",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "province",
+            "label": "省/直辖市",
+            "type": "string",
+            "comment": "省/直辖市",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "city",
+            "label": "市",
+            "type": "string",
+            "comment": "市",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "region",
+            "label": "区",
+            "type": "string",
+            "comment": "区",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "detail_address",
+            "label": "详细地址",
+            "type": "string",
+            "comment": "详细地址",
+            "length": 200,
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_oms_company_address"
+    },
+    "name": "app_oms_company_address",
+    "relations": {}
+}

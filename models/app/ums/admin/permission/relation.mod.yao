@@ -1,0 +1,30 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "admin_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "permission_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "type",
+            "type": "integer",
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_ums_admin_permission_relation"
+    },
+    "name": "app_ums_admin_permission_relation",
+    "relations": {}
+}

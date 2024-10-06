@@ -1,0 +1,41 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "attribute_name",
+            "label": "属性名",
+            "type": "string",
+            "comment": "属性名",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "attribute_value",
+            "label": "属性值",
+            "type": "string",
+            "comment": "属性值",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "tenant_id",
+            "label": "租户id",
+            "type": "bigInteger",
+            "comment": "租户id",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_jsh_material_attribute"
+    },
+    "name": "app_jsh_material_attribute",
+    "relations": {}
+}

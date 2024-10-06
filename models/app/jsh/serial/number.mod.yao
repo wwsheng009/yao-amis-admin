@@ -1,0 +1,103 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "主键",
+            "type": "id",
+            "comment": "主键",
+            "primary": true
+        },
+        {
+            "name": "material_id",
+            "label": "产品表id",
+            "type": "bigInteger",
+            "comment": "产品表id",
+            "nullable": true
+        },
+        {
+            "name": "depot_id",
+            "label": "仓库id",
+            "type": "bigInteger",
+            "comment": "仓库id",
+            "nullable": true
+        },
+        {
+            "name": "serial_number",
+            "label": "序列号",
+            "type": "string",
+            "comment": "序列号",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "is_sell",
+            "label": "是否卖出，0未卖出，1卖出",
+            "type": "string",
+            "comment": "是否卖出，0未卖出，1卖出",
+            "length": 1,
+            "nullable": true,
+            "default": "0"
+        },
+        {
+            "name": "in_price",
+            "label": "入库单价",
+            "type": "decimal",
+            "comment": "入库单价",
+            "nullable": true
+        },
+        {
+            "name": "remark",
+            "label": "备注",
+            "type": "string",
+            "comment": "备注",
+            "length": 1024,
+            "nullable": true
+        },
+        {
+            "name": "created_by",
+            "label": "创建人",
+            "type": "bigInteger",
+            "comment": "创建人",
+            "nullable": true
+        },
+        {
+            "name": "updated_by",
+            "label": "更新人",
+            "type": "bigInteger",
+            "comment": "更新人",
+            "nullable": true
+        },
+        {
+            "name": "in_bill_no",
+            "label": "入库单号",
+            "type": "string",
+            "comment": "入库单号",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "out_bill_no",
+            "label": "出库单号",
+            "type": "string",
+            "comment": "出库单号",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "tenant_id",
+            "label": "租户id",
+            "type": "bigInteger",
+            "comment": "租户id",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_jsh_serial_number"
+    },
+    "name": "app_jsh_serial_number",
+    "relations": {}
+}

@@ -1,0 +1,82 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "主键",
+            "type": "id",
+            "comment": "主键",
+            "primary": true
+        },
+        {
+            "name": "name",
+            "label": "名称",
+            "type": "string",
+            "comment": "名称",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "type",
+            "label": "类型",
+            "type": "string",
+            "comment": "类型",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "price_limit",
+            "label": "价格屏蔽 1-屏蔽采购价 2-屏蔽零售价 3-屏蔽销售价",
+            "type": "string",
+            "comment": "价格屏蔽 1-屏蔽采购价 2-屏蔽零售价 3-屏蔽销售价",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "value",
+            "label": "值",
+            "type": "string",
+            "comment": "值",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "description",
+            "label": "描述",
+            "type": "string",
+            "comment": "描述",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "enabled",
+            "label": "启用",
+            "type": "tinyInteger",
+            "comment": "启用",
+            "nullable": true
+        },
+        {
+            "name": "sort",
+            "label": "排序",
+            "type": "string",
+            "comment": "排序",
+            "length": 10,
+            "nullable": true
+        },
+        {
+            "name": "tenant_id",
+            "label": "租户id",
+            "type": "bigInteger",
+            "comment": "租户id",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_jsh_role"
+    },
+    "name": "app_jsh_role",
+    "relations": {}
+}

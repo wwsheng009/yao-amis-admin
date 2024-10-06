@@ -1,0 +1,81 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "category_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "name",
+            "type": "string",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "start_time",
+            "type": "datetime",
+            "nullable": true
+        },
+        {
+            "name": "end_time",
+            "type": "datetime",
+            "nullable": true
+        },
+        {
+            "name": "attend_count",
+            "label": "参与人数",
+            "type": "integer",
+            "comment": "参与人数",
+            "nullable": true
+        },
+        {
+            "name": "attention_count",
+            "label": "关注人数",
+            "type": "integer",
+            "comment": "关注人数",
+            "nullable": true
+        },
+        {
+            "name": "read_count",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "award_name",
+            "label": "奖品名称",
+            "type": "string",
+            "comment": "奖品名称",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "attend_type",
+            "label": "参与方式",
+            "type": "string",
+            "comment": "参与方式",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "content",
+            "label": "话题内容",
+            "type": "text",
+            "comment": "话题内容",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_cms_topic"
+    },
+    "name": "app_cms_topic",
+    "relations": {}
+}

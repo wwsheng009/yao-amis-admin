@@ -1,0 +1,83 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "name",
+            "type": "string",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "first_letter",
+            "label": "首字母",
+            "type": "string",
+            "comment": "首字母",
+            "length": 8,
+            "nullable": true
+        },
+        {
+            "name": "sort",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "factory_status",
+            "label": "是否为品牌制造商：0->不是；1->是",
+            "type": "integer",
+            "comment": "是否为品牌制造商：0->不是；1->是",
+            "nullable": true
+        },
+        {
+            "name": "show_status",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "product_count",
+            "label": "产品数量",
+            "type": "integer",
+            "comment": "产品数量",
+            "nullable": true
+        },
+        {
+            "name": "product_comment_count",
+            "label": "产品评论数量",
+            "type": "integer",
+            "comment": "产品评论数量",
+            "nullable": true
+        },
+        {
+            "name": "logo",
+            "label": "品牌logo",
+            "type": "string",
+            "comment": "品牌logo",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "big_pic",
+            "label": "专区大图",
+            "type": "string",
+            "comment": "专区大图",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "brand_story",
+            "label": "品牌故事",
+            "type": "text",
+            "comment": "品牌故事",
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_pms_brand"
+    },
+    "name": "app_pms_brand",
+    "relations": {}
+}

@@ -1,0 +1,44 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "product_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "vertify_man",
+            "label": "审核人",
+            "type": "string",
+            "comment": "审核人",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "status",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "detail",
+            "label": "反馈详情",
+            "type": "string",
+            "comment": "反馈详情",
+            "length": 255,
+            "nullable": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_pms_product_vertify_record"
+    },
+    "name": "app_pms_product_vertify_record",
+    "relations": {}
+}

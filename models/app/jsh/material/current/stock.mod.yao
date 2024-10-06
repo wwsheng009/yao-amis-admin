@@ -1,0 +1,55 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "主键",
+            "type": "id",
+            "comment": "主键",
+            "primary": true
+        },
+        {
+            "name": "material_id",
+            "label": "产品id",
+            "type": "bigInteger",
+            "comment": "产品id",
+            "nullable": true
+        },
+        {
+            "name": "depot_id",
+            "label": "仓库id",
+            "type": "bigInteger",
+            "comment": "仓库id",
+            "nullable": true
+        },
+        {
+            "name": "current_number",
+            "label": "当前库存数量",
+            "type": "decimal",
+            "comment": "当前库存数量",
+            "nullable": true
+        },
+        {
+            "name": "current_unit_price",
+            "label": "当前单价",
+            "type": "decimal",
+            "comment": "当前单价",
+            "nullable": true
+        },
+        {
+            "name": "tenant_id",
+            "label": "租户id",
+            "type": "bigInteger",
+            "comment": "租户id",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_jsh_material_current_stock"
+    },
+    "name": "app_jsh_material_current_stock",
+    "relations": {}
+}

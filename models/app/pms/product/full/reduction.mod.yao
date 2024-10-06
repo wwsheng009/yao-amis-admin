@@ -1,0 +1,30 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "product_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "full_price",
+            "type": "decimal",
+            "nullable": true
+        },
+        {
+            "name": "reduce_price",
+            "type": "decimal",
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_pms_product_full_reduction"
+    },
+    "name": "app_pms_product_full_reduction",
+    "relations": {}
+}

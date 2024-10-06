@@ -1,0 +1,99 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "product_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "member_nick_name",
+            "type": "string",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "product_name",
+            "type": "string",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "star",
+            "label": "评价星数：0->5",
+            "type": "integer",
+            "comment": "评价星数：0->5",
+            "nullable": true
+        },
+        {
+            "name": "member_ip",
+            "label": "评价的ip",
+            "type": "string",
+            "comment": "评价的ip",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "show_status",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "product_attribute",
+            "label": "购买时的商品属性",
+            "type": "string",
+            "comment": "购买时的商品属性",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "collect_couont",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "read_count",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "content",
+            "type": "text",
+            "nullable": true
+        },
+        {
+            "name": "pics",
+            "label": "上传图片地址，以逗号隔开",
+            "type": "string",
+            "comment": "上传图片地址，以逗号隔开",
+            "length": 1000,
+            "nullable": true
+        },
+        {
+            "name": "member_icon",
+            "label": "评论用户头像",
+            "type": "string",
+            "comment": "评论用户头像",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "replay_count",
+            "type": "integer",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_pms_comment"
+    },
+    "name": "app_pms_comment",
+    "relations": {}
+}

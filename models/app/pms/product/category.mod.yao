@@ -1,0 +1,86 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "parent_id",
+            "label": "上机分类的编号：0表示一级分类",
+            "type": "bigInteger",
+            "comment": "上机分类的编号：0表示一级分类",
+            "nullable": true
+        },
+        {
+            "name": "name",
+            "type": "string",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "level",
+            "label": "分类级别：0->1级；1->2级",
+            "type": "integer",
+            "comment": "分类级别：0->1级；1->2级",
+            "nullable": true
+        },
+        {
+            "name": "product_count",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "product_unit",
+            "type": "string",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "nav_status",
+            "label": "是否显示在导航栏：0->不显示；1->显示",
+            "type": "integer",
+            "comment": "是否显示在导航栏：0->不显示；1->显示",
+            "nullable": true
+        },
+        {
+            "name": "show_status",
+            "label": "显示状态：0->不显示；1->显示",
+            "type": "integer",
+            "comment": "显示状态：0->不显示；1->显示",
+            "nullable": true
+        },
+        {
+            "name": "sort",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "icon",
+            "label": "图标",
+            "type": "string",
+            "comment": "图标",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "keywords",
+            "type": "string",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "description",
+            "label": "描述",
+            "type": "text",
+            "comment": "描述",
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_pms_product_category"
+    },
+    "name": "app_pms_product_category",
+    "relations": {}
+}

@@ -1,0 +1,50 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "pid",
+            "label": "行政区域父ID，例如区县的pid指向市，市的pid指向省，省的pid则是0",
+            "type": "integer",
+            "comment": "行政区域父ID，例如区县的pid指向市，市的pid指向省，省的pid则是0",
+            "default": 0,
+            "index": true
+        },
+        {
+            "name": "name",
+            "label": "行政区域名称",
+            "type": "string",
+            "comment": "行政区域名称",
+            "length": 120,
+            "default": ""
+        },
+        {
+            "name": "type",
+            "label": "行政区域类型，如如1则是省， 如果是2则是市，如果是3则是区县",
+            "type": "tinyInteger",
+            "comment": "行政区域类型，如如1则是省， 如果是2则是市，如果是3则是区县",
+            "default": 0,
+            "index": true
+        },
+        {
+            "name": "code",
+            "label": "行政区域编码",
+            "type": "integer",
+            "comment": "行政区域编码",
+            "default": 0,
+            "index": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_litemall_region"
+    },
+    "name": "app_litemall_region",
+    "relations": {}
+}

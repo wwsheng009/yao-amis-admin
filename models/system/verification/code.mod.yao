@@ -1,0 +1,59 @@
+{
+  "columns": [
+    {
+      "name": "id",
+      "label": "ID",
+      "type": "id",
+      "comment": "ID",
+      "primary": true
+    },
+    {
+      "name": "code",
+      "label": "验证码",
+      "type": "string",
+      "comment": "验证码",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "status",
+      "label": "状态：1有效、0过期",
+      "type": "tinyInteger",
+      "comment": "状态：1有效、0过期",
+      "nullable": true
+    },
+    {
+      "name": "type",
+      "label": "验证码类型：email或者短信",
+      "type": "string",
+      "comment": "验证码类型：email或者短信",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "value",
+      "label": "接收邮箱或者手机号码",
+      "type": "string",
+      "comment": "接收邮箱或者手机号码",
+      "length": 255,
+      "nullable": true
+    },
+    {
+      "name": "scenes",
+      "label": "业务名称：如重置邮箱、重置密码等",
+      "type": "string",
+      "comment": "业务名称：如重置邮箱、重置密码等",
+      "length": 255,
+      "nullable": true
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  },
+  "table": {
+    "name": "system_verification_code"
+  },
+  "name": "system_verification_code",
+  "relations": {}
+}

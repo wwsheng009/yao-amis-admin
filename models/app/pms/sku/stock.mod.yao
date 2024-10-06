@@ -1,0 +1,85 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "product_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "sku_code",
+            "label": "sku编码",
+            "type": "string",
+            "comment": "sku编码",
+            "length": 64
+        },
+        {
+            "name": "price",
+            "type": "decimal",
+            "nullable": true
+        },
+        {
+            "name": "stock",
+            "label": "库存",
+            "type": "integer",
+            "comment": "库存",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "low_stock",
+            "label": "预警库存",
+            "type": "integer",
+            "comment": "预警库存",
+            "nullable": true
+        },
+        {
+            "name": "pic",
+            "label": "展示图片",
+            "type": "string",
+            "comment": "展示图片",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "sale",
+            "label": "销量",
+            "type": "integer",
+            "comment": "销量",
+            "nullable": true
+        },
+        {
+            "name": "promotion_price",
+            "label": "单品促销价格",
+            "type": "decimal",
+            "comment": "单品促销价格",
+            "nullable": true
+        },
+        {
+            "name": "lock_stock",
+            "label": "锁定库存",
+            "type": "integer",
+            "comment": "锁定库存",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "sp_data",
+            "label": "商品销售属性，json格式",
+            "type": "string",
+            "comment": "商品销售属性，json格式",
+            "length": 500,
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_pms_sku_stock"
+    },
+    "name": "app_pms_sku_stock",
+    "relations": {}
+}

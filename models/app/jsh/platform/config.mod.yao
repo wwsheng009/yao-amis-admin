@@ -1,0 +1,42 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "platform_key",
+            "label": "关键词",
+            "type": "string",
+            "comment": "关键词",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "platform_key_info",
+            "label": "关键词名称",
+            "type": "string",
+            "comment": "关键词名称",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "platform_value",
+            "label": "值",
+            "type": "string",
+            "comment": "值",
+            "length": 200,
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_jsh_platform_config"
+    },
+    "name": "app_jsh_platform_config",
+    "relations": {}
+}

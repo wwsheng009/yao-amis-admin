@@ -1,0 +1,73 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "product_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "price_old",
+            "type": "decimal",
+            "nullable": true
+        },
+        {
+            "name": "price_new",
+            "type": "decimal",
+            "nullable": true
+        },
+        {
+            "name": "sale_price_old",
+            "type": "decimal",
+            "nullable": true
+        },
+        {
+            "name": "sale_price_new",
+            "type": "decimal",
+            "nullable": true
+        },
+        {
+            "name": "gift_point_old",
+            "label": "赠送的积分",
+            "type": "integer",
+            "comment": "赠送的积分",
+            "nullable": true
+        },
+        {
+            "name": "gift_point_new",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "use_point_limit_old",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "use_point_limit_new",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "operate_man",
+            "label": "操作人",
+            "type": "string",
+            "comment": "操作人",
+            "length": 64,
+            "nullable": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_pms_product_operate_log"
+    },
+    "name": "app_pms_product_operate_log",
+    "relations": {}
+}

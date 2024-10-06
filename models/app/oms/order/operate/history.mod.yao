@@ -1,0 +1,48 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "order_id",
+            "label": "订单id",
+            "type": "bigInteger",
+            "comment": "订单id",
+            "nullable": true
+        },
+        {
+            "name": "operate_man",
+            "label": "操作人：用户；系统；后台管理员",
+            "type": "string",
+            "comment": "操作人：用户；系统；后台管理员",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "order_status",
+            "label": "订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单",
+            "type": "integer",
+            "comment": "订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单",
+            "nullable": true
+        },
+        {
+            "name": "note",
+            "label": "备注",
+            "type": "string",
+            "comment": "备注",
+            "length": 500,
+            "nullable": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_oms_order_operate_history"
+    },
+    "name": "app_oms_order_operate_history",
+    "relations": {}
+}

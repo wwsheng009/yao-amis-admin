@@ -1,0 +1,194 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "主键",
+            "type": "id",
+            "comment": "主键",
+            "primary": true
+        },
+        {
+            "name": "category_id",
+            "label": "产品类型id",
+            "type": "bigInteger",
+            "comment": "产品类型id",
+            "nullable": true,
+            "index": true
+        },
+        {
+            "name": "name",
+            "label": "名称",
+            "type": "string",
+            "comment": "名称",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "mfrs",
+            "label": "制造商",
+            "type": "string",
+            "comment": "制造商",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "model",
+            "label": "型号",
+            "type": "string",
+            "comment": "型号",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "standard",
+            "label": "规格",
+            "type": "string",
+            "comment": "规格",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "brand",
+            "label": "品牌",
+            "type": "string",
+            "comment": "品牌",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "mnemonic",
+            "label": "助记码",
+            "type": "string",
+            "comment": "助记码",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "color",
+            "label": "颜色",
+            "type": "string",
+            "comment": "颜色",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "unit",
+            "label": "单位-单个",
+            "type": "string",
+            "comment": "单位-单个",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "remark",
+            "label": "备注",
+            "type": "string",
+            "comment": "备注",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "img_name",
+            "label": "图片名称",
+            "type": "string",
+            "comment": "图片名称",
+            "length": 1000,
+            "nullable": true
+        },
+        {
+            "name": "unit_id",
+            "label": "计量单位Id",
+            "type": "bigInteger",
+            "comment": "计量单位Id",
+            "nullable": true,
+            "index": true
+        },
+        {
+            "name": "expiry_num",
+            "label": "保质期天数",
+            "type": "integer",
+            "comment": "保质期天数",
+            "nullable": true
+        },
+        {
+            "name": "weight",
+            "label": "基础重量(kg)",
+            "type": "decimal",
+            "comment": "基础重量(kg)",
+            "nullable": true
+        },
+        {
+            "name": "enabled",
+            "label": "启用 0-禁用  1-启用",
+            "type": "tinyInteger",
+            "comment": "启用 0-禁用  1-启用",
+            "nullable": true
+        },
+        {
+            "name": "other_field1",
+            "label": "自定义1",
+            "type": "string",
+            "comment": "自定义1",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "other_field2",
+            "label": "自定义2",
+            "type": "string",
+            "comment": "自定义2",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "other_field3",
+            "label": "自定义3",
+            "type": "string",
+            "comment": "自定义3",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "enable_serial_number",
+            "label": "是否开启序列号，0否，1是",
+            "type": "string",
+            "comment": "是否开启序列号，0否，1是",
+            "length": 1,
+            "nullable": true,
+            "default": "0"
+        },
+        {
+            "name": "enable_batch_number",
+            "label": "是否开启批号，0否，1是",
+            "type": "string",
+            "comment": "是否开启批号，0否，1是",
+            "length": 1,
+            "nullable": true,
+            "default": "0"
+        },
+        {
+            "name": "position",
+            "label": "仓位货架",
+            "type": "string",
+            "comment": "仓位货架",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "tenant_id",
+            "label": "租户id",
+            "type": "bigInteger",
+            "comment": "租户id",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_jsh_material"
+    },
+    "name": "app_jsh_material",
+    "relations": {}
+}

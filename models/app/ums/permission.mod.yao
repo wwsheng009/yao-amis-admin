@@ -1,0 +1,78 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "pid",
+            "label": "父级权限id",
+            "type": "bigInteger",
+            "comment": "父级权限id",
+            "nullable": true
+        },
+        {
+            "name": "name",
+            "label": "名称",
+            "type": "string",
+            "comment": "名称",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "value",
+            "label": "权限值",
+            "type": "string",
+            "comment": "权限值",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "icon",
+            "label": "图标",
+            "type": "string",
+            "comment": "图标",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "type",
+            "label": "权限类型：0->目录；1->菜单；2->按钮（接口绑定权限）",
+            "type": "integer",
+            "comment": "权限类型：0->目录；1->菜单；2->按钮（接口绑定权限）",
+            "nullable": true
+        },
+        {
+            "name": "uri",
+            "label": "前端资源路径",
+            "type": "string",
+            "comment": "前端资源路径",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "status",
+            "label": "启用状态；0->禁用；1->启用",
+            "type": "integer",
+            "comment": "启用状态；0->禁用；1->启用",
+            "nullable": true
+        },
+        {
+            "name": "sort",
+            "label": "排序",
+            "type": "integer",
+            "comment": "排序",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_ums_permission"
+    },
+    "name": "app_ums_permission",
+    "relations": {}
+}

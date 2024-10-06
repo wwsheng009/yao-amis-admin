@@ -1,0 +1,101 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "主键",
+            "type": "id",
+            "comment": "主键",
+            "primary": true
+        },
+        {
+            "name": "name",
+            "label": "仓库名称",
+            "type": "string",
+            "comment": "仓库名称",
+            "length": 20,
+            "nullable": true
+        },
+        {
+            "name": "address",
+            "label": "仓库地址",
+            "type": "string",
+            "comment": "仓库地址",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "warehousing",
+            "label": "仓储费",
+            "type": "decimal",
+            "comment": "仓储费",
+            "nullable": true
+        },
+        {
+            "name": "truckage",
+            "label": "搬运费",
+            "type": "decimal",
+            "comment": "搬运费",
+            "nullable": true
+        },
+        {
+            "name": "type",
+            "label": "类型",
+            "type": "integer",
+            "comment": "类型",
+            "nullable": true
+        },
+        {
+            "name": "sort",
+            "label": "排序",
+            "type": "string",
+            "comment": "排序",
+            "length": 10,
+            "nullable": true
+        },
+        {
+            "name": "remark",
+            "label": "描述",
+            "type": "string",
+            "comment": "描述",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "principal",
+            "label": "负责人",
+            "type": "bigInteger",
+            "comment": "负责人",
+            "nullable": true
+        },
+        {
+            "name": "enabled",
+            "label": "启用",
+            "type": "tinyInteger",
+            "comment": "启用",
+            "nullable": true
+        },
+        {
+            "name": "tenant_id",
+            "label": "租户id",
+            "type": "bigInteger",
+            "comment": "租户id",
+            "nullable": true
+        },
+        {
+            "name": "is_default",
+            "label": "是否默认",
+            "type": "tinyInteger",
+            "comment": "是否默认",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_jsh_depot"
+    },
+    "name": "app_jsh_depot",
+    "relations": {}
+}

@@ -1,0 +1,66 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "主键",
+            "type": "id",
+            "comment": "主键",
+            "primary": true
+        },
+        {
+            "name": "org_no",
+            "label": "机构编号",
+            "type": "string",
+            "comment": "机构编号",
+            "length": 20,
+            "nullable": true
+        },
+        {
+            "name": "org_abr",
+            "label": "机构简称",
+            "type": "string",
+            "comment": "机构简称",
+            "length": 20,
+            "nullable": true
+        },
+        {
+            "name": "parent_id",
+            "label": "父机构id",
+            "type": "bigInteger",
+            "comment": "父机构id",
+            "nullable": true
+        },
+        {
+            "name": "sort",
+            "label": "机构显示顺序",
+            "type": "string",
+            "comment": "机构显示顺序",
+            "length": 20,
+            "nullable": true
+        },
+        {
+            "name": "remark",
+            "label": "备注",
+            "type": "string",
+            "comment": "备注",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "tenant_id",
+            "label": "租户id",
+            "type": "bigInteger",
+            "comment": "租户id",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_jsh_organization"
+    },
+    "name": "app_jsh_organization",
+    "relations": {}
+}

@@ -1,0 +1,136 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "主键",
+            "type": "id",
+            "comment": "主键",
+            "primary": true
+        },
+        {
+            "name": "username",
+            "label": "用户姓名--例如张三",
+            "type": "string",
+            "comment": "用户姓名--例如张三",
+            "length": 255
+        },
+        {
+            "name": "login_name",
+            "label": "登录用户名",
+            "type": "string",
+            "comment": "登录用户名",
+            "length": 255
+        },
+        {
+            "name": "password",
+            "label": "登陆密码",
+            "type": "string",
+            "comment": "登陆密码",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "leader_flag",
+            "label": "是否经理，0否，1是",
+            "type": "string",
+            "comment": "是否经理，0否，1是",
+            "length": 1,
+            "nullable": true,
+            "default": "0"
+        },
+        {
+            "name": "position",
+            "label": "职位",
+            "type": "string",
+            "comment": "职位",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "department",
+            "label": "所属部门",
+            "type": "string",
+            "comment": "所属部门",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "email",
+            "label": "电子邮箱",
+            "type": "string",
+            "comment": "电子邮箱",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "phonenum",
+            "label": "手机号码",
+            "type": "string",
+            "comment": "手机号码",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "ismanager",
+            "label": "是否为管理者 0==管理者 1==员工",
+            "type": "tinyInteger",
+            "comment": "是否为管理者 0==管理者 1==员工",
+            "default": 1
+        },
+        {
+            "name": "isystem",
+            "label": "是否系统自带数据 ",
+            "type": "tinyInteger",
+            "comment": "是否系统自带数据 ",
+            "default": 0
+        },
+        {
+            "name": "Status",
+            "label": "状态，0：正常，1：删除，2封禁",
+            "type": "tinyInteger",
+            "comment": "状态，0：正常，1：删除，2封禁",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "description",
+            "label": "用户描述信息",
+            "type": "string",
+            "comment": "用户描述信息",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "remark",
+            "label": "备注",
+            "type": "string",
+            "comment": "备注",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "weixin_open_id",
+            "label": "微信绑定",
+            "type": "string",
+            "comment": "微信绑定",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "tenant_id",
+            "label": "租户id",
+            "type": "bigInteger",
+            "comment": "租户id",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_jsh_user"
+    },
+    "name": "app_jsh_user",
+    "relations": {}
+}

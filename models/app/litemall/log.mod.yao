@@ -1,0 +1,72 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "admin",
+            "label": "管理员",
+            "type": "string",
+            "comment": "管理员",
+            "length": 45,
+            "nullable": true
+        },
+        {
+            "name": "ip",
+            "label": "管理员地址",
+            "type": "string",
+            "comment": "管理员地址",
+            "length": 45,
+            "nullable": true
+        },
+        {
+            "name": "type",
+            "label": "操作分类",
+            "type": "integer",
+            "comment": "操作分类",
+            "nullable": true
+        },
+        {
+            "name": "action",
+            "label": "操作动作",
+            "type": "string",
+            "comment": "操作动作",
+            "length": 45,
+            "nullable": true
+        },
+        {
+            "name": "status",
+            "label": "操作状态",
+            "type": "tinyInteger",
+            "comment": "操作状态",
+            "nullable": true
+        },
+        {
+            "name": "result",
+            "label": "操作结果，或者成功消息，或者失败消息",
+            "type": "string",
+            "comment": "操作结果，或者成功消息，或者失败消息",
+            "length": 127,
+            "nullable": true
+        },
+        {
+            "name": "comment",
+            "label": "补充信息",
+            "type": "string",
+            "comment": "补充信息",
+            "length": 255,
+            "nullable": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_litemall_log"
+    },
+    "name": "app_litemall_log",
+    "relations": {}
+}

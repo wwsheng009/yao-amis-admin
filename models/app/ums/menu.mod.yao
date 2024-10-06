@@ -1,0 +1,70 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "parent_id",
+            "label": "父级ID",
+            "type": "bigInteger",
+            "comment": "父级ID",
+            "nullable": true
+        },
+        {
+            "name": "title",
+            "label": "菜单名称",
+            "type": "string",
+            "comment": "菜单名称",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "level",
+            "label": "菜单级数",
+            "type": "integer",
+            "comment": "菜单级数",
+            "nullable": true
+        },
+        {
+            "name": "sort",
+            "label": "菜单排序",
+            "type": "integer",
+            "comment": "菜单排序",
+            "nullable": true
+        },
+        {
+            "name": "name",
+            "label": "前端名称",
+            "type": "string",
+            "comment": "前端名称",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "icon",
+            "label": "前端图标",
+            "type": "string",
+            "comment": "前端图标",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "hidden",
+            "label": "前端隐藏",
+            "type": "integer",
+            "comment": "前端隐藏",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_ums_menu"
+    },
+    "name": "app_ums_menu",
+    "relations": {}
+}

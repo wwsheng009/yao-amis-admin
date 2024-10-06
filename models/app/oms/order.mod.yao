@@ -1,0 +1,324 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "订单id",
+            "type": "id",
+            "comment": "订单id",
+            "primary": true
+        },
+        {
+            "name": "member_id",
+            "type": "bigInteger"
+        },
+        {
+            "name": "coupon_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "order_sn",
+            "label": "订单编号",
+            "type": "string",
+            "comment": "订单编号",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "member_username",
+            "label": "用户帐号",
+            "type": "string",
+            "comment": "用户帐号",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "total_amount",
+            "label": "订单总金额",
+            "type": "decimal",
+            "comment": "订单总金额",
+            "nullable": true
+        },
+        {
+            "name": "pay_amount",
+            "label": "应付金额（实际支付金额）",
+            "type": "decimal",
+            "comment": "应付金额（实际支付金额）",
+            "nullable": true
+        },
+        {
+            "name": "freight_amount",
+            "label": "运费金额",
+            "type": "decimal",
+            "comment": "运费金额",
+            "nullable": true
+        },
+        {
+            "name": "promotion_amount",
+            "label": "促销优化金额（促销价、满减、阶梯价）",
+            "type": "decimal",
+            "comment": "促销优化金额（促销价、满减、阶梯价）",
+            "nullable": true
+        },
+        {
+            "name": "integration_amount",
+            "label": "积分抵扣金额",
+            "type": "decimal",
+            "comment": "积分抵扣金额",
+            "nullable": true
+        },
+        {
+            "name": "coupon_amount",
+            "label": "优惠券抵扣金额",
+            "type": "decimal",
+            "comment": "优惠券抵扣金额",
+            "nullable": true
+        },
+        {
+            "name": "discount_amount",
+            "label": "管理员后台调整订单使用的折扣金额",
+            "type": "decimal",
+            "comment": "管理员后台调整订单使用的折扣金额",
+            "nullable": true
+        },
+        {
+            "name": "pay_type",
+            "label": "支付方式：0->未支付；1->支付宝；2->微信",
+            "type": "integer",
+            "comment": "支付方式：0->未支付；1->支付宝；2->微信",
+            "nullable": true
+        },
+        {
+            "name": "source_type",
+            "label": "订单来源：0->PC订单；1->app订单",
+            "type": "integer",
+            "comment": "订单来源：0->PC订单；1->app订单",
+            "nullable": true
+        },
+        {
+            "name": "status",
+            "label": "订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单",
+            "type": "integer",
+            "comment": "订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单",
+            "nullable": true
+        },
+        {
+            "name": "order_type",
+            "label": "订单类型：0->正常订单；1->秒杀订单",
+            "type": "integer",
+            "comment": "订单类型：0->正常订单；1->秒杀订单",
+            "nullable": true
+        },
+        {
+            "name": "delivery_company",
+            "label": "物流公司(配送方式)",
+            "type": "string",
+            "comment": "物流公司(配送方式)",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "delivery_sn",
+            "label": "物流单号",
+            "type": "string",
+            "comment": "物流单号",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "auto_confirm_day",
+            "label": "自动确认时间（天）",
+            "type": "integer",
+            "comment": "自动确认时间（天）",
+            "nullable": true
+        },
+        {
+            "name": "integration",
+            "label": "可以获得的积分",
+            "type": "integer",
+            "comment": "可以获得的积分",
+            "nullable": true
+        },
+        {
+            "name": "growth",
+            "label": "可以活动的成长值",
+            "type": "integer",
+            "comment": "可以活动的成长值",
+            "nullable": true
+        },
+        {
+            "name": "promotion_info",
+            "label": "活动信息",
+            "type": "string",
+            "comment": "活动信息",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "bill_type",
+            "label": "发票类型：0->不开发票；1->电子发票；2->纸质发票",
+            "type": "integer",
+            "comment": "发票类型：0->不开发票；1->电子发票；2->纸质发票",
+            "nullable": true
+        },
+        {
+            "name": "bill_header",
+            "label": "发票抬头",
+            "type": "string",
+            "comment": "发票抬头",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "bill_content",
+            "label": "发票内容",
+            "type": "string",
+            "comment": "发票内容",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "bill_receiver_phone",
+            "label": "收票人电话",
+            "type": "string",
+            "comment": "收票人电话",
+            "length": 32,
+            "nullable": true
+        },
+        {
+            "name": "bill_receiver_email",
+            "label": "收票人邮箱",
+            "type": "string",
+            "comment": "收票人邮箱",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "receiver_name",
+            "label": "收货人姓名",
+            "type": "string",
+            "comment": "收货人姓名",
+            "length": 100
+        },
+        {
+            "name": "receiver_phone",
+            "label": "收货人电话",
+            "type": "string",
+            "comment": "收货人电话",
+            "length": 32
+        },
+        {
+            "name": "receiver_post_code",
+            "label": "收货人邮编",
+            "type": "string",
+            "comment": "收货人邮编",
+            "length": 32,
+            "nullable": true
+        },
+        {
+            "name": "receiver_province",
+            "label": "省份/直辖市",
+            "type": "string",
+            "comment": "省份/直辖市",
+            "length": 32,
+            "nullable": true
+        },
+        {
+            "name": "receiver_city",
+            "label": "城市",
+            "type": "string",
+            "comment": "城市",
+            "length": 32,
+            "nullable": true
+        },
+        {
+            "name": "receiver_region",
+            "label": "区",
+            "type": "string",
+            "comment": "区",
+            "length": 32,
+            "nullable": true
+        },
+        {
+            "name": "receiver_detail_address",
+            "label": "详细地址",
+            "type": "string",
+            "comment": "详细地址",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "note",
+            "label": "订单备注",
+            "type": "string",
+            "comment": "订单备注",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "confirm_status",
+            "label": "确认收货状态：0->未确认；1->已确认",
+            "type": "integer",
+            "comment": "确认收货状态：0->未确认；1->已确认",
+            "nullable": true
+        },
+        {
+            "name": "delete_status",
+            "label": "删除状态：0->未删除；1->已删除",
+            "type": "integer",
+            "comment": "删除状态：0->未删除；1->已删除",
+            "default": 0
+        },
+        {
+            "name": "use_integration",
+            "label": "下单时使用的积分",
+            "type": "integer",
+            "comment": "下单时使用的积分",
+            "nullable": true
+        },
+        {
+            "name": "payment_time",
+            "label": "支付时间",
+            "type": "datetime",
+            "comment": "支付时间",
+            "nullable": true
+        },
+        {
+            "name": "delivery_time",
+            "label": "发货时间",
+            "type": "datetime",
+            "comment": "发货时间",
+            "nullable": true
+        },
+        {
+            "name": "receive_time",
+            "label": "确认收货时间",
+            "type": "datetime",
+            "comment": "确认收货时间",
+            "nullable": true
+        },
+        {
+            "name": "comment_time",
+            "label": "评价时间",
+            "type": "datetime",
+            "comment": "评价时间",
+            "nullable": true
+        },
+        {
+            "name": "modify_time",
+            "label": "修改时间",
+            "type": "datetime",
+            "comment": "修改时间",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_oms_order"
+    },
+    "name": "app_oms_order",
+    "relations": {}
+}

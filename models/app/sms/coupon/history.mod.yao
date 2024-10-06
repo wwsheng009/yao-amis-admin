@@ -1,0 +1,80 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "coupon_id",
+            "type": "bigInteger",
+            "nullable": true,
+            "index": true
+        },
+        {
+            "name": "member_id",
+            "type": "bigInteger",
+            "nullable": true,
+            "index": true
+        },
+        {
+            "name": "coupon_code",
+            "type": "string",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "member_nickname",
+            "label": "领取人昵称",
+            "type": "string",
+            "comment": "领取人昵称",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "get_type",
+            "label": "获取类型",
+            "type": "integer",
+            "comment": "获取类型：0->后台赠送；1->主动获取",
+            "nullable": true
+        },
+        {
+            "name": "use_status",
+            "label": "使用状态：0->未使用；1->已使用；2->已过期",
+            "type": "integer",
+            "comment": "使用状态：0->未使用；1->已使用；2->已过期",
+            "nullable": true
+        },
+        {
+            "name": "use_time",
+            "label": "使用时间",
+            "type": "datetime",
+            "comment": "使用时间",
+            "nullable": true
+        },
+        {
+            "name": "order_id",
+            "label": "订单编号",
+            "type": "bigInteger",
+            "comment": "订单编号",
+            "nullable": true
+        },
+        {
+            "name": "order_sn",
+            "label": "订单号码",
+            "type": "string",
+            "comment": "订单号码",
+            "length": 100,
+            "nullable": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_sms_coupon_history"
+    },
+    "name": "app_sms_coupon_history",
+    "relations": {}
+}

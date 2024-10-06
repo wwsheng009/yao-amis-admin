@@ -1,0 +1,43 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "admin_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "ip",
+            "type": "string",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "address",
+            "type": "string",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "user_agent",
+            "label": "浏览器登录类型",
+            "type": "string",
+            "comment": "浏览器登录类型",
+            "length": 100,
+            "nullable": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_ums_admin_login_log"
+    },
+    "name": "app_ums_admin_login_log",
+    "relations": {}
+}

@@ -1,0 +1,189 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "主键",
+            "type": "id",
+            "comment": "主键",
+            "primary": true
+        },
+        {
+            "name": "header_id",
+            "label": "表头Id",
+            "type": "bigInteger",
+            "comment": "表头Id",
+            "index": true
+        },
+        {
+            "name": "material_id",
+            "label": "商品Id",
+            "type": "bigInteger",
+            "comment": "商品Id",
+            "index": true
+        },
+        {
+            "name": "material_extend_id",
+            "label": "商品扩展id",
+            "type": "bigInteger",
+            "comment": "商品扩展id",
+            "nullable": true
+        },
+        {
+            "name": "material_unit",
+            "label": "商品计量单位",
+            "type": "string",
+            "comment": "商品计量单位",
+            "length": 20,
+            "nullable": true
+        },
+        {
+            "name": "sku",
+            "label": "多属性",
+            "type": "string",
+            "comment": "多属性",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "oper_number",
+            "label": "数量",
+            "type": "decimal",
+            "comment": "数量",
+            "nullable": true
+        },
+        {
+            "name": "basic_number",
+            "label": "基础数量，如kg、瓶",
+            "type": "decimal",
+            "comment": "基础数量，如kg、瓶",
+            "nullable": true
+        },
+        {
+            "name": "unit_price",
+            "label": "单价",
+            "type": "decimal",
+            "comment": "单价",
+            "nullable": true
+        },
+        {
+            "name": "purchase_unit_price",
+            "label": "采购单价",
+            "type": "decimal",
+            "comment": "采购单价",
+            "nullable": true
+        },
+        {
+            "name": "tax_unit_price",
+            "label": "含税单价",
+            "type": "decimal",
+            "comment": "含税单价",
+            "nullable": true
+        },
+        {
+            "name": "all_price",
+            "label": "金额",
+            "type": "decimal",
+            "comment": "金额",
+            "nullable": true
+        },
+        {
+            "name": "remark",
+            "label": "备注",
+            "type": "string",
+            "comment": "备注",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "depot_id",
+            "label": "仓库ID",
+            "type": "bigInteger",
+            "comment": "仓库ID",
+            "nullable": true,
+            "index": true
+        },
+        {
+            "name": "another_depot_id",
+            "label": "调拨时，对方仓库Id",
+            "type": "bigInteger",
+            "comment": "调拨时，对方仓库Id",
+            "nullable": true,
+            "index": true
+        },
+        {
+            "name": "tax_rate",
+            "label": "税率",
+            "type": "decimal",
+            "comment": "税率",
+            "nullable": true
+        },
+        {
+            "name": "tax_money",
+            "label": "税额",
+            "type": "decimal",
+            "comment": "税额",
+            "nullable": true
+        },
+        {
+            "name": "tax_last_money",
+            "label": "价税合计",
+            "type": "decimal",
+            "comment": "价税合计",
+            "nullable": true
+        },
+        {
+            "name": "material_type",
+            "label": "商品类型",
+            "type": "string",
+            "comment": "商品类型",
+            "length": 20,
+            "nullable": true
+        },
+        {
+            "name": "sn_list",
+            "label": "序列号列表",
+            "type": "string",
+            "comment": "序列号列表",
+            "length": 2000,
+            "nullable": true
+        },
+        {
+            "name": "batch_number",
+            "label": "批号",
+            "type": "string",
+            "comment": "批号",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "expiration_date",
+            "label": "有效日期",
+            "type": "datetime",
+            "comment": "有效日期",
+            "nullable": true
+        },
+        {
+            "name": "link_id",
+            "label": "关联明细id",
+            "type": "bigInteger",
+            "comment": "关联明细id",
+            "nullable": true
+        },
+        {
+            "name": "tenant_id",
+            "label": "租户id",
+            "type": "bigInteger",
+            "comment": "租户id",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_jsh_depot_item"
+    },
+    "name": "app_jsh_depot_item",
+    "relations": {}
+}

@@ -1,0 +1,89 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "name",
+            "type": "string",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "type",
+            "label": "轮播位置：0->PC首页轮播；1->app首页轮播",
+            "type": "integer",
+            "comment": "轮播位置：0->PC首页轮播；1->app首页轮播",
+            "nullable": true
+        },
+        {
+            "name": "pic",
+            "type": "string",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "start_time",
+            "type": "datetime",
+            "nullable": true
+        },
+        {
+            "name": "end_time",
+            "type": "datetime",
+            "nullable": true
+        },
+        {
+            "name": "status",
+            "label": "上下线状态：0->下线；1->上线",
+            "type": "integer",
+            "comment": "上下线状态：0->下线；1->上线",
+            "nullable": true
+        },
+        {
+            "name": "click_count",
+            "label": "点击数",
+            "type": "integer",
+            "comment": "点击数",
+            "nullable": true
+        },
+        {
+            "name": "order_count",
+            "label": "下单数",
+            "type": "integer",
+            "comment": "下单数",
+            "nullable": true
+        },
+        {
+            "name": "url",
+            "label": "链接地址",
+            "type": "string",
+            "comment": "链接地址",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "note",
+            "label": "备注",
+            "type": "string",
+            "comment": "备注",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "sort",
+            "label": "排序",
+            "type": "integer",
+            "comment": "排序",
+            "nullable": true,
+            "default": 0
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_sms_home_advertise"
+    },
+    "name": "app_sms_home_advertise",
+    "relations": {}
+}

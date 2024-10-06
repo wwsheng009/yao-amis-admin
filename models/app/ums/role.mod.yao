@@ -1,0 +1,55 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "name",
+            "label": "名称",
+            "type": "string",
+            "comment": "名称",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "description",
+            "label": "描述",
+            "type": "string",
+            "comment": "描述",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "admin_count",
+            "label": "后台用户数量",
+            "type": "integer",
+            "comment": "后台用户数量",
+            "nullable": true
+        },
+        {
+            "name": "status",
+            "label": "启用状态：0->禁用；1->启用",
+            "type": "integer",
+            "comment": "启用状态：0->禁用；1->启用",
+            "nullable": true,
+            "default": 1
+        },
+        {
+            "name": "sort",
+            "type": "integer",
+            "nullable": true,
+            "default": 0
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_ums_role"
+    },
+    "name": "app_ums_role",
+    "relations": {}
+}

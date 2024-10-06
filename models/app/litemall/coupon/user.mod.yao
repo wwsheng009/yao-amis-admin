@@ -1,0 +1,66 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "user_id",
+            "label": "用户ID",
+            "type": "integer",
+            "comment": "用户ID"
+        },
+        {
+            "name": "coupon_id",
+            "label": "优惠券ID",
+            "type": "integer",
+            "comment": "优惠券ID"
+        },
+        {
+            "name": "status",
+            "label": "使用状态, 如果是0则未使用；如果是1则已使用；如果是2则已过期；如果是3则已经下架；",
+            "type": "smallInteger",
+            "comment": "使用状态, 如果是0则未使用；如果是1则已使用；如果是2则已过期；如果是3则已经下架；",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "used_time",
+            "label": "使用时间",
+            "type": "datetime",
+            "comment": "使用时间",
+            "nullable": true
+        },
+        {
+            "name": "start_time",
+            "label": "有效期开始时间",
+            "type": "datetime",
+            "comment": "有效期开始时间",
+            "nullable": true
+        },
+        {
+            "name": "end_time",
+            "label": "有效期截至时间",
+            "type": "datetime",
+            "comment": "有效期截至时间",
+            "nullable": true
+        },
+        {
+            "name": "order_id",
+            "label": "订单ID",
+            "type": "integer",
+            "comment": "订单ID",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_litemall_coupon_user"
+    },
+    "name": "app_litemall_coupon_user",
+    "relations": {}
+}

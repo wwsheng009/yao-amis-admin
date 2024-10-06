@@ -1,0 +1,25 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "member_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "product_category_id",
+            "type": "bigInteger",
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_ums_member_product_category_relation"
+    },
+    "name": "app_ums_member_product_category_relation",
+    "relations": {}
+}

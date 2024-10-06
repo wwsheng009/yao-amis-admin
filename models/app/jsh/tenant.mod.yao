@@ -1,0 +1,74 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "主键",
+            "type": "id",
+            "comment": "主键",
+            "primary": true
+        },
+        {
+            "name": "tenant_id",
+            "label": "用户id",
+            "type": "bigInteger",
+            "comment": "用户id",
+            "nullable": true
+        },
+        {
+            "name": "login_name",
+            "label": "登录名",
+            "type": "string",
+            "comment": "登录名",
+            "length": 255,
+            "nullable": true
+        },
+        {
+            "name": "user_num_limit",
+            "label": "用户数量限制",
+            "type": "integer",
+            "comment": "用户数量限制",
+            "nullable": true
+        },
+        {
+            "name": "type",
+            "label": "租户类型，0免费租户，1付费租户",
+            "type": "string",
+            "comment": "租户类型，0免费租户，1付费租户",
+            "length": 1,
+            "nullable": true,
+            "default": "0"
+        },
+        {
+            "name": "enabled",
+            "label": "启用 0-禁用  1-启用",
+            "type": "tinyInteger",
+            "comment": "启用 0-禁用  1-启用",
+            "nullable": true,
+            "default": 1
+        },
+        {
+            "name": "expire_time",
+            "label": "到期时间",
+            "type": "datetime",
+            "comment": "到期时间",
+            "nullable": true
+        },
+        {
+            "name": "remark",
+            "label": "备注",
+            "type": "string",
+            "comment": "备注",
+            "length": 500,
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_jsh_tenant"
+    },
+    "name": "app_jsh_tenant",
+    "relations": {}
+}

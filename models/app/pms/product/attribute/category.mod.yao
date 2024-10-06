@@ -1,0 +1,37 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "name",
+            "type": "string",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "attribute_count",
+            "label": "属性数量",
+            "type": "integer",
+            "comment": "属性数量",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "param_count",
+            "label": "参数数量",
+            "type": "integer",
+            "comment": "参数数量",
+            "nullable": true,
+            "default": 0
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_pms_product_attribute_category"
+    },
+    "name": "app_pms_product_attribute_category",
+    "relations": {}
+}

@@ -1,0 +1,49 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "name",
+            "label": "资源名称",
+            "type": "string",
+            "comment": "资源名称",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "url",
+            "label": "资源URL",
+            "type": "string",
+            "comment": "资源URL",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "description",
+            "label": "描述",
+            "type": "string",
+            "comment": "描述",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "category_id",
+            "label": "资源分类ID",
+            "type": "bigInteger",
+            "comment": "资源分类ID",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_ums_resource"
+    },
+    "name": "app_ums_resource",
+    "relations": {}
+}

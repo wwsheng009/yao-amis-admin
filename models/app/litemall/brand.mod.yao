@@ -1,0 +1,56 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "name",
+            "label": "品牌商名称",
+            "type": "string",
+            "comment": "品牌商名称",
+            "length": 255,
+            "default": ""
+        },
+        {
+            "name": "desc",
+            "label": "品牌商简介",
+            "type": "string",
+            "comment": "品牌商简介",
+            "length": 255,
+            "default": ""
+        },
+        {
+            "name": "pic_url",
+            "label": "品牌商页的品牌商图片",
+            "type": "string",
+            "comment": "品牌商页的品牌商图片",
+            "length": 255,
+            "default": ""
+        },
+        {
+            "name": "sort_order",
+            "type": "tinyInteger",
+            "nullable": true,
+            "default": 50
+        },
+        {
+            "name": "floor_price",
+            "label": "品牌商的商品低价，仅用于页面展示",
+            "type": "decimal",
+            "comment": "品牌商的商品低价，仅用于页面展示",
+            "nullable": true,
+            "default": 0
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_litemall_brand"
+    },
+    "name": "app_litemall_brand",
+    "relations": {}
+}

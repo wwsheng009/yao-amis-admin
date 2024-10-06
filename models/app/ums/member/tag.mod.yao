@@ -1,0 +1,35 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "name",
+            "type": "string",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "finish_order_count",
+            "label": "自动打标签完成订单数量",
+            "type": "integer",
+            "comment": "自动打标签完成订单数量",
+            "nullable": true
+        },
+        {
+            "name": "finish_order_amount",
+            "label": "自动打标签完成订单金额",
+            "type": "decimal",
+            "comment": "自动打标签完成订单金额",
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_ums_member_tag"
+    },
+    "name": "app_ums_member_tag",
+    "relations": {}
+}

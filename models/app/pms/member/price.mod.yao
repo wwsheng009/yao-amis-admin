@@ -1,0 +1,38 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "product_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "member_level_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "member_price",
+            "label": "会员价格",
+            "type": "decimal",
+            "comment": "会员价格",
+            "nullable": true
+        },
+        {
+            "name": "member_level_name",
+            "type": "string",
+            "length": 100,
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_pms_member_price"
+    },
+    "name": "app_pms_member_price",
+    "relations": {}
+}

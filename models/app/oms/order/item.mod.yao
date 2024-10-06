@@ -1,0 +1,151 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "order_id",
+            "label": "订单id",
+            "type": "bigInteger",
+            "comment": "订单id",
+            "nullable": true
+        },
+        {
+            "name": "order_sn",
+            "label": "订单编号",
+            "type": "string",
+            "comment": "订单编号",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "product_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "product_pic",
+            "type": "string",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "product_name",
+            "type": "string",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "product_brand",
+            "type": "string",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "product_sn",
+            "type": "string",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "product_price",
+            "label": "销售价格",
+            "type": "decimal",
+            "comment": "销售价格",
+            "nullable": true
+        },
+        {
+            "name": "product_quantity",
+            "label": "购买数量",
+            "type": "integer",
+            "comment": "购买数量",
+            "nullable": true
+        },
+        {
+            "name": "product_sku_id",
+            "label": "商品sku编号",
+            "type": "bigInteger",
+            "comment": "商品sku编号",
+            "nullable": true
+        },
+        {
+            "name": "product_sku_code",
+            "label": "商品sku条码",
+            "type": "string",
+            "comment": "商品sku条码",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "product_category_id",
+            "label": "商品分类id",
+            "type": "bigInteger",
+            "comment": "商品分类id",
+            "nullable": true
+        },
+        {
+            "name": "promotion_name",
+            "label": "商品促销名称",
+            "type": "string",
+            "comment": "商品促销名称",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "promotion_amount",
+            "label": "商品促销分解金额",
+            "type": "decimal",
+            "comment": "商品促销分解金额",
+            "nullable": true
+        },
+        {
+            "name": "coupon_amount",
+            "label": "优惠券优惠分解金额",
+            "type": "decimal",
+            "comment": "优惠券优惠分解金额",
+            "nullable": true
+        },
+        {
+            "name": "integration_amount",
+            "label": "积分优惠分解金额",
+            "type": "decimal",
+            "comment": "积分优惠分解金额",
+            "nullable": true
+        },
+        {
+            "name": "real_amount",
+            "label": "该商品经过优惠后的分解金额",
+            "type": "decimal",
+            "comment": "该商品经过优惠后的分解金额",
+            "nullable": true
+        },
+        {
+            "name": "gift_integration",
+            "type": "integer",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "gift_growth",
+            "type": "integer",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "product_attr",
+            "label": "商品销售属性:[{\"key\":\"颜色\",\"value\":\"颜色\"},{\"key\":\"容量\",\"value\":\"4G\"}]",
+            "type": "string",
+            "comment": "商品销售属性:[{\"key\":\"颜色\",\"value\":\"颜色\"},{\"key\":\"容量\",\"value\":\"4G\"}]",
+            "length": 500,
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_oms_order_item"
+    },
+    "name": "app_oms_order_item",
+    "relations": {}
+}

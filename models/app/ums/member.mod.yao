@@ -1,0 +1,145 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "member_level_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "username",
+            "label": "用户名",
+            "type": "string",
+            "comment": "用户名",
+            "length": 64,
+            "nullable": true,
+            "unique": true
+        },
+        {
+            "name": "password",
+            "label": "密码",
+            "type": "string",
+            "comment": "密码",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "nickname",
+            "label": "昵称",
+            "type": "string",
+            "comment": "昵称",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "phone",
+            "label": "手机号码",
+            "type": "string",
+            "comment": "手机号码",
+            "length": 64,
+            "nullable": true,
+            "unique": true
+        },
+        {
+            "name": "status",
+            "label": "帐号启用状态:0->禁用；1->启用",
+            "type": "integer",
+            "comment": "帐号启用状态:0->禁用；1->启用",
+            "nullable": true
+        },
+        {
+            "name": "icon",
+            "label": "头像",
+            "type": "string",
+            "comment": "头像",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "gender",
+            "label": "性别：0->未知；1->男；2->女",
+            "type": "integer",
+            "comment": "性别：0->未知；1->男；2->女",
+            "nullable": true
+        },
+        {
+            "name": "birthday",
+            "label": "生日",
+            "type": "date",
+            "comment": "生日",
+            "nullable": true
+        },
+        {
+            "name": "city",
+            "label": "所做城市",
+            "type": "string",
+            "comment": "所做城市",
+            "length": 64,
+            "nullable": true
+        },
+        {
+            "name": "job",
+            "label": "职业",
+            "type": "string",
+            "comment": "职业",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "personalized_signature",
+            "label": "个性签名",
+            "type": "string",
+            "comment": "个性签名",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "source_type",
+            "label": "用户来源",
+            "type": "integer",
+            "comment": "用户来源",
+            "nullable": true
+        },
+        {
+            "name": "integration",
+            "label": "积分",
+            "type": "integer",
+            "comment": "积分",
+            "nullable": true
+        },
+        {
+            "name": "growth",
+            "label": "成长值",
+            "type": "integer",
+            "comment": "成长值",
+            "nullable": true
+        },
+        {
+            "name": "luckey_count",
+            "label": "剩余抽奖次数",
+            "type": "integer",
+            "comment": "剩余抽奖次数",
+            "nullable": true
+        },
+        {
+            "name": "history_integration",
+            "label": "历史积分数量",
+            "type": "integer",
+            "comment": "历史积分数量",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_ums_member"
+    },
+    "name": "app_ums_member",
+    "relations": {}
+}

@@ -1,0 +1,55 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "keyword",
+            "label": "关键字",
+            "type": "string",
+            "comment": "关键字",
+            "length": 127,
+            "default": ""
+        },
+        {
+            "name": "url",
+            "label": "关键字的跳转链接",
+            "type": "string",
+            "comment": "关键字的跳转链接",
+            "length": 255,
+            "default": ""
+        },
+        {
+            "name": "is_hot",
+            "label": "是否是热门关键字",
+            "type": "tinyInteger",
+            "comment": "是否是热门关键字",
+            "default": 0
+        },
+        {
+            "name": "is_default",
+            "label": "是否是默认关键字",
+            "type": "tinyInteger",
+            "comment": "是否是默认关键字",
+            "default": 0
+        },
+        {
+            "name": "sort_order",
+            "label": "排序",
+            "type": "integer",
+            "comment": "排序",
+            "default": 100
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_litemall_keyword"
+    },
+    "name": "app_litemall_keyword",
+    "relations": {}
+}

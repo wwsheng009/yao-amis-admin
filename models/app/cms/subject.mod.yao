@@ -1,0 +1,105 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "category_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "title",
+            "type": "string",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "pic",
+            "label": "专题主图",
+            "type": "string",
+            "comment": "专题主图",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "product_count",
+            "label": "关联产品数量",
+            "type": "integer",
+            "comment": "关联产品数量",
+            "nullable": true
+        },
+        {
+            "name": "recommend_status",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "collect_count",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "read_count",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "comment_count",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "album_pics",
+            "label": "画册图片用逗号分割",
+            "type": "string",
+            "comment": "画册图片用逗号分割",
+            "length": 1000,
+            "nullable": true
+        },
+        {
+            "name": "description",
+            "type": "string",
+            "length": 1000,
+            "nullable": true
+        },
+        {
+            "name": "show_status",
+            "label": "显示状态：0->不显示；1->显示",
+            "type": "integer",
+            "comment": "显示状态：0->不显示；1->显示",
+            "nullable": true
+        },
+        {
+            "name": "content",
+            "type": "text",
+            "nullable": true
+        },
+        {
+            "name": "forward_count",
+            "label": "转发数",
+            "type": "integer",
+            "comment": "转发数",
+            "nullable": true
+        },
+        {
+            "name": "category_name",
+            "label": "专题分类名称",
+            "type": "string",
+            "comment": "专题分类名称",
+            "length": 200,
+            "nullable": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_cms_subject"
+    },
+    "name": "app_cms_subject",
+    "relations": {}
+}

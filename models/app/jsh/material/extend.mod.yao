@@ -1,0 +1,111 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "主键",
+            "type": "id",
+            "comment": "主键",
+            "primary": true
+        },
+        {
+            "name": "material_id",
+            "label": "商品id",
+            "type": "bigInteger",
+            "comment": "商品id",
+            "nullable": true
+        },
+        {
+            "name": "bar_code",
+            "label": "商品条码",
+            "type": "string",
+            "comment": "商品条码",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "commodity_unit",
+            "label": "商品单位",
+            "type": "string",
+            "comment": "商品单位",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "sku",
+            "label": "多属性",
+            "type": "string",
+            "comment": "多属性",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "purchase_decimal",
+            "label": "采购价格",
+            "type": "decimal",
+            "comment": "采购价格",
+            "nullable": true
+        },
+        {
+            "name": "commodity_decimal",
+            "label": "零售价格",
+            "type": "decimal",
+            "comment": "零售价格",
+            "nullable": true
+        },
+        {
+            "name": "wholesale_decimal",
+            "label": "销售价格",
+            "type": "decimal",
+            "comment": "销售价格",
+            "nullable": true
+        },
+        {
+            "name": "low_decimal",
+            "label": "最低售价",
+            "type": "decimal",
+            "comment": "最低售价",
+            "nullable": true
+        },
+        {
+            "name": "default_flag",
+            "label": "是否为默认单位，1是，0否",
+            "type": "string",
+            "comment": "是否为默认单位，1是，0否",
+            "length": 1,
+            "nullable": true,
+            "default": "1"
+        },
+        {
+            "name": "create_serial",
+            "label": "创建人编码",
+            "type": "string",
+            "comment": "创建人编码",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "update_serial",
+            "label": "更新人编码",
+            "type": "string",
+            "comment": "更新人编码",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "tenant_id",
+            "label": "租户id",
+            "type": "bigInteger",
+            "comment": "租户id",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_jsh_material_extend"
+    },
+    "name": "app_jsh_material_extend",
+    "relations": {}
+}

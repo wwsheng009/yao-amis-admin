@@ -1,0 +1,242 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "主键",
+            "type": "id",
+            "comment": "主键",
+            "primary": true
+        },
+        {
+            "name": "type",
+            "label": "类型(出库/入库)",
+            "type": "string",
+            "comment": "类型(出库/入库)",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "sub_type",
+            "label": "出入库分类",
+            "type": "string",
+            "comment": "出入库分类",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "default_number",
+            "label": "初始票据号",
+            "type": "string",
+            "comment": "初始票据号",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "number",
+            "label": "票据号",
+            "type": "string",
+            "comment": "票据号",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "oper_time",
+            "label": "出入库时间",
+            "type": "datetime",
+            "comment": "出入库时间",
+            "nullable": true
+        },
+        {
+            "name": "organ_id",
+            "label": "供应商id",
+            "type": "bigInteger",
+            "comment": "供应商id",
+            "nullable": true,
+            "index": true
+        },
+        {
+            "name": "created_by",
+            "label": "操作员",
+            "type": "bigInteger",
+            "comment": "操作员",
+            "nullable": true
+        },
+        {
+            "name": "account_id",
+            "label": "账户id",
+            "type": "bigInteger",
+            "comment": "账户id",
+            "nullable": true,
+            "index": true
+        },
+        {
+            "name": "change_amount",
+            "label": "变动金额(收款/付款)",
+            "type": "decimal",
+            "comment": "变动金额(收款/付款)",
+            "nullable": true
+        },
+        {
+            "name": "back_amount",
+            "label": "找零金额",
+            "type": "decimal",
+            "comment": "找零金额",
+            "nullable": true
+        },
+        {
+            "name": "total_price",
+            "label": "合计金额",
+            "type": "decimal",
+            "comment": "合计金额",
+            "nullable": true
+        },
+        {
+            "name": "pay_type",
+            "label": "付款类型(现金、记账等)",
+            "type": "string",
+            "comment": "付款类型(现金、记账等)",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "bill_type",
+            "label": "单据类型",
+            "type": "string",
+            "comment": "单据类型",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "remark",
+            "label": "备注",
+            "type": "string",
+            "comment": "备注",
+            "length": 1000,
+            "nullable": true
+        },
+        {
+            "name": "file_name",
+            "label": "附件名称",
+            "type": "string",
+            "comment": "附件名称",
+            "length": 1000,
+            "nullable": true
+        },
+        {
+            "name": "sales_man",
+            "label": "销售员（可以多个）",
+            "type": "string",
+            "comment": "销售员（可以多个）",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "account_id_list",
+            "label": "多账户ID列表",
+            "type": "string",
+            "comment": "多账户ID列表",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "account_money_list",
+            "label": "多账户金额列表",
+            "type": "string",
+            "comment": "多账户金额列表",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "discount",
+            "label": "优惠率",
+            "type": "decimal",
+            "comment": "优惠率",
+            "nullable": true
+        },
+        {
+            "name": "discount_money",
+            "label": "优惠金额",
+            "type": "decimal",
+            "comment": "优惠金额",
+            "nullable": true
+        },
+        {
+            "name": "discount_last_money",
+            "label": "优惠后金额",
+            "type": "decimal",
+            "comment": "优惠后金额",
+            "nullable": true
+        },
+        {
+            "name": "other_money",
+            "label": "销售或采购费用合计",
+            "type": "decimal",
+            "comment": "销售或采购费用合计",
+            "nullable": true
+        },
+        {
+            "name": "deposit",
+            "label": "订金",
+            "type": "decimal",
+            "comment": "订金",
+            "nullable": true
+        },
+        {
+            "name": "status",
+            "label": "状态，0未审核、1已审核、2完成采购|销售、3部分采购|销售、9审核中",
+            "type": "string",
+            "comment": "状态，0未审核、1已审核、2完成采购|销售、3部分采购|销售、9审核中",
+            "length": 1,
+            "nullable": true
+        },
+        {
+            "name": "purchase_status",
+            "label": "采购状态，0未采购、2完成采购、3部分采购",
+            "type": "string",
+            "comment": "采购状态，0未采购、2完成采购、3部分采购",
+            "length": 1,
+            "nullable": true
+        },
+        {
+            "name": "source",
+            "label": "单据来源，0-pc，1-手机",
+            "type": "string",
+            "comment": "单据来源，0-pc，1-手机",
+            "length": 1,
+            "nullable": true,
+            "default": "0"
+        },
+        {
+            "name": "link_number",
+            "label": "关联订单号",
+            "type": "string",
+            "comment": "关联订单号",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "link_apply",
+            "label": "关联请购单",
+            "type": "string",
+            "comment": "关联请购单",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "tenant_id",
+            "label": "租户id",
+            "type": "bigInteger",
+            "comment": "租户id",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_jsh_depot_head"
+    },
+    "name": "app_jsh_depot_head",
+    "relations": {}
+}

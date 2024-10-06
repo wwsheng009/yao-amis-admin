@@ -1,0 +1,95 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "name",
+            "type": "string",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "growth_point",
+            "type": "integer",
+            "nullable": true
+        },
+        {
+            "name": "default_status",
+            "label": "是否为默认等级：0->不是；1->是",
+            "type": "integer",
+            "comment": "是否为默认等级：0->不是；1->是",
+            "nullable": true
+        },
+        {
+            "name": "free_freight_point",
+            "label": "免运费标准",
+            "type": "decimal",
+            "comment": "免运费标准",
+            "nullable": true
+        },
+        {
+            "name": "comment_growth_point",
+            "label": "每次评价获取的成长值",
+            "type": "integer",
+            "comment": "每次评价获取的成长值",
+            "nullable": true
+        },
+        {
+            "name": "priviledge_free_freight",
+            "label": "是否有免邮特权",
+            "type": "integer",
+            "comment": "是否有免邮特权",
+            "nullable": true
+        },
+        {
+            "name": "priviledge_sign_in",
+            "label": "是否有签到特权",
+            "type": "integer",
+            "comment": "是否有签到特权",
+            "nullable": true
+        },
+        {
+            "name": "priviledge_comment",
+            "label": "是否有评论获奖励特权",
+            "type": "integer",
+            "comment": "是否有评论获奖励特权",
+            "nullable": true
+        },
+        {
+            "name": "priviledge_promotion",
+            "label": "是否有专享活动特权",
+            "type": "integer",
+            "comment": "是否有专享活动特权",
+            "nullable": true
+        },
+        {
+            "name": "priviledge_member_price",
+            "label": "是否有会员价格特权",
+            "type": "integer",
+            "comment": "是否有会员价格特权",
+            "nullable": true
+        },
+        {
+            "name": "priviledge_birthday",
+            "label": "是否有生日特权",
+            "type": "integer",
+            "comment": "是否有生日特权",
+            "nullable": true
+        },
+        {
+            "name": "note",
+            "type": "string",
+            "length": 200,
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_ums_member_level"
+    },
+    "name": "app_ums_member_level",
+    "relations": {}
+}

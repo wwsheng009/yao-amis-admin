@@ -1,0 +1,95 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "主键",
+            "type": "id",
+            "comment": "主键",
+            "primary": true
+        },
+        {
+            "name": "name",
+            "label": "名称，支持多单位",
+            "type": "string",
+            "comment": "名称，支持多单位",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "basic_unit",
+            "label": "基础单位",
+            "type": "string",
+            "comment": "基础单位",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "other_unit",
+            "label": "副单位",
+            "type": "string",
+            "comment": "副单位",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "other_unit_two",
+            "label": "副单位2",
+            "type": "string",
+            "comment": "副单位2",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "other_unit_three",
+            "label": "副单位3",
+            "type": "string",
+            "comment": "副单位3",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "ratio",
+            "label": "比例",
+            "type": "decimal",
+            "comment": "比例",
+            "nullable": true
+        },
+        {
+            "name": "ratio_two",
+            "label": "比例2",
+            "type": "decimal",
+            "comment": "比例2",
+            "nullable": true
+        },
+        {
+            "name": "ratio_three",
+            "label": "比例3",
+            "type": "decimal",
+            "comment": "比例3",
+            "nullable": true
+        },
+        {
+            "name": "enabled",
+            "label": "启用",
+            "type": "tinyInteger",
+            "comment": "启用",
+            "nullable": true
+        },
+        {
+            "name": "tenant_id",
+            "label": "租户id",
+            "type": "bigInteger",
+            "comment": "租户id",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_jsh_unit"
+    },
+    "name": "app_jsh_unit",
+    "relations": {}
+}

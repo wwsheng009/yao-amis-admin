@@ -1,0 +1,84 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "name",
+            "label": "类目名称",
+            "type": "string",
+            "comment": "类目名称",
+            "length": 63,
+            "default": ""
+        },
+        {
+            "name": "keywords",
+            "label": "类目关键字，以JSON数组格式",
+            "type": "string",
+            "comment": "类目关键字，以JSON数组格式",
+            "length": 1023,
+            "default": ""
+        },
+        {
+            "name": "desc",
+            "label": "类目广告语介绍",
+            "type": "string",
+            "comment": "类目广告语介绍",
+            "length": 255,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "pid",
+            "label": "父类目ID",
+            "type": "integer",
+            "comment": "父类目ID",
+            "default": 0,
+            "index": true
+        },
+        {
+            "name": "icon_url",
+            "label": "类目图标",
+            "type": "string",
+            "comment": "类目图标",
+            "length": 255,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "pic_url",
+            "label": "类目图片",
+            "type": "string",
+            "comment": "类目图片",
+            "length": 255,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "level",
+            "type": "string",
+            "length": 255,
+            "nullable": true,
+            "default": "L1"
+        },
+        {
+            "name": "sort_order",
+            "label": "排序",
+            "type": "tinyInteger",
+            "comment": "排序",
+            "nullable": true,
+            "default": 50
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_litemall_category"
+    },
+    "name": "app_litemall_category",
+    "relations": {}
+}

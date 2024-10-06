@@ -1,0 +1,199 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "主键",
+            "type": "id",
+            "comment": "主键",
+            "primary": true
+        },
+        {
+            "name": "company_name",
+            "label": "公司名称",
+            "type": "string",
+            "comment": "公司名称",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "company_contacts",
+            "label": "公司联系人",
+            "type": "string",
+            "comment": "公司联系人",
+            "length": 20,
+            "nullable": true
+        },
+        {
+            "name": "company_address",
+            "label": "公司地址",
+            "type": "string",
+            "comment": "公司地址",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "company_tel",
+            "label": "公司电话",
+            "type": "string",
+            "comment": "公司电话",
+            "length": 20,
+            "nullable": true
+        },
+        {
+            "name": "company_fax",
+            "label": "公司传真",
+            "type": "string",
+            "comment": "公司传真",
+            "length": 20,
+            "nullable": true
+        },
+        {
+            "name": "company_post_code",
+            "label": "公司邮编",
+            "type": "string",
+            "comment": "公司邮编",
+            "length": 20,
+            "nullable": true
+        },
+        {
+            "name": "sale_agreement",
+            "label": "销售协议",
+            "type": "string",
+            "comment": "销售协议",
+            "length": 500,
+            "nullable": true
+        },
+        {
+            "name": "depot_flag",
+            "label": "仓库启用标记，0未启用，1启用",
+            "type": "string",
+            "comment": "仓库启用标记，0未启用，1启用",
+            "length": 1,
+            "nullable": true,
+            "default": "0"
+        },
+        {
+            "name": "customer_flag",
+            "label": "客户启用标记，0未启用，1启用",
+            "type": "string",
+            "comment": "客户启用标记，0未启用，1启用",
+            "length": 1,
+            "nullable": true,
+            "default": "0"
+        },
+        {
+            "name": "minus_stock_flag",
+            "label": "负库存启用标记，0未启用，1启用",
+            "type": "string",
+            "comment": "负库存启用标记，0未启用，1启用",
+            "length": 1,
+            "nullable": true,
+            "default": "0"
+        },
+        {
+            "name": "purchase_by_sale_flag",
+            "label": "以销定购启用标记，0未启用，1启用",
+            "type": "string",
+            "comment": "以销定购启用标记，0未启用，1启用",
+            "length": 1,
+            "nullable": true,
+            "default": "0"
+        },
+        {
+            "name": "multi_level_approval_flag",
+            "label": "多级审核启用标记，0未启用，1启用",
+            "type": "string",
+            "comment": "多级审核启用标记，0未启用，1启用",
+            "length": 1,
+            "nullable": true,
+            "default": "0"
+        },
+        {
+            "name": "multi_bill_type",
+            "label": "流程类型，可多选",
+            "type": "string",
+            "comment": "流程类型，可多选",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "force_approval_flag",
+            "label": "强审核启用标记，0未启用，1启用",
+            "type": "string",
+            "comment": "强审核启用标记，0未启用，1启用",
+            "length": 1,
+            "nullable": true,
+            "default": "0"
+        },
+        {
+            "name": "update_unit_price_flag",
+            "label": "更新单价启用标记，0未启用，1启用",
+            "type": "string",
+            "comment": "更新单价启用标记，0未启用，1启用",
+            "length": 1,
+            "nullable": true,
+            "default": "1"
+        },
+        {
+            "name": "over_link_bill_flag",
+            "label": "超出关联单据启用标记，0未启用，1启用",
+            "type": "string",
+            "comment": "超出关联单据启用标记，0未启用，1启用",
+            "length": 1,
+            "nullable": true,
+            "default": "0"
+        },
+        {
+            "name": "in_out_manage_flag",
+            "label": "出入库管理启用标记，0未启用，1启用",
+            "type": "string",
+            "comment": "出入库管理启用标记，0未启用，1启用",
+            "length": 1,
+            "nullable": true,
+            "default": "0"
+        },
+        {
+            "name": "multi_account_flag",
+            "label": "多账户启用标记，0未启用，1启用",
+            "type": "string",
+            "comment": "多账户启用标记，0未启用，1启用",
+            "length": 1,
+            "nullable": true,
+            "default": "0"
+        },
+        {
+            "name": "move_avg_price_flag",
+            "label": "移动平均价启用标记，0未启用，1启用",
+            "type": "string",
+            "comment": "移动平均价启用标记，0未启用，1启用",
+            "length": 1,
+            "nullable": true,
+            "default": "0"
+        },
+        {
+            "name": "audit_print_flag",
+            "label": "先审核后打印启用标记，0未启用，1启用",
+            "type": "string",
+            "comment": "先审核后打印启用标记，0未启用，1启用",
+            "length": 1,
+            "nullable": true,
+            "default": "0"
+        },
+        {
+            "name": "tenant_id",
+            "label": "租户id",
+            "type": "bigInteger",
+            "comment": "租户id",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_jsh_system_config"
+    },
+    "name": "app_jsh_system_config",
+    "relations": {}
+}

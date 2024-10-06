@@ -1,0 +1,81 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "name",
+            "label": "广告标题",
+            "type": "string",
+            "comment": "广告标题",
+            "length": 63,
+            "default": ""
+        },
+        {
+            "name": "link",
+            "label": "所广告的商品页面或者活动页面链接地址",
+            "type": "string",
+            "comment": "所广告的商品页面或者活动页面链接地址",
+            "length": 255,
+            "default": ""
+        },
+        {
+            "name": "url",
+            "label": "广告宣传图片",
+            "type": "string",
+            "comment": "广告宣传图片",
+            "length": 255
+        },
+        {
+            "name": "position",
+            "label": "广告位置：1则是首页",
+            "type": "tinyInteger",
+            "comment": "广告位置：1则是首页",
+            "nullable": true,
+            "default": 1
+        },
+        {
+            "name": "content",
+            "label": "活动内容",
+            "type": "string",
+            "comment": "活动内容",
+            "length": 255,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "start_time",
+            "label": "广告开始时间",
+            "type": "datetime",
+            "comment": "广告开始时间",
+            "nullable": true
+        },
+        {
+            "name": "end_time",
+            "label": "广告结束时间",
+            "type": "datetime",
+            "comment": "广告结束时间",
+            "nullable": true
+        },
+        {
+            "name": "enabled",
+            "label": "是否启动",
+            "type": "tinyInteger",
+            "comment": "是否启动",
+            "nullable": true,
+            "default": 0,
+            "index": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_litemall_ad"
+    },
+    "name": "app_litemall_ad",
+    "relations": {}
+}

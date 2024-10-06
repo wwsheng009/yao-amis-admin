@@ -1,0 +1,54 @@
+{
+    "columns": [
+        {
+            "name": "seq_name",
+            "label": "序列名称",
+            "type": "string",
+            "comment": "序列名称",
+            "length": 50,
+            "primary": true
+        },
+        {
+            "name": "min_value",
+            "label": "最小值",
+            "type": "bigInteger",
+            "comment": "最小值"
+        },
+        {
+            "name": "max_value",
+            "label": "最大值",
+            "type": "bigInteger",
+            "comment": "最大值"
+        },
+        {
+            "name": "current_val",
+            "label": "当前值",
+            "type": "bigInteger",
+            "comment": "当前值"
+        },
+        {
+            "name": "increment_val",
+            "label": "增长步数",
+            "type": "integer",
+            "comment": "增长步数",
+            "default": 1
+        },
+        {
+            "name": "remark",
+            "label": "备注",
+            "type": "string",
+            "comment": "备注",
+            "length": 500,
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_jsh_sequence"
+    },
+    "name": "app_jsh_sequence",
+    "relations": {}
+}

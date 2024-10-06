@@ -1,0 +1,70 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "主键",
+            "type": "id",
+            "comment": "主键",
+            "primary": true
+        },
+        {
+            "name": "orga_id",
+            "label": "机构id",
+            "type": "bigInteger",
+            "comment": "机构id"
+        },
+        {
+            "name": "user_id",
+            "label": "用户id",
+            "type": "bigInteger",
+            "comment": "用户id"
+        },
+        {
+            "name": "user_blng_orga_dspl_seq",
+            "label": "用户在所属机构中显示顺序",
+            "type": "string",
+            "comment": "用户在所属机构中显示顺序",
+            "length": 20,
+            "nullable": true
+        },
+        {
+            "name": "delete_flag",
+            "label": "删除标记，0未删除，1删除",
+            "type": "char",
+            "comment": "删除标记，0未删除，1删除",
+            "length": 1,
+            "nullable": true,
+            "default": "0"
+        },
+        {
+            "name": "created_by",
+            "label": "创建人",
+            "type": "bigInteger",
+            "comment": "创建人",
+            "nullable": true
+        },
+        {
+            "name": "updated_by",
+            "label": "更新人",
+            "type": "bigInteger",
+            "comment": "更新人",
+            "nullable": true
+        },
+        {
+            "name": "tenant_id",
+            "label": "租户id",
+            "type": "bigInteger",
+            "comment": "租户id",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_jsh_orga_user_rel"
+    },
+    "name": "app_jsh_orga_user_rel",
+    "relations": {}
+}

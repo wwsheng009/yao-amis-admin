@@ -1,0 +1,41 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "coupon_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "product_category_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "product_category_name",
+            "label": "产品分类名称",
+            "type": "string",
+            "comment": "产品分类名称",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "parent_category_name",
+            "label": "父分类名称",
+            "type": "string",
+            "comment": "父分类名称",
+            "length": 200,
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_sms_coupon_product_category_relation"
+    },
+    "name": "app_sms_coupon_product_category_relation",
+    "relations": {}
+}

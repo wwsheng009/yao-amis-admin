@@ -1,0 +1,49 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "编号",
+            "type": "id",
+            "comment": "编号",
+            "primary": true
+        },
+        {
+            "name": "name",
+            "label": "场次名称",
+            "type": "string",
+            "comment": "场次名称",
+            "length": 200,
+            "nullable": true
+        },
+        {
+            "name": "start_time",
+            "label": "每日开始时间",
+            "type": "time",
+            "comment": "每日开始时间",
+            "nullable": true
+        },
+        {
+            "name": "end_time",
+            "label": "每日结束时间",
+            "type": "time",
+            "comment": "每日结束时间",
+            "nullable": true
+        },
+        {
+            "name": "status",
+            "label": "启用状态：0->不启用；1->启用",
+            "type": "integer",
+            "comment": "启用状态：0->不启用；1->启用",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_sms_flash_promotion_session"
+    },
+    "name": "app_sms_flash_promotion_session",
+    "relations": {}
+}

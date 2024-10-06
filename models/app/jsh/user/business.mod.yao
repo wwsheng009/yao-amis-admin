@@ -1,0 +1,59 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "主键",
+            "type": "id",
+            "comment": "主键",
+            "primary": true
+        },
+        {
+            "name": "type",
+            "label": "类别",
+            "type": "string",
+            "comment": "类别",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "key_id",
+            "label": "主id",
+            "type": "string",
+            "comment": "主id",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "value",
+            "label": "值",
+            "type": "string",
+            "comment": "值",
+            "length": 10000,
+            "nullable": true
+        },
+        {
+            "name": "btn_str",
+            "label": "按钮权限",
+            "type": "string",
+            "comment": "按钮权限",
+            "length": 2000,
+            "nullable": true
+        },
+        {
+            "name": "tenant_id",
+            "label": "租户id",
+            "type": "bigInteger",
+            "comment": "租户id",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_jsh_user_business"
+    },
+    "name": "app_jsh_user_business",
+    "relations": {}
+}

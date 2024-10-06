@@ -1,0 +1,96 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "aftersale_sn",
+            "label": "售后编号",
+            "type": "string",
+            "comment": "售后编号",
+            "length": 63,
+            "nullable": true
+        },
+        {
+            "name": "order_id",
+            "label": "订单ID",
+            "type": "integer",
+            "comment": "订单ID"
+        },
+        {
+            "name": "user_id",
+            "label": "用户ID",
+            "type": "integer",
+            "comment": "用户ID"
+        },
+        {
+            "name": "type",
+            "label": "售后类型",
+            "type": "smallInteger",
+            "comment": "售后类型，0是未收货退款，1是已收货（无需退货）退款，2用户退货退款",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "reason",
+            "label": "退款原因",
+            "type": "string",
+            "comment": "退款原因",
+            "length": 31,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "amount",
+            "label": "退款金额",
+            "type": "decimal",
+            "comment": "退款金额",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "pictures",
+            "label": "退款凭证图片链接数组",
+            "type": "string",
+            "comment": "退款凭证图片链接数组",
+            "length": 1023,
+            "nullable": true,
+            "default": "[]"
+        },
+        {
+            "name": "comment",
+            "label": "退款说明",
+            "type": "string",
+            "comment": "退款说明",
+            "length": 511,
+            "nullable": true,
+            "default": ""
+        },
+        {
+            "name": "status",
+            "label": "售后状态",
+            "type": "smallInteger",
+            "comment": "售后状态，0是可申请，1是用户已申请，2是管理员审核通过，3是管理员退款成功，4是管理员审核拒绝，5是用户已取消",
+            "nullable": true,
+            "default": 0
+        },
+        {
+            "name": "handle_time",
+            "label": "管理员操作时间",
+            "type": "datetime",
+            "comment": "管理员操作时间",
+            "nullable": true
+        }
+    ],
+    "option": {
+        "soft_deletes": true,
+        "timestamps": true
+    },
+    "table": {
+        "name": "app_litemall_aftersale"
+    },
+    "name": "app_litemall_aftersale",
+    "relations": {}
+}

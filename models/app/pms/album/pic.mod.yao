@@ -1,0 +1,26 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "album_id",
+            "type": "bigInteger",
+            "nullable": true
+        },
+        {
+            "name": "pic",
+            "type": "string",
+            "length": 1000,
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_pms_album_pic"
+    },
+    "name": "app_pms_album_pic",
+    "relations": {}
+}

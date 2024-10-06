@@ -1,0 +1,107 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "label": "主键",
+            "type": "id",
+            "comment": "主键",
+            "primary": true
+        },
+        {
+            "name": "number",
+            "label": "编号",
+            "type": "string",
+            "comment": "编号",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "name",
+            "label": "名称",
+            "type": "string",
+            "comment": "名称",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "parent_number",
+            "label": "上级编号",
+            "type": "string",
+            "comment": "上级编号",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "url",
+            "label": "链接",
+            "type": "string",
+            "comment": "链接",
+            "length": 100,
+            "nullable": true,
+            "unique": true
+        },
+        {
+            "name": "component",
+            "label": "组件",
+            "type": "string",
+            "comment": "组件",
+            "length": 100,
+            "nullable": true
+        },
+        {
+            "name": "state",
+            "label": "收缩",
+            "type": "tinyInteger",
+            "comment": "收缩",
+            "nullable": true
+        },
+        {
+            "name": "sort",
+            "label": "排序",
+            "type": "string",
+            "comment": "排序",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "enabled",
+            "label": "启用",
+            "type": "tinyInteger",
+            "comment": "启用",
+            "nullable": true
+        },
+        {
+            "name": "type",
+            "label": "类型",
+            "type": "string",
+            "comment": "类型",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "push_btn",
+            "label": "功能按钮",
+            "type": "string",
+            "comment": "功能按钮",
+            "length": 50,
+            "nullable": true
+        },
+        {
+            "name": "icon",
+            "label": "图标",
+            "type": "string",
+            "comment": "图标",
+            "length": 50,
+            "nullable": true
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    },
+    "table": {
+        "name": "app_jsh_function"
+    },
+    "name": "app_jsh_function",
+    "relations": {}
+}

@@ -1,0 +1,43 @@
+{
+    "columns": [
+        {
+            "name": "id",
+            "type": "id",
+            "primary": true
+        },
+        {
+            "name": "deduction_per_amount",
+            "label": "每一元需要抵扣的积分数量",
+            "type": "integer",
+            "comment": "每一元需要抵扣的积分数量",
+            "nullable": true
+        },
+        {
+            "name": "max_percent_per_order",
+            "label": "每笔订单最高抵用百分比",
+            "type": "integer",
+            "comment": "每笔订单最高抵用百分比",
+            "nullable": true
+        },
+        {
+            "name": "use_unit",
+            "label": "每次使用积分最小单位100",
+            "type": "integer",
+            "comment": "每次使用积分最小单位100",
+            "nullable": true
+        },
+        {
+            "name": "coupon_status",
+            "label": "是否可以和优惠券同用；0->不可以；1->可以",
+            "type": "integer",
+            "comment": "是否可以和优惠券同用；0->不可以；1->可以",
+            "nullable": true
+        }
+    ],
+    "option": {},
+    "table": {
+        "name": "app_ums_integration_consume_setting"
+    },
+    "name": "app_ums_integration_consume_setting",
+    "relations": {}
+}
