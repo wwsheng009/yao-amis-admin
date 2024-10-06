@@ -322,7 +322,7 @@ export function column2AmisTableViewColumn(
   // const name = column.name.toUpperCase();
   const newColumn = {} as AmisUIColumn;
   newColumn.name = column.name;
-  newColumn.label = column.label;
+  newColumn.label = column.label || column.name;
 
   // 查看没必要使用必填项
   // if (column.primary !== true) {
@@ -550,7 +550,7 @@ export function column2AmisFormViewColumn(
   // const name = column.name.toUpperCase();
   const newColumn = {} as AmisUIColumn;
   newColumn.name = column.name;
-  newColumn.label = column.label;
+  newColumn.label = column.label || column.name;
 
   // 必填项，查看界面没必要要显示必输
   // if (column.primary !== true) {
@@ -753,7 +753,7 @@ export function column2AmisFormEditColumn(
   //   const name = column.name.toUpperCase();
   const newColumn = {} as AmisUIColumn;
   newColumn.name = column.name;
-  newColumn.label = column.label;
+  newColumn.label = column.label || column.name;
 
   // nullable的优先级最高
   if (!column.nullable) {
