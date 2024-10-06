@@ -22,19 +22,21 @@ export function TableListSearch(querysIn: QueryObjectIn, payload: object) {
  * yao run scripts.system.table.TableListUniq
  * @returns
  */
-function TableListUniq(query?: { name: string }) {
-  const list = TableList();
+export function TableListUniq(query?: { name: string }) {
+  // const list = TableList();
 
-  let result = Object.values(
-    list.reduce((acc, curr) => {
-      if (!acc[curr.name]) {
-        acc[curr.name] = curr;
-      }
-      return acc;
-    }, {})
-  ) as { [k: string]: string }[];
-
-  if (query && query.name) {
+  // 本身已经是排重过的。
+  // let result = Object.values(
+  //   list.reduce((acc, curr) => {
+  //     if (!acc[curr.name]) {
+  //       acc[curr.name] = curr;
+  //     }
+  //     return acc;
+  //   }, {})
+  // ) as { [k: string]: string }[];
+  // console.log(result.length);
+  let result = TableList();
+  if (query?.name) {
     result = result.filter((item) => item?.name?.includes(query.name));
   }
   return result;
@@ -45,7 +47,11 @@ function TableListUniq(query?: { name: string }) {
  * @returns
  */
 export function TableNameList() {
-  const list = TableListUniq();
+  // const dbTables = Process('schemas.default.Tables') || [];
+  // return dbTables.map((item) => {
+  //   return { value: item, label: item };
+  // });
+  const list = TableList().filter((t) => !!t.created);
 
   return list.map((item) => {
     return { value: item.name, label: item.label };
@@ -57,18 +63,19 @@ export function TableNameList() {
  * yao run scripts.system.table.TableList
  */
 function TableList() {
-  let dbTables = Process('schemas.default.Tables') || [];
+  const dbTables = Process('schemas.default.Tables') || [];
   const cachedModels = getCachedModelList() || [];
   const SavedModels = Process('models.ddic.model.get', {}) || [];
 
-  cachedModels.forEach((x) => x.table?.name && dbTables.push(x.table.name));
-  SavedModels.forEach((x) => x.table_name && dbTables.push(x.table_name));
-
   // remove duplicate
-  dbTables = [...new Set(dbTables)];
+  let tables = [...dbTables];
+
+  cachedModels.forEach((x) => x.table?.name && tables.push(x.table.name));
+  SavedModels.forEach((x) => x.table_name && tables.push(x.table_name));
+  tables = [...new Set(tables)];
 
   const result = [];
-  dbTables.forEach((tab) => {
+  tables.forEach((tab) => {
     // 在缓存中找
     const cacheds = cachedModels.filter((m) => m.table?.name === tab);
 
@@ -88,7 +95,7 @@ function TableList() {
           label: model.table_comment || tab, // 如果已经加载到模型中，从模型中获取表的描述
           saved: true, // 是否加载到数据库
           cached: cached ? true : false, // 是否已经加载到缓存
-          created: true // 表已创建
+          created: dbTables.includes(tab) //true // 表已创建
         });
       });
     } else {
@@ -101,7 +108,7 @@ function TableList() {
             label: model.table?.comment || tab, // 如果已经加载到模型中，从模型中获取表的描述
             saved: false, // 是否加保存数据库
             cached: true, // 是否已经加载到缓存
-            created: true // 表已创建
+            created: dbTables.includes(tab) //true // 表已创建
           });
         });
       } else {
@@ -110,7 +117,7 @@ function TableList() {
           label: tab,
           saved: false,
           cached: false,
-          created: true // 表已创建
+          created: dbTables.includes(tab) // 表已创建
         });
       }
     }

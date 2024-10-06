@@ -6,7 +6,10 @@
       "type": "crud",
       "api": {
         "method": "get",
-        "url": "/api/v1/system/meta/table/search?page=${page}&perPage=${perPage}&keywords=${name}"
+        "url": "/api/v1/system/meta/table/search?page=${page}&perPage=${perPage}",
+        "data": {
+          "&": "$$"
+        }
       },
       "bulkActions": [
         {
@@ -324,22 +327,66 @@
       "filter": {
         "body": [
           {
+            "type": "container",
+            "style": {
+              "width": "25%"
+            },
+            "body": [
+              {
+                "label": "已创建数据库表",
+                "name": "created",
+                "type": "checkbox"
+              },
+              {
+                "label": "已导入",
+                "name": "saved",
+                "type": "checkbox",
+                "colSize": "1/10"
+              },
+              {
+                "label": "已缓存",
+                "name": "cached",
+                "type": "checkbox"
+              }
+            ]
+          },
+          {
             "editorState": "default",
             "id": "u:88b757c09fe6",
             "label": "关键字",
-            "name": "name",
+            "name": "keywords",
             "type": "input-text",
+            "size": "full",
             "addOn": {
               "type": "submit",
               "id": "u:02004312fbc2",
               "label": "搜索",
               "primary": true
             }
+          },
+          {
+            "type": "button",
+            "id": "u:02004312fbc2",
+            "label": "重置",
+            "primary": false,
+            "onEvent": {
+              "click": {
+                "actions": [
+                  {
+                    "actionType": "reset",
+                    "componentId": "u:ea5258eeb135"
+                  },
+                  {
+                    "actionType": "reload",
+                    "componentId": "u:de315aac9687"
+                  }
+                ]
+              }
+            }
           }
         ],
-        "columnCount": 3,
+        "columnCount": 4,
         "id": "u:ea5258eeb135",
-        "mode": "horizontal",
         "title": "查询条件",
         "actions": []
       },

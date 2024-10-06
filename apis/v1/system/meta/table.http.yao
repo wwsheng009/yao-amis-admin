@@ -8,7 +8,7 @@
         {
             "label": "数据库表清单",
             "description": "数据库表清单",
-            "path": "/name_list", //api/v1/system/meta/table/name_list
+            "path": "/table_name_list", //api/v1/system/meta/table/name_list
             "method": "GET",
             "process": "scripts.system.table.TableNameList",
             "in": [

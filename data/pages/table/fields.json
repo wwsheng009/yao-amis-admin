@@ -36,8 +36,9 @@
           "label": "表名"
         }
       ],
-      "source": "get:/api/v1/system/meta/table/name_list",
+      "source": "get:/api/v1/system/meta/table/table_name_list",
       "type": "select",
+      "searchable": true,
       "id": "u:1aaf7e1e5008",
       "placeholder": "请选择数据库表"
     },
