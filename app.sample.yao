@@ -14,7 +14,7 @@
   "afterLoad": "scripts.startup.afterLoad",
   "adminRoot": "admin",
   "token": {
-    "storage": "sessionStorage"
+    "storage": "localStorage"
   },
   "moapi": {
     "secret": "sk-",
