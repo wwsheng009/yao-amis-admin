@@ -54,7 +54,27 @@ export function amisModelToAmisUiModel(modelDsl: AmisModel): AmisUIModel {
         delete col.index;
       }
     });
+
+    // add check models for the columns
+    // 为列添加check_model信息
+    if (modelDsl.relations && typeof modelDsl.relations == 'object') {
+      for (const key in modelDsl.relations) {
+        if (Object.prototype.hasOwnProperty.call(modelDsl.relations, key)) {
+          const relaction = modelDsl.relations[key];
+          if (relaction.type == 'hasOne') {
+            model.columns
+              .filter((c) => !c.check_model && c.name == relaction.foreign)
+              .forEach((c) => {
+                c.check_model = relaction.model;
+                c.check_model_value = relaction.key;
+                c.check_model_label = relaction.key;
+              });
+          }
+        }
+      }
+    }
   }
+
   return model;
 }
 /**
@@ -323,6 +343,146 @@ export function amisUIModelToAmisModel(modelDsl: AmisUIModel): AmisModel {
   return model;
 }
 
+function completeAmisModelColumn(col: AmisModelColumn) {
+  // 传换成bool类型
+  ['index', 'nullable', 'unique', 'primary'].forEach((key) => {
+    if (col[key] !== null && col[key] !== undefined) {
+      if (col[key] !== false && col[key] > 0) {
+        col[key] = true;
+      } else {
+        col[key] = false;
+      }
+    }
+  });
+  // 非浮点类型不需要scale属性。
+  const colType = col.type.toLowerCase();
+  if (
+    colType &&
+    !colType.includes('double') &&
+    !colType.includes('demical') &&
+    !colType.includes('float')
+  ) {
+    delete col.scale;
+    delete col.precision;
+  }
+
+  if (['longtext', 'json', 'text', 'mediumtext'].includes(colType)) {
+    delete col.length;
+  }
+  if (colType == 'mediumint') {
+    col.type = 'integer';
+  } else if (colType == 'datetime') {
+    if (col.default?.toString().indexOf('(') > -1) {
+      delete col.default;
+    }
+  } else if (colType == 'bit') {
+    col.type = 'bool';
+    if (col.default == false || col.default.toString() == '0') {
+      col.default = false;
+    } else if (col.default == "b'1" || col.default.toString() == '1') {
+      col.default = true;
+    }
+  } else if (colType == 'mediumblob') {
+    col.type = 'binary';
+  }
+
+  if (Array.isArray(col.options) && col.options.length > 0) {
+    col.option = [];
+    col.options.forEach((opt) => {
+      col.option.push(opt.value);
+    });
+  } else {
+    if (col.option != null && typeof col.option === 'string') {
+      try {
+        col.option = JSON.parse(col.option);
+      } catch (err) {
+        log.Error(err);
+      }
+    }
+    if (Array.isArray(col.option) && col.option.length > 0) {
+      col.options = [];
+      col.option.forEach((opt) => {
+        col.options.push({
+          label: opt + '',
+          value: opt
+        });
+      });
+    }
+  }
+
+  if (colType == 'boolean' && typeof col.default === 'string') {
+    if (col.default.toLowerCase() == 'true') {
+      col.default = true;
+    } else if (col.default.toLowerCase() == 'false') {
+      col.default = false;
+    }
+  }
+  // 长度不能为字符串
+  if (!col.length) {
+    delete col.length;
+  }
+  // add the primary attribute for id field
+  if (colType == 'id' || col.name.toLowerCase() == 'id') {
+    if (col.primary == null) {
+      col.primary = true;
+    }
+  }
+  //fix the column datetime type and id type
+  if (colType == 'datetime') {
+    col.type = 'datetime';
+  }
+  if (colType == 'id') {
+    col.type = 'id';
+  }
+
+  if (colType == 'json' && col.default != null) {
+    if (col.default == '') {
+      delete col.default;
+    } else if (!(typeof col.default === 'object')) {
+      try {
+        col.default = JSON.parse(col.default);
+      } catch (e) {
+        delete col.default;
+      }
+    }
+  }
+  if (col.crypt == '') {
+    col.crypt = undefined;
+  }
+  if (colType === 'phone' || colType === 'email' || colType === 'url') {
+    if (col.validations == null) {
+      col.validations = [];
+    }
+    if (col.validations.length == 0) {
+      if (colType === 'url') {
+        col.validations.push({
+          method: 'pattern',
+          args: [
+            `^(https?:\/\/)?([a-zA-Z0-9\-]+\.)*[a-zA-Z0-9\-]+\.[a-zA-Z]{2,}(\/.*)*$`
+          ],
+          message: ' {{label}}URL地址格式不正确'
+        });
+      } else if (colType === 'phone') {
+        col.validations.push({
+          method: 'pattern',
+          args: [`^[1]([3-9])[0-9]{9}$`],
+          message: ' {{label}}手机号码格式不正确'
+        });
+      } else if (colType === 'email') {
+        col.validations.push({
+          method: 'pattern',
+          args: [`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`],
+          message: ' {{label}}邮箱地址格式不正确'
+        });
+      }
+    }
+  }
+  if (!col.check_model) {
+    delete col.check_model_label;
+    delete col.check_model_value;
+  }
+  return col;
+}
 /**
  * 补全模型的定义
  * @param {object} modelDsl
@@ -370,145 +530,35 @@ export function completeAmisModel(modelDsl: AmisModel): AmisModel {
     return true;
   });
   modelDsl.columns.forEach((col, idx) => {
-    // 传换成bool类型
-    ['index', 'nullable', 'unique', 'primary'].forEach((key) => {
-      if (col[key] !== null && col[key] !== undefined) {
-        if (col[key] !== false && col[key] > 0) {
-          col[key] = true;
-        } else {
-          col[key] = false;
-        }
+    modelDsl.columns[idx] = completeAmisModelColumn(col);
+  });
+
+  //convert the check_model to relation
+  if (!modelDsl.relations && modelDsl.columns.some((col) => col.check_model)) {
+    modelDsl.relations = modelDsl.relations || {};
+  }
+  modelDsl.columns
+    .filter((col) => col.check_model)
+    .forEach((col) => {
+      const colKey = col.name.replace(/_id$/i, '');
+      if (
+        modelDsl.relations[colKey] == null &&
+        !Object.values(modelDsl.relations).find(
+          (r) =>
+            r.model == col.check_model &&
+            r.foreign == col.name &&
+            r.key == col.check_model_value
+        )
+      ) {
+        modelDsl.relations[colKey] = {
+          type: 'hasOne',
+          model: col.check_model,
+          foreign: col.name,
+          key: col.check_model_value,
+          label: colKey
+        };
       }
     });
-    // 非浮点类型不需要scale属性。
-    const colType = col.type.toLowerCase();
-    if (
-      colType &&
-      !colType.includes('double') &&
-      !colType.includes('demical') &&
-      !colType.includes('float')
-    ) {
-      delete col.scale;
-      delete col.precision;
-    }
-
-    if (['longtext', 'json', 'text', 'mediumtext'].includes(colType)) {
-      delete col.length;
-    }
-    if (colType == 'mediumint') {
-      col.type = 'integer';
-    } else if (colType == 'datetime') {
-      if (col.default?.toString().indexOf('(') > -1) {
-        delete col.default;
-      }
-    } else if (colType == 'bit') {
-      col.type = 'bool';
-      if (col.default == false || col.default.toString() == '0') {
-        col.default = false;
-      } else if (col.default == "b'1" || col.default.toString() == '1') {
-        col.default = true;
-      }
-    } else if (colType == 'mediumblob') {
-      col.type = 'binary';
-    }
-
-    if (Array.isArray(col.options) && col.options.length > 0) {
-      col.option = [];
-      col.options.forEach((opt) => {
-        col.option.push(opt.value);
-      });
-    } else {
-      if (col.option != null && typeof col.option === 'string') {
-        try {
-          col.option = JSON.parse(col.option);
-        } catch (err) {
-          log.Error(err);
-        }
-      }
-      if (Array.isArray(col.option) && col.option.length > 0) {
-        col.options = [];
-        col.option.forEach((opt) => {
-          col.options.push({
-            label: opt + '',
-            value: opt
-          });
-        });
-      }
-    }
-
-    if (colType == 'boolean' && typeof col.default === 'string') {
-      if (col.default.toLowerCase() == 'true') {
-        col.default = true;
-      } else if (col.default.toLowerCase() == 'false') {
-        col.default = false;
-      }
-    }
-    // 长度不能为字符串
-    if (!col.length) {
-      delete col.length;
-    }
-    // add the primary attribute for id field
-    if (colType == 'id' || col.name.toLowerCase() == 'id') {
-      if (col.primary == null) {
-        col.primary = true;
-      }
-    }
-    //fix the column datetime type and id type
-    if (colType == 'datetime') {
-      col.type = 'datetime';
-    }
-    if (colType == 'id') {
-      col.type = 'id';
-    }
-
-    if (colType == 'json' && col.default != null) {
-      if (col.default == '') {
-        delete col.default;
-      } else if (!(typeof col.default === 'object')) {
-        try {
-          col.default = JSON.parse(col.default);
-        } catch (e) {
-          delete col.default;
-        }
-      }
-    }
-    if (col.crypt == '') {
-      col.crypt = undefined;
-    }
-    if (colType === 'phone' || colType === 'email' || colType === 'url') {
-      if (col.validations == null) {
-        col.validations = [];
-      }
-      if (col.validations.length == 0) {
-        if (colType === 'url') {
-          col.validations.push({
-            method: 'pattern',
-            args: [
-              `^(https?:\/\/)?([a-zA-Z0-9\-]+\.)*[a-zA-Z0-9\-]+\.[a-zA-Z]{2,}(\/.*)*$`
-            ],
-            message: ' {{label}}URL地址格式不正确'
-          });
-        } else if (colType === 'phone') {
-          col.validations.push({
-            method: 'pattern',
-            args: [`^[1]([3-9])[0-9]{9}$`],
-            message: ' {{label}}手机号码格式不正确'
-          });
-        } else if (colType === 'email') {
-          col.validations.push({
-            method: 'pattern',
-            args: [`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`],
-            message: ' {{label}}邮箱地址格式不正确'
-          });
-        }
-      }
-    }
-    if (!col.check_model) {
-      delete col.check_model_label;
-      delete col.check_model_value;
-    }
-    modelDsl.columns[idx] = col;
-  });
 
   if (modelDsl.relations != null) {
     for (const r in modelDsl.relations) {
