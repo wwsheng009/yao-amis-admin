@@ -379,6 +379,13 @@
                                             "id": "u:d5d9f15dccc2",
                                             "label": "允许空值",
                                             "name": "nullable"
+                                          },
+                                          {
+                                            "trueValue": 1,
+                                            "type": "switch",
+                                            "falseValue": 0,
+                                            "label": "公共访问",
+                                            "name": "is_public"
                                           }
                                         ],
                                         "hiddenOn": "data.type == `id`",

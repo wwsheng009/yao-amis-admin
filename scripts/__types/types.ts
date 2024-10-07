@@ -51,6 +51,8 @@ export interface AmisModelColumn extends YaoModel.ModelColumn {
   language?: string;
   static?: boolean;
   format?: string;
+  /** 是否上传公共文件夹 */
+  is_public?: boolean;
 }
 
 /** 增强的Yao 模型定义 */

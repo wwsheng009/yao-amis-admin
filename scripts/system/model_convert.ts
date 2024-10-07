@@ -589,6 +589,7 @@ export function convertAmisColToYaoCol(
   delete col.check_model;
   delete col.options;
   delete col.language;
+  delete col.is_public;
 
   ['index', 'nullable', 'primary', 'unique'].forEach((item) => {
     if (item in col && col[item] === false) {

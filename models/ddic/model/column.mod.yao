@@ -127,6 +127,13 @@
       "type": "boolean"
     },
     {
+      "default": false,
+      "comment": "是否公开",
+      "label": "是否公开",
+      "name": "is_public",
+      "type": "boolean"
+    },
+    {
       "nullable": true,
       "option": ["PASSWORD", "AES"],
       "label": "加密方式",
@@ -235,3 +242,4 @@
     "name": "ddic_model_column"
   }
 }
+//yao migrate -n ddic.model.column
