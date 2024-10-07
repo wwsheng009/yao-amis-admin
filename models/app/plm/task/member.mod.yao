@@ -1,0 +1,86 @@
+{
+  "name": "::Task Members",
+  "table": {
+    "name": "app_plm_task_member",
+    "comment": "::Task Members"
+  },
+  "columns": [
+    {
+      "label": "::ID",
+      "name": "id",
+      "type": "ID"
+    },
+    {
+      "label": "::Project ID",
+      "name": "project_id",
+      "type": "bigInteger",
+      "length": 20,
+      "comment": "::Project ID",
+      "index": true
+    },
+    {
+      "label": "::Task ID",
+      "name": "task_id",
+      "type": "bigInteger",
+      "length": 20,
+      "comment": "::Task ID",
+      "index": true
+    },
+    {
+      "label": "::Staff ID",
+      "name": "staff_id",
+      "type": "bigInteger",
+      "length": 20,
+      "comment": "::Staff ID",
+      "index": true
+    },
+    {
+      "label": "::Is Manager",
+      "name": "is_manager",
+      "type": "boolean",
+      "comment": "::Is Manager",
+      "index": true,
+      "nullable": true
+    }
+  ],
+  "relations": {
+    "task": {
+      "type": "hasOne",
+      "model": "app.plm.task",
+      "key": "id",
+      "foreign": "task_id",
+      "query": {
+        "select": [
+          "id",
+          "name"
+        ]
+      }
+    },
+    "staff": {
+      "type": "hasOne",
+      "model": "app.plm.staff",
+      "key": "id",
+      "foreign": "staff_id",
+      "query": {
+        "select": [
+          "id",
+          "name"
+        ]
+      }
+    }
+  },
+  "values": [],
+  "indexes": [
+    {
+      "columns": [
+        "task_id",
+        "staff_id"
+      ],
+      "type": "unique"
+    }
+  ],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  }
+}

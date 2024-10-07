@@ -1,0 +1,111 @@
+{
+  "name": "::Task Deliverables",
+  "table": {
+    "name": "app_plm_task_deliverable",
+    "comment": "::Task Deliverables"
+  },
+  "columns": [
+    {
+      "label": "::ID",
+      "name": "id",
+      "type": "ID"
+    },
+    {
+      "label": "::Project ID",
+      "name": "project_id",
+      "type": "bigInteger",
+      "length": 20,
+      "comment": "::Project ID",
+      "index": true
+    },
+    {
+      "label": "::Task ID",
+      "name": "task_id",
+      "type": "bigInteger",
+      "length": 20,
+      "comment": "::Task ID",
+      "index": true
+    },
+    {
+      "label": "::Product ID",
+      "name": "product_id",
+      "type": "bigInteger",
+      "length": 20,
+      "comment": "::Product ID",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "::Numbers",
+      "name": "nums",
+      "type": "integer",
+      "length": 20,
+      "comment": "::Numbers",
+      "nullable": true,
+      "index": true
+    },
+    {
+      "label": "::Deliverable",
+      "name": "name",
+      "type": "string",
+      "length": 200,
+      "comment": "::Deliverable"
+    },
+    {
+      "label": "::Files",
+      "name": "files",
+      "type": "JSON",
+      "nullable": true,
+      "comment": "::Files"
+    },
+    {
+      "label": "::Status",
+      "comment": "::Status",
+      "name": "status",
+      "type": "enum",
+      "default": "waiting",
+      "option": [
+        "waiting",
+        "done"
+      ],
+      "index": true,
+      "validations": [
+        {
+          "method": "typeof",
+          "args": [
+            "string"
+          ],
+          "message": "::{{input}} Error, {{label}} should be string"
+        },
+        {
+          "method": "enum",
+          "args": [
+            "waiting",
+            "done"
+          ],
+          "message": "::{{input}} Error, {{label}} should be enabled/disabled"
+        }
+      ]
+    }
+  ],
+  "relations": {
+    "task": {
+      "type": "hasOne",
+      "model": "app.plm.task",
+      "key": "id",
+      "foreign": "task_id",
+      "query": {
+        "select": [
+          "id",
+          "name"
+        ]
+      }
+    }
+  },
+  "values": [],
+  "indexes": [],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  }
+}

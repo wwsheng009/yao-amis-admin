@@ -1,0 +1,134 @@
+{
+  "name": "::Staff",
+  "table": {
+    "name": "app_plm_staff",
+    "comment": "::Staff"
+  },
+  "columns": [
+    {
+      "label": "::ID",
+      "name": "id",
+      "type": "ID"
+    },
+    {
+      "label": "::Email",
+      "name": "email",
+      "type": "string",
+      "length": 50,
+      "comment": "::Email",
+      "unique": true,
+      "nullable": true,
+      "validations": [
+        {
+          "method": "email",
+          "args": [],
+          "message": "::{{input}} should be email"
+        }
+      ]
+    },
+    {
+      "label": "::Mobile",
+      "name": "mobile",
+      "type": "string",
+      "length": 50,
+      "comment": "::Mobile",
+      "unique": true,
+      "nullable": true,
+      "crypt": "AES"
+    },
+    {
+      "label": "::Department IDs",
+      "name": "department_ids",
+      "type": "json",
+      "comment": "::Department IDs",
+      "nullable": true
+    },
+    {
+      "label": "::Password",
+      "name": "password",
+      "type": "string",
+      "length": 256,
+      "comment": "::Password",
+      "crypt": "PASSWORD",
+      "index": true,
+      "nullable": true,
+      "validations": [
+        {
+          "method": "typeof",
+          "args": [
+            "string"
+          ],
+          "message": "::{{input}} Error"
+        },
+        {
+          "method": "minLength",
+          "args": [
+            6
+          ],
+          "message": "::{{label}} Error"
+        },
+        {
+          "method": "maxLength",
+          "args": [
+            18
+          ],
+          "message": "::{{label}} Error"
+        }
+      ]
+    },
+    {
+      "label": "::Full Name",
+      "name": "name",
+      "type": "string",
+      "length": 80,
+      "comment": "::Full Name",
+      "index": true,
+      "nullable": true,
+      "validations": [
+        {
+          "method": "typeof",
+          "args": [
+            "string"
+          ],
+          "message": "::{{input}} Error"
+        }
+      ]
+    },
+    {
+      "label": "::Status",
+      "comment": "::Status",
+      "name": "status",
+      "type": "enum",
+      "default": "enabled",
+      "option": [
+        "enabled",
+        "disabled"
+      ],
+      "index": true,
+      "validations": [
+        {
+          "method": "typeof",
+          "args": [
+            "string"
+          ],
+          "message": "::{{input}} Error, {{label}} should be string"
+        },
+        {
+          "method": "enum",
+          "args": [
+            "enabled",
+            "disabled"
+          ],
+          "message": "::{{input}} Error, {{label}} should be enabled/disabled"
+        }
+      ]
+    }
+  ],
+  "relations": {},
+  "values": [],
+  "indexes": [],
+  "option": {
+    "timestamps": true,
+    "soft_deletes": true
+  }
+}
