@@ -291,6 +291,7 @@
                                           },
                                           {
                                             "type": "select",
+                                            "searchable": true,
                                             "label": "数据元素",
                                             "name": "element_id",
                                             "source": {
@@ -403,6 +404,7 @@
                                         "body": [
                                           {
                                             "type": "select",
+                                            "searchable": true,
                                             "label": "关联模型",
                                             "name": "check_model",
                                             "source": {
@@ -417,6 +419,7 @@
                                           {
                                             "multiple": false,
                                             "type": "select",
+                                            "searchable": true,
                                             "name": "check_model_value",
                                             "label": "关联值字段",
                                             "source": {
@@ -434,6 +437,7 @@
                                           {
                                             "multiple": false,
                                             "type": "select",
+                                            "searchable": true,
                                             "name": "check_model_label",
                                             "label": "关联标签字段",
                                             "source": {
@@ -808,6 +812,7 @@
                       "label": "字段类型",
                       "placeholder": "-",
                       "type": "select",
+                      "searchable": true,
                       "id": "u:ae584cb4e14a",
                       "name": "type",
                       "source": {
@@ -932,6 +937,7 @@
                                               },
                                               {
                                                 "type": "select",
+                                                "searchable": true,
                                                 "label": "数据元素",
                                                 "name": "element_id",
                                                 "source": {
@@ -1025,6 +1031,7 @@
                                             "body": [
                                               {
                                                 "type": "select",
+                                                "searchable": true,
                                                 "label": "关联模型",
                                                 "name": "check_model",
                                                 "source": {
@@ -1039,6 +1046,7 @@
                                               {
                                                 "multiple": false,
                                                 "type": "select",
+                                                "searchable": true,
                                                 "name": "check_model_value",
                                                 "label": "关联值字段",
                                                 "source": {
@@ -1354,6 +1362,7 @@
                     },
                     {
                       "type": "select",
+                      "searchable": true,
                       "name": "model",
                       "label": "关联模型",
                       "source": {
@@ -1369,6 +1378,7 @@
                     {
                       "multiple": false,
                       "type": "select",
+                      "searchable": true,
                       "name": "key",
                       "label": "关联模型key",
                       "id": "module_key",

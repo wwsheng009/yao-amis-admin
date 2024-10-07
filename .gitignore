@@ -5,6 +5,7 @@ logs
 data/amis_editor
 data/pages_temp
 data/upload
+data/dev
 amis.json
 public/soy-admin
 public/amis-editor

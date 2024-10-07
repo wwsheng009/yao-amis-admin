@@ -163,7 +163,7 @@
               "type": "button",
               "actionType": "dialog",
               "dialog": {
-                "title": "查看详情",
+                "title": "查看表详情:${name}",
                 "type": "dialog",
                 "actions": [
                   {
