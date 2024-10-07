@@ -33,7 +33,7 @@ export function saveModelToFile(modelDsl: AmisModel) {
   dsl.WriteFile(`/dev/models/${model_id}.mod.yao`, JSON.stringify(model));
   // __yao_data = { ROOT: false };
 
-  saveModelToDSLFile(model_id, model);
+  //   saveModelToDSLFile(model_id, model);
 }
 
 // save to the dsl folder for development
