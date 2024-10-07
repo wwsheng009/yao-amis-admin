@@ -7,16 +7,16 @@
         },
         {
             "name": "user_id",
-            "label": "用户表的用户ID",
+            "label": "用户ID",
             "type": "integer",
             "comment": "用户表的用户ID",
             "nullable": true
         },
         {
             "name": "goods_id",
-            "label": "商品表的商品ID",
+            "label": "商品ID",
             "type": "integer",
-            "comment": "商品表的商品ID",
+            "comment": "商品ID",
             "nullable": true
         },
         {
@@ -37,14 +37,14 @@
         },
         {
             "name": "product_id",
-            "label": "商品货品表的货品ID",
+            "label": "货品ID",
             "type": "integer",
             "comment": "商品货品表的货品ID",
             "nullable": true
         },
         {
             "name": "price",
-            "label": "商品货品的价格",
+            "label": "商品价格",
             "type": "decimal",
             "comment": "商品货品的价格",
             "nullable": true,
@@ -52,7 +52,7 @@
         },
         {
             "name": "number",
-            "label": "商品货品的数量",
+            "label": "商品数量",
             "type": "smallInteger",
             "comment": "商品货品的数量",
             "nullable": true,
@@ -60,23 +60,22 @@
         },
         {
             "name": "specifications",
-            "label": "商品规格值列表，采用JSON数组格式",
-            "type": "string",
+            "label": "商品规格值列表",
+            "type": "json",
             "comment": "商品规格值列表，采用JSON数组格式",
-            "length": 1023,
             "nullable": true
         },
         {
             "name": "checked",
-            "label": "购物车中商品是否选择状态",
-            "type": "tinyInteger",
+            "label": "否选择状态",
+            "type": "boolean",
             "comment": "购物车中商品是否选择状态",
             "nullable": true,
-            "default": 1
+            "default": true
         },
         {
             "name": "pic_url",
-            "label": "商品图片或者商品货品图片",
+            "label": "商品图片",
             "type": "string",
             "comment": "商品图片或者商品货品图片",
             "length": 255,

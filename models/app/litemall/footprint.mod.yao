@@ -7,7 +7,7 @@
         },
         {
             "name": "user_id",
-            "label": "用户表的用户ID",
+            "label": "用户ID",
             "type": "integer",
             "comment": "用户表的用户ID",
             "default": 0

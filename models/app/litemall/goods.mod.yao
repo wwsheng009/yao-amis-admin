@@ -24,7 +24,7 @@
         },
         {
             "name": "category_id",
-            "label": "商品所属类目ID",
+            "label": "类目ID",
             "type": "integer",
             "comment": "商品所属类目ID",
             "nullable": true,
@@ -40,10 +40,9 @@
         },
         {
             "name": "gallery",
-            "label": "商品宣传图片列表，采用JSON数组格式",
-            "type": "string",
+            "label": "商品宣传图片列表",
+            "type": "json",
             "comment": "商品宣传图片列表，采用JSON数组格式",
-            "length": 1023,
             "nullable": true
         },
         {
@@ -67,10 +66,10 @@
         {
             "name": "is_on_sale",
             "label": "是否上架",
-            "type": "tinyInteger",
+            "type": "boolean",
             "comment": "是否上架",
             "nullable": true,
-            "default": 1
+            "default": true
         },
         {
             "name": "sort_order",
@@ -97,7 +96,7 @@
         },
         {
             "name": "is_new",
-            "label": "是否新品首发，如果设置则可以在新品首发页面展示",
+            "label": "是否新品首发",
             "type": "tinyInteger",
             "comment": "是否新品首发，如果设置则可以在新品首发页面展示",
             "nullable": true,
@@ -105,7 +104,7 @@
         },
         {
             "name": "is_hot",
-            "label": "是否人气推荐，如果设置则可以在人气推荐页面展示",
+            "label": "是否人气推荐",
             "type": "tinyInteger",
             "comment": "是否人气推荐，如果设置则可以在人气推荐页面展示",
             "nullable": true,
@@ -113,7 +112,7 @@
         },
         {
             "name": "unit",
-            "label": "商品单位，例如件、盒",
+            "label": "商品单位",
             "type": "string",
             "comment": "商品单位，例如件、盒",
             "length": 31,
@@ -138,7 +137,7 @@
         },
         {
             "name": "detail",
-            "label": "商品详细介绍，是富文本格式",
+            "label": "商品详细介绍",
             "type": "text",
             "comment": "商品详细介绍，是富文本格式",
             "nullable": true

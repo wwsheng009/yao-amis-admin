@@ -7,7 +7,7 @@
         },
         {
             "name": "goods_id",
-            "label": "商品表的商品ID",
+            "label": "商品ID",
             "type": "integer",
             "comment": "商品表的商品ID",
             "index": true
@@ -21,7 +21,7 @@
         },
         {
             "name": "pic_url",
-            "label": "商品图片或者商品货品图片",
+            "label": "商品图片",
             "type": "string",
             "comment": "商品图片或者商品货品图片",
             "length": 255,
@@ -48,7 +48,7 @@
         },
         {
             "name": "status",
-            "label": "团购规则状态，正常上线则0，到期自动下线则1，管理手动下线则2",
+            "label": "团购规则状态",
             "type": "smallInteger",
             "comment": "团购规则状态，正常上线则0，到期自动下线则1，管理手动下线则2",
             "nullable": true,

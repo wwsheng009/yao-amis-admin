@@ -23,7 +23,7 @@
         },
         {
             "name": "gender",
-            "label": "性别：0 未知， 1男， 1 女",
+            "label": "性别",
             "type": "tinyInteger",
             "comment": "性别：0 未知， 1男， 1 女",
             "default": 0
@@ -52,7 +52,7 @@
         },
         {
             "name": "user_level",
-            "label": "0 普通用户，1 VIP用户，2 高级VIP用户",
+            "label": "用户级别",
             "type": "tinyInteger",
             "comment": "0 普通用户，1 VIP用户，2 高级VIP用户",
             "nullable": true,
@@ -84,7 +84,7 @@
         },
         {
             "name": "weixin_openid",
-            "label": "微信登录openid",
+            "label": "微信openid",
             "type": "string",
             "comment": "微信登录openid",
             "length": 63,
@@ -92,7 +92,7 @@
         },
         {
             "name": "session_key",
-            "label": "微信登录会话KEY",
+            "label": "微信会话KEY",
             "type": "string",
             "comment": "微信登录会话KEY",
             "length": 100,
@@ -100,7 +100,7 @@
         },
         {
             "name": "status",
-            "label": "0 可用, 1 禁用, 2 注销",
+            "label": "状态",
             "type": "tinyInteger",
             "comment": "0 可用, 1 禁用, 2 注销",
             "default": 0

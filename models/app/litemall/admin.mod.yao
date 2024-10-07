@@ -49,7 +49,7 @@
         {
             "name": "role_ids",
             "label": "角色列表",
-            "type": "string",
+            "type": "json",
             "comment": "角色列表",
             "length": 127,
             "nullable": true,

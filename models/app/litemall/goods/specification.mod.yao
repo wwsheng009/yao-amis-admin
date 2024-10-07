@@ -7,7 +7,7 @@
         },
         {
             "name": "goods_id",
-            "label": "商品表的商品ID",
+            "label": "商品ID",
             "type": "integer",
             "comment": "商品表的商品ID",
             "default": 0,

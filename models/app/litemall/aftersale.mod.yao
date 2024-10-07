@@ -52,10 +52,9 @@
         },
         {
             "name": "pictures",
-            "label": "退款凭证图片链接数组",
-            "type": "string",
+            "label": "退款凭证图片链接",
+            "type": "json",
             "comment": "退款凭证图片链接数组",
-            "length": 1023,
             "nullable": true,
             "default": "[]"
         },

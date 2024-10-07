@@ -7,7 +7,7 @@
         },
         {
             "name": "user_id",
-            "label": "用户表的用户ID",
+            "label": "用户ID",
             "type": "integer",
             "comment": "用户表的用户ID",
             "default": 0,
@@ -15,7 +15,7 @@
         },
         {
             "name": "value_id",
-            "label": "如果type=0，则是商品ID；如果type=1，则是专题ID",
+            "label": "商品ID/专题ID",
             "type": "integer",
             "comment": "如果type=0，则是商品ID；如果type=1，则是专题ID",
             "default": 0,
@@ -23,7 +23,7 @@
         },
         {
             "name": "type",
-            "label": "收藏类型，如果type=0，则是商品ID；如果type=1，则是专题ID",
+            "label": "收藏类型",
             "type": "tinyInteger",
             "comment": "收藏类型，如果type=0，则是商品ID；如果type=1，则是专题ID",
             "default": 0

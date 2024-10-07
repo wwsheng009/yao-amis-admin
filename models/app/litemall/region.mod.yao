@@ -7,7 +7,7 @@
         },
         {
             "name": "pid",
-            "label": "行政区域父ID，例如区县的pid指向市，市的pid指向省，省的pid则是0",
+            "label": "行政区域父ID",
             "type": "integer",
             "comment": "行政区域父ID，例如区县的pid指向市，市的pid指向省，省的pid则是0",
             "default": 0,
@@ -23,7 +23,7 @@
         },
         {
             "name": "type",
-            "label": "行政区域类型，如如1则是省， 如果是2则是市，如果是3则是区县",
+            "label": "行政区域类型",
             "type": "tinyInteger",
             "comment": "行政区域类型，如如1则是省， 如果是2则是市，如果是3则是区县",
             "default": 0,

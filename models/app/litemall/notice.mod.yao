@@ -23,7 +23,7 @@
         },
         {
             "name": "admin_id",
-            "label": "创建通知的管理员ID，如果是系统内置通知则是0.",
+            "label": "管理员ID",
             "type": "integer",
             "comment": "创建通知的管理员ID，如果是系统内置通知则是0.",
             "nullable": true,

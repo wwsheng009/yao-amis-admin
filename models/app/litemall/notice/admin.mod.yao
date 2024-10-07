@@ -22,14 +22,14 @@
         },
         {
             "name": "admin_id",
-            "label": "接收通知的管理员ID",
+            "label": "管理员ID",
             "type": "integer",
             "comment": "接收通知的管理员ID",
             "nullable": true
         },
         {
             "name": "read_time",
-            "label": "阅读时间，如果是NULL则是未读状态",
+            "label": "阅读时间",
             "type": "datetime",
             "comment": "阅读时间，如果是NULL则是未读状态",
             "nullable": true

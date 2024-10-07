@@ -24,7 +24,7 @@
         },
         {
             "name": "content",
-            "label": "专题内容，富文本格式",
+            "label": "专题内容",
             "type": "text",
             "comment": "专题内容，富文本格式",
             "nullable": true
@@ -65,10 +65,9 @@
         },
         {
             "name": "goods",
-            "label": "专题相关商品，采用JSON数组格式",
-            "type": "string",
+            "label": "专题相关商品",
+            "type": "json",
             "comment": "专题相关商品，采用JSON数组格式",
-            "length": 1023,
             "nullable": true,
             "default": ""
         }

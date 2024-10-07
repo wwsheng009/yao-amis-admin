@@ -15,10 +15,9 @@
         },
         {
             "name": "keywords",
-            "label": "类目关键字，以JSON数组格式",
-            "type": "string",
+            "label": "类目关键字",
+            "type": "json",
             "comment": "类目关键字，以JSON数组格式",
-            "length": 1023,
             "default": ""
         },
         {
@@ -61,6 +60,7 @@
             "type": "string",
             "length": 255,
             "nullable": true,
+            "label": "层级",
             "default": "L1"
         },
         {

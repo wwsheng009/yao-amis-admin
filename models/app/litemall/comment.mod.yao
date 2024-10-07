@@ -7,7 +7,7 @@
         },
         {
             "name": "value_id",
-            "label": "如果type=0，则是商品评论；如果是type=1，则是专题评论。",
+            "label": "评论类型",
             "type": "integer",
             "comment": "如果type=0，则是商品评论；如果是type=1，则是专题评论。",
             "default": 0,
@@ -15,7 +15,7 @@
         },
         {
             "name": "type",
-            "label": "评论类型，如果type=0，则是商品评论；如果是type=1，则是专题评论；",
+            "label": "评论类型",
             "type": "tinyInteger",
             "comment": "评论类型，如果type=0，则是商品评论；如果是type=1，则是专题评论；",
             "default": 0
@@ -40,7 +40,7 @@
         },
         {
             "name": "user_id",
-            "label": "用户表的用户ID",
+            "label": "用户ID",
             "type": "integer",
             "comment": "用户表的用户ID",
             "default": 0
@@ -48,17 +48,16 @@
         {
             "name": "has_picture",
             "label": "是否含有图片",
-            "type": "tinyInteger",
+            "type": "boolean",
             "comment": "是否含有图片",
             "nullable": true,
-            "default": 0
+            "default": false
         },
         {
             "name": "pic_urls",
-            "label": "图片地址列表，采用JSON数组格式",
-            "type": "string",
+            "label": "图片地址列表",
+            "type": "json",
             "comment": "图片地址列表，采用JSON数组格式",
-            "length": 1023,
             "nullable": true
         },
         {

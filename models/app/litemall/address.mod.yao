@@ -15,7 +15,7 @@
         },
         {
             "name": "user_id",
-            "label": "用户表的用户ID",
+            "label": "用户ID",
             "type": "integer",
             "comment": "用户表的用户ID",
             "default": 0,
@@ -77,9 +77,9 @@
         {
             "name": "is_default",
             "label": "是否默认地址",
-            "type": "tinyInteger",
+            "type": "boolean",
             "comment": "是否默认地址",
-            "default": 0
+            "default": false
         }
     ],
     "option": {

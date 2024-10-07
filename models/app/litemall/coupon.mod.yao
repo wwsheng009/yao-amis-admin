@@ -14,7 +14,7 @@
         },
         {
             "name": "desc",
-            "label": "优惠券介绍，通常是显示优惠券使用限制文字",
+            "label": "优惠券介绍",
             "type": "string",
             "comment": "优惠券介绍，通常是显示优惠券使用限制文字",
             "length": 127,
@@ -23,7 +23,7 @@
         },
         {
             "name": "tag",
-            "label": "优惠券标签，例如新人专用",
+            "label": "优惠券标签",
             "type": "string",
             "comment": "优惠券标签，例如新人专用",
             "length": 63,
@@ -32,7 +32,7 @@
         },
         {
             "name": "total",
-            "label": "优惠券数量，如果是0，则是无限量",
+            "label": "优惠券数量",
             "type": "integer",
             "comment": "优惠券数量，如果是0，则是无限量",
             "default": 0
@@ -47,7 +47,7 @@
         },
         {
             "name": "min",
-            "label": "最少消费金额才能使用优惠券。",
+            "label": "最少消费金额",
             "type": "decimal",
             "comment": "最少消费金额才能使用优惠券。",
             "nullable": true,
@@ -55,7 +55,7 @@
         },
         {
             "name": "limit",
-            "label": "用户领券限制数量，如果是0，则是不限制；默认是1，限领一张.",
+            "label": "用户领券限制数量",
             "type": "smallInteger",
             "comment": "用户领券限制数量，如果是0，则是不限制；默认是1，限领一张.",
             "nullable": true,
@@ -63,7 +63,7 @@
         },
         {
             "name": "type",
-            "label": "优惠券赠送类型，如果是0则通用券，用户领取；如果是1，则是注册赠券；如果是2，则是优惠券码兑换；",
+            "label": "优惠券赠送类型",
             "type": "smallInteger",
             "comment": "优惠券赠送类型，如果是0则通用券，用户领取；如果是1，则是注册赠券；如果是2，则是优惠券码兑换；",
             "nullable": true,
@@ -71,7 +71,7 @@
         },
         {
             "name": "status",
-            "label": "优惠券状态，如果是0则是正常可用；如果是1则是过期; 如果是2则是下架。",
+            "label": "优惠券状态",
             "type": "smallInteger",
             "comment": "优惠券状态，如果是0则是正常可用；如果是1则是过期; 如果是2则是下架。",
             "nullable": true,
@@ -79,7 +79,7 @@
         },
         {
             "name": "goods_type",
-            "label": "商品限制类型，如果0则全商品，如果是1则是类目限制，如果是2则是商品限制。",
+            "label": "商品限制类型",
             "type": "smallInteger",
             "comment": "商品限制类型，如果0则全商品，如果是1则是类目限制，如果是2则是商品限制。",
             "nullable": true,
@@ -87,12 +87,11 @@
         },
         {
             "name": "goods_value",
-            "label": "商品限制值，goods_type如果是0则空集合，如果是1则是类目集合，如果是2则是商品集合。",
-            "type": "string",
+            "label": "商品限制值",
+            "type": "smallInteger",
             "comment": "商品限制值，goods_type如果是0则空集合，如果是1则是类目集合，如果是2则是商品集合。",
-            "length": 1023,
             "nullable": true,
-            "default": "[]"
+            "default": 0
         },
         {
             "name": "code",
@@ -105,7 +104,7 @@
         },
         {
             "name": "time_type",
-            "label": "有效时间限制，如果是0，则基于领取时间的有效天数days；如果是1，则start_time和end_time是优惠券有效期；",
+            "label": "有效时间限制",
             "type": "smallInteger",
             "comment": "有效时间限制，如果是0，则基于领取时间的有效天数days；如果是1，则start_time和end_time是优惠券有效期；",
             "nullable": true,
@@ -113,7 +112,7 @@
         },
         {
             "name": "days",
-            "label": "基于领取时间的有效天数days。",
+            "label": "有效天数",
             "type": "smallInteger",
             "comment": "基于领取时间的有效天数days。",
             "nullable": true,

@@ -15,7 +15,7 @@
         },
         {
             "name": "goods_id",
-            "label": "商品表的商品ID",
+            "label": "商品ID",
             "type": "integer",
             "comment": "商品表的商品ID",
             "default": 0,
@@ -39,35 +39,35 @@
         },
         {
             "name": "product_id",
-            "label": "商品货品表的货品ID",
+            "label": "货品ID",
             "type": "integer",
             "comment": "商品货品表的货品ID",
             "default": 0
         },
         {
             "name": "number",
-            "label": "商品货品的购买数量",
+            "label": "购买数量",
             "type": "smallInteger",
             "comment": "商品货品的购买数量",
             "default": 0
         },
         {
             "name": "price",
-            "label": "商品货品的售价",
+            "label": "售价",
             "type": "decimal",
             "comment": "商品货品的售价",
             "default": 0
         },
         {
             "name": "specifications",
-            "label": "商品货品的规格列表",
+            "label": "规格列表",
             "type": "string",
             "comment": "商品货品的规格列表",
             "length": 1023
         },
         {
             "name": "pic_url",
-            "label": "商品货品图片或者商品图片",
+            "label": "货品图片",
             "type": "string",
             "comment": "商品货品图片或者商品图片",
             "length": 255,
@@ -75,7 +75,7 @@
         },
         {
             "name": "comment",
-            "label": "订单商品评论，如果是-1，则超期不能评价；如果是0，则可以评价；如果其他值，则是comment表里面的评论ID。",
+            "label": "订单商品评论",
             "type": "integer",
             "comment": "订单商品评论，如果是-1，则超期不能评价；如果是0，则可以评价；如果其他值，则是comment表里面的评论ID。",
             "nullable": true,

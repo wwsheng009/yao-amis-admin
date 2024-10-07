@@ -15,7 +15,7 @@
         },
         {
             "name": "link",
-            "label": "所广告的商品页面或者活动页面链接地址",
+            "label": "链接地址",
             "type": "string",
             "comment": "所广告的商品页面或者活动页面链接地址",
             "length": 255,
@@ -30,7 +30,7 @@
         },
         {
             "name": "position",
-            "label": "广告位置：1则是首页",
+            "label": "广告位置",
             "type": "tinyInteger",
             "comment": "广告位置：1则是首页",
             "nullable": true,
@@ -62,10 +62,10 @@
         {
             "name": "enabled",
             "label": "是否启动",
-            "type": "tinyInteger",
+            "type": "boolean",
             "comment": "是否启动",
             "nullable": true,
-            "default": 0,
+            "default": false,
             "index": true
         }
     ],

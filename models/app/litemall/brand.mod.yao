@@ -23,7 +23,7 @@
         },
         {
             "name": "pic_url",
-            "label": "品牌商页的品牌商图片",
+            "label": "品牌商图片",
             "type": "string",
             "comment": "品牌商页的品牌商图片",
             "length": 255,
@@ -33,11 +33,12 @@
             "name": "sort_order",
             "type": "tinyInteger",
             "nullable": true,
-            "default": 50
+            "default": 50,
+            "label": "排序"
         },
         {
             "name": "floor_price",
-            "label": "品牌商的商品低价，仅用于页面展示",
+            "label": "品牌商的商品低价",
             "type": "decimal",
             "comment": "品牌商的商品低价，仅用于页面展示",
             "nullable": true,

@@ -7,7 +7,7 @@
         },
         {
             "name": "user_id",
-            "label": "用户表的用户ID",
+            "label": "用户ID",
             "type": "integer",
             "comment": "用户表的用户ID",
             "default": 0
@@ -54,15 +54,15 @@
         {
             "name": "has_picture",
             "label": "是否含有图片",
-            "type": "tinyInteger",
+            "type": "boolean",
             "comment": "是否含有图片",
             "nullable": true,
-            "default": 0
+            "default": false
         },
         {
             "name": "pic_urls",
-            "label": "图片地址列表，采用JSON数组格式",
-            "type": "string",
+            "label": "图片地址列表",
+            "type": "json",
             "comment": "图片地址列表，采用JSON数组格式",
             "length": 1023,
             "nullable": true

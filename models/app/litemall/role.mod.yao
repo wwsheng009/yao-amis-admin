@@ -24,10 +24,10 @@
         {
             "name": "enabled",
             "label": "是否启用",
-            "type": "tinyInteger",
+            "type": "boolean",
             "comment": "是否启用",
             "nullable": true,
-            "default": 1
+            "default": true
         }
     ],
     "option": {
