@@ -14,7 +14,7 @@ var yao_amis = {
         if (o.value === "sessionStorage") {
           stoarge_type = "sessionStorage";
         }
-      } catch (error) {}
+      } catch (error) { }
     }
     return stoarge_type;
   },
@@ -70,9 +70,31 @@ var yao_amis = {
     if (s != null && key.startsWith("xgen:")) {
       try {
         s = JSON.parse(s);
-      } catch (error) {}
+      } catch (error) { }
     }
     return s;
+  },
+  // 兼容xgen集成登录
+  updateXgenMenus(menus) {
+    // Set keys for the menu items
+    const setKeys = (items, parent_key, in_setting) => {
+      let idxkey = 0
+      items.forEach((item) => {
+        const parent = parent_key != '' ? '/_parent' + parent_key : ''
+        const setting = in_setting ? '/_setting' : ''
+        const id = idxkey > 0 ? '/_' + idxkey : ''
+        const key = `${item.path}/_menu${setting}${parent}${id}`
+        item.key = key
+        idxkey++
+        if (item.children) setKeys(item.children, item.key, in_setting)
+      })
+    }
+
+    setKeys(menus.items, '', false)
+    setKeys(menus.setting, '', true)
+
+    this.xgenSetStorage("xgen:menus", menus);
+    this.xgenSetStorage("xgen:menu", menus.items);
   },
 
   afterLogin(payload) {
@@ -92,9 +114,9 @@ var yao_amis = {
 
     const tokenStoarageType = this.getTokenStorageType();
     this.xgenSetStorage("xgen:token", token, tokenStoarageType);
-    this.xgenSetStorage("xgen:menus", payload.menus);
-    this.xgenSetStorage("xgen:menu", payload.menus.items);
     this.xgenSetStorage("xgen:user", payload.user);
+
+    this.updateXgenMenus(payload.menus)
 
     if (payload.studio) {
       //studio
