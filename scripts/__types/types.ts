@@ -191,7 +191,8 @@ export interface AmisUIColumn
   clearable?: boolean;
 
   btnLabel?: string;
-
+  /** 显示更多的提示信息 */
+  labelRemark?: string;
   form?: { [key: string]: any };
 }
 

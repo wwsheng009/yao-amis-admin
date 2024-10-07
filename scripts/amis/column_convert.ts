@@ -551,7 +551,9 @@ export function column2AmisFormViewColumn(
   const newColumn = {} as AmisUIColumn;
   newColumn.name = column.name;
   newColumn.label = column.label || column.name;
-
+  if (column.comment && column.comment != newColumn.label) {
+    newColumn.labelRemark = column.comment;
+  }
   // 必填项，查看界面没必要要显示必输
   // if (column.primary !== true) {
   //   if (column.nullable) {
@@ -754,6 +756,9 @@ export function column2AmisFormEditColumn(
   const newColumn = {} as AmisUIColumn;
   newColumn.name = column.name;
   newColumn.label = column.label || column.name;
+  if (column.comment && column.comment != newColumn.label) {
+    newColumn.labelRemark = column.comment;
+  }
 
   // nullable的优先级最高
   if (!column.nullable) {
@@ -882,24 +887,16 @@ export function column2AmisFormEditColumn(
       if (column.nullable) {
         newColumn.clearable = true;
       }
-      if (
-        column.options != null &&
-        Array.isArray(column.options) &&
-        column.options.length
-      ) {
+      if (Array.isArray(column.options) && column.options.length) {
         newColumn.options = column.options;
-      } else {
-        const options =
-          column.option &&
-          column.option.map((option) => {
-            return {
-              label: option as string,
-              value: option
-            };
-          });
-        newColumn.options = options;
+      } else if (Array.isArray(column.option) && column.option.length) {
+        newColumn.options = column.option.map((option) => {
+          return {
+            label: option as string,
+            value: option
+          };
+        });
       }
-
       break;
     case 'FILE':
       newColumn.type = 'input-file';
