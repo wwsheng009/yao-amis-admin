@@ -562,6 +562,9 @@ export function amisModelToYaoModel(modelDsl: AmisModel): YaoModel.ModelDSL {
   if (m.option) {
     delete m.option.migrate_force;
   }
+  if (m.name == m.table?.name) {
+    m.name = DotName(m.table.name);
+  }
   delete m.id;
   delete m.ID;
 
