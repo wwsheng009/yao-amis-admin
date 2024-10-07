@@ -47,6 +47,7 @@ import {
   guessModelColumnsType
 } from './model_convert';
 import { ErrorMessage, SuccessMessage } from '@scripts/return';
+import { deleteModelLocalFile, saveModelToFile } from './model_file';
 
 /**
  * yao run scripts.system.model.page
@@ -108,41 +109,6 @@ function getDatabaseModelList(): AmisModelDB[] {
   return list;
 }
 
-/**
- * Save the model dsl to local file
- * @param {object} modelDsl
- * @returns
- */
-function saveModelToFile(modelDsl: AmisModel) {
-  const yaoEnv = Process('utils.env.Get', 'YAO_ENV');
-  if (yaoEnv !== 'development') {
-    return;
-  }
-
-  // 控制是否需要保存到本地
-  const saveFlag = Process('utils.env.Get', 'SAVE_MODEL_FILE_TO_LOCAL');
-  if (saveFlag !== 'true') {
-    return;
-  }
-
-  // hacked,don't do this in production envirement
-  // __yao_data = { ROOT: true };
-  let model_id = modelDsl.ID;
-  if (!model_id) {
-    model_id = modelDsl.table?.name;
-  }
-  if (!model_id) {
-    console.log(`模型不完整，不保存成文件！`);
-    return;
-  }
-  const model = amisModelToYaoModel(modelDsl);
-
-  const dsl = new FS('system');
-  model_id = SlashName(model_id);
-  dsl.WriteFile(`/dev/models/${model_id}.mod.yao`, JSON.stringify(model));
-  // __yao_data = { ROOT: false };
-}
-
 // // 删除关联表数据
 // export function BeforeDelete(id: number) {
 //   DeleteModelolumns(id);
@@ -169,7 +135,6 @@ export function saveModelApi(payload: AmisUIModel) {
   CheckAmisModel(model);
 
   // 传入的是模型数据，转成表结构后再保存
-  saveModelToFile(model);
   const line = amisModelToAmisModelDB(model);
   const id = saveAmisModel(line, model.option?.migrate_force);
 
@@ -186,6 +151,7 @@ export function saveModelApi(payload: AmisUIModel) {
   } else {
     return Process('scripts.return.ErrorMessage', 403, '保存模型失败');
   }
+  saveModelToFile(model);
 
   return Process('scripts.return.RSuccess', getModelApi(id), '保存成功');
 }
@@ -249,8 +215,6 @@ function DeleteModelMetaById(modelId: string) {
   // 检查是否存在，不存在会报错
   Process('models.ddic.model.Find', modelId, {});
 
-  DeleteModelLocalFile(modelId);
-
   const deleteFun = function (modelId: string) {
     // 先删除列定义
     let ret = Process('models.ddic.model.column.DeleteWhere', {
@@ -265,31 +229,9 @@ function DeleteModelMetaById(modelId: string) {
       throw ret;
     }
   };
-  return RunTransaction(deleteFun, modelId as undefined);
-}
+  RunTransaction(deleteFun, modelId as undefined);
 
-/**
- * 删除本地模型定义文件
- * @param {string} modelId model id
- * @returns
- */
-function DeleteModelLocalFile(modelId: string) {
-  const yaoEnv = Process('utils.env.Get', 'YAO_ENV');
-  if (yaoEnv !== 'development') {
-    return;
-  }
-  const saveFlag = Process('utils.env.Get', 'SAVE_MODEL_FILE_TO_LOCAL');
-  if (saveFlag !== 'true') {
-    return;
-  }
-  // __yao_data = { ROOT: true };
-  const dsl = new FS('system');
-  const model_id = SlashName(modelId);
-  const fname = `/dev/models/${model_id}.mod.yao`;
-  if (dsl.Exists(fname)) {
-    dsl.Remove(fname);
-  }
-  // __yao_data = { ROOT: false };
+  return deleteModelLocalFile(modelId);
 }
 
 /**
@@ -425,7 +367,6 @@ export function ImportModelFromSource(payload: { ID: string; source: string }) {
   model = completeAmisModel(model);
   CheckAmisModel(model);
   model = removeModelColumnIds(model);
-  saveModelToFile(model);
   // 传入的是模型数据，转成表结构后再保存
   const line = amisModelToAmisModelDB(model);
   const id = saveAmisModel(line) as unknown as number;
@@ -441,6 +382,7 @@ export function ImportModelFromSource(payload: { ID: string; source: string }) {
       '模型保存失败，导入失败'
     );
   }
+  saveModelToFile(model);
 
   return Process('scripts.return.RSuccess', { id: id }, '导入成功');
 }
@@ -600,8 +542,6 @@ function ImportTableAction(payload: { name: string }) {
   CheckAmisModel(model);
   model = removeModelColumnIds(model);
 
-  saveModelToFile(model);
-
   let dbModel = deepCopyObject(model);
   dbModel = guessModelColumnsType(dbModel);
   // 传入的是模型数据，转成表结构后再保存
@@ -616,6 +556,8 @@ function ImportTableAction(payload: { name: string }) {
   } else {
     return ErrorMessage(403, '保存模型失败');
   }
+
+  saveModelToFile(model);
   return SuccessMessage('保存模型成功');
 }
 
@@ -674,7 +616,6 @@ export function ImportFromNeo(modelDsl: AmisUIModel) {
 
   CheckAmisModel(model);
 
-  saveModelToFile(model);
   // 传入的是模型数据，转成表结构后再保存
   const line = amisModelToAmisModelDB(model);
   const id = saveAmisModel(line);
@@ -687,6 +628,7 @@ export function ImportFromNeo(modelDsl: AmisUIModel) {
   } else {
     throw new Exception('保存模型失败', 503);
   }
+  saveModelToFile(model);
   return id;
 }
 export function ImportFromCached(payload: { model: string }) {

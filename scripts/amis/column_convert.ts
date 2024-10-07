@@ -285,6 +285,14 @@ export function GetColumnTypeList() {
       value: 'integer'
     },
     {
+      label: '小整型',
+      value: 'smallInteger'
+    },
+    {
+      label: '微整型',
+      value: 'tinyInteger'
+    },
+    {
       label: '浮点数',
       value: 'float'
     },
@@ -392,7 +400,8 @@ export function column2AmisTableViewColumn(
     case 'TINYINTEGER':
     case 'SMALLINTEGER':
     case 'INTEGER':
-    case 'BIGINTEGE':
+    case 'BITINT':
+    case 'BIGINTEGER':
       newColumn.type = 'number';
       newColumn.searchable = true;
       newColumn.sortable = true;
@@ -611,7 +620,8 @@ export function column2AmisFormViewColumn(
     case 'TINYINTEGER':
     case 'SMALLINTEGER':
     case 'INTEGER':
-    case 'BIGINTEGE':
+    case 'BITINT':
+    case 'BIGINTEGER':
       newColumn.type = 'static-number';
       break;
     case 'UNSIGNEDTINYINTEGER':
@@ -766,22 +776,13 @@ export function column2AmisFormEditColumn(
     newColumn.description = column.comment;
   }
 
-  // nullable的优先级最高
-  if (!column.nullable) {
-    // 必填项
-    if (column.type.toLowerCase() !== 'id' && column.default == null) {
-      if (column.unique || column.index || column.primary) {
-        newColumn.required = true;
-      }
-    }
-  }
+  const columnType = column.type.toUpperCase();
 
   if (column.default) {
     newColumn.value = column.default;
   }
   newColumn.type = 'input-text';
 
-  const columnType = column.type.toUpperCase();
   switch (columnType) {
     case 'STRING':
     case 'CHAR':
@@ -833,7 +834,8 @@ export function column2AmisFormEditColumn(
     case 'TINYINTEGER':
     case 'SMALLINTEGER':
     case 'INTEGER':
-    case 'BIGINTEGE':
+    case 'BITINT':
+    case 'BIGINTEGER':
       newColumn.type = 'input-number';
       break;
     case 'UNSIGNEDTINYINTEGER':
@@ -953,6 +955,17 @@ export function column2AmisFormEditColumn(
     default:
       break;
   }
+  if (!newColumn.isID && column.default == null) {
+    // nullable的优先级最高
+    if (!column.nullable) {
+      newColumn.required = true;
+    } else if (column.nullable) {
+      if (column.unique || column.index || column.primary) {
+        newColumn.required = true;
+      }
+    }
+  }
+
   // 布尔
   if (
     columnType === 'TINYINTEGER' &&

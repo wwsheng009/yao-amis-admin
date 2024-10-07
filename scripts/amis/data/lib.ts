@@ -367,7 +367,8 @@ export function updateInputData(
         case 'TINYINTEGER':
         case 'SMALLINTEGER':
         case 'INTEGER':
-        case 'BIGINTEGE':
+        case 'BITINT':
+        case 'BIGINTEGER':
         case 'UNSIGNEDTINYINTEGER':
         case 'UNSIGNEDSMALLINTEGER':
         case 'UNSIGNEDINTEGER':

@@ -410,6 +410,16 @@ function completeAmisModelColumn(col: AmisModelColumn) {
     }
   }
 
+  if (
+    (colType.includes('float') ||
+      colType.includes('int') ||
+      colType.includes('decimal') ||
+      colType.includes('double')) &&
+    col.default
+  ) {
+    col.default = Number(col.default);
+  }
+
   if (colType == 'boolean' && typeof col.default === 'string') {
     if (col.default.toLowerCase() == 'true') {
       col.default = true;

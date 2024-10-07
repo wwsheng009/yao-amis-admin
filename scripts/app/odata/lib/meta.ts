@@ -48,7 +48,8 @@ export function getEdmType(typeIn) {
     case 'TINYINTEGER':
     case 'SMALLINTEGER':
     case 'INTEGER':
-    case 'BIGINTEGE':
+    case 'BITINT':
+    case 'BIGINTEGER':
       newColumn.type = 'Edm.Int32';
       break;
     case 'UNSIGNEDTINYINTEGER':

@@ -170,7 +170,8 @@ function makeFake(modelId: ModelId) {
       case 'TINYINTEGER':
       case 'SMALLINTEGER':
       case 'INTEGER':
-      case 'BIGINTEGE':
+      case 'BITINT':
+      case 'BIGINTEGER':
         fakeData[key] = 12331;
         break;
       case 'UNSIGNEDTINYINTEGER':
