@@ -1,155 +1,170 @@
 {
-    "columns": [
-        {
-            "name": "id",
-            "type": "id",
-            "primary": true
-        },
-        {
-            "name": "goods_sn",
-            "label": "商品编号",
-            "type": "string",
-            "comment": "商品编号",
-            "length": 63,
-            "default": "",
-            "index": true
-        },
-        {
-            "name": "name",
-            "label": "商品名称",
-            "type": "string",
-            "comment": "商品名称",
-            "length": 127,
-            "default": ""
-        },
-        {
-            "name": "category_id",
-            "label": "类目ID",
-            "type": "integer",
-            "comment": "商品所属类目ID",
-            "nullable": true,
-            "default": 0,
-            "index": true
-        },
-        {
-            "name": "brand_id",
-            "type": "integer",
-            "nullable": true,
-            "default": 0,
-            "index": true
-        },
-        {
-            "name": "gallery",
-            "label": "商品宣传图片列表",
-            "type": "json",
-            "comment": "商品宣传图片列表，采用JSON数组格式",
-            "nullable": true
-        },
-        {
-            "name": "keywords",
-            "label": "商品关键字，采用逗号间隔",
-            "type": "string",
-            "comment": "商品关键字，采用逗号间隔",
-            "length": 255,
-            "nullable": true,
-            "default": ""
-        },
-        {
-            "name": "brief",
-            "label": "商品简介",
-            "type": "string",
-            "comment": "商品简介",
-            "length": 255,
-            "nullable": true,
-            "default": ""
-        },
-        {
-            "name": "is_on_sale",
-            "label": "是否上架",
-            "type": "boolean",
-            "comment": "是否上架",
-            "nullable": true,
-            "default": true
-        },
-        {
-            "name": "sort_order",
-            "type": "smallInteger",
-            "nullable": true,
-            "default": 100,
-            "index": true
-        },
-        {
-            "name": "pic_url",
-            "label": "商品页面商品图片",
-            "type": "string",
-            "comment": "商品页面商品图片",
-            "length": 255,
-            "nullable": true
-        },
-        {
-            "name": "share_url",
-            "label": "商品分享海报",
-            "type": "string",
-            "comment": "商品分享海报",
-            "length": 255,
-            "nullable": true
-        },
-        {
-            "name": "is_new",
-            "label": "是否新品首发",
-            "type": "tinyInteger",
-            "comment": "是否新品首发，如果设置则可以在新品首发页面展示",
-            "nullable": true,
-            "default": 0
-        },
-        {
-            "name": "is_hot",
-            "label": "是否人气推荐",
-            "type": "tinyInteger",
-            "comment": "是否人气推荐，如果设置则可以在人气推荐页面展示",
-            "nullable": true,
-            "default": 0
-        },
-        {
-            "name": "unit",
-            "label": "商品单位",
-            "type": "string",
-            "comment": "商品单位，例如件、盒",
-            "length": 31,
-            "nullable": true,
-            "default": "’件‘"
-        },
-        {
-            "name": "counter_price",
-            "label": "专柜价格",
-            "type": "decimal",
-            "comment": "专柜价格",
-            "nullable": true,
-            "default": 0
-        },
-        {
-            "name": "retail_price",
-            "label": "零售价格",
-            "type": "decimal",
-            "comment": "零售价格",
-            "nullable": true,
-            "default": 100000
-        },
-        {
-            "name": "detail",
-            "label": "商品详细介绍",
-            "type": "text",
-            "comment": "商品详细介绍，是富文本格式",
-            "nullable": true
-        }
-    ],
-    "option": {
-        "soft_deletes": true,
-        "timestamps": true
+"name": "app.litemall.goods",
+"relations": {
+    "brand": {
+        "foreign": "brand_id",
+        "key": "id",
+        "label": "brand",
+        "model": "app.litemall.brand",
+        "name": "brand",
+        "type": "hasOne"
     },
-    "table": {
-        "name": "app_litemall_goods"
-    },
-    "name": "app_litemall_goods",
-    "relations": {}
+    "category": {
+        "key": "id",
+        "label": "category",
+        "model": "app.litemall.category",
+        "name": "category",
+        "type": "hasOne",
+        "foreign": "category_id"
+    }
+},
+"table": {
+    "name": "app_litemall_goods"
+},
+"option": {
+    "soft_deletes": true,
+    "timestamps": true
+},
+"columns": [
+    {
+    "comment": "商品编号",
+    "label": "商品编号",
+    "length": 63,
+    "type": "string",
+    "default": "",
+    "name": "goods_sn",
+    "index": true
+},
+{
+    "default": "",
+    "length": 127,
+    "name": "name",
+    "type": "string",
+    "comment": "商品名称",
+    "label": "商品名称"
+},
+{
+    "comment": "商品所属类目ID",
+    "default": 0,
+    "nullable": true,
+    "label": "类目ID",
+    "name": "category_id",
+    "type": "integer",
+    "index": true
+},
+{
+    "label": "品牌ID",
+    "comment": "brand_id",
+    "default": 0,
+    "name": "brand_id",
+    "nullable": true,
+    "type": "integer",
+    "index": true
+},
+{
+    "comment": "商品宣传图片列表，采用JSON数组格式",
+    "label": "商品宣传图片列表",
+    "name": "gallery",
+    "nullable": true,
+    "type": "longText"
+},
+{
+    "comment": "商品关键字，采用逗号间隔",
+    "nullable": true,
+    "default": "",
+    "name": "keywords",
+    "type": "string",
+    "label": "商品关键字，采用逗号间隔",
+    "length": 255
+},
+{
+    "nullable": true,
+    "default": "",
+    "type": "string",
+    "label": "商品简介",
+    "comment": "商品简介",
+    "length": 255,
+    "name": "brief"
+},
+{
+    "type": "boolean",
+    "default": true,
+    "name": "is_on_sale",
+    "nullable": true,
+    "label": "是否上架",
+    "comment": "是否上架"
+},
+{
+    "type": "smallInteger",
+    "default": 100,
+    "label": "排序",
+    "comment": "sort_order",
+    "name": "sort_order",
+    "nullable": true,
+    "index": true
+},
+{
+    "comment": "商品页面商品图片",
+    "nullable": true,
+    "type": "longText",
+    "label": "商品页面商品图片",
+    "name": "pic_url"
+},
+{
+    "name": "share_url",
+    "nullable": true,
+    "label": "商品分享海报",
+    "comment": "商品分享海报",
+    "length": 255,
+    "type": "string"
+},
+{
+    "name": "is_new",
+    "comment": "是否新品首发，如果设置则可以在新品首发页面展示",
+    "nullable": true,
+    "label": "是否新品首发",
+    "type": "boolean",
+    "default": false
+},
+{
+    "type": "boolean",
+    "nullable": true,
+    "label": "是否人气推荐",
+    "name": "is_hot",
+    "comment": "是否人气推荐，如果设置则可以在人气推荐页面展示",
+    "default": false
+},
+{
+    "nullable": true,
+    "length": 31,
+    "name": "unit",
+    "type": "string",
+    "label": "商品单位",
+    "default": "件",
+    "comment": "商品单位，例如件、盒"
+},
+{
+    "label": "专柜价格",
+    "comment": "专柜价格",
+    "default": 0,
+    "nullable": true,
+    "type": "decimal",
+    "name": "counter_price"
+},
+{
+    "label": "零售价格",
+    "default": 100000,
+    "comment": "零售价格",
+    "name": "retail_price",
+    "type": "decimal",
+    "nullable": true
+},
+{
+    "nullable": true,
+    "type": "text",
+    "label": "商品详细介绍",
+    "name": "detail",
+    "comment": "商品详细介绍，是富文本格式"
+}
+]
 }

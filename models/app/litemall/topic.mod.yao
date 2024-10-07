@@ -68,8 +68,7 @@
             "label": "专题相关商品",
             "type": "json",
             "comment": "专题相关商品，采用JSON数组格式",
-            "nullable": true,
-            "default": ""
+            "nullable": true
         }
     ],
     "option": {
@@ -79,6 +78,7 @@
     "table": {
         "name": "app_litemall_topic"
     },
-    "name": "app_litemall_topic",
+    "name": "app.litemall.topic",
     "relations": {}
 }
+// yao migrate -n app.litemall.topic
