@@ -13,42 +13,42 @@
       "comment": "ID"
     },
     {
-      "label": "Project",
+      "label": "项目",
       "name": "project_id",
       "type": "bigInteger",
       "comment": "Project",
       "index": true
     },
     {
-      "label": "Manager",
+      "label": "经理",
       "name": "user_id",
       "type": "bigInteger",
       "comment": "Manager",
       "index": true
     },
     {
-      "label": "SignAt",
+      "label": "签约时间",
       "name": "sign_at",
       "type": "datetime",
       "comment": "SignAt",
       "index": true
     },
     {
-      "label": "ExpiredAt",
+      "label": "过期时间",
       "name": "expired_at",
       "type": "datetime",
       "comment": "ExpiredAt",
       "index": true
     },
     {
-      "label": "Files",
+      "label": "文件",
       "name": "files",
       "type": "json",
       "comment": "Files",
       "nullable": true
     },
     {
-      "label": "Status",
+      "label": "状态",
       "name": "status",
       "type": "enum",
       "default": "Create",

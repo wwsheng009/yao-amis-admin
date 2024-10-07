@@ -3,44 +3,51 @@
         {
             "name": "id",
             "type": "id",
-            "primary": true
+            "primary": true,
+            "label": "ID"
         },
         {
             "name": "name",
             "type": "string",
             "length": 64,
-            "nullable": true
+            "nullable": true,
+            "label": "名称"
         },
         {
             "name": "charge_type",
-            "label": "计费类型:0->按重量；1->按件数",
+            "label": "计费类型",
             "type": "integer",
             "comment": "计费类型:0->按重量；1->按件数",
-            "nullable": true
+            "nullable": true,
+            "label": "计费类型"
         },
         {
             "name": "first_weight",
             "label": "首重kg",
             "type": "decimal",
             "comment": "首重kg",
-            "nullable": true
+            "nullable": true,
+            "label": "首重"
         },
         {
             "name": "first_fee",
             "label": "首费（元）",
             "type": "decimal",
             "comment": "首费（元）",
-            "nullable": true
+            "nullable": true,
+            "label": "首费"
         },
         {
             "name": "continue_weight",
             "type": "decimal",
-            "nullable": true
+            "nullable": true,
+            "label": "续重"
         },
         {
             "name": "continme_fee",
             "type": "decimal",
-            "nullable": true
+            "nullable": true,
+            "label": "续费"
         },
         {
             "name": "dest",
@@ -48,7 +55,8 @@
             "type": "string",
             "comment": "目的地（省、市）",
             "length": 255,
-            "nullable": true
+            "nullable": true,
+            "label": "目的地"
         }
     ],
     "option": {},

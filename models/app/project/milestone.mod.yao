@@ -1,37 +1,37 @@
 {
-  "name": "::Project Milestones",
+  "name": "项目里程碑",
   "table": {
     "name": "app_project_milestone",
-    "comment": "::Project Milestones"
+    "comment": "项目里程碑"
   },
   "columns": [
     {
-      "label": "::ID",
+      "label": "ID",
       "name": "id",
       "type": "ID"
     },
     {
-      "label": "::Project ID",
+      "label": "项目ID",
       "name": "project_id",
       "type": "bigInteger",
       "length": 20,
-      "comment": "::Project ID",
+      "comment": "项目ID",
       "index": true
     },
     {
-      "label": "::Step ID",
+      "label": "步骤ID",
       "name": "step_id",
       "type": "bigInteger",
       "length": 20,
-      "comment": "::Step ID",
+      "comment": "步骤ID",
       "index": true
     },
     {
-      "label": "::Milestone",
+      "label": "里程碑",
       "name": "name",
       "type": "string",
       "length": 200,
-      "comment": "::Milestone"
+      "comment": "里程碑"
     }
   ],
   "relations": {

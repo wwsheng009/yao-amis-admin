@@ -9,7 +9,8 @@
             "name": "name",
             "type": "string",
             "length": 100,
-            "nullable": true
+            "nullable": true,
+            "label": "名称"
         },
         {
             "name": "icon",
@@ -29,12 +30,14 @@
         {
             "name": "show_status",
             "type": "integer",
-            "nullable": true
+            "nullable": true,
+            "label": "显示状态"
         },
         {
             "name": "sort",
             "type": "integer",
-            "nullable": true
+            "nullable": true,
+            "label": "排序"
         }
     ],
     "option": {},

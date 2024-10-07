@@ -9,13 +9,15 @@
             "name": "name",
             "type": "string",
             "length": 255,
-            "nullable": true
+            "nullable": true,
+            "label": "名称"
         },
         {
             "name": "sub_title",
             "type": "string",
             "length": 255,
-            "nullable": true
+            "nullable": true,
+            "label": "副标题"
         },
         {
             "name": "pic",
@@ -28,12 +30,14 @@
         {
             "name": "sort",
             "type": "integer",
-            "nullable": true
+            "nullable": true,
+            "label": "排序"
         },
         {
             "name": "show_status",
             "type": "integer",
-            "nullable": true
+            "nullable": true,
+            "label": "显示状态"
         }
     ],
     "option": {},

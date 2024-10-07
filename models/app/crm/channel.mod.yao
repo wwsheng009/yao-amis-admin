@@ -13,7 +13,7 @@
       "comment": "ID"
     },
     {
-      "label": "Name",
+      "label": "名称",
       "name": "name",
       "type": "string",
       "length": 100,
@@ -21,7 +21,7 @@
       "index": true
     },
     {
-      "label": "Homepage",
+      "label": "主页",
       "name": "link",
       "type": "string",
       "length": 200,
@@ -29,7 +29,7 @@
       "nullable": true
     },
     {
-      "label": "Contact",
+      "label": "联系人",
       "name": "contact_name",
       "type": "string",
       "length": 200,
@@ -38,7 +38,7 @@
       "index": true
     },
     {
-      "label": "Contact Title",
+      "label": "联系人职务",
       "name": "contact_title",
       "type": "string",
       "length": 200,
@@ -47,7 +47,7 @@
       "index": true
     },
     {
-      "label": "Mobile",
+      "label": "手机",
       "name": "contact_mobile",
       "type": "string",
       "comment": "Mobile",
@@ -55,7 +55,7 @@
       "index": true
     },
     {
-      "label": "Wechat",
+      "label": "微信",
       "name": "contact_wechat",
       "type": "string",
       "comment": "Wechat",
@@ -63,7 +63,7 @@
       "index": true
     },
     {
-      "label": "Summary",
+      "label": "摘要",
       "name": "summary",
       "type": "string",
       "length": 600,
@@ -72,7 +72,7 @@
       "index": true
     },
     {
-      "label": "Description",
+      "label": "描述",
       "name": "desc",
       "type": "text",
       "comment": "Description",

@@ -8,17 +8,20 @@
         {
             "name": "product_id",
             "type": "bigInteger",
-            "nullable": true
+            "nullable": true,
+            "label": "商品ID"
         },
         {
             "name": "full_price",
             "type": "decimal",
-            "nullable": true
+            "nullable": true,
+            "label": "全额价格"
         },
         {
             "name": "reduce_price",
             "type": "decimal",
-            "nullable": true
+            "nullable": true,
+            "label": "减免价格"
         }
     ],
     "option": {},

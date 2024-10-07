@@ -7,7 +7,7 @@
         },
         {
             "name": "parent_id",
-            "label": "上机分类的编号：0表示一级分类",
+            "label": "上机分类的编号",
             "type": "bigInteger",
             "comment": "上机分类的编号：0表示一级分类",
             "nullable": true
@@ -20,7 +20,7 @@
         },
         {
             "name": "level",
-            "label": "分类级别：0->1级；1->2级",
+            "label": "分类级别",
             "type": "integer",
             "comment": "分类级别：0->1级；1->2级",
             "nullable": true
@@ -38,14 +38,14 @@
         },
         {
             "name": "nav_status",
-            "label": "是否显示在导航栏：0->不显示；1->显示",
+            "label": "是否显示在导航栏",
             "type": "integer",
             "comment": "是否显示在导航栏：0->不显示；1->显示",
             "nullable": true
         },
         {
             "name": "show_status",
-            "label": "显示状态：0->不显示；1->显示",
+            "label": "显示状态",
             "type": "integer",
             "comment": "显示状态：0->不显示；1->显示",
             "nullable": true

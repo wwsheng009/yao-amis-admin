@@ -3,17 +3,20 @@
         {
             "name": "id",
             "type": "id",
-            "primary": true
+            "primary": true,
+            "label": "ID"
         },
         {
             "name": "product_category_id",
             "type": "bigInteger",
-            "nullable": true
+            "nullable": true,
+            "label": "产品类别ID"
         },
         {
             "name": "product_attribute_id",
             "type": "bigInteger",
-            "nullable": true
+            "nullable": true,
+            "label": "产品属性ID"
         }
     ],
     "option": {},

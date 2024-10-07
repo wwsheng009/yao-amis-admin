@@ -1,29 +1,29 @@
 {
-  "name": "::Project Steps",
+  "name": "项目步骤",
   "table": {
     "name": "app_project_step",
-    "comment": "::Project Steps"
+    "comment": "项目步骤"
   },
   "columns": [
     {
-      "label": "::ID",
+      "label": "ID",
       "name": "id",
       "type": "ID"
     },
     {
-      "label": "::Project ID",
+      "label": "项目ID",
       "name": "project_id",
       "type": "bigInteger",
       "length": 20,
-      "comment": "::Project ID",
+      "comment": "项目ID",
       "index": true
     },
     {
-      "label": "::Step",
+      "label": "步骤",
       "name": "name",
       "type": "string",
       "length": 200,
-      "comment": "::Step"
+      "comment": "步骤"
     }
   ],
   "relations": {},

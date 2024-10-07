@@ -9,7 +9,8 @@
             "name": "name",
             "type": "string",
             "length": 64,
-            "nullable": true
+            "nullable": true,
+            "label": "名称"
         },
         {
             "name": "attribute_count",

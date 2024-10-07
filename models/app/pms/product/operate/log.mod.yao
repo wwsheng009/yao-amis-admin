@@ -3,54 +3,64 @@
         {
             "name": "id",
             "type": "id",
-            "primary": true
+            "primary": true,
+            "label": "ID"
         },
         {
             "name": "product_id",
             "type": "bigInteger",
-            "nullable": true
+            "nullable": true,
+            "label": "产品ID"
         },
         {
             "name": "price_old",
             "type": "decimal",
-            "nullable": true
+            "nullable": true,
+            "label": "旧价格"
         },
         {
             "name": "price_new",
             "type": "decimal",
-            "nullable": true
+            "nullable": true,
+            "label": "新价格"
         },
         {
             "name": "sale_price_old",
             "type": "decimal",
-            "nullable": true
+            "nullable": true,
+            "label": "旧促销价格"
         },
         {
             "name": "sale_price_new",
             "type": "decimal",
-            "nullable": true
+            "nullable": true,
+            "label": "新促销价格"
         },
         {
             "name": "gift_point_old",
             "label": "赠送的积分",
             "type": "integer",
             "comment": "赠送的积分",
-            "nullable": true
+            "nullable": true,
+            "label": "赠送的积分"
         },
         {
             "name": "gift_point_new",
             "type": "integer",
-            "nullable": true
+            "nullable": true,
+            "label": "新积分"
         },
         {
             "name": "use_point_limit_old",
             "type": "integer",
-            "nullable": true
+            "nullable": true,
+            "label": "使用旧积分限制"
         },
         {
             "name": "use_point_limit_new",
             "type": "integer",
-            "nullable": true
+            "nullable": true,
+            "label": "使用新积分限制"
         },
         {
             "name": "operate_man",
@@ -58,7 +68,8 @@
             "type": "string",
             "comment": "操作人",
             "length": 64,
-            "nullable": true
+            "nullable": true,
+            "label": "操作人"
         }
     ],
     "option": {

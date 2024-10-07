@@ -8,12 +8,14 @@
         {
             "name": "product_id",
             "type": "bigInteger",
-            "nullable": true
+            "nullable": true,
+            "label": "产品ID"
         },
         {
             "name": "product_attribute_id",
             "type": "bigInteger",
-            "nullable": true
+            "nullable": true,
+            "label": "产品属性ID"
         },
         {
             "name": "value",

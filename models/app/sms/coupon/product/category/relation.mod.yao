@@ -8,12 +8,14 @@
         {
             "name": "coupon_id",
             "type": "bigInteger",
-            "nullable": true
+            "nullable": true,
+            "label": "优惠券ID"
         },
         {
             "name": "product_category_id",
             "type": "bigInteger",
-            "nullable": true
+            "nullable": true,
+            "label": "产品分类ID"
         },
         {
             "name": "product_category_name",

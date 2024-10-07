@@ -14,23 +14,26 @@
             "name": "member_nick_name",
             "type": "string",
             "length": 255,
-            "nullable": true
+            "nullable": true,
+            "label": "会员昵称"
         },
         {
             "name": "member_icon",
             "type": "string",
             "length": 255,
-            "nullable": true
+            "nullable": true,
+            "label": "会员头像"
         },
         {
             "name": "content",
             "type": "string",
             "length": 1000,
-            "nullable": true
+            "nullable": true,
+            "label": "评论内容"
         },
         {
             "name": "type",
-            "label": "评论人员类型；0->会员；1->管理员",
+            "label": "评论人员类型",
             "type": "integer",
             "comment": "评论人员类型；0->会员；1->管理员",
             "nullable": true

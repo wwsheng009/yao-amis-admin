@@ -1,29 +1,29 @@
 {
-  "name": "::Project Templates",
+  "name": "项目模板",
   "table": {
     "name": "app_project_template",
-    "comment": "::Project Templates"
+    "comment": "项目模板"
   },
   "columns": [
     {
-      "label": "::ID",
+      "label": "ID",
       "name": "id",
       "type": "ID"
     },
     {
-      "label": "::Template Name",
+      "label": "模板名称",
       "name": "name",
       "type": "string",
       "index": true,
       "length": 200,
-      "comment": "::Template Name"
+      "comment": "模板名称"
     },
     {
-      "label": "::Data",
+      "label": "数据",
       "name": "data",
       "type": "JSON",
       "nullable": true,
-      "comment": "::Data"
+      "comment": "数据"
     }
   ],
   "relations": {},

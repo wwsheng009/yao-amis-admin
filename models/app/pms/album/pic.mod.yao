@@ -3,18 +3,21 @@
         {
             "name": "id",
             "type": "id",
-            "primary": true
+            "primary": true,
+            "label": "ID"
         },
         {
             "name": "album_id",
             "type": "bigInteger",
-            "nullable": true
+            "nullable": true,
+            "label": "相册ID"
         },
         {
             "name": "pic",
             "type": "string",
             "length": 1000,
-            "nullable": true
+            "nullable": true,
+            "label": "图片"
         }
     ],
     "option": {},

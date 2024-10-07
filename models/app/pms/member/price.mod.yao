@@ -8,12 +8,14 @@
         {
             "name": "product_id",
             "type": "bigInteger",
-            "nullable": true
+            "nullable": true,
+            "label": "产品ID"
         },
         {
             "name": "member_level_id",
             "type": "bigInteger",
-            "nullable": true
+            "nullable": true,
+            "label": "会员等级ID"
         },
         {
             "name": "member_price",
@@ -24,6 +26,7 @@
         },
         {
             "name": "member_level_name",
+            "label": "会员等级名称",
             "type": "string",
             "length": 100,
             "nullable": true

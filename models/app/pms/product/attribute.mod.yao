@@ -6,7 +6,7 @@
             "primary": true
         },
         {
-            "name": "product_attribute_category_id",
+            "name": "category_id",
             "type": "bigInteger",
             "nullable": true
         },
@@ -18,21 +18,21 @@
         },
         {
             "name": "select_type",
-            "label": "属性选择类型：0->唯一；1->单选；2->多选",
+            "label": "属性选择类型",
             "type": "integer",
             "comment": "属性选择类型：0->唯一；1->单选；2->多选",
             "nullable": true
         },
         {
             "name": "input_type",
-            "label": "属性录入方式：0->手工录入；1->从列表中选取",
+            "label": "属性录入方式",
             "type": "integer",
             "comment": "属性录入方式：0->手工录入；1->从列表中选取",
             "nullable": true
         },
         {
             "name": "input_list",
-            "label": "可选值列表，以逗号隔开",
+            "label": "可选值列表",
             "type": "string",
             "comment": "可选值列表，以逗号隔开",
             "length": 255,
@@ -40,42 +40,42 @@
         },
         {
             "name": "sort",
-            "label": "排序字段：最高的可以单独上传图片",
+            "label": "排序字段",
             "type": "integer",
             "comment": "排序字段：最高的可以单独上传图片",
             "nullable": true
         },
         {
             "name": "filter_type",
-            "label": "分类筛选样式：1->普通；1->颜色",
+            "label": "分类筛选样式",
             "type": "integer",
             "comment": "分类筛选样式：1->普通；1->颜色",
             "nullable": true
         },
         {
             "name": "search_type",
-            "label": "检索类型；0->不需要进行检索；1->关键字检索；2->范围检索",
+            "label": "检索类型",
             "type": "integer",
             "comment": "检索类型；0->不需要进行检索；1->关键字检索；2->范围检索",
             "nullable": true
         },
         {
             "name": "related_status",
-            "label": "相同属性产品是否关联；0->不关联；1->关联",
+            "label": "相同属性产品是否关联",
             "type": "integer",
             "comment": "相同属性产品是否关联；0->不关联；1->关联",
             "nullable": true
         },
         {
             "name": "hand_add_status",
-            "label": "是否支持手动新增；0->不支持；1->支持",
+            "label": "是否支持手动新增",
             "type": "integer",
             "comment": "是否支持手动新增；0->不支持；1->支持",
             "nullable": true
         },
         {
             "name": "type",
-            "label": "属性的类型；0->规格；1->参数",
+            "label": "属性的类型",
             "type": "integer",
             "comment": "属性的类型；0->规格；1->参数",
             "nullable": true
