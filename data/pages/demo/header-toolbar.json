@@ -124,13 +124,7 @@
                       "actions": [
                         {
                           "actionType": "custom",
-                          "script": "window.yao_amis.logout(false)"
-                        },
-                        {
-                          "actionType": "url",
-                          "args": {
-                            "url": "/amis-admin/login.html"
-                          }
+                          "script": "window.yao_amis.logout(true)"
                         }
                       ]
                     }

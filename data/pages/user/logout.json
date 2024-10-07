@@ -9,7 +9,8 @@
         {
           "actionType": "url",
           "args": {
-            "url": "/amis-admin/login.html"
+            "url": "/amis-admin/login.html",
+            "blank": false
           }
         }
       ],

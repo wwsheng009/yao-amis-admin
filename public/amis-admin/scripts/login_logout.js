@@ -24,6 +24,10 @@ var yao_amis = {
    * @param {string} type 保存类型 = sessionStorage或是localStorage
    */
   setTokenStorageType(typeIn) {
+    //clean up first
+    localStorage.removeItem(`xgen:token_storage`);
+    localStorage.removeItem(`xgen:token_storage`)
+
     const type = typeIn === "localStorage" ? "localStorage" : "sessionStorage";
     this.xgenSetStorage(`xgen:token_storage`, type, "localStorage");
   },
@@ -171,7 +175,7 @@ var yao_amis = {
     localStorage.removeItem("xgen:token");
     sessionStorage.removeItem("xgen:token");
     if (toLogin) {
-      window.location.href = loginUrl;
+      window.location.href = this.loginUrl;
     }
   },
 
