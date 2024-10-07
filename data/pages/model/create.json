@@ -127,6 +127,14 @@
               "label": "模型ID",
               "name": "header.id",
               "size": "sm"
+            },
+            {
+              "size": "sm",
+              "type": "static-link",
+              "body": "数据维护",
+              "blank": false,
+              "value": "#/table_maintain?table=${header.identity}",
+              "visibleOn": "!!header.id && header.identity"
             }
           ],
           "id": "u:fe16ac20a403",
@@ -353,6 +361,13 @@
                                             "id": "u:d5d9f15dccc2",
                                             "label": "允许空值",
                                             "name": "nullable"
+                                          },
+                                          {
+                                            "trueValue": 1,
+                                            "type": "switch",
+                                            "falseValue": 0,
+                                            "label": "公共访问",
+                                            "name": "is_public"
                                           }
                                         ],
                                         "hiddenOn": "data.type == `id`",
@@ -986,6 +1001,13 @@
                                                 "id": "u:d5d9f15dccc2",
                                                 "label": "允许空值",
                                                 "name": "nullable"
+                                              },
+                                              {
+                                                "trueValue": 1,
+                                                "type": "switch",
+                                                "falseValue": 0,
+                                                "label": "公共访问",
+                                                "name": "is_public"
                                               }
                                             ],
                                             "hiddenOn": "data.type == `id`",
