@@ -7,18 +7,21 @@
         },
         {
             "name": "coupon_id",
+            "label": "优惠券ID",
             "type": "bigInteger",
             "nullable": true,
             "index": true
         },
         {
             "name": "member_id",
+            "label": "会员ID",
             "type": "bigInteger",
             "nullable": true,
             "index": true
         },
         {
             "name": "coupon_code",
+            "label": "优惠券码",
             "type": "string",
             "length": 64,
             "nullable": true
@@ -34,14 +37,23 @@
         {
             "name": "get_type",
             "label": "获取类型",
-            "type": "integer",
+            "type": "enum",
+            "option": [
+                "0",
+                "1"
+            ],
             "comment": "获取类型：0->后台赠送；1->主动获取",
             "nullable": true
         },
         {
             "name": "use_status",
-            "label": "使用状态：0->未使用；1->已使用；2->已过期",
-            "type": "integer",
+            "label": "使用状态",
+            "type": "enum",
+            "option": [
+                "0",
+                "1",
+                "2"
+            ],
             "comment": "使用状态：0->未使用；1->已使用；2->已过期",
             "nullable": true
         },
@@ -75,6 +87,7 @@
     "table": {
         "name": "app_sms_coupon_history"
     },
-    "name": "app_sms_coupon_history",
+    "name": "app.sms.coupon.history",
+    "comment": "优惠券使用、领取历史表",
     "relations": {}
 }

@@ -3,39 +3,46 @@
         {
             "name": "id",
             "type": "id",
-            "primary": true
+            "primary": true,
+            "label": "ID"
         },
         {
             "name": "category_id",
             "type": "bigInteger",
-            "nullable": true
+            "nullable": true,
+            "label": "分类ID"
         },
         {
             "name": "icon",
             "type": "string",
             "length": 500,
-            "nullable": true
+            "nullable": true,
+            "label": "图标"
         },
         {
             "name": "title",
             "type": "string",
             "length": 100,
-            "nullable": true
+            "nullable": true,
+            "label": "标题"
         },
         {
             "name": "show_status",
             "type": "integer",
-            "nullable": true
+            "nullable": true,
+            "label": "显示状态"
         },
         {
             "name": "read_count",
             "type": "integer",
-            "nullable": true
+            "nullable": true,
+            "label": "阅读次数"
         },
         {
             "name": "content",
             "type": "text",
-            "nullable": true
+            "nullable": true,
+            "label": "内容"
         }
     ],
     "option": {
@@ -45,6 +52,7 @@
     "table": {
         "name": "app_cms_help"
     },
-    "name": "app_cms_help",
+    "name": "app.cms.help",
+    "comment": "帮助表",
     "relations": {}
 }

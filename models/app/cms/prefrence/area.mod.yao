@@ -40,6 +40,6 @@
     "table": {
         "name": "app_cms_prefrence_area"
     },
-    "name": "app_cms_prefrence_area",
+    "name": "app.cms.prefrence.area",
     "relations": {}
 }

@@ -20,6 +20,6 @@
     "table": {
         "name": "app_cms_prefrence_area_product_relation"
     },
-    "name": "app_cms_prefrence_area_product_relation",
+    "name": "app.cms.prefrence.area.product.relation",
     "relations": {}
 }

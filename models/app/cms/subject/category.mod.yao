@@ -41,6 +41,6 @@
     "table": {
         "name": "app_cms_subject_category"
     },
-    "name": "app_cms_subject_category",
+    "name": "app.cms.subject.category",
     "relations": {}
 }

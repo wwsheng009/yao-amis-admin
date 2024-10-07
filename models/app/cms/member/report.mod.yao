@@ -55,6 +55,6 @@
     "table": {
         "name": "app_cms_member_report"
     },
-    "name": "app_cms_member_report",
+    "name": "app.cms.member.report",
     "relations": {}
 }

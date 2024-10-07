@@ -76,6 +76,6 @@
     "table": {
         "name": "app_cms_topic"
     },
-    "name": "app_cms_topic",
+    "name": "app.cms.topic",
     "relations": {}
 }

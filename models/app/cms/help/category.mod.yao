@@ -41,6 +41,6 @@
     "table": {
         "name": "app_cms_help_category"
     },
-    "name": "app_cms_help_category",
+    "name": "app.cms.help.category",
     "relations": {}
 }

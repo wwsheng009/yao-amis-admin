@@ -67,8 +67,12 @@
         },
         {
             "name": "show_status",
-            "label": "显示状态：0->不显示；1->显示",
-            "type": "integer",
+            "label": "显示状态",
+            "type": "enum",
+            "option": [
+                "0",
+                "1"
+            ],
             "comment": "显示状态：0->不显示；1->显示",
             "nullable": true
         },
@@ -100,6 +104,6 @@
     "table": {
         "name": "app_cms_subject"
     },
-    "name": "app_cms_subject",
+    "name": "app.cms.subject",
     "relations": {}
 }

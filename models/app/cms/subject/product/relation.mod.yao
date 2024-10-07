@@ -20,6 +20,7 @@
     "table": {
         "name": "app_cms_subject_product_relation"
     },
-    "name": "app_cms_subject_product_relation",
+    "name": "app.cms.subject.product.relation",
+    "ID": "",
     "relations": {}
 }

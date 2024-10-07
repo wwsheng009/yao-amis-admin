@@ -3,35 +3,41 @@
         {
             "name": "id",
             "type": "id",
-            "primary": true
+            "primary": true,
+            "label": "ID"
         },
         {
             "name": "member_nick_name",
             "type": "string",
             "length": 255,
-            "nullable": true
+            "nullable": true,
+            "label": "会员昵称"
         },
         {
             "name": "topic_id",
             "type": "bigInteger",
-            "nullable": true
+            "nullable": true,
+            "label": "话题ID"
         },
         {
             "name": "member_icon",
             "type": "string",
             "length": 255,
-            "nullable": true
+            "nullable": true,
+            "label": "会员头像"
         },
         {
             "name": "content",
             "type": "string",
             "length": 1000,
-            "nullable": true
+            "nullable": true,
+            "label": "内容"
         },
         {
             "name": "show_status",
             "type": "integer",
-            "nullable": true
+            "nullable": true,
+            "label": "显示状态"
         }
     ],
     "option": {
@@ -41,6 +47,6 @@
     "table": {
         "name": "app_cms_topic_comment"
     },
-    "name": "app_cms_topic_comment",
+    "name": "app.cms.topic.comment",
     "relations": {}
 }
