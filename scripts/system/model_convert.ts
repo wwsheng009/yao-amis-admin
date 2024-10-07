@@ -462,14 +462,13 @@ export function completeAmisModel(modelDsl: AmisModel): AmisModel {
     }
 
     if (colType == 'json' && col.default != null) {
-      if (!(typeof col.default === 'object')) {
+      if (col.default == '') {
+        delete col.default;
+      } else if (!(typeof col.default === 'object')) {
         try {
           col.default = JSON.parse(col.default);
-        } catch (error) {
-          log.Error(
-            `Failed to convert the default value for field:${col.name}` +
-              error.message
-          );
+        } catch (e) {
+          delete col.default;
         }
       }
     }
