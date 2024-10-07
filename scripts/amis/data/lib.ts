@@ -431,13 +431,12 @@ export function updateInputData(
         colType === 'JSON' &&
         field != null &&
         typeof field === 'string' &&
-        field.length > 0 &&
-        !/^\s*\[/.test(field)
+        field.length > 0
       ) {
         try {
           line[key] = JSON.parse(field);
-        } catch (error) {
-          log.Error('invalid field data' + error.message);
+        } catch (e) {
+          throw new Exception(`Invalid json data for field ${key}`);
         }
       }
       return line;
