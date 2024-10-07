@@ -134,9 +134,7 @@ function updateAmisFormMetaFields(
   }
 
   // 检查是否存在外键
-  // if (/.*_id/i.test(amisColumn.name)) {
-  // let model_name = amisColumn.name.split("_")[0];
-  if (modelDsl.relations) {
+  if (!amisColumn.check_model && modelDsl.relations) {
     for (const key in modelDsl.relations) {
       const rel = modelDsl.relations[key];
       if (
@@ -156,7 +154,6 @@ function updateAmisFormMetaFields(
       }
     }
   }
-  // }
 
   return amisColumn;
 }
@@ -430,50 +427,60 @@ function updateFormRelations(
   if (model.relations) {
     for (const key in model.relations) {
       if (Object.hasOwnProperty.call(model.relations, key)) {
-        const element = model.relations[key];
-        if (element.type === 'hasOne') {
-          hasOnes[key] = element;
-        } else if (element.type === 'hasMany') {
-          hasManys[key] = element;
+        const relation = model.relations[key];
+
+        if (relation.type === 'hasOne') {
+          hasOnes[key] = relation;
+        } else if (relation.type === 'hasMany') {
+          hasManys[key] = relation;
         }
       }
     }
   }
   for (const key in hasOnes) {
-    const element = hasOnes[key];
-    const label = element.label || key;
+    const relation = hasOnes[key];
+    //当在form中存在一个可以编辑的关联key时，不能增加子表单。
+    const is_exists = columns.find(
+      (c) =>
+        c.name == relation.foreign &&
+        !(c.static || c.type.toLowerCase().includes('static'))
+    );
+    const label = relation.label || key;
     let fields = [];
     if (actionType == 'view') {
-      fields = getFormViewFields(element.model, null, true);
-    } else {
-      fields = getFormFields(element.model, actionType, null, null, true);
+      fields = getFormViewFields(relation.model, null, true);
+    } else if (!is_exists) {
+      fields = getFormFields(relation.model, actionType, null, null, true);
     }
-    fields = fields.filter((col) => col.name !== element.key);
-    columns.push({
-      visibleOn: `typeof this.${key} == 'object' && Object.keys(this.${key}).length > 0`,
-      type: 'input-sub-form',
-      name: key,
-      label: label,
-      btnLabel: '明细',
-      form: {
-        // body: {
-        //   type: "service",
-        //   schemaApi: `get:/api/v1/system/schema/${element.model}/form-edit`,
-        // },
-        body: fields
-      }
-    });
+    fields = fields.filter((col) => col.name !== relation.key);
+    if (fields.length) {
+      columns.push({
+        visibleOn: `typeof this.${key} == 'object' && Object.keys(this.${key}).length > 0`,
+        type: 'input-sub-form',
+        name: key,
+        label: label,
+        btnLabel: '明细',
+        form: {
+          // body: {
+          //   type: "service",
+          //   schemaApi: `get:/api/v1/system/schema/${element.model}/form-edit`,
+          // },
+          body: fields
+        }
+      });
+    }
   }
 
   const tabList = [];
   for (const key in hasManys) {
-    const element = hasManys[key];
-    const label = element.label || key;
+    const relation = hasManys[key];
+    const label = relation.label || key;
     let fields = [];
-    let tableSchema = {};
+    let tableSchema = null;
+
     if (actionType === 'view') {
-      fields = getModelFieldsForAmis(element.model, null);
-      fields = fields.filter((col) => col.name !== element.key);
+      fields = getModelFieldsForAmis(relation.model, null);
+      fields = fields.filter((col) => col.name !== relation.key);
 
       tableSchema = {
         visibleOn: `Array.isArray(this.${key})`,
@@ -482,27 +489,37 @@ function updateFormRelations(
         type: 'table'
       };
     } else {
-      fields = getModelFieldsWithQuick(element.model, null);
-      fields = fields.filter((col) => col.name !== element.key);
+      //当在form中存在一个可以编辑的关联key时，不能增加子表单。
+      const is_exists = columns.find(
+        (c) =>
+          c.name == relation.key &&
+          !(c.static || c.type.toLowerCase().includes('static'))
+      );
+      if (!is_exists) {
+        fields = getModelFieldsWithQuick(relation.model, null);
+        fields = fields.filter((col) => col.name !== relation.key);
 
-      tableSchema = {
-        labelClassName: 'hidden',
-        columns: fields,
-        name: key,
-        source: '${' + key + '}',
-        copyable: true,
-        editable: true,
-        removable: true,
-        showIndex: true,
-        addable: true,
-        type: 'input-table'
-      };
+        tableSchema = {
+          labelClassName: 'hidden',
+          columns: fields,
+          name: key,
+          source: '${' + key + '}',
+          copyable: true,
+          editable: true,
+          removable: true,
+          showIndex: true,
+          addable: true,
+          type: 'input-table'
+        };
+      }
     }
-    const tab = {
-      title: label,
-      body: tableSchema
-    };
-    tabList.push(tab);
+    if (tableSchema) {
+      const tab = {
+        title: label,
+        body: tableSchema
+      };
+      tabList.push(tab);
+    }
   }
   // console.log("tabList", tabList)
   // 多个就使用页签显示，一个就直接显示表格
