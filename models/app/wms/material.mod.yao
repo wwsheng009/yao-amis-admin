@@ -69,7 +69,7 @@
     },
     "supplier": {
       "type": "hasOne",
-      "model": "supplier",
+      "model": "app.wms.supplier",
       "key": "id",
       "foreign": "supplier_id",
       "query": {
