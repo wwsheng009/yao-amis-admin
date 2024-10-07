@@ -450,7 +450,7 @@ function completeAmisModelColumn(col: AmisModelColumn) {
       delete col.default;
     } else if (!(typeof col.default === 'object')) {
       try {
-        col.default = JSON.parse(col.default);
+        col.default = JSON.stringify(JSON.parse(col.default));
       } catch (e) {
         delete col.default;
       }
