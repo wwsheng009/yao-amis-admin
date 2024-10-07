@@ -135,7 +135,7 @@
     },
     "user": {
       "type": "hasOne",
-      "model": "app.hr.user",
+      "model": "app.hr.staff",
       "key": "id",
       "foreign": "user_id",
       "query": {}
