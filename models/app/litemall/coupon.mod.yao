@@ -88,10 +88,9 @@
         {
             "name": "goods_value",
             "label": "商品限制值",
-            "type": "smallInteger",
+            "type": "json",
             "comment": "商品限制值，goods_type如果是0则空集合，如果是1则是类目集合，如果是2则是商品集合。",
-            "nullable": true,
-            "default": 0
+            "nullable": true
         },
         {
             "name": "code",
@@ -140,6 +139,7 @@
     "table": {
         "name": "app_litemall_coupon"
     },
-    "name": "app_litemall_coupon",
+    "name": "app.litemall.coupon",
     "relations": {}
 }
+//yao migrate -n app.litemall.coupon

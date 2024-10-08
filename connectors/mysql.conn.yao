@@ -1,0 +1,27 @@
+{
+    "LANG": "1.0.0",
+    "VERSION": "1.0.0",
+    "label": "MySQL 8.0 TEST",
+    "type": "mysql", //类型，官方只支持支持sqlite3,mysql,扩展支持postgres,hdb
+    "version": "8.0.26",
+    "options": {
+        "db": "litemall",
+        "charset": "utf8mb4",
+        "parseTime": true,
+        "hosts": [
+            {
+                "host": "$ENV.MYSQL_LITEMALL_HOST",
+                "port": "$ENV.MYSQL_LITEMALL_PORT",
+                "user": "$ENV.MYSQL_LITEMALL_USER",
+                "pass": "$ENV.MYSQL_LITEMALL_PASS",
+                "primary": true //主库
+            },
+            {
+                "host": "$ENV.MYSQL_LITEMALL_HOST",
+                "port": "$ENV.MYSQL_LITEMALL_PORT",
+                "user": "$ENV.MYSQL_LITEMALL_USER",
+                "pass": "$ENV.MYSQL_LITEMALL_PASS",
+            }
+        ]
+    }
+}
