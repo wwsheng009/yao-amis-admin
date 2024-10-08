@@ -32,6 +32,17 @@ export function getModelData(
   return data;
 }
 
+/**
+ * 根据模型 ID 和记录 ID 查找模型数据
+ * 如果模型是表格类型，则使用表格钩子查找数据；否则，使用模型的查找方法
+ * 如果 updateOutput 为 true，则更新输出数据
+ * 清除数据中的虚假键值
+ * @param modelId - 模型 ID
+ * @param id - 记录 ID
+ * @param queryParam - 查询参数
+ * @param updateOutput - 是否更新输出数据，默认为 true
+ * @returns 查找的数据
+ */
 export function findModelData(
   modelId: ModelId,
   id: number,
@@ -54,6 +65,8 @@ export function findModelData(
 
 /**
  * search the model data with page
+ *
+ * 分页搜索模型数据
  * @param modelId model id
  * @param queryParam
  * @param page
@@ -81,6 +94,13 @@ export function searchModelData(
   return modelData;
 }
 
+/**
+ * 保存模型数据到数据库
+ * @param modelId - 模型ID
+ * @param payload - 要保存的数据
+ * @param action - 执行的操作，create 或 save
+ * @returns 返回保存操作的结果
+ */
 export function saveModelData(
   modelId: ModelId,
   payload: any,
@@ -94,10 +114,16 @@ export function saveModelData(
   const dbAction = action == 'create' ? 'create' : 'save';
   if (isModelTableExist(modelId)) {
     return Process(`yao.table.${dbAction}`, modelId, payload);
+  } else {
+    return Process(`models.${modelId}.${dbAction}`, payload);
   }
-  return Process(`models.${modelId}.${dbAction}`, payload);
 }
 
+/**
+ * 批量保存模型数据
+ * @param modelId model id
+ * @param payload payload,数组或是单个对象
+ */
 export function saveModelDataBatch(modelId: ModelId, payload: any) {
   if (payload == null) {
     return;
@@ -110,23 +136,31 @@ export function saveModelDataBatch(modelId: ModelId, payload: any) {
         Process(`yao.table.save`, modelId, l);
       });
     } else {
-      return Process(`yao.table.save`, modelId, payload);
+      Process(`yao.table.save`, modelId, payload);
+    }
+  } else {
+    if (Array.isArray(payload)) {
+      return Process(`models.${modelId}.eachSave`, payload);
+    } else {
+      return Process(`models.${modelId}.Save`, payload);
     }
   }
-  if (Array.isArray(payload)) {
-    return Process(`models.${modelId}.eachSave`, payload);
-  } else {
-    return Process(`models.${modelId}.Save`, payload);
-  }
 }
-
+/**
+ * 在删除数据之后，更新其他数据
+ * @param modelId model id
+ * @param idsDeleted 需要删除的数据的主键列表
+ * @param lines 需要更新的数据
+ * @param share 需要共享的数据
+ * @returns
+ */
 export function eachSaveAfterDelete(
   modelId: ModelId,
   idsDeleted: number[],
   lines: object[],
   share: object
 ) {
-  const checkTable = isModelTableExist(modelId);
+  const isExist = isModelTableExist(modelId);
 
   if (Array.isArray(lines) && lines.length) {
     const yaoColMap = getYaoModelColumnMap(modelId);
@@ -140,8 +174,12 @@ export function eachSaveAfterDelete(
     });
     lines = updateInputData(yaoColMap, lines) as object[];
   }
-  if (checkTable) {
-    Process(`yao.table.deletein`, modelId, idsDeleted.join(','));
+  if (isExist) {
+    Process(
+      `yao.table.deletein`,
+      modelId,
+      Array.isArray(idsDeleted) ? idsDeleted.join(',') : idsDeleted
+    );
     if (Array.isArray(lines) && lines.length) {
       lines.forEach((l) => {
         Process(`yao.table.save`, modelId, l);
@@ -156,7 +194,11 @@ export function eachSaveAfterDelete(
     );
   }
 }
-
+/**
+ * 根据主键删除模型数据
+ * @param modelId
+ * @param ids
+ */
 export function deleteModelData(modelId: ModelId, ids: string) {
   const myArray = ids.split(',');
   if (isModelTableExist(modelId)) {
@@ -174,6 +216,12 @@ export function deleteModelData(modelId: ModelId, ids: string) {
   }
 }
 
+/**
+ * 批量更新模型的数据
+ * @param modelId model id
+ * @param ids ids
+ * @param payload payload
+ */
 export function bulkUpdateModelData(
   modelId: ModelId,
   ids: string,
@@ -201,7 +249,13 @@ export function bulkUpdateModelData(
     });
   }
 }
-
-function isModelTableExist(modelId: ModelId) {
+/**
+ * 检查模型关联的同名的表格配置是否存在，这里的表格是tables目录下的配置，不是数据库的表
+ *
+ * 使用模型关联表的处理器可以间接使用表格配置中的hook处理器，方便加强处理逻辑
+ * @param modelId model id
+ * @returns
+ */
+function isModelTableExist(modelId: ModelId): boolean {
   return Process('yao.table.exists', modelId);
 }
