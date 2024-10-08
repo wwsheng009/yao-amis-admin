@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "moduleResolution": "Node",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "esModuleInterop": true,
     "allowJs": false,
     "target": "ESNext",
@@ -21,5 +21,14 @@
     "node_modules",
     "dist"
   ],
-  "include": ["./scripts/**/*", "./services/**/*", "./studio/**/*"]
+  "include": [
+    "./scripts/**/*",
+    "./services/**/*",
+    "./studio/**/*"
+  ],
+  "ts-node": {
+    "require": [
+      "tsconfig-paths/register"
+    ]
+  }
 }

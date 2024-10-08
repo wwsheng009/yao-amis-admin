@@ -1,11 +1,10 @@
 {
   "name": "yao-init",
-  "type": "module",
   "version": "1.0.0",
   "description": "yao application for nodejs usage",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "node -r ts-node/register -r tsconfig-paths/register scripts/system/table.ts",
     "lint": "eslint",
     "lint:fix": "eslint --fix"
   },
@@ -13,14 +12,14 @@
   "author": "vincentwwsheng@gmail.com",
   "license": "MIT",
   "devDependencies": {
-    "@yaoapps/client": "npm:yao-node-client@^1.1.2",
-    "@yaoapps/types": "npm:yao-app-ts-types@^1.0.8",
     "@eslint/js": "^9.10.0",
     "@stylistic/eslint-plugin": "^2.8.0",
     "@types/jest": "^29.5.13",
     "@types/node": "^22.5.5",
     "@typescript-eslint/eslint-plugin": "^8.5.0",
     "@typescript-eslint/parser": "^8.5.0",
+    "@yaoapps/client": "npm:yao-node-client@^1.1.2",
+    "@yaoapps/types": "npm:yao-app-ts-types@^1.0.8",
     "eslint": "^9.10.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
@@ -30,9 +29,8 @@
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript-eslint": "^8.5.0",
-    "typescript": "^5.6.2"
+    "typescript": "^5.6.2",
+    "typescript-eslint": "^8.5.0"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
