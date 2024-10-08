@@ -30,6 +30,20 @@
       }
     },
     {
+      // /api/v1/system/schema/crud-all?model=xxx
+      //兼容使用query的调用方式
+      "path": "/crud-all",
+      "method": "get",
+      "process": "scripts.amis.curd.curdTemplate",
+      "in": [
+        "$query.model"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
       "path": "/:model/crud-list",
       "method": "get",
       "process": "scripts.amis.schema.curdListPage",

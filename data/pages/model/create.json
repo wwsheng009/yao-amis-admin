@@ -133,8 +133,8 @@
               "type": "static-link",
               "body": "数据维护",
               "blank": false,
-              "value": "#/table_maintain?table=${header.identity}",
-              "visibleOn": "!!header.id && header.identity"
+              "value": "/table/maintainer?table=${header.identity}",
+              "visibleOn": "!!id && identity"
             }
           ],
           "id": "u:fe16ac20a403",

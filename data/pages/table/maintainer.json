@@ -1,18 +1,16 @@
 {
+  "type": "page",
   "pullRefresh": {
     "disabled": true
   },
   "regions": ["body", "toolbar", "aside"],
-  "data": {
-    "table": "${__query.table}"
-  },
   "toolbar": [
     {
       "type": "container",
       "body": [
         {
           "labelAlign": "right",
-          "name": "table",
+          "name": "model",
           "id": "u:fc6740e2cc60",
           "source": {
             "url": "/api/v1/system/meta/model/model_name_list",
@@ -28,7 +26,7 @@
                   "actionType": "setValue",
                   "args": {
                     "value": {
-                      "table": "${value}"
+                      "model": "${value}"
                     }
                   },
                   "dataMergeMode": "merge"
@@ -66,7 +64,6 @@
       "id": "u:ad562680664e"
     }
   ],
-  "type": "page",
   "cssVars": {
     "--Tree-max-height": "100%"
   },
@@ -81,8 +78,8 @@
           "actions": [
             {
               "actionType": "setValue",
-              "componentId": "u:568b02cd6929",
-              "args": { "value": { "table": "${mytable}" } }
+              "componentId": "u:5ce017fa279d",
+              "args": { "value": { "model": "${mytable}" } }
             }
           ]
         }
@@ -101,11 +98,15 @@
   ],
   "body": [
     {
-      "schemaApi": {
-        "url": "/api/v1/system/schema/${table}/crud-all",
-        "method": "get",
-        "sendOn": "data.table"
+      "data": {
+        "model": "${__query.model}"
       },
+      "schemaApi": {
+        "url": "/api/v1/system/schema/${model}/crud-all",
+        "method": "get",
+        "sendOn": "!!model"
+      },
+      "name": "model",
       "initFetchSchema": true,
       "type": "service",
       "body": [],

@@ -854,7 +854,7 @@ function getModelMenu() {
           label: '表数据管理',
           icon: 'fa fa-book',
           schemaApi: '/api/v1/amis/pages/table.maintainer',
-          url: '/table_maintain'
+          url: '/table/maintainer'
         },
         {
           label: 'Studio',
