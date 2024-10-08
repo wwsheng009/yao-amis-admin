@@ -48,6 +48,7 @@ import {
 } from './model_convert';
 import { ErrorMessage, SuccessMessage } from '@scripts/return';
 import { deleteModelLocalFile, saveModelToFile } from './model_file';
+import { buildHierarchy } from '@lib/utils/hierarchy';
 
 /**
  * yao run scripts.system.model.page
@@ -519,6 +520,13 @@ export function getAllModelNameOptions() {
   // 将Map转换为数组
   const items = Array.from(modelMap, ([value, label]) => ({ value, label }));
   return { items };
+}
+
+// yao run scripts.system.model.getAllModelNameOptionsTree
+export function getAllModelNameOptionsTree() {
+  const data = getAllModelNameOptions();
+
+  return { items: buildHierarchy(data.items) };
 }
 
 /**

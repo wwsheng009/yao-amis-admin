@@ -39,9 +39,19 @@
       "path": "/model_name_list",
       "method": "GET",
       "process": "scripts.system.model.getAllModelNameOptions",
-      "in": [
-        ""
-      ],
+      "in": [],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      "label": "模型选项-tree",
+      "description": "模型选项-tree",
+      "path": "/model_name_tree",
+      "method": "GET",
+      "process": "scripts.system.model.getAllModelNameOptionsTree",
+      "in": [],
       "out": {
         "status": 200,
         "type": "application/json"

@@ -2,7 +2,7 @@
   "pullRefresh": {
     "disabled": true
   },
-  "regions": ["body", "toolbar"],
+  "regions": ["body", "toolbar", "aside"],
   "data": {
     "table": "${__query.table}"
   },
@@ -67,6 +67,38 @@
     }
   ],
   "type": "page",
+  "cssVars": {
+    "--Tree-max-height": "100%"
+  },
+  "asideClassName": "w-56",
+  "asideSticky": true,
+  "asideMinWidth": 300,
+  "asideResizor": true,
+  "aside": [
+    {
+      "onEvent": {
+        "click": {
+          "actions": [
+            {
+              "actionType": "setValue",
+              "componentId": "u:568b02cd6929",
+              "args": { "value": { "table": "${mytable}" } }
+            }
+          ]
+        }
+      },
+      "type": "container",
+      "body": [
+        {
+          "heightAuto": true,
+          "name": "mytable",
+          "type": "input-tree",
+          "source": "/api/v1/system/meta/model/model_name_tree",
+          "searchable": true
+        }
+      ]
+    }
+  ],
   "body": [
     {
       "schemaApi": {
