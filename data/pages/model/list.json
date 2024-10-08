@@ -96,7 +96,7 @@
                   "actionType": "link",
                   "level": "link",
                   "label": "数据维护",
-                  "link": "/table/maintainer?table=${identity}",
+                  "link": "/table/maintainer?model=${identity}",
                   "disabledOn": "!identity"
                 },
                 {

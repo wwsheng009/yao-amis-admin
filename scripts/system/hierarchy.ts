@@ -21,6 +21,7 @@ export function buildHierarchy(items: Node[]): Node[] {
     parent: Node[]
   ) {
     const [current, ...rest] = path;
+
     let node = parent.find((item) => item.label === current);
 
     if (!node) {
@@ -39,6 +40,17 @@ export function buildHierarchy(items: Node[]): Node[] {
     } else {
       node.label = label;
       node.value = value;
+      if (
+        items.find((i) => i.value == value) &&
+        items.find(
+          (i) => i.value.includes(value) && i.value.length > value.length
+        ) //存在子节点，并且子节点的value包含当前节点的value
+      ) {
+        if (!node.children) {
+          node.children = [];
+        }
+        node.children.push({ label, value });
+      }
     }
   }
 

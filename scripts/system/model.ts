@@ -48,7 +48,7 @@ import {
 } from './model_convert';
 import { ErrorMessage, SuccessMessage } from '@scripts/return';
 import { deleteModelLocalFile, saveModelToFile } from './model_file';
-import { buildHierarchy } from '@lib/utils/hierarchy';
+import { buildHierarchy } from '@scripts/system/hierarchy';
 
 /**
  * yao run scripts.system.model.page

@@ -68,8 +68,6 @@
     "--Tree-max-height": "100%"
   },
   "asideClassName": "w-56",
-  "asideSticky": true,
-  "asideMinWidth": 300,
   "asideResizor": true,
   "aside": [
     {
@@ -91,7 +89,10 @@
           "name": "mytable",
           "type": "input-tree",
           "source": "/api/v1/system/meta/model/model_name_tree",
-          "searchable": true
+          "searchable": true,
+          "initiallyOpen": false,
+          "unfoldedLevel": 1,
+          "onlyLeaf": true
         }
       ]
     }
@@ -104,7 +105,7 @@
       "schemaApi": {
         "url": "/api/v1/system/schema/${model}/crud-all",
         "method": "get",
-        "sendOn": "!!model"
+        "sendOn": "!!model && model.indexOf(\".\") > -1"
       },
       "name": "model",
       "initFetchSchema": true,
