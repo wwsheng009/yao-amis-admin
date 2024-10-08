@@ -99,8 +99,10 @@ export function page(
  */
 function getDatabaseModelList(): AmisModelDB[] {
   const list = Process('models.ddic.model.get', {
-    select: ['identity', 'name', 'comment']
-  });
+    select: ['identity', 'name', 'comment'],
+    limit: 1000000
+  } as YaoQueryParam.QueryParam);
+
   list.forEach((item) => {
     if (item.comment == null) {
       item.comment = item.name ? item.name : item.identity;
