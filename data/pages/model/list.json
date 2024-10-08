@@ -92,6 +92,14 @@
             {
               "buttons": [
                 {
+                  "type": "button",
+                  "actionType": "link",
+                  "level": "link",
+                  "label": "数据维护",
+                  "link": "/table_maintain?table=${identity}",
+                  "disabledOn": "!header.identity"
+                },
+                {
                   "actionType": "link",
                   "label": "修改",
                   "level": "link",
