@@ -23,3 +23,4 @@ public/yao
 pnpm-lock.yaml
 dist
 package-lock.json
+yarn.lock
