@@ -231,3 +231,14 @@ export function modelListFromMemory(modelData: CachedModelTree) {
   }
   return modelList;
 }
+
+/**
+ * 检查模型关联的同名的表格配置是否存在，这里的表格是tables目录下的配置，不是数据库的表
+ *
+ * 使用模型关联表的处理器可以间接使用表格配置中的hook处理器，方便加强处理逻辑
+ * @param modelId model id
+ * @returns
+ */
+export function isModelTableExist(modelId: ModelId): boolean {
+  return Process('yao.table.exists', modelId);
+}
