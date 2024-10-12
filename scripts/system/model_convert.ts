@@ -609,6 +609,47 @@ export function updateModelMetaFields(
 }
 
 /**
+ * 更新模型，增加元数据字段如果它们不存在，
+ *
+ * 字段包含：创建时间，更新时间，删除时间字段。
+ * @param {object} modelDsl yao模型定义
+ * @returns 新的模型定义
+ */
+export function addModelMetaFields(modelDsl2: YaoModel.ModelDSL) {
+  const modelDsl = modelDsl2;
+  if (modelDsl.option?.timestamps) {
+    let result = modelDsl.columns?.some((item) => item.name === 'created_at');
+    if (!result) {
+      modelDsl.columns.push({
+        name: 'created_at',
+        label: '创建时间',
+        type: 'datetime'
+      });
+    }
+    result = modelDsl.columns?.some((item) => item.name === 'updated_at');
+    if (!result) {
+      modelDsl.columns.push({
+        name: 'updated_at',
+        label: '更新时间',
+        type: 'datetime'
+      });
+    }
+  }
+  if (modelDsl.option?.soft_deletes) {
+    const result = modelDsl.columns?.some((item) => item.name === 'deleted_at');
+    if (!result) {
+      modelDsl.columns.push({
+        name: 'deleted_at',
+        label: '删除时间',
+        type: 'datetime'
+      });
+    }
+  }
+
+  return modelDsl;
+}
+
+/**
  * Db模型转换成yao模型
  * @param {object} modelDsl
  * @returns

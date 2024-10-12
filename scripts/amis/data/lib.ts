@@ -59,7 +59,7 @@ export function queryToQueryParam(
   if (querysIn == null && queryParams == null) {
     return {};
   }
-  const querys = querysIn;
+  const querys = querysIn || {};
   // 查询条件
   const queryParam = queryParams || {};
   const orders = [];
@@ -91,7 +91,10 @@ export function queryToQueryParam(
   }
 
   let select = [];
-  if (Object.prototype.hasOwnProperty.call(querys, 'select')) {
+  if (
+    querys != null &&
+    Object.prototype.hasOwnProperty.call(querys, 'select')
+  ) {
     const joinedString = querys['select'].join(',');
     const selectArray = joinedString.split(',');
     select = [...new Set(selectArray)];
@@ -236,13 +239,17 @@ export function queryToQueryParam(
     }
   }
   if (wheres.length) {
-    queryParam['wheres'] = wheres;
+    queryParam['wheres'] = queryParam['wheres'] || [];
+    queryParam['wheres'] = queryParam['wheres'].concat(wheres);
   }
   if (orders.length) {
-    queryParam['orders'] = orders;
+    queryParam['orders'] = queryParam['orders'] || [];
+    queryParam['orders'] = queryParam['orders'].concat(orders);
   }
   if (select.length) {
-    queryParam['select'] = select;
+    queryParam['select'] = queryParam['select'] || [];
+    queryParam['select'] = queryParam['select'].concat(select);
+    queryParam['select'] = [...new Set(queryParam['select'])];
   }
 
   return queryParam;

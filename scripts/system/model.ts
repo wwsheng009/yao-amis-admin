@@ -12,7 +12,7 @@ import {
   checkAndloadDefaultTableForm
 } from '@scripts/system/model_load';
 
-import { DotName, SlashName } from '@scripts/system/lib';
+import { DotName } from '@scripts/system/lib';
 
 import { RunTransaction } from '@scripts/system/db';
 

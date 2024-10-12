@@ -2,14 +2,18 @@ function mergeQueryObject(querysIn, payload) {
   // console.log(`types of querysIn${typeof querysIn}`);
   // console.log(`types of payload${typeof payload}`);
 
-  const querys = querysIn;
-  if (querysIn == null || payload == null) {
+  if (payload == null) {
     return querysIn;
+  }
+  if (querysIn == null) {
+    querysIn = {};
   }
   if (typeof querysIn !== 'object') {
     return querysIn;
   }
-  if (payload != null && typeof payload === 'object') {
+  const querys = querysIn;
+
+  if (typeof payload === 'object' && Object.keys(querys).length) {
     for (const key in payload) {
       if (Object.hasOwnProperty.call(payload, key)) {
         const element = payload[key];

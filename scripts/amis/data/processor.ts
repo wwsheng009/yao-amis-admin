@@ -1,5 +1,5 @@
 import { getYaoModelColumnMap } from '@scripts/system/model';
-import { ModelId } from '@yao/types';
+import { ModelId, PaginateSearchResult } from '@yao/types';
 import { Exception, Process } from '@yao/yao';
 import { YaoQueryParam } from '@yaoapps/types';
 import { updateOutputData, updateInputData } from './lib';
@@ -79,7 +79,9 @@ export function searchModelData(
   queryParam: YaoQueryParam.QueryParam,
   page: number,
   perPage: number
-) {
+): PaginateSearchResult {
+  page = page || 1;
+  perPage = perPage || 10;
   let modelData = null;
   if (isModelTableExist(modelId)) {
     // we can use the table hooks
