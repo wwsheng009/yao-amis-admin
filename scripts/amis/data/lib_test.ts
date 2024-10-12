@@ -13,7 +13,7 @@ function mergeQueryObject(querysIn, payload) {
   }
   const querys = querysIn;
 
-  if (typeof payload === 'object' && Object.keys(querys).length) {
+  if (typeof payload === 'object' && Object.keys(payload).length) {
     for (const key in payload) {
       if (Object.hasOwnProperty.call(payload, key)) {
         const element = payload[key];
