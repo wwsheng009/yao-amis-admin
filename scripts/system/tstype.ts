@@ -1,7 +1,8 @@
 import { DotName, SlashName } from '@scripts/system/lib';
 import { getModelDslById } from './model';
-import { AmisModel, AmisUIColumn, ModelId } from '@yao/types';
+import { AmisUIColumn, ModelId } from '@yao/types';
 import { amisUIModelToAmisModel } from './model_convert';
+import { YaoModel } from '@yaoapps/types';
 
 // 创建模型对象的ts类型定义。
 
@@ -32,11 +33,10 @@ export function createModelType(modelId: ModelId, columnsIn?: AmisUIColumn[]) {
  * @param {object|Array} modelsIn 模型对象或是列表
  * @returns string
  */
-function createTSTypes(modelsIn: AmisModel[] | AmisModel) {
+function createTSTypes(modelsIn: YaoModel.ModelDSL[] | YaoModel.ModelDSL) {
   if (!modelsIn) {
     return '';
   }
-  const typeMapping = getTSTypeMapping();
 
   let models = [];
   if (Array.isArray(modelsIn)) {
@@ -44,49 +44,57 @@ function createTSTypes(modelsIn: AmisModel[] | AmisModel) {
   } else if (!Array.isArray(modelsIn) && typeof modelsIn == 'object') {
     models.push(modelsIn);
   }
-  const codes = models.map((model) => {
-    const tabName = model.table.name;
-    const funtionName = SlashName(tabName);
-    const dotName = DotName(tabName);
-    const last = funtionName.replaceAll('/', '_');
-    const fields = model.columns
-      .map((item) => {
-        return `  /**${item.label || item.comment} */
+  const codes = models.map(getCodeTemplate);
+  return codes.join('\n');
+}
+
+function getCodeTemplate(model: YaoModel.ModelDSL) {
+  const typeMapping = getTSTypeMapping();
+
+  const tabName = model.table.name;
+  const funtionName = SlashName(tabName);
+  const dotName = DotName(tabName);
+  const last = funtionName.replaceAll('/', '_');
+
+  //handle the fields
+  const fields = model.columns
+    .map((item) => {
+      return `  /**${item.label || item.comment} */
   ${item.name}${isOption(item) ? '?' : ''}: ${getTsType(
     tabName,
     item,
     typeMapping
   )};`;
-      }, [])
-      .join('\n');
+    }, [])
+    .join('\n');
 
-    const rels = [];
-    for (const key in model.relations) {
-      const element = model.relations[key];
-      let sign = '';
-      if (element.type === 'hasMany') {
-        sign = '[]';
-      }
-      rels.push(`  /** Relation: ${key}=> ${element.model} */
-  ${key}?: ${element.model.replaceAll('.', '_')}${sign}`);
+  //handle the relations
+  const rels = [];
+  for (const key in model.relations) {
+    const element = model.relations[key];
+    let sign = '';
+    if (element.type === 'hasMany') {
+      sign = '[]';
     }
+    rels.push(`  /** Relation: ${key}=> ${element.model} */
+    ${key}?: ${element.model.replaceAll('.', '_')}${sign}`);
+  }
 
-    return `\/**
- * Model=> ${dotName} ${model.name ? '(' + model.name + ')' : ''}
- * 
- * Table=> ${model.table.name} ${
-   model.table.comment ? '(' + model.table.comment + ')' : ''
- }
+  //return code template
+  return `\/**
+* Model=> ${dotName} ${model.name ? '(' + model.name + ')' : ''}
+* 
+* Table=> ${model.table.name} ${
+    model.table.comment ? '(' + model.table.comment + ')' : ''
+  }
 *\/
-interface ${last} {
+export interface ${last} {
 ${fields}
 ${rels.join('\n')}
 }`;
-  });
-  return codes.join('\n');
 }
 
-function isOption(column) {
+function isOption(column: YaoModel.ModelColumn) {
   const { unique, nullable, default: columnDefault, type } = column;
 
   if (/^id$/i.test(type)) {
@@ -99,50 +107,68 @@ function isOption(column) {
   return true;
 }
 
-function getTsType(tabName, column, typeMapping) {
+function getTsType(
+  tableName: string,
+  column: YaoModel.ModelColumn,
+  typeMapping: {
+    [x: string]: string;
+  }
+) {
   let type = 'any';
-  if (column.type === 'enum') {
+  const ctype = column.type.toLowerCase();
+  if (ctype === 'enum') {
     if (!column.option) {
       console.log(
-        `column: ${column.name} in ${tabName} type is enum,but no options, fallback to string`
+        `column: ${column.name} in ${tableName} type is enum,but no options, fallback to string`
       );
       type = 'string';
     } else {
       type = column.option?.map((item) => `"${item}"`).join(' | ');
     }
-  } else if (column.type in typeMapping) {
-    type = typeMapping[column.type];
+  } else if (ctype.includes('decimal')) {
+    type = 'number';
+  } else if (ctype.includes('float')) {
+    type = 'number';
+  } else if (ctype.includes('integer')) {
+    type = 'number';
+  } else if (ctype.includes('date')) {
+    type = 'Date';
+  } else if (ctype.includes('time')) {
+    type = 'Date';
+  } else if (ctype.includes('text')) {
+    type = 'string';
+  } else if (ctype in typeMapping) {
+    type = typeMapping[ctype];
   }
   return type;
 }
 function getTSTypeMapping() {
   return {
-    ID: 'number',
+    id: 'number',
     string: 'string',
     char: 'string',
     text: 'string',
-    mediumText: 'string',
-    longText: 'string',
-    date: 'date',
-    datetime: 'date',
-    datetimeTz: 'date',
-    time: 'date',
-    timeTz: 'date',
-    timestamp: 'date',
-    timestampTz: 'date',
-    tinyInteger: 'number',
-    tinyIncrements: 'number',
-    unsignedTinyInteger: 'number',
-    smallInteger: 'number',
-    unsignedSmallInteger: 'number',
+    mediumtext: 'string',
+    longtext: 'string',
+    date: 'Date',
+    datetime: 'Date',
+    datetimetz: 'Date',
+    time: 'Date',
+    timetz: 'Date',
+    timestamp: 'Date',
+    timestamptz: 'Date',
+    tinyinteger: 'number',
+    tinyincrements: 'number',
+    unsignedtinyinteger: 'number',
+    smallinteger: 'number',
+    unsignedsmallinteger: 'number',
     integer: 'number',
-    bigInteger: 'number',
+    biginteger: 'number',
     decimal: 'number',
-    unsignedDecimal: 'number',
+    unsigneddecimal: 'number',
     float: 'number',
     boolean: 'boolean',
-    enum: 'Select',
-    json: 'any',
-    JSON: 'any' // 使用大写的JSON区分小写的json
+    enum: 'string',
+    json: 'any'
   };
 }
