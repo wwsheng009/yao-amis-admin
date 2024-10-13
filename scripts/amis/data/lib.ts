@@ -105,6 +105,9 @@ export function queryToQueryParam(
   }
 
   const keywords = querys['keywords'];
+  // 只要有keyword的关键字就触发模糊搜索。
+  const hasKeyword = keywords != null && keywords.length ? true : false;
+
   delete querys['keywords'];
 
   delete querys['page'];
@@ -125,83 +128,89 @@ export function queryToQueryParam(
       option: option
     });
   }
-
-  for (const key in querys) {
-    // 不存在列
-    if (!Object.prototype.hasOwnProperty.call(columnMap, key)) {
-      continue;
+  if (!hasKeyword) {
+    //delete undefined in querys
+    for (const key in querys) {
+      if (querys[key] === undefined) {
+        delete querys[key];
+      }
     }
-    const column = columnMap[key];
-    if (column == null) {
-      continue;
-    }
-    const isDateTime = isDateTimeType(column);
-
-    const conditions = querys[key]; // 查询都是一个数组
-
-    for (const condition of conditions) {
-      if (condition === '') {
-        // 前端无法清空搜索值
+    for (const key in querys) {
+      // 不存在列
+      if (!Object.prototype.hasOwnProperty.call(columnMap, key)) {
         continue;
       }
-      // 时间范围查询
-      if (isDateTime && condition.includes(',')) {
-        const conds = condition.split(',');
-        if (conds.length === 2) {
-          const low = conds[0];
-          const high = conds[1];
-          wheres.push({
-            column: key,
-            value: low,
-            method: 'where',
-            op: 'ge' // >=
-          });
-          wheres.push({
-            column: key,
-            value: high,
-            method: 'where',
-            op: 'le' // <=
-          });
-          whereCount += 2;
-          continue;
-        }
+      const column = columnMap[key];
+      if (column == null) {
+        continue;
       }
+      const isDateTime = isDateTimeType(column);
 
-      let param = {};
-      //* xx* 转换成数据库的%%
-      if (typeof condition === 'string' && condition.includes('*')) {
-        if (condition === '*') {
+      const conditions = querys[key]; // 查询都是一个数组
+
+      for (const condition of conditions) {
+        if (condition === '' || condition === undefined) {
+          // 前端无法清空搜索值
           continue;
         }
-        const newcondt = condition.replaceAll(/\*/g, '%');
-        param = {
-          column: key,
-          value: newcondt,
-          op: 'like'
-        };
-      } else {
-        param = {
-          column: key,
-          value: condition
-        };
+        // 时间范围查询
+        if (isDateTime && condition.includes(',')) {
+          const conds = condition.split(',');
+          if (conds.length === 2) {
+            const low = conds[0];
+            const high = conds[1];
+            wheres.push({
+              column: key,
+              value: low,
+              method: 'where',
+              op: 'ge' // >=
+            });
+            wheres.push({
+              column: key,
+              value: high,
+              method: 'where',
+              op: 'le' // <=
+            });
+            whereCount += 2;
+            continue;
+          }
+        }
+
+        let param = {};
+        //* xx* 转换成数据库的%%
+        if (typeof condition === 'string' && condition.includes('*')) {
+          if (condition === '*') {
+            continue;
+          }
+          const newcondt = condition.replaceAll(/\*/g, '%');
+          param = {
+            column: key,
+            value: newcondt,
+            op: 'like'
+          };
+        } else {
+          param = {
+            column: key,
+            value: condition
+          };
+        }
+        // 超过一个条件，使用交叉查询
+        if (whereCount > 1) {
+          param['method'] = 'where';
+        }
+        wheres.push(param);
+        whereCount += 1;
       }
-      // 超过一个条件，使用交叉查询
-      if (whereCount > 1) {
-        param['method'] = 'where';
-      }
-      wheres.push(param);
-      whereCount += 1;
     }
   }
 
   // 使用keywords进行模糊
   if (
-    keywords &&
+    hasKeyword &&
     Array.isArray(keywords) &&
     keywords.length &&
     keywords[0] != '' &&
-    keywords[0] != '*' &&
-    wheres.length == 0
+    keywords[0] != '*'
   ) {
     const keyword = keywords[0] + '';
     for (const colname in columnMap) {
@@ -218,6 +227,10 @@ export function queryToQueryParam(
         // console.log("colname:", colname);
         const column = columnMap[colname];
         if (column == null) {
+          continue;
+        }
+        // 只针对有索引的字段
+        if (!column.index) {
           continue;
         }
         const param = {
@@ -590,7 +603,11 @@ function FilterArrayWithQuery(
   const keyword = getArrayItem(querys, 'keywords');
 
   const keywordQuery = {};
-  if (querys['keywords'] != null && !first['keywords']) {
+  if (
+    querys['keywords'] != null &&
+    querys['keywords'].length && //如果是空值，没必要过滤
+    !first['keywords']
+  ) {
     // 只有keywords
     searchFields = searchFields || [];
     if (!Array.isArray(searchFields)) {
@@ -665,14 +682,3 @@ function FilterArrayWithQuery(
   }
   return list;
 }
-
-// const {mergeQueryObject} = Require("amis.data.lib")
-// module.exports = {
-//   mergeQueryObject,
-//   updateInputData,
-//   updateOutputData,
-//   queryToQueryParam,
-//   paginateArray,
-//   PaginateArrayWithQuery,
-//   getArrayItem,
-// };
