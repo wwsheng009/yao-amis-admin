@@ -617,6 +617,9 @@ export function updateModelMetaFields(
  */
 export function addModelMetaFields(modelDsl2: YaoModel.ModelDSL) {
   const modelDsl = modelDsl2;
+  if (!modelDsl) {
+    return modelDsl;
+  }
   if (modelDsl.option?.timestamps) {
     let result = modelDsl.columns?.some((item) => item.name === 'created_at');
     if (!result) {

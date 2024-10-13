@@ -313,7 +313,9 @@ function updateOutputDataLine(dbColMap: object, line: object) {
     const modelCol = dbColMap[key];
     const colType = modelCol.type.toUpperCase();
     const field = line[key];
-
+    if (field === undefined) {
+      continue;
+    }
     switch (colType) {
       // 如果数据库中使用的是json的字符串，作一次转换
       // 在amis编辑保存后会自动的转换成","拼接的字符串
@@ -339,6 +341,17 @@ function updateOutputDataLine(dbColMap: object, line: object) {
           }
         }
         break;
+      case 'DECIMAL':
+        if (field) {
+          line[key] = Number(field);
+        }
+        break;
+      case 'BOOLEAN':
+        if (field) {
+          line[key] = true;
+        } else {
+          line[key] = false;
+        }
     }
   }
   return line;
