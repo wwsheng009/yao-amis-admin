@@ -600,7 +600,7 @@ export function updateModelMetaFields(
       }
     }
     if (modelDsl?.option?.soft_deletes) {
-      if (c.name == 'deleted_at' && c.label == '::Deleted At') {
+      if (c.name == 'deleted_at' && c.label == '::Delete At') {
         c.label = '删除时间';
       }
     }

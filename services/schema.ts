@@ -1,5 +1,6 @@
 import { curdTemplate } from '@scripts/amis/curd';
 import { curdListPage } from '@scripts/amis/schema';
+import { generateCodeTemplate } from '@scripts/system/tscode';
 import { createModelType } from '@scripts/system/tstype';
 import { AmisUIColumn, ModelId } from '@yao/types';
 import { Process } from '@yao/yao';
@@ -59,8 +60,12 @@ export function getCodeGenerationList() {
       value: 'getXgenFormFullEdit'
     },
     {
-      label: 'TypeScript类型定义',
+      label: 'TS类型定义',
       value: 'getTSType'
+    },
+    {
+      label: 'TS模型服务定义',
+      value: 'getTSModelServiceTemplate'
     }
   ];
 }
@@ -161,16 +166,32 @@ export function getTSType(modelId: ModelId, columns?: AmisUIColumn[]) {
       {
         language: 'typescript',
         title: 'Ts类型',
-        __code_source: createModelType(modelId, columns) //
-        // Process(
-        //   'scripts.system.tstype.createModelType',
-        //   modelId,
-        //   columns
-        // )
+        __code_source: createModelType(modelId, columns)
       }
     ]
   };
 }
+/**
+ * 生成模型对应的处理代码
+ * @param modelId
+ * @param columns
+ * @returns
+ */
+export function getTSModelServiceTemplate(
+  modelId: ModelId,
+  columns?: AmisUIColumn[]
+) {
+  return {
+    __code_sources: [
+      {
+        language: 'typescript',
+        title: '模型TS函数模板',
+        __code_source: generateCodeTemplate(modelId, columns)
+      }
+    ]
+  };
+}
+
 /**
  * 生成amis table控件的列表字段定义
  * @param {string} modelId 模型名称
@@ -277,7 +298,7 @@ export function getTableAmisViewFieldsWithQuick(
  * @returns
  */
 export function getXgenTable(modelId: ModelId, columns?: AmisUIColumn[]) {
-  let template = Process(
+  const template = Process(
     'scripts.xgen.schema.generateTableView',
     modelId,
     columns,

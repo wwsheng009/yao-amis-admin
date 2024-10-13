@@ -1,4 +1,4 @@
-import { DotName, SlashName } from '@scripts/system/lib';
+import { DotName } from '@scripts/system/lib';
 import { getModelDslById } from './model';
 import { AmisUIColumn, ModelId } from '@yao/types';
 import { amisUIModelToAmisModel } from './model_convert';
@@ -23,7 +23,6 @@ export function createModelType(modelId: ModelId, columnsIn?: AmisUIColumn[]) {
   } else {
     model.columns = model.columns || [];
   }
-
   return createTSTypes(model);
 }
 /**
@@ -44,23 +43,46 @@ function createTSTypes(modelsIn: YaoModel.ModelDSL[] | YaoModel.ModelDSL) {
   } else if (!Array.isArray(modelsIn) && typeof modelsIn == 'object') {
     models.push(modelsIn);
   }
-  const codes = models.map(getCodeTemplate);
+  const codes = models.map(getFieldsTemplate);
   return codes.join('\n');
 }
 
-function getCodeTemplate(model: YaoModel.ModelDSL) {
+/**
+ * 将字符串转换为驼峰命名空间格式
+ * 如果字符串为空或长度小于1，则返回原字符串
+ * 否则，将字符串中的下划线或点替换为驼峰格式，并将首字母大写
+ * @param str - 要转换的字符串
+ * @returns 转换后的驼峰命名空间字符串
+ */
+export function toCamelCaseNameSpace(str) {
+  if (!str || str.length < 1) {
+    return str;
+  }
+  const newStr = str.replace(/[._]([a-z])/g, function (match, letter) {
+    return letter.toUpperCase();
+  });
+  return newStr.charAt(0).toUpperCase() + newStr.slice(1);
+}
+
+/**
+ * 生成模型字段的 TypeScript 模板
+ *
+ * @param model - 要处理的模型对象
+ * @returns 包含模型字段和关系的 TypeScript 接口定义字符串
+ */
+export function getFieldsTemplate(model: YaoModel.ModelDSL) {
   const typeMapping = getTSTypeMapping();
 
   const tabName = model.table.name;
-  const funtionName = SlashName(tabName);
+  // const funtionName = SlashName(tabName);
   const dotName = DotName(tabName);
-  const last = funtionName.replaceAll('/', '_');
-
+  // const last = funtionName.replaceAll('/', '_');
+  const interFaceName = toCamelCaseNameSpace(tabName);
   //handle the fields
   const fields = model.columns
     .map((item) => {
       return `  /**${item.label || item.comment} */
-  ${item.name}${isOption(item) ? '?' : ''}: ${getTsType(
+  ${item.name}${isOptionField(item) ? '?' : ''}: ${getFieldTsType(
     tabName,
     item,
     typeMapping
@@ -88,26 +110,23 @@ function getCodeTemplate(model: YaoModel.ModelDSL) {
     model.table.comment ? '(' + model.table.comment + ')' : ''
   }
 *\/
-export interface ${last} {
+export interface ${interFaceName} {
 ${fields}
 ${rels.join('\n')}
 }`;
 }
 
-function isOption(column: YaoModel.ModelColumn) {
-  const { unique, nullable, default: columnDefault, type } = column;
-
-  if (/^id$/i.test(type)) {
-    // id一般是数据创建
+function isOptionField(column: YaoModel.ModelColumn) {
+  if (column.primary) {
     return true;
-  } else if (unique || (columnDefault == null && !nullable)) {
+  } else if (column.unique || (column.default == null && !column.nullable)) {
     // 这里不要判断同时 == null || == undefined
     return false;
   }
   return true;
 }
 
-function getTsType(
+function getFieldTsType(
   tableName: string,
   column: YaoModel.ModelColumn,
   typeMapping: {
@@ -169,6 +188,6 @@ function getTSTypeMapping() {
     float: 'number',
     boolean: 'boolean',
     enum: 'string',
-    json: 'any'
+    json: 'object'
   };
 }
