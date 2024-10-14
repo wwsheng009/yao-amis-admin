@@ -100,7 +100,7 @@ export function Server(payload: {
         break;
       default:
         resp.code = 500;
-        resp.message = `不支持的方法调用${type}`;
+        resp.message = `不支持的方法调用${type},请使用：Process,Studio,Query,FileSystem,Store,Http,Log,WebSocket,Translate`;
     }
   } catch (error) {
     resp.code = error.code || 500;

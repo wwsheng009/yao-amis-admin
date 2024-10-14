@@ -1,8 +1,12 @@
-import { getFieldsTemplate, toCamelCaseNameSpace } from './tstype';
-import { YaoModel } from '@yaoapps/types';
+import {
+  getFieldsTemplate,
+  getFieldTsType,
+  toCamelCaseNameSpace
+} from './tstype';
 import { ModelId, AmisUIColumn } from '@yao/types';
 import { getModelDslById } from './model';
 import { amisUIModelToAmisModel } from './model_convert';
+import { YaoModel } from '@yaoapps/types';
 
 /**
  * yao run scripts.system.tscode.generateCodeTemplate admin.user
@@ -23,190 +27,188 @@ export function generateCodeTemplate(
   } else {
     model.columns = model.columns || [];
   }
-  //fields
-  const fieldsCode = getFieldsTemplate(model);
+  return getModelServiceTemplate(modelId, model);
+}
 
-  const namespace = toCamelCaseNameSpace(modelId);
+/**
+ * yao run scripts.system.tscode.getModelServiceTemplate admin.user
+ * @param modelId
+ * @param modelDsl
+ * @returns
+ */
+function getModelServiceTemplate(
+  modelId: ModelId,
+  modelDsl: YaoModel.ModelDSL
+) {
+  //fields
+  const fieldsCode = getFieldsTemplate(modelDsl, 'I');
+
+  const idCol = modelDsl.columns.find((col) => col.primary);
+  const idColType = getFieldTsType(idCol);
+
+  // const namespace = toCamelCaseNameSpace(modelId);
+  // const modelInterface = 'I' + toCamelCaseNameSpace(modelId);
+
   //service template
   return `
 ${'import'} { Process } from '@yaoapps/client';
-${'import'} { YaoQueryParam } from '@yaoapps/types';
+${'import'} { ModelPaginateResult, YaoQueryParam } from '@yaoapps/types';
 
 ${fieldsCode}
 
-${'export'} interface ${namespace}Paginate {
-  \/**数据记录集合 */
-  data: ${namespace}[];
-  \/**下一页，如没有下一页返回-1*/
-  next: number;
-  \/**上一页，如没有上一页返回-1*/
-  prev: number;
-  \/**当前页码 */
-  page: number;
-  \/**每页记录数量 */
-  pagesize: number;
-  \/**总页数 */
-  pagecnt: number;
-  \/**总记录数 */
-  total: number;
-}
-  
-  ${getFunctionsTemplate(modelId)}
+  ${getFunctionsTemplate(modelId, idColType, modelDsl)}
  `;
 }
 
-function getFunctionsTemplate(modelID: ModelId) {
+function getFunctionsTemplate(
+  modelID: ModelId,
+  idFieldType: string,
+  modelDsl: YaoModel.ModelDSL
+) {
   const namespace = toCamelCaseNameSpace(modelID);
+  const modelInterface = 'I' + toCamelCaseNameSpace(modelID);
+
+  const fieldsName = modelDsl.columns.map((col) => col.name);
 
   return `
-\/**
- * 根据主键 id 查询单条记录。
- * @param id
- * @param where
- * @returns
- */
-function Find(id:number,where:YaoQueryParam.QueryParam): ${namespace}{
-    return Process('models.${modelID}.find',id,where)
-}
-\/**
- * 根据条件查询数据记录, 返回符合条件的结果集。
- * @param where
- * @returns
- */
-function Get(where:YaoQueryParam.QueryParam): ${namespace}[]{
-    return Process('models.${modelID}.get',where)
-}
-\/**
- * 根据条件查询数据记录, 返回带有分页信息的数据对象。
- * @param where
- * @param page
- * @param perPage
- * @returns
- */
-function Paginate(where:YaoQueryParam.QueryParam,page:number,perPage:number): ${namespace}Paginate[]{
-    return Process('models.${modelID}.Paginate',where,page,perPage)
-}
+${'export'} class ${namespace}Service {
+    static FieldNames = ${JSON.stringify(fieldsName)};
+    static ModelID = '${modelID}';
+    static TableName = '${modelDsl.table.name}';
 
-\/**
- * 创建单条记录, 返回新创建记录的主键
- * @param data
- * @returns
- */
-function Create(data:${namespace}): number {
-    return Process('models.${modelID}.create',data)
-}
+    \/**
+    * 根据主键查询单条记录。
+    \/**
+    * 根据主键与附加条件查询单条记录。
+    * @param key 主键
+    * @param where 筛选条件
+    * @returns ${modelInterface}
+    */
+    static Find(key:${idFieldType},where:YaoQueryParam.QueryParam): ${modelInterface}{
+        return Process('models.${modelID}.find',key,where)
+    }
+    \/**
+    * 根据条件查询数据记录, 返回符合条件的结果集。
+    * @param where
+    * @returns ${modelInterface}[]
+    */
+    static Get(where:YaoQueryParam.QueryParam): ${modelInterface}[]{
+        return Process('models.${modelID}.get',where)
+    }
+    \/**
+    * 根据条件查询数据记录, 返回带有分页信息的数据对象。
+    * @param where
+    * @param page
+    * @param perPage
+    * @returns ModelPaginateResult<${modelInterface}>
+    */
+    static Paginate(where:YaoQueryParam.QueryParam,page:number,perPage:number): ModelPaginateResult<${modelInterface}>{
+        return Process('models.${modelID}.Paginate',where,page,perPage)
+    }
 
-\/**
- * 一次性插入多条数据记录，返回插入行数
- * @param fields
- * @param data
- * @returns
- */
-function Insert(fields:string[],data:any[][]): number {
-    return Process('models.${modelID}.Insert',fields,data)
-}
+    \/**
+    * 创建单条记录, 返回新创建记录的主键
+    * @param data
+    * @returns
+    */
+    static Create(data:${modelInterface}): number {
+        return Process('models.${modelID}.create',data)
+    }
 
-\/**
- * 创建或更新单条记录。如数据记录中包含 id 则更新，不包含 id 则创建记录；返回创建或更新的记录 ID。
- * @param data
- * @returns
- */
-function Save(data:${namespace}): number {
-    return Process('models.${modelID}.Save',data)
-}
+    \/**
+    * 一次性插入多条数据记录，返回插入行数
+    * @param fields
+    * @param data
+    * @returns
+    */
+    static Insert(fields:string[],data:any[][]): number {
+        return Process('models.${modelID}.Insert',fields,data)
+    }
 
-\/**
- * 根据主键 id 更新单条数据记录。
- * @param id
- * @param line
- * @returns
- */
-function Update(id:number,line:${namespace}) {
-    return Process('models.${modelID}.Update',id,line)
-}
+    \/**
+    * 创建或更新单条记录。如数据记录中包含 id 则更新，不包含 id 则创建记录；返回创建或更新的记录 ID。
+    * @param data
+    * @returns
+    */
+    static Save(data:${modelInterface}): number {
+        return Process('models.${modelID}.Save',data)
+    }
 
-\/**
- * 根据条件更新数据记录, 返回更新行数。
- * @param where
- * @param line
- * @returns
- */
-function UpdateWhere(where:YaoQueryParam.QueryParam,line:${namespace}) {
-    return Process('models.${modelID}.UpdateWhere',where,line)
-}
+    \/**
+    * 根据主键更新单条数据记录。
+    * @param key
+    * @param line
+    * @returns
+    */
+    static Update(key:${idFieldType},line:${modelInterface}) {
+        return Process('models.${modelID}.Update',key,line)
+    }
 
-\/**
- * 批量创建或是更新多条记录, 不包含主键字段则创建记录, 存在更新记录。
- * @param data
- * @param line
- * @returns
- */
-function EachSave(data:${namespace}[],line:${namespace}) {
-    return Process('models.${modelID}.EachSave',data,line)
-}
+    \/**
+    * 根据条件更新数据记录, 返回更新行数。
+    * @param where
+    * @param line
+    * @returns
+    */
+    static UpdateWhere(where:YaoQueryParam.QueryParam,line:${modelInterface}) {
+        return Process('models.${modelID}.UpdateWhere',where,line)
+    }
 
-\/**
- * 删除并保存数据，删除给定 ID 的记录后，保存多条记录数据, 不包含主键字段则创建记录, 存在更新记录, 返回记录 ID 集合 ，返回创建或更新的记录 ID 集合。
- * @param ids
- * @param data
- * @param line
- * @returns
- */
-function EachSaveAfterDelete(ids:number[],data:${namespace}[],line:${namespace}) {
-    return Process('models.${modelID}.EachSaveAfterDelete',ids,data,line)
-}
+    \/**
+    * 批量创建或是更新多条记录, 不包含主键字段则创建记录, 存在更新记录。
+    * @param data
+    * @param line
+    * @returns
+    */
+    static EachSave(data:${modelInterface}[],line:${modelInterface}) {
+        return Process('models.${modelID}.EachSave',data,line)
+    }
 
-\/**
- * 根据 id 删除数据
- * @param id
- * @returns
- */
-function Delete(id:number){
-    return Process('models.${modelID}.Delete',id)
-}
+    \/**
+    * 删除并保存数据，删除给定 ID 的记录后，保存多条记录数据, 不包含主键字段则创建记录, 存在更新记录, 返回记录 ID 集合 ，返回创建或更新的记录 ID 集合。
+    * @param keys
+    * @param data
+    * @param line
+    * @returns
+    */
+    static EachSaveAfterDelete(keys:${idFieldType}[],data:${modelInterface}[],line:${modelInterface}) {
+        return Process('models.${modelID}.EachSaveAfterDelete',keys,data,line)
+    }
 
-\/**
- * 根据条件删除数据
- * @param where
- * @returns
- */
-function DeleteWhere(where:YaoQueryParam.QueryParam){
-    return Process('models.${modelID}.DeleteWhere',where)
-}
+    \/**
+    * 根据主键删除数据
+    * @param key
+    * @returns
+    */
+    static Delete(key:${idFieldType}){
+        return Process('models.${modelID}.Delete',key)
+    }
 
-\/**
- * 根据主键 id 真删除单条数据记录。
- * @param id
- * @returns
- */
-function Destroy(id:number){
-    return Process('models.${modelID}.Destroy',id)
-}
+    \/**
+    * 根据条件删除数据
+    * @param where
+    * @returns
+    */
+    static DeleteWhere(where:YaoQueryParam.QueryParam){
+        return Process('models.${modelID}.DeleteWhere',where)
+    }
 
-\/**
- * 根据主键 id 真删除单条数据记录。
- * @param where
- * @returns
- */
-function DestroyWhere(where:YaoQueryParam.QueryParam){
-    return Process('models.${modelID}.DestroyWhere',where)
-}
+    \/**
+    * 根据主键真删除单条数据记录。
+    * @param key
+    * @returns
+    */
+    static Destroy(key:${idFieldType}){
+        return Process('models.${modelID}.Destroy',key)
+    }
 
-
-${'export'} default {
-  Find,
-  Get,
-  Paginate,
-  Create,
-  Insert,
-  Save,
-  Update,
-  UpdateWhere,
-  EachSave,
-  EachSaveAfterDelete,
-  Delete,
-  DeleteWhere,
-  Destroy,
-  DestroyWhere
-};`;
+    \/**
+    * 按条件硬删除
+    * @param where
+    * @returns
+    */
+    static DestroyWhere(where:YaoQueryParam.QueryParam){
+        return Process('models.${modelID}.DestroyWhere',where)
+    }
+}`;
 }

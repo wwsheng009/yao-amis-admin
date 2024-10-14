@@ -28,7 +28,8 @@ export function createModelType(modelId: ModelId, columnsIn?: AmisUIColumn[]) {
 /**
  * 生成模型对应的ts类型定义
  *
- * yao run scripts.system.tstype.createTSTypes admin.user
+ * yao run scripts.system.tstype.createTSTypes
+ *
  * @param {object|Array} modelsIn 模型对象或是列表
  * @returns string
  */
@@ -43,7 +44,7 @@ function createTSTypes(modelsIn: YaoModel.ModelDSL[] | YaoModel.ModelDSL) {
   } else if (!Array.isArray(modelsIn) && typeof modelsIn == 'object') {
     models.push(modelsIn);
   }
-  const codes = models.map(getFieldsTemplate);
+  const codes = models.map((m) => getFieldsTemplate(m, ''));
   return codes.join('\n');
 }
 
@@ -67,33 +68,29 @@ export function toCamelCaseNameSpace(str) {
 /**
  * 生成模型字段的 TypeScript 模板
  *
- * @param model - 要处理的模型对象
+ * yao run scripts.system.tstype.getFieldsTemplate admin.user
+ *
+ * @param modelDsl - 要处理的模型对象
  * @returns 包含模型字段和关系的 TypeScript 接口定义字符串
  */
-export function getFieldsTemplate(model: YaoModel.ModelDSL) {
-  const typeMapping = getTSTypeMapping();
-
-  const tabName = model.table.name;
+export function getFieldsTemplate(modelDsl: YaoModel.ModelDSL, prefix: string) {
+  const tabName = modelDsl.table.name;
   // const funtionName = SlashName(tabName);
   const dotName = DotName(tabName);
   // const last = funtionName.replaceAll('/', '_');
-  const interFaceName = toCamelCaseNameSpace(tabName);
+  const interFaceName = prefix + toCamelCaseNameSpace(tabName);
   //handle the fields
-  const fields = model.columns
+  const fields = modelDsl.columns
     .map((item) => {
       return `  /**${item.label || item.comment} */
-  ${item.name}${isOptionField(item) ? '?' : ''}: ${getFieldTsType(
-    tabName,
-    item,
-    typeMapping
-  )};`;
+  ${item.name}${isOptionField(item) ? '?' : ''}: ${getFieldTsType(item)};`;
     }, [])
     .join('\n');
 
   //handle the relations
   const rels = [];
-  for (const key in model.relations) {
-    const element = model.relations[key];
+  for (const key in modelDsl.relations) {
+    const element = modelDsl.relations[key];
     let sign = '';
     if (element.type === 'hasMany') {
       sign = '[]';
@@ -104,10 +101,10 @@ export function getFieldsTemplate(model: YaoModel.ModelDSL) {
 
   //return code template
   return `\/**
-* Model=> ${dotName} ${model.name ? '(' + model.name + ')' : ''}
+* Model=> ${dotName} ${modelDsl.name ? '(' + modelDsl.name + ')' : ''}
 * 
-* Table=> ${model.table.name} ${
-    model.table.comment ? '(' + model.table.comment + ')' : ''
+* Table=> ${modelDsl.table.name} ${
+    modelDsl.table.comment ? '(' + modelDsl.table.comment + ')' : ''
   }
 *\/
 export interface ${interFaceName} {
@@ -116,6 +113,11 @@ ${rels.join('\n')}
 }`;
 }
 
+/**
+ * 判断字段是否可选
+ * @param column 列定义
+ * @returns
+ */
 function isOptionField(column: YaoModel.ModelColumn) {
   if (column.primary) {
     return true;
@@ -126,19 +128,23 @@ function isOptionField(column: YaoModel.ModelColumn) {
   return true;
 }
 
-function getFieldTsType(
-  tableName: string,
-  column: YaoModel.ModelColumn,
-  typeMapping: {
-    [x: string]: string;
+/**
+ * 获取字段对应的ts类型
+ * @param column 列定义
+ * @returns 对应的ts类型
+ */
+export function getFieldTsType(column: YaoModel.ModelColumn) {
+  if (!column || !column.type) {
+    return 'string';
   }
-) {
+  const typeMapping = getTSTypeMapping();
+
   let type = 'any';
   const ctype = column.type.toLowerCase();
   if (ctype === 'enum') {
     if (!column.option) {
       console.log(
-        `column: ${column.name} in ${tableName} type is enum,but no options, fallback to string`
+        `column: ${column.name} type is enum,but no options, fallback to string`
       );
       type = 'string';
     } else {
