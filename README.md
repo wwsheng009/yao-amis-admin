@@ -46,9 +46,9 @@ mkdir upload
 mkdir logs
 
 docker run -d --name=yao-amis-admin \
-    -v ./.env:/data/.env \
-    -v ./upload:/data/data/upload \
-    -v ./logs:/data/logs \
+    -v ./.env:/data/app/.env \
+    -v ./upload:/data/app/data/upload \
+    -v ./logs:/data/app/logs \
     -p 5099:5099 \
     wwsheng009/yao-amis-admin-amd64:latest
 ```
