@@ -23,7 +23,7 @@ export function createModelType(modelId: ModelId, columnsIn?: AmisUIColumn[]) {
   } else {
     model.columns = model.columns || [];
   }
-  return createTSTypes(model);
+  return createTSTypes(model, '');
 }
 /**
  * 生成模型对应的ts类型定义
@@ -33,7 +33,10 @@ export function createModelType(modelId: ModelId, columnsIn?: AmisUIColumn[]) {
  * @param {object|Array} modelsIn 模型对象或是列表
  * @returns string
  */
-function createTSTypes(modelsIn: YaoModel.ModelDSL[] | YaoModel.ModelDSL) {
+function createTSTypes(
+  modelsIn: YaoModel.ModelDSL[] | YaoModel.ModelDSL,
+  prefix: string
+) {
   if (!modelsIn) {
     return '';
   }
@@ -44,7 +47,7 @@ function createTSTypes(modelsIn: YaoModel.ModelDSL[] | YaoModel.ModelDSL) {
   } else if (!Array.isArray(modelsIn) && typeof modelsIn == 'object') {
     models.push(modelsIn);
   }
-  const codes = models.map((m) => getFieldsTemplate(m, ''));
+  const codes = models.map((m) => getFieldsTemplate(m, prefix || ''));
   return codes.join('\n');
 }
 
