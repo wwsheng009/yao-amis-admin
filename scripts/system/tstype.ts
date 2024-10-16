@@ -99,7 +99,7 @@ export function getFieldsTemplate(modelDsl: YaoModel.ModelDSL, prefix: string) {
       sign = '[]';
     }
     rels.push(`  /** Relation: ${key}=> ${element.model} */
-    ${key}?: ${prefix + toCamelCaseNameSpace(element.model)}${sign}`);
+  ${key}?: ${prefix + toCamelCaseNameSpace(element.model)}${sign}`);
   }
 
   //return code template

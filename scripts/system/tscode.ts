@@ -65,13 +65,13 @@ function getFunctionsTemplate(
   idFieldType: string,
   modelDsl: YaoModel.ModelDSL
 ) {
-  const namespace = toCamelCaseNameSpace(modelID);
+  const namespace = toCamelCaseNameSpace(modelID) + 'Service';
   const modelInterface = 'I' + toCamelCaseNameSpace(modelID);
 
   const fieldsName = modelDsl.columns.map((col) => col.name);
 
   return `
-${'export'} class ${namespace}Service {
+${'export'} class ${namespace} {
     static FieldNames = ${JSON.stringify(fieldsName)};
     static ModelID = '${modelID}';
     static TableName = '${modelDsl.table.name}';
@@ -85,7 +85,7 @@ ${'export'} class ${namespace}Service {
     * @returns ${modelInterface}
     */
     static Find(key:${idFieldType},query:YaoQueryParam.QueryParam): ${modelInterface}{
-        return Process('models.${modelID}.find',key,query)
+        return Process(\`models.$\{${namespace}.ModelID}.find\`,key,query)
     }
     \/**
     * 根据条件查询数据记录, 返回符合条件的结果集。
@@ -93,7 +93,7 @@ ${'export'} class ${namespace}Service {
     * @returns ${modelInterface}[]
     */
     static Get(query:YaoQueryParam.QueryParam): ${modelInterface}[]{
-        return Process('models.${modelID}.get',query)
+        return Process(\`models.$\{${namespace}.ModelID}.get\`,query)
     }
     \/**
     * 根据条件查询数据记录, 返回带有分页信息的数据对象。
@@ -103,7 +103,7 @@ ${'export'} class ${namespace}Service {
     * @returns ModelPaginateResult<${modelInterface}>
     */
     static Paginate(query:YaoQueryParam.QueryParam,page:number,perPage:number): ModelPaginateResult<${modelInterface}>{
-        return Process('models.${modelID}.Paginate',query,page,perPage)
+        return Process(\`models.$\{${namespace}.ModelID}.Paginate\`,query,page,perPage)
     }
 
     \/**
@@ -112,7 +112,7 @@ ${'export'} class ${namespace}Service {
     * @returns
     */
     static Create(data:${modelInterface}): number {
-        return Process('models.${modelID}.create',data)
+        return Process(\`models.$\{${namespace}.ModelID}.create\`,data)
     }
 
     \/**
@@ -122,7 +122,7 @@ ${'export'} class ${namespace}Service {
     * @returns
     */
     static Insert(fields:string[],data:any[][]): number {
-        return Process('models.${modelID}.Insert',fields,data)
+        return Process(\`models.$\{${namespace}.ModelID}.Insert\`,fields,data)
     }
 
     \/**
@@ -131,7 +131,7 @@ ${'export'} class ${namespace}Service {
     * @returns
     */
     static Save(data:${modelInterface}): number {
-        return Process('models.${modelID}.Save',data)
+        return Process(\`models.$\{${namespace}.ModelID}.Save\`,data)
     }
 
     \/**
@@ -141,7 +141,7 @@ ${'export'} class ${namespace}Service {
     * @returns
     */
     static Update(key:${idFieldType},line:${modelInterface}) {
-        return Process('models.${modelID}.Update',key,line)
+        return Process(\`models.$\{${namespace}.ModelID}.Update\`,key,line)
     }
 
     \/**
@@ -151,7 +151,7 @@ ${'export'} class ${namespace}Service {
     * @returns
     */
     static UpdateWhere(query:YaoQueryParam.QueryParam,line:${modelInterface}) {
-        return Process('models.${modelID}.UpdateWhere',query,line)
+        return Process(\`models.$\{${namespace}.ModelID}.UpdateWhere\`,query,line)
     }
 
     \/**
@@ -161,7 +161,7 @@ ${'export'} class ${namespace}Service {
     * @returns
     */
     static EachSave(data:${modelInterface}[],line:${modelInterface}) {
-        return Process('models.${modelID}.EachSave',data,line)
+        return Process(\`models.$\{${namespace}.ModelID}.EachSave\`,data,line)
     }
 
     \/**
@@ -172,7 +172,7 @@ ${'export'} class ${namespace}Service {
     * @returns
     */
     static EachSaveAfterDelete(keys:${idFieldType}[],data:${modelInterface}[],line:${modelInterface}) {
-        return Process('models.${modelID}.EachSaveAfterDelete',keys,data,line)
+        return Process(\`models.$\{${namespace}.ModelID}.EachSaveAfterDelete\`,keys,data,line)
     }
 
     \/**
@@ -181,7 +181,7 @@ ${'export'} class ${namespace}Service {
     * @returns
     */
     static Delete(key:${idFieldType}){
-        return Process('models.${modelID}.Delete',key)
+        return Process(\`models.$\{${namespace}.ModelID}.Delete\`,key)
     }
 
     \/**
@@ -190,7 +190,7 @@ ${'export'} class ${namespace}Service {
     * @returns
     */
     static DeleteWhere(query:YaoQueryParam.QueryParam){
-        return Process('models.${modelID}.DeleteWhere',query)
+        return Process(\`models.$\{${namespace}.ModelID}.DeleteWhere\`,query)
     }
 
     \/**
@@ -199,7 +199,7 @@ ${'export'} class ${namespace}Service {
     * @returns
     */
     static Destroy(key:${idFieldType}){
-        return Process('models.${modelID}.Destroy',key)
+        return Process(\`models.$\{${namespace}.ModelID}.Destroy\`,key)
     }
 
     \/**
@@ -208,7 +208,7 @@ ${'export'} class ${namespace}Service {
     * @returns
     */
     static DestroyWhere(query:YaoQueryParam.QueryParam){
-        return Process('models.${modelID}.DestroyWhere',query)
+        return Process(\`models.$\{${namespace}.ModelID}.DestroyWhere\`,query)
     }
 }`;
 }
