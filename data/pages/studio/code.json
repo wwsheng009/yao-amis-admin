@@ -46,6 +46,17 @@
                 "url": "/api/v1/system/meta/model/model_name_list",
                 "cache": 2000
               },
+              "selectMode": "table",
+              "columns": [
+                {
+                  "name": "label",
+                  "label": "描述"
+                },
+                {
+                  "name": "value",
+                  "label": "表名"
+                }
+              ],
               "searchable": true,
               "type": "select",
               "id": "u:f464af1bea51",

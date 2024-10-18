@@ -45,11 +45,6 @@
           "searchable": true,
           "sortable": true,
           "type": "text",
-          "quickEdit": {
-            "required": true,
-            "saveImmediately": true,
-            "type": "textarea"
-          },
           "id": "u:392c5b00efce",
           "label": "模型"
         },
@@ -57,11 +52,6 @@
           "searchable": true,
           "sortable": true,
           "type": "text",
-          "quickEdit": {
-            "required": true,
-            "saveImmediately": true,
-            "type": "textarea"
-          },
           "id": "u:f5e0fd3456a4",
           "label": "横轴",
           "name": "xfield"
@@ -69,11 +59,6 @@
         {
           "sortable": true,
           "type": "json",
-          "quickEdit": {
-            "type": "textarea",
-            "required": true,
-            "saveImmediately": true
-          },
           "id": "u:2f2309c34414",
           "label": "横轴",
           "name": "yfields",
@@ -198,7 +183,19 @@
                           "label": "模型列表",
                           "multiple": false,
                           "static": true,
-                          "name": "model"
+                          "searchable": true,
+                          "name": "model",
+                          "selectMode": "table",
+                          "columns": [
+                            {
+                              "name": "label",
+                              "label": "描述"
+                            },
+                            {
+                              "name": "value",
+                              "label": "表名"
+                            }
+                          ]
                         },
                         {
                           "label": "横轴字段",
@@ -380,7 +377,19 @@
                           "id": "u:1baedf88ab9b",
                           "label": "模型列表",
                           "multiple": false,
-                          "name": "model"
+                          "searchable": true,
+                          "name": "model",
+                          "selectMode": "table",
+                          "columns": [
+                            {
+                              "name": "label",
+                              "label": "描述"
+                            },
+                            {
+                              "name": "value",
+                              "label": "表名"
+                            }
+                          ]
                         },
                         {
                           "label": "横轴字段",
@@ -390,18 +399,16 @@
                           "multiple": false,
                           "colSize": "1/2",
                           "source": {
-                            "sendOn": "this.model",
-                            "url": "/api/v1/system/model/ddic.model.column/select_options",
+                            "sendOn": "!!this.model",
+                            "url": "/api/v1/system/meta/model/model_field_list",
                             "method": "get",
                             "dataType": "json",
                             "messages": {},
-                            "trackExpression": "${model}",
+                            "trackExpression": "${this.model}",
                             "adaptor": "",
                             "requestAdaptor": "",
                             "data": {
-                              "_label": "label",
-                              "_value": "name",
-                              "model_identity": "${model}"
+                              "model": "${this.model}"
                             }
                           },
                           "type": "select"
@@ -421,17 +428,14 @@
                               "source": {
                                 "method": "get",
                                 "data": {
-                                  "_label": "label",
-                                  "_value": "name",
-                                  "model_identity": "${model}"
+                                  "model_identity": "${this.model}"
                                 },
                                 "dataType": "json",
                                 "requestAdaptor": "",
                                 "messages": {},
-                                "sendOn": "this.model",
-                                "trackExpression": "${model}",
-                                "url": "/api/v1/system/model/ddic.model.column/select_options",
-                                "adaptor": ""
+                                "sendOn": "!!this.model",
+                                "trackExpression": "${this.model}",
+                                "url": "/api/v1/system/meta/model/model_field_list"
                               },
                               "type": "select",
                               "id": "u:fe6001e49812"
@@ -736,8 +740,20 @@
                       "colSize": "1/2",
                       "id": "u:1baedf88ab9b",
                       "label": "模型列表",
+                      "searchable": true,
                       "multiple": false,
-                      "name": "model"
+                      "name": "model",
+                      "selectMode": "table",
+                      "columns": [
+                        {
+                          "name": "label",
+                          "label": "描述"
+                        },
+                        {
+                          "name": "value",
+                          "label": "表名"
+                        }
+                      ]
                     },
                     {
                       "label": "横轴字段",
@@ -748,17 +764,13 @@
                       "colSize": "1/2",
                       "source": {
                         "sendOn": "this.model",
-                        "url": "/api/v1/system/model/ddic.model.column/select_options",
+                        "url": "/api/v1/system/meta/model/model_field_list",
                         "method": "get",
                         "dataType": "json",
                         "messages": {},
                         "trackExpression": "${model}",
-                        "adaptor": "",
-                        "requestAdaptor": "",
                         "data": {
-                          "_label": "label",
-                          "_value": "name",
-                          "model_identity": "${model}"
+                          "model": "${model}"
                         }
                       },
                       "type": "select"
@@ -778,17 +790,14 @@
                           "source": {
                             "method": "get",
                             "data": {
-                              "_label": "label",
-                              "_value": "name",
-                              "model_identity": "${model}"
+                              "model": "${model}"
                             },
                             "dataType": "json",
                             "requestAdaptor": "",
                             "messages": {},
                             "sendOn": "this.model",
                             "trackExpression": "${model}",
-                            "url": "/api/v1/system/model/ddic.model.column/select_options",
-                            "adaptor": ""
+                            "url": "/api/v1/system/meta/model/model_field_list"
                           },
                           "type": "select",
                           "id": "u:fe6001e49812"

@@ -498,6 +498,22 @@ export function getDbModelsNameOptions() {
 }
 
 /**
+ * yao run scripts.system.model.getFieldsForModel admin.auth.role
+ * @param modelId 模型ID
+ * @returns 返回模型字段列表
+ */
+export function getFieldsForModel(modelId: string) {
+  const model = getModelDslById(modelId);
+
+  const fields = model?.columns?.map((col) => {
+    return {
+      label: col.label || col.name,
+      value: col.name
+    };
+  });
+  return fields;
+}
+/**
  * get all model name list as select options including the cached and the database.
  *
  * yao run scripts.system.model.getAllModelNameOptions
