@@ -24,7 +24,7 @@ function getUserInfo(type, value) {
     ],
     wheres: [
       { column: supportTypes[type], value: value },
-      { Column: 'status', Value: 'enabled' }
+      { column: 'status', value: 'enabled' }
     ],
     limit: 1
   });

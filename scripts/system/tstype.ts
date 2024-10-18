@@ -197,6 +197,6 @@ function getTSTypeMapping() {
     float: 'number',
     boolean: 'boolean',
     enum: 'string',
-    json: 'object'
+    json: 'any'
   };
 }

@@ -68,7 +68,10 @@ function getFunctionsTemplate(
   const namespace = toCamelCaseNameSpace(modelID) + 'Service';
   const modelInterface = 'I' + toCamelCaseNameSpace(modelID);
 
-  const fieldsName = modelDsl.columns.map((col) => col.name);
+  const fieldsName = modelDsl.columns.reduce((pre, col) => {
+    pre[col.name] = col.name;
+    return pre;
+  }, {});
 
   return `
 ${'export'} class ${namespace} {
