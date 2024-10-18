@@ -105,7 +105,7 @@
       "schemaApi": {
         "url": "/api/v1/system/schema/${model}/crud-all",
         "method": "get",
-        "sendOn": "!!model && model.indexOf(\".\") > -1"
+        "sendOn": "!!model"
       },
       "name": "model",
       "initFetchSchema": true,
