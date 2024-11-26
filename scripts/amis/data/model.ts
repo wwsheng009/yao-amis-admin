@@ -443,9 +443,17 @@ export function selectOptions(
   if (!query.labelField) {
     const modelDsl = FindAndLoadYaoModelById(query.from);
     for (const col of modelDsl.columns) {
-      if (col.type === 'string' || col.type === 'text') {
+      if (['name', 'title', 'description', 'desc'].includes('col.name')) {
         query.labelField = col.name;
         break;
+      }
+    }
+    if (!query.labelField) {
+      for (const col of modelDsl.columns) {
+        if (col.type === 'string' || col.type === 'text') {
+          query.labelField = col.name;
+          break;
+        }
       }
     }
   }
