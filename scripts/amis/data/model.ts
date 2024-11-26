@@ -416,15 +416,15 @@ export function selectOptions(
     limit: 1
   } as YaoQueryParam.QueryParam);
 
-  const query = { model: modelId } as any;
+  const query = { from: modelId } as any;
   let wheres = undefined as
     | YaoQueryParam.QueryWhere
     | YaoQueryParam.QueryWhere[];
   let join = false;
   if (row != null) {
-    query.model = row.model_id;
-    query.value = row.value_field;
-    query.label = row.label_field;
+    query.from = row.model_id;
+    query.valueField = row.value_field;
+    query.labelField = row.label_field;
     if (row.wheres) {
       query.wheres = JSON.parse(row.wheres);
     }
@@ -432,13 +432,27 @@ export function selectOptions(
   }
 
   if (querys['_value']) {
-    query.value = querys['_value'][0];
+    query.valueField = querys['_value'][0];
   }
   if (querys['_label']) {
-    query.label = querys['_label'][0];
+    query.labelField = querys['_label'][0];
   }
-
-  const queryParam = queryToQueryParam(query.model, querys);
+  if (!query.valueField) {
+    query.valueField = 'id';
+  }
+  if (!query.labelField) {
+    const modelDsl = FindAndLoadYaoModelById(query.from);
+    for (const col of modelDsl.columns) {
+      if (col.type === 'string' || col.type === 'text') {
+        query.labelField = col.name;
+        break;
+      }
+    }
+  }
+  if (!query.labelField) {
+    query.labelField = 'id';
+  }
+  const queryParam = queryToQueryParam(query.from, querys);
   wheres = queryParam?.wheres;
   if (wheres != null) {
     query.wheres = wheres;
@@ -448,7 +462,7 @@ export function selectOptions(
     query.wheres = querys['__wheres'];
   }
 
-  const data = Process('yao.component.SelectOptions', query);
+  const data = Process('yao.component.GetOptions', {}, { query });
   data.forEach((x: { label: string; value: string }) => {
     const isNull = x.label == null;
     x.label = x.label || x.value;

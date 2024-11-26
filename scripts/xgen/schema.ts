@@ -800,11 +800,11 @@ function RelationSelect(
           props: {
             xProps: {
               $remote: {
-                process: 'yao.component.SelectOptions',
+                process: 'yao.component.GetOptions',
                 query: {
-                  model: dotName,
-                  label: field,
-                  value: 'id'
+                  from: dotName,
+                  labelField: field,
+                  valueField: 'id'
                 }
               }
             },
@@ -816,11 +816,11 @@ function RelationSelect(
           props: {
             xProps: {
               $remote: {
-                process: 'yao.component.SelectOptions',
+                process: 'yao.component.GetOptions',
                 query: {
-                  model: dotName,
-                  label: field,
-                  value: 'id'
+                  from: dotName,
+                  labelField: field,
+                  valueField: 'id'
                 }
               }
             },
@@ -1899,11 +1899,11 @@ function EditSelect(
           props: {
             xProps: {
               $remote: {
-                process: 'yao.component.SelectOptions',
+                process: 'yao.component.GetOptions',
                 query: {
-                  model: DotName(relation[rel].model),
-                  label: field,
-                  value: 'id'
+                  from: DotName(relation[rel].model),
+                  labelField: field,
+                  valueField: 'id'
                 }
               }
             },
