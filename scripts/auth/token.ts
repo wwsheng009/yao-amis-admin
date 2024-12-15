@@ -19,7 +19,7 @@ export function CheckToken(path, params, queries, payload, headers) {
   }
 
   const data = Process('utils.jwt.Verify', token);
-  return { __sid: data.sid, __global: data.data };
+  return { sid: data.sid, __sid: data.sid, __global: data.data };
 }
 function error() {
   throw new Exception('Not Authorized', 403);
