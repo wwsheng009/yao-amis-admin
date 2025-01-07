@@ -1,9 +1,32 @@
-import { FileNameConvert } from '@scripts/system/lib';
-import { FS, Process } from '@yao/yao';
-
 /**
- * 在amis-editor里创建或是修改页面配置后可以先保存成文件，在确定没有问题后再加载到数据库
+ * AMIS Editor 文件操作工具
+ *
+ * 本模块提供了一系列用于处理AMIS编辑器相关文件操作的函数，包括：
+ * - 页面文件的创建、读取、保存和删除
+ * - 页面文件与数据库之间的同步
+ * - 文件备份和恢复
+ * - 用户目录管理
+ *
+ * 主要功能：
+ * 1. 在amis-editor里创建或修改页面配置后可以先保存成文件，在确定没有问题后再加载到数据库
+ * 2. 提供工作目录和正式目录的隔离，防止误操作
+ * 3. 支持页面文件的版本管理和备份
+ * 4. 提供与Yao框架的集成接口
+ *
+ * 使用示例：
+ * 1. 获取用户目录：yao studio run editor.getUserDir
+ * 2. 获取页面列表：yao studio run editor.getPages
+ * 3. 保存页面：yao studio run editor.savePage "pageName" "{...pageData}"
+ * 4. 加载页面到数据库：yao studio run editor.loadPageToDB
+ *
+ * 注意事项：
+ * 1. 所有文件操作都在指定工作目录下进行，避免直接修改生产环境文件
+ * 2. 文件删除操作会先移动到.trash目录进行备份
+ * 3. 页面文件必须符合AMIS JSON格式规范
  */
+
+import { FileNameConvert } from '@scripts/system/lib';
+import { FS, log, Process } from '@yao/yao';
 
 // 1 防止误操作，在特定的目录下使用editor的创建与编辑，创建好后再手动复制到正式的目录pages
 // 2 编辑器的功能比较简单，目录结构不支持嵌套的目录结构
@@ -58,10 +81,10 @@ export function getPages(dir: string) {
         const filename = file.replace(/\.json$/, '');
         result[filename] = page;
       } else {
-        console.log(`AMIS文件格式不正确:${dir + file}`);
+        log.Warn(`AMIS文件格式不正确:${dir + file}`);
       }
     } catch (error) {
-      console.log(`error when parse json:${dir + file}` + error.message);
+      log.Error(`error when parse json:${dir + file}` + error.message);
     }
   });
 
@@ -70,7 +93,7 @@ export function getPages(dir: string) {
 
 // yao studio run editor.saveFileRecord 1, "xxx/test.json"
 export function saveFileRecord(user_id: number, file_name: string) {
-  console.log(`saveFileRecord userid:${user_id},filename:${file_name}`);
+  // console.log(`saveFileRecord userid:${user_id},filename:${file_name}`);
 
   if (!user_id || !file_name) {
     return;
@@ -86,13 +109,12 @@ export function saveFileRecord(user_id: number, file_name: string) {
     Process('models.system.file.save', { user_id, file_name });
   } else {
     // 更新时间
-    // console.log(`更新时间${data[0].id}`);
-    Process('models.system.file.save', { id: record.id });
+    Process('models.system.file.save', record);
   }
 }
 // yao studio run editor.deleteFileRecord 1, "/public/amis-admin/pages_working/1/测试.json"
 export function deleteFileRecord(user_id: number, file_name: string) {
-  console.log(`deleteFileRecord userid:${user_id},filename:${file_name}`);
+  // console.log(`deleteFileRecord userid:${user_id},filename:${file_name}`);
   if (!user_id || !file_name) {
     return;
   }
@@ -113,7 +135,7 @@ export function savePage(
   }
   // 空数据
   if (!payload.body && !payload.type) {
-    console.log(`空页面：${file}`);
+    // console.log(`空页面：${file}`);
     return;
   }
   let fname = file;
@@ -137,7 +159,7 @@ export function savePage(
   WriteFile(nfilename, payload);
   // fs.WriteFile(fname, JSON.stringify(payload), "0644");
 
-  console.log('nfilename', nfilename);
+  // console.log('nfilename', nfilename);
   saveFileRecord(user_id, nfilename);
 
   return { message: 'Page Saved' };
