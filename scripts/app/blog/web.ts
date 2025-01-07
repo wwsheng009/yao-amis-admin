@@ -571,32 +571,57 @@ export function convertJs2xml(data: any) {
     return `<value><${type}>${data}</${type}></value>`;
   }
 }
-export function isDateTimeOrDate(value: any) {
+/**
+ * Checks if the provided value is a valid date or date-time string/number/Date object.
+ * A date-time is considered valid if it has non-zero time components (hours, minutes, seconds, or milliseconds).
+ *
+ * @param {string | number | Date} value - The value to check. This can be a string, number (timestamp), or Date object.
+ * @returns {boolean} - Returns `true` if the value is a valid date or date-time with non-zero time components.
+ *                      Returns `false` if the value is an invalid date or if it represents a date without time components.
+ *
+ * @example
+ * // Returns true (valid date-time with time components)
+ * isDateTimeOrDate("2023-10-05T14:30:00Z");
+ *
+ * @example
+ * // Returns false (valid date but no time components)
+ * isDateTimeOrDate("2023-10-05");
+ *
+ * @example
+ * // Returns false (invalid date)
+ * isDateTimeOrDate("invalid-date");
+ */
+export function isDateTimeOrDate(value: string | number | Date): boolean {
   const date = new Date(value);
+
   // Check if the date is valid
   if (isNaN(date.getTime())) {
     return false;
   }
-  // Check if the date has valid time components
-  if (
+
+  // Check if the date has time components
+  return (
     date.getHours() !== 0 ||
     date.getMinutes() !== 0 ||
     date.getSeconds() !== 0 ||
     date.getMilliseconds() !== 0
-  ) {
-    return true; // Assuming a datetime
-  }
-  return false; // Assuming a date
+  );
 }
-export function formatDateIso(dateIn: string | number | Date) {
-  const date = new Date(dateIn);
+/**
+ * 将给定的日期转换为ISO格式的字符串，去掉连字符和冒号
+ * @param dateIn - 输入的日期，可以是字符串、数字或Date对象
+ * @returns 返回格式化后的ISO日期字符串，如果转换失败则返回原始输入
+ */
+export function formatDateIso(dateIn: string | number | Date): string {
   try {
-    const isoString = date.toISOString();
-    const formattedDate = isoString.replace(/[:-]/g, '').replace('T', '');
-    return formattedDate;
+    const date = new Date(dateIn);
+    if (isNaN(date.getTime())) {
+      throw new Error('Invalid date input');
+    }
+    return date.toISOString().replace(/[:-]/g, '').replace('T', '');
   } catch (error) {
     log.Error('format date error:', error.message);
-    return dateIn;
+    return typeof dateIn === 'string' ? dateIn : dateIn.toString();
   }
 }
 
@@ -653,9 +678,18 @@ export function getXmlType(data: unknown) {
 // yao run scripts.app.blog.web.convertJs2xml true
 // yao run scripts.app.blog.web.convertJs2xml 1
 // yao run scripts.app.blog.web.convertJs2xml '::{"name":"test"}'
+/**
+ * 根据传入的数据生成 XML-RPC 响应
+ * @param data - 要转换为 XML 格式的数据
+ * @returns 包含 XML 响应内容的对象
+ */
 export function getRpcResponse(data: any) {
+  // 将传入的数据转换为 XML 格式，并将其嵌入到 XML-RPC 响应的 <param> 标签中
   const xml = `<?xml version="1.0" encoding="utf-8"?><methodResponse><params><param>${convertJs2xml(data)}</param></params></methodResponse>`;
+  // 输出调试信息，显示生成的 XML 响应内容
   // console.log("response:", xml)
+  // 返回包含 XML 响应内容的对象
+
   return {
     content: xml
   };
