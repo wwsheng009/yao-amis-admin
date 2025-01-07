@@ -32,18 +32,26 @@ function getUserInfo(type, value) {
 }
 /**
  * 自定义一个用户登录的处理器,使用用户名密码登录，不需要验证码
+ *
  * yao run scripts.amis.user.Login
+ *
  * @param {object} payload 用户登录信息
  * @returns 返回登录信息
  */
-export function Login(payload) {
+export function Login(payload: {
+  email?: string;
+  mobile?: string;
+  userName?: string;
+  password: string;
+  captcha?: { id: string; code: string };
+}) {
   if (payload.captcha && typeof payload.captcha === 'object') {
-    const captcha = Process(
+    const captchaValid = Process(
       'yao.utils.CaptchaValidate',
       payload.captcha.id,
       payload.captcha.code
     );
-    if (captcha !== true) {
+    if (captchaValid !== true) {
       throw new Exception('验证码不正确!', 400);
     }
   }
@@ -51,23 +59,20 @@ export function Login(payload) {
   const { password, email, mobile, userName } = payload;
 
   let user = null;
-  if (email != null) {
+  if (email !== null) {
     user = getUserInfo('email', email);
-  } else if (mobile != null) {
-    user = getUserInfo('mobile', email);
-  } else if (userName != null) {
+  } else if (mobile !== null) {
+    user = getUserInfo('mobile', mobile);
+  } else if (userName !== null) {
     user = getUserInfo('email', userName);
   }
+
   if (!user) {
     return Process('scripts.return.RError', '', 400, '用户不存在');
   }
   try {
-    const password_validate = Process(
-      'utils.pwd.Verify',
-      password,
-      user.password
-    );
-    if (password_validate !== true) {
+    const passwordValid = Process('utils.pwd.Verify', password, user.password);
+    if (passwordValid !== true) {
       return Process('scripts.return.RError', '', 400, '密码不正确');
     }
   } catch (error) {
@@ -78,21 +83,24 @@ export function Login(payload) {
       '密码不正确' + error.message
     );
   }
-  const timeout = 60 * 60 * 8;
+  const TIMEOUT = 60 * 60 * 8;
   const sessionId = Process('utils.str.UUID');
-  const userPayload = { ...user };
-  delete userPayload.password;
+  const userData = { ...user };
+  delete userData.password;
+
   const jwtOptions = {
-    timeout: timeout,
+    timeout: TIMEOUT,
     sid: sessionId
   };
+
   const jwtClaims = { user_name: user.name };
   // 需要注意的是在这里无法生成studio的token,因为这个处理器只接受3个参数，
   // 而生成studio的token需要在第4个参数里传入secretkey
   const jwt = Process('utils.jwt.Make', user.id, jwtClaims, jwtOptions);
-  Process('session.set', 'user', userPayload, timeout, sessionId);
-  Process('session.set', 'token', jwt.token, timeout, sessionId);
-  Process('session.set', 'user_id', user.id, timeout, sessionId);
+
+  Process('session.set', 'user', userData, TIMEOUT, sessionId);
+  Process('session.set', 'token', jwt.token, TIMEOUT, sessionId);
+  Process('session.set', 'user_id', user.id, TIMEOUT, sessionId);
 
   // 设置权限缓存
   const userAuthObject = getUserAuthObjects(user.id);
@@ -100,20 +108,24 @@ export function Login(payload) {
     'session.set',
     'user_auth_objects',
     userAuthObject,
-    timeout,
+    TIMEOUT,
     sessionId
   );
 
   return Process('scripts.return.RSuccess', {
     sid: sessionId,
-    user: userPayload,
+    user: userData,
     menus: Process('scripts.admin.menu_node.xgenMenu'),
     token: jwt.token,
     expires_at: jwt.expires_at
   });
 }
 
-// yao run scripts.amis.user.Info
+/**
+ * 获取用户信息
+ * // yao run scripts.amis.user.Info
+ * @returns 包含用户ID、用户名和用户角色的对象
+ */
 export function Info() {
   const user_id = Process('session.get', 'user_id');
   const user = Process('session.get', 'user');
@@ -125,7 +137,17 @@ export function Info() {
   };
 }
 
-// yao run scripts.amis.user.userVerify
+/**
+ * 这是一个用户验证函数。首先，根据用户名获取用户信息。如果用户不存在，返回错误消息和代码500。
+ * 然后，尝试使用提供的密码进行验证。如果密码不正确，捕获错误并返回错误消息和代码500。
+ * 如果一切正常，返回验证通过的消息、代码200和用户的id。
+ *
+ * yao run scripts.amis.user.userVerify
+ *
+ * @param {String} userName - 需要验证的用户名。
+ * @param {String} password - 用户提供的密码。
+ * @return {Object} 返回一个对象，包含消息（message）、代码（code）和用户id（user_id）。如果用户不存在或密码不正确，消息将描述错误，代码为500；如果验证通过，消息为"验证通过"，代码为200，并包含用户的id。
+ */
 export function userVerify(userName, password) {
   const user = getUserInfo('email', userName);
 
