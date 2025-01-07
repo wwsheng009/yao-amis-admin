@@ -1,38 +1,51 @@
-import { Process, Exception, Query } from '@yao/yao';
+import { Process, Exception } from '@yao/yao';
 
 /**
- * 验证用户身份，使用Basic方法，即是用户名密码的登录方式
+ * Verifies user identity using Basic Auth (username and password).
  *
- * use in api guard,scripts.auth.basic.Check
- * @param {string} path api path
- * @param {map} params api path params
- * @param {map} queries api queries in url query string
- * @param {object|string} payload json object or string
- * @param {map} headers request headers
+ * Used in API guard, scripts.auth.basic.Check
+ * @param {string} path - API path
+ * @param {Record<string, any>} params - API path parameters
+ * @param {Record<string, any>} queries - API query parameters
+ * @param {object | string} payload - JSON object or string
+ * @param {Record<string, string[]>} headers - Request headers
  */
-function Check(path, params, queries, payload, headers) {
+export function Check(
+  path: string,
+  params: Record<string, string[]>,
+  queries: Record<string, string[]>,
+  payload: object | string,
+  headers: Record<string, string[]>
+) {
   checkBasicAuth(headers);
 }
 /**
- * check user authorization using user password
- * @param {object} headers
- * @returns
+ * Checks user authorization using Basic Auth (username and password).
+ * @param {Record<string, string[]>} headers - Request headers containing the Authorization header.
+ * @throws {Exception} Throws a 403 Exception if authorization fails.
  */
-function checkBasicAuth(headers) {
-  const auth = headers['Authorization']?.[0];
 
-  if (auth && auth.startsWith('Basic ')) {
-    const base64 = auth.substring('Basic '.length);
-    const [userName, password] = Process(
-      'encoding.base64.Decode',
-      base64
-    ).split(':');
+export function checkBasicAuth(headers: Record<string, string[]>): void {
+  const authHeader = headers['Authorization']?.[0];
 
-    const result = Process('scripts.amis.user.userVerify', userName, password);
-
-    if (result.code === 200) {
-      return;
-    }
+  if (!authHeader || !authHeader.startsWith('Basic ')) {
+    throw new Exception('Not Authorized', 403);
   }
-  throw new Exception('Not Authorized', 403);
+
+  const base64Credentials = authHeader.substring('Basic '.length);
+  const decodedCredentials = Process(
+    'encoding.base64.Decode',
+    base64Credentials
+  );
+  const [userName, password] = decodedCredentials.split(':');
+
+  if (!userName || !password) {
+    throw new Exception('Invalid credentials format', 403);
+  }
+
+  const result = Process('scripts.amis.user.userVerify', userName, password);
+
+  if (result.code !== 200) {
+    throw new Exception('Not Authorized', 403);
+  }
 }
