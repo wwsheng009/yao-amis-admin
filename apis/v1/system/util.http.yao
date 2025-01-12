@@ -4,7 +4,6 @@
   "version": "1.0.0",
   "description": "工具类",
   "group": "",
-  "guard": "bearer-jwt",
   "paths": [
     {
       "label": "获取版本",

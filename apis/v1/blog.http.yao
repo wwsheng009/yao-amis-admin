@@ -3,7 +3,6 @@
     "version": "1.0.0",
     "description": "Api for the meta web blog",
     "group": "",
-    "guard": "-",
     "paths": [
         {
             // /api/v1/blog/web/:blog

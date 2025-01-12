@@ -134,7 +134,6 @@
       "description": "所有的模型定义明细",
       "path": "/list",
       "method": "GET",
-      "guard": "-",
       "process": "widget.models", //"",
       "in": [
         ""

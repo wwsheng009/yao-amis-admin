@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "odata services",
   "group": "",
-  "guard": "-",
   "paths": [
     {
       // api/odata/v2/service/:modelId
