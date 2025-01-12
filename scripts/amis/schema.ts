@@ -413,8 +413,6 @@ export function curdNewPage(modelId: ModelId, columns) {
 // 查看页面
 export function curdViewPage(modelId: ModelId) {
   const fields = getFormViewFields(modelId);
-  // fields.map((field) => (field.static = true));
-  // fields.map((field) => (field.disabled = true));
 
   const schema = {
     type: 'page',

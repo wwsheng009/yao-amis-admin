@@ -843,52 +843,72 @@ export function AddModelMetaFields(
 export function CheckAmisModel(modelDsl: AmisModel) {
   const message = [];
 
-  if (!modelDsl.ID || !modelDsl.ID.length) {
-    message.push(`模型标识不能为空`);
-  }
-  if (!modelDsl.table?.name || !modelDsl.table?.name.length) {
-    message.push(`数据库表名称不能为空`);
-  }
+  // 提前检查 modelDsl.id 存在性
   if (modelDsl.id != null) {
     const line = Process('models.ddic.model.Find', modelDsl.id, {});
-    //  不存在会直接报错
-    if (modelDsl.ID && modelDsl.ID != line.identity) {
+    if (!line) {
+      message.push(`无法找到对应ID的模型`);
+      // 如果找不到模型，后续检查无需进行
+      if (message.length > 0) {
+        throw new Exception(message.join('\n'));
+      }
+      return;
+    }
+
+    if (modelDsl.ID && modelDsl.ID !== line.identity) {
       message.push(
-        `模型已经存在，但是模型标识[${modelDsl.ID}]与数据库表[${line.identity}]不一致`
+        `模型标识[${modelDsl.ID}]与数据库表[${line.identity}]不一致`
       );
     }
-    if (modelDsl.table?.name && modelDsl.table.name != line.table_name) {
+    if (modelDsl.table?.name && modelDsl.table.name !== line.table_name) {
       message.push(
-        `模型已经存在，但是表名称不一致，新表名${modelDsl.table?.name},已经存在${line.table_name}`
+        `表名称不一致，新表名${modelDsl.table.name}, 已存在${line.table_name}`
       );
     }
   }
 
+  if (!modelDsl.ID || !modelDsl.ID.length) {
+    message.push(`模型标识不能为空`);
+  }
+  if (!modelDsl.table?.name || !modelDsl.table.name.length) {
+    message.push(`数据库表名称不能为空`);
+  }
+
+  if (!Array.isArray(modelDsl.columns) || modelDsl.columns.length === 0) {
+    message.push(`缺少字段定义`);
+  }
+
   const cModelList = getCachedModelIDList();
-  if (modelDsl.relations != null) {
+  if (modelDsl.relations) {
     for (const key in modelDsl.relations) {
       if (Object.prototype.hasOwnProperty.call(modelDsl.relations, key)) {
         const relation = modelDsl.relations[key];
-        // 有可能是自我引用
-        if (relation.model != null && relation.model !== modelDsl.ID) {
+        if (relation.model && relation.model !== modelDsl.ID) {
           if (!cModelList.includes(relation.model)) {
             message.push(`关联模型${relation.model}不存在`);
-          } else if (relation.key != null) {
+          } else {
             const cmodelDsl = FindCachedModelById(relation.model);
             if (cmodelDsl) {
-              const col = cmodelDsl?.columns?.find(
-                (c) => c.name == relation.key
-              );
-              if (col == null) {
-                message.push(
-                  `关联模型${relation.model}的字段${relation.key}不存在`
+              if (relation.key != null) {
+                const col = cmodelDsl.columns?.find(
+                  (c) => c.name === relation.key
                 );
+                if (!col) {
+                  message.push(
+                    `关联模型${relation.model}的字段${relation.key}不存在`
+                  );
+                }
               }
-            }
-          } else if (relation.foreign != null) {
-            const col = modelDsl.columns.find((c) => c.name == relation.key);
-            if (col == null) {
-              message.push(`模型${modelDsl.ID}的字段${relation.foreign}不存在`);
+              if (relation.foreign != null) {
+                const col = modelDsl.columns.find(
+                  (c) => c.name === relation.foreign
+                );
+                if (!col) {
+                  message.push(
+                    `模型${modelDsl.ID}的字段${relation.foreign}不存在`
+                  );
+                }
+              }
             }
           }
         }
@@ -896,27 +916,18 @@ export function CheckAmisModel(modelDsl: AmisModel) {
     }
   }
 
-  // 根据表名或是模型名称，检查是否已经存在同样ID的模型，防止误更更新
-  const tableName = modelDsl.table.name;
-  const wheres = [];
-  wheres.push({ column: 'table_name', value: tableName });
+  const tableName = modelDsl.table?.name;
   const [one] = Process('models.ddic.model.get', {
-    wheres: wheres,
+    wheres: [{ column: 'table_name', value: tableName }],
     withs: {}
   });
 
-  if (one?.id && modelDsl.id != null && one?.id != modelDsl.id) {
+  if (one?.id && modelDsl.id != null && one.id !== modelDsl.id) {
     message.push(
-      `存在同名的表[${tableName}]，但是id不同[${modelDsl.id}]=>${one.id}`
+      `存在同名的表[${tableName}]，但ID不同[${modelDsl.id}]=>${one.id}`
     );
   }
-  if (!Array.isArray(modelDsl.columns)) {
-    message.push(`列定义应该是数组`);
-  }
 
-  if (modelDsl.columns.length == 0) {
-    message.push(`不存在列定义`);
-  }
   if (message.length > 0) {
     throw new Exception(message.join('\n'));
   }

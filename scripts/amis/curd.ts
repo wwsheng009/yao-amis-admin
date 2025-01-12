@@ -29,14 +29,14 @@ export function curdTemplate(modelId: ModelId, columns: AmisUIColumn[]) {
       tpl: tplHtml
     },
     {
-      name: 'excel',
+      name: 'excelFile',
       type: 'input-excel'
     },
     {
       columns: cols,
       copyable: true,
       editable: true,
-      name: 'excel',
+      name: 'excelData',
       removable: true,
       showIndex: true,
       type: 'input-table',

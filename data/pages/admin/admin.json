@@ -2,6 +2,6 @@
   "type": "page",
   "body": {
     "type": "iframe",
-    "src": "/admin/x/Table/ddic.model"
+    "src": "/admin/chat"
   }
 }

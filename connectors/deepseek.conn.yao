@@ -1,0 +1,9 @@
+{
+    "label": "Model v3",
+    "type": "openai",
+    "options": {
+        "model": "deepseek-chat",
+        "key": "$ENV.DEEPSEEK_KEY",
+        "proxy": "https://api.deepseek.com"
+    }
+}

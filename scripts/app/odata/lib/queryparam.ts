@@ -1,7 +1,5 @@
 import { getOdataModel } from '@scripts/app/odata/lib/model';
 
-import functions from '@scripts/app/odata/lib/operator';
-
 import { Exception } from '@yao/yao';
 import { QueryObjectIn } from '@yao/request';
 import { convertUrlQueryObj, getFirstConfigByKey } from '@lib/request';

@@ -6,7 +6,9 @@
     "allowJs": false,
     "target": "ESNext",
     "paths": {
-      "@yao/*": ["./scripts/__types/*"],
+      "@yao/*": [
+        "./.vscode/types/*"
+      ],
       "@lib/*": ["./scripts/lib/*"],
       "@scripts/*": [
         "./scripts/*"
