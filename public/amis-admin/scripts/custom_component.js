@@ -38,6 +38,7 @@ function CustomVueComponent(props) {
 
         function buttonClick(event) {
           debugger;
+          // 这里可以调用amis的action方法，比如弹出对话框
           props.onAction(
             event,
             {
@@ -67,25 +68,41 @@ function CustomVueComponent(props) {
   });
 }
 
-// 自定义组件，props 中可以拿到配置中的所有参数，比如 props.label 是 'Name'
-// props.env 可以拿到env配置中的配置。
+/**
+ * 自定义的SSE组件,可以通过SSE与AI助手进行交互，
+ * 
+ * 使用assistantId参数配置选择后端的助手进行交互，
+ * 
+ * 使用componentId参数配置目标组件的ID，
+ * 
+ * 使用componentName参数配置目标组件的名称。
+ *
+ * 自定义组件，props 中可以拿到配置中的所有参数，比如 props.label 是 'Name'，
+ * props.env 可以拿到env配置中的配置。
+ * 
+ * @param {Object} props - 组件属性
+ * @param {Object} props.$schema - 组件的配置信息
+ * @param {string} props.$schema.label - 组件的标签
+ * @param {string} props.$schema.name - 组件的名称
+ * @param {string} props.$schema.placeHolder - 输入框的占位符
+ * @param {string} props.$schema.assistantId - AI助手的ID
+ * @param {string} props.$schema.componentId - 目标组件的ID
+ * @param {string} props.$schema.componentName - 目标组件的名称
+ * @returns 返回自定义的SSE组件
+ */
 function CustomSSEComponent(props) {
-  let label = "";
-  if (props != null) {
-    label = props?.$schema?.label;
-  }
   let dom = React.useRef(null);
   React.useEffect(function () {
     const html = `
         <label class="cxd-Form-label cxd-Form-itemColumn--normal">
           <span><span class="cxd-TplField" >
-          <span>${label}</span>
+          <span>${props?.$schema?.label}</span>
           </span></span>
         </label>
         <div class="cxd-Form-value">
           <div class="cxd-Form-control cxd-TextControl">
             <div class="cxd-TextControl-input">
-                <input v-model="inputValue" name=${props?.$schema?.name} size="10" type="text" placeholder="Enter something..." />
+                <input v-model="inputValue" name=${props?.$schema?.name} size="10" type="text" placeholder=${props?.$schema?.placeHolder} />
                 <button @click.prevent="toggleSSE">
                   {{ buttonText }}
                   <span v-if="isLoading" class="loading-spinner"></span>
@@ -127,7 +144,7 @@ function CustomSSEComponent(props) {
           sse.value = new EventSource(
             `${neo_api}?content=${encodeURIComponent(
               inputValue.value
-            )}&token=${encodeURIComponent(yao_amis.getToken())}`
+            )}&assistant_id=${props?.$schema?.assistantId}&token=${encodeURIComponent(yao_amis.getToken())}`
           );
 
           sse.value.onmessage = function (event) {
@@ -138,18 +155,27 @@ function CustomSSEComponent(props) {
               if (done) {
                 stopSSE(); // 请求结束时自动停止SSE并更新按钮状态
               } else if (text) {
-                let bindId = props.$schema.bindId;
                 message.value += text;
-                let targetComponent = amisInstance.getComponentById(bindId);
-                if (targetComponent?.setData) {
-                  targetComponent?.setData(
-                    message.value,
-                    true,
-                    null,
-                    null
-                  );
-                } else {
-                  targetComponent?.props.onChange?.(message.value);
+                let targetComponent = null;
+                if (props?.$schema?.componentId) {
+                  // amisInstance是一个全局对象，当在首页中初始化amis实例时会构建出一个scopedContext，在里面可以找到对应的组件实例。
+                  targetComponent = amisInstance.getComponentById(props?.$schema?.componentId);
+                }
+                if (props?.$schema?.componentName) {
+                  targetComponent = amisInstance.getComponentByName(props?.$schema?.componentName);
+                }
+
+                if (targetComponent) {
+                  if (targetComponent?.setData) {
+                    targetComponent?.setData(
+                      message.value,
+                      true,
+                      null,
+                      null
+                    );
+                  } else {
+                    targetComponent?.props.onChange?.(message.value);
+                  }
                 }
               }
             }
@@ -190,7 +216,7 @@ function CustomSSEComponent(props) {
     app.mount(dom.current);
 
   }, []);
-  
+
   return React.createElement("div", {
     ref: dom,
     className: "cxd-Form-item cxd-Form-item--horizontal is-required",

@@ -205,7 +205,9 @@
                         "label": "AI",
                         "type": "my-sse-vue",
                         "name": "test",
-                        "bindId": "u:18805e926840"
+                        "componentId": "u:18805e926840",
+                        "placeHolder": "请输入需要生成的模型的描述",
+                        "assistantId": "model"
                       }
                     ],
                     "id": "u:297a88684e22",

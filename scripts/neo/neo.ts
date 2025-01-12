@@ -18,16 +18,16 @@ export function Create(
 ) {
   //console.log('messages', messages);
   //check messages contains the item role = 'system'
-  let hasSystem = false;
-  for (const message of messages) {
-    if (message.role === 'system') {
-      hasSystem = true;
-      break;
-    }
-  }
-  if (!hasSystem || ctx.assistant_id === '') {
-    ctx.assistant_id = 'model';
-  }
+  // let hasSystem = false;
+  // for (const message of messages) {
+  //   if (message.role === 'system') {
+  //     hasSystem = true;
+  //     break;
+  //   }
+  // }
+  // if (!hasSystem || ctx.assistant_id === '') {
+  //   ctx.assistant_id = 'model';
+  // }
   //console.log('writer', writer);
   //update the ctx.assistant_id
   return { assistant_id: ctx.assistant_id, chat_id: ctx.chat_id };
