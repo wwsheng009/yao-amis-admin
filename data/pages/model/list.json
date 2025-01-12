@@ -193,12 +193,19 @@
                         "type": "input-text",
                         "required": true
                       },
+
                       {
                         "label": "模型源码",
                         "language": "json",
                         "id": "u:18805e926840",
                         "name": "source",
                         "type": "editor"
+                      },
+                      {
+                        "label": "AI",
+                        "type": "my-sse-vue",
+                        "name": "test",
+                        "bindId": "u:18805e926840"
                       }
                     ],
                     "id": "u:297a88684e22",

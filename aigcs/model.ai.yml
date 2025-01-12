@@ -1,0 +1,13 @@
+# Yao Model Creator
+# yao run aigcs.model 飞机
+name: Model Creator
+connector: deepseek
+prompts:
+  - role: system
+    content: |
+      - 学习Yao模型DSL定义：https://wwsheng009.github.io/yao-docs/YaoDSL/Model/%E5%AE%9A%E4%B9%89Yao%E6%A8%A1%E5%9E%8B.html，
+      - 根据DSL定义生成一个对应的yao模型定义，模型的字段列表的信息尽可能的详细
+      - 只输出模型定义的信息，输出内容必须是有效的json格式
+
+optional:
+  autopilot: true

@@ -70,17 +70,29 @@ function CustomVueComponent(props) {
 // 自定义组件，props 中可以拿到配置中的所有参数，比如 props.label 是 'Name'
 // props.env 可以拿到env配置中的配置。
 function CustomSSEComponent(props) {
+  let label = "";
+  if (props != null) {
+    label = props?.$schema?.label;
+  }
   let dom = React.useRef(null);
   React.useEffect(function () {
-    // 从这里开始写自定义代码，dom.current 就是新创建的 dom 节点
-    // 可以基于这个 dom 节点对接任意 JavaScript 框架，比如 jQuery/Vue 等
-
     const html = `
-    <div>
-      <input v-model="inputValue" type="text" placeholder="Enter something..." class="cxd-TextControl-input"/>
-      <textarea>{{ message }}</textarea>
-      <button @click="startSSE">Start SSE</button>
-    </div>
+        <label class="cxd-Form-label cxd-Form-itemColumn--normal">
+          <span><span class="cxd-TplField" >
+          <span>${label}</span>
+          </span></span>
+        </label>
+        <div class="cxd-Form-value">
+          <div class="cxd-Form-control cxd-TextControl">
+            <div class="cxd-TextControl-input">
+                <input v-model="inputValue" name=${props?.$schema?.name} size="10" type="text" placeholder="Enter something..." />
+                <button @click.prevent="toggleSSE">
+                  {{ buttonText }}
+                  <span v-if="isLoading" class="loading-spinner"></span>
+                </button>
+            </div>
+          </div>
+        </div>
     `;
     dom.current.innerHTML = html;
 
@@ -90,58 +102,99 @@ function CustomSSEComponent(props) {
       setup() {
         const message = ref("Waiting for server...");
         const inputValue = ref("");
-        // Function to handle SSE
+        const buttonText = ref("问AI");
+        const isLoading = ref(false); // 新增状态变量，用于控制加载动画
+        const sse = ref(null);
+
+        function toggleSSE() {
+          if (buttonText.value === "问AI") {
+            startSSE();
+            buttonText.value = "停止";
+            isLoading.value = true; // 开始加载动画
+          } else {
+            stopSSE();
+            buttonText.value = "问AI";
+            isLoading.value = false; // 停止加载动画
+          }
+        }
+
         function startSSE() {
           if (typeof EventSource === "undefined") {
             message.value = "SSE not supported by your browser.";
             return;
           }
           const neo_api = `/api/__yao/neo`;
-          const sse = new EventSource(
+          sse.value = new EventSource(
             `${neo_api}?content=${encodeURIComponent(
               inputValue.value
             )}&token=${encodeURIComponent(yao_amis.getToken())}`
-          ); // Use your server's SSE endpoint
+          );
 
-          // const sse = new EventSource(props.env.context.SSE_ENDPOINT); // Use your server's SSE endpoint
-
-          sse.onmessage = function (event) {
-            // debugger;
+          sse.value.onmessage = function (event) {
             let data = event.data;
             if (data != null) {
-              console.log(`data:${data}`);
               formated_data = JSON.parse(data);
               const { text, confirm, actions, done, command } = formated_data;
               if (done) {
+                stopSSE(); // 请求结束时自动停止SSE并更新按钮状态
               } else if (text) {
+                let bindId = props.$schema.bindId;
                 message.value += text;
+                let targetComponent = amisInstance.getComponentById(bindId);
+                if (targetComponent?.setData) {
+                  targetComponent?.setData(
+                    message.value,
+                    true,
+                    null,
+                    null
+                  );
+                } else {
+                  targetComponent?.props.onChange?.(message.value);
+                }
               }
             }
           };
-          sse.onopen = () => {
+          sse.value.onopen = () => {
             message.value = "";
           };
-          sse.onerror = function (event) {
-            // debugger;
-            sse.close();
-            // message.value = "Disconnected from SSE.";
+          sse.value.onerror = function (event) {
+            sse.value.close();
+            buttonText.value = "问AI"; // 发生错误时也恢复按钮状态
+            isLoading.value = false; // 停止加载动画
           };
-          // Cleanup on component unmount
         }
+
+        function stopSSE() {
+          if (sse.value) {
+            sse.value.close();
+            sse.value = null;
+            buttonText.value = "问AI"; // 停止SSE时恢复按钮状态
+            isLoading.value = false; // 停止加载动画
+          }
+        }
+
         onBeforeUnmount(() => {
-          // sse.close();
+          stopSSE();
         });
+
         return {
           message,
           inputValue,
-          startSSE,
+          buttonText,
+          isLoading,
+          toggleSSE,
         };
       },
     });
 
     app.mount(dom.current);
-  });
+
+  }, []);
+  
   return React.createElement("div", {
     ref: dom,
+    className: "cxd-Form-item cxd-Form-item--horizontal is-required",
+    'data-role': "form-item",
+    'data-amis-name': props?.$schema?.name
   });
 }

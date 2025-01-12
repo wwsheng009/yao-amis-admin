@@ -15,6 +15,8 @@
   <link rel="stylesheet" title="default" href="https://unpkg.com/amis@latest/sdk/sdk.css" />
   <link rel="stylesheet" href="https://unpkg.com/amis@latest/sdk/helper.css" />
   <link rel="stylesheet" href="https://unpkg.com/amis@latest/sdk/iconfont.css" />
+  <link rel="stylesheet" href="./style/custom.css" />
+  
   <script src="https://unpkg.com/amis@latest/sdk/sdk.js"></script>
   <!-- <script src="https://unpkg.com/vue@2"></script> -->
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -40,6 +42,7 @@
   <script type="text/javascript" src="./scripts/fetcher.js"></script>
   <script type="text/javascript" src="./scripts/custom_component.js"></script>
   <script type="text/javascript" src="./scripts/amis_extension.js"></script>
+  <script type="text/javascript" src="./scripts/custom.js"></script>
 </head>
 
 <body>
@@ -221,6 +224,7 @@
           // pdfjsWorkerSrc: `https://unpkg.com/pdfjs-dist@4.3.136/build/pdf.worker.min.mjs` // pdfJsUrl1
         }
       );
+      window.amisInstance = amisInstance;
 
       // console.log("amisInstance", amisInstance)
       history.listen(state => {

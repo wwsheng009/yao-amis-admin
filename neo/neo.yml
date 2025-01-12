@@ -1,24 +1,81 @@
-connector: gpt-3_5-turbo
+connector: deepseek
+use: "model" # default assistannt
 guard: "scripts.auth.token.CheckToken"
 
-conversation:
-  connector: default
-  table: system_neo_conversation
-  max_size: 10
-  ttl: 3600
 
-command:
-  parser: gpt-3_5-turbo
+store:
+  connector: "default" #Name of the connector used to specify data storage method,default is app database connector
+  user_field: "user_id" #User ID field name, defaults to "user_id"
+  prefix: "yao_neo_" #Database table name prefix,will automatically create three table with prefix,+_history,+_chat,+_assistant
+  max_size: 100 #Maximum storage size limit
+  ttl: 3600 #Time To Live in seconds
 
-prepare: ""
+# Setting RAG settings
+rag:
+  engine: #Engine the vector database engine settings
+    dirver: "" #qdrant  -> vector store driver,currently only support qdrant,empty means not using RAG
+    options: # use the $ENV.ENV_NAME to get the environment variable
+      host: ""
+      api_key: "sr-"
+      port: 80
+
+  vectorizer: #Vectorizer the text vectorizer settings , use the $ENV.ENV_NAME to get the environment variable
+    dirver: "" #openai -> embeddings driver,currently only support openai
+    options:
+      model: "text-embedding-ada-002" #default model for openai
+      api_key: "sr-"
+
+  upload: #Upload the file upload settings
+    async: false
+    allowed_types: ["image/jpeg", "image/png", "image/jpg"]
+    chunk_size: 1024
+    chunk_overlap: 256
+  index_prefix: "yao_neo_"
+
+vision:
+  storage:
+    driver: "local" #local -> local storage, s3 -> s3 storage
+    options: #local storage options
+      path: "./storage/vision" #required for local storage
+      compression: true #whether to compress the image
+      base_url: "" # base url for the downloading file
+      preview_url: "" # preview url for the file
+
+    # options:  #s3 storage options
+    #   expiration: ""
+    #   endpoint: ""
+    #   region: "auto"
+    #   key: ""
+    #   secret: ""
+    #   bucket: ""
+    #   prefix: ""
+    #   compression: true
+
+
+  model: 
+    driver: "openai" #openai -> openai vision model
+    options:
+      model: "openai/clip-vit-base-patch32"
+      api_key: "sr-"
+      compression: true
+      prompt: ""
+
+# prepare: "scripts.vector.Match"
 prompts:
   - role: system
     content: |
-      - Your name is Neo.
-      - Your are a AI assistant of YAO
+      - You are pretending to be YAO's AI assistant and your name is Neo.
+      - Answer my questions in Chinese from now on.
 
-option:
-  temperature: 1.2
+option: #options for chatting with the assistant
+  temperature: 0.8
+
+
+create: "scripts.neo.neo.Create" #create function for the assistant 选择assistant
+
+prepare: "scripts.neo.neo.prepare" #prepare function for the assistant不再使用，使用assistant代替
+write: "scripts.neo.neo.write"  #write function for the assistant 不再使用，使用assistant代替
+
 
 allows:
   - "http://127.0.0.1:8000"
