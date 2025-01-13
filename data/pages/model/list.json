@@ -206,6 +206,7 @@
                         "type": "my-sse-vue",
                         "name": "test",
                         "componentId": "u:18805e926840",
+                        "componentName": "source",
                         "placeHolder": "请输入需要生成的模型的描述",
                         "assistantId": "model"
                       }

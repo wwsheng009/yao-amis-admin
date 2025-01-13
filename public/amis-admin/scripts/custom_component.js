@@ -146,6 +146,13 @@ function CustomSSEComponent(props) {
               inputValue.value
             )}&assistant_id=${props?.$schema?.assistantId}&token=${encodeURIComponent(yao_amis.getToken())}`
           );
+          let targetComponent = null;
+          if (props?.$schema?.componentId) {
+            // amisInstance是一个全局对象，当在首页中初始化amis实例时会构建出一个scopedContext，在里面可以找到对应的组件实例。
+            targetComponent = amisInstance.getComponentById(props?.$schema?.componentId);
+          } else if (props?.$schema?.componentName) {
+            targetComponent = amisInstance.getComponentByName(props?.$schema?.componentName);
+          }
 
           sse.value.onmessage = function (event) {
             let data = event.data;
@@ -156,25 +163,18 @@ function CustomSSEComponent(props) {
                 stopSSE(); // 请求结束时自动停止SSE并更新按钮状态
               } else if (text) {
                 message.value += text;
-                let targetComponent = null;
-                if (props?.$schema?.componentId) {
-                  // amisInstance是一个全局对象，当在首页中初始化amis实例时会构建出一个scopedContext，在里面可以找到对应的组件实例。
-                  targetComponent = amisInstance.getComponentById(props?.$schema?.componentId);
-                }
-                if (props?.$schema?.componentName) {
-                  targetComponent = amisInstance.getComponentByName(props?.$schema?.componentName);
-                }
-
+                const obj = message.value//{ [props.$schema.formItem]: message.value };
                 if (targetComponent) {
                   if (targetComponent?.setData) {
+                    // debugger;
                     targetComponent?.setData(
-                      message.value,
+                      obj,
                       true,
                       null,
                       null
                     );
                   } else {
-                    targetComponent?.props.onChange?.(message.value);
+                    targetComponent?.props.onChange?.(obj);
                   }
                 }
               }
