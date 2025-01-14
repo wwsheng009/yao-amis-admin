@@ -1,7 +1,70 @@
 (function () {
+
+    // some sse examples from github
+    // https://github.com/weibaohui/k8m/blob/main/assets/public/custom.js
+
     let amisLib = amisRequire("amis");
     let React = amisRequire('react');
 
+    //注册自定义组件，请参考后续对工作原理的介绍
+    amisLib.Renderer({
+        test: /(^|\/)sse/
+    })(SSEComponent);
+
+    // 注册自定义的 DownloadComponent 组件
+    amisLib.Renderer({
+        test: /(^|\/)log-download/
+    })(SSEDownloadComponent);
+
+    // 注册自定义组件
+    amisLib.Renderer({
+        test: /(^|\/)k8sAge/
+    })(K8sAgeDisplayComponent);
+
+    // 注册自定义组件
+    amisLib.Renderer({
+        test: /(^|\/)k8sPodReady/
+    })(K8sPodReadyComponent);
+
+    // 注册自定义组件
+    amisLib.Renderer({
+        test: /(^|\/)nodeRoles/
+    })(NodeRolesComponent);
+
+    // 注册自定义组件
+    amisLib.Renderer({
+        test: /(^|\/)k8sLabels/
+    })(K8sLabelsComponent);
+
+    // 注册自定义组件
+    amisLib.Renderer({
+        test: /(^|\/)websocketViewer/, // 用于在 AMIS 中匹配此组件
+    })(WebSocketViewerComponent);
+
+    // 注册自定义组件
+    amisLib.Renderer({
+        test: /(^|\/)websocketMarkdownViewer/, // 用于在 AMIS 中匹配此组件
+    })(WebSocketMarkdownViewerComponent);
+
+    // 注册自定义组件
+    amisLib.Renderer({
+        test: /(^|\/)k8sConditions/
+    })(K8sConditionsComponent);
+
+    // 注册自定义组件为 AMIS 渲染器
+    amisLib.Renderer({
+        test: /(^|\/)highlightHtml/ // 使用 type: "highlightHtml" 进行匹配
+    })(HighlightHtmlComponent);
+
+    // 注册自定义组件
+    amisLib.Renderer({
+        test: /(^|\/)ciExecutionAge/
+    })(CIExecutionAgeDisplayComponent);
+
+    //注册自定义组件，请参考后续对工作原理的介绍
+    amisLib.Renderer({
+        test: /(^|\/)chatgpt/
+    })(ChatGPTComponent);
 
     function replacePlaceholders(url, data) {
         // 使用正则表达式匹配 ${} 包裹的变量
@@ -221,10 +284,6 @@
     }
 
 
-    //注册自定义组件，请参考后续对工作原理的介绍
-    amisLib.Renderer({
-        test: /(^|\/)sse/
-    })(SSEComponent);
 
 
     function SSEDownloadComponent(props) {
@@ -283,10 +342,6 @@
     }
 
 
-    // 注册自定义的 DownloadComponent 组件
-    amisLib.Renderer({
-        test: /(^|\/)log-download/
-    })(SSEDownloadComponent);
 
     function K8sAgeDisplayComponent(props) {
         // 定义一个状态来存储当前时间，用于计算持续时间
@@ -362,11 +417,6 @@
         return React.createElement('span', null, formattedTime);
     }
 
-    // 注册自定义组件
-    amisLib.Renderer({
-        test: /(^|\/)k8sAge/
-    })(K8sAgeDisplayComponent);
-
 
     function K8sPodReadyComponent(props) {
         // 获取Pod状态中的容器状态列表
@@ -387,10 +437,6 @@
         return React.createElement('span', null, readyStatus);
     }
 
-    // 注册自定义组件
-    amisLib.Renderer({
-        test: /(^|\/)k8sPodReady/
-    })(K8sPodReadyComponent);
 
     function NodeRolesComponent(props) {
         const labels = props.data.metadata?.labels || {};
@@ -418,10 +464,6 @@
         );
     }
 
-    // 注册自定义组件
-    amisLib.Renderer({
-        test: /(^|\/)nodeRoles/
-    })(NodeRolesComponent);
 
 
     function K8sLabelsComponent(props) {
@@ -441,10 +483,6 @@
         return React.createElement('div', null, labelElements.length > 0 ? labelElements : '');
     }
 
-    // 注册自定义组件
-    amisLib.Renderer({
-        test: /(^|\/)k8sLabels/
-    })(K8sLabelsComponent);
 
     function WebSocketViewerComponent(props) {
         let url = formatFinalGetUrl(props);
@@ -514,10 +552,6 @@
         );
     }
 
-    // 注册自定义组件
-    amisLib.Renderer({
-        test: /(^|\/)websocketViewer/, // 用于在 AMIS 中匹配此组件
-    })(WebSocketViewerComponent);
 
 
     function WebSocketMarkdownViewerComponent(props) {
@@ -590,10 +624,6 @@
         );
     }
 
-    // 注册自定义组件
-    amisLib.Renderer({
-        test: /(^|\/)websocketMarkdownViewer/, // 用于在 AMIS 中匹配此组件
-    })(WebSocketMarkdownViewerComponent);
 
 
     function K8sConditionsComponent(props) {
@@ -629,10 +659,6 @@
         }, conditionElements);
     }
 
-    // 注册自定义组件
-    amisLib.Renderer({
-        test: /(^|\/)k8sConditions/
-    })(K8sConditionsComponent);
 
     // 自定义 HTML 内容渲染组件
     //{
@@ -676,10 +702,6 @@
 
     }
 
-    // 注册自定义组件为 AMIS 渲染器
-    amisLib.Renderer({
-        test: /(^|\/)highlightHtml/ // 使用 type: "highlightHtml" 进行匹配
-    })(HighlightHtmlComponent);
 
     function CIExecutionAgeDisplayComponent(props) {
         // 定义一个状态来存储当前时间，用于计算持续时间
@@ -764,10 +786,6 @@
         return React.createElement('span', null, formattedTime);
     }
 
-    // 注册自定义组件
-    amisLib.Renderer({
-        test: /(^|\/)ciExecutionAge/
-    })(CIExecutionAgeDisplayComponent);
 
     // 自定义组件，props 中可以拿到配置中的所有参数，比如 props.label 是 'Name'
     //{
@@ -878,10 +896,6 @@
 
     }
 
-    //注册自定义组件，请参考后续对工作原理的介绍
-    amisLib.Renderer({
-        test: /(^|\/)chatgpt/
-    })(ChatGPTComponent);
 
 
     // 定义自动转换内存单位的过滤器
