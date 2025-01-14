@@ -8,6 +8,19 @@ function isHTML(text: string) {
   return htmlTagPattern.test(text);
 }
 
+export function truncateText(text: string) {
+  const lines = text.split('\n');
+  const truncatedLines = lines.slice(0, 10); // Get the first 10 lines
+  let truncatedText = truncatedLines.join('\n');
+  if (truncatedText.length > 1000) {
+    truncatedText = truncatedText.slice(0, 1000); // If the length exceeds 1000 characters, truncate it to 1000 characters
+  }
+  if (lines.length > 10 || text.length > 1000) {
+    truncatedText += '...'; // Add ellipsis to indicate truncation
+  }
+  return truncatedText;
+}
+
 // yao run scripts.lib.web.getWebPageContent https://wwsheng009.github.io/yao-docs/YaoDSL/Model/%E5%AE%9A%E4%B9%89Yao%E6%A8%A1%E5%9E%8B.html
 
 export function getWebPageContent(url) {

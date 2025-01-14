@@ -1,19 +1,7 @@
-import { getWebPageContent } from '@lib/web';
+import { getWebPageContent, truncateText } from '@lib/web';
 import { neo } from '@yao/neo';
 import { Process } from '@yaoapps/client';
 
-function truncateText(text) {
-  const lines = text.split('\n');
-  const truncatedLines = lines.slice(0, 10); // Get the first 10 lines
-  let truncatedText = truncatedLines.join('\n');
-  if (truncatedText.length > 1000) {
-    truncatedText = truncatedText.slice(0, 1000); // If the length exceeds 1000 characters, truncate it to 1000 characters
-  }
-  if (lines.length > 10 || text.length > 1000) {
-    truncatedText += '...'; // Add ellipsis to indicate truncation
-  }
-  return truncatedText;
-}
 /**
  * user request -> [init hook] -> stream call -> openai
  *

@@ -1,3 +1,4 @@
+import { getWebPageContent, truncateText } from '@lib/web';
 import { neo } from '@yao/neo';
 import { Process } from '@yaoapps/client';
 
@@ -80,23 +81,28 @@ export function Init(
   if (lastMessage.attachments && lastMessage.attachments.length > 0) {
     // Check if any attachment has the type 'URL'
     lastMessage.attachments.forEach((attachment) => {
-      if (attachment.type === 'URL' && attachment.url) {
+      try {
         Process('neo.write', writer, [
-          { text: '正在加载：' + attachment.url + '\n' }
+          { text: '读取网页' + attachment.url + '\n' }
         ]);
-        const request = Process('http.get', attachment.url);
-        if (request.code !== 200) {
-          Process('neo.write', writer, [
-            { text: '异常：' + 'request.message' + '\n' }
-          ]);
-        } else {
-          const jsonData = Process('encoding.base64.Decode', request.data);
-          input.push({
-            role: 'system',
-            text: jsonData,
-            type: 'text'
-          });
-        }
+        const content = getWebPageContent(attachment.url);
+        Process('neo.write', writer, [
+          { text: '读取网页完成' + attachment.url + '\n' }
+        ]);
+        Process('neo.write', writer, [
+          { text: truncateText(content) + '\n\n' }
+        ]);
+        // console.log('content');
+        // console.log(content);
+        input.push({
+          role: 'user',
+          text: content,
+          type: 'text'
+        });
+      } catch (error) {
+        Process('neo.write', writer, [
+          { text: '异常：' + error.message + '\n' }
+        ]);
       }
     });
   }
