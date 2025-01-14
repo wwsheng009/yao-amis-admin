@@ -631,7 +631,7 @@ export function formatDateIso(dateIn: string | number | Date): string {
  * @param data any
  * @returns
  */
-export function getXmlType(data: unknown) {
+export function getXmlType(data: any) {
   if (data == null) {
     return 'string';
   }
