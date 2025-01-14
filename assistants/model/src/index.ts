@@ -77,6 +77,8 @@ export function Init(
 
   // Get the last message in the input array
   const lastMessage = input[input.length - 1];
+  input.pop();
+
   // Check if the last message has attachments
   if (lastMessage.attachments && lastMessage.attachments.length > 0) {
     // Check if any attachment has the type 'URL'
@@ -106,10 +108,21 @@ export function Init(
       }
     });
   }
+  // get the assistant_id from the message text where it looks  "@xxxxx"
+  const mentenion_assistant_id = lastMessage.text?.match(/@(\w+)/)?.[1];
+  let new_assistant_id = context.assistant_id;
 
+  if (
+    mentenion_assistant_id &&
+    mentenion_assistant_id !== context.assistant_id
+  ) {
+    new_assistant_id = mentenion_assistant_id;
+  }
+
+  input.push(lastMessage);
   //case 3 returns an object
   return {
-    assistant_id: context.assistant_id, //optional,change the assistant_id,switch the assistant for following process
+    assistant_id: new_assistant_id, //optional,change the assistant_id,switch the assistant for following process
     chat_id: context.chat_id, //optional
     next: {
       //optional, if you want to call another action in frontend
