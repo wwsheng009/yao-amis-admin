@@ -1,14 +1,14 @@
 {
-    "name": "model",
+    "name": "chat",
     "type": "assistant",
-    "description": "This is a test assistant",
-    "assistant_id": "model",
+    "description": "This is a chat assistant",
+    "assistant_id": "chat",
     "mentionable": true,
     "automated": false,
     "readonly": false,
     "built_in": false,
     "sort": 0,
-    "path": "model",
+    "path": "chat",
     "connector": "deepseek",
     "created_at": "2022-02-22T14:00:00.000Z",
     "tags": [

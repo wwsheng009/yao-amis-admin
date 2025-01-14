@@ -1,4 +1,4 @@
-import { Process } from '../__types/yao';
+import { Process } from '@yaoapps/client';
 
 describe('Sum function', () => {
   test('yao test', () => {

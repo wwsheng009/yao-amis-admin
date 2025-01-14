@@ -4,55 +4,6 @@ import { io } from './io.d.ts';
  */
 export declare namespace neo {
   /**
-   * Represents the context of an operation or request.
-   */
-  export interface Context {
-    /** Session ID, optional. */
-    sid?: string;
-    /** The current path of the operation. */
-    path: string;
-    /** Stack trace or operation stack. */
-    stack: string;
-    /** The namespace where the operation is executed. */
-    namespace: string;
-    /** Form data associated with the context. */
-    formdata: Record<string, any>;
-    /** Configuration settings for the context. */
-    config: Record<string, any>;
-    /** The current field being processed. */
-    field: Field;
-    /** Signal data for triggering or handling events. */
-    signal: any;
-    /**
-     * update data
-     */
-    upload?: {
-      name?: string;
-      bytes?: number;
-      content_type?: string;
-      mimetype?: string;
-      option?: Record<string, any>;
-    };
-
-    chat_id?: string;
-    assistant_id?: string;
-  }
-
-  /**
-   * Represents a message exchanged within the system.
-   */
-  export interface Message {
-    /** Optional name of the message sender or identifier. */
-    name?: string;
-    /** Optional session ID of the message sender. */
-    sid?: string;
-    /** The content of the message. */
-    content: string;
-    /** The role of the message sender, e.g., "user" or "agent". */
-    role: string;
-  }
-
-  /**
    * Represents the response structure of an operation or request.
    */
   export interface Response {
@@ -108,33 +59,141 @@ export declare namespace neo {
     value: any;
   }
 
-  /**
-   * Interface for an agent that processes messages and responses.
-   */
-  export interface IAgent {
-    /**
-     * Prepares the messages before further processing.
-     * @param context - The current context of the operation.
-     * @param messages - The list of messages to prepare.
-     * @returns The modified list of messages.
-     */
-    Prepare: (context: Context, messages: Message[]) => Message[];
+  interface Header {
+    [key: string]: string[];
+  }
+  interface Payload {
+    [key: string]: any;
+  }
+  interface HttpResponseWriter {
+    header(): Header;
+    write(data: Uint8Array): number | Promise<number>;
+    writeHeader(statusCode: number): void;
+  }
+  interface Hijacker {
+    Hijack(): [any, any, Error];
+  }
+  export interface ResponseWriter extends HttpResponseWriter, Hijacker {
+    // Status returns the HTTP response status code of the current request.
+    status(): number;
 
-    /**
-     * Writes responses based on the given context and messages.
-     * @param context - The current context of the operation.
-     * @param messages - The list of messages to process.
-     * @param response - The initial response structure.
-     * @param content - Optional additional content to include.
-     * @param writer - Optional response writer for output.
-     * @returns The final list of responses.
-     */
-    Write: (
-      context: Context,
-      messages: Message[],
-      response: Response,
-      content?: string,
-      writer?: io.ResponseWriter
-    ) => Response[];
+    // Size returns the number of bytes already written into the response http body.
+    // See written()
+    size(): number;
+
+    // WriteString writes the string into the response body.
+    writeString(s: string): number;
+
+    // Written returns true if the response body was already written.
+    written(): boolean;
+
+    // WriteHeaderNow forces to write the http header (status code + headers).
+    writeHeaderNow(): void;
+
+    // Pusher get the http.Pusher for server push
+    pusher(): any;
+
+    Flush();
+  }
+  /**
+   * Represents the context of an operation or request.
+   */
+  export interface Context {
+    /** Session ID, optional. */
+    sid: string; // Session ID
+    chat_id?: string; // Chat ID, use to select chat
+    assistant_id?: string; // Assistant ID, use to select assistant
+    /** Stack trace or operation stack. */
+    stack?: string;
+    /** The current path of the operation. */
+    path?: string;
+    /** Form data associated with the context. */
+    formdata?: Payload; // Map of string to any type
+    /** The current field being processed. */
+    field?: Field;
+    /** The namespace where the operation is executed. */
+    namespace?: string;
+    /** Configuration settings for the context. */
+    config?: Payload; // Map of string to any type
+    /** Signal data for triggering or handling events. */
+    signal?: any; // Can be any type
+    /** update data. */
+    upload?: FileUpload;
+  }
+
+  interface Field {
+    name?: string;
+    type?: string;
+    bind?: string;
+    props?: Payload; // Map of string to any type
+    children?: any[]; // Array of any type
+  }
+
+  interface FileUpload {
+    name?: string;
+    type?: string;
+    size?: number;
+    temp_file?: string;
+  }
+
+  export interface Message {
+    /** The content of the message. */
+    text?: string; // text content
+    type?: string; // error, text, plan, table, form, page, file, video, audio, image, markdown, json ...
+    props?: Payload; // props for the types
+    done?: boolean;
+    actions?: Action[]; // Conversation Actions for frontend
+    attachments?: Attachment[]; // File attachments
+    role?: string; // user, assistant, system ...
+    /** Optional name of the message sender or identifier. */
+    name?: string; // name for the message
+  }
+
+  type Attachment = {
+    name?: string; // name of the attachment
+    url?: string; // URL of the attachment
+    type?: string; // type of the attachment
+    content_type?: string; // MIME type of the attachment
+    bytes?: number; // size of the attachment in bytes
+    created_at?: number; // timestamp when the attachment was created
+    file_id?: string; // unique identifier for the file
+    chat_id?: string; // unique identifier for the chat
+    assistant_id?: string; // unique identifier for the assistant
+  };
+  type Action = {
+    name?: string; // name of the action
+    type: string; // type of the action (required, as it doesn't have `omitempty` in Go)
+    payload?: any; // payload for the action
+  };
+
+  export interface ResHookInit {
+    assistant_id?: string;
+    chat_id?: string;
+    next?: NextAction;
+    input?: Message[];
+    options?: Payload;
+  }
+  export interface ResHookStream {
+    silent?: boolean; // Whether to suppress the output
+    next?: NextAction; // The next action
+    output?: string; // The output
+  }
+
+  export interface NextAction {
+    action: string; // The action to be performed
+    payload?: Payload; // Optional payload for the action
+  }
+
+  export interface ResHookDone {
+    next?: NextAction;
+    input?: Message[];
+    output?: string;
+  }
+
+  export interface ResHookFail {
+    next?: NextAction;
+    input?: Message[];
+    output?: string;
+    error?: string;
   }
 }

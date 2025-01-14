@@ -24,9 +24,11 @@
     "dist"
   ],
   "include": [
+    "./assistants/**/*",
     "./scripts/**/*",
     "./services/**/*",
-    "./studio/**/*"
+    "./studio/**/*",
+    "./.vscode/types/**/*"
   ],
   "ts-node": {
     "require": [

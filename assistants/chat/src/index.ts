@@ -1,6 +1,19 @@
+import { getWebPageContent } from '@lib/web';
 import { neo } from '@yao/neo';
 import { Process } from '@yaoapps/client';
 
+function truncateText(text) {
+  const lines = text.split('\n');
+  const truncatedLines = lines.slice(0, 10); // Get the first 10 lines
+  let truncatedText = truncatedLines.join('\n');
+  if (truncatedText.length > 1000) {
+    truncatedText = truncatedText.slice(0, 1000); // If the length exceeds 1000 characters, truncate it to 1000 characters
+  }
+  if (lines.length > 10 || text.length > 1000) {
+    truncatedText += '...'; // Add ellipsis to indicate truncation
+  }
+  return truncatedText;
+}
 /**
  * user request -> [init hook] -> stream call -> openai
  *
@@ -8,15 +21,14 @@ import { Process } from '@yaoapps/client';
  *
  * @param context The context object containing session information and other relevant data.
  * @param input The input message array.
- * @param writer A payload object containing additional options or data.
+ * @param option A payload object containing additional options or data.
  * @returns A response object containing the next action, input messages, and output data.
  */
-
 export function Init(
   context: neo.Context,
   input: neo.Message[],
   writer: neo.ResponseWriter
-): neo.ResHookInit | null | string {
+): neo.ResHookInit {
   // input: [
   //     {
   //       text: "Hello, I'm a bot.", //text content
@@ -76,34 +88,58 @@ export function Init(
 
   // Get the last message in the input array
   const lastMessage = input[input.length - 1];
+  input.pop();
   // Check if the last message has attachments
   if (lastMessage.attachments && lastMessage.attachments.length > 0) {
     // Check if any attachment has the type 'URL'
     lastMessage.attachments.forEach((attachment) => {
       if (attachment.type === 'URL' && attachment.url) {
-        Process('neo.write', writer, [
-          { text: '正在加载：' + attachment.url + '\n' }
-        ]);
-        const request = Process('http.get', attachment.url);
-        if (request.code !== 200) {
+        // console.log('attachment');
+        // console.log(attachment);
+        try {
           Process('neo.write', writer, [
-            { text: '异常：' + 'request.message' + '\n' }
+            { text: '读取网页' + attachment.url + '\n' }
           ]);
-        } else {
-          const jsonData = Process('encoding.base64.Decode', request.data);
+          const content = getWebPageContent(attachment.url);
+          Process('neo.write', writer, [
+            { text: '读取网页完成' + attachment.url + '\n' }
+          ]);
+          Process('neo.write', writer, [
+            { text: truncateText(content) + '\n\n' }
+          ]);
+          // console.log('content');
+          // console.log(content);
           input.push({
-            role: 'system',
-            text: jsonData,
+            role: 'user',
+            text: content,
             type: 'text'
           });
+        } catch (error) {
+          Process('neo.write', writer, [
+            { text: '异常：' + error.message + '\n' }
+          ]);
         }
       }
     });
   }
+  // get the assistant_id from the message text where it looks  "@xxxxx"
+  const mentenion_assistant_id = lastMessage.text?.match(/@(\w+)/)?.[1];
+  let new_assistant_id = context.assistant_id;
+
+  if (
+    mentenion_assistant_id &&
+    mentenion_assistant_id !== context.assistant_id
+  ) {
+    new_assistant_id = mentenion_assistant_id;
+  }
+
+  input.push(lastMessage);
+  // console.log('new_assistant_id');
+  // console.log(new_assistant_id);
 
   //case 3 returns an object
   return {
-    assistant_id: context.assistant_id, //optional,change the assistant_id,switch the assistant for following process
+    assistant_id: new_assistant_id, //optional,change the assistant_id,switch the assistant for following process
     chat_id: context.chat_id, //optional
     next: {
       //optional, if you want to call another action in frontend

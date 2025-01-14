@@ -2,6 +2,6 @@
   "type": "page",
   "body": {
     "type": "iframe",
-    "src": "/admin/chat"
+    "src": "/admin/chat?__hidemenu=1"
   }
 }

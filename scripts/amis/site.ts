@@ -631,6 +631,7 @@ function getSuperUserMenu() {
       ...getHomeMenu(),
       ...getModelMenu(),
       ...getSystemMenu(),
+      ...getAiMenus(),
       {
         children: pages_in
       },
@@ -791,6 +792,55 @@ function getSettingMenu() {
     }
   ];
 }
+function getAiMenus() {
+  return [
+    {
+      children: [
+        {
+          label: 'AI',
+          icon: 'fas fa-robot ',
+          rewrite: '/gpt/robot',
+          url: '/ai',
+          children: [
+            {
+              label: 'AI聊天',
+              icon: 'fas fa-robot',
+              schemaApi: '/api/v1/amis/pages/admin.admin',
+              url: 'robot'
+            },
+            {
+              label: '模型列表',
+              icon: 'fas fa-robot',
+              schema: {
+                type: 'iframe',
+                src: '/admin/assistants?__hidemenu=1&assistant_id=model'
+              },
+              url: 'assistants'
+            },
+            {
+              label: '聊天助手',
+              icon: 'fas fa-robot',
+              schema: {
+                type: 'iframe',
+                src: '/admin/chat?__hidemenu=1&assistant_id=chat'
+              },
+              url: 'chat-chat'
+            },
+            {
+              label: '模型对话',
+              icon: 'fas fa-robot',
+              schema: {
+                type: 'iframe',
+                src: '/admin/chat?__hidemenu=1&assistant_id=model'
+              },
+              url: 'chat-model'
+            }
+          ]
+        }
+      ]
+    }
+  ];
+}
 function getModelMenu() {
   return [
     {
@@ -814,12 +864,6 @@ function getModelMenu() {
               icon: 'fas fa-file-import',
               schemaApi: '/api/v1/amis/pages/model.import',
               url: 'import'
-            },
-            {
-              label: 'GPT生成模型',
-              icon: 'fas fa-braille ',
-              schemaApi: '/api/v1/amis/pages/admin.admin',
-              url: 'gpt'
             },
             {
               label: '修改',
@@ -866,43 +910,43 @@ function getModelMenu() {
               label: '表格字段',
               icon: 'fas fa-table',
               schemaApi: '/api/v1/amis/pages/table.fields',
-              url: '/table/fields'
+              url: 'table/fields'
             },
             {
               label: '代码生成',
               icon: 'fas fa-code',
               schemaApi: '/api/v1/amis/pages/studio.code',
-              url: '/code'
+              url: 'code'
             },
             {
               label: 'API列表',
               icon: 'fas fa-list-ol',
               schemaApi: '/api/v1/amis/pages/api.list',
-              url: '/api/list'
+              url: 'api/list'
             },
             {
               label: 'API测试',
               icon: 'fas fa-location-arrow ',
               schemaApi: '/api/v1/amis/pages/api.test',
-              url: '/api/test'
+              url: 'api/test'
             },
             {
               label: '字体列表',
               icon: 'fab fa-font-awesome',
               schemaApi: '/api/v1/amis/pages/studio.font',
-              url: '/font'
+              url: 'font'
             },
             {
               schemaApi: '/api/v1/amis/pages/studio.chart',
               label: '图表编辑器',
               icon: 'fas fa-chart-line',
-              url: '/chart'
+              url: 'chart'
             },
             {
               schemaApi: '/api/v1/amis/pages/studio.editor',
               label: 'Amis-编辑器',
               icon: 'far fa-file-code',
-              url: '/editor'
+              url: 'editor'
             }
           ]
         }
