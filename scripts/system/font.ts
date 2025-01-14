@@ -38,13 +38,16 @@ function loadfont2() {
  * load the awesome font infomation from github file
  * @returns
  */
-function loadfont() {
+export function loadfont() {
   //
   // "https://github.com/FortAwesome/Font-Awesome/blob/master/metadata/icons.json";
 
   const source =
     'https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/metadata/icons.json';
   const request = Process('http.get', source);
+  if (request.code !== 200) {
+    throw new Error(request.message || '加载失败');
+  }
   const jsonData = Process('encoding.base64.Decode', request.data);
   const data = JSON.parse(jsonData);
   const iconArray = [];
