@@ -1,0 +1,255 @@
+{
+    "name": "省份天气分类",
+    "table": {
+        "name": "app_weather_province",
+        "comment": "省份天气分类表",
+        "engine": "InnoDB"
+    },
+    "columns": [
+        {
+            "label": "ID",
+            "name": "id",
+            "type": "ID",
+            "comment": "唯一标识"
+        },
+        {
+            "label": "省份代码",
+            "name": "code",
+            "type": "string",
+            "length": 3,
+            "comment": "省份代码",
+            "index": true,
+            "unique": true,
+            "validations": [
+                {
+                    "method": "typeof",
+                    "args": [
+                        "string"
+                    ],
+                    "message": "{{input}}类型错误, {{label}}应该为字符串"
+                },
+                {
+                    "method": "minLength",
+                    "args": [
+                        3
+                    ],
+                    "message": "{{label}}长度必须为3个字符"
+                },
+                {
+                    "method": "maxLength",
+                    "args": [
+                        3
+                    ],
+                    "message": "{{label}}长度必须为3个字符"
+                }
+            ]
+        },
+        {
+            "label": "省份名称",
+            "name": "name",
+            "type": "string",
+            "length": 50,
+            "comment": "省份名称",
+            "index": true,
+            "validations": [
+                {
+                    "method": "typeof",
+                    "args": [
+                        "string"
+                    ],
+                    "message": "{{input}}类型错误, {{label}}应该为字符串"
+                },
+                {
+                    "method": "minLength",
+                    "args": [
+                        2
+                    ],
+                    "message": "{{label}}至少需要2个字符"
+                },
+                {
+                    "method": "maxLength",
+                    "args": [
+                        50
+                    ],
+                    "message": "{{label}}不能超过50个字符"
+                }
+            ]
+        },
+        {
+            "label": "国家代码",
+            "name": "country_code",
+            "type": "string",
+            "length": 10,
+            "comment": "国家代码",
+            "default": "C000",
+            "index": true,
+            "validations": [
+                {
+                    "method": "typeof",
+                    "args": [
+                        "string"
+                    ],
+                    "message": "{{input}}类型错误, {{label}}应该为字符串"
+                },
+                {
+                    "method": "minLength",
+                    "args": [
+                        2
+                    ],
+                    "message": "{{label}}至少需要2个字符"
+                },
+                {
+                    "method": "maxLength",
+                    "args": [
+                        10
+                    ],
+                    "message": "{{label}}不能超过10个字符"
+                }
+            ]
+        }
+    ],
+    "relations": {},
+    "values": [
+        {
+            "code": "ABJ",
+            "name": "北京"
+        },
+        {
+            "code": "ATJ",
+            "name": "天津"
+        },
+        {
+            "code": "AHE",
+            "name": "河北"
+        },
+        {
+            "code": "ASX",
+            "name": "山西"
+        },
+        {
+            "code": "ANM",
+            "name": "内蒙古"
+        },
+        {
+            "code": "ALN",
+            "name": "辽宁"
+        },
+        {
+            "code": "AJL",
+            "name": "吉林"
+        },
+        {
+            "code": "AHL",
+            "name": "黑龙江"
+        },
+        {
+            "code": "ASH",
+            "name": "上海"
+        },
+        {
+            "code": "AJS",
+            "name": "江苏"
+        },
+        {
+            "code": "AZJ",
+            "name": "浙江"
+        },
+        {
+            "code": "AAH",
+            "name": "安徽"
+        },
+        {
+            "code": "AFJ",
+            "name": "福建"
+        },
+        {
+            "code": "AJX",
+            "name": "江西"
+        },
+        {
+            "code": "ASD",
+            "name": "山东"
+        },
+        {
+            "code": "AHA",
+            "name": "河南"
+        },
+        {
+            "code": "AHB",
+            "name": "湖北"
+        },
+        {
+            "code": "AHN",
+            "name": "湖南"
+        },
+        {
+            "code": "AGD",
+            "name": "广东"
+        },
+        {
+            "code": "AGX",
+            "name": "广西"
+        },
+        {
+            "code": "AHI",
+            "name": "海南"
+        },
+        {
+            "code": "ACQ",
+            "name": "重庆"
+        },
+        {
+            "code": "ASC",
+            "name": "四川"
+        },
+        {
+            "code": "AGZ",
+            "name": "贵州"
+        },
+        {
+            "code": "AYN",
+            "name": "云南"
+        },
+        {
+            "code": "AXZ",
+            "name": "西藏"
+        },
+        {
+            "code": "ASN",
+            "name": "陕西"
+        },
+        {
+            "code": "AGS",
+            "name": "甘肃"
+        },
+        {
+            "code": "AQH",
+            "name": "青海"
+        },
+        {
+            "code": "ANX",
+            "name": "宁夏"
+        },
+        {
+            "code": "AXJ",
+            "name": "新疆"
+        },
+        {
+            "code": "AXG",
+            "name": "香港"
+        },
+        {
+            "code": "AAM",
+            "name": "澳门"
+        },
+        {
+            "code": "ATW",
+            "name": "台湾"
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    }
+}
+// yao migrate -n app.weather.province

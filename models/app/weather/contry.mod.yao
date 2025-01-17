@@ -1,0 +1,755 @@
+{
+    "name": "WeatherCountryInfo",
+    "table": {
+        "name": "app_weather_country",
+        "comment": "国家天气信息表",
+        "engine": "InnoDB"
+    },
+    "columns": [
+        {
+            "label": "ID",
+            "name": "id",
+            "type": "ID",
+            "comment": "主键ID"
+        },
+        {
+            "label": "国家代码",
+            "name": "code",
+            "type": "string",
+            "length": 10,
+            "comment": "国家代码",
+            "index": true,
+            "nullable": false,
+            "validations": [
+                {
+                    "method": "typeof",
+                    "args": [
+                        "string"
+                    ],
+                    "message": "{{input}}类型错误, {{label}}应该为字符串"
+                },
+                {
+                    "method": "minLength",
+                    "args": [
+                        2
+                    ],
+                    "message": "{{label}}至少需要2个字符"
+                },
+                {
+                    "method": "maxLength",
+                    "args": [
+                        10
+                    ],
+                    "message": "{{label}}不能超过10个字符"
+                }
+            ]
+        },
+        {
+            "label": "国家名称",
+            "name": "name",
+            "type": "string",
+            "length": 100,
+            "comment": "国家名称",
+            "index": true,
+            "nullable": false,
+            "validations": [
+                {
+                    "method": "typeof",
+                    "args": [
+                        "string"
+                    ],
+                    "message": "{{input}}类型错误, {{label}}应该为字符串"
+                },
+                {
+                    "method": "minLength",
+                    "args": [
+                        2
+                    ],
+                    "message": "{{label}}至少需要2个字符"
+                },
+                {
+                    "method": "maxLength",
+                    "args": [
+                        100
+                    ],
+                    "message": "{{label}}不能超过100个字符"
+                }
+            ]
+        }
+    ],
+    "relations": {},
+    "values": [
+        {
+            "code": "C168",
+            "name": "不丹"
+        },
+        {
+            "code": "C115",
+            "name": "东帝汶"
+        },
+        {
+            "code": "C038",
+            "name": "中非"
+        },
+        {
+            "code": "C045",
+            "name": "丹麦"
+        },
+        {
+            "code": "C157",
+            "name": "乌克兰"
+        },
+        {
+            "code": "C129",
+            "name": "乌兹别克斯坦"
+        },
+        {
+            "code": "C050",
+            "name": "乌干达"
+        },
+        {
+            "code": "C030",
+            "name": "乌拉圭"
+        },
+        {
+            "code": "C051",
+            "name": "乍得"
+        },
+        {
+            "code": "C102",
+            "name": "也门"
+        },
+        {
+            "code": "C092",
+            "name": "亚美尼亚"
+        },
+        {
+            "code": "C047",
+            "name": "以色列"
+        },
+        {
+            "code": "C147",
+            "name": "伊拉克"
+        },
+        {
+            "code": "C167",
+            "name": "伊朗"
+        },
+        {
+            "code": "C046",
+            "name": "佛得角"
+        },
+        {
+            "code": "C069",
+            "name": "俄罗斯"
+        },
+        {
+            "code": "C134",
+            "name": "保加利亚"
+        },
+        {
+            "code": "C163",
+            "name": "克罗地亚"
+        },
+        {
+            "code": "C067",
+            "name": "冈比亚"
+        },
+        {
+            "code": "C081",
+            "name": "几内亚"
+        },
+        {
+            "code": "C022",
+            "name": "刚果布"
+        },
+        {
+            "code": "C005",
+            "name": "刚果民主共和国"
+        },
+        {
+            "code": "C091",
+            "name": "利比亚"
+        },
+        {
+            "code": "C066",
+            "name": "利比里亚"
+        },
+        {
+            "code": "C029",
+            "name": "加拿大"
+        },
+        {
+            "code": "C028",
+            "name": "加纳"
+        },
+        {
+            "code": "C027",
+            "name": "加蓬"
+        },
+        {
+            "code": "C144",
+            "name": "匈牙利"
+        },
+        {
+            "code": "C153",
+            "name": "北马其顿（原马其顿）"
+        },
+        {
+            "code": "C140",
+            "name": "南苏丹"
+        },
+        {
+            "code": "C122",
+            "name": "南非"
+        },
+        {
+            "code": "C145",
+            "name": "卡塔尔"
+        },
+        {
+            "code": "C143",
+            "name": "卢旺达"
+        },
+        {
+            "code": "C087",
+            "name": "卢森堡"
+        },
+        {
+            "code": "C135",
+            "name": "印度"
+        },
+        {
+            "code": "C101",
+            "name": "印度尼西亚"
+        },
+        {
+            "code": "C057",
+            "name": "厄瓜多尔"
+        },
+        {
+            "code": "C152",
+            "name": "叙利亚"
+        },
+        {
+            "code": "C025",
+            "name": "古巴"
+        },
+        {
+            "code": "C107",
+            "name": "吉尔吉斯斯坦"
+        },
+        {
+            "code": "C026",
+            "name": "吉布提"
+        },
+        {
+            "code": "C162",
+            "name": "哈萨克斯坦"
+        },
+        {
+            "code": "C075",
+            "name": "哥伦比亚"
+        },
+        {
+            "code": "C065",
+            "name": "哥斯达黎加"
+        },
+        {
+            "code": "C074",
+            "name": "喀麦隆"
+        },
+        {
+            "code": "C099",
+            "name": "土库曼斯坦"
+        },
+        {
+            "code": "C105",
+            "name": "土耳其"
+        },
+        {
+            "code": "C058",
+            "name": "圭亚那"
+        },
+        {
+            "code": "C073",
+            "name": "坦桑尼亚"
+        },
+        {
+            "code": "C103",
+            "name": "埃及"
+        },
+        {
+            "code": "C114",
+            "name": "埃塞俄比亚"
+        },
+        {
+            "code": "C148",
+            "name": "塔吉克斯坦"
+        },
+        {
+            "code": "C154",
+            "name": "塞内加尔"
+        },
+        {
+            "code": "C150",
+            "name": "塞尔维亚"
+        },
+        {
+            "code": "C088",
+            "name": "塞拉利昂"
+        },
+        {
+            "code": "C077",
+            "name": "塞浦路斯"
+        },
+        {
+            "code": "C082",
+            "name": "塞舌尔"
+        },
+        {
+            "code": "C053",
+            "name": "墨西哥"
+        },
+        {
+            "code": "C017",
+            "name": "多哥"
+        },
+        {
+            "code": "C044",
+            "name": "多米尼克"
+        },
+        {
+            "code": "C031",
+            "name": "多米尼加"
+        },
+        {
+            "code": "C132",
+            "name": "奥地利"
+        },
+        {
+            "code": "C085",
+            "name": "委内瑞拉"
+        },
+        {
+            "code": "C096",
+            "name": "孟加拉国"
+        },
+        {
+            "code": "C033",
+            "name": "安哥拉"
+        },
+        {
+            "code": "C106",
+            "name": "安提瓜和巴布达"
+        },
+        {
+            "code": "C032",
+            "name": "密克罗尼西亚联邦"
+        },
+        {
+            "code": "C083",
+            "name": "尼日利亚"
+        },
+        {
+            "code": "C049",
+            "name": "尼日尔"
+        },
+        {
+            "code": "C116",
+            "name": "尼泊尔"
+        },
+        {
+            "code": "C060",
+            "name": "巴勒斯坦，以色列有争议"
+        },
+        {
+            "code": "C113",
+            "name": "巴基斯坦"
+        },
+        {
+            "code": "C086",
+            "name": "巴巴多斯"
+        },
+        {
+            "code": "C158",
+            "name": "巴布亚新几内亚"
+        },
+        {
+            "code": "C161",
+            "name": "巴拿马"
+        },
+        {
+            "code": "C146",
+            "name": "巴林"
+        },
+        {
+            "code": "C013",
+            "name": "巴西"
+        },
+        {
+            "code": "C039",
+            "name": "布基纳法索"
+        },
+        {
+            "code": "C016",
+            "name": "布隆迪"
+        },
+        {
+            "code": "C014",
+            "name": "希腊"
+        },
+        {
+            "code": "C021",
+            "name": "库克群岛"
+        },
+        {
+            "code": "C059",
+            "name": "德国"
+        },
+        {
+            "code": "C003",
+            "name": "意大利"
+        },
+        {
+            "code": "C117",
+            "name": "拉脱维亚"
+        },
+        {
+            "code": "C068",
+            "name": "挪威"
+        },
+        {
+            "code": "C094",
+            "name": "捷克"
+        },
+        {
+            "code": "C156",
+            "name": "摩尔多瓦"
+        },
+        {
+            "code": "C166",
+            "name": "摩洛哥"
+        },
+        {
+            "code": "C125",
+            "name": "文莱"
+        },
+        {
+            "code": "C127",
+            "name": "斐济"
+        },
+        {
+            "code": "C133",
+            "name": "斯洛伐克"
+        },
+        {
+            "code": "C137",
+            "name": "斯洛文尼亚"
+        },
+        {
+            "code": "C110",
+            "name": "斯里兰卡"
+        },
+        {
+            "code": "C149",
+            "name": "新加坡"
+        },
+        {
+            "code": "C159",
+            "name": "新西兰"
+        },
+        {
+            "code": "C071",
+            "name": "日本"
+        },
+        {
+            "code": "C019",
+            "name": "智利"
+        },
+        {
+            "code": "C048",
+            "name": "朝鲜"
+        },
+        {
+            "code": "C155",
+            "name": "柬埔寨"
+        },
+        {
+            "code": "C055",
+            "name": "格林纳达"
+        },
+        {
+            "code": "C104",
+            "name": "格鲁吉亚"
+        },
+        {
+            "code": "C070",
+            "name": "比利时"
+        },
+        {
+            "code": "C072",
+            "name": "毛里塔尼亚"
+        },
+        {
+            "code": "C004",
+            "name": "毛里求斯"
+        },
+        {
+            "code": "C009",
+            "name": "汤加"
+        },
+        {
+            "code": "C097",
+            "name": "沙特阿拉伯"
+        },
+        {
+            "code": "C002",
+            "name": "法国"
+        },
+        {
+            "code": "C100",
+            "name": "波兰"
+        },
+        {
+            "code": "C120",
+            "name": "波黑"
+        },
+        {
+            "code": "C126",
+            "name": "泰国"
+        },
+        {
+            "code": "C018",
+            "name": "津巴布韦"
+        },
+        {
+            "code": "C054",
+            "name": "澳大利亚"
+        },
+        {
+            "code": "C124",
+            "name": "爱沙尼亚"
+        },
+        {
+            "code": "C076",
+            "name": "牙买加"
+        },
+        {
+            "code": "C141",
+            "name": "特立尼达和多巴哥"
+        },
+        {
+            "code": "C034",
+            "name": "玻利维亚"
+        },
+        {
+            "code": "C001",
+            "name": "瑞典"
+        },
+        {
+            "code": "C079",
+            "name": "瑞士"
+        },
+        {
+            "code": "C010",
+            "name": "瓦努阿图"
+        },
+        {
+            "code": "C109",
+            "name": "白俄罗斯"
+        },
+        {
+            "code": "C165",
+            "name": "科威特"
+        },
+        {
+            "code": "C064",
+            "name": "科摩罗"
+        },
+        {
+            "code": "C052",
+            "name": "科特迪瓦"
+        },
+        {
+            "code": "C008",
+            "name": "秘鲁"
+        },
+        {
+            "code": "C118",
+            "name": "突尼斯"
+        },
+        {
+            "code": "C119",
+            "name": "立陶宛"
+        },
+        {
+            "code": "C037",
+            "name": "索马里"
+        },
+        {
+            "code": "C121",
+            "name": "约旦"
+        },
+        {
+            "code": "C078",
+            "name": "纳米比亚"
+        },
+        {
+            "code": "C011",
+            "name": "纽埃"
+        },
+        {
+            "code": "C151",
+            "name": "缅甸"
+        },
+        {
+            "code": "C093",
+            "name": "罗马尼亚"
+        },
+        {
+            "code": "C040",
+            "name": "美国"
+        },
+        {
+            "code": "C136",
+            "name": "老挝"
+        },
+        {
+            "code": "C062",
+            "name": "肯尼亚"
+        },
+        {
+            "code": "C012",
+            "name": "芬兰"
+        },
+        {
+            "code": "C139",
+            "name": "苏丹"
+        },
+        {
+            "code": "C056",
+            "name": "苏里南"
+        },
+        {
+            "code": "C023",
+            "name": "英国"
+        },
+        {
+            "code": "C084",
+            "name": "莫桑比克"
+        },
+        {
+            "code": "C131",
+            "name": "菲律宾"
+        },
+        {
+            "code": "C043",
+            "name": "萨尔瓦多"
+        },
+        {
+            "code": "C042",
+            "name": "萨摩亚"
+        },
+        {
+            "code": "C035",
+            "name": "葡萄牙"
+        },
+        {
+            "code": "C160",
+            "name": "蒙古"
+        },
+        {
+            "code": "C024",
+            "name": "西班牙"
+        },
+        {
+            "code": "C006",
+            "name": "贝宁"
+        },
+        {
+            "code": "C007",
+            "name": "赞比亚"
+        },
+        {
+            "code": "C063",
+            "name": "赤道几内亚"
+        },
+        {
+            "code": "C123",
+            "name": "越南"
+        },
+        {
+            "code": "C128",
+            "name": "阿塞拜疆"
+        },
+        {
+            "code": "C095",
+            "name": "阿富汗"
+        },
+        {
+            "code": "C036",
+            "name": "阿尔及利亚"
+        },
+        {
+            "code": "C098",
+            "name": "阿尔巴尼亚"
+        },
+        {
+            "code": "C080",
+            "name": "阿拉伯联合酋长国"
+        },
+        {
+            "code": "C111",
+            "name": "阿曼"
+        },
+        {
+            "code": "C041",
+            "name": "阿根廷"
+        },
+        {
+            "code": "C130",
+            "name": "阿联酋"
+        },
+        {
+            "code": "C138",
+            "name": "韩国"
+        },
+        {
+            "code": "C142",
+            "name": "马尔代夫"
+        },
+        {
+            "code": "C090",
+            "name": "马来西亚"
+        },
+        {
+            "code": "C020",
+            "name": "马耳他"
+        },
+        {
+            "code": "C164",
+            "name": "马达加斯加"
+        },
+        {
+            "code": "C061",
+            "name": "马里"
+        },
+        {
+            "code": "C112",
+            "name": "黎巴嫩"
+        },
+        {
+            "code": "C108",
+            "name": "黑山"
+        },
+        {
+            "code": "C000",
+            "name": "中国"
+        }
+    ],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    }
+}

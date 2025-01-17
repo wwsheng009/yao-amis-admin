@@ -1,0 +1,115 @@
+{
+    "name": "地区信息",
+    "table": {
+        "name": "app_weather_location",
+        "comment": "地区信息表",
+        "engine": "InnoDB"
+    },
+    "columns": [
+        {
+            "label": "ID",
+            "name": "id",
+            "type": "ID",
+            "comment": "主键ID"
+        },
+        {
+            "label": "省份编码",
+            "name": "province_code",
+            "type": "string",
+            "length": 50,
+            "comment": "省份编码",
+            "index": true,
+            "validations": [
+                {
+                    "method": "typeof",
+                    "args": [
+                        "string"
+                    ],
+                    "message": "{{input}}类型错误, {{label}}应该为字符串"
+                },
+                {
+                    "method": "minLength",
+                    "args": [
+                        1
+                    ],
+                    "message": "{{label}}至少需要1个字符"
+                },
+                {
+                    "method": "maxLength",
+                    "args": [
+                        50
+                    ],
+                    "message": "{{label}}不能超过50个字符"
+                }
+            ]
+        },
+        {
+            "label": "地区名称",
+            "name": "name",
+            "type": "string",
+            "length": 100,
+            "comment": "地区名称",
+            "index": true,
+            "validations": [
+                {
+                    "method": "typeof",
+                    "args": [
+                        "string"
+                    ],
+                    "message": "{{input}}类型错误, {{label}}应该为字符串"
+                },
+                {
+                    "method": "minLength",
+                    "args": [
+                        1
+                    ],
+                    "message": "{{label}}至少需要1个字符"
+                },
+                {
+                    "method": "maxLength",
+                    "args": [
+                        100
+                    ],
+                    "message": "{{label}}不能超过100个字符"
+                }
+            ]
+        },
+        {
+            "label": "地区代码",
+            "name": "code",
+            "type": "string",
+            "length": 50,
+            "comment": "地区代码",
+            "index": true,
+            "validations": [
+                {
+                    "method": "typeof",
+                    "args": [
+                        "string"
+                    ],
+                    "message": "{{input}}类型错误, {{label}}应该为字符串"
+                },
+                {
+                    "method": "minLength",
+                    "args": [
+                        1
+                    ],
+                    "message": "{{label}}至少需要1个字符"
+                },
+                {
+                    "method": "maxLength",
+                    "args": [
+                        50
+                    ],
+                    "message": "{{label}}不能超过50个字符"
+                }
+            ]
+        }
+    ],
+    "relations": {},
+    "values": [],
+    "option": {
+        "timestamps": true,
+        "soft_deletes": true
+    }
+}
