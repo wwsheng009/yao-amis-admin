@@ -1,4 +1,4 @@
-import { Query } from '@yao/yao';
+import { Query } from '@yaoapps/client';
 import { IsMysql, IsPg } from '@scripts/system/lib';
 
 /**
@@ -60,7 +60,7 @@ export function RunTransaction(
  * @param {string} tableName
  * @returns
  */
-function cleanTable(tableName) {
+export function cleanTable(tableName: string) {
   const query = new Query('default');
   // use statement
   const data = query.Run({

@@ -23,26 +23,37 @@ export function truncateText(text: string) {
 
 // yao run scripts.lib.web.getWebPageContent https://wwsheng009.github.io/yao-docs/YaoDSL/Model/%E5%AE%9A%E4%B9%89Yao%E6%A8%A1%E5%9E%8B.html
 
-export function getWebPageContent(url) {
+export function getWebPageContent(url: string) {
   const request = Process('http.get', url);
+  const headers = request.headers;
+
+  let isJson = false;
+  if (
+    headers['Content-Type'] &&
+    headers['Content-Type'][0].includes('application/json')
+  ) {
+    isJson = true;
+  }
 
   if (request.code !== 200) {
     console.log('Error: ', request);
-    throw new Exception('Error: ' + request.message);
+    let message = request.message;
+    if (message == '') {
+      message = request.data;
+      if (message && !isJson) {
+        message = Process('encoding.base64.Decode', message);
+      }
+    }
+    console.log('Error: ', message);
+    throw new Exception('Error: ' + message);
   } else {
-    const headers = request.headers;
     let responseData = '';
 
-    if (
-      headers['Content-Type'] &&
-      headers['Content-Type'][0].includes('application/json')
-    ) {
+    if (isJson) {
       // 如果Content-Type是application/json，则直接返回响应数据（可能是JSON对象）
       responseData = request.data;
     } else {
-      // 如果Content-Type不是application/json，则按照当前逻辑处理
       responseData = Process('encoding.base64.Decode', request.data);
-      // console.log('jsonData:>>', responseData);
     }
     if (typeof responseData === 'object' && responseData != null) {
       responseData = JSON.stringify(responseData['data']);

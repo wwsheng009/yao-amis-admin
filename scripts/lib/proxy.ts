@@ -105,6 +105,17 @@ export class ModelProxy<T> {
   Insert(fields: Array<string>, records: Array<Array<any>>): number {
     return Process(`models.${this.name}.Insert`, fields, records);
   }
+
+  /**
+   * 一次性插入多条数据记录，返回插入行数
+   * @param data
+   * @returns
+   */
+  InsertBatch(data: T[]): number {
+    const { columns, values } = Process('utils.arr.split', data);
+    return this.Insert(columns, values);
+  }
+
   /**
    * UpdateWhere 按条件更新记录, 返回更新行数, 失败抛出异常
    * @param query
@@ -1099,6 +1110,15 @@ export class UtilsProxy {
     algorithm: string
   ): boolean {
     return Process('ssl.verify', data, sign, certName, algorithm);
+  }
+
+  /**
+   * Sleep for a while
+   * @param duration ms
+   * @returns
+   */
+  static Sleep(duration: number): Promise<void> {
+    return Process('utils.time.Sleep', duration);
   }
 }
 
