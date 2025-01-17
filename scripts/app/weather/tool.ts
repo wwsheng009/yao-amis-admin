@@ -120,8 +120,7 @@ export function getWeatherByName(locationName: string) {
     return output;
   }
 
-  // const tm = Math.floor(Date.now() / 1000);
-  // console.log('tm', tm);
+  // curl https://weather.cma.cn/api/now/54528
   const resp = Process(
     'http.get',
     `https://weather.cma.cn/api/now/${location.code}`

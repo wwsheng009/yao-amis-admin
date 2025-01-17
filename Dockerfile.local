@@ -1,5 +1,12 @@
 #docker build -f Dockerfile.local --build-arg ARCH=amd64 --build-arg VERSION=0.10.5 --tag demo-project .
-#docker run -d --restart unless-stopped --name demo-project -p 5099:5099 demo-project
+#docker network create --ipv6 ip6net
+
+#docker run -d --restart unless-stopped --name demo-project --network ip6net --dns=8.8.8.8 --dns=8.8.4.4 --dns=2001:4860:4860::8888 --dns=2001:4860:4860::8844 -p 5099:5099 -v E:/projects/yao/yao-projects/yao-amis-admin/.env:/data/app/.env demo-project 
+
+#docker run -d --restart unless-stopped --name demo-project --network ip6net -v E:/projects/yao/yao-projects/yao-amis-admin/resolv.conf:/etc/resolv.conf:ro -v E:/projects/yao/yao-projects/yao-amis-admin/.env:/data/app/.env demo-project 
+
+
+#docker run -d --restart unless-stopped --name demo-project --network ip6net -p 5099:5099 -v E:/projects/yao/yao-projects/yao-amis-admin/.env:/data/app/.env demo-project 
 
 ARG ARCH
 FROM wwsheng009/yao-${ARCH}:latest
@@ -26,11 +33,18 @@ ADD . /data/app
 
 RUN rm -rf /data/app/.git && \
     rm -rf /data/app/.env* && \
+    rm -rf /data/app/node_modules && \
     chown -R yao:yao /data/app && \
     chmod +x /data/app/init.sh && \
     chmod +x /usr/local/bin/yao && \
     mkdir -p /data/app/plugins && \
     mkdir -p /data/app/db
+
+RUN apk add --no-cache nodejs npm
+
+WORKDIR /data/app
+RUN npm i yarn -g
+RUN yarn install --production
 
 USER root
 VOLUME [ "/data/app" ]

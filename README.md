@@ -51,6 +51,17 @@ docker run -d --name=yao-amis-admin \
     -v ./logs:/data/app/logs \
     -p 5099:5099 \
     wwsheng009/yao-amis-admin-amd64:latest
+
+# for ipv6
+docker network create --ipv6 ip6net
+
+docker run -d --name=yao-amis-admin \
+    --network ip6net \
+    -v ./.env:/data/app/.env \
+    -v ./upload:/data/app/data/upload \
+    -v ./logs:/data/app/logs \
+    -p 5099:5099 \
+    wwsheng009/yao-amis-admin-amd64:latest
 ```
 ## 演示地址：
 
