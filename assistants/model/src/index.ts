@@ -124,11 +124,11 @@ export function Init(
   return {
     assistant_id: new_assistant_id, //optional,change the assistant_id,switch the assistant for following process
     chat_id: context.chat_id, //optional
-    next: {
-      //optional, if you want to call another action in frontend
-      action: 'action1', //set to 'exit' to exit process
-      payload: {}
-    },
+    // next: {
+    //   //optional, if you want to call another action in frontend
+    //   action: 'action1', //set to 'exit' to exit process
+    //   payload: {}
+    // },
     input: input //optional,overwrite the input messages
     // options: {
     //   max_tokens: 8192

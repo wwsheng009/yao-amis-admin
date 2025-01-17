@@ -1,4 +1,5 @@
 import { getWebPageContent, truncateText } from '@lib/web';
+import { getWeatherByName } from '@scripts/app/weather/tool';
 import { neo } from '@yao/neo';
 import { Process } from '@yaoapps/client';
 
@@ -129,11 +130,17 @@ export function Init(
   return {
     assistant_id: new_assistant_id, //optional,change the assistant_id,switch the assistant for following process
     chat_id: context.chat_id, //optional
-    next: {
-      //optional, if you want to call another action in frontend
-      action: 'action1', //set to 'exit' to exit process
-      payload: {}
-    },
+    // next: {
+    //   //optional, if you want to call another action in frontend
+    //   action: 'assistant', //call other assistant set to 'exit' to exit process
+    //   payload: {
+    //     assistant_id: new_assistant_id,
+    //     input: input,
+    //     options: {
+    //       max_tokens: 8192
+    //     }
+    //   }
+    // },
     input: input //optional,overwrite the input messages
     // options: {
     //   max_tokens: 8192
@@ -155,7 +162,7 @@ function Stream(
   context: neo.Context,
   input: neo.Message[],
   output: string,
-  writer: neo.ResponseWriter
+  toolcall: boolean
 ): neo.ResHookStream | null {
   // case 1 return null,no change
   // return null
@@ -164,13 +171,23 @@ function Stream(
   return {
     silent: false, // set true to continue the stream without output
     next: {
-      action: 'action1', //set to 'exit' to exit stream
-      payload: {}
+      action: 'process', //set to 'exit' to exit stream
+      payload: {
+        name: 'get_webpage',
+        args: '{"url":"https://www.baidu.com"}'
+      }
     }
     // output: output //change the output message
   };
 }
-
+interface FunctionCall {
+  id: string;
+  type: string;
+  function: {
+    name: string;
+    arguments: string;
+  };
+}
 /**
  * called only once, when the call openai api done,open ai return messages
  *
@@ -183,9 +200,45 @@ function Stream(
 function Done(
   context: neo.Context,
   input: neo.Message[],
-  output: string,
-  writer: neo.ResponseWriter
-): neo.ResHookDone | null {
+  output: FunctionCall | string,
+  toolcall: boolean
+): neo.ResHookDone | null | string {
+  if (toolcall == true) {
+    // let content = {
+    //   id: '%s', //return by openai
+    //   type: 'function',
+    //   function: { name: '%s', arguments: '%s' }
+    // };
+    // console.log(output);
+    let fcall = output as unknown as FunctionCall; //= JSON.parse(output) as FunctionCall;
+    if (typeof output == 'string') {
+      try {
+        fcall = JSON.parse(output) as FunctionCall;
+      } catch (error) {
+        console.log(error.message);
+        return null;
+      }
+    }
+    if (fcall.function.name == 'get_weather') {
+      const data = getWeatherByName(fcall.function.arguments['location']);
+      // const data = Process(
+      //   'scripts.app.weather.init.getWeatherByName',
+      //   fcall.function.arguments['location']
+      // );
+      console.log('get_weather:');
+      console.log(data);
+      return data;
+
+      // return '{"temperature": "15°C"}';
+    } else if (fcall.function.name == 'find_user') {
+      console.log('find_user:');
+      console.log(fcall.function.arguments);
+      return '{"name": "Neo","location": "Beijing"}';
+    }
+
+    return '错误的调用，不支持的函数调用：' + fcall.function.name;
+  }
+
   // case 1 return null,no change
   // return null
   return null;
