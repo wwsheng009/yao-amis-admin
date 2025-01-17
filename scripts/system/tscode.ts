@@ -14,7 +14,7 @@ import { YaoModel } from '@yaoapps/types';
  * @returns
  */
 export function generateCodeTemplate(
-  modelId: ModelId,
+  modelId: string,
   columnsIn?: AmisUIColumn[]
 ) {
   const model = getModelDslById(modelId);
@@ -36,12 +36,9 @@ export function generateCodeTemplate(
  * @param modelDsl
  * @returns
  */
-function getModelServiceTemplate(
-  modelId: ModelId,
-  modelDsl: YaoModel.ModelDSL
-) {
+function getModelServiceTemplate(modelId: string, modelDsl: YaoModel.ModelDSL) {
   //fields
-  const fieldsCode = getFieldsTemplate(modelDsl, 'I');
+  const fieldsCode = getFieldsTemplate(modelId, modelDsl, 'I');
 
   const idCol = modelDsl.columns.find((col) => col.primary);
   const idColType = getFieldTsType(idCol);
@@ -51,7 +48,7 @@ function getModelServiceTemplate(
 
   //service template
   return `
-${'import'} { Process } from '@yaoapps/client';
+${'import'} { Process, Query } from '@yaoapps/client';
 ${'import'} { ModelPaginateResult, YaoQueryParam } from '@yaoapps/types';
 
 ${fieldsCode}
@@ -68,19 +65,28 @@ function getFunctionsTemplate(
   const namespace = toCamelCaseNameSpace(modelID) + 'Service';
   const modelInterface = 'I' + toCamelCaseNameSpace(modelID);
 
-  const fieldsName = modelDsl.columns.reduce((pre, col) => {
-    pre[col.name] = col.name;
-    return pre;
-  }, {});
+  // const fieldsName = modelDsl.columns.reduce((pre, col) => {
+  //   pre[col.name] = col.name;
+  //   return pre;
+  // }, {});
+
+  let fieldsName = '';
+  modelDsl.columns.forEach((c) => {
+    fieldsName += `   /** ${c.label || c.comment || c.name} */
+    ${c.name}: '${c.name}',
+ `;
+  });
+  fieldsName += '\n';
 
   return `
 ${'export'} class ${namespace} {
-    static FieldNames = ${JSON.stringify(fieldsName)};
+    static FieldNames = {
+${fieldsName}
+  };
     static ModelID = '${modelID}';
     static TableName = '${modelDsl.table.name}';
 
-    \/**
-    * 根据主键查询单条记录。
+
     \/**
     * 根据主键与附加条件查询单条记录。
     * @param key 主键
@@ -119,13 +125,23 @@ ${'export'} class ${namespace} {
     }
 
     \/**
+    * 根据字段与数据，一次性插入多条数据记录，返回插入行数
+    * @param columns
+    * @param values
+    * @returns
+    */
+    static Insert(columns:string[],values:any[][]): number {
+        return Process(\`models.$\{${namespace}.ModelID}.Insert\`,columns,values)
+    }
+
+    \/**
     * 一次性插入多条数据记录，返回插入行数
-    * @param fields
     * @param data
     * @returns
     */
-    static Insert(fields:string[],data:any[][]): number {
-        return Process(\`models.$\{${namespace}.ModelID}.Insert\`,fields,data)
+    static InsertBatch(data:${modelInterface}[]): number {
+        const { columns, values } = Process('utils.arr.split', data);
+        return Process(\`models.$\{${namespace}.ModelID}.Insert\`,columns,values)
     }
 
     \/**
@@ -133,7 +149,7 @@ ${'export'} class ${namespace} {
     * @param data
     * @returns
     */
-    static Save(data:${modelInterface}): number {
+    static Save(data:Partial<${modelInterface}>): number {
         return Process(\`models.$\{${namespace}.ModelID}.Save\`,data)
     }
 
@@ -143,7 +159,7 @@ ${'export'} class ${namespace} {
     * @param line
     * @returns
     */
-    static Update(key:${idFieldType},line:${modelInterface}) {
+    static Update(key:${idFieldType},line:Partial<${modelInterface}>) {
         return Process(\`models.$\{${namespace}.ModelID}.Update\`,key,line)
     }
 
@@ -153,7 +169,7 @@ ${'export'} class ${namespace} {
     * @param line
     * @returns
     */
-    static UpdateWhere(query:YaoQueryParam.QueryParam,line:${modelInterface}) {
+    static UpdateWhere(query:YaoQueryParam.QueryParam,line:Partial<${modelInterface}>) {
         return Process(\`models.$\{${namespace}.ModelID}.UpdateWhere\`,query,line)
     }
 
@@ -163,7 +179,7 @@ ${'export'} class ${namespace} {
     * @param line
     * @returns
     */
-    static EachSave(data:${modelInterface}[],line:${modelInterface}) {
+    static EachSave(data:${modelInterface}[],line:Partial<${modelInterface}>) {
         return Process(\`models.$\{${namespace}.ModelID}.EachSave\`,data,line)
     }
 
@@ -174,7 +190,7 @@ ${'export'} class ${namespace} {
     * @param line
     * @returns
     */
-    static EachSaveAfterDelete(keys:${idFieldType}[],data:${modelInterface}[],line:${modelInterface}) {
+    static EachSaveAfterDelete(keys:${idFieldType}[],data:${modelInterface}[],line:Partial<${modelInterface}>) {
         return Process(\`models.$\{${namespace}.ModelID}.EachSaveAfterDelete\`,keys,data,line)
     }
 
@@ -185,6 +201,17 @@ ${'export'} class ${namespace} {
     */
     static Delete(key:${idFieldType}){
         return Process(\`models.$\{${namespace}.ModelID}.Delete\`,key)
+    }
+
+    \/**
+    * 删除所有数据
+    * @returns
+    */
+    static DeleteAll(){
+        // use statement
+        return new Query('default').Run({
+          sql: { stmt: \`delete from $\{${namespace}.TableName}\` }
+        });
     }
 
     \/**

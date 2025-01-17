@@ -160,7 +160,7 @@ export function CRUDAllTemplate(modelId: ModelId, columns?: AmisUIColumn[]) {
  * @param {string} modelId 模型定义
  * @returns string
  */
-export function getTSType(modelId: ModelId, columns?: AmisUIColumn[]) {
+export function getTSType(modelId: string, columns?: AmisUIColumn[]) {
   return {
     __code_sources: [
       {
@@ -178,7 +178,7 @@ export function getTSType(modelId: ModelId, columns?: AmisUIColumn[]) {
  * @returns
  */
 export function getTSModelServiceTemplate(
-  modelId: ModelId,
+  modelId: string,
   columns?: AmisUIColumn[]
 ) {
   return {

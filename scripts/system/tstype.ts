@@ -1,6 +1,6 @@
 import { DotName } from '@scripts/system/lib';
 import { getModelDslById } from './model';
-import { AmisUIColumn, ModelId } from '@yao/types';
+import { AmisUIColumn } from '@yao/types';
 import { amisUIModelToAmisModel } from './model_convert';
 import { YaoModel } from '@yaoapps/types';
 
@@ -12,8 +12,8 @@ import { YaoModel } from '@yaoapps/types';
  * yao run scripts.system.tstype.createModelType admin.user
  * @param {string} modelId 模型id
  */
-export function createModelType(modelId: ModelId, columnsIn?: AmisUIColumn[]) {
-  const model = getModelDslById(modelId); //Process('scripts.system.model.getModelDslById', modelId);
+export function createModelType(modelId: string, columnsIn?: AmisUIColumn[]) {
+  const model = getModelDslById(modelId);
 
   if (columnsIn != null && Array.isArray(columnsIn) && columnsIn.length > 0) {
     const columns = columnsIn.filter((col) => col.checked === true);
@@ -23,7 +23,7 @@ export function createModelType(modelId: ModelId, columnsIn?: AmisUIColumn[]) {
   } else {
     model.columns = model.columns || [];
   }
-  return createTSTypes(model, '');
+  return createTSTypes(modelId, model, '');
 }
 /**
  * 生成模型对应的ts类型定义
@@ -34,21 +34,22 @@ export function createModelType(modelId: ModelId, columnsIn?: AmisUIColumn[]) {
  * @returns string
  */
 function createTSTypes(
-  modelsIn: YaoModel.ModelDSL[] | YaoModel.ModelDSL,
+  modelId: string,
+  modelsIn: YaoModel.ModelDSL,
   prefix: string
 ) {
   if (!modelsIn) {
     return '';
   }
 
-  let models = [];
-  if (Array.isArray(modelsIn)) {
-    models = modelsIn;
-  } else if (!Array.isArray(modelsIn) && typeof modelsIn == 'object') {
-    models.push(modelsIn);
-  }
-  const codes = models.map((m) => getFieldsTemplate(m, prefix || ''));
-  return codes.join('\n');
+  // let models = [];
+  // if (Array.isArray(modelsIn)) {
+  //   models = modelsIn;
+  // } else if (!Array.isArray(modelsIn) && typeof modelsIn == 'object') {
+  //   models.push(modelsIn);
+  // }
+  // const codes = models.map((m) => getFieldsTemplate(m, prefix || ''));
+  return getFieldsTemplate(modelId, modelsIn, prefix || '');
 }
 
 /**
@@ -76,16 +77,20 @@ export function toCamelCaseNameSpace(str) {
  * @param modelDsl - 要处理的模型对象
  * @returns 包含模型字段和关系的 TypeScript 接口定义字符串
  */
-export function getFieldsTemplate(modelDsl: YaoModel.ModelDSL, prefix: string) {
-  const tabName = modelDsl.table.name;
+export function getFieldsTemplate(
+  modelId: string,
+  modelDsl: YaoModel.ModelDSL,
+  prefix: string
+) {
+  // const tabName = modelDsl.table.name;
   // const funtionName = SlashName(tabName);
-  const dotName = DotName(tabName);
+  const dotName = DotName(modelId);
   // const last = funtionName.replaceAll('/', '_');
-  const interFaceName = prefix + toCamelCaseNameSpace(tabName);
+  const interFaceName = prefix + toCamelCaseNameSpace(dotName);
   //handle the fields
   const fields = modelDsl.columns
     .map((item) => {
-      return `  /**${item.label || item.comment} */
+      return `  /**${item.label || item.comment || item.name} */
   ${item.name}${isOptionField(item) ? '?' : ''}: ${getFieldTsType(item)};`;
     }, [])
     .join('\n');
@@ -122,7 +127,7 @@ ${rels.join('\n')}
  * @returns
  */
 function isOptionField(column: YaoModel.ModelColumn) {
-  if (column.primary) {
+  if (column.primary || column.type.toLocaleLowerCase() === 'id') {
     return true;
   } else if (column.unique || (column.default == null && !column.nullable)) {
     // 这里不要判断同时 == null || == undefined
