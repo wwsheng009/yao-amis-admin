@@ -29,3 +29,13 @@ services:
 
 volumes:
   pgvector_data:
+
+# docker network create --ipv6 --subnet fd00::/8 ip6net
+
+networks:
+  default:
+    enable_ipv6: true
+    ipam:
+      config:
+        - subnet: 172.24.0.0/16  # IPv4
+        - subnet: fd01::/64
