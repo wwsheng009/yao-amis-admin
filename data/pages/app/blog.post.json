@@ -532,7 +532,7 @@
                   {
                     "type": "input-image",
                     "name": "img",
-                    "label": "图片",
+                    "label": "上传图片",
                     "required": false,
                     "receiver": "post:/api/v1/fs/public/file/upload",
                     "maxSize": 2097152,

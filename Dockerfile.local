@@ -5,8 +5,7 @@
 
 #docker run -d --restart unless-stopped --name demo-project --network ip6net -v E:/projects/yao/yao-projects/yao-amis-admin/resolv.conf:/etc/resolv.conf:ro -v E:/projects/yao/yao-projects/yao-amis-admin/.env:/data/app/.env demo-project 
 
-
-#docker run -d --restart unless-stopped --name demo-project --network ip6net -p 5099:5099 -v E:/projects/yao/yao-projects/yao-amis-admin/.env:/data/app/.env demo-project 
+#docker run -d --restart unless-stopped --name demo-project --network ip6net -p 5099:5099 -v E:/projects/yao/yao-projects/yao-amis-admin/.env:/data/app/.env demo-project
 
 ARG ARCH
 FROM wwsheng009/yao-${ARCH}:latest

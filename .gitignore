@@ -25,3 +25,5 @@ dist
 package-lock.json
 yarn.lock
 debug.log
+public/amis-admin/jssdk
+public/amis-admin/scripts/lib

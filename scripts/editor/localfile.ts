@@ -61,7 +61,6 @@ export function getPages(dirIn: string) {
   return result;
 }
 
-// yao studio run editor.saveFileRecord 1, "xxx/test.json"
 export function saveFileRecord(user_id: number, file_name: string) {
   console.log(`保存文件:${file_name},by userid:${user_id}`);
 
@@ -83,7 +82,7 @@ export function saveFileRecord(user_id: number, file_name: string) {
     Process('models.system.file.save', { id: record.id });
   }
 }
-// yao studio run editor.deleteFileRecord 1, "/public/amis-admin/pages_working/1/测试.json"
+// yao run scripts.editor.localfile.deleteFileRecord 1, "/public/amis-admin/pages_working/1/测试.json"
 export function deleteFileRecord(user_id: number, file_name: string) {
   console.log(`删除文件:${file_name},by user_id:${user_id}`);
   if (!user_id || !file_name) {
@@ -162,7 +161,7 @@ export function loadSinglePageToDB(fname: string) {
 }
 
 // dump the pages form database to file
-// yao studio run editor.dumpPagesFromDB
+// yao run scripts.editor.localfil.edumpPagesFromDB
 export function dumpPagesFromDB() {
   const pages = Process('scripts.editor.getPages');
   for (const key in pages) {
@@ -172,7 +171,7 @@ export function dumpPagesFromDB() {
     }
   }
 }
-// yao studio run editor.dumpSinglePageFromDB "tables.json"
+// yao run scripts.editor.localfile.dumpSinglePageFromDB "tables.json"
 export function dumpSinglePageFromDB(fname: string) {
   const page = Process('scripts.editor.getPage', fname);
   if (page.type && page.type !== 'app') {
@@ -183,7 +182,7 @@ export function dumpSinglePageFromDB(fname: string) {
 /**
  * 创建yao dsl 配置文件，如果已经存在，移动到.trash目录
  *
- * yao studio run model.file.MoveAndWrite
+ * yao run scripts.editor.localfile.MoveAndWrite
  * @param folder Yao应用目录，相对于Yao App根目录
  * @param file 文件名
  * @param dsl dsl定义对象，会自动的转换成json
@@ -195,7 +194,7 @@ export function MoveAndWrite(folder: string, file: string, dsl: any) {
 /**
  * write yao dsl json file
  *
- * yao studio run model.file.WriteFile fname data
+ * yao run scripts.editor.localfile.WriteFile fname data
  * @param {string} filename json file name
  * @param {object} data
  */
@@ -217,7 +216,7 @@ export function WriteFile(filename: string, data: any) {
 }
 
 /**
- * yao studio run editor.Move
+ * yao run scripts.editor.localfile.Move
  * 文件复制移动逻辑
  */
 export function Move(dir: string, name: string) {
@@ -253,7 +252,7 @@ export function Mkdir(name: string) {
   }
 }
 
-//    yao studio run editor.createCurdPage admin.auth.role
+//    yao run scripts.editor.localfilecreateCurdPage admin.auth.role
 //    curl -X POST http://127.0.0.1:5077/service/editor \
 //    -H 'Content-Type: application/json' \
 //    -H 'Authorization: Bearer <Studio JWT>' \
@@ -380,7 +379,6 @@ export function getEditorPagesFileList(userId: string) {
 /**
  * 保存并加载设计的页面到数据库中后，才能使用以下的请求
  * /api/__yao/widget/amis/crud-list/setting
- * yao studio run editor.loadPageToDB
  */
 export function loadPageToDB() {
   const pages = getPages(PagesLocation);

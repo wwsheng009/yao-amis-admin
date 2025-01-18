@@ -117,83 +117,15 @@ export function CreateAfter(content: string) {
   throw new Exception('Error: data is empty.', 500);
 }
 
-// the following code is used to test generate the module
-const testData = {
-  columns: [
-    { label: 'ID', name: 'id', type: 'ID' },
-    {
-      Component: {
-        form: { edit: 'Input', view: 'Text' },
-        table: { edit: 'Input', view: 'Text' }
-      },
-      Searchable: true,
-      index: true,
-      label: 'Customer Name',
-      length: 256,
-      name: 'customer_name',
-      nullable: true,
-      type: 'string'
-    },
-    {
-      Component: {
-        form: { edit: 'Input', view: 'Text' },
-        table: { edit: 'Input', view: 'Text' }
-      },
-      Searchable: true,
-      index: true,
-      label: 'Product Name',
-      length: 256,
-      name: 'product_name',
-      nullable: true,
-      type: 'string'
-    },
-    {
-      Component: {
-        form: { edit: 'Input', view: 'Text' },
-        table: { edit: 'Input', view: 'Text' }
-      },
-      Searchable: true,
-      index: true,
-      label: 'Quantity',
-      length: 256,
-      name: 'quantity',
-      nullable: true,
-      type: 'integer'
-    },
-    {
-      Component: {
-        form: { edit: 'Input', view: 'Text' },
-        table: { edit: 'Input', view: 'Text' }
-      },
-      Searchable: true,
-      index: true,
-      label: 'Price',
-      length: 256,
-      name: 'price',
-      nullable: true,
-      type: 'integer'
-    }
-  ],
-  name: 'Order',
-  table: { name: 'order' }
-};
-
 /**
  * Run the command
- * yao studio run module.create
  * @param {*} payload
  */
 function Create(payload: AiModel) {
-  // payload = testData;
   validate(payload);
-  // @ts-ignore
-  __yao_data = { ROOT: true };
-
-  const _ = saveModel(payload);
+  saveModel(payload);
   saveTable(payload);
   saveForm(payload);
-  // @ts-ignore
-  __yao_data = { ROOT: false };
 
   // Reload
   const id = payload.table.name;
@@ -248,7 +180,7 @@ function validate(data: YaoModel.ModelDSL) {
 }
 
 function saveModel(data: AiModel) {
-  let model_id = data.table?.name;
+  // let model_id = data.table?.name;
   const option = { timestamps: true, soft_deletes: true };
 
   const table = { ...data.table };
@@ -271,12 +203,12 @@ function saveModel(data: AiModel) {
     });
   });
 
-  const id = Process('scripts.system.model.ImportFromNeo', model);
+  Process('scripts.system.model.ImportFromNeo', model);
   // return id;
 
-  const dsl = new FS('dsl');
-  model_id = SlashName(model_id);
-  dsl.WriteFile(`/models/${model_id}.mod.yao`, JSON.stringify(model));
+  // const dsl = new FS('app');
+  // model_id = SlashName(model_id);
+  // dsl.WriteFile(`/models/${model_id}.mod.yao`, JSON.stringify(model));
 }
 
 function saveTable(data: AiModel) {
@@ -380,7 +312,7 @@ function saveTable(data: AiModel) {
     };
   });
 
-  const dsl = new FS('dsl');
+  const dsl = new FS('app');
 
   dsl.WriteFile(`/tables/${SlashName(id)}.tab.yao`, JSON.stringify(table));
 }
@@ -501,7 +433,7 @@ function saveForm(data: AiModel) {
     // };
   });
 
-  const dsl = new FS('dsl');
+  const dsl = new FS('app');
   dsl.WriteFile(`/forms/${SlashName(id)}.form.yao`, JSON.stringify(form));
 }
 

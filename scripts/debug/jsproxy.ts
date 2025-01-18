@@ -1,6 +1,6 @@
 // 代理js api请求
 
-import { Store, Studio, WebSocket } from '@yao/yao';
+import { Store, WebSocket } from '@yao/yao';
 import { Process, Query } from '@yao/yao';
 import { $L, FS, http, log } from '@yao/yao';
 
@@ -39,7 +39,7 @@ export function Server(payload: {
     const type = payload.type;
     const method = payload.method;
     const args = payload.args;
-    const space = payload.space as 'system' | 'dsl' | 'script'; // "dsl","script","system"
+    const space = payload.space as 'app' | 'data';
     const engine = payload.engine;
     let localParams = [];
     if (Array.isArray(args)) {
@@ -51,11 +51,11 @@ export function Server(payload: {
       case 'Process':
         resp.data = Process(method, ...localParams);
         break;
-      case 'Studio':
-        // @ts-ignore
-        __YAO_SU_ROOT = true;
-        resp.data = Studio(method, ...localParams);
-        break;
+      // case 'Studio':
+      //   // @ts-ignore
+      //   __YAO_SU_ROOT = true;
+      //   resp.data = Studio(method, ...localParams);
+      //   break;
       case 'Query':
         if (engine) {
           const query = new Query(engine);
@@ -100,7 +100,7 @@ export function Server(payload: {
         break;
       default:
         resp.code = 500;
-        resp.message = `不支持的方法调用${type},请使用：Process,Studio,Query,FileSystem,Store,Http,Log,WebSocket,Translate`;
+        resp.message = `不支持的方法调用${type},请使用：Process,Query,FileSystem,Store,Http,Log,WebSocket,Translate`;
     }
   } catch (error) {
     resp.code = error.code || 500;

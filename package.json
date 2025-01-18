@@ -18,7 +18,7 @@
     "@types/node": "^22.5.5",
     "@typescript-eslint/eslint-plugin": "^8.5.0",
     "@typescript-eslint/parser": "^8.5.0",
-    "@yaoapps/client": "npm:yao-node-client@^1.1.2",
+    "@yaoapps/client": "npm:yao-node-client@^1.1.3",
     "@yaoapps/types": "npm:yao-app-ts-types@^1.1.0",
     "eslint": "^9.10.0",
     "eslint-config-prettier": "^9.1.0",

@@ -1154,7 +1154,7 @@ const models = [
     ]
   },
   {
-    name: 'dsl',
+    name: 'app',
     children: [
       {
         name: 'amis.mod.json',

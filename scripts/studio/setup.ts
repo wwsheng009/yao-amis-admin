@@ -1,11 +1,9 @@
 /**
  * 系统设置初始化
- * yao studio run setup.run
- * studio.setup.run
+ * yao run scripts.studio.setup.run
  */
 function run() {
   // 加载页面数据到数据库
-  // Process("studio.editor.loadPageToDB");
 
   // 加载字段列表
   try {

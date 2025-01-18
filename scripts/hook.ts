@@ -12,7 +12,7 @@ import { Process } from '@yaoapps/client';
  */
 export function startup(config: object, action: string) {
   // 生产环境才自动加载，开发环境，开发人员手动处理
-  console.log('startup action', action);
+  console.log('startup action:' + action);
   if (action == 'production') {
     initCheck();
     // console.log('config', config);
@@ -54,7 +54,7 @@ export function afterLoad(option: {
   ignoredAfterLoad: boolean;
   reload: boolean;
 }) {
-  console.log('reloading', option);
+  console.log('reloading:' + option);
 
   // importDBModelsToCache();
 }
@@ -69,5 +69,5 @@ export function afterMigrate(option: {
   /**production | development */
   mode: string;
 }) {
-  console.log('afterMigrate', option);
+  console.log('afterMigrate:' + option);
 }

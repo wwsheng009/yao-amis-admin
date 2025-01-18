@@ -378,9 +378,7 @@ function getXgenFormSchema(modelDsl: YaoModel.ModelDSL, type = 'view') {
   }
 }
 
-//  *  yao studio run model.relation.GetWiths
-//  * @param modelDsl
-//  */
+
 function GetWiths(modelDsl: YaoModel.ModelDSL) {
   const relations = modelDsl.relations || {};
   const withs = {};
@@ -414,7 +412,7 @@ function MakeColumnOrder(columns: AmisModelColumn[]) {
 /**
  * 数据库类型与控件类型对应字段
  *
- * yao studio run model.column.component.GetDBTypeMap
+ * yao run scripts.xgen.schema.GetDBTypeMap
  * @returns
  */
 function GetDBTypeMap() {
@@ -452,14 +450,14 @@ function GetDBTypeMap() {
   };
 }
 /**
- * yao studio model.column.component.FilterFields
+ * yao run scripts.xgen.schema.FilterFields
  * @returns
  */
 function FilterFields() {
   return ['name', 'title'];
 }
 /**
- * yao run studio model.column.table.Cast
+ * yao run scripts.xgen.schema.TableColumnCast
  * @param column 模型列定义
  * @param modelDsl 模型定义
  * @returns 表定义
@@ -665,7 +663,7 @@ function updateViewSwitchPropes(
 }
 /**
  * 根据参数类型返回需要排除的字段列表
- * yao studio run model.column.component.Hidden
+ * yao run scripts.xgen.schema.HiddenFields
  * @param isTable true获取Table页面排除,false获取form布局排除字段
  * @returns 排除字段列表
  */
@@ -682,7 +680,7 @@ function HiddenFields(isTable) {
 }
 /**
  * 把模型中的option定义转换成控件select option对象
- * yao studio run model.column.component.Enum
+ * yao run scripts.xgen.schema.Enum
  * @param option 选择列表
  * @returns
  */
@@ -767,7 +765,8 @@ function GetFileType(column: YaoModel.ModelColumn) {
 }
 
 /**
- * yao studio run model.relation.Select
+ * yao run scripts.xgen.schema.RelationSelect
+ *
  * 把hasOne变成下拉选择
  * @param {*} column
  * @param {*} modelDsl
@@ -836,7 +835,7 @@ function RelationSelect(
 }
 /**
  * //根据关联关系找到列，并查找列对应的模型
- * yao studio run model.remote.select
+ * yao run scripts.xgen.schema.remoteSelect
  * @param relation_name
  * @param relation
  * @returns
@@ -1107,7 +1106,6 @@ function updateReference(formTemplate, modelDsl: YaoModel.ModelDSL) {
 }
 /**
  * 合并两个js对象，并返回新对象。
- * yao studio run model.utils.MergeObject
  * @param target 目标对象
  * @param source 源对象
  * @returns
@@ -1195,7 +1193,6 @@ function relationTable(formDsl: YaoForm.FormDSL, modelDsl: AmisModel) {
   return [wrapForm(formDsl, modelDsl, 'view')];
 }
 /**
- * yao studio run model.relation.List
  * 把hasMany变成表单中的List
  */
 function relationList(formDsl: YaoForm.FormDSL, modelDsl: AmisModel) {
@@ -1540,7 +1537,6 @@ function toList(modelDsl: YaoModel.ModelDSL) {
 
 /**
  *根据模型定义生成Form定义
- * yao studio run model.column.list.Cast
  * @param column 模型列定义
  * @param modelDsl 模型定义
  * @param type 类型
@@ -1663,7 +1659,6 @@ function CastListColumn(
   return res;
 }
 /**
- * yao studio run model.column.form.AddTabColumn
  * @param formTemplate form template
  * @param column column
  * @returns new form template
@@ -1870,7 +1865,6 @@ function IsFormFile(
   return component;
 }
 /**
- * yao studio run model.relation.EditSelect
  * Select控件。
  * @param column 模型的列
  * @param modelDsl 模型实例

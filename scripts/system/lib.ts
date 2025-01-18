@@ -10,8 +10,6 @@ import { Process } from '@yao/yao';
 /**
  * 处理模型名称分隔符
  *
- * yao studio run model.file.DotName table_name
- * yao studio run model.file.DotName /file/name
  * @param {string} pathname
  * @returns model name with dot
  */
@@ -32,7 +30,6 @@ export function DotName(pathname: string) {
 /**
  * 处理数据库表名分隔符，把模型标识转换化成表名，在这里一般会有一个命名规范的约束
  *
- * yao studio run model.file.UnderscoreName crm.help
  * @param {string} pathname
  * @returns pathname
  */
@@ -180,7 +177,6 @@ export function RemoveOjbectEmptyKey(obj: { [x: string]: any }) {
 
 /**
  * 合并两个js对象，并返回新对象。
- * yao studio run model.utils.MergeObject
  * @param target 目标对象
  * @param source 源对象
  * @returns

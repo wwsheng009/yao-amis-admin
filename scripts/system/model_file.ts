@@ -28,9 +28,9 @@ export function saveModelToFile(modelDsl: AmisModel) {
   }
   const model = amisModelToYaoModel(modelDsl);
 
-  const dsl = new FS('system');
+  const dsl = new FS('app');
   model_id = SlashName(model_id);
-  dsl.WriteFile(`/dev/models/${model_id}.mod.yao`, JSON.stringify(model));
+  dsl.WriteFile(`/models/${model_id}.mod.yao`, JSON.stringify(model));
   // __yao_data = { ROOT: false };
 
   //   saveModelToDSLFile(model_id, model);
@@ -46,13 +46,9 @@ export function saveModelToDSLFile(
     return;
   }
   // hacked,don't do this in production envirement
-  //@ts-ignore
-  __yao_data = { ROOT: true };
-  const dsl = new FS('dsl');
+  const dsl = new FS('app');
 
   dsl.WriteFile(`/models/${modelId}.mod.yao`, JSON.stringify(modelDsl));
-  //@ts-ignore
-  __yao_data = { ROOT: false };
 }
 /**
  * 删除本地模型定义文件
@@ -68,10 +64,9 @@ export function deleteModelLocalFile(modelId: string) {
   if (saveFlag !== 'true') {
     return;
   }
-  // __yao_data = { ROOT: true };
   const dsl = new FS('system');
   const model_id = SlashName(modelId);
-  const fname = `/dev/models/${model_id}.mod.yao`;
+  const fname = `/models/${model_id}.mod.yao`;
   if (dsl.Exists(fname)) {
     dsl.Remove(fname);
   }

@@ -36,10 +36,7 @@ export function modelIdListFromMemory(modelData: CachedModelTree) {
   }
   return idList;
 }
-/**
- * yao studio run tool.getCachedModelIDList
- * @returns
- */
+
 export function getCachedModelIDList(): string[] {
   const models = Process('widget.models');
 
@@ -143,7 +140,6 @@ export function generateModelTypeCode(modelId: string) {
 
 /**
  * 生成所有模型服务代码
- * yao studio run tool.generateAllModelService
  */
 export function generateAllModelService() {
   getCachedModelIDList().map((modelId) => {
