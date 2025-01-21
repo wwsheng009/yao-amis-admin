@@ -1,16 +1,37 @@
 <section aigc-enabled="true">
   <h1 class="text-3xl font-bold mb-4">Yao Blog Post List</h1>
-  <ul class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-    <!-- Replace the code below with your actual post data -->
+  <ul
+    class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+  >
     <li s:for="articles.data" s:for-item="article" s:for-index="idx">
-      <div class="bg-white shadow-md rounded-lg p-4">
-        <img s:if="article.img != ''" src="{{ article.img }}" alt="Post Image" class="object-cover rounded-md">
-        <a href="{{ article.url }}" target="_blank" class="text-xl text-blue-500 font-semibold mb-2">{{ article.title
-          }}</a>
-        <p class="text-gray-600 mb-4">{{ article.description }}</p>
-        <a href="{{ article.url }}" target="_blank" class="text-blue-500 font-semibold">更多。。。</a>
-      </div>
+      <a
+        href="{{ article.url }}"
+        target="_blank"
+        class="text-blue-500 font-semibold"
+      >
+        <div class="bg-white shadow-md rounded-lg p-4">
+          <div class="aspect-w-16 mb-2">
+            <div class="aspect-h-9">
+              <img
+                s:if="article.img != ''"
+                src="{{ article.img }}"
+                alt="Post Image"
+                class="object-cover w-full h-full rounded-md"
+              />
+              <div
+                s:else
+                class="bg-gray-200 w-full h-full rounded-md flex items-center justify-center"
+              >
+                <span class="text-gray-500">No Image</span>
+              </div>
+            </div>
+          </div>
+          
+          <p class="text-gray-600 mb-4">{{ article.title }}</p>
+          <p class="text-gray-400 text-sm">{{ article.description }}</p>
+          <p class="text-gray-400 text-sm">{{ article.date}}</p>
+        </div>
+      </a>
     </li>
-    <!-- Repeat the above code for each post -->
   </ul>
-</section><!-- JAVASCRIPTS -->
+</section>
