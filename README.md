@@ -82,6 +82,7 @@ docker run -d --name=yao-amis-admin \
 - 文件管理，支持个人文件管理，公共文件管理，项目文件管理。非公共文件管理支持权限管控。
 - Xgen 登录集成/Amis 页面编辑器集成/Soy-Admin 管理后台集成。
 - 菜单管理配置。
+- 集成了XGEN的AI聊天功能。
 
 ### 业务功能
 
@@ -113,6 +114,7 @@ Yao 模型是整个系统的核心组件，在这里，可以使用界面创建 
 - 模型创建中支持直接配置文件/图片/视频的类型。
 - 模型字段支持配置关联表查询。
 - 模型支持模型关联关系配置，一对一/一对多。
+- 支持AI生成模型定义并导入。
 
 ![model_import](doc/model_import.png)
 
@@ -148,11 +150,27 @@ amis-sdk 可以与 react 或是 vue 作集成开发，这里是把 amis-sdk 作�
 
 ![menu_manager](doc/menu_manager.png)
 
-### yao xgen 集成
+### yao ai 集成
 
-yao 本身有一个 xgen 的管理后端，已经实现了 aigc 的功能，这里也是把 xgen 的模型生成功能利用起来。
+yao 本身有一个 xgen 的管理后端，已经实现了 AI 的功能，这里也是把 xgen 的AI功能利用起来。
 
-![Axgen_integrated](doc/xgen_integrated.png)
+支持使用deepseek的模型与豆包的模型。
+
+需要在环境变量文本中配置
+
+```sh
+# 配置deepseek的key与豆包的key
+DEEPSEEK_KEY="sk-"
+
+# 豆包的key
+# 豆包还需要修改connectors目录下的连接配置中模型。
+DOUBAO_KEY=""
+```
+
+其中豆包对函数调用比较完善。
+
+![ai_chat](doc/ai_chat.png)
+
 
 ## 本地安装
 
