@@ -6,7 +6,7 @@
           "&": "$$"
         },
         "method": "post",
-        "url": "/api/v1/system/model/admin.user/search?select=id,type,email,name,phone,role,mobile,status,created_at,updated_at"
+        "url": "/api/v1/system/model/admin.user/search?select=id,type,email,name,phone,role,mobile,status,created_at,updated_at,location"
       },
       "autoFillHeight": true,
       "bulkActions": [
@@ -62,6 +62,15 @@
           "label": "角色",
           "levelExpand": 0,
           "name": "role",
+          "quickEdit": false,
+          "searchable": true,
+          "sortable": true,
+          "type": "text"
+        },
+        {
+          "label": "地区",
+          "levelExpand": 0,
+          "name": "location",
           "quickEdit": false,
           "searchable": true,
           "sortable": true,
@@ -135,6 +144,12 @@
                       "static": true,
                       "name": "role",
                       "label": "角色"
+                    },
+                    {
+                      "type": "input-text",
+                      "static": true,
+                      "name": "location",
+                      "label": "地区"
                     },
                     {
                       "label": "状态",
@@ -276,6 +291,12 @@
                           "value": "disabled"
                         }
                       ]
+                    },
+                    {
+                      "label": "地区",
+                      "maxLength": 50,
+                      "name": "location",
+                      "type": "input-text"
                     },
                     {
                       "format": "YYYY-MM-DD HH:mm:ss",
@@ -466,6 +487,12 @@
             }
           },
           {
+            "label": "地区",
+            "maxLength": 50,
+            "name": "location",
+            "type": "input-text"
+          },
+          {
             "label": "状态",
             "name": "status",
             "type": "select",
@@ -615,6 +642,11 @@
                   "extractValue": true
                 },
                 {
+                  "type": "input-text",
+                  "name": "location",
+                  "label": "地区"
+                },
+                {
                   "label": "状态",
                   "name": "status",
                   "type": "select",
@@ -743,6 +775,18 @@
                         "validations": {
                           "isEmail": true
                         }
+                      },
+                      "searchable": true,
+                      "sortable": true,
+                      "type": "text"
+                    },
+                    {
+                      "label": "地区",
+                      "name": "location",
+                      "quickEdit": {
+                        "maxLength": 50,
+                        "saveImmediately": true,
+                        "type": "input-text"
                       },
                       "searchable": true,
                       "sortable": true,

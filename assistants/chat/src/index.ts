@@ -1,5 +1,7 @@
+import { ModelProxy } from '@lib/proxy';
 import { getWebPageContent, truncateText } from '@lib/web';
 import { getWeatherByName } from '@scripts/app/weather/tool';
+import { IAdminUser } from '@scripts/db_types/admin/user';
 import { neo } from '@yao/neo';
 import { Process } from '@yaoapps/client';
 
@@ -18,56 +20,6 @@ export function Init(
   input: neo.Message[],
   writer: neo.ResponseWriter
 ): neo.ResHookInit {
-  // input: [
-  //     {
-  //       text: "Hello, I'm a bot.", //text content
-  //       type: 'text', //error, text, plan, table, form, page, file, video, audio, image, markdown, json ...
-  //       role: 'system', //user, assistant, system ...
-  //       name: 'system', //name for the message
-  //       props: {
-  //         // props for the types
-  //         type: 'text',
-  //         payload: {
-  //           type: 'text'
-  //         }
-  //       },
-  //       done: true,
-  //       actions: [
-  //         // Conversation Actions for frontend
-  //         {
-  //           type: 'button',
-  //           name: 'button1',
-  //           payload: {}
-  //         }
-  //       ],
-  //       attachments: [
-  //         //File attachments
-  //         {
-  //           name: 'file1',
-  //           url: 'https:',
-  //           type: 'file',
-  //           content_type: 'image/png',
-  //           bytes: 123,
-  //           created_at: new Date().getTime(),
-  //           file_id: '',
-  //           chat_id: context.chat_id,
-  //           assistant_id: context.assistant_id
-  //         },
-  //         {
-  //           name: 'file1',
-  //           url: 'https:',
-  //           type: 'URL',
-  //           content_type: 'image/png',
-  //           bytes: 123,
-  //           created_at: new Date().getTime(),
-  //           file_id: '',
-  //           chat_id: context.chat_id,
-  //           assistant_id: context.assistant_id
-  //         }
-  //       ]
-  //     }
-  //   ],
-
   //case 1 return null
   //return null
 
@@ -161,8 +113,7 @@ export function Init(
 function Stream(
   context: neo.Context,
   input: neo.Message[],
-  output: string,
-  toolcall: boolean
+  output: neo.Message[]
 ): neo.ResHookStream | null {
   // case 1 return null,no change
   // return null
@@ -199,44 +150,58 @@ interface FunctionCall {
  */
 function Done(
   context: neo.Context,
-  input: neo.Message[],
-  output: FunctionCall | string,
-  toolcall: boolean
-): neo.ResHookDone | null | string {
-  if (toolcall == true) {
-    // let content = {
-    //   id: '%s', //return by openai
-    //   type: 'function',
-    //   function: { name: '%s', arguments: '%s' }
-    // };
-    // console.log(output);
-    let fcall = output as unknown as FunctionCall; //= JSON.parse(output) as FunctionCall;
-    if (typeof output == 'string') {
-      try {
-        fcall = JSON.parse(output) as FunctionCall;
-      } catch (error) {
-        console.log(error.message);
-        return null;
-      }
-    }
-    if (fcall.function.name == 'get_weather') {
-      const data = getWeatherByName(fcall.function.arguments['location']);
+  input: neo.ChatMessage[],
+  output: neo.ChatMessage[]
+): any | null | string {
+  console.log('output');
+  console.log(output);
+  if (output.length > 0 && output[output.length - 1].function !== '') {
+    const lastLine = output[output.length - 1];
+    const funcName = lastLine.function;
+
+    if (funcName == 'get_weather') {
+      const data = getWeatherByName(lastLine.arguments['location']);
       // const data = Process(
       //   'scripts.app.weather.init.getWeatherByName',
       //   fcall.function.arguments['location']
       // );
       console.log('get_weather:');
       console.log(data);
-      return data;
+      return {
+        output: [{ result: data }] as neo.ChatMessage[]
+      };
 
       // return '{"temperature": "15°C"}';
-    } else if (fcall.function.name == 'find_user') {
+    } else if (funcName == 'find_user') {
       console.log('find_user:');
-      console.log(fcall.function.arguments);
-      return '{"name": "Neo","location": "Beijing"}';
+      console.log(lastLine.arguments);
+      const [user] = new ModelProxy<IAdminUser>('admin.user').Get({
+        wheres: [
+          {
+            column: 'name',
+            op: 'like',
+            value: `%${lastLine.arguments['username']}%`
+          }
+        ]
+      });
+      if (user) {
+        console.log(user);
+        return {
+          output: [{ result: user }] as neo.ChatMessage[]
+        };
+      } else {
+        console.log('用户不存在');
+        return {
+          output: [{ result: { error: '用户不存在' } }] as neo.ChatMessage[]
+        };
+      }
     }
 
-    return '错误的调用，不支持的函数调用：' + fcall.function.name;
+    return {
+      ouput: [
+        { result: '错误的调用，不支持的函数调用：' + funcName }
+      ] as neo.ChatMessage[]
+    };
   }
 
   // case 1 return null,no change

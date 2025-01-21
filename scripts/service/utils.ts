@@ -1,6 +1,9 @@
 import { QueryObjectIn } from '@yao/request';
 
 function toCamelCase(str: string) {
+  if (!str || typeof str.replace !== 'function') {
+    return str;
+  }
   return str.replace(/_([a-z])/g, function (_match: any, letter: string) {
     return letter.toUpperCase();
   });
@@ -8,6 +11,9 @@ function toCamelCase(str: string) {
 
 // 将 camelCase 转换为 snake_case
 function toSnakeCase(str: string) {
+  if (!str || typeof str.replace !== 'function') {
+    return str;
+  }
   return str.replace(/([A-Z])/g, function (match: string) {
     return '_' + match.toLowerCase();
   });

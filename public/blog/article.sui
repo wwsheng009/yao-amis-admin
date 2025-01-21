@@ -1,6 +1,6 @@
-<!DOCTYPE html><html lang="en" class="dark scroll-smooth" dir="ltr"><head>
+<!DOCTYPE html><html lang="en" scroll-smooth"="" dir="ltr"><head>
   <meta charset="UTF-8"/>
-  <title>Home Page | {{ $global.title }}</title>
+  <title>{{ post.title }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   <meta name="description" content="Tailwind CSS Saas &amp; Software Landing Page Template"/>
   <meta name="keywords" content="agency, application, business, clean, creative, cryptocurrency, it solutions, modern, multipurpose, nft marketplace, portfolio, saas, software, tailwind css"/>
@@ -21,24 +21,52 @@
   <!-- Main Css -->
 
   <link rel="stylesheet" href="\blog\assets/css/tailwind.min.css"/>
+<script s:ns="" s:cn="" s:hash="script_a9c1fc9185ab7164" src="\blog\assets/libsui.min.js" type="text/javascript" name="libsui"></script>
+<style s:ns="page__article_2" s:cn="__page" rel="stylesheet" type="text/css">
+.container {
+  max-width: 100%; /* 确保容器宽度不超过其父元素 */
+}
+
+.post-content {
+  overflow: auto; /* 添加滚动条以查看所有内容 */
+  word-wrap: break-word; /* 长单词自动换行 */
+  white-space: pre-wrap; /* 保留空格和换行符，并允许换行 */
+}
+
+.dark .post-content {
+  /* 如果需要针对暗色模式的特殊样式 */
+  color: #e5e7eb; /* 示例颜色 */
+}
+
+</style>
 </head>
 
-<body>
+<body s:ns="page__article_2" s:public="/blog" s:assets="\blog\assets">
 
   <div class="container mx-auto p-4">
     <section>
-  <div class="container mx-auto p-4">
-    <div class="bg-white shadow-md rounded-lg p-4">
-      <h1 class="text-3xl font-bold mb-4">{{post.title}}</h1>
-      <img s:if="post.img != &#39;&#39;" src="/api/v1/fs/public/file/download?name=/20231218/16035023731_1947087622.jpg" alt=" Post Image" src="{{ post.img }}" class="object-cover rounded-md mb-4"/>
-      <div class="flex justify-between items-center mb-4">
-        <p class="text-gray-600">Created Time:{{post.created_at}}</p>
-        <p class="text-gray-600">Created By:{{post.user_id}}</p>
+  <div class="container mx-auto p-6">
+    <div class="bg-white dark:bg-gray-800 shadow-lg rounded-xl p-6 transition-shadow duration-300 hover:shadow-xl">
+      <!-- Header Image -->
+      <img s:if="post.img != &#39;&#39;" src="{{ post.img }}" alt="Post Image" class="w-full h-48 object-cover rounded-t-xl mb-6"/>
+      
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-6">{{ post.title }}</h1>
+      
+      <!-- Metadata -->
+      <div class="mb-6 text-gray-600 dark:text-gray-400">
+        <p>创建时间: <span class="font-semibold">{{ post.created_at }}</span></p>
+        <p>作者: <span class="font-semibold">{{ post.user_id }}</span></p>
       </div>
-      <p class="text-gray-600 mb-4">{{post.description}}</p>
-      <p class="mb-4" s:raw="true">{{post.content}}</p>
-      <a href="/blog/index.sui" class="text-blue-500 font-semibold">Back to Post
-        List</a>
+      
+      <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">{{ post.description }}</p>
+      
+      <div class="prose prose-lg max-w-none dark:prose-invert post-content" s:raw="true">
+        {{ post.content }}
+      </div>
+      
+      <a href="/blog/index.sui" class="mt-6 inline-block px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-md transition-colors duration-300">
+        返回文章列表
+      </a>
     </div>
   </div>
 </section>
@@ -48,23 +76,64 @@
 
 
 
-<script>
+<script s:ns="page__article_2" s:cn="comp__article" s:hash="script_deea49d0ba766d43" type="text/javascript">
+this.root = document.body;
+const __self = this;
+this.store = new __sui_store(this.root);
+this.state = new __sui_state(this);
+this.props = new __sui_props(this.root);
+this.$root = new __Query(this.root);
+this.find = function(selector) {
+  return new __Query(__self.root).find(selector);
+};
+this.query = function(selector) {
+  return __self.root.querySelector(selector);
+};
+this.queryAll = function(selector) {
+  return __self.root.querySelectorAll(selector);
+};
+this.render = function(name, data, option) {
+  const r = new __Render(__self, option);
+  return r.Exec(name, data);
+};
+this.emit = function(name, data) {
+  const event = new CustomEvent(name, { detail: data });
+  __self.root.dispatchEvent(event);
+};
 function Hello() {
   console.log("Hello World!");
 }
-
 function Index() {
   return {
     title: "Customers",
     rows: [
       { name: "John", age: 30, city: "New York" },
       { name: "Mary", age: 20, city: "Paris" },
-      { name: "Peter", age: 40, city: "London" },
-    ],
+      { name: "Peter", age: 40, city: "London" }
+    ]
   };
+}
+if (this.root.getAttribute("initialized") != "true") {
+  __self.root.setAttribute("initialized", "true");
+  __self.root.addEventListener("state:change", function(event) {
+    const name = this.getAttribute("s:cn");
+    const target = event.detail.target;
+    const key = event.detail.key;
+    const value = event.detail.value;
+    const component = new window[name](this);
+    const state = new __sui_state(component);
+    state.Set(key, value, target);
+  });
+  __self.once && __self.once();
 }
 
 </script>
+
+
+<script name="config" type="json">
+{"cache":0,"dataCache":0,"api":null,"root":"/blog","title":"{{ post.title }}","guard":"","cacheStore":""}
+</script>
+
 
 
 <script name="data" type="json">

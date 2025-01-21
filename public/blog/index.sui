@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en" class="dark scroll-smooth" dir="ltr"><head>
+<!DOCTYPE html><html lang="en" scroll-smooth"="" dir="ltr"><head>
   <meta charset="UTF-8"/>
   <title>Home Page | {{ $global.title }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
@@ -21,9 +21,10 @@
   <!-- Main Css -->
 
   <link rel="stylesheet" href="\blog\assets/css/tailwind.min.css"/>
+<script s:ns="" s:cn="" s:hash="script_a9c1fc9185ab7164" src="\blog\assets/libsui.min.js" type="text/javascript" name="libsui"></script>
 </head>
 
-<body>
+<body s:ns="page__index_2" s:public="/blog" s:assets="\blog\assets">
 
   <div class="container mx-auto p-4">
     <section aigc-enabled="true">
@@ -36,7 +37,7 @@
         <a href="{{ article.url }}" target="_blank" class="text-xl text-blue-500 font-semibold mb-2">{{ article.title
           }}</a>
         <p class="text-gray-600 mb-4">{{ article.description }}</p>
-        <a href="{{ article.url }}" target="_blank" class="text-blue-500 font-semibold">Read More</a>
+        <a href="{{ article.url }}" target="_blank" class="text-blue-500 font-semibold">更多。。。</a>
       </div>
     </li>
     <!-- Repeat the above code for each post -->
@@ -48,23 +49,64 @@
 
 
 
-<script>
+<script s:ns="page__index_2" s:cn="comp__index" s:hash="script_6ab7cc08747880c1" type="text/javascript">
+this.root = document.body;
+const __self = this;
+this.store = new __sui_store(this.root);
+this.state = new __sui_state(this);
+this.props = new __sui_props(this.root);
+this.$root = new __Query(this.root);
+this.find = function(selector) {
+  return new __Query(__self.root).find(selector);
+};
+this.query = function(selector) {
+  return __self.root.querySelector(selector);
+};
+this.queryAll = function(selector) {
+  return __self.root.querySelectorAll(selector);
+};
+this.render = function(name, data, option) {
+  const r = new __Render(__self, option);
+  return r.Exec(name, data);
+};
+this.emit = function(name, data) {
+  const event = new CustomEvent(name, { detail: data });
+  __self.root.dispatchEvent(event);
+};
 function Hello() {
   console.log("Hello World!");
 }
-
 function Index() {
   return {
     title: "Customers",
     rows: [
       { name: "John", age: 30, city: "New York" },
       { name: "Mary", age: 20, city: "Paris" },
-      { name: "Peter", age: 40, city: "London" },
-    ],
+      { name: "Peter", age: 40, city: "London" }
+    ]
   };
+}
+if (this.root.getAttribute("initialized") != "true") {
+  __self.root.setAttribute("initialized", "true");
+  __self.root.addEventListener("state:change", function(event) {
+    const name = this.getAttribute("s:cn");
+    const target = event.detail.target;
+    const key = event.detail.key;
+    const value = event.detail.value;
+    const component = new window[name](this);
+    const state = new __sui_state(component);
+    state.Set(key, value, target);
+  });
+  __self.once && __self.once();
 }
 
 </script>
+
+
+<script name="config" type="json">
+{"title":"Home Page | {{ $global.title }}","guard":"","cacheStore":"","cache":0,"dataCache":0,"api":null,"root":"/blog"}
+</script>
+
 
 
 <script name="data" type="json">

@@ -14,7 +14,7 @@ import { Process } from '@yao/yao';
  * @returns model name with dot
  */
 export function DotName(pathname: string) {
-  if (!pathname || !pathname.length) {
+  if (!pathname || typeof pathname.replace !== 'function') {
     return pathname;
   }
   let str = pathname;
@@ -34,7 +34,7 @@ export function DotName(pathname: string) {
  * @returns pathname
  */
 export function UnderscoreName(pathname: string) {
-  if (!pathname || !pathname.length) {
+  if (!pathname || typeof pathname.replace !== 'function') {
     return pathname;
   }
   let str = pathname;
@@ -54,7 +54,7 @@ export function UnderscoreName(pathname: string) {
  * @returns pathname
  */
 export function SlashName(pathname: string) {
-  if (!pathname || !pathname.length) {
+  if (!pathname || typeof pathname.replace !== 'function') {
     return pathname;
   }
   let str = pathname;

@@ -1,0 +1,14 @@
+.container {
+  max-width: 100%; /* 确保容器宽度不超过其父元素 */
+}
+
+.post-content {
+  overflow: auto; /* 添加滚动条以查看所有内容 */
+  word-wrap: break-word; /* 长单词自动换行 */
+  white-space: pre-wrap; /* 保留空格和换行符，并允许换行 */
+}
+
+.dark .post-content {
+  /* 如果需要针对暗色模式的特殊样式 */
+  color: #e5e7eb; /* 示例颜色 */
+}

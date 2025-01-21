@@ -58,7 +58,7 @@ ${fieldsCode}
 }
 
 function getFunctionsTemplate(
-  modelID: ModelId,
+  modelID: string,
   idFieldType: string,
   modelDsl: YaoModel.ModelDSL
 ) {

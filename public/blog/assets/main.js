@@ -1,3 +1,3 @@
 function Hello(...args) {
-  console.log("GlobalFn", args);
+  console.log('GlobalFn', args);
 }

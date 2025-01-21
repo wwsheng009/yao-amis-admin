@@ -142,7 +142,7 @@
       {
         "type": "tpl",
         "label": "文章来源",
-        "tpl": "<a href=\"${source}\" target=\"_blank\">ID:${id},Title:${title}</a>"
+        "tpl": "<a href=\"/blog/article.sui?post_id=${id}\" target=\"_blank\">ID:${id},Title:${title}</a>"
       },
 
       {
@@ -513,7 +513,7 @@
           "type": "dialog",
           "body": {
             "type": "form",
-            "data": { "type": "" },
+            "data": { "type": "html" },
             "name": "create",
             "body": [
               {
@@ -538,6 +538,7 @@
                     "maxSize": 2097152,
                     "maxLength": 300
                   },
+
                   {
                     "type": "input-text",
                     "name": "img",
@@ -557,49 +558,76 @@
                 "clearValueOnEmpty": true
               },
               {
-                "type": "select",
-                "name": "status",
-                "value": 0,
-                "label": "状态",
-                "required": false,
-                "joinValues": false,
-                "clearable": true,
-                "extractValue": true,
-                "options": [
+                "type": "group",
+                "name": "tag_id",
+                "body": [
                   {
-                    "label": "未发布",
-                    "value": 0
+                    "type": "select",
+                    "name": "type",
+                    "label": "类型",
+                    "required": false,
+                    "joinValues": false,
+                    "clearable": true,
+                    "extractValue": true,
+                    "options": [
+                      {
+                        "label": "Markdown",
+                        "value": "md"
+                      },
+                      {
+                        "label": "HTML",
+                        "value": "html"
+                      }
+                    ]
                   },
                   {
-                    "label": "已发布",
-                    "value": 1
+                    "type": "input-text",
+                    "name": "source",
+                    "value": "",
+                    "label": "文章来源",
+                    "required": false,
+                    "clearable": true,
+                    "clearValueOnEmpty": true,
+                    "maxLength": 200
                   },
                   {
-                    "label": "审核中",
-                    "value": 2
+                    "type": "select",
+                    "name": "category",
+                    "label": "分类标识",
+                    "multiple": true,
+                    "valueField": "label",
+                    "cascade": true,
+                    "source": "/api/v1/system/model/app.blog.category/select_options",
+                    "joinValues": false,
+                    "extractValue": true
                   },
                   {
-                    "label": "已禁用",
-                    "value": 3
-                  }
-                ]
-              },
-              {
-                "type": "select",
-                "name": "type",
-                "label": "类型",
-                "required": false,
-                "joinValues": false,
-                "clearable": true,
-                "extractValue": true,
-                "options": [
-                  {
-                    "label": "Markdown",
-                    "value": "md"
-                  },
-                  {
-                    "label": "HTML",
-                    "value": "html"
+                    "type": "select",
+                    "name": "status",
+                    "value": 0,
+                    "label": "状态",
+                    "required": false,
+                    "joinValues": false,
+                    "clearable": true,
+                    "extractValue": true,
+                    "options": [
+                      {
+                        "label": "未发布",
+                        "value": 0
+                      },
+                      {
+                        "label": "已发布",
+                        "value": 1
+                      },
+                      {
+                        "label": "审核中",
+                        "value": 2
+                      },
+                      {
+                        "label": "已禁用",
+                        "value": 3
+                      }
+                    ]
                   }
                 ]
               },
@@ -610,7 +638,8 @@
                 "required": true,
                 "receiver": "post:/api/v1/fs/public/file/upload",
                 "videoReceiver": "post:/api/v1/fs/public/file/upload",
-                "visibleOn": "data.type !== 'md'"
+                "visibleOn": "data.type !== 'md'",
+                "size": "lg"
               },
               {
                 "type": "editor",
@@ -635,32 +664,11 @@
                 },
                 "required": false,
                 "visibleOn": "data.type == 'md'"
-              },
-              {
-                "type": "input-text",
-                "name": "source",
-                "value": "",
-                "label": "文章来源",
-                "required": false,
-                "clearable": true,
-                "clearValueOnEmpty": true,
-                "maxLength": 200
-              },
-              {
-                "type": "select",
-                "name": "category",
-                "label": "分类标识",
-                "multiple": true,
-                "valueField": "label",
-                "cascade": true,
-                "source": "/api/v1/system/model/app.blog.category/select_options",
-                "joinValues": false,
-                "extractValue": true
               }
             ],
             "api": "post:/api/v1/system/model/app.blog.post/create"
           },
-          "size": "lg",
+          "size": "full",
           "title": "创建文章"
         }
       },

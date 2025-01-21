@@ -22,18 +22,32 @@
       "label": "类型",
       "name": "type",
       "type": "enum",
-      "option": ["super", "admin", "staff", "user", "robot"],
+      "option": [
+        "super",
+        "admin",
+        "staff",
+        "user",
+        "robot"
+      ],
       "comment": "账号类型 super 超级管理员,admin 管理员, staff 员工, user 用户, robot 机器人",
       "default": "user",
       "validations": [
         {
           "method": "typeof",
-          "args": ["string"],
+          "args": [
+            "string"
+          ],
           "message": "{{input}}类型错误, {{label}}应该为字符串"
         },
         {
           "method": "enum",
-          "args": ["super", "admin", "staff", "user", "robot"],
+          "args": [
+            "super",
+            "admin",
+            "staff",
+            "user",
+            "robot"
+          ],
           "message": "{{input}}不在许可范围, {{label}}应该为 super/admin/staff/user/robot"
         }
       ]
@@ -48,7 +62,9 @@
       "validations": [
         {
           "method": "typeof",
-          "args": ["string"],
+          "args": [
+            "string"
+          ],
           "message": "{{input}}类型错误, {{label}}应该为字符串"
         },
         {
@@ -85,37 +101,51 @@
       "validations": [
         {
           "method": "typeof",
-          "args": ["string"],
+          "args": [
+            "string"
+          ],
           "message": "{{input}}类型错误, {{label}}应该为字符串"
         },
         {
           "method": "minLength",
-          "args": [6],
+          "args": [
+            6
+          ],
           "message": "{{label}}应该由6-18位，大小写字母、数字和符号构成"
         },
         {
           "method": "maxLength",
-          "args": [18],
+          "args": [
+            18
+          ],
           "message": "{{label}}应该由6-18位，大小写字母、数字和符号构成"
         },
         {
           "method": "pattern",
-          "args": ["[0-9]+"],
+          "args": [
+            "[0-9]+"
+          ],
           "message": "{{label}}应该至少包含一个数字"
         },
         {
           "method": "pattern",
-          "args": ["[A-Z]+"],
+          "args": [
+            "[A-Z]+"
+          ],
           "message": "{{label}}应该至少包含一个大写字母"
         },
         {
           "method": "pattern",
-          "args": ["[a-z]+"],
+          "args": [
+            "[a-z]+"
+          ],
           "message": "{{label}}应该至少包含一个小写字母"
         },
         {
           "method": "pattern",
-          "args": ["[@#$&*\\+]+"],
+          "args": [
+            "[@#$&*\\+]+"
+          ],
           "message": "{{label}}应该至少包含一个符号"
         }
       ]
@@ -131,37 +161,51 @@
       "validations": [
         {
           "method": "typeof",
-          "args": ["string"],
+          "args": [
+            "string"
+          ],
           "message": "{{input}}类型错误, {{label}}应该为字符串"
         },
         {
           "method": "minLength",
-          "args": [6],
+          "args": [
+            6
+          ],
           "message": "{{label}}应该由6-18位，大小写字母、数字和符号构成"
         },
         {
           "method": "maxLength",
-          "args": [18],
+          "args": [
+            18
+          ],
           "message": "{{label}}应该由6-18位，大小写字母、数字和符号构成"
         },
         {
           "method": "pattern",
-          "args": ["[0-9]+"],
+          "args": [
+            "[0-9]+"
+          ],
           "message": "{{label}}应该至少包含一个数字"
         },
         {
           "method": "pattern",
-          "args": ["[A-Z]+"],
+          "args": [
+            "[A-Z]+"
+          ],
           "message": "{{label}}应该至少包含一个大写字母"
         },
         {
           "method": "pattern",
-          "args": ["[a-z]+"],
+          "args": [
+            "[a-z]+"
+          ],
           "message": "{{label}}应该至少包含一个小写字母"
         },
         {
           "method": "pattern",
-          "args": ["[@#$&*\\+]+"],
+          "args": [
+            "[@#$&*\\+]+"
+          ],
           "message": "{{label}}应该至少包含一个符号"
         }
       ]
@@ -177,17 +221,23 @@
       "validations": [
         {
           "method": "typeof",
-          "args": ["string"],
+          "args": [
+            "string"
+          ],
           "message": "{{input}}类型错误, {{label}}应该为字符串"
         },
         {
           "method": "minLength",
-          "args": [2],
+          "args": [
+            2
+          ],
           "message": "{{label}}至少需要2个字"
         },
         {
           "method": "maxLength",
-          "args": [40],
+          "args": [
+            40
+          ],
           "message": "{{label}}不能超过20个字"
         }
       ]
@@ -203,12 +253,16 @@
       "validations": [
         {
           "method": "typeof",
-          "args": ["string"],
+          "args": [
+            "string"
+          ],
           "message": "{{input}}类型错误, {{label}}应该为字符串"
         },
         {
           "method": "pattern",
-          "args": ["^(\\d{18})|(\\d{14}X)$"],
+          "args": [
+            "^(\\d{18})|(\\d{14}X)$"
+          ],
           "message": "{{label}}格式错误"
         }
       ]
@@ -223,12 +277,16 @@
       "validations": [
         {
           "method": "typeof",
-          "args": ["string"],
+          "args": [
+            "string"
+          ],
           "message": "{{input}}类型错误, {{label}}应该为数字"
         },
         {
           "method": "pattern",
-          "args": ["^[0-9]{10}$"],
+          "args": [
+            "^[0-9]{10}$"
+          ],
           "message": " {{label}}应该由10位数字构成"
         }
       ]
@@ -244,12 +302,16 @@
       "validations": [
         {
           "method": "typeof",
-          "args": ["string"],
+          "args": [
+            "string"
+          ],
           "message": "{{input}}类型错误, {{label}}应该为字符串"
         },
         {
           "method": "pattern",
-          "args": ["^[0-9A-Za-z@#$&*]{32}$"],
+          "args": [
+            "^[0-9A-Za-z@#$&*]{32}$"
+          ],
           "message": "{{label}}应该由32位，大小写字母、数字和符号构成"
         }
       ]
@@ -259,6 +321,13 @@
       "name": "extra",
       "type": "json",
       "comment": "扩展信息",
+      "nullable": true
+    },
+    {
+      "label": "地区",
+      "name": "location",
+      "type": "string",
+      "comment": "所在地址",
       "nullable": true
     },
     {
@@ -274,16 +343,24 @@
       "name": "status",
       "type": "enum",
       "default": "enabled",
-      "option": ["enabled", "disabled"],
+      "option": [
+        "enabled",
+        "disabled"
+      ],
       "validations": [
         {
           "method": "typeof",
-          "args": ["string"],
+          "args": [
+            "string"
+          ],
           "message": "{{input}}类型错误, {{label}}应该为字符串"
         },
         {
           "method": "enum",
-          "args": ["enabled", "disabled"],
+          "args": [
+            "enabled",
+            "disabled"
+          ],
           "message": "{{input}}不在许可范围, {{label}}应该为 enabled/disabled"
         }
       ]
@@ -310,3 +387,4 @@
     "soft_deletes": true
   }
 }
+// yao migrate -n admin.user

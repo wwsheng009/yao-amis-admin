@@ -3,6 +3,7 @@ import { getModelDslById } from './model';
 import { AmisUIColumn } from '@yao/types';
 import { amisUIModelToAmisModel } from './model_convert';
 import { YaoModel } from '@yaoapps/types';
+import { Exception } from '@yaoapps/client';
 
 // 创建模型对象的ts类型定义。
 
@@ -38,6 +39,9 @@ function createTSTypes(
   modelsIn: YaoModel.ModelDSL,
   prefix: string
 ) {
+  if (!modelId || typeof modelId !== 'string') {
+    throw new Exception('modelId is required');
+  }
   if (!modelsIn) {
     return '';
   }
@@ -59,8 +63,8 @@ function createTSTypes(
  * @param str - 要转换的字符串
  * @returns 转换后的驼峰命名空间字符串
  */
-export function toCamelCaseNameSpace(str) {
-  if (!str || str.length < 1) {
+export function toCamelCaseNameSpace(str: string) {
+  if (!str || typeof str.replace !== 'function') {
     return str;
   }
   const newStr = str.replace(/[._]([a-z])/g, function (match, letter) {

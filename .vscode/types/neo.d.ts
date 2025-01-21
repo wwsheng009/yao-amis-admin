@@ -136,6 +136,14 @@ export declare namespace neo {
     temp_file?: string;
   }
 
+  export interface ChatMessage {
+    type?: string;
+    id?: string;
+    function?: string;
+    text?: string;
+    arguments?: string;
+    result?: any;
+  }
   export interface Message {
     /** The content of the message. */
     text?: string; // text content

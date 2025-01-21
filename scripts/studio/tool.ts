@@ -78,7 +78,7 @@ function remoteCall(remoteMethod: string, ...args: any[]) {
 }
 
 export function toCamelCaseNameSpace(str: string) {
-  if (!str || str.length < 1) {
+  if (!str || typeof str.replace !== 'function') {
     return str;
   }
   const newStr = str.replace(/[._]([a-z])/g, function (match, letter) {
@@ -120,17 +120,25 @@ export function generateModelCode(modelId: string, overwrite: boolean = true) {
  * yao run scripts.studio.tool.generateModelTypeCode admin.user
  * @param modelId
  */
-export function generateModelTypeCode(modelId: string) {
+export function generateModelTypeCode(
+  modelId: string,
+  overwrite: boolean = true
+) {
   const modelDsl = FindCachedModelById(modelId);
 
-  const code = remoteCall('scripts.system.tstype.createTSTypes', modelDsl, 'I');
+  const code = remoteCall(
+    'scripts.system.tstype.createTSTypes',
+    modelId,
+    modelDsl,
+    'I'
+  );
 
   const typeName = modelId.replace(/\./g, '/');
 
   // const typeName = toCamelCaseNameSpace(modelId);
   const fname = `/scripts/db_types/${typeName}.ts`;
   const fs = new FS('app');
-  if (!fs.Exists(fname)) {
+  if (overwrite || !fs.Exists(fname)) {
     fs.WriteFile(fname, code);
     console.log(`create file: ${fname}`);
   } else {
