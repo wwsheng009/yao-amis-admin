@@ -1,23 +1,21 @@
 {
-    "name": "model",
+    "name": "chat",
     "type": "assistant",
-    "description": "This is a test assistant",
-    "assistant_id": "model",
+    "description": "This is a chat assistant",
+    "assistant_id": "chat",
     "mentionable": true,
     "automated": false,
     "readonly": false,
     "built_in": false,
     "sort": 0,
-    "path": "model",
+    "path": "chat",
     "connector": "deepseek-reasoner",
     "created_at": "2022-02-22T14:00:00.000Z",
     "tags": [
         "test"
     ],
     "options": {
-        "model": "deepseek-chat",
         "temperature": 0.7,
-        "max_tokens": 8192,
         "top_p": 1,
         "frequency_penalty": 0,
         "presence_penalty": 0

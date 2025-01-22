@@ -1,10 +1,7 @@
-import { ModelProxy } from '@lib/proxy';
 import { getWebPageContent, truncateText } from '@lib/web';
-import { getWeatherByName } from '@scripts/app/weather/tool';
-import { IAdminUser } from '@scripts/db_types/admin/user';
 import { neo } from '@yao/neo';
+import { Process } from '@yaoapps/client';
 
-declare function SendMessage(message: string | object): void;
 /**
  * user request -> [init hook] -> stream call -> openai
  *
@@ -37,14 +34,27 @@ export function Init(
         // console.log('attachment');
         // console.log(attachment);
         try {
-          SendMessage('读取网页' + attachment.url);
-
+          Process('neo.write', writer, [
+            { text: '读取网页' + attachment.url + '\n' }
+          ]);
           const content = getWebPageContent(attachment.url);
-          SendMessage('读取网页完成' + attachment.url);
-
-          SendMessage(content);
+          Process('neo.write', writer, [
+            { text: '读取网页完成' + attachment.url + '\n' }
+          ]);
+          Process('neo.write', writer, [
+            { text: truncateText(content) + '\n\n' }
+          ]);
+          // console.log('content');
+          // console.log(content);
+          input.push({
+            role: 'user',
+            text: content,
+            type: 'text'
+          });
         } catch (error) {
-          console.log(error.message);
+          Process('neo.write', writer, [
+            { text: '异常：' + error.message + '\n' }
+          ]);
         }
       }
     });
@@ -137,57 +147,14 @@ function Done(
   context: neo.Context,
   input: neo.ChatMessage[]
 ): any | null | string {
+  console.log('context');
+  console.log(context);
   console.log('input');
   console.log(input);
-  if (input.length > 0 && input[input.length - 1].function !== '') {
-    const lastLine = input[input.length - 1];
-    const funcName = lastLine.function;
 
-    if (funcName == 'get_weather') {
-      const data = getWeatherByName(lastLine.arguments['location']);
-      // const data = Process(
-      //   'scripts.app.weather.init.getWeatherByName',
-      //   fcall.function.arguments['location']
-      // );
-      console.log('get_weather:');
-      console.log(data);
-      return {
-        output: [{ result: data }] as neo.ChatMessage[]
-      };
-
-      // return '{"temperature": "15°C"}';
-    } else if (funcName == 'find_user') {
-      console.log('find_user:');
-      console.log(lastLine.arguments);
-      const [user] = new ModelProxy<IAdminUser>('admin.user').Get({
-        wheres: [
-          {
-            column: 'name',
-            op: 'like',
-            value: `%${lastLine.arguments['username']}%`
-          }
-        ]
-      });
-      if (user) {
-        console.log(user);
-        return {
-          output: [{ result: user }] as neo.ChatMessage[]
-        };
-      } else {
-        console.log('用户不存在');
-        return {
-          output: [{ result: { error: '用户不存在' } }] as neo.ChatMessage[]
-        };
-      }
-    }
-
-    return {
-      ouput: [
-        { result: '错误的调用，不支持的函数调用：' + funcName }
-      ] as neo.ChatMessage[]
-    };
+  if (input && input.length > 0 && input[0].text?.includes('[{"type":"text"')) {
+    return JSON.parse(input[0].text);
   }
-
   // case 1 return null,no change
   // return null
   return null;
@@ -197,7 +164,7 @@ function Done(
       action: 'action1', //set to 'exit' to exit stream,only set it when you want to exit the process
       payload: {}
     }
-    // output: output //change the output message
+    // output: input //change the output message
   };
 }
 

@@ -1,5 +1,5 @@
 connector: deepseek
-use: "chat" # default assistannt
+use: "neo" # default assistannt
 guard: "scripts.auth.token.CheckToken"
 
 

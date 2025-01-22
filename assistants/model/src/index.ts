@@ -15,8 +15,7 @@ import { Process } from '@yaoapps/client';
 
 export function Init(
   context: neo.Context,
-  input: neo.Message[],
-  writer: neo.ResponseWriter
+  input: neo.Message[]
 ): neo.ResHookInit | null | string {
   // input: [
   //     {
@@ -148,9 +147,7 @@ export function Init(
  */
 function Stream(
   context: neo.Context,
-  input: neo.Message[],
-  output: string,
-  writer: neo.ResponseWriter
+  input: neo.Message[]
 ): neo.ResHookStream | null {
   // case 1 return null,no change
   // return null
@@ -177,9 +174,7 @@ function Stream(
  */
 function Done(
   context: neo.Context,
-  input: neo.Message[],
-  output: string,
-  writer: neo.ResponseWriter
+  input: neo.Message[]
 ): neo.ResHookDone | null {
   // case 1 return null,no change
   // return null
@@ -205,9 +200,7 @@ function Done(
  */
 function Fail(
   context: neo.Context,
-  input: neo.Message[],
-  output: string,
-  writer: neo.ResponseWriter
+  input: neo.Message[]
 ): neo.ResHookFail | null {
   // case 1 return null,no change
   // return null
