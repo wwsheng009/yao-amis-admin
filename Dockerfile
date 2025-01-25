@@ -6,32 +6,35 @@ FROM wwsheng009/yao-${ARCH}:latest
 
 ARG ARCH
 ARG VERSION
+RUN mkdir -p /data/app
 WORKDIR /data/app
 
 
 RUN addgroup -S -g 1000 yao && adduser -S -G yao -u 999 yao
-RUN mkdir -p /data/app && curl -fsSL "https://github.com/wwsheng009/yao-amis-admin/releases/download/yao-amis-admin-${VERSION}/yao-amis-admin-${VERSION}.zip" > /data/app/latest.zip && \
-    unzip /data/app/latest.zip && rm /data/app/latest.zip && \
-    rm -rf /data/app/.git && \
-    chown -R yao:yao /data/app && \
-    chmod +x /data/app/init.sh && \
-    chmod +x /usr/local/bin/yao && \
-    cp /data/app/app.sample.yao /data/app/app.yao && \
-    mkdir -p /data/app/plugins && \
-    mkdir -p /data/app/db
-
-# RUN mkdir -p /data/app
-
-# ADD . /data/app
-
-# RUN rm -rf /data/app/.git && \
-#     rm -rf /data/app/.env* && \
-#     rm -rf /data/app/Dockerfile* && \
+# RUN mkdir -p /data/app && curl -fsSL "https://github.com/wwsheng009/yao-amis-admin/releases/download/yao-amis-admin-${VERSION}/yao-amis-admin-${VERSION}.zip" > /data/app/latest.zip && \
+#     unzip /data/app/latest.zip && rm /data/app/latest.zip && \
+#     rm -rf /data/app/.git && \
 #     chown -R yao:yao /data/app && \
 #     chmod +x /data/app/init.sh && \
 #     chmod +x /usr/local/bin/yao && \
+#     cp /data/app/app.sample.yao /data/app/app.yao && \
 #     mkdir -p /data/app/plugins && \
 #     mkdir -p /data/app/db
+
+
+ADD . /data/app
+RUN rm -rf /data/app/.git && \
+    rm -rf /data/app/.env* && \
+    rm -rf /data/app/Dockerfile* && \
+    rm -rf /data/app/node_modules && \
+    chown -R yao:yao /data/app && \
+    chmod +x /data/app/init.sh && \
+    chmod +x /usr/local/bin/yao && \
+    mkdir -p /data/app/plugins && \
+    mkdir -p /data/app/db
+
+RUN  sh /data/app/download_jsjdk.sh
+
 
 RUN mkdir -p /data/app/public/amis-editor && \
     curl -fsSL "https://github.com/wwsheng009/amis-editor-yao/releases/download/1.1.0/amis-editor-1.1.0.zip" > /data/app/public/amis-editor/latest.zip && \
@@ -61,5 +64,7 @@ RUN yarn install --production
 USER root
 VOLUME [ "/data/app" ]
 WORKDIR /data/app
+
+
 EXPOSE 5099
 CMD ["sh", "init.sh"]

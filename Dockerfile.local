@@ -39,6 +39,8 @@ RUN rm -rf /data/app/.git && \
     mkdir -p /data/app/plugins && \
     mkdir -p /data/app/db
 
+RUN  sh /data/app/download_jsjdk.sh
+
 RUN apk add --no-cache nodejs npm
 
 WORKDIR /data/app

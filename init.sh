@@ -1,11 +1,11 @@
 #!/bin/bash
 
-if [ ! -d "public/amis-admin/jssdk" ] || [ -z "$(ls -A public/amis-admin/jssdk)" ]; then
-    echo "Directory does not exist or is empty, executing download_jsjdk.sh"
-    sh download_jsjdk.sh
-else
-    echo "JS SDK Directory exists and is not empty."
-fi
+# if [ ! -d "public/amis-admin/jssdk" ] || [ -z "$(ls -A public/amis-admin/jssdk)" ]; then
+#     echo "Directory does not exist or is empty, executing download_jsjdk.sh"
+#     sh download_jsjdk.sh
+# else
+#     echo "JS SDK Directory exists and is not empty."
+# fi
 
 # Remount /etc to allow writing to resolv.conf
 # mount -o remount,rw /etc

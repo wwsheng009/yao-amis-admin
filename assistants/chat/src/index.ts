@@ -17,6 +17,7 @@ declare function SendMessage(message: string | object): void;
  */
 export function Init(
   context: neo.Context,
+  ouput: neo.Message[],
   input: neo.Message[]
 ): neo.ResHookInit {
   //case 1 return null
@@ -98,6 +99,7 @@ export function Init(
  */
 function Stream(
   context: neo.Context,
+  output: neo.ChatMessage[],
   input: neo.Message[]
 ): neo.ResHookStream | null {
   // case 1 return null,no change
@@ -135,12 +137,13 @@ interface FunctionCall {
  */
 function Done(
   context: neo.Context,
+  output: neo.ChatMessage[],
   input: neo.ChatMessage[]
 ): any | null | string {
-  console.log('input');
-  console.log(input);
-  if (input.length > 0 && input[input.length - 1].function !== '') {
-    const lastLine = input[input.length - 1];
+  console.log('output');
+  console.log(output);
+  if (output.length > 0 && output[output.length - 1].function !== '') {
+    const lastLine = output[output.length - 1];
     const funcName = lastLine.function;
 
     if (funcName == 'get_weather') {
