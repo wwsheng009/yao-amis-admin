@@ -31,7 +31,8 @@ RUN rm -rf /data/app/.git && \
     chmod +x /data/app/init.sh && \
     chmod +x /usr/local/bin/yao && \
     mkdir -p /data/app/plugins && \
-    mkdir -p /data/app/db
+    mkdir -p /data/app/db && \
+    cp /data/app/app.sample.yao /data/app/app.yao
 
 RUN  sh /data/app/download_jsjdk.sh
 
