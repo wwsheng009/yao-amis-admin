@@ -15,7 +15,8 @@ import { Process } from '@yaoapps/client';
 
 export function Init(
   context: neo.Context,
-  input: neo.Message[]
+  input: neo.Message[],
+  option: { [key: string]: any }
 ): neo.ResHookInit | null | string {
   // input: [
   //     {
@@ -147,7 +148,9 @@ export function Init(
  */
 function Stream(
   context: neo.Context,
-  input: neo.Message[]
+  input: neo.Message[],
+  msg: neo.AiMessage,
+  output: neo.ChatMessage[]
 ): neo.ResHookStream | null {
   // case 1 return null,no change
   // return null
@@ -174,7 +177,8 @@ function Stream(
  */
 function Done(
   context: neo.Context,
-  input: neo.Message[]
+  input: neo.ChatMessage[],
+  output: neo.ChatMessage[]
 ): neo.ResHookDone | null {
   // case 1 return null,no change
   // return null

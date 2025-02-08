@@ -1,5 +1,5 @@
 import { ModelProxy } from '@lib/proxy';
-import { getWebPageContent, truncateText } from '@lib/web';
+import { getWebPageContent } from '@lib/web';
 import { getWeatherByName } from '@scripts/app/weather/tool';
 import { IAdminUser } from '@scripts/db_types/admin/user';
 import { neo } from '@yao/neo';
@@ -17,8 +17,8 @@ declare function SendMessage(message: string | object): void;
  */
 export function Init(
   context: neo.Context,
-  ouput: neo.Message[],
-  input: neo.Message[]
+  input: neo.Message[],
+  option: { [key: string]: any }
 ): neo.ResHookInit {
   //case 1 return null
   //return null
@@ -99,8 +99,9 @@ export function Init(
  */
 function Stream(
   context: neo.Context,
-  output: neo.ChatMessage[],
-  input: neo.Message[]
+  input: neo.Message[],
+  msg: neo.AiMessage,
+  output: neo.ChatMessage[]
 ): neo.ResHookStream | null {
   // case 1 return null,no change
   // return null
@@ -118,14 +119,6 @@ function Stream(
     // output: output //change the output message
   };
 }
-interface FunctionCall {
-  id: string;
-  type: string;
-  function: {
-    name: string;
-    arguments: string;
-  };
-}
 /**
  * called only once, when the call openai api done,open ai return messages
  *
@@ -137,8 +130,8 @@ interface FunctionCall {
  */
 function Done(
   context: neo.Context,
-  output: neo.ChatMessage[],
-  input: neo.ChatMessage[]
+  input: neo.ChatMessage[],
+  output: neo.ChatMessage[]
 ): any | null | string {
   console.log('output');
   console.log(output);
@@ -210,7 +203,6 @@ function Done(
  * @param context context info
  * @param input input messages
  * @param output output messages
- * @param writer writer for response
  * @returns {next,input,output}
  */
 function Fail(

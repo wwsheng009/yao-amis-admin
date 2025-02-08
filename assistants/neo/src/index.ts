@@ -1,6 +1,5 @@
 import { getWebPageContent, truncateText } from '@lib/web';
-import { neo } from '@yao/neo';
-import { Process } from '@yaoapps/client';
+import { neo, SendMessage } from '@yao/neo';
 
 /**
  * user request -> [init hook] -> stream call -> openai
@@ -14,7 +13,8 @@ import { Process } from '@yaoapps/client';
  */
 export function Init(
   context: neo.Context,
-  input: neo.Message[]
+  input: neo.Message[],
+  option: { [key: string]: any }
 ): neo.ResHookInit {
   //case 1 return null
   //return null
@@ -34,16 +34,10 @@ export function Init(
         // console.log('attachment');
         // console.log(attachment);
         try {
-          Process('neo.write', writer, [
-            { text: '读取网页' + attachment.url + '\n' }
-          ]);
+          SendMessage('读取网页' + attachment.url + '\n', false);
           const content = getWebPageContent(attachment.url);
-          Process('neo.write', writer, [
-            { text: '读取网页完成' + attachment.url + '\n' }
-          ]);
-          Process('neo.write', writer, [
-            { text: truncateText(content) + '\n\n' }
-          ]);
+          SendMessage('读取网页完成' + attachment.url + '\n', false);
+          SendMessage(truncateText(content) + '\n\n', false);
           // console.log('content');
           // console.log(content);
           input.push({
@@ -52,9 +46,7 @@ export function Init(
             type: 'text'
           });
         } catch (error) {
-          Process('neo.write', writer, [
-            { text: '异常：' + error.message + '\n' }
-          ]);
+          SendMessage('异常：' + error.message + '\n', false);
         }
       }
     });
@@ -108,7 +100,9 @@ export function Init(
  */
 function Stream(
   context: neo.Context,
-  input: neo.Message[]
+  input: neo.Message[],
+  msg: neo.AiMessage,
+  output: neo.ChatMessage[]
 ): neo.ResHookStream | null {
   // case 1 return null,no change
   // return null
@@ -126,14 +120,7 @@ function Stream(
     // output: output //change the output message
   };
 }
-interface FunctionCall {
-  id: string;
-  type: string;
-  function: {
-    name: string;
-    arguments: string;
-  };
-}
+
 /**
  * called only once, when the call openai api done,open ai return messages
  *
@@ -145,7 +132,8 @@ interface FunctionCall {
  */
 function Done(
   context: neo.Context,
-  input: neo.ChatMessage[]
+  input: neo.ChatMessage[],
+  output: neo.ChatMessage[]
 ): any | null | string {
   console.log('context');
   console.log(context);
@@ -174,7 +162,6 @@ function Done(
  * @param context context info
  * @param input input messages
  * @param output output messages
- * @param writer writer for response
  * @returns {next,input,output}
  */
 function Fail(

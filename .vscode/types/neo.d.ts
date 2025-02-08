@@ -204,4 +204,43 @@ export declare namespace neo {
     output?: string;
     error?: string;
   }
+
+  type FCAttributes = {
+    name: string; // json:"name"
+    arguments: string; // json:"arguments"
+  };
+
+  type FunctionCall = {
+    index: number; // json:"index"
+    id: string; // json:"id"
+    type: string; // json:"type"
+    function: FCAttributes; // json:"function"
+  };
+
+  type Mention = {
+    assistant_id: string; // json:"assistant_id"
+    name: string; // json:"name"
+    avatar?: string; // json:"avatar,omitempty"
+  };
+
+  export type AiMessage = {
+    text?: string; // json:"text,omitempty"
+    type?: string; // json:"type,omitempty"
+    props?: { [key: string]: any }; // json:"props,omitempty"
+    done?: boolean; // json:"done,omitempty"
+    new?: boolean; // json:"new,omitempty"
+    actions?: Action[]; // json:"actions,omitempty"
+    attachments?: Attachment[]; // json:"attachments,omitempty"
+    role?: string; // json:"role,omitempty"
+    name?: string; // json:"name,omitempty"
+    assistant_id?: string; // json:"assistant_id,omitempty"
+    assistant_name?: string; // json:"assistant_name,omitempty"
+    assistant_avatar?: string; // json:"assistant_avatar,omitempty"
+    menions?: Mention[]; // json:"menions,omitempty"
+    data?: { [key: string]: any }; // json:"-"`
+    tool_call_id?: string; // json:"tool_call_id,omitempty"
+    tool_calls?: FunctionCall[]; // json:"tool_calls,omitempty"
+  };
+
+  export declare function SendMessage(str: string, saveHistory: boolean);
 }

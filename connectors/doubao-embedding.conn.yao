@@ -1,0 +1,9 @@
+{
+    "label": "Model v3",
+    "type": "openai",
+    "options": {
+        "model": "ep-20250205210443-n8qnk",
+        "key": "$ENV.DOUBAO_KEY",
+        "proxy": "https://ark.cn-beijing.volces.com/api/v3"
+    }
+}

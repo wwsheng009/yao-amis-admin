@@ -1,0 +1,9 @@
+{
+    "label": "Model v3",
+    "type": "openai",
+    "options": {
+        "model": "deepseek-ai/DeepSeek-R1",
+        "key": "$ENV.DEEPSEEK2_KEY",
+        "proxy": "https://api.siliconflow.cn"
+    }
+}
