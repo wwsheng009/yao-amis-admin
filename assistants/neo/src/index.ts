@@ -90,38 +90,6 @@ export function Init(
 }
 
 /**
- * called every time when the call openai api stream happen
- *
- * @param context context info
- * @param input input messages
- * @param output output messages
- * @param writer writer for response
- * @returns {next,output}
- */
-function Stream(
-  context: neo.Context,
-  input: neo.Message[],
-  msg: neo.AiMessage,
-  output: neo.ChatMessage[]
-): neo.ResHookStream | null {
-  // case 1 return null,no change
-  // return null
-  return null;
-  // case 2 return object
-  return {
-    silent: false, // set true to continue the stream without output
-    next: {
-      action: 'process', //set to 'exit' to exit stream
-      payload: {
-        name: 'get_webpage',
-        args: '{"url":"https://www.baidu.com"}'
-      }
-    }
-    // output: output //change the output message
-  };
-}
-
-/**
  * called only once, when the call openai api done,open ai return messages
  *
  * @param context context info

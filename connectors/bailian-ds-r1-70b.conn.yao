@@ -1,0 +1,9 @@
+{
+    "label": "Model v3",
+    "type": "openai",
+    "options": {
+        "model": "deepseek-r1-distill-llama-70b",
+        "key": "$ENV.BAILIAN_KEY",
+        "proxy": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    }
+}

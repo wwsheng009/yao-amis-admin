@@ -194,5 +194,9 @@
       "name": "yaodb",
       "database": "./db/yao.db"
     }
-  ]
+  ],
+  "marscode.codeCompletionPro": {
+    "enableCodeCompletionPro": true
+  },
+  "marscode.enableInlineCommand": true
 }

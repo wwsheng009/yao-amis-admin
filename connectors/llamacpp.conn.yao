@@ -1,0 +1,9 @@
+{
+    "label": "Model v3",
+    "type": "openai",
+    "options": {
+        "model": "test",
+        "key": "$ENV.BAILIAN_KEY",
+        "proxy": "http://127.0.0.1:8080/v1"
+    }
+}

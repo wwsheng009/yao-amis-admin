@@ -1,0 +1,42 @@
+{
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "get_weather",
+        "description": "Get weather of an location, the user shoud supply a location first",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "location": {
+              "type": "string",
+              "description": "只需提供城市名称"
+            }
+          },
+          "required": [
+            "location"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "find_user",
+        "description": "find the user infomation in database by user name",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "username": {
+              "type": "string",
+              "description": "user name of the user to find"
+            }
+          },
+          "required": [
+            "username"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+# array of the prompts
+- role: system
+  name: Translate
+  content: |
+    - you are a yao dsl lanugage model assistannt

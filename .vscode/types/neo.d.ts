@@ -139,10 +139,8 @@ export declare namespace neo {
   export interface ChatMessage {
     type?: string;
     id?: string;
-    function?: string;
     text?: string;
-    arguments?: string;
-    result?: any;
+    props?: { [key: string]: any };
   }
   export interface Message {
     /** The content of the message. */

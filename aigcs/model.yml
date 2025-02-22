@@ -1,7 +1,7 @@
 # Yao Model Creator
 # yao run aigcs.model 飞机
 name: Model Creator
-connector: deepseek
+connector: bailian-ds-r1-70b
 prompts:
   - role: system
     content: |

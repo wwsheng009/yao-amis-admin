@@ -1,25 +1,25 @@
 {
-    "name": "neo-assistant",
+    "name": "schema-assistant",
     "type": "assistant",
     "description": "This is a chat assistant",
-    "assistant_id": "neo",
+    "assistant_id": "schema",
     "mentionable": true,
     "automated": false,
-    "readonly": false,
-    "built_in": false,
+    "readonly": true,
+    "built_in": true,
     "sort": 0,
-    "path": "chat",
+    "path": "schema",
     "connector": "bailian-ds-r1-70b",
     "created_at": "2022-02-22T14:00:00.000Z",
     "tags": [
         "test"
     ],
     "options": {
-        "temperature": 0.7,
+        "temperature": 0.1,
         "top_p": 1,
         "frequency_penalty": 0,
         "presence_penalty": 0
     },
-    "avatar": "https://cdn.pixabay.com/photo/2020/01/16/17/21/pantheon-4771206_1280.jpg",
+    "avatar": "https://cdn.pixabay.com/photo/2023/03/13/23/48/woman-7851024_1280.jpg",
     "prompts": ""
 }

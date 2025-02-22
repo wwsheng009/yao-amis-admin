@@ -1,27 +1,25 @@
 {
-    "name": "model-assistant",
+    "name": "chat-assistant2",
     "type": "assistant",
-    "description": "This is a test assistant",
-    "assistant_id": "model",
+    "description": "This is a chat assistant",
+    "assistant_id": "chat2",
     "mentionable": true,
     "automated": false,
     "readonly": false,
     "built_in": false,
     "sort": 0,
-    "path": "model",
-    "connector": "deepseek-reasoner",
+    "path": "chat",
+    "connector": "bailian-ds-r1-70b",
     "created_at": "2022-02-22T14:00:00.000Z",
     "tags": [
         "test"
     ],
     "options": {
-        "model": "deepseek-chat",
         "temperature": 0.7,
-        "max_tokens": 8192,
         "top_p": 1,
         "frequency_penalty": 0,
         "presence_penalty": 0
     },
-    "avatar": "https://cdn.pixabay.com/photo/2016/08/20/05/38/avatar-1606916_960_720.png",
+    "avatar": "https://cdn.pixabay.com/photo/2023/03/13/23/48/woman-7851024_1280.jpg",
     "prompts": ""
 }
