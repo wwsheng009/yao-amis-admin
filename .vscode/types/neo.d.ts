@@ -240,5 +240,5 @@ export declare namespace neo {
     tool_calls?: FunctionCall[]; // json:"tool_calls,omitempty"
   };
 
-  export declare function SendMessage(str: string, saveHistory: boolean);
+  export declare function Send(str: string, saveHistory: boolean);
 }

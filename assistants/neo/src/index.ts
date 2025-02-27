@@ -2,17 +2,15 @@ import { getWebPageContent, truncateText } from '@lib/web';
 import { neo, SendMessage } from '@yao/neo';
 
 /**
- * user request -> [init hook] -> stream call -> openai
+ * user request -> [Create hook] -> openai
  *
  * called before the chat with openai.
  *
- * @param context The context object containing session information and other relevant data.
  * @param input The input message array.
  * @param option A payload object containing additional options or data.
  * @returns A response object containing the next action, input messages, and output data.
  */
-export function Init(
-  context: neo.Context,
+export function Create(
   input: neo.Message[],
   option: { [key: string]: any }
 ): neo.ResHookInit {
@@ -34,10 +32,10 @@ export function Init(
         // console.log('attachment');
         // console.log(attachment);
         try {
-          SendMessage('读取网页' + attachment.url + '\n', false);
+          Send('读取网页' + attachment.url + '\n', false);
           const content = getWebPageContent(attachment.url);
-          SendMessage('读取网页完成' + attachment.url + '\n', false);
-          SendMessage(truncateText(content) + '\n\n', false);
+          Send('读取网页完成' + attachment.url + '\n', false);
+          Send(truncateText(content) + '\n\n', false);
           // console.log('content');
           // console.log(content);
           input.push({
@@ -46,7 +44,7 @@ export function Init(
             type: 'text'
           });
         } catch (error) {
-          SendMessage('异常：' + error.message + '\n', false);
+          Send('异常：' + error.message + '\n', false);
         }
       }
     });
@@ -92,14 +90,11 @@ export function Init(
 /**
  * called only once, when the call openai api done,open ai return messages
  *
- * @param context context info
  * @param input input messages
  * @param output messages
- * @param writer for response
  * @returns
  */
 function Done(
-  context: neo.Context,
   input: neo.ChatMessage[],
   output: neo.ChatMessage[]
 ): any | null | string {
@@ -127,15 +122,11 @@ function Done(
 /**
  * called every time when the call openai api failed,open ai return error messages
  *
- * @param context context info
  * @param input input messages
- * @param output output messages
+ * @param error error messages
  * @returns {next,input,output}
  */
-function Fail(
-  context: neo.Context,
-  input: neo.Message[]
-): neo.ResHookFail | null {
+function Fail(context: neo.Context, error: string): neo.ResHookFail | null {
   // case 1 return null,no change
   // return null
   return null;

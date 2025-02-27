@@ -9,7 +9,7 @@
     "built_in": false,
     "sort": 0,
     "path": "chat",
-    "connector": "bailian-ds-r1-70b",
+    "connector": "copilot-tencent",
     "created_at": "2022-02-22T14:00:00.000Z",
     "tags": [
         "test"

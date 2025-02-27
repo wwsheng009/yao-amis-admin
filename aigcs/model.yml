@@ -1,7 +1,7 @@
 # Yao Model Creator
 # yao run aigcs.model 飞机
 name: Model Creator
-connector: bailian-ds-r1-70b
+connector: copilot-tencent
 prompts:
   - role: system
     content: |

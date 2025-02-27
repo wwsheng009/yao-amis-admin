@@ -4,9 +4,9 @@ import { getWeatherByName } from '@scripts/app/weather/tool';
 import { IAdminUser } from '@scripts/db_types/admin/user';
 import { neo } from '@yao/neo';
 
-declare function SendMessage(message: string | object): void;
+declare function Send(message: string | object): void;
 /**
- * user request -> [init hook] -> stream call -> openai
+ * user request -> [Create hook] -> openai
  *
  * called before the chat with openai.
  *
@@ -15,8 +15,7 @@ declare function SendMessage(message: string | object): void;
  * @param option A payload object containing additional options or data.
  * @returns A response object containing the next action, input messages, and output data.
  */
-export function Init(
-  context: neo.Context,
+export function Create(
   input: neo.Message[],
   option: { [key: string]: any }
 ): neo.ResHookInit {
@@ -38,12 +37,12 @@ export function Init(
         // console.log('attachment');
         // console.log(attachment);
         try {
-          SendMessage('读取网页' + attachment.url);
+          Send('读取网页' + attachment.url);
 
           const content = getWebPageContent(attachment.url);
-          SendMessage('读取网页完成' + attachment.url);
+          Send('读取网页完成' + attachment.url);
 
-          SendMessage(content);
+          Send(content);
         } catch (error) {
           console.log(error.message);
         }
@@ -91,14 +90,12 @@ export function Init(
 /**
  * called only once, when the call openai api done,open ai return messages
  *
- * @param context context info
  * @param input input messages
  * @param output messages
  * @param writer for response
  * @returns
  */
 function Done(
-  context: neo.Context,
   input: neo.ChatMessage[],
   output: neo.ChatMessage[]
 ): any | null | string {
@@ -173,15 +170,11 @@ function Done(
 /**
  * called every time when the call openai api failed,open ai return error messages
  *
- * @param context context info
  * @param input input messages
- * @param output output messages
+ * @param error error messages
  * @returns {next,input,output}
  */
-function Fail(
-  context: neo.Context,
-  input: neo.Message[]
-): neo.ResHookFail | null {
+function Fail(context: neo.Context, error: string): neo.ResHookFail | null {
   // case 1 return null,no change
   // return null
   return null;
