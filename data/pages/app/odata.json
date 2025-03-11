@@ -80,7 +80,8 @@
               "url": "/api/v1/system/model/ddic.model/select_options",
               "data": {
                 "_label": "name",
-                "_value": "identity"
+                "_value": "identity",
+                "join": true
               }
             },
             "type": "select"
@@ -189,7 +190,8 @@
               "url": "/api/v1/system/model/ddic.model/select_options",
               "data": {
                 "_value": "identity",
-                "_label": "name"
+                "_label": "name",
+                "join": true
               },
               "method": "post"
             }
@@ -300,7 +302,8 @@
                       "source": {
                         "data": {
                           "_label": "name",
-                          "_value": "identity"
+                          "_value": "identity",
+                          "join": true
                         },
                         "method": "post",
                         "url": "/api/v1/system/model/ddic.model/select_options",
@@ -385,7 +388,8 @@
                       "source": {
                         "data": {
                           "_label": "name",
-                          "_value": "identity"
+                          "_value": "identity",
+                          "join": true
                         },
                         "method": "post",
                         "url": "/api/v1/system/model/ddic.model/select_options"
@@ -519,7 +523,8 @@
                   "source": {
                     "data": {
                       "_label": "name",
-                      "_value": "identity"
+                      "_value": "identity",
+                      "join": true
                     },
                     "method": "post",
                     "url": "/api/v1/system/model/ddic.model/select_options"
@@ -657,7 +662,8 @@
                         "source": {
                           "data": {
                             "_label": "name",
-                            "_value": "identity"
+                            "_value": "identity",
+                            "join": true
                           },
                           "method": "post",
                           "url": "/api/v1/system/model/ddic.model/select_options"

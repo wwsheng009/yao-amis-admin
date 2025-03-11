@@ -170,7 +170,6 @@ export function getDataFromRequest(
 ) {
   const metaFullPath = basePath + '$metadata';
   const oQsl = ConvertUrlToQsl(oRequest);
-  // const q = new Query();
 
   // 计算数量
   if (oQsl.isCount) {

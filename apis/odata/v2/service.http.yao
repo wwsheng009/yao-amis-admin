@@ -11,8 +11,9 @@
       // http://localhost:5099/api/odata/v2/service/$metadata
       "name": "入口",
       "description": "get请求入口",
-      "path": "/*path",
+      "path": "/:path",
       "method": "GET",
+      "guard": "-",
       // "guard": "scripts.auth.basic.Check",
       "process": "scripts.app.odata.v2.getData",
       "in": [
@@ -27,7 +28,7 @@
       "out": {
         "status": 200,
         "body": "{{data}}",
-        "Headers": {//一定要是大写
+        "Headers": { //一定要是大写
           "Content-Type": "{{type}}",
           "DataServiceVersion": "2.0"
         }
@@ -37,10 +38,10 @@
       // api/v1/odata/
       "name": "入口",
       "description": "post请求入口",
-      "path": "/*path",
+      "path": "/:path",
       "method": "POST",
       "guard": "scripts.auth.basic.Check",
-      "process": "scripts.app.odata.postData",
+      "process": "scripts.app.odata.v2.postData",
       "in": [
         "$param.path",
         ":query",
@@ -60,34 +61,5 @@
         }
       }
     }
-    // {
-    //   // api/v1/odata/
-    //   "name": "入口",
-    //   "description": "OPTIONS请求入口,跨域请求",
-    //   "path": "/*path",
-    //   "method": "OPTIONS",
-    //   "guard": "-",
-    //   "process": "scripts.app.odata.head",
-    //   "in": [],
-    //   "out": {
-    //     "status": 200
-    //   }
-    // },
-    // {
-    //   // api/v1/odata/
-    //   "name": "入口",
-    //   "description": "head请求入口",
-    //   "path": "/",
-    //   "method": "HEAD",
-    //   "guard": "-",
-    //   "process": "scripts.app.odata.head",
-    //   "in": [],
-    //   "out": {
-    //     "status": 200,
-    //     "Headers": {
-    //       "X-CSRF-Token": "123123"
-    //     }
-    //   }
-    // }
   ]
 }

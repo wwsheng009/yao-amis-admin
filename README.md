@@ -67,8 +67,8 @@ docker run -d --name=yao-amis-admin \
 
 演示地址：[demo](http://fun.wwsheng.online:5099/)，用户名：xiang@iqka.com 密码：A123456p+
 
-![entry](doc/entry_index.png)
-![model_create](doc/model_create.png)
+![entry](doc/img/entry_index.png)
+![model_create](doc/img/model_create.png)
 
 
 ## 特性列表
@@ -116,7 +116,7 @@ Yao 模型是整个系统的核心组件，在这里，可以使用界面创建 
 - 模型支持模型关联关系配置，一对一/一对多。
 - 支持AI生成模型定义并导入。
 
-![model_import](doc/model_import.png)
+![model_import](doc/img/model_import.png)
 
 ### AMIS 界面编辑器集成
 
@@ -126,29 +126,29 @@ Yao 模型是整个系统的核心组件，在这里，可以使用界面创建 
 
 基于 amis-sdk，实现了在线的 yao api 接口测试功能。
 
-![api_test](doc/api_test.png)
+![api_test](doc/img/api_test.png)
 
 ### 表数据维护
 
 基于模型定义，可以推断出整个 crud 界面的定义。在表数据维护的入口可以查看或是更新表数据。
 
-![table_maintain](doc/table_maintain.png)
+![table_maintain](doc/img/table_maintain.png)
 
 ### 代码生成
 
 基于模型定义，也可以自己创建不同的代码生成功能。
 
-![code_generate](doc/code_generate.png)
+![code_generate](doc/img/code_generate.png)
 
 ### Soybean-admin 集成
 
 amis-sdk 可以与 react 或是 vue 作集成开发，这里是把 amis-sdk 作为 vue 组件，嵌入到第三方的 admin 框架。
 
-![soy-admin-integrate](doc/soy-admin-integrate.png)
+![soy-admin-integrate](doc/img/soy-admin-integrate.png)
 
 已经实现了 soybean 的菜单管理功能。
 
-![menu_manager](doc/menu_manager.png)
+![menu_manager](doc/img/menu_manager.png)
 
 ### yao ai 集成
 
@@ -169,7 +169,7 @@ DOUBAO_KEY=""
 
 其中豆包对函数调用比较完善。
 
-![ai_chat](doc/ai_chat.png)
+![ai_chat](doc/img/ai_chat.png)
 
 
 ## 本地安装
@@ -237,7 +237,7 @@ amis 框架地址:https://github.com/baidu/amis
 
 amis 文档地址：https://aisuda.bce.baidu.com/amis/zh-CN/docs/index
 
-yao 处理器列表：https://yaoapps.com/doc/%E6%89%8B%E5%86%8C/%E5%A4%84%E7%90%86%E5%99%A8/Model
+yao 处理器列表：https://yaoapps.com/doc/img/%E6%89%8B%E5%86%8C/%E5%A4%84%E7%90%86%E5%99%A8/Model
 
 ## 许可
 

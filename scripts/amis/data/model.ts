@@ -430,6 +430,11 @@ export function selectOptions(
     }
     join = row.join;
   }
+  if (!join) {
+    if (querys['join'] && querys['join'][0]) {
+      join = true;
+    }
+  }
 
   if (querys['_value']) {
     query.valueField = querys['_value'][0];
@@ -475,7 +480,7 @@ export function selectOptions(
     const isNull = x.label == null;
     x.label = x.label || x.value;
     if (join && !isNull) {
-      x.label = `${x.value}[${x.label}]`;
+      x.label = `${x.value} - ${x.label}`;
     }
   });
 

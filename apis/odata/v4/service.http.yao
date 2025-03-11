@@ -8,8 +8,9 @@
       // api/v1/odata/
       "name": "入口",
       "description": "get请求入口",
-      "path": "/*path",
+      "path": "/:path",
       "method": "GET",
+      // "guard": "-",
       "guard": "scripts.auth.basic.Check",
       "process": "scripts.app.odata.v4.getData",
       "in": [
@@ -34,7 +35,7 @@
       // api/v1/odata/
       "name": "入口",
       "description": "post请求入口",
-      "path": "/*path",
+      "path": "/:path",
       "method": "POST",
       "guard": "scripts.auth.basic.Check",
       "process": "scripts.app.odata.v4.postData",
@@ -57,34 +58,5 @@
         }
       }
     }
-    // {
-    //   // api/v1/odata/
-    //   "name": "入口",
-    //   "description": "OPTIONS请求入口,跨域请求",
-    //   "path": "/*path",
-    //   "method": "OPTIONS",
-    //   "guard": "cross-origin",
-    //   "process": "scripts.app.odata.head",
-    //   "in": [],
-    //   "out": {
-    //     "status": 200
-    //   }
-    // },
-    // {
-    //   // api/v1/odata/
-    //   "name": "入口",
-    //   "description": "head请求入口",
-    //   "path": "/",
-    //   "method": "HEAD",
-    //   "guard": "cross-origin",
-    //   "process": "scripts.app.odata.head",
-    //   "in": [],
-    //   "out": {
-    //     "status": 200,
-    //     "Headers": {
-    //       "X-CSRF-Token": "123123"
-    //     }
-    //   }
-    // }
   ]
 }
