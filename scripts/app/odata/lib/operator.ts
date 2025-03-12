@@ -117,4 +117,3 @@ export const year = (
 };
 
 export default { indexof, year, contains };
-// module.exports = { indexof, year, contains };

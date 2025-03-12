@@ -149,9 +149,3 @@ function escapedXmlString(str) {
   });
   return strXml;
 }
-
-// module.exports = {
-//   getEntryMetaDataXml,
-//   getMetaDataXml2,
-//   convertJsonToXml
-// };

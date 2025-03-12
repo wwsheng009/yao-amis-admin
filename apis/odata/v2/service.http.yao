@@ -6,15 +6,14 @@
   "paths": [
     {
       // api/odata/v2/service/:modelId
-      // http://localhost:5099/api/odata/v2/service/admin.user
+      // http://localhost:5099/api/odata/v2/service/
       // http://localhost:5099/api/odata/v2/service/$
       // http://localhost:5099/api/odata/v2/service/$metadata
       "name": "入口",
       "description": "get请求入口",
-      "path": "/:path",
+      "path": "/*path",
       "method": "GET",
-      "guard": "-",
-      // "guard": "scripts.auth.basic.Check",
+      "guard": "scripts.auth.basic.OdataCheck",
       "process": "scripts.app.odata.v2.getData",
       "in": [
         "$param.path",
@@ -38,9 +37,9 @@
       // api/v1/odata/
       "name": "入口",
       "description": "post请求入口",
-      "path": "/:path",
+      "path": "/*path",
       "method": "POST",
-      "guard": "scripts.auth.basic.Check",
+      "guard": "scripts.auth.basic.OdataCheck",
       "process": "scripts.app.odata.v2.postData",
       "in": [
         "$param.path",

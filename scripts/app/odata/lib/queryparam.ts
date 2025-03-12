@@ -53,20 +53,6 @@ export function ConvertUrlToQsl(oUrl: {
 
   let pathParam = oUrl.URL.path;
   const query = convertUrlQueryObj(oUrl.URL.query);
-
-  // let sRequestUrl = queryObjectToUrl(query);
-
-  // if (sRequestUrl !== '') {
-  //   sRequestUrl = `${pathParam}?${sRequestUrl}`;
-  // } else {
-  //   sRequestUrl = pathParam;
-  // }
-  // const q1 = sRequestUrl(sRequestUrl);
-
-  // console.log("sRequestUrl:", sRequestUrl);
-  // const odataRequest = odataParser.odataUri(sRequestUrl);
-  // console.log("odataRequest:", odataRequest);
-
   if (pathParam.startsWith('/')) {
     // check if string starts with "/"
     pathParam = pathParam.substring(1); // remove the first character
@@ -404,4 +390,3 @@ function splitByKeys(sentence: string, keys = []) {
   result.push(mergeList(tmp));
   return result;
 }
-// module.exports = { ConvertUrlToQsl };

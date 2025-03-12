@@ -196,13 +196,8 @@ export function getDataFromRequest(
       oQsl.qsl.limit = 100000;
     }
     oQsl.qsl.limit = Number(oQsl.qsl.limit);
-    // const data1 = q.Get(oQsl.qsl);
     let data1 = null;
-    // console.log('oQsl.qsl', oQsl.qsl);
     if (oQsl.model?.table_id) {
-      // console.log('oQsl.model?.table_id', oQsl.model?.table_id);
-      // console.log('oQsl.model.model_id', oQsl.model.model_id);
-
       data1 = Process('yao.table.get', oQsl.model.table_id, oQsl.qsl);
     } else {
       // data1 = q.Get(oQsl.qsl);
