@@ -8,17 +8,15 @@ import { updateModelMetaFields } from './model_convert';
 
 /**
  * get the id of the cached models 读取所有的模型id的列表
- * 
- * 缺少一个name属性，所有只能读取到id列表
-
  *
  * yao run scripts.system.model_lib.getCachedModelIDList
  * @returns list of the cached model ids
  */
 export function getCachedModelIDList(): string[] {
-  const models = Process('widget.models');
+  return Process('model.list').map((m) => m.id);
+  // const models = Process('widget.models');
 
-  return modelIdListFromMemory(models);
+  // return modelIdListFromMemory(models);
 }
 
 /**
@@ -28,8 +26,16 @@ export function getCachedModelIDList(): string[] {
  * @returns []object
  */
 export function getCachedModelList(): CachedModel[] {
-  const models = Process('widget.models');
-  return modelListFromMemory(models);
+  const modelsList = Process('model.list', { metadata: true });
+
+  return modelsList.map((m) => {
+    m.metadata.ID = m.id;
+    return m.metadata;
+    // return m as CachedModel;
+  });
+
+  // const models = Process('widget.models');
+  // return modelListFromMemory(models);
 }
 /**
  * 解析内存中的模型数据,可以使用路径表达式
@@ -142,28 +148,6 @@ export function FindCachedModelById(modelId: ModelId): AmisModel {
   } else {
     return null;
   }
-
-  // const models = Process('widget.models') as YaoModelNode[];
-
-  // const traverse = (node: any, modelId: string) => {
-  //   if (node.children) {
-  //     return traverse(node.children, modelId);
-  //   } else if (node.data) {
-  //     if (node.data.ID == modelId) {
-  //       return node.data;
-  //     }
-  //   } else if (Array.isArray(node)) {
-  //     for (const item of node) {
-  //       const obj = traverse(item, modelId);
-  //       if (obj) {
-  //         return obj;
-  //       }
-  //     }
-  //   }
-  // };
-  // const model = traverse(models, modelId + '');
-  // const modelDsl = updateModelMetaFields(model);
-  // return modelDsl;
 }
 
 /**

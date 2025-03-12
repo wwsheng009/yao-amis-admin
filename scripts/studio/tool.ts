@@ -38,9 +38,10 @@ export function modelIdListFromMemory(modelData: CachedModelTree) {
 }
 
 export function getCachedModelIDList(): string[] {
-  const models = Process('widget.models');
+  return Process('model.list').map((m) => m.id);
 
-  return modelIdListFromMemory(models);
+  // const models = Process('widget.models');
+  // return modelIdListFromMemory(models);
 }
 /**
  * use the yao-amis-admin service to generate the code
