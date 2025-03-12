@@ -25,17 +25,6 @@ function error() {
   throw new Exception('Not Authorized', 403);
 }
 
-// yao run scripts.security.CheckToken
-// export function Token(path, params, queries, payload, headers) {
-//   const token = getToken(path, params, queries, payload, headers);
-//   if (!token) {
-//     return;
-//   }
-
-//   const data = Process('utils.jwt.Verify', token);
-//   return { __sid: data.sid, __global: data.data };
-// }
-
 function getToken(path, params, queries, payload, headers) {
   // 接受三种身份验证参数传入路径
   // 1 headers Authorization

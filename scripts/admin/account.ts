@@ -7,7 +7,7 @@ import { Process, Query } from '@yao/yao';
  *
  * @returns 当前登录用户的信息
  */
-function UserInfo(id: string) {
+export function UserInfo(id: string) {
   let user_id = Process('session.get', 'user_id');
   if (id) {
     user_id = id;
@@ -48,7 +48,7 @@ function UserInfo(id: string) {
  * yao run scripts.system.account.UserList
  * @returns 用户列表
  */
-function UserList() {
+export function UserList() {
   const q = new Query();
   const list = q.Get({
     // "debug": true,
@@ -83,7 +83,7 @@ function UserList() {
  * @param {object} form
  * @returns
  */
-function changeOwnassword({ current, new_password, confirm }) {
+export function changeOwnassword({ current, new_password, confirm }) {
   const user_id = Process('session.get', 'user_id');
   if (!user_id) {
     return Process('scripts.return.RError', '', 400, '用户不存在');
@@ -131,7 +131,7 @@ function changeOwnassword({ current, new_password, confirm }) {
  * @param {object} payload
  * @returns
  */
-function register(payload: {
+export function register(payload: {
   captcha: { id: string; code: string };
   password: string;
   email: string;

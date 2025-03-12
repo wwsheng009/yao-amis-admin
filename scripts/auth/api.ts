@@ -13,7 +13,7 @@ import { Exception } from '@yao/yao';
  * @param {object} headers
  * @returns
  */
-function check(path, params, queries, payload, headers) {
+export function check(path, params, queries, payload, headers) {
   // super use has all api access
   if (isSuperUser()) {
     return;

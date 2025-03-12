@@ -10,7 +10,7 @@
       "path": "/get",
       "method": "GET",
       "guard": "bearer-jwt",
-      "process": "scripts.system.account.UserInfo",
+      "process": "scripts.admin.account.UserInfo",
       "in": [],
       "out": {
         "status": 200,
@@ -37,7 +37,7 @@
       "path": "/change_password",
       "method": "POST",
       "guard": "bearer-jwt",
-      "process": "scripts.system.account.changeOwnassword",
+      "process": "scripts.admin.account.changeOwnassword",
       "in": [
         ":payload"
       ],
@@ -52,7 +52,7 @@
       "path": "/register",
       "method": "POST",
       "guard": "-",
-      "process": "scripts.system.account.register",
+      "process": "scripts.admin.account.register",
       "in": [
         ":payload"
       ],
@@ -60,6 +60,6 @@
         "status": 200,
         "type": "application/json"
       }
-    }
+    },
   ]
 }

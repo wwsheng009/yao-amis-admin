@@ -161,3 +161,45 @@ export function userVerify(userName, password) {
   }
   return { message: '验证通过', code: 200, user_id: user.id };
 }
+
+/**
+ * 刷新Token
+ * yao run scripts.amis.user.TokenRefresh
+ */
+export function TokenRefresh() {
+  const TIMEOUT = 60 * 60 * 8;
+
+  const userData = Process('session.Get', 'user');
+  delete userData.password;
+
+  const jwtClaims = { user_name: userData.name };
+
+  const id = userData.id;
+  const sessionId = Process('session.ID');
+  const jwt = Process('utils.jwt.Make', id, jwtClaims, {
+    timeout: TIMEOUT,
+    sid: sessionId
+  });
+
+  // 更新 Session
+  Process('session.Set', 'user_id', id, TIMEOUT, sessionId);
+  Process('session.Set', 'user', userData, TIMEOUT, sessionId);
+  Process('session.set', 'token', jwt.token, TIMEOUT, sessionId);
+
+  // 设置权限缓存
+  const userAuthObject = getUserAuthObjects(userData.id);
+  Process(
+    'session.set',
+    'user_auth_objects',
+    userAuthObject,
+    TIMEOUT,
+    sessionId
+  );
+
+  return {
+    sid: sessionId,
+    user: userData,
+    token: jwt.token,
+    expires_at: jwt.expires_at
+  };
+}

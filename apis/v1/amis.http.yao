@@ -21,6 +21,20 @@
       }
     },
     {
+      // /api/v1/amis/refresh_token
+      "label": "刷新token",
+      "description": "刷新token",
+      "path": "/refresh_token",
+      "method": "POST",
+      "guard": "bearer-jwt",
+      "process": "scripts.amis.user.TokenRefresh",
+      "in": [],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
       "label": "验证码",
       "description": "验证码",
       "path": "/captcha",
