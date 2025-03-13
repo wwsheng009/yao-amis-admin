@@ -11,7 +11,7 @@
       "description": "读取树形数据",
       "path": "/:tree/find",
       "method": "GET",
-      "process": "scripts.system.tree.GetTreeNodes",
+      "process": "scripts.amis.tree.GetTreeNodes",
       "in": [
         "$param.tree",
         ":query"
@@ -28,7 +28,7 @@
       "path": "/:tree/create",
       "method": "POST",
       "guard": "bearer-jwt",
-      "process": "scripts.system.tree.CreateTreeNode",
+      "process": "scripts.amis.tree.CreateTreeNode",
       "in": [
         "$param.tree",
         ":payload"
@@ -45,7 +45,7 @@
       "path": "/:tree/edit/:id",
       "method": "POST",
       "guard": "bearer-jwt",
-      "process": "scripts.system.tree.UpdateTreeNode",
+      "process": "scripts.amis.tree.UpdateTreeNode",
       "in": [
         "$param.tree",
         "$param.id",
@@ -63,7 +63,7 @@
       "path": "/:tree/delete/:id",
       "method": "DELETE",
       "guard": "bearer-jwt",
-      "process": "scripts.system.tree.DeleteTreeNode",
+      "process": "scripts.amis.tree.DeleteTreeNode",
       "in": [
         "$param.tree",
         "$param.id"
@@ -80,7 +80,7 @@
       "path": "/:tree/delete/:id",
       "method": "post",
       "guard": "bearer-jwt",
-      "process": "scripts.system.tree.DeleteTreeNode",
+      "process": "scripts.amis.tree.DeleteTreeNode",
       "in": [
         "$param.tree",
         "$param.id"

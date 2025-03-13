@@ -10,7 +10,7 @@
             "description": "数据库表清单",
             "path": "/table_name_list", //api/v1/system/meta/table/name_list
             "method": "GET",
-            "process": "scripts.system.table.TableNameList",
+            "process": "scripts.amis.table.TableNameList",
             "in": [
                 ""
             ],
@@ -25,7 +25,7 @@
             "description": "获取数据库表清单",
             "path": "/list",
             "method": "get",
-            "process": "scripts.system.table.TableListUniq",
+            "process": "scripts.amis.table.TableListUniq",
             "in": [
                 ":query"
             ],
@@ -40,7 +40,7 @@
             "description": "获取数据库表清单",
             "path": "/search",
             "method": "get",
-            "process": "scripts.system.table.TableListSearch",
+            "process": "scripts.amis.table.TableListSearch",
             "in": [
                 ":query",
                 ":payload"

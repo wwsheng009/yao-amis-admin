@@ -10,7 +10,7 @@ import {
  * yao run scripts.system.tree.GetTreeNodes admin.menu
  * @returns
  */
-function GetTreeNodes(model, querys) {
+export function GetTreeNodes(model, querys) {
   return GetNodes(model, querys);
 }
 
@@ -23,7 +23,7 @@ function GetTreeNodes(model, querys) {
  * @param node 当前节点数据
  * @returns
  */
-function CreateTreeNode(model, { idx, parent, ...node }) {
+export function CreateTreeNode(model, { idx, parent, ...node }) {
   return CreateNode(model, { idx, parent, ...node });
 }
 /**
@@ -34,7 +34,7 @@ function CreateTreeNode(model, { idx, parent, ...node }) {
  * @param {*} menuNode 菜单节点，没有携带id信息
  * @returns
  */
-function UpdateTreeNode(model, id, menuNode) {
+export function UpdateTreeNode(model, id, menuNode) {
   return UpdateNode(model, id, menuNode);
 }
 //
@@ -46,7 +46,7 @@ function UpdateTreeNode(model, id, menuNode) {
  * @param {*} ids
  * @returns
  */
-function DeleteTreeNode(model, ids) {
+export function DeleteTreeNode(model, ids) {
   return DeleteNode(model, ids);
 }
 
@@ -58,6 +58,6 @@ function DeleteTreeNode(model, ids) {
  * @param {*} id
  * @returns
  */
-function GetTreeNodeItems(model, id) {
+export function GetTreeNodeItems(model, id) {
   return GetNodeItems(model, id);
 }

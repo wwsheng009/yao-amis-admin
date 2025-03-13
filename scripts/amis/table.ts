@@ -5,7 +5,7 @@ import { Process } from '@yao/yao';
 import { QueryObjectIn } from '@yao/request';
 
 /**
- * yao run scripts.system.table.TableListSearch  '::{"created":[false]}'
+ * yao run scripts.amis.table.TableListSearch  '::{"created":[false]}'
  * @param {object} querysIn url 查询条件，支持get查询
  * @param {object} payload payload 查询条件，支持post查询
  * @returns
@@ -19,7 +19,7 @@ export function TableListSearch(querysIn: QueryObjectIn, payload: object) {
 
 /**
  * 根据表名进行排重
- * yao run scripts.system.table.TableListUniq
+ * yao run scripts.amis.table.TableListUniq
  * @returns
  */
 export function TableListUniq(query?: { name: string }) {
@@ -41,7 +41,7 @@ export function TableListUniq(query?: { name: string }) {
   }
   return result;
 }
-// yao run scripts.system.table.TableNameList
+// yao run scripts.amis.table.TableNameList
 /**
  * 转换成options
  * @returns
@@ -60,7 +60,7 @@ export function TableNameList() {
 
 /**
  * 获取数据库中所有表与表的相关状态
- * yao run scripts.system.table.TableList
+ * yao run scripts.amis.table.TableList
  */
 function TableList() {
   const dbTables = Process('schemas.default.Tables') || [];
@@ -144,7 +144,7 @@ function TableList() {
 }
 
 /**
- * yao run scripts.system.table.tableNameOptions
+ * yao run scripts.amis.table.tableNameOptions
  * @returns 返回数据库表列表
  */
 export function tableNameOptions() {
