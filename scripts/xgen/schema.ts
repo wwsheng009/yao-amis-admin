@@ -89,7 +89,7 @@ export function generateTableView(
 export function generateFormView(
   modelId: ModelId,
   columns: AmisUIColumn[],
-  simple: string,
+  simple: string, //simple / full
   type: string
 ) {
   if (simple == 'simple') {
@@ -97,7 +97,6 @@ export function generateFormView(
       {
         language: 'json',
         title: '表单查看',
-        can_preview: true,
         __code_source: {
           name: modelId,
           action: { bind: { model: modelId } }
@@ -107,6 +106,7 @@ export function generateFormView(
   }
 
   const modelDsl = getModelDefinition(modelId, columns);
+
   return getXgenFormSchema(modelDsl, type);
 }
 
@@ -377,7 +377,6 @@ function getXgenFormSchema(modelDsl: YaoModel.ModelDSL, type = 'view') {
     return relationList(formTemplate, modelDsl);
   }
 }
-
 
 function GetWiths(modelDsl: YaoModel.ModelDSL) {
   const relations = modelDsl.relations || {};

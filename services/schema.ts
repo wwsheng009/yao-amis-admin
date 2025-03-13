@@ -8,63 +8,63 @@ import { Process } from '@yao/yao';
 export function getCodeGenerationList() {
   return [
     {
-      label: 'Amis增删改查-页面',
+      label: 'Amis-CURD-ALL',
       value: 'CRUDAllTemplate'
     },
     {
-      label: 'Amis增删改查-查看',
+      label: 'Amis-CURD-List',
       value: 'CRUDListTemplate'
     },
     {
-      label: 'Amis增删改查-创建',
+      label: 'Amis-CRUD-New',
       value: 'CRUDNewTemplate'
     },
     {
-      label: 'Amis列表视图-字段列表',
+      label: 'Amis-Table-View',
       value: 'getTableAmisViewFields'
     },
     {
-      label: 'Amis表单查看-字段列表',
+      label: 'Amis-Table-Form',
       value: 'getTableAmisFormViewFields'
     },
     {
-      label: 'Amis表单修改-字段列表',
+      label: 'Amis-Table-Form-View',
       value: 'getTableAmisFormFields'
     },
     {
-      label: 'Amis表单修改-带快速-字段列表',
+      label: 'Amis-Table-View-With-Quick',
       value: 'getTableAmisViewFieldsWithQuick'
     },
     {
-      label: 'Xgen所有对象',
-      value: 'getXgenObjects'
+      label: 'Xgen-All',
+      value: 'getXgenAll'
     },
     {
-      label: 'Xgen表格定义-简单',
+      label: 'Xgen-Table',
       value: 'getXgenTable'
     },
     {
-      label: 'Xgen表格定义-完整',
+      label: 'Xgen-Table-Full',
       value: 'getXgenTableFull'
     },
     {
-      label: 'Xgen表单定义-简单',
+      label: 'Xgen-Form',
       value: 'getXgenForm'
     },
     {
-      label: 'Xgen表单定义-完整-查看',
+      label: 'Xgen-Form-View-Full',
       value: 'getXgenFormFullView'
     },
     {
-      label: 'Xgen表单定义-完整-编辑',
+      label: 'Xgen-Form-Edit-Full',
       value: 'getXgenFormFullEdit'
     },
     {
-      label: 'TS类型定义',
+      label: 'TS-Model-Types',
       value: 'getTSType'
     },
     {
-      label: 'TS模型服务定义',
+      label: 'TS-Model-Service',
       value: 'getTSModelServiceTemplate'
     }
   ];
@@ -334,18 +334,12 @@ export function getXgenTableFull(modelId: ModelId, columns?: AmisUIColumn[]) {
  */
 export function getXgenForm(modelId: ModelId, columns?: AmisUIColumn[]) {
   return {
-    __code_sources: [
-      {
-        language: 'json',
-        title: 'xgen-表单查看',
-        __code_source: Process(
-          'scripts.xgen.schema.generateFormView',
-          modelId,
-          columns,
-          'simple'
-        )
-      }
-    ]
+    __code_sources: Process(
+      'scripts.xgen.schema.generateFormView',
+      modelId,
+      columns,
+      'simple'
+    )
   };
 }
 
@@ -396,7 +390,7 @@ export function getXgenFormFullEdit(
  * @param {Array} columns 列定义
  * @returns
  */
-export function getXgenObjects(modelId: ModelId, columns?: AmisUIColumn[]) {
+export function getXgenAll(modelId: ModelId, columns?: AmisUIColumn[]) {
   const formFullviews = Process(
     'scripts.xgen.schema.generateFormView',
     modelId,
