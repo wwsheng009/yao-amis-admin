@@ -1,3 +1,7 @@
+/**
+ * 实用函数，调用amis-admin的远程服务，生成模型的类型定义
+ */
+
 import { FindCachedModelById } from '@scripts/service/data';
 import { FS, http, Process } from '@yaoapps/client';
 import { YaoModel } from '@yaoapps/types';
@@ -14,34 +18,9 @@ export interface CachedModelTree {
   children?: { data?: CachedModel }[];
   data?: CachedModel;
 }
-/**
- * 解析内存中的模型数据
- * @param {*} modelData
- * @returns
- */
-export function modelIdListFromMemory(modelData: CachedModelTree) {
-  let idList = [];
-  if (modelData.children) {
-    modelData.children.forEach((line) => {
-      const subLine = modelIdListFromMemory(line);
-      idList = idList.concat(subLine);
-    });
-  } else if (modelData.data) {
-    idList.push(modelData.data.ID);
-  } else if (Array.isArray(modelData)) {
-    modelData.forEach((line) => {
-      const subLine = modelIdListFromMemory(line);
-      idList = idList.concat(subLine);
-    });
-  }
-  return idList;
-}
 
 export function getCachedModelIDList(): string[] {
   return Process('model.list').map((m) => m.id);
-
-  // const models = Process('widget.models');
-  // return modelIdListFromMemory(models);
 }
 /**
  * use the yao-amis-admin service to generate the code
@@ -91,7 +70,7 @@ export function toCamelCaseNameSpace(str: string) {
 /**
  * 生成模型服务代码
  *
- * yao run scripts.studio.tool.generateModelCode admin.user
+ * yao run scripts.service.model.generateModelCode admin.user
  * @param modelId 模型ID
  */
 export function generateModelCode(modelId: string, overwrite: boolean = true) {
@@ -118,7 +97,7 @@ export function generateModelCode(modelId: string, overwrite: boolean = true) {
 /**
  * 生成模型类型代码
  *
- * yao run scripts.studio.tool.generateModelTypeCode admin.user
+ * yao run scripts.service.model.generateModelTypeCode admin.user
  * @param modelId
  */
 export function generateModelTypeCode(

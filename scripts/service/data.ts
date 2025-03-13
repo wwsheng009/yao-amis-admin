@@ -1,3 +1,8 @@
+/**
+ * 一些实用的功能函数，可以直接把data.ts与utils.ts,model.ts复制到别的项目使用
+ *
+ */
+
 import { ModelId, SearchResult } from '@yao/types';
 import { Exception, log, Process } from '@yaoapps/client';
 import { QueryObjectIn } from '@yao/request';
@@ -27,7 +32,7 @@ export function dataPaginate(
   let querys = convertKeysToSnakeCase(queryIn);
   querys = mergeQueryObject(querys, payload);
 
-  const page = parseInt(getArrayItem(querys, 'page'), 1);
+  const page = parseInt(getArrayItem(querys, 'page', 1));
   const perPage = parseInt(getArrayItem(querys, 'limit', 10));
 
   const queryParams =

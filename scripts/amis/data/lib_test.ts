@@ -1,38 +1,4 @@
-function mergeQueryObject(querysIn, payload) {
-  // console.log(`types of querysIn${typeof querysIn}`);
-  // console.log(`types of payload${typeof payload}`);
-
-  if (payload == null) {
-    return querysIn;
-  }
-  if (querysIn == null) {
-    querysIn = {};
-  }
-  if (typeof querysIn !== 'object') {
-    return querysIn;
-  }
-  const querys = querysIn;
-
-  if (typeof payload === 'object' && Object.keys(payload).length) {
-    for (const key in payload) {
-      if (Object.hasOwnProperty.call(payload, key)) {
-        const element = payload[key];
-        const values = querys[key];
-        if (Array.isArray(values)) {
-          if (!values.some((x) => x == element)) {
-            // 使用弱比较，'1'应该等于1
-            querys[key].push(element);
-          }
-        } else {
-          querys[key] = [element];
-        }
-      }
-    }
-  }
-
-  return querys;
-}
-
+import { mergeQueryObject } from './lib';
 // yao run scripts.amis.data.test.testMerage
 function testMerage() {
   const querys = {

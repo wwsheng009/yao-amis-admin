@@ -579,6 +579,15 @@ export function completeAmisModel(modelDsl: AmisModel): AmisModel {
   return modelDsl;
 }
 
+/**
+ * 更新模型元数据字段
+ *
+ * 这个函数用于更新模型的元数据字段，例如列的标签。它接受一个模型的 DSL 对象，并根据模型的选项（如时间戳和软删除）来更新列的标签。
+ *
+ * @param modelDsl - 要更新的模型的 DSL 对象
+ * @returns 更新后的模型 DSL 对象
+ * @throws {Exception} 如果模型定义不正确或缺少字段定义，将抛出异常
+ */
 export function updateModelMetaFields(
   modelDsl: YaoModel.ModelDSL
 ): YaoModel.ModelDSL {

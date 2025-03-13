@@ -8,6 +8,8 @@ import { ModelId } from '@yao/types';
 import { QueryObjectIn } from '@yao/request';
 import { getModelDslById, getYaoModelColumnMap } from '@scripts/system/model';
 
+import { addModelMetaFields } from '@scripts/system/model_convert';
+
 // 推荐在循环对象属性的时候，使用for...in,
 // 在遍历数组的时候的时候使用for...of。
 // for...in循环出的是key，for...of循环出的是value
@@ -48,20 +50,20 @@ export function mergeQueryObject(querysIn: QueryObjectIn, payload: object) {
  * 转换URL查询对象成YAO的QueryParam对象
  * @param {object} modelIn 模型定义
  * @param {object} querysIn URL查询对象
- * @param {object} queryParams yao解析的queryParams
+ * @param {object} queryParamsIn yao解析的queryParams
  * @returns 返回Yao QueryParam
  */
 export function queryToQueryParam(
   modelIn: ModelId | YaoModel.ModelDSL,
   querysIn: QueryObjectIn,
-  queryParams?: YaoQueryParam.QueryParam
+  queryParamsIn?: YaoQueryParam.QueryParam
 ) {
-  if (querysIn == null && queryParams == null) {
+  if (querysIn == null && queryParamsIn == null) {
     return {};
   }
   const querys = querysIn || {};
   // 查询条件
-  const queryParam = queryParams || {};
+  const queryParam = queryParamsIn || {};
   const orders = [];
   const wheres = [];
   // 根据url参数信息，构造yao的查询条件
@@ -73,30 +75,21 @@ export function queryToQueryParam(
   if (typeof model === 'string') {
     model = FindAndLoadYaoModelById(model);
   }
+  model = addModelMetaFields(model);
+
   model.columns?.forEach((col) => {
     columnMap[col.name] = col;
   });
-  // fillup the miss col
-  if (model.option?.soft_deletes) {
-    columnMap['deleted_at'] = {
-      type: 'datetime'
-    };
-  } else if (model.option?.timestamps) {
-    columnMap['updated_at'] = {
-      type: 'datetime'
-    };
-    columnMap['created_at'] = {
-      type: 'datetime'
-    };
-  }
 
   let select = [];
   if (
     querys != null &&
     Object.prototype.hasOwnProperty.call(querys, 'select')
   ) {
-    const joinedString = querys['select'].join(',');
-    const selectArray = joinedString.split(',');
+    let selectArray = querys.select;
+    if (selectArray && typeof selectArray === 'string') {
+      selectArray = (selectArray + '').split(',');
+    }
     select = [...new Set(selectArray)];
     delete querys['select'];
     select = select.filter((col) =>
@@ -540,19 +533,27 @@ function paginateArray(
   // Return the sliced array of objects for the current page
   return arr.slice(startIndex, endIndex);
 }
-
+/**
+ * 从对象中获取指定键的第一个数组项，如果键不存在或对应的值不是数组，则返回默认值
+ * @param querys - 要搜索的对象
+ * @param key - 要搜索的键
+ * @param defaultValue - 键不存在或对应的值不是数组时的默认值
+ * @returns 找到的第一个数组项或默认值
+ */
 export function getArrayItem(
   querys: { [x: string]: string[] },
-  key: string
-): string {
+  key: string,
+  defaultValue?: any
+): any {
   if (typeof querys !== 'object') {
-    return;
+    return defaultValue;
   }
   if (Array.isArray(querys[key]) && querys[key].length) {
     return querys[key][0];
-  } else {
-    return String(querys[key]);
+  } else if (Object.hasOwnProperty.call(querys, key)) {
+    return querys[key];
   }
+  return defaultValue;
 }
 
 /**
@@ -574,8 +575,8 @@ export function PaginateArrayWithQuery(
   const orderBy = getArrayItem(querys, 'orderBy');
   const orderDir = getArrayItem(querys, 'orderDir');
 
-  const page = parseInt(getArrayItem(querys, 'page')) || 1;
-  const perPage = parseInt(getArrayItem(querys, 'perPage')) || 10;
+  const page = parseInt(getArrayItem(querys, 'page', 1));
+  const perPage = parseInt(getArrayItem(querys, 'perPage', 10));
 
   // console.log(
   //   `querys:${querys},page:${page},perage:${perPage},orderBy${orderBy},orderDir:${orderDir}`

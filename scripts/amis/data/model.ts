@@ -51,10 +51,10 @@ export function dataSearch(
   let page = pageIn;
   let perPage = perPageIn;
   if (!page || page == null) {
-    page = Number(getArrayItem(querys, 'page')) || 1;
+    page = Number(getArrayItem(querys, 'page', 1));
   }
   if (!perPage || perPage == null) {
-    perPage = Number(getArrayItem(querys, 'perPage')) || 10;
+    perPage = Number(getArrayItem(querys, 'perPage', 10));
   }
 
   const modelDsl = FindAndLoadYaoModelById(modelId);

@@ -743,6 +743,15 @@ export function column2AmisFormViewColumn(
   // }
   return newColumn;
 }
+
+/**
+ * 检查列类型是否为日期时间类型
+ *
+ * 这个函数用于判断给定的列是否属于日期时间类型。它通过检查列的类型属性来确定这一点。
+ *
+ * @param column - 要检查的列对象
+ * @returns 如果列类型是日期时间类型之一，则返回 true，否则返回 false
+ */
 export function isDateTimeType(column: AmisModelColumn) {
   const columnType = column.type?.toUpperCase();
   switch (columnType) {
