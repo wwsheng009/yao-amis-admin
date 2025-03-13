@@ -1,7 +1,7 @@
 import { curdTemplate } from '@scripts/amis/curd';
 import { curdListPage } from '@scripts/amis/schema';
-import { generateCodeTemplate } from '@scripts/system/tscode';
-import { createModelType } from '@scripts/system/tstype';
+import { generateCodeTemplate } from '@scripts/template/tscode';
+import { createModelType } from '@scripts/template/tstype';
 import { AmisUIColumn, ModelId } from '@yao/types';
 import { Process } from '@yao/yao';
 

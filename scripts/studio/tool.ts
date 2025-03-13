@@ -128,7 +128,7 @@ export function generateModelTypeCode(
   const modelDsl = FindCachedModelById(modelId);
 
   const code = remoteCall(
-    'scripts.system.tstype.createTSTypes',
+    'scripts.template.tstype.createTSTypes',
     modelId,
     modelDsl,
     'I'

@@ -3,9 +3,9 @@ import {
   getFieldTsType,
   toCamelCaseNameSpace
 } from './tstype';
-import { ModelId, AmisUIColumn } from '@yao/types';
-import { getModelDslById } from './model';
-import { amisUIModelToAmisModel } from './model_convert';
+import { AmisUIColumn } from '@yao/types';
+import { getModelDslById } from '@scripts/system/model';
+import { amisUIModelToAmisModel } from '@scripts/system/model_convert';
 import { YaoModel } from '@yaoapps/types';
 
 /**

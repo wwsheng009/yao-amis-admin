@@ -7,7 +7,7 @@ import { loadModeltoMemory } from '@scripts/system/model_load';
 import { updateModelMetaFields } from './model_convert';
 
 /**
- * get the id of the cached models 读取所有的模型id的列表
+ * get the id list of the cached models 读取所有的模型id的列表
  *
  * yao run scripts.system.model_lib.getCachedModelIDList
  * @returns list of the cached model ids

@@ -25,7 +25,7 @@ import {
   getCachedModelList
 } from '@scripts/system/model_lib';
 
-import { Process, Exception, FS } from '@yao/yao';
+import { Process, Exception } from '@yao/yao';
 import {
   AmisModelDB,
   AmisModelColumn,

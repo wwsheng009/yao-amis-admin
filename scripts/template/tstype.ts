@@ -1,7 +1,7 @@
 import { DotName } from '@scripts/system/lib';
-import { getModelDslById } from './model';
+import { getModelDslById } from '@scripts/system/model';
 import { AmisUIColumn } from '@yao/types';
-import { amisUIModelToAmisModel } from './model_convert';
+import { amisUIModelToAmisModel } from '@scripts/system/model_convert';
 import { YaoModel } from '@yaoapps/types';
 import { Exception } from '@yaoapps/client';
 
