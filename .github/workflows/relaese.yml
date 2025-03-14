@@ -14,12 +14,16 @@ env:
 
 jobs:
   release:
-    runs-on: "ubuntu-latest"
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Get Version
+        shell: bash
         run: |
           VERSION=$(cat app.sample.yao |grep version |awk -F : '{print $2}' | sed 's/"//g' | sed 's/,//g' | sed 's/ //g')
           if [ -z "$VERSION" ]; then 
@@ -28,16 +32,29 @@ jobs:
           echo VERSION=$VERSION >> $GITHUB_ENV
 
       - name: download jssdk
+        shell: bash
         run: |
-          ls -lrt
-          sh download_jssdk.sh
-          sh download_plugin.sh
+          ls -la
+          if [ "${{ matrix.os }}" = "windows-latest" ]; then
+            bash download_jssdk.sh
+            bash download_plugin.sh
+          else
+            bash download_jssdk.sh
+            bash download_plugin.sh
+          fi
         
       - name: pack
+        shell: bash
         run: |
           rm -rf ./.git
           rm -rf ./.github
-          zip -q -r yao-amis-admin-${{ env.VERSION }}.zip *
+          PLATFORM="linux"
+          if [ "${{ matrix.os }}" = "windows-latest" ]; then
+            PLATFORM="windows"
+            7z a -tzip yao-amis-admin-${{ env.VERSION }}-$PLATFORM.zip *
+          else
+            zip -q -r yao-amis-admin-${{ env.VERSION }}-$PLATFORM.zip *
+          fi
 
       # - name: Create Draft Release
       #   id: create_release
@@ -71,7 +88,7 @@ jobs:
         with:
           tag_name: yao-amis-admin-${{ env.VERSION }}
           files: |
-            yao-amis-admin-${{ env.VERSION }}.zip
+            yao-amis-admin-${{ env.VERSION }}-*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
