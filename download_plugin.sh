@@ -11,7 +11,7 @@ install_plugins() {
 
     # 下载并安装amis-editor
     mkdir -p public/amis-editor
-    curl -fsSL "https://github.com/wwsheng009/amis-editor-yao/releases/download/1.1.0/amis-editor-1.1.0.zip" -o public/amis-editor/latest.zip
+    curl -fsSL "https://github.com/wwsheng009/amis-editor-yao/releases/download/1.1.1/amis-editor-1.1.1.zip" -o public/amis-editor/latest.zip
     unzip -q public/amis-editor/latest.zip -d public/amis-editor/
     rm public/amis-editor/latest.zip
 
