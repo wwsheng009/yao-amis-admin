@@ -38,9 +38,8 @@ RUN rm -rf /data/app/.git && \
 RUN apk add --no-cache nodejs npm
 
 WORKDIR /data/app
-RUN sh download_jsjdk.sh
+RUN sh download_jssdk.sh
 RUN sh download_plugin.sh ${ARCH}
-
 RUN npm i yarn -g
 RUN yarn install --production
 
