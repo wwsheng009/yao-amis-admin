@@ -29,8 +29,8 @@ jobs:
 
       - name: download jssdk
         run: |
-          download_jssdk.sh
-          download_plugin.sh
+          sh download_jssdk.sh
+          sh download_plugin.sh
         
       - name: pack
         run: |
