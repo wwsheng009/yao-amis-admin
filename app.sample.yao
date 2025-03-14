@@ -10,8 +10,10 @@
   "short": "::Amis-Yao",
   "description": "::Amis Yao Admin",
   "version": "0.10.5",
-  "startup": "scripts.startup.start",
-  "afterLoad": "scripts.startup.afterLoad",
+  "setup": "", //after install,deprecated
+  "startup": "scripts.startup.start", //hook after load and reload
+  "afterLoad": "scripts.startup.afterLoad", //hook after load
+  "afterMigrate": "", //hook after run yao migrate command
   "adminRoot": "admin",
   "token": {
     "storage": "localStorage"
