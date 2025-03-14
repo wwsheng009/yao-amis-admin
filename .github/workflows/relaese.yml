@@ -27,6 +27,11 @@ jobs:
           fi
           echo VERSION=$VERSION >> $GITHUB_ENV
 
+      - name: download jssdk
+        run: |
+          download_jssdk.sh
+          download_plugin.sh
+        
       - name: pack
         run: |
           rm -rf ./.git

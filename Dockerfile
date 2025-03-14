@@ -34,31 +34,13 @@ RUN rm -rf /data/app/.git && \
     mkdir -p /data/app/db && \
     cp /data/app/app.sample.yao /data/app/app.yao
 
-RUN  sh /data/app/download_jsjdk.sh
-
-
-RUN mkdir -p /data/app/public/amis-editor && \
-    curl -fsSL "https://github.com/wwsheng009/amis-editor-yao/releases/download/1.1.0/amis-editor-1.1.0.zip" > /data/app/public/amis-editor/latest.zip && \
-    unzip /data/app/public/amis-editor/latest.zip -d /data/app/public/amis-editor/ && \
-    rm /data/app/public/amis-editor/latest.zip
-
-RUN mkdir -p /data/app/public/soy-admin && \
-    curl -fsSL "https://github.com/wwsheng009/soybean-admin-amis-yao/releases/download/0.10.4/soy-yao-admin-0.10.4.zip" > /data/app/public/soy-admin/latest.zip && \
-    unzip /data/app/public/soy-admin/latest.zip -d /data/app/public/soy-admin/ && \
-    rm /data/app/public/soy-admin/latest.zip
-
-RUN curl -fsSL "https://github.com/wwsheng009/yao-plugin-command/releases/download/command-linux-plugin/command-linux-${ARCH}.so" -o /data/app/plugins/command.so && \
-    chmod +x /data/app/plugins/command.so
-
-RUN curl -fsSL "https://github.com/wwsheng009/yao-plugin-psutil/releases/download/psutil-linux-plugin/psutil-linux-${ARCH}.so" -o /data/app/plugins/psutil.so && \
-    chmod +x /data/app/plugins/psutil.so
-
-RUN curl -fsSL "https://github.com/wwsheng009/yao-plugin-email/releases/download/email-linux-plugin/email-linux-${ARCH}.so" -o /data/app/plugins/email.so && \
-    chmod +x /data/app/plugins/email.so
 
 RUN apk add --no-cache nodejs npm
 
 WORKDIR /data/app
+RUN sh download_jsjdk.sh
+RUN sh download_plugin.sh ${ARCH}
+
 RUN npm i yarn -g
 RUN yarn install --production
 
