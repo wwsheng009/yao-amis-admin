@@ -54,7 +54,7 @@ export function afterLoad(option: {
   ignoredAfterLoad: boolean;
   reload: boolean;
 }) {
-  console.log('reloading:' + option);
+  console.log('reloading:' + JSON.stringify(option));
 
   // importDBModelsToCache();
 }
@@ -69,5 +69,5 @@ export function afterMigrate(option: {
   /**production | development */
   mode: string;
 }) {
-  console.log('afterMigrate:' + option);
+  console.log('afterMigrate:' + JSON.stringify(option));
 }
