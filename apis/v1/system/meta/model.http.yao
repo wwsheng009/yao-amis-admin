@@ -64,6 +64,38 @@
       }
     },
     {
+      // /api/v1/system/meta/model/model_value_field_list
+      "label": "模型字段列表",
+      "description": "模型字段列表",
+      "path": "/model_value_field_list",
+      "method": "GET",
+      "process": "scripts.system.model.getFieldsForModelByType",
+      "in": [
+        "$query.model",
+        "value"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
+      // /api/v1/system/meta/model/model_text_field_list
+      "label": "模型字段列表",
+      "description": "模型字段列表",
+      "path": "/model_text_field_list",
+      "method": "GET",
+      "process": "scripts.system.model.getFieldsForModelByType",
+      "in": [
+        "$query.model",
+        "text"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
       //api/v1/system/meta/model/model_name_tree
       "label": "模型选项-tree",
       "description": "模型选项-tree",

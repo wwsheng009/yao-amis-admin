@@ -11,7 +11,7 @@
   "description": "::Amis Yao Admin",
   "version": "0.10.5",
   "setup": "scripts.studio.setup.run", //after install,deprecated
-  "startup": "scripts.hook.start", //hook after load and reload
+  "startup": "scripts.hook.startup", //hook after load and reload
   "afterLoad": "scripts.hook.afterLoad", //hook after load
   "afterMigrate": "scripts.hook.afterMigrate", //hook after run yao migrate command
   "adminRoot": "admin",

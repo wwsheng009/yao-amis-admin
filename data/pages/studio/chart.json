@@ -400,7 +400,7 @@
                           "colSize": "1/2",
                           "source": {
                             "sendOn": "!!this.model",
-                            "url": "/api/v1/system/meta/model/model_field_list",
+                            "url": "/api/v1/system/meta/model/model_text_field_list",
                             "method": "get",
                             "dataType": "json",
                             "messages": {},
@@ -435,7 +435,7 @@
                                 "messages": {},
                                 "sendOn": "!!this.model",
                                 "trackExpression": "${this.model}",
-                                "url": "/api/v1/system/meta/model/model_field_list"
+                                "url": "/api/v1/system/meta/model/model_value_field_list"
                               },
                               "type": "select",
                               "id": "u:fe6001e49812"
@@ -764,7 +764,7 @@
                       "colSize": "1/2",
                       "source": {
                         "sendOn": "this.model",
-                        "url": "/api/v1/system/meta/model/model_field_list",
+                        "url": "/api/v1/system/meta/model/model_text_field_list",
                         "method": "get",
                         "dataType": "json",
                         "messages": {},
@@ -797,7 +797,7 @@
                             "messages": {},
                             "sendOn": "this.model",
                             "trackExpression": "${model}",
-                            "url": "/api/v1/system/meta/model/model_field_list"
+                            "url": "/api/v1/system/meta/model/model_value_field_list"
                           },
                           "type": "select",
                           "id": "u:fe6001e49812"

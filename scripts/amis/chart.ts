@@ -55,7 +55,24 @@ export function getChartById(
     ]
   });
   if (!row) {
-    throw new Exception(`图表配置不存在${chartId}`);
+    // throw new Exception(`图表配置不存在${chartId}`);
+
+    return {
+      title: {
+        text: `图表配置不存在${chartId}`
+      },
+      tooltip: {},
+      legend: {
+        data: []
+      },
+      xAxis: [
+        {
+          data: []
+        }
+      ],
+      yAxis: [{}],
+      series: []
+    };
   }
   return getChartUseConfig(row, query);
 }

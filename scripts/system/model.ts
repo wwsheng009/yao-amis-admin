@@ -497,6 +497,68 @@ export function getDbModelsNameOptions() {
   return { items: models };
 }
 
+function getColTypeMapping() {
+  return {
+    id: 'text',
+    string: 'text',
+    ipaddress: 'text',
+    macaddress: 'text',
+    year: 'text',
+    uuid: 'text',
+    char: 'text',
+    text: 'text',
+    mediumtext: 'text',
+    longtext: 'text',
+    date: 'text',
+    datetime: 'text',
+    datetimetz: 'text',
+    time: 'text',
+    timetz: 'text',
+    timestamp: 'text',
+    timestamptz: 'text',
+    tinyinteger: 'value',
+    smallinteger: 'value',
+    integer: 'value',
+    biginteger: 'value',
+    double: 'value',
+    decimal: 'value',
+    tinyincrements: 'value',
+    unsignedtinyinteger: 'value',
+    unsignedsmallinteger: 'value',
+    unsigneddecimal: 'value',
+    float: 'value',
+    boolean: 'text',
+    enum: 'none',
+    json: 'none',
+    jsonb: 'none'
+  };
+}
+/**
+ * yao run scripts.system.model.getFieldsForModelByType admin.auth.role
+ * @param modelId 模型ID
+ * @param fieldType 字段类型,默认为text
+ * @returns 返回模型字段列表
+ */
+export function getFieldsForModelByType(
+  modelId: string,
+  fieldType: string = 'text'
+) {
+  const model = getModelDslById(modelId);
+
+  const typeMapping = getColTypeMapping();
+  const cols = model?.columns.filter((col) => {
+    const type = typeMapping[col.type?.toLowerCase()];
+    return type === fieldType;
+  });
+  const fields = cols?.map((col) => {
+    return {
+      label: `${col.name} - ${col.label}`,
+      value: col.name
+    };
+  });
+  return fields;
+}
+
 /**
  * yao run scripts.system.model.getFieldsForModel admin.auth.role
  * @param modelId 模型ID
@@ -507,7 +569,7 @@ export function getFieldsForModel(modelId: string) {
 
   const fields = model?.columns?.map((col) => {
     return {
-      label: col.label || col.name,
+      label: `${col.name} - ${col.label}`,
       value: col.name
     };
   });

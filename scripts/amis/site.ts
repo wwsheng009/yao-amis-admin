@@ -803,17 +803,26 @@ function getAiMenus() {
           url: '/ai',
           children: [
             {
+              label: 'Xgen',
+              icon: 'fas fa-book',
+              schema: {
+                type: 'iframe',
+                src: '/admin/chat?__hidemenu=0'
+              },
+              url: 'xgen'
+            },
+            {
               label: 'AI聊天',
               icon: 'fas fa-robot',
               schemaApi: '/api/v1/amis/pages/admin.admin',
               url: 'robot'
             },
             {
-              label: '模型列表',
+              label: '助手列表',
               icon: 'fas fa-robot',
               schema: {
                 type: 'iframe',
-                src: '/admin/assistants?__hidemenu=1&assistant_id=model'
+                src: '/admin/assistants'
               },
               url: 'assistants'
             },
