@@ -55,15 +55,14 @@ export function Login(payload: {
       throw new Exception('验证码不正确!', 400);
     }
   }
-
   const { password, email, mobile, userName } = payload;
 
   let user = null;
-  if (email !== null) {
+  if (email != null) {
     user = getUserInfo('email', email);
-  } else if (mobile !== null) {
+  } else if (mobile != null) {
     user = getUserInfo('mobile', mobile);
-  } else if (userName !== null) {
+  } else if (userName != null) {
     user = getUserInfo('email', userName);
   }
 

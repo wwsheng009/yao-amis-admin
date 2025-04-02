@@ -43,6 +43,16 @@ install_plugins() {
     unzip -q public/soy-admin/latest.zip -d public/soy-admin/
     rm public/soy-admin/latest.zip
 
+    # replace the /publice/soy-admin/index.html file 
+    # /soy-admin/amis/jssdk => /amis-admin/jssdk
+    # 替换 soy-admin 的 index.html 文件中的路径
+    log "替换 soy-admin 的路径配置"
+    if [[ "$OS_TYPE" == "windows" ]]; then
+        powershell -Command "(Get-Content public/soy-admin/index.html) -replace '/soy-admin/amis/jssdk', '/amis-admin/jssdk' | Set-Content public/soy-admin/index.html"
+    else
+        sed -i 's|/soy-admin/amis/jssdk|/amis-admin/jssdk|g' public/soy-admin/index.html
+    fi
+
     # 下载插件
     log "开始下载插件"
     rm -rf plugins/psutil.*

@@ -27,7 +27,7 @@
 使用容器运行，已打包编辑器与 soy-admin。
 
 ```sh
-docker run -d -p 5099:5099 wwsheng009/yao-amis-admin-amd64:latest
+docker run -d -e DEEPSEEK_KEY="sk-" -p 5099:5099 wwsheng009/yao-amis-admin-amd64:latest
 ```
 在浏览器里访问地址：http://localhost:5099/，
 进行初始化安装，选择数据库的类型并输入数据库的相关信息后确定安装。
