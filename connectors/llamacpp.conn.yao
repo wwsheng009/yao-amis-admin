@@ -1,5 +1,5 @@
 {
-    "label": "Model v3",
+    "label": "llama.cpp",
     "type": "openai",
     "options": {
         "model": "test",

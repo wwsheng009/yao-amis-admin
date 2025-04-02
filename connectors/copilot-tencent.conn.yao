@@ -1,5 +1,5 @@
 {
-    "label": "Model v3",
+    "label": "deepseek r1 copilot",
     "type": "openai",
     "options": {
         "model": "deepseek-r1",

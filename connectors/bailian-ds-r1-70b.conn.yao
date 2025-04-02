@@ -1,5 +1,5 @@
 {
-    "label": "Model v3",
+    "label": "deepseek r1 70b",
     "type": "openai",
     "options": {
         "model": "deepseek-r1-distill-llama-70b",

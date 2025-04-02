@@ -48,6 +48,8 @@ jobs:
         run: |
           rm -rf ./.git
           rm -rf ./.github
+          cp app.sample.yao app.yao
+          cp .env.sqlite .env
           PLATFORM="linux"
           if [ "${{ matrix.os }}" = "windows-latest" ]; then
             PLATFORM="windows"

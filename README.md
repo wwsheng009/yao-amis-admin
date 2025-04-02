@@ -49,6 +49,7 @@ docker run -d --name=yao-amis-admin \
     -v ./.env:/data/app/.env \
     -v ./upload:/data/app/data/upload \
     -v ./logs:/data/app/logs \
+    -e DEEPSEEK_KEY="sk-" \
     -p 5099:5099 \
     wwsheng009/yao-amis-admin-amd64:latest
 
@@ -60,6 +61,7 @@ docker run -d --name=yao-amis-admin \
     -v ./.env:/data/app/.env \
     -v ./upload:/data/app/data/upload \
     -v ./logs:/data/app/logs \
+    -e DEEPSEEK_KEY="sk-" \
     -p 5099:5099 \
     wwsheng009/yao-amis-admin-amd64:latest
 ```

@@ -1,5 +1,5 @@
 {
-    "label": "Model v3",
+    "label": "deepseek reasoner",
     "type": "openai",
     "options": {
         "model": "deepseek-reasoner",

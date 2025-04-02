@@ -1,5 +1,5 @@
 {
-    "label": "Model v3",
+    "label": "doubao embedding",
     "type": "openai",
     "options": {
         "model": "ep-20250205210443-n8qnk",

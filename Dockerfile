@@ -24,7 +24,7 @@ RUN addgroup -S -g 1000 yao && adduser -S -G yao -u 999 yao
 
 ADD . /data/app
 RUN rm -rf /data/app/.git && \
-    rm -rf /data/app/.env* && \
+    rm -rf /data/app/.github && \
     rm -rf /data/app/Dockerfile* && \
     rm -rf /data/app/node_modules && \
     chown -R yao:yao /data/app && \
@@ -32,15 +32,20 @@ RUN rm -rf /data/app/.git && \
     chmod +x /usr/local/bin/yao && \
     mkdir -p /data/app/plugins && \
     mkdir -p /data/app/db && \
+    cp /data/app/.env.sqlite /data/app/.env && \
     cp /data/app/app.sample.yao /data/app/app.yao
 
 
 RUN apk add --no-cache nodejs npm
 
 WORKDIR /data/app
+# download amis jssdk
 RUN sh download_jssdk.sh
+# download plugin
 RUN sh download_plugin.sh ${ARCH}
+# install the yarn tool
 RUN npm i yarn -g
+# install the npm packages
 RUN yarn install --production
 
 USER root
