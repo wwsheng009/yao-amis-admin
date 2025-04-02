@@ -49,8 +49,10 @@ install_plugins() {
     log "替换 soy-admin 的路径配置"
     if [[ "$OS_TYPE" == "windows" ]]; then
         powershell -Command "(Get-Content public/soy-admin/index.html) -replace '/soy-admin/amis/jssdk', '/amis-admin/jssdk' | Set-Content public/soy-admin/index.html"
+        powershell -Command "(Get-Content public/soy-admin/index.html) -replace '/amis/jssdk', '/amis-admin/jssdk' | Set-Content public/soy-admin/index.html"
     else
         sed -i 's|/soy-admin/amis/jssdk|/amis-admin/jssdk|g' public/soy-admin/index.html
+        sed -i 's|/amis/jssdk|/amis-admin/jssdk|g' public/soy-admin/index.html
     fi
 
     # 下载插件
