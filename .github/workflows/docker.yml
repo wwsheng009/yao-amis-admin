@@ -8,10 +8,10 @@ on:
     inputs:
       tags:
         description: "Comment"
-  push:
-    branches: [main]
-    paths:
-      - "app.sample.yao"
+  # push:
+  #   branches: [main]
+  #   paths:
+  #     - "app.sample.yao"
 env:
   IMAGE_ORG: wwsheng009
   IMAGE_NAME: ${{ github.event.repository.name }}
