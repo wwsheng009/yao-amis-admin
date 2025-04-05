@@ -7,9 +7,10 @@ import { AmisUIColumn } from '@yao/types';
 import { getModelDslById } from '@scripts/system/model';
 import { amisUIModelToAmisModel } from '@scripts/system/model_convert';
 import { YaoModel } from '@yaoapps/types';
+import { IsMysql } from '@scripts/system/lib';
 
 /**
- * yao run scripts.system.tscode.generateCodeTemplate admin.user
+ * yao run scripts.template.tscode.generateCodeTemplate admin.user
  * @param modelId
  * @returns
  */
@@ -31,7 +32,7 @@ export function generateCodeTemplate(
 }
 
 /**
- * yao run scripts.system.tscode.getModelServiceTemplate admin.user
+ * yao run scripts.template.tscode.getModelServiceTemplate admin.user
  * @param modelId
  * @param modelDsl
  * @returns
@@ -42,9 +43,6 @@ function getModelServiceTemplate(modelId: string, modelDsl: YaoModel.ModelDSL) {
 
   const idCol = modelDsl.columns.find((col) => col.primary);
   const idColType = getFieldTsType(idCol);
-
-  // const namespace = toCamelCaseNameSpace(modelId);
-  // const modelInterface = 'I' + toCamelCaseNameSpace(modelId);
 
   //service template
   return `
@@ -65,11 +63,6 @@ function getFunctionsTemplate(
   const namespace = toCamelCaseNameSpace(modelID) + 'Service';
   const modelInterface = 'I' + toCamelCaseNameSpace(modelID);
 
-  // const fieldsName = modelDsl.columns.reduce((pre, col) => {
-  //   pre[col.name] = col.name;
-  //   return pre;
-  // }, {});
-
   let fieldsName = '';
   modelDsl.columns.forEach((c) => {
     fieldsName += `   /** ${c.label || c.comment || c.name} */
@@ -86,7 +79,6 @@ ${fieldsName}
     static ModelID = '${modelID}';
     static TableName = '${modelDsl.table.name}';
 
-
     \/**
     * 根据主键与附加条件查询单条记录。
     * @param key 主键
@@ -96,6 +88,7 @@ ${fieldsName}
     static Find(key:${idFieldType},query:YaoQueryParam.QueryParam): ${modelInterface}{
         return Process(\`models.$\{${namespace}.ModelID}.find\`,key,query)
     }
+
     \/**
     * 根据条件查询数据记录, 返回符合条件的结果集。
     * @param query
@@ -104,6 +97,7 @@ ${fieldsName}
     static Get(query:YaoQueryParam.QueryParam): ${modelInterface}[]{
         return Process(\`models.$\{${namespace}.ModelID}.get\`,query)
     }
+
     \/**
     * 根据条件查询数据记录, 返回带有分页信息的数据对象。
     * @param query
@@ -134,6 +128,17 @@ ${fieldsName}
         return Process(\`models.$\{${namespace}.ModelID}.Insert\`,columns,values)
     }
 
+    \/**
+    * 如果记录不存在则插入，如果存在则更新记录
+    * @param data 数据
+    * @param uniqueBy 唯一键 或 唯一键数组
+    * @param updateColumns 更新或插入记录的ID
+    * @returns afftectedRows
+    */
+    static Upsert(data:${modelInterface},uniqueBy:string | string[],updateColumns?:string[]): number {
+        return Process(\`models.$\{${namespace}.ModelID}.Upsert\`,data,uniqueBy,updateColumns)
+    }
+    
     \/**
     * 一次性插入多条数据记录，返回插入行数
     * @param data
