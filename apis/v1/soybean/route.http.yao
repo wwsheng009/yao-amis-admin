@@ -1,0 +1,43 @@
+{
+  "name": "账户信息",
+  "version": "1.0.0",
+  "description": "账户信息",
+  "group": "",
+  "guard": "bearer-jwt",
+  "paths": [
+    {
+      // /api/v1/soybean/route/getConstantRoutes
+      "path": "/getConstantRoutes", 
+      "method": "GET",
+      "guard": "bearer-jwt",
+      "process": "scripts.soybean.route.getConstantRoutes",
+      "in": [],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },{
+      // /api/v1/soybean/route/getUserRoutes
+      "path": "/getUserRoutes", 
+      "method": "GET",
+      "guard": "bearer-jwt",
+      "process": "scripts.admin.menu.getSoyAdminUserMenu",
+      "in": [],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },{
+      // /api/v1/soybean/route/getUserRoutes
+      "path": "/isRouteExist", 
+      "method": "GET",
+      "guard": "bearer-jwt",
+      "process": "scripts.soybean.route.isRouteExist",
+      "in": ["$query.routeName"],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 import {
   convertFileListToSoyRoute,
-  convertListToSoyRoute,
+  convertAmisFileListToSoyRoute,
   getAmisEditorSoyRoute,
   removeEmptyChildren,
   updateSoyRoutePath
@@ -82,7 +82,7 @@ function test2() {
     '/amis_editor/fileChunkUpload.json',
     '/amis_editor/test/a.json'
   ];
-  const result = convertListToSoyRoute(list);
+  const result = convertAmisFileListToSoyRoute(list);
   //   小心处理层级
   removeEmptyChildren(result);
 }

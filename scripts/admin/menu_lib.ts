@@ -17,29 +17,36 @@ export function updateSoyRouteComponent(node, parent?) {
 
   delete node.meta.singleLayout;
 
+  //最上面一层
   if (!hasParent) {
     if (!hasChildren) {
       node.meta.singleLayout = 'basic';
-      node.component = 'self';
-    } else {
-      if (!node.component || node.component === 'self') {
-        node.component = 'basic';
+      // 只有一层的菜单
+      if (node.meta?.schemaApi) {
+        node.component = 'layout.base@view.amis';
       }
+    } else {
+      node.component = 'layout.base';
     }
   } else {
+    //最底一层
     if (!hasChildren) {
-      if (node.meta.schemaApi && node.meta.schemaApi != '') {
-        node.component = 'amis';
+      if (node.meta?.schemaApi) {
+        node.component = 'view.amis';
       } else {
-        node.component = 'self';
+        node.component = 'view.' + node.component;
       }
     } else {
-      node.component = 'multi';
+      // 中间一层，一般使用redirect
+      node.component = null;
     }
+  }
+  // add the parent name for
+  if (hasParent && !node.name.includes(parent.name + '_')) {
+    node.name = parent.name + '_' + node.name;
   }
 
   if (Array.isArray(node.children) && node.children.length) {
     node.children.forEach((n) => updateSoyRouteComponent(n, node));
   }
 }
-// module.exports = { updateSoyRouteComponent };

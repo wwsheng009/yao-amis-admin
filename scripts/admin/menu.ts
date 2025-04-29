@@ -4,6 +4,8 @@ import { updateSoyRouteComponent } from '@scripts/admin/menu_lib';
 import { filterTreeDataWithFunc } from '@scripts/amis/data/tree';
 import { getUserAuthMenuIds } from '@scripts/auth/lib';
 import { Process } from '@yao/yao';
+import { MenuSoybean } from '@scripts/amis/site';
+import { getPagesFileList } from '@scripts/editor/localfile';
 
 /**
  * 处理用户的菜单
@@ -18,7 +20,7 @@ import { Process } from '@yao/yao';
 
 /**
  * get user auth menus
- * yao run scripts.admin.menu.getUserAuthMenu
+ * yao run scripts.admin.menu.getSoyAdminUserMenu
  */
 export function getSoyAdminUserMenu() {
   const user = Process('session.get', 'user');
@@ -49,7 +51,7 @@ export function reLoadAndSaveMenus() {
   saveLocalAmisSoyRoutesToDB();
 }
 
-function cleanUpRouteMenu(routes) {
+export function cleanUpRouteMenu(routes) {
   routes.forEach((x) => updateSoyRouteComponent(x));
 
   deleteObjectKey(routes, 'parent');
@@ -69,10 +71,10 @@ function cleanUpRouteMenu(routes) {
  * yao run scripts.admin.menu.getSoySuperUserMenu
  * @returns 用户菜单
  */
-function getSoySuperUserMenu() {
+export function getSoySuperUserMenu() {
   let routes = getSoyRoutesFromDB();
   if (routes.length === 0) {
-    const routesSoy = Process('scripts.amis.site.MenuSoybean')['routes'];
+    const routesSoy = MenuSoybean().routes;
     const routesLocal = getAmisLocalPageAsSoyRoutes();
     const editor_routes = getAmisEditorSoyRoute(); //Process('scripts.admin.menu.getAmisEditorSoyRoute');
 
@@ -94,7 +96,7 @@ function getSoySuperUserMenu() {
  * 读取数据库中所有的菜单配置列表
  * @returns []Route
  */
-function getSoyRoutesFromDB() {
+export function getSoyRoutesFromDB() {
   // 优先从数据库读取菜单
   const menus: admin_menu[] = Process('models.admin.menu.get', {});
 
@@ -194,14 +196,8 @@ function saveSoyRoutesToDB() {
  * @returns []
  */
 function getAmisLocalPageAsSoyRoutes() {
-  // const fs = new FS('system');
-  // let files: string[] = fs.ReadDir(PagesLocation, true); // recursive
-  // files = files.filter((x) => x.length > 5 && x.endsWith('.json'));
-  // files = files.map((f) => {
-  //   f = f.replace(/\\/g, '/');
-  //   return f.substring(PagesLocation.length);
-  // });
-  const files = Process('scripts.editor.localfile.getPagesFileList');
+
+  const files = getPagesFileList();
   const routes = convertFileListToSoyRoute(files);
 
   updateSoyRoutePath('/api/v1/amis/pages/', routes, undefined);
@@ -212,7 +208,7 @@ function getAmisLocalPageAsSoyRoutes() {
       name: 'amis',
       path: '/amis',
       subPath: 'amis',
-      component: 'basic',
+      component: 'layout.base',
       children: routes,
       meta: { order: 2001, requiresAuth: true, title: 'AMIS页面' }
     }
@@ -265,10 +261,10 @@ export function getAmisEditorSoyRoute() {
   // 这里包装了一个顶层
   const rootRoutes = [
     {
-      name: 'amis_editor',
-      path: '/amis_editor',
-      subPath: 'amis_editor',
-      component: 'basic',
+      name: 'amis-editor',
+      path: '/amis-editor',
+      subPath: 'amis-editor',
+      component: 'layout.base',
       children: [] as Route[],
       meta: { order: 2001, requiresAuth: true, title: 'AMIS编辑器' }
     }
@@ -291,15 +287,15 @@ export function getAmisEditorSoyRoute() {
  * @param {string[]} list 文件路径列表
  * @returns []Route
  */
-export function convertListToSoyRoute(
+export function convertAmisFileListToSoyRoute(
   list: string[],
   sep: string = '/'
 ): Route {
   let order = 1000;
   const result = {
-    name: '',
-    path: '',
-    component: 'basic',
+    name: 'amis_editor',
+    path: '/amis_editor',
+    component: 'layout.base',
     subPath: '', // 单一层级的节点
     children: [],
     meta: { title: '', order: order, requiresAuth: true }
@@ -360,7 +356,7 @@ export function convertListToSoyRoute(
 }
 
 export function convertFileListToSoyRoute(list: string[]): Route[] {
-  const result = convertListToSoyRoute(list);
+  const result = convertAmisFileListToSoyRoute(list);
   //   小心处理层级
   removeEmptyChildren(result);
   return result.children || [];

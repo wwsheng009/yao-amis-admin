@@ -1,0 +1,32 @@
+{
+  "name": "账户信息",
+  "version": "1.0.0",
+  "description": "账户信息",
+  "group": "",
+  "guard": "bearer-jwt",
+  "paths": [
+    {
+      // /api/v1/soybean/auth/login
+      "path": "/login", 
+      "method": "POST",
+      "guard": "-",
+      "process": "scripts.amis.user.Login",
+      "in": [":payload"],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },{
+      // /api/v1/soybean/auth/getUserInfo
+      "path": "/getUserInfo", 
+      "method": "GET",
+      "guard": "bearer-jwt",
+      "process": "scripts.soybean.user.userInfo",
+      "in": [],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    }
+  ]
+}

@@ -67,20 +67,24 @@ export function Login(payload: {
   }
 
   if (!user) {
-    return Process('scripts.return.RError', '', 400, '用户不存在');
+    throw new Exception('用户不存在!', 400);
+    // return Process('scripts.return.RError', '', 400, '用户不存在');
   }
   try {
     const passwordValid = Process('utils.pwd.Verify', password, user.password);
     if (passwordValid !== true) {
-      return Process('scripts.return.RError', '', 400, '密码不正确');
+      throw new Exception('密码不正确!', 400);
+      // return Process('scripts.return.RError', '', 400, '密码不正确');
     }
   } catch (error) {
-    return Process(
-      'scripts.return.RError',
-      '',
-      400,
-      '密码不正确' + error.message
-    );
+    throw new Exception('密码不正确' + error.message, 400);
+
+    // return Process(
+    //   'scripts.return.RError',
+    //   '',
+    //   400,
+    //   '密码不正确' + error.message
+    // );
   }
   const TIMEOUT = 60 * 60 * 8;
   const sessionId = Process('utils.str.UUID');
@@ -111,13 +115,20 @@ export function Login(payload: {
     sessionId
   );
 
-  return Process('scripts.return.RSuccess', {
+  return {
     sid: sessionId,
     user: userData,
     menus: Process('scripts.admin.menu_node.xgenMenu'),
     token: jwt.token,
     expires_at: jwt.expires_at
-  });
+  };
+  // return Process('scripts.return.RSuccess', {
+  //   sid: sessionId,
+  //   user: userData,
+  //   menus: Process('scripts.admin.menu_node.xgenMenu'),
+  //   token: jwt.token,
+  //   expires_at: jwt.expires_at
+  // });
 }
 
 /**
