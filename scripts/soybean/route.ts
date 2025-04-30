@@ -56,6 +56,20 @@ export function getConstantRoutes() {
       }
     },
     {
+      name: 'iconify-design',
+      path: '/iconify/design',
+      component: 'layout.base$view.iframe-page',
+      props: {
+        url: 'https://icon-sets.iconify.design/'
+      },
+      meta: {
+        title: 'Iconify Design',
+        order: 3,
+        url: 'https://icon-sets.iconify.design/',
+        icon: 'line-md:iconify2-static'
+      }
+    },
+    {
       name: 'login',
       path: '/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?',
       component: 'layout.blank$view.login',
