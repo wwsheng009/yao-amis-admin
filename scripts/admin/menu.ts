@@ -392,23 +392,23 @@ export function updateSoyRoutePath(
     return;
   }
 
-  route.meta.title = route.meta.title || route.subPath || route.name;
+  // route.meta.title = route.meta.title || route.subPath || route.name;
   if (!route.meta?.schemaApi?.startsWith(api)) {
     route.meta.schemaApi = api + route.path;
     route.meta.schemaApi = route.meta.schemaApi.replace(/\/\//g, '/');
   }
 
-  if (parent == null) {
-    route.path = '/' + route.subPath;
-  } else {
-    route.path = parent.path + '/' + route.subPath;
-  }
-  route.path = route.path.replace(/\/\//g, '/');
+  // if (parent == null) {
+  //   route.path = '/' + route.subPath;
+  // } else {
+  //   route.path = parent.path + '/' + route.subPath;
+  // }
+  // route.path = route.path.replace(/\/\//g, '/');
 
-  route.name = route.path.replace(/[\\./]/g, '_');
-  if (route.name.startsWith('_')) {
-    route.name = route.name.substring(1);
-  }
+  // route.name = route.path.replace(/[\\./]/g, '_');
+  // if (route.name.startsWith('_')) {
+  //   route.name = route.name.substring(1);
+  // }
 
   if (route.children?.length > 0) {
     route.children.forEach((n) => updateSoyRoutePath(api, n, route));

@@ -102,7 +102,7 @@ function getSystemMenu() {
       children: [
         {
           label: '系统管理',
-          url: '/amis/system',
+          url: '/amis',
           icon: 'fas fa-toolbox',
           children: [
             {
@@ -142,14 +142,14 @@ function getSystemMenu() {
             {
               label: '文件管理',
               icon: 'fa fa-file',
-              schemaApi: '/api/v1/amis/pages/admin.file',
-              url: '/admin/file/:category'
+              schemaApi: '/api/v1/amis/pages/admin.file[category]',
+              url: 'admin/file/:category'
             },
             {
               label: '文件管理',
               icon: 'fa fa-file',
               schemaApi: '/api/v1/amis/pages/admin.file2',
-              url: 'admin/file'
+              url: 'admin/file2'
             },
             {
               label: 'ODATA管理',
@@ -167,7 +167,7 @@ function getSystemMenu() {
         },
         {
           label: '博客管理',
-          url: '/app/blog',
+          url: '/amis/app/blog',
           icon: 'fas fa-blog',
           children: [
             {
@@ -306,7 +306,7 @@ function getModelMenu() {
             },
             {
               label: '新增',
-              schemaApi: '/api/v1/amis/pages/model.create',
+              schemaApi: '/api/v1/amis/pages/model.create[id]',
               url: 'create',
               icon: 'fa fa-plus'
             },
@@ -318,7 +318,7 @@ function getModelMenu() {
             },
             {
               label: '修改',
-              schemaApi: '/api/v1/amis/pages/model.create',
+              schemaApi: '/api/v1/amis/pages/model.create[id]',
               url: 'create/:id/'
             },
             {

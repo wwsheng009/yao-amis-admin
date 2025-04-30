@@ -28,7 +28,7 @@
                 "actionType": "link",
                 "body": "表数据维护",
                 "className": "",
-                "link": "/table/maintainer",
+                "link": "/amis/table/maintainer",
                 "type": "button"
               },
               "className": "b m-9 bg-blue-200 w-full text-center rounded"

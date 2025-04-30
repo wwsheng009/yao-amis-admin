@@ -133,7 +133,7 @@
               "type": "static-link",
               "body": "数据维护",
               "blank": false,
-              "value": "/table/maintainer?model=${header.identity}",
+              "value": "/amis/table/maintainer?model=${header.identity}",
               "visibleOn": "!!id && identity"
             }
           ],
@@ -1413,7 +1413,7 @@
       "id": "u:8a1edb98584a",
       "initApi": {
         "method": "get",
-        "sendOn": "${!!params.id}",
+        "sendOn": "${params.id && params.id != '0' && params.id != 0}",
         "url": "/api/v1/system/meta/model/get/${params.id}"
       },
       "mode": "horizontal",

@@ -16,6 +16,9 @@ export function updateSoyRouteComponent(route, parent?) {
     Array.isArray(route.children) && route.children.length > 0 ? true : false;
 
   delete route.meta.singleLayout;
+  if (route.meta) {
+    route.meta.title = route.meta.title || route.subPath || route.name;
+  }
 
   //最上面一层
   if (!hasParent) {
@@ -47,13 +50,25 @@ export function updateSoyRouteComponent(route, parent?) {
 
   // 针对于文件系统路径，重新设置路径
   if (route.subPath) {
+    // const sub_path = 'file[category]';
+    const sub_path = route.subPath;
+    if (/.*\[.+\]$/g.test(sub_path)) {
+      // 获取[]中的内容作为参数名
+      const paramName = sub_path.match(/.*\[(.*?)\]$/)[1];
+      route.meta.paramName = paramName;
+      const title = sub_path.replace(/\[.*?\]$/, '');
+      route.meta.title = title;
+      route.meta.hideInMenu = true;
+      route.subPath = sub_path.replace(/\[.*?\]$/, '/:' + paramName);
+    }
+
     if (hasParent) {
       route.path = parent.path + '/' + route.subPath;
     } else {
       route.path = '/' + route.subPath;
     }
     // 将路径中的点号、斜杠替换为下划线，用作路由名称
-    route.name = route.path.replace(/[\\./]/g, '_');
+    route.name = route.path.replace(/[\\.:/]/g, '_');
     // 如果路由名称以下划线开头
     if (route.name.startsWith('_')) {
       route.name = route.name.substring(1);
