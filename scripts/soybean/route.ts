@@ -7,35 +7,6 @@ import { filterTreeDataWithFunc } from '@scripts/amis/data/tree';
 import { getUserAuthMenuIds } from '@scripts/auth/lib';
 import { Process } from '@yaoapps/client';
 
-export function getUserRoutes() {
-  return {
-    home: 'home',
-    routes: [
-      {
-        name: 'home',
-        path: '/home',
-        component: 'layout.base$view.home',
-        meta: {
-          title: 'home',
-          i18nKey: 'route.home',
-          icon: 'mdi:monitor-dashboard',
-          order: 1
-        }
-      },
-      {
-        name: 'amis',
-        path: '/amis',
-        component: 'layout.base$view.amis',
-        meta: {
-          title: 'model',
-          icon: 'mdi:monitor-dashboard',
-          schemaApi: '/api/v1/amis/pages/model.list',
-          order: 1
-        }
-      }
-    ]
-  };
-}
 export function getConstantRoutes() {
   return [
     {
@@ -120,4 +91,8 @@ export function getSoyAdminUserMenu() {
     return cleanUpRouteMenu(routes);
   }
   return [];
+}
+
+export function isRouteExist(routeName: string) {
+  return routeName != '';
 }

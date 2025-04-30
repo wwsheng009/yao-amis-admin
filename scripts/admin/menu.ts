@@ -23,11 +23,6 @@ import { getPagesFileList } from '@scripts/editor/localfile';
  * yao run scripts.admin.menu.getSoyAdminUserMenu
  */
 export function getSoyAdminUserMenu() {
-  const user = Process('session.get', 'user');
-  if (user?.type === 'super') {
-    return getSoySuperUserMenu();
-  }
-
   const menusIds = getUserAuthMenuIds();
   if (menusIds.length) {
     // get menus
@@ -37,6 +32,11 @@ export function getSoyAdminUserMenu() {
       return menusIds.includes(item.id) || !item.meta?.requiresAuth;
     });
     return cleanUpRouteMenu(routes);
+  } else {
+    const user = Process('session.get', 'user');
+    if (user?.type === 'super') {
+      return getSoySuperUserMenu();
+    }
   }
   return [];
 }
@@ -59,7 +59,7 @@ export function cleanUpRouteMenu(routes) {
 
   routes = ClearFalsyKeys(routes);
 
-  let home = 'dashboard_analysis';
+  let home = 'home';
   if (routes?.length > 0) {
     home = routes[0].name;
   }
@@ -72,24 +72,24 @@ export function cleanUpRouteMenu(routes) {
  * @returns 用户菜单
  */
 export function getSoySuperUserMenu() {
-  let routes = getSoyRoutesFromDB();
-  if (routes.length === 0) {
-    const routesSoy = MenuSoybean().routes;
-    const routesLocal = getAmisLocalPageAsSoyRoutes();
-    const editor_routes = getAmisEditorSoyRoute(); //Process('scripts.admin.menu.getAmisEditorSoyRoute');
-
-    const localRoutes = [...routesSoy, ...routesLocal, ...editor_routes];
-
-    return cleanUpRouteMenu(localRoutes);
-  }
-  // 转换成树结构
-  routes = Process(`utils.arr.Tree`, routes, { parent: 'parent', empty: 0 });
-
-  // 导入正在编辑的页面
+  // let routes = getSoyRoutesFromDB();
+  // if (routes.length === 0) {
+  const routesSoy = MenuSoybean().routes;
+  const routesLocal = getAmisLocalPageAsSoyRoutes();
   const editor_routes = getAmisEditorSoyRoute(); //Process('scripts.admin.menu.getAmisEditorSoyRoute');
-  routes = routes.concat(editor_routes);
 
-  return cleanUpRouteMenu(routes);
+  const localRoutes = [...routesSoy, ...routesLocal, ...editor_routes];
+
+  return cleanUpRouteMenu(localRoutes);
+  // }
+  // // 转换成树结构
+  // routes = Process(`utils.arr.Tree`, routes, { parent: 'parent', empty: 0 });
+
+  // // 导入正在编辑的页面
+  // const editor_routes = getAmisEditorSoyRoute(); //Process('scripts.admin.menu.getAmisEditorSoyRoute');
+  // routes = routes.concat(editor_routes);
+
+  // return cleanUpRouteMenu(routes);
 }
 
 /**
@@ -196,7 +196,6 @@ function saveSoyRoutesToDB() {
  * @returns []
  */
 function getAmisLocalPageAsSoyRoutes() {
-
   const files = getPagesFileList();
   const routes = convertFileListToSoyRoute(files);
 
@@ -264,7 +263,7 @@ export function getAmisEditorSoyRoute() {
       name: 'amis-editor',
       path: '/amis-editor',
       subPath: 'amis-editor',
-      component: 'layout.base',
+      component: '',
       children: [] as Route[],
       meta: { order: 2001, requiresAuth: true, title: 'AMIS编辑器' }
     }
@@ -295,8 +294,8 @@ export function convertAmisFileListToSoyRoute(
   const result = {
     name: 'amis_editor',
     path: '/amis_editor',
-    component: 'layout.base',
-    subPath: '', // 单一层级的节点
+    component: 'layout.base$view.404',
+    subPath: 'amis_editor', // 单一层级的节点
     children: [],
     meta: { title: '', order: order, requiresAuth: true }
   };
@@ -406,7 +405,7 @@ export function updateSoyRoutePath(
   }
   route.path = route.path.replace(/\/\//g, '/');
 
-  route.name = route.path.replace(/[./-]/g, '_');
+  route.name = route.path.replace(/[\\./]/g, '_');
   if (route.name.startsWith('_')) {
     route.name = route.name.substring(1);
   }

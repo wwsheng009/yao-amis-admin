@@ -102,7 +102,7 @@ function getSystemMenu() {
       children: [
         {
           label: '系统管理',
-          url: '/system',
+          url: '/amis/system',
           icon: 'fas fa-toolbox',
           children: [
             {
@@ -125,19 +125,19 @@ function getSystemMenu() {
               label: '权限管理',
               icon: 'fa fa-group',
               schemaApi: '/api/v1/amis/pages/admin.permission',
-              url: 'admin.permission'
+              url: 'admin/permission'
             },
             {
               label: '角色管理',
               icon: 'fa fa-group',
               schemaApi: '/api/v1/amis/pages/admin.role',
-              url: 'admin.role'
+              url: 'admin/role'
             },
             {
               label: '用户管理',
               icon: 'fa fa-user',
               schemaApi: '/api/v1/amis/pages/admin.user',
-              url: 'admin.user'
+              url: 'admin/user'
             },
             {
               label: '文件管理',
@@ -149,19 +149,19 @@ function getSystemMenu() {
               label: '文件管理',
               icon: 'fa fa-file',
               schemaApi: '/api/v1/amis/pages/admin.file2',
-              url: 'admin.file'
+              url: 'admin/file'
             },
             {
               label: 'ODATA管理',
               icon: 'fa fa-file',
               schemaApi: '/api/v1/amis/pages/app.odata',
-              url: 'odata.view'
+              url: 'odata/view'
             },
             {
               label: '分块上传演示',
               icon: 'fa fa-file',
               schemaApi: '/api/v1/amis/pages/demo.fileChunkUpload',
-              url: 'admin.fileChunkUpload'
+              url: 'admin/fileChunkUpload'
             }
           ]
         },
@@ -307,7 +307,7 @@ function getModelMenu() {
             {
               label: '新增',
               schemaApi: '/api/v1/amis/pages/model.create',
-              url: 'model.create',
+              url: 'create',
               icon: 'fa fa-plus'
             },
             {
@@ -319,7 +319,7 @@ function getModelMenu() {
             {
               label: '修改',
               schemaApi: '/api/v1/amis/pages/model.create',
-              url: '/model/create/:id/'
+              url: 'create/:id/'
             },
             {
               label: '模型关联Api',
@@ -342,19 +342,19 @@ function getModelMenu() {
           ],
           icon: 'fa fa-cube',
           label: '模型维护',
-          rewrite: '/model/list',
-          url: '/model'
+          rewrite: '/amis/model/list',
+          url: '/amis/model'
         },
         {
           label: '表数据管理',
           icon: 'fa fa-book',
           schemaApi: '/api/v1/amis/pages/table.maintainer',
-          url: '/table/maintainer'
+          url: '/amis/table/maintainer'
         },
         {
           label: 'Studio',
-          url: '/studio',
-          rewrite: '/table/fields',
+          url: '/amis/studio',
+          rewrite: '/amis/table/fields',
           icon: 'fab fa-studiovinari',
           children: [
             {

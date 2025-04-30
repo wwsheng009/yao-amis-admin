@@ -103,7 +103,7 @@
                   "actionType": "link",
                   "label": "修改",
                   "level": "link",
-                  "link": "/model/create/${id}/",
+                  "link": "/amis/model/create/${id}/",
                   "type": "button",
                   "id": "u:60c2b54030ad"
                 },
@@ -162,7 +162,7 @@
       "id": "u:4862440567d8",
       "actionType": "link",
       "label": "新增",
-      "link": "/model/model.create",
+      "link": "/amis/model/create",
       "primary": true,
       "type": "button"
     },

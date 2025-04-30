@@ -1,52 +1,68 @@
 /**
  * 更新路由结构中的上下节点的层次关系，防止错误的设置导致无法显示菜单。
  * ！！一定要更新最顶层的节点
- * @param node 路由节点
+ * @param route 路由节点
  * @param parent 上级路由节点
  * @returns 路由表
  */
-export function updateSoyRouteComponent(node, parent?) {
+export function updateSoyRouteComponent(route, parent?) {
   // 没有子节点，可能是最后的节点或是第一个节点
-  if (Array.isArray(node)) {
-    node.forEach((n) => updateSoyRouteComponent(n, parent));
+  if (Array.isArray(route)) {
+    route.forEach((n) => updateSoyRouteComponent(n, parent));
     return;
   }
   const hasParent = parent != null ? true : false;
   const hasChildren =
-    Array.isArray(node.children) && node.children.length > 0 ? true : false;
+    Array.isArray(route.children) && route.children.length > 0 ? true : false;
 
-  delete node.meta.singleLayout;
+  delete route.meta.singleLayout;
 
   //最上面一层
   if (!hasParent) {
     if (!hasChildren) {
-      node.meta.singleLayout = 'basic';
+      route.meta.singleLayout = 'basic';
       // 只有一层的菜单
-      if (node.meta?.schemaApi) {
-        node.component = 'layout.base@view.amis';
+      if (route.meta?.schemaApi) {
+        route.component = 'layout.base$view.amis';
+      } else if (!route.component.includes('$')) {
+        route.component = 'layout.base$view.404';
       }
     } else {
-      node.component = 'layout.base';
+      // 中间一层，一般使用redirect
+      route.component = 'layout.base';
     }
   } else {
     //最底一层
     if (!hasChildren) {
-      if (node.meta?.schemaApi) {
-        node.component = 'view.amis';
+      if (route.meta?.schemaApi) {
+        route.component = 'view.amis';
       } else {
-        node.component = 'view.' + node.component;
+        route.component = 'view.' + route.component;
       }
     } else {
       // 中间一层，一般使用redirect
-      node.component = null;
+      route.component = 'layout.base';
     }
   }
-  // add the parent name for
-  if (hasParent && !node.name.includes(parent.name + '_')) {
-    node.name = parent.name + '_' + node.name;
+
+  // 针对于文件系统路径，重新设置路径
+  if (route.subPath) {
+    if (hasParent) {
+      route.path = parent.path + '/' + route.subPath;
+    } else {
+      route.path = '/' + route.subPath;
+    }
+    // 将路径中的点号、斜杠替换为下划线，用作路由名称
+    route.name = route.path.replace(/[\\./]/g, '_');
+    // 如果路由名称以下划线开头
+    if (route.name.startsWith('_')) {
+      route.name = route.name.substring(1);
+    }
   }
 
-  if (Array.isArray(node.children) && node.children.length) {
-    node.children.forEach((n) => updateSoyRouteComponent(n, node));
+  route.path = route.path.replace(/\/\//g, '/');
+
+  if (Array.isArray(route.children) && route.children.length) {
+    route.children.forEach((n) => updateSoyRouteComponent(n, route));
   }
 }

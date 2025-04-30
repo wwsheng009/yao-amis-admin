@@ -28,7 +28,7 @@
         "type": "application/json"
       }
     },{
-      // /api/v1/soybean/route/getUserRoutes
+      // /api/v1/soybean/route/isRouteExist
       "path": "/isRouteExist", 
       "method": "GET",
       "guard": "bearer-jwt",
