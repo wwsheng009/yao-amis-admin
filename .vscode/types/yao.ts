@@ -13,10 +13,8 @@ import {
   ssWrite
 } from '@yaoapps/client';
 
-export * from './neo';
-export * from './io';
-
-export function Require(script: string) {}
+// 已经取消
+// export function Require(script: string) {}
 
 export {
   Process,
