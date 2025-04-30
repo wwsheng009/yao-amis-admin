@@ -15,9 +15,6 @@ import { getPagesFileList } from '@scripts/editor/localfile';
  *
  * */
 
-// const PagesLocation = '/pages';
-// const WorkingPagesLocation = '/amis_editor';
-
 /**
  * yao run scripts.admin.menu.reLoadAndSaveMenus
  * 重新加载菜单列表
@@ -58,15 +55,6 @@ export function getSoySuperUserMenu() {
   const localRoutes = [...routesSoy, ...routesLocal, ...editor_routes];
 
   return cleanUpRouteMenu(localRoutes);
-  // }
-  // // 转换成树结构
-  // routes = Process(`utils.arr.Tree`, routes, { parent: 'parent', empty: 0 });
-
-  // // 导入正在编辑的页面
-  // const editor_routes = getAmisEditorSoyRoute(); //Process('scripts.admin.menu.getAmisEditorSoyRoute');
-  // routes = routes.concat(editor_routes);
-
-  // return cleanUpRouteMenu(routes);
 }
 
 /**
@@ -206,23 +194,6 @@ function getAmisLocalPageAsSoyRoutes() {
  */
 export function getAmisPageSchema(pageId: string) {
   return Process('scripts.editor.localfile.getAmisPageSchema', pageId);
-  // const page = pageId.replace('.', '/') + '.json';
-
-  // const fpath = PagesLocation + '/' + page;
-  // const isExist = Process('fs.system.Exists', fpath);
-  // if (!isExist) {
-  //   throw new Exception(`文件不存在：${fpath}`);
-  // }
-
-  // const str = Process('fs.system.ReadFile', fpath);
-  // const source = JSON.parse(str);
-  // if (source.type === 'app') {
-  //   return {
-  //     type: 'tpl',
-  //     tpl: '不能显示类型为app的页面'
-  //   };
-  // }
-  // return JSON.parse(str);
 }
 
 /**
@@ -273,10 +244,10 @@ export function convertAmisFileListToSoyRoute(
 ): Route {
   let order = 1000;
   const result = {
-    name: 'amis_editor',
-    path: '/amis_editor',
+    name: 'amis-editor',
+    path: '/amis-editor',
     component: 'layout.base$view.404',
-    subPath: 'amis_editor', // 单一层级的节点
+    subPath: 'amis-editor', // 单一层级的节点
     children: [],
     meta: { title: '', order: order, requiresAuth: true }
   };
@@ -295,8 +266,6 @@ export function convertAmisFileListToSoyRoute(
           return path.substring(1);
         }
         return path;
-        // const dotIndex = path.lastIndexOf('.');
-        // return dotIndex > -1 ? path.substring(0, dotIndex) : path;
       })
       .join(sep);
   };
@@ -335,6 +304,12 @@ export function convertAmisFileListToSoyRoute(
   return result;
 }
 
+/**
+ * 把文件名列表转换成路由列表
+ *
+ * @param list 文件名列表
+ * @returns 路由列表
+ */
 export function convertFileListToSoyRoute(list: string[]): Route[] {
   const result = convertAmisFileListToSoyRoute(list);
   //   小心处理层级
@@ -378,18 +353,6 @@ export function updateSoyRoutePath(
     route.meta.schemaApi = api + route.path;
     route.meta.schemaApi = route.meta.schemaApi.replace(/\/\//g, '/');
   }
-
-  // if (parent == null) {
-  //   route.path = '/' + route.subPath;
-  // } else {
-  //   route.path = parent.path + '/' + route.subPath;
-  // }
-  // route.path = route.path.replace(/\/\//g, '/');
-
-  // route.name = route.path.replace(/[\\./]/g, '_');
-  // if (route.name.startsWith('_')) {
-  //   route.name = route.name.substring(1);
-  // }
 
   if (route.children?.length > 0) {
     route.children.forEach((n) => updateSoyRoutePath(api, n, route));
@@ -464,7 +427,6 @@ function saveTreeMenusToDB(
     menu.parent = parentId; // reset parent
 
     const id = Process('models.admin.menu.save', menu);
-    // console.log("id==>", id, menu);
     if (Array.isArray(route.children)) {
       route.children.forEach((element) => {
         traverse(element, id);
