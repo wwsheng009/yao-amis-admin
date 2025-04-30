@@ -38,7 +38,7 @@ install_plugins() {
     rm -rf public/soy-admin/*
     log "下载soy-admin包"
     echo "正在下载soy-admin包..."
-    curl -# -fL "https://github.com/wwsheng009/soybean-admin-amis-yao/releases/download/0.10.4/soy-yao-admin-0.10.4.zip" -o public/soy-admin/latest.zip || { log_error "下载soy-admin失败"; exit 1; }
+    curl -# -fL "https://github.com/wwsheng009/soybean-admin-amis-yao/releases/download/1.3.13/soy-yao-admin-1.3.13.zip" -o public/soy-admin/latest.zip || { log_error "下载soy-admin失败"; exit 1; }
     log "解压soy-admin包"
     unzip -q public/soy-admin/latest.zip -d public/soy-admin/
     rm public/soy-admin/latest.zip
