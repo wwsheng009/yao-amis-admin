@@ -41,7 +41,7 @@
             "path": "/menu_admin",
             "method": "POST",
             "guard": "bearer-jwt",
-            "process": "scripts.admin.menu.getSoyAdminUserMenu",
+            "process": "scripts.soybean.route.getSoyUserMenu",
             "in": [],
             "out": {
                 "status": 200,

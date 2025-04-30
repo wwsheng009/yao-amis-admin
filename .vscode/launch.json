@@ -22,6 +22,28 @@
         //"sourceMap": true
         "${workspaceFolder}/dist/**/*.js"
       ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Node Program",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${file}",
+      "runtimeArgs": [
+        "--experimental-transform-types",
+        "--no-warnings=ExperimentalWarning",
+        "-r",
+        "ts-node/register",
+        "-r",
+        "tsconfig-paths/register"
+      ],
+      "cwd": "${workspaceFolder}",
+      "outFiles": [
+        //"sourceMap": true
+        "${workspaceFolder}/dist/**/*.js"
+      ]
     }
   ]
 }

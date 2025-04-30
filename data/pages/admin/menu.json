@@ -240,11 +240,11 @@
                       "label": "组件",
                       "options": {
                         "amis": "amis",
-                        "basic": "basic",
-                        "multi": "multi",
-                        "self": "self"
+                        "layout.base": "layout.base",
+                        "layout.blank": "layout.blank",
+                        "view.amis": "view.amis"
                       },
-                      "value": "self"
+                      "value": "amis"
                     },
                     {
                       "type": "select",
@@ -252,9 +252,8 @@
                       "label": "单级路由布局",
                       "options": {
                         "amis": "amis",
-                        "basic": "basic",
-                        "multi": "multi",
-                        "self": "self"
+                        "layout.base": "layout.base",
+                        "layout.blank": "layout.blank"
                       },
                       "visibleOn": "data.parent == 0"
                     }
@@ -537,11 +536,11 @@
                           "label": "组件",
                           "options": {
                             "amis": "amis",
-                            "basic": "basic",
-                            "multi": "multi",
-                            "self": "self"
+                            "layout.base": "layout.base",
+                            "layout.blank": "layout.blank",
+                            "view.amis": "view.amis"
                           },
-                          "value": "self"
+                          "value": "amis"
                         },
                         {
                           "type": "select",
@@ -549,9 +548,8 @@
                           "label": "单级路由布局",
                           "options": {
                             "amis": "amis",
-                            "basic": "basic",
-                            "multi": "multi",
-                            "self": "self"
+                            "layout.base": "layout.base",
+                            "layout.blank": "layout.blank"
                           },
                           "visibleOn": "data.parent == 0"
                         }

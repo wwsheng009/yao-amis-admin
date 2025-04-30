@@ -33,6 +33,7 @@ export function updateSoyRouteComponent(route, parent?) {
     } else {
       // 中间一层，一般使用redirect
       route.component = 'layout.base';
+      route.meta.href = null;
     }
   } else {
     //最底一层
@@ -40,11 +41,14 @@ export function updateSoyRouteComponent(route, parent?) {
       if (route.meta?.schemaApi) {
         route.component = 'view.amis';
       } else {
-        route.component = 'view.' + route.component;
+        if (!route.component.startsWith('view.')) {
+          route.component = 'view.' + route.component;
+        }
       }
     } else {
       // 中间一层，一般使用redirect
       route.component = 'layout.base';
+      route.meta.href = null;
     }
   }
 

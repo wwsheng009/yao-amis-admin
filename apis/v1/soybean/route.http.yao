@@ -9,7 +9,7 @@
       // /api/v1/soybean/route/getConstantRoutes
       "path": "/getConstantRoutes", 
       "method": "GET",
-      "guard": "bearer-jwt",
+      "guard": "-", //固定的route不要认证
       "process": "scripts.soybean.route.getConstantRoutes",
       "in": [],
       "out": {
@@ -21,7 +21,7 @@
       "path": "/getUserRoutes", 
       "method": "GET",
       "guard": "bearer-jwt",
-      "process": "scripts.admin.menu.getSoyAdminUserMenu",
+      "process": "scripts.soybean.route.getSoyUserMenu",
       "in": [],
       "out": {
         "status": 200,

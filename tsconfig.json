@@ -9,15 +9,21 @@
       "@yao/*": [
         "./.vscode/types/*"
       ],
-      "@lib/*": ["./scripts/lib/*"],
+      "@lib/*": [
+        "./scripts/lib/*"
+      ],
       "@scripts/*": [
         "./scripts/*"
       ]
     },
-    "lib": ["ESNEXT", "DOM"],
+    "lib": [
+      "ESNEXT",
+      "DOM"
+    ],
     "outDir": "dist",
     "skipLibCheck": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "noEmit": true
   },
   "exclude": [
     "node_modules",

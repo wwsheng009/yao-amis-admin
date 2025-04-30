@@ -72,14 +72,10 @@ export function getConstantRoutes() {
 
 /**
  * get user auth menus
- * yao run scripts.admin.menu.getSoyAdminUserMenu
+ * yao run scripts.soybean.route.getSoyUserMenu
  */
-export function getSoyAdminUserMenu() {
-  const user = Process('session.get', 'user');
-  if (user?.type === 'super') {
-    return getSoySuperUserMenu();
-  }
-
+export function getSoyUserMenu() {
+  // Process('session.set', 'user_id', 3);
   const menusIds = getUserAuthMenuIds();
   if (menusIds.length) {
     // get menus
@@ -89,6 +85,11 @@ export function getSoyAdminUserMenu() {
       return menusIds.includes(item.id) || !item.meta?.requiresAuth;
     });
     return cleanUpRouteMenu(routes);
+  } else {
+    const user = Process('session.get', 'user');
+    if (user?.type === 'super') {
+      return getSoySuperUserMenu();
+    }
   }
   return [];
 }

@@ -1,7 +1,6 @@
 import {
   convertFileListToSoyRoute,
   convertAmisFileListToSoyRoute,
-  getAmisEditorSoyRoute,
   removeEmptyChildren,
   updateSoyRoutePath
 } from './menu';
@@ -85,5 +84,6 @@ function test2() {
   const result = convertAmisFileListToSoyRoute(list);
   //   小心处理层级
   removeEmptyChildren(result);
+  console.log(JSON.stringify(result));
 }
 // getAmisEditorSoyRoute();

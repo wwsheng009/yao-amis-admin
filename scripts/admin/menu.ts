@@ -19,29 +19,6 @@ import { getPagesFileList } from '@scripts/editor/localfile';
 // const WorkingPagesLocation = '/amis_editor';
 
 /**
- * get user auth menus
- * yao run scripts.admin.menu.getSoyAdminUserMenu
- */
-export function getSoyAdminUserMenu() {
-  const menusIds = getUserAuthMenuIds();
-  if (menusIds.length) {
-    // get menus
-    let routes = getSoyRoutesFromDB();
-    routes = Process(`utils.arr.Tree`, routes, { parent: 'parent', empty: 0 });
-    routes = filterTreeDataWithFunc(routes, (item) => {
-      return menusIds.includes(item.id) || !item.meta?.requiresAuth;
-    });
-    return cleanUpRouteMenu(routes);
-  } else {
-    const user = Process('session.get', 'user');
-    if (user?.type === 'super') {
-      return getSoySuperUserMenu();
-    }
-  }
-  return [];
-}
-
-/**
  * yao run scripts.admin.menu.reLoadAndSaveMenus
  * 重新加载菜单列表
  */
@@ -93,6 +70,7 @@ export function getSoySuperUserMenu() {
 }
 
 /**
+ * yao run scripts.admin.menu.getSoyRoutesFromDB
  * 读取数据库中所有的菜单配置列表
  * @returns []Route
  */
@@ -118,13 +96,14 @@ export function getSoyRoutesFromDB() {
       children: []
     };
     // 外链
-    if (menu.url_type == 2) {
-      r.meta.href = menu.url;
-    } else if (menu.url_type == 3) {
+    if (menu.schema_api) {
       // amis组件
-      r.component = 'amis';
+      r.component = 'view.amis';
       // 需要配置api
       r.meta.schemaApi = menu.schema_api;
+      r.meta.href = null;
+    } else if (menu.url) {
+      r.meta.href = menu.url;
     }
     if (!menu.visible) {
       r.meta.hide = true;
@@ -142,6 +121,8 @@ export function getSoyRoutesFromDB() {
   });
   return menus2;
 }
+// const menus = getSoyRoutesFromDB();
+// console.log(menus);
 
 /**
  * 导出数据库中的菜单，由于导入本地菜单时的描述信息没有，可以编辑好菜单后导出成文件
