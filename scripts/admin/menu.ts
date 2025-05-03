@@ -244,10 +244,10 @@ export function convertAmisFileListToSoyRoute(
 ): Route {
   let order = 1000;
   const result = {
-    name: 'amis-editor',
-    path: '/amis-editor',
+    name: '',
+    path: '',
     component: 'layout.base$view.404',
-    subPath: 'amis-editor', // 单一层级的节点
+    subPath: '', // 单一层级的节点
     children: [],
     meta: { title: '', order: order, requiresAuth: true }
   };
