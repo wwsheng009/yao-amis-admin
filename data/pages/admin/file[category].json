@@ -426,7 +426,6 @@
               "actionType": "ajax",
               "api": {
                 "method": "get",
-                "sendOn": "this.file_path",
                 "url": "/api/v1/fs/${params.category}/file/delete?name=${path}"
               },
               "className": "text-danger"
@@ -589,5 +588,4 @@
   "asideResizor": true,
   "editorState": "default",
   "id": "u:b3a36a017400"
-
 }
