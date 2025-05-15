@@ -1,3 +1,21 @@
+/**
+ * @file 数据处理工具库
+ * @description 提供了一系列用于处理数据转换、查询参数处理、数组分页等功能的工具函数
+ *
+ * 主要功能：
+ * 1. 查询参数处理：将URL查询参数转换为YAO查询参数
+ * 2. 数据转换：处理输入输出数据的格式转换
+ * 3. 数组操作：提供数组分页、过滤等功能
+ *
+ * 主要导出函数：
+ * - mergeQueryObject: 合并查询对象
+ * - queryToQueryParam: 将URL查询对象转换为YAO查询参数
+ * - updateOutputData: 更新输出数据格式
+ * - updateInputData: 更新输入数据格式
+ * - PaginateArrayWithQuery: 数组分页查询
+ * - getArrayItem: 获取数组项
+ */
+
 import { FindAndLoadYaoModelById } from '@scripts/system/model_lib';
 import { IsMysql } from '@scripts/system/lib';
 import { isDateTimeType } from '@scripts/amis/column_convert';
@@ -15,6 +33,36 @@ import { addModelMetaFields } from '@scripts/system/model_convert';
 // for...in循环出的是key，for...of循环出的是value
 // 注意，for...of是ES6新引入的特性。修复了ES5引入的for...in的不足
 // for...of不能循环普通的对象，需要通过和Object.keys()搭配使用
+
+/**
+ * 合并查询对象
+ * @param {QueryObjectIn} querysIn - 原始查询对象,通常来自URL查询参数,格式为 {"key": [value]}
+ * @param {object} payload - 需要合并的对象,格式为 {"key": value}
+ * @returns {QueryObjectIn} 合并后的查询对象
+ *
+ * @description
+ * 该函数用于合并两个查询对象:
+ * 1. querysIn: URL查询参数对象,其中值通常是数组
+ * 2. payload: 普通对象,值为单个值
+ *
+ * 合并规则:
+ * - 如果querysIn中对应key的值是数组,则将payload中的值添加到数组中(去重)
+ * - 如果querysIn中不存在该key,则创建新数组包含payload中的值
+ * - 使用弱比较(==)进行值的比较,如'1'等于1
+ *
+ * @example
+ * // 基础合并
+ * mergeQueryObject({"type": ["1"]}, {"type": "2"})
+ * // 返回: {"type": ["1", "2"]}
+ *
+ * // 去重合并
+ * mergeQueryObject({"type": ["1"]}, {"type": "1"})
+ * // 返回: {"type": ["1"]}
+ *
+ * // 新建字段
+ * mergeQueryObject({"type": ["1"]}, {"status": "active"})
+ * // 返回: {"type": ["1"], "status": ["active"]}
+ */
 export function mergeQueryObject(querysIn: QueryObjectIn, payload: object) {
   // console.log(`types of querysIn${typeof querysIn}`);
   // console.log(`types of payload${typeof payload}`);
@@ -260,6 +308,26 @@ export function queryToQueryParam(
 
   return queryParam;
 }
+/**
+ * 获取数据库模型的字段映射
+ * @param {ModelId | YaoModel.ModelDSL} model 模型ID或模型定义
+ * @returns {object} 字段映射对象,key为字段名,value为字段定义
+ * @throws {Exception} 当模型定义不正确时抛出异常
+ *
+ * @example
+ * // 使用模型ID
+ * const columnMap = getDbModelColumnMap('user');
+ *
+ * // 使用模型定义
+ * const modelDsl = {
+ *   columns: [
+ *     { name: 'id', type: 'ID' },
+ *     { name: 'name', type: 'string' }
+ *   ]
+ * };
+ * const columnMap = getDbModelColumnMap(modelDsl);
+ */
+
 function getDbModelColumnMap(model: ModelId | YaoModel.ModelDSL) {
   let modelDsl = model as YaoModel.ModelDSL;
   if (typeof model === 'string') {
@@ -293,11 +361,44 @@ export function updateOutputData(model: ModelId | YaoModel.ModelDSL, Data) {
   return updateOutputDataLine(dbColmap, Data);
 }
 /**
- * update the data line before output
- * @param {object} dbColMap
- * @param {object} line
- * @returns
+ * 更新输出数据行
+ * @param {object} dbColMap 数据库字段映射
+ * @param {object} line 数据行
+ * @returns {object} 更新后的数据行
+ *
+ * @description
+ * 该函数用于处理单行数据的输出格式转换。主要处理以下几种类型:
+ * 1. IMAGES - 将JSON字符串转换为数组
+ * 2. DECIMAL - 将字符串转换为数字
+ * 3. BOOLEAN - 转换为布尔值
+ *
+ * 对于每个字段:
+ * - 如果字段值未定义则跳过
+ * - 根据字段类型进行相应转换
+ * - 保持其他类型字段不变
+ *
+ * @example
+ * const dbColMap = {
+ *   images: { type: 'IMAGES' },
+ *   price: { type: 'DECIMAL' },
+ *   active: { type: 'BOOLEAN' }
+ * };
+ *
+ * const line = {
+ *   images: '["/img1.jpg","/img2.jpg"]',
+ *   price: "99.99",
+ *   active: 1
+ * };
+ *
+ * updateOutputDataLine(dbColMap, line);
+ * // 返回:
+ * // {
+ * //   images: ["/img1.jpg","/img2.jpg"],
+ * //   price: 99.99,
+ * //   active: true
+ * // }
  */
+
 function updateOutputDataLine(dbColMap: object, line: object) {
   if (line == null || typeof line !== 'object') {
     return line;
@@ -496,7 +597,7 @@ export function updateInputData(
  * @returns Array
  */
 function paginateArray(
-  arr: any[],
+  arr: object[],
   pageIn: number,
   pageSizeIn: number,
   orderBy: string,
@@ -541,10 +642,10 @@ function paginateArray(
  * @returns 找到的第一个数组项或默认值
  */
 export function getArrayItem(
-  querys: { [x: string]: string[] },
+  querys: { [x: string]: any },
   key: string,
   defaultValue?: any
-): any {
+): string {
   if (typeof querys !== 'object') {
     return defaultValue;
   }
@@ -565,10 +666,10 @@ export function getArrayItem(
  * @returns 数组
  */
 export function PaginateArrayWithQuery(
-  data: Array<any>,
+  data: Array<object>,
   querysIn: QueryObjectIn,
   payload: object,
-  searchFields: Array<any> = []
+  searchFields: Array<string> = []
 ) {
   const querys = mergeQueryObject(querysIn, payload);
 
@@ -593,10 +694,41 @@ export function PaginateArrayWithQuery(
     total: count
   };
 }
+/**
+ * 对数组进行分页
+ * @param {Array} list 需要分页的数组
+ * @param {number} page 页码,从1开始
+ * @param {number} perPage 每页数量
+ * @param {string} orderBy 排序字段
+ * @param {string} orderDir 排序方向,asc或desc
+ * @returns {Array} 分页后的数组
+ *
+ * @description
+ * 该函数用于对数组进行分页处理,支持以下功能:
+ * 1. 基础分页 - 根据页码和每页数量截取数组
+ * 2. 排序 - 支持按指定字段正序或倒序排序
+ *
+ * 排序规则:
+ * - 如果未指定orderBy,保持原数组顺序
+ * - orderDir默认为asc(升序)
+ * - 支持对数字、字符串类型字段排序
+ *
+ * @example
+ * const list = [{id:1}, {id:2}, {id:3}, {id:4}, {id:5}];
+ *
+ * // 基础分页
+ * paginateArray(list, 1, 2);
+ * // 返回: [{id:1}, {id:2}]
+ *
+ * // 带排序的分页
+ * paginateArray(list, 1, 2, 'id', 'desc');
+ * // 返回: [{id:5}, {id:4}]
+ */
+
 function FilterArrayWithQuery(
   list: object[],
   querysIn: QueryObjectIn,
-  searchFields = []
+  searchFields: Array<string> = []
 ) {
   if (!Array.isArray(list) || list.length == 0) {
     return list;
@@ -686,7 +818,6 @@ function FilterArrayWithQuery(
     });
     return arr;
   }
-  // console.log("querys", querys)
   if (Object.keys(querys).length > 0) {
     list = filterArray(querys, true);
   }
