@@ -19,7 +19,10 @@
             "url": "/api/v1/system/meta/model/model_name_list",
             "method": "get"
           },
-          "mode": "horizontal",
+          "overlay": {
+            "width": "70%",
+            "align": "center"
+          },
           "searchable": true,
           "columns": [
             {
@@ -46,8 +49,7 @@
                   },
                   "componentName": "api_list"
                 }
-              ],
-              "weight": 0
+              ]
             }
           }
         }
