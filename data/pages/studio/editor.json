@@ -1,22 +1,45 @@
 {
+  "type": "page",
+  "title": "编辑器",
+  "body": [
+    {
+      "type": "button",
+      "label": "打开编辑器",
+      "onEvent": {
+        "click": {
+          "actions": [
+            {
+              "ignoreError": false,
+              "actionType": "url",
+              "args": {
+                "url": "/amis-editor"
+              }
+            }
+          ]
+        }
+      },
+      "disabledOnAction": false
+    }
+  ],
+  "id": "u:cf6fa1f12e1d",
+  "pullRefresh": {
+    "disabled": true
+  },
   "onEvent": {
     "init": {
       "actions": [
         {
+          "ignoreError": false,
           "actionType": "url",
           "args": {
-            "url": "/amis-editor/"
+            "url": "/amis-editor"
           }
         }
       ],
       "weight": 0
     }
   },
-  "pullRefresh": {
-    "disabled": true
-  },
-  "regions": ["body"],
-  "title": "编辑器",
-  "type": "page",
-  "id": "u:cf6fa1f12e1d"
+  "regions": [
+    "body"
+  ]
 }
