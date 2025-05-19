@@ -288,7 +288,7 @@ export function convertAmisFileListToSoyRoute(
           // fullpath: `${tempObj.fullpath}/${subPath}`,
           path: tempObj.subPath ? `${tempObj.subPath}.${subPath}` : subPath,
           children: [],
-          meta: { requiresAuth: true, title: subPath }
+          meta: { requiresAuth: true, title: subPath, keepAlive: true }
         } as Route;
         tempObj.children.push(newChild);
         tempObj = newChild;
