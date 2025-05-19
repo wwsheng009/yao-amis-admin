@@ -47,21 +47,21 @@
     },
     {
       "name": "pid",
-      "label": "分类ID0编辑器,1产品图片,2拼团图片,3砍价图片,4秒杀图片,5文章图片,6组合数据图",
+      "label": "分类ID0编辑器",
       "type": "integer",
       "comment": "分类ID0编辑器,1产品图片,2拼团图片,3砍价图片,4秒杀图片,5文章图片,6组合数据图",
       "default": 0
     },
     {
       "name": "image_type",
-      "label": "图片上传类型 1本地 2七牛云 3OSS 4COS ",
+      "label": "图片上传类型",
       "type": "tinyInteger",
       "comment": "图片上传类型 1本地 2七牛云 3OSS 4COS ",
       "default": 1
     },
     {
       "name": "module_type",
-      "label": "图片上传模块类型 1 后台上传 2 用户生成",
+      "label": "图片上传模块类型",
       "type": "tinyInteger",
       "comment": "图片上传模块类型 1 后台上传 2 用户生成",
       "default": 1

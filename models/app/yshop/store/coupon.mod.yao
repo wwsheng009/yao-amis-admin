@@ -37,7 +37,7 @@
     },
     {
       "name": "coupon_time",
-      "label": "优惠券有效期限（单位：天）",
+      "label": "优惠券有效期限",
       "type": "integer",
       "comment": "优惠券有效期限（单位：天）",
       "default": 0,
@@ -52,7 +52,7 @@
     },
     {
       "name": "status",
-      "label": "状态（0：关闭，1：开启）",
+      "label": "状态",
       "type": "tinyInteger",
       "comment": "状态（0：关闭，1：开启）",
       "default": 0,
@@ -68,7 +68,7 @@
     },
     {
       "name": "type",
-      "label": "优惠券类型 0-通用 1-商品券",
+      "label": "优惠券类型",
       "type": "tinyInteger",
       "comment": "优惠券类型 0-通用 1-商品券",
       "nullable": true,

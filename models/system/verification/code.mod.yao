@@ -17,14 +17,14 @@
     },
     {
       "name": "status",
-      "label": "状态：1有效、0过期",
+      "label": "验证码状态",
       "type": "tinyInteger",
       "comment": "状态：1有效、0过期",
       "nullable": true
     },
     {
       "name": "type",
-      "label": "验证码类型：email或者短信",
+      "label": "验证码类型",
       "type": "string",
       "comment": "验证码类型：email或者短信",
       "length": 255,
@@ -40,7 +40,7 @@
     },
     {
       "name": "scenes",
-      "label": "业务名称：如重置邮箱、重置密码等",
+      "label": "业务名称",
       "type": "string",
       "comment": "业务名称：如重置邮箱、重置密码等",
       "length": 255,

@@ -9,7 +9,7 @@
     },
     {
       "name": "terminal",
-      "label": "终端 1-小程序 2-H5 3-APP 4-PC",
+      "label": "终端",
       "type": "tinyInteger",
       "comment": "终端 1-小程序 2-H5 3-APP 4-PC"
     },
@@ -22,7 +22,7 @@
     },
     {
       "name": "type",
-      "label": "类型 1-系统画布 2-自定义页面 3-商家店铺装修",
+      "label": "类型",
       "type": "tinyInteger",
       "comment": "类型 1-系统画布 2-自定义页面 3-商家店铺装修",
       "nullable": true,
@@ -38,7 +38,7 @@
     },
     {
       "name": "shop_id",
-      "label": "店铺id，当type=3的时候，值为具体的店铺id，其它情况为0",
+      "label": "店铺id",
       "type": "bigInteger",
       "comment": "店铺id，当type=3的时候，值为具体的店铺id，其它情况为0",
       "nullable": true,

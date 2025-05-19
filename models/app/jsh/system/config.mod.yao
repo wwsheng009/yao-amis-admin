@@ -65,7 +65,7 @@
         },
         {
             "name": "depot_flag",
-            "label": "仓库启用标记，0未启用，1启用",
+            "label": "仓库启用标记",
             "type": "string",
             "comment": "仓库启用标记，0未启用，1启用",
             "length": 1,
@@ -74,7 +74,7 @@
         },
         {
             "name": "customer_flag",
-            "label": "客户启用标记，0未启用，1启用",
+            "label": "客户启用标记",
             "type": "string",
             "comment": "客户启用标记，0未启用，1启用",
             "length": 1,
@@ -83,7 +83,7 @@
         },
         {
             "name": "minus_stock_flag",
-            "label": "负库存启用标记，0未启用，1启用",
+            "label": "负库存启用标记",
             "type": "string",
             "comment": "负库存启用标记，0未启用，1启用",
             "length": 1,
@@ -92,7 +92,7 @@
         },
         {
             "name": "purchase_by_sale_flag",
-            "label": "以销定购启用标记，0未启用，1启用",
+            "label": "以销定购启用标记",
             "type": "string",
             "comment": "以销定购启用标记，0未启用，1启用",
             "length": 1,
@@ -101,7 +101,7 @@
         },
         {
             "name": "multi_level_approval_flag",
-            "label": "多级审核启用标记，0未启用，1启用",
+            "label": "多级审核启用标记",
             "type": "string",
             "comment": "多级审核启用标记，0未启用，1启用",
             "length": 1,
@@ -118,7 +118,7 @@
         },
         {
             "name": "force_approval_flag",
-            "label": "强审核启用标记，0未启用，1启用",
+            "label": "强审核启用标记",
             "type": "string",
             "comment": "强审核启用标记，0未启用，1启用",
             "length": 1,
@@ -127,7 +127,7 @@
         },
         {
             "name": "update_unit_price_flag",
-            "label": "更新单价启用标记，0未启用，1启用",
+            "label": "更新单价启用标记",
             "type": "string",
             "comment": "更新单价启用标记，0未启用，1启用",
             "length": 1,
@@ -136,7 +136,7 @@
         },
         {
             "name": "over_link_bill_flag",
-            "label": "超出关联单据启用标记，0未启用，1启用",
+            "label": "超出关联单据启用标记",
             "type": "string",
             "comment": "超出关联单据启用标记，0未启用，1启用",
             "length": 1,
@@ -145,7 +145,7 @@
         },
         {
             "name": "in_out_manage_flag",
-            "label": "出入库管理启用标记，0未启用，1启用",
+            "label": "出入库管理启用标记",
             "type": "string",
             "comment": "出入库管理启用标记，0未启用，1启用",
             "length": 1,
@@ -154,7 +154,7 @@
         },
         {
             "name": "multi_account_flag",
-            "label": "多账户启用标记，0未启用，1启用",
+            "label": "多账户启用标记",
             "type": "string",
             "comment": "多账户启用标记，0未启用，1启用",
             "length": 1,
@@ -163,7 +163,7 @@
         },
         {
             "name": "move_avg_price_flag",
-            "label": "移动平均价启用标记，0未启用，1启用",
+            "label": "移动平均价启用标记",
             "type": "string",
             "comment": "移动平均价启用标记，0未启用，1启用",
             "length": 1,
@@ -172,7 +172,7 @@
         },
         {
             "name": "audit_print_flag",
-            "label": "先审核后打印启用标记，0未启用，1启用",
+            "label": "先审核后打印启用标记",
             "type": "string",
             "comment": "先审核后打印启用标记，0未启用，1启用",
             "length": 1,

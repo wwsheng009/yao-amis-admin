@@ -12,7 +12,7 @@
         },
         {
             "name": "change_type",
-            "label": "改变类型：0->增加；1->减少",
+            "label": "改变类型",
             "type": "integer",
             "comment": "改变类型：0->增加；1->减少",
             "nullable": true
@@ -42,7 +42,7 @@
         },
         {
             "name": "source_type",
-            "label": "积分来源：0->购物；1->管理员修改",
+            "label": "积分来源",
             "type": "integer",
             "comment": "积分来源：0->购物；1->管理员修改",
             "nullable": true

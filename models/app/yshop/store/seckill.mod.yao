@@ -170,7 +170,7 @@
     },
     {
       "name": "spec_type",
-      "label": "规格 0单 1多",
+      "label": "规格",
       "type": "tinyInteger",
       "comment": "规格 0单 1多",
       "nullable": true

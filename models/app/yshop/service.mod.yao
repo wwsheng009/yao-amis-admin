@@ -23,7 +23,7 @@
         },
         {
             "name": "type",
-            "label": "类型:pages=页面,miniprogram=跳转小程序,menu=菜单,content=内容,call=电话",
+            "label": "类型",
             "type": "string",
             "comment": "类型:pages=页面,miniprogram=跳转小程序,menu=菜单,content=内容,call=电话",
             "length": 30
@@ -77,7 +77,7 @@
         },
         {
             "name": "status",
-            "label": "状态:0=下架,1=上架",
+            "label": "状态",
             "type": "tinyInteger",
             "comment": "状态:0=下架,1=上架",
             "default": 0

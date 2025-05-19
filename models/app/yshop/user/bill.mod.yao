@@ -25,7 +25,7 @@
         },
         {
             "name": "pm",
-            "label": "0 = 支出 1 = 获得",
+            "label": "账单分类",
             "type": "tinyInteger",
             "comment": "0 = 支出 1 = 获得",
             "default": 0,
@@ -95,7 +95,7 @@
         },
         {
             "name": "status",
-            "label": "0 = 带确定 1 = 有效 -1 = 无效",
+            "label": "状态",
             "type": "tinyInteger",
             "comment": "0 = 带确定 1 = 有效 -1 = 无效",
             "default": 1,

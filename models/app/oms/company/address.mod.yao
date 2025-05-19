@@ -15,14 +15,14 @@
         },
         {
             "name": "send_status",
-            "label": "默认发货地址：0->否；1->是",
+            "label": "默认发货地址",
             "type": "integer",
             "comment": "默认发货地址：0->否；1->是",
             "nullable": true
         },
         {
             "name": "receive_status",
-            "label": "是否默认收货地址：0->否；1->是",
+            "label": "是否默认收货地址",
             "type": "integer",
             "comment": "是否默认收货地址：0->否；1->是",
             "nullable": true

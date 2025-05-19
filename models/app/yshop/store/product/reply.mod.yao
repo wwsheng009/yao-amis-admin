@@ -34,7 +34,7 @@
         },
         {
             "name": "reply_type",
-            "label": "某种商品类型(普通商品、秒杀商品）",
+            "label": "某种商品类型",
             "type": "string",
             "comment": "某种商品类型(普通商品、秒杀商品）",
             "length": 32,

@@ -67,7 +67,7 @@
         },
         {
             "name": "status",
-            "label": "申请状态：0->待处理；1->退货中；2->已完成；3->已拒绝",
+            "label": "申请状态",
             "type": "integer",
             "comment": "申请状态：0->待处理；1->退货中；2->已完成；3->已拒绝",
             "nullable": true
@@ -105,7 +105,7 @@
         },
         {
             "name": "product_attr",
-            "label": "商品销售属性：颜色：红色；尺码：xl;",
+            "label": "商品销售属性",
             "type": "string",
             "comment": "商品销售属性：颜色：红色；尺码：xl;",
             "length": 500,
@@ -150,7 +150,7 @@
         },
         {
             "name": "proof_pics",
-            "label": "凭证图片，以逗号隔开",
+            "label": "凭证图片列表",
             "type": "string",
             "comment": "凭证图片，以逗号隔开",
             "length": 1000,

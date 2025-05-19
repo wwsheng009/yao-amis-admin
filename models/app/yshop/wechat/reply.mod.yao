@@ -33,7 +33,7 @@
     },
     {
       "name": "status",
-      "label": "0=不可用  1 =可用",
+      "label": "状态",
       "type": "tinyInteger",
       "comment": "0=不可用  1 =可用",
       "default": 1,

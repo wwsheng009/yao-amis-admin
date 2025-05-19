@@ -55,7 +55,7 @@
     },
     {
       "name": "third_party_tag",
-      "label": "1, 2：表示是为api添加商品，否则是直播控制台添加的商品",
+      "label": "第三方标签",
       "type": "string",
       "comment": "1, 2：表示是为api添加商品，否则是直播控制台添加的商品",
       "length": 255,
@@ -70,7 +70,7 @@
     },
     {
       "name": "audit_status",
-      "label": "审核状态 0：未审核，1：审核中，2:审核通过，3审核失败",
+      "label": "审核状态",
       "type": "integer",
       "comment": "审核状态 0：未审核，1：审核中，2:审核通过，3审核失败",
       "nullable": true

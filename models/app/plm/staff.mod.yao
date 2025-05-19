@@ -1,54 +1,54 @@
 {
-  "name": "::Staff",
+  "name": "员工",
   "table": {
     "name": "app_plm_staff",
-    "comment": "::Staff"
+    "comment": "员工"
   },
   "columns": [
     {
-      "label": "::ID",
+      "label": "ID",
       "name": "id",
       "type": "ID"
     },
     {
-      "label": "::Email",
+      "label": "邮箱",
       "name": "email",
       "type": "string",
       "length": 50,
-      "comment": "::Email",
+      "comment": "邮箱",
       "unique": true,
       "nullable": true,
       "validations": [
         {
           "method": "email",
           "args": [],
-          "message": "::{{input}} should be email"
+          "message": "{{input}}错误，请输入正确的邮箱地址"
         }
       ]
     },
     {
-      "label": "::Mobile",
+      "label": "手机号",
       "name": "mobile",
       "type": "string",
       "length": 50,
-      "comment": "::Mobile",
+      "comment": "手机号",
       "unique": true,
       "nullable": true,
       "crypt": "AES"
     },
     {
-      "label": "::Department IDs",
+      "label": "部门ID列表",
       "name": "department_ids",
       "type": "json",
-      "comment": "::Department IDs",
+      "comment": "部门ID列表",
       "nullable": true
     },
     {
-      "label": "::Password",
+      "label": "密码",
       "name": "password",
       "type": "string",
       "length": 256,
-      "comment": "::Password",
+      "comment": "密码",
       "crypt": "PASSWORD",
       "index": true,
       "nullable": true,
@@ -58,30 +58,30 @@
           "args": [
             "string"
           ],
-          "message": "::{{input}} Error"
+          "message": "{{input}}错误，密码类型错误"
         },
         {
           "method": "minLength",
           "args": [
             6
           ],
-          "message": "::{{label}} Error"
+          "message": "{{input}}错误，密码长度不能小于6位"
         },
         {
           "method": "maxLength",
           "args": [
             18
           ],
-          "message": "::{{label}} Error"
+          "message": "{{input}}错误，密码长度不能超过18位"
         }
       ]
     },
     {
-      "label": "::Full Name",
+      "label": "姓名",
       "name": "name",
       "type": "string",
       "length": 80,
-      "comment": "::Full Name",
+      "comment": "姓名",
       "index": true,
       "nullable": true,
       "validations": [
@@ -90,13 +90,13 @@
           "args": [
             "string"
           ],
-          "message": "::{{input}} Error"
+          "message": "{{input}}错误，姓名类型错误"
         }
       ]
     },
     {
-      "label": "::Status",
-      "comment": "::Status",
+      "label": "状态",
+      "comment": "状态",
       "name": "status",
       "type": "enum",
       "default": "enabled",
@@ -111,7 +111,7 @@
           "args": [
             "string"
           ],
-          "message": "::{{input}} Error, {{label}} should be string"
+          "message": "{{input}}错误，状态类型错误"
         },
         {
           "method": "enum",
@@ -119,7 +119,7 @@
             "enabled",
             "disabled"
           ],
-          "message": "::{{input}} Error, {{label}} should be enabled/disabled"
+          "message": "{{input}}错误，状态只能为enabled/disabled"
         }
       ]
     }

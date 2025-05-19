@@ -20,7 +20,7 @@
         },
         {
             "name": "status",
-            "label": "状态：0->不启用；1->启用",
+            "label": "状态",
             "type": "integer",
             "comment": "状态：0->不启用；1->启用",
             "nullable": true

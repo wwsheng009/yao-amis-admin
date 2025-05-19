@@ -167,7 +167,7 @@
         },
         {
             "name": "status",
-            "label": "订单状态（-1 : 申请退款 -2 : 退货成功 0：待发货；1：待收货；2：已收货；3：已完成；-1：已退款）",
+            "label": "订单状态",
             "type": "tinyInteger",
             "comment": "订单状态（-1 : 申请退款 -2 : 退货成功 0：待发货；1：待收货；2：已收货；3：已完成；-1：已退款）",
             "default": 0,
@@ -175,7 +175,7 @@
         },
         {
             "name": "refund_status",
-            "label": "0 未退款 1 申请中 2 已退款",
+            "label": "退款状态",
             "type": "tinyInteger",
             "comment": "0 未退款 1 申请中 2 已退款",
             "default": 0
@@ -245,7 +245,7 @@
         },
         {
             "name": "delivery_type",
-            "label": "发货类型normal-手动填写 ｜face-电子面单",
+            "label": "发货类型",
             "type": "string",
             "comment": "发货类型normal-手动填写 ｜face-电子面单",
             "length": 32,
@@ -261,9 +261,9 @@
         },
         {
             "name": "order_type",
-            "label": "购买类型:takein=自取,takeout=外卖\n",
+            "label": "购买类型",
             "type": "string",
-            "comment": "购买类型:takein=自取,takeout=外卖\n",
+            "comment": "购买类型:takein=自取,takeout=外卖",
             "length": 50,
             "nullable": true,
             "default": "send"
@@ -299,7 +299,7 @@
         },
         {
             "name": "back_integral",
-            "label": "给用户退了多少积分",
+            "label": "退积分",
             "type": "decimal",
             "comment": "给用户退了多少积分",
             "nullable": true,
@@ -314,7 +314,7 @@
         },
         {
             "name": "unique",
-            "label": "唯一id(md5加密)类似id",
+            "label": "唯一id",
             "type": "char",
             "comment": "唯一id(md5加密)类似id",
             "length": 32,
@@ -337,7 +337,7 @@
         },
         {
             "name": "combination_id",
-            "label": "拼团产品id0一般产品",
+            "label": "拼团产品id",
             "type": "bigInteger",
             "comment": "拼团产品id0一般产品",
             "nullable": true,
@@ -345,7 +345,7 @@
         },
         {
             "name": "pink_id",
-            "label": "拼团id 0没有拼团",
+            "label": "拼团id",
             "type": "bigInteger",
             "comment": "拼团id 0没有拼团",
             "default": 0
@@ -388,14 +388,14 @@
         },
         {
             "name": "shipping_type",
-            "label": "配送方式 1=快递 ，2=门店自提",
+            "label": "配送方式",
             "type": "tinyInteger",
             "comment": "配送方式 1=快递 ，2=门店自提",
             "default": 1
         },
         {
             "name": "is_channel",
-            "label": "支付渠道(0微信公众号1微信小程序)",
+            "label": "支付渠道",
             "type": "tinyInteger",
             "comment": "支付渠道(0微信公众号1微信小程序)",
             "nullable": true,

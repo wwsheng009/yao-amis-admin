@@ -44,7 +44,7 @@
     },
     {
       "name": "status",
-      "label": "状态 1参与中 2 活动结束参与失败 3活动结束参与成功",
+      "label": "状态",
       "type": "tinyInteger",
       "comment": "状态 1参与中 2 活动结束参与失败 3活动结束参与成功",
       "default": 0

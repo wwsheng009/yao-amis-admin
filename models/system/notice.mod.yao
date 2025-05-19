@@ -22,13 +22,13 @@
         },
         {
             "name": "type",
-            "label": "公告类型（1通知 2公告）",
+            "label": "公告类型",
             "type": "tinyInteger",
             "comment": "公告类型（1通知 2公告）"
         },
         {
             "name": "status",
-            "label": "公告状态（0正常 1关闭）",
+            "label": "公告状态",
             "type": "tinyInteger",
             "comment": "公告状态（0正常 1关闭）",
             "default": 0

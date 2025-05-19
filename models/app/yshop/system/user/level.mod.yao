@@ -43,14 +43,14 @@
     },
     {
       "name": "is_pay",
-      "label": "是否购买,1=购买,0=不购买",
+      "label": "是否购买",
       "type": "tinyInteger",
       "comment": "是否购买,1=购买,0=不购买",
       "default": 0
     },
     {
       "name": "is_show",
-      "label": "是否显示 1=显示,0=隐藏",
+      "label": "是否显示",
       "type": "tinyInteger",
       "comment": "是否显示 1=显示,0=隐藏",
       "default": 0

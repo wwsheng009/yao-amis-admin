@@ -31,7 +31,7 @@
         },
         {
             "name": "status",
-            "label": "启用状态：0->不启用；1->启用",
+            "label": "启用状态",
             "type": "integer",
             "comment": "启用状态：0->不启用；1->启用",
             "nullable": true

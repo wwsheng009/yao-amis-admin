@@ -58,7 +58,7 @@
         },
         {
             "name": "status",
-            "label": "帐号启用状态：0->禁用；1->启用",
+            "label": "帐号启用状态",
             "type": "integer",
             "comment": "帐号启用状态：0->禁用；1->启用",
             "nullable": true,

@@ -22,7 +22,7 @@
     },
     {
       "name": "service_type",
-      "label": "服务类型0仅退款1退货退款",
+      "label": "服务类型",
       "type": "tinyInteger",
       "comment": "服务类型0仅退款1退货退款",
       "nullable": true
@@ -43,7 +43,7 @@
     },
     {
       "name": "explain_img",
-      "label": "说明图片->多个用逗号分割",
+      "label": "说明图片",
       "type": "text",
       "comment": "说明图片->多个用逗号分割",
       "nullable": true
@@ -74,14 +74,14 @@
     },
     {
       "name": "state",
-      "label": "状态 0已提交等待平台审核 1平台已审核 等待用户发货/退款 2 用户已发货 3退款成功",
+      "label": "状态",
       "type": "tinyInteger",
       "comment": "状态 0已提交等待平台审核 1平台已审核 等待用户发货/退款 2 用户已发货 3退款成功",
       "nullable": true
     },
     {
       "name": "sales_state",
-      "label": "售后状态-0正常1用户取消2商家拒绝",
+      "label": "售后状态",
       "type": "tinyInteger",
       "comment": "售后状态-0正常1用户取消2商家拒绝",
       "nullable": true

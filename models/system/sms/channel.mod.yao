@@ -37,14 +37,14 @@
         },
         {
             "name": "api_key",
-            "label": "短信 API 的账号",
+            "label": "短信API的账号",
             "type": "string",
             "comment": "短信 API 的账号",
             "length": 128
         },
         {
             "name": "api_secret",
-            "label": "短信 API 的秘钥",
+            "label": "短信API的秘钥",
             "type": "string",
             "comment": "短信 API 的秘钥",
             "length": 128,
@@ -52,7 +52,7 @@
         },
         {
             "name": "callback_url",
-            "label": "短信发送回调 URL",
+            "label": "短信发送回调URL",
             "type": "string",
             "comment": "短信发送回调 URL",
             "length": 255,

@@ -242,4 +242,4 @@
     "name": "ddic_model_column"
   }
 }
-//yao migrate -n ddic.model.column
+//yao migrate -n ddic.model.column --reset

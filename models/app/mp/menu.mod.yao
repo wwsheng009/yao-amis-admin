@@ -15,7 +15,7 @@
         },
         {
             "name": "app_id",
-            "label": "微信公众号 appid",
+            "label": "微信公众号appid",
             "type": "string",
             "comment": "微信公众号 appid",
             "length": 128

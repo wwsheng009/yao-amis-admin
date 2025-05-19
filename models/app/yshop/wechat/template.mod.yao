@@ -65,7 +65,7 @@
     },
     {
       "name": "type",
-      "label": "类型：template:模板消息 subscribe:订阅消息",
+      "label": "类型",
       "type": "string",
       "comment": "类型：template:模板消息 subscribe:订阅消息",
       "length": 30,

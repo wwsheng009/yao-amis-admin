@@ -22,7 +22,7 @@
     },
     {
       "name": "ctype",
-      "label": "优惠券类型 0-通用 1-商品券",
+      "label": "优惠券类型",
       "type": "tinyInteger",
       "comment": "优惠券类型 0-通用 1-商品券",
       "nullable": true
@@ -65,7 +65,7 @@
     },
     {
       "name": "status",
-      "label": "1 正常 0 未开启 -1 已无效",
+      "label": "状态",
       "type": "tinyInteger",
       "comment": "1 正常 0 未开启 -1 已无效",
       "default": 1,

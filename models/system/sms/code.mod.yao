@@ -24,7 +24,7 @@
         },
         {
             "name": "create_ip",
-            "label": "创建 IP",
+            "label": "创建IP",
             "type": "string",
             "comment": "创建 IP",
             "length": 15

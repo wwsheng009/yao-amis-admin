@@ -18,7 +18,7 @@
         },
         {
             "name": "default_status",
-            "label": "是否为默认等级：0->不是；1->是",
+            "label": "是否为默认等级",
             "type": "integer",
             "comment": "是否为默认等级：0->不是；1->是",
             "nullable": true

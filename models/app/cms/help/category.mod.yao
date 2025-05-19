@@ -1,11 +1,13 @@
 {
     "columns": [
         {
+            "label": "ID",
             "name": "id",
             "type": "id",
             "primary": true
         },
         {
+            "label": "分类名称",
             "name": "name",
             "type": "string",
             "length": 100,
@@ -29,12 +31,14 @@
         {
             "name": "show_status",
             "type": "integer",
-            "nullable": true
+            "nullable": true,
+            "label": "显示状态"
         },
         {
             "name": "sort",
             "type": "integer",
-            "nullable": true
+            "nullable": true,
+            "label": "排序"
         }
     ],
     "option": {},

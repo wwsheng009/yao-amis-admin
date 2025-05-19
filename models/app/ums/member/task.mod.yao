@@ -27,7 +27,7 @@
         },
         {
             "name": "type",
-            "label": "任务类型：0->新手任务；1->日常任务",
+            "label": "任务类型",
             "type": "integer",
             "comment": "任务类型：0->新手任务；1->日常任务",
             "nullable": true

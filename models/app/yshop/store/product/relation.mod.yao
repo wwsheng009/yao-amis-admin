@@ -19,7 +19,7 @@
         },
         {
             "name": "type",
-            "label": "类型(收藏(collect）、点赞(like))",
+            "label": "类型",
             "type": "string",
             "comment": "类型(收藏(collect）、点赞(like))",
             "length": 32,
@@ -28,7 +28,7 @@
         },
         {
             "name": "category",
-            "label": "某种类型的商品(普通商品、秒杀商品)",
+            "label": "某种类型的商品",
             "type": "string",
             "comment": "某种类型的商品(普通商品、秒杀商品)",
             "length": 32,

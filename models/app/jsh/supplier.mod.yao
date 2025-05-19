@@ -48,7 +48,7 @@
         },
         {
             "name": "isystem",
-            "label": "是否系统自带 0==系统 1==非系统",
+            "label": "是否系统自带",
             "type": "tinyInteger",
             "comment": "是否系统自带 0==系统 1==非系统",
             "nullable": true

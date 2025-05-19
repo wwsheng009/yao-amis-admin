@@ -47,7 +47,7 @@
     },
     {
       "name": "is_pay",
-      "label": "0 = 未购买 1 = 已购买",
+      "label": "购买状态",
       "type": "tinyInteger",
       "comment": "0 = 未购买 1 = 已购买",
       "default": 0

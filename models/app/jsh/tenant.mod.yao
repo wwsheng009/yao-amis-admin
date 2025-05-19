@@ -31,7 +31,7 @@
         },
         {
             "name": "type",
-            "label": "租户类型，0免费租户，1付费租户",
+            "label": "租户类型",
             "type": "string",
             "comment": "租户类型，0免费租户，1付费租户",
             "length": 1,
@@ -40,7 +40,7 @@
         },
         {
             "name": "enabled",
-            "label": "启用 0-禁用  1-启用",
+            "label": "是否启用",
             "type": "tinyInteger",
             "comment": "启用 0-禁用  1-启用",
             "nullable": true,

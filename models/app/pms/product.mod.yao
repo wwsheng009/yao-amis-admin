@@ -45,35 +45,35 @@
         },
         {
             "name": "delete_status",
-            "label": "删除状态：0->未删除；1->已删除",
+            "label": "删除状态",
             "type": "integer",
             "comment": "删除状态：0->未删除；1->已删除",
             "nullable": true
         },
         {
             "name": "publish_status",
-            "label": "上架状态：0->下架；1->上架",
+            "label": "上架状态",
             "type": "integer",
             "comment": "上架状态：0->下架；1->上架",
             "nullable": true
         },
         {
             "name": "new_status",
-            "label": "新品状态:0->不是新品；1->新品",
+            "label": "新品状态",
             "type": "integer",
             "comment": "新品状态:0->不是新品；1->新品",
             "nullable": true
         },
         {
             "name": "recommand_status",
-            "label": "推荐状态；0->不推荐；1->推荐",
+            "label": "推荐状态",
             "type": "integer",
             "comment": "推荐状态；0->不推荐；1->推荐",
             "nullable": true
         },
         {
             "name": "verify_status",
-            "label": "审核状态：0->未审核；1->审核通过",
+            "label": "审核状态",
             "type": "integer",
             "comment": "审核状态：0->未审核；1->审核通过",
             "nullable": true
@@ -180,14 +180,14 @@
         },
         {
             "name": "preview_status",
-            "label": "是否为预告商品：0->不是；1->是",
+            "label": "是否为预告商品",
             "type": "integer",
             "comment": "是否为预告商品：0->不是；1->是",
             "nullable": true
         },
         {
             "name": "service_ids",
-            "label": "以逗号分割的产品服务：1->无忧退货；2->快速退款；3->免费包邮",
+            "label": "以逗号分割的产品服务",
             "type": "string",
             "comment": "以逗号分割的产品服务：1->无忧退货；2->快速退款；3->免费包邮",
             "length": 64,
@@ -207,7 +207,7 @@
         },
         {
             "name": "album_pics",
-            "label": "画册图片，连产品图片限制为5张，以逗号分割",
+            "label": "画册图片",
             "type": "string",
             "comment": "画册图片，连产品图片限制为5张，以逗号分割",
             "length": 255,
@@ -261,7 +261,7 @@
         },
         {
             "name": "promotion_type",
-            "label": "促销类型：0->没有促销使用原价;1->使用促销价；2->使用会员价；3->使用阶梯价格；4->使用满减价格；5->限时购",
+            "label": "促销类型",
             "type": "integer",
             "comment": "促销类型：0->没有促销使用原价;1->使用促销价；2->使用会员价；3->使用阶梯价格；4->使用满减价格；5->限时购",
             "nullable": true

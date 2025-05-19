@@ -1,12 +1,12 @@
 {
-  "name": "::Supplier",
+  "name": "供应商",
   "table": {
     "name": "app_plm_supplier",
-    "comment": "::Supplier"
+    "comment": "供应商"
   },
   "columns": [
     {
-      "label": "::ID",
+      "label": "ID",
       "name": "id",
       "type": "ID"
     },
@@ -15,7 +15,7 @@
       "name": "sn",
       "type": "string",
       "length": 80,
-      "comment": "::Supplier SN",
+      "comment": "供应商编号",
       "unique": true,
       "nullable": true,
       "validations": [
@@ -24,7 +24,7 @@
           "args": [
             "string"
           ],
-          "message": "::{{input}} Error"
+          "message": "{{input}}错误，编号类型错误"
         }
       ]
     },
@@ -33,7 +33,7 @@
       "name": "name",
       "type": "string",
       "length": 200,
-      "comment": "::Supplier Name",
+      "comment": "供应商名称",
       "index": true,
       "nullable": true,
       "validations": [
@@ -42,7 +42,7 @@
           "args": [
             "string"
           ],
-          "message": "::{{input}} Error"
+          "message": "{{input}}错误，名称类型错误"
         }
       ]
     },
@@ -51,7 +51,7 @@
       "name": "province",
       "type": "string",
       "length": 100,
-      "comment": "::City",
+      "comment": "省份",
       "index": true,
       "nullable": true,
       "validations": []
@@ -61,14 +61,14 @@
       "name": "city",
       "type": "string",
       "length": 100,
-      "comment": "::City",
+      "comment": "城市",
       "index": true,
       "nullable": true,
       "validations": []
     },
     {
       "label": "状态",
-      "comment": "::Status",
+      "comment": "状态",
       "name": "status",
       "type": "enum",
       "default": "enabled",
@@ -83,7 +83,7 @@
           "args": [
             "string"
           ],
-          "message": "::{{input}} Error, {{label}} should be string"
+          "message": "{{input}}错误，状态类型错误"
         },
         {
           "method": "enum",
@@ -91,7 +91,7 @@
             "enabled",
             "disabled"
           ],
-          "message": "::{{input}} Error, {{label}} should be enabled/disabled"
+          "message": "{{input}}错误，状态只能为enabled/disabled"
         }
       ]
     }

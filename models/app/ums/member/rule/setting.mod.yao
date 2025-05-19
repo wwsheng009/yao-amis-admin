@@ -42,7 +42,7 @@
         },
         {
             "name": "type",
-            "label": "类型：0->积分规则；1->成长值规则",
+            "label": "类型",
             "type": "integer",
             "comment": "类型：0->积分规则；1->成长值规则",
             "nullable": true

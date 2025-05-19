@@ -21,7 +21,7 @@
         },
         {
             "name": "user_blng_orga_dspl_seq",
-            "label": "用户在所属机构中显示顺序",
+            "label": "显示顺序",
             "type": "string",
             "comment": "用户在所属机构中显示顺序",
             "length": 20,
@@ -29,7 +29,7 @@
         },
         {
             "name": "delete_flag",
-            "label": "删除标记，0未删除，1删除",
+            "label": "删除标记",
             "type": "char",
             "comment": "删除标记，0未删除，1删除",
             "length": 1,

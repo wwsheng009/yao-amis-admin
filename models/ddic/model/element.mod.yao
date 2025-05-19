@@ -124,7 +124,7 @@
         {
           "method": "mobile",
           "args": [],
-          "message": "::{{input}} should be mobile"
+          "message": "{{input}}错误，请输入正确的手机号"
         }
       ]
     },
@@ -137,7 +137,7 @@
         {
           "method": "email",
           "args": [],
-          "message": "::{{input}} should be email"
+          "message": "{{input}}错误，请输入正确的邮箱地址"
         }
       ]
     },
@@ -163,7 +163,7 @@
             "enabled",
             "disabled"
           ],
-          "message": "::{{input}} Error, {{label}} should be enabled/disabled"
+          "message": "{{input}}错误，状态只能为enabled/disabled"
         }
       ]
     }

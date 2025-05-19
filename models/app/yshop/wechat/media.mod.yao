@@ -42,7 +42,7 @@
     },
     {
       "name": "temporary",
-      "label": "是否永久或者临时 0永久1临时",
+      "label": "是否永久或者临时",
       "type": "tinyInteger",
       "comment": "是否永久或者临时 0永久1临时",
       "default": 0

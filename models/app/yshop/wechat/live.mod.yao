@@ -112,7 +112,7 @@
     },
     {
       "name": "product_id",
-      "label": "商品id 多个,分割",
+      "label": "商品id",
       "type": "string",
       "comment": "商品id 多个,分割",
       "length": 255,

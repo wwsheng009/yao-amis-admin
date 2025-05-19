@@ -24,7 +24,7 @@
         },
         {
             "name": "login_type",
-            "label": "登录类型：0->PC；1->android;2->ios;3->小程序",
+            "label": "登录类型",
             "type": "integer",
             "comment": "登录类型：0->PC；1->android;2->ios;3->小程序",
             "nullable": true

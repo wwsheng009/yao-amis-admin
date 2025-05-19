@@ -9,7 +9,7 @@
         },
         {
             "name": "shop_id",
-            "label": "店铺id,0表示通用",
+            "label": "店铺id",
             "type": "string",
             "comment": "店铺id,0表示通用",
             "length": 500,
@@ -70,7 +70,7 @@
         },
         {
             "name": "type",
-            "label": "可用类型:0=通用,1=自取,2=外卖",
+            "label": "可用类型",
             "type": "tinyInteger",
             "comment": "可用类型:0=通用,1=自取,2=外卖",
             "default": 0

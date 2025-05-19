@@ -59,7 +59,7 @@
         },
         {
             "name": "bar_code",
-            "label": "产品条码（一维码）",
+            "label": "产品条码",
             "type": "string",
             "comment": "产品条码（一维码）",
             "length": 15,
@@ -148,7 +148,7 @@
         },
         {
             "name": "is_show",
-            "label": "状态（0：未上架，1：上架）",
+            "label": "状态",
             "type": "tinyInteger",
             "comment": "状态（0：未上架，1：上架）",
             "nullable": true,
@@ -225,7 +225,7 @@
         },
         {
             "name": "mer_use",
-            "label": "商户是否代理 0不可代理1可代理",
+            "label": "商户是否代理",
             "type": "tinyInteger",
             "comment": "商户是否代理 0不可代理1可代理",
             "nullable": true,
@@ -247,7 +247,7 @@
         },
         {
             "name": "is_seckill",
-            "label": "秒杀状态 0 未开启 1已开启",
+            "label": "秒杀状态",
             "type": "tinyInteger",
             "comment": "秒杀状态 0 未开启 1已开启",
             "nullable": true,
@@ -255,7 +255,7 @@
         },
         {
             "name": "is_bargain",
-            "label": "砍价状态 0未开启 1开启",
+            "label": "砍价状态",
             "type": "tinyInteger",
             "comment": "砍价状态 0未开启 1开启",
             "nullable": true
@@ -286,7 +286,7 @@
         },
         {
             "name": "code_path",
-            "label": "产品二维码地址(用户小程序海报)",
+            "label": "产品二维码地址",
             "type": "string",
             "comment": "产品二维码地址(用户小程序海报)",
             "length": 64,
@@ -310,7 +310,7 @@
         },
         {
             "name": "spec_type",
-            "label": "规格 0单 1多",
+            "label": "规格",
             "type": "tinyInteger",
             "comment": "规格 0单 1多",
             "nullable": true,
@@ -325,7 +325,7 @@
         },
         {
             "name": "integral",
-            "label": "需要多少积分兑换 只在开启积分兑换时生效",
+            "label": "积分兑换",
             "type": "integer",
             "comment": "需要多少积分兑换 只在开启积分兑换时生效",
             "nullable": true,

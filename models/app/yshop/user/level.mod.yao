@@ -49,7 +49,7 @@
     },
     {
       "name": "status",
-      "label": "0:禁止,1:正常",
+      "label": "状态",
       "type": "tinyInteger",
       "comment": "0:禁止,1:正常",
       "default": 0

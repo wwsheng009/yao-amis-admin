@@ -15,14 +15,14 @@
         },
         {
             "name": "openid",
-            "label": "社交 openid",
+            "label": "社交openid",
             "type": "string",
             "comment": "社交 openid",
             "length": 32
         },
         {
             "name": "token",
-            "label": "社交 token",
+            "label": "社交token",
             "type": "string",
             "comment": "社交 token",
             "length": 256,
@@ -30,7 +30,7 @@
         },
         {
             "name": "raw_token_info",
-            "label": "原始 Token 数据，一般是 JSON 格式",
+            "label": "原始Token数据",
             "type": "string",
             "comment": "原始 Token 数据，一般是 JSON 格式",
             "length": 1024
@@ -52,21 +52,21 @@
         },
         {
             "name": "raw_user_info",
-            "label": "原始用户数据，一般是 JSON 格式",
+            "label": "原始用户数据",
             "type": "string",
             "comment": "原始用户数据，一般是 JSON 格式",
             "length": 1024
         },
         {
             "name": "code",
-            "label": "最后一次的认证 code",
+            "label": "最后一次的认证code",
             "type": "string",
             "comment": "最后一次的认证 code",
             "length": 256
         },
         {
             "name": "state",
-            "label": "最后一次的认证 state",
+            "label": "最后一次的认证state",
             "type": "string",
             "comment": "最后一次的认证 state",
             "length": 256,

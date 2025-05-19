@@ -128,3 +128,4 @@
     "soft_deletes": false
   }
 }
+// yao migrate -n ddic.model --reset

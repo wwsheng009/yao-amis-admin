@@ -1,11 +1,13 @@
 {
     "columns": [
         {
+            "label": "ID",
             "name": "id",
             "type": "id",
             "primary": true
         },
         {
+            "label": "产品ID",
             "name": "product_id",
             "type": "bigInteger",
             "nullable": true
@@ -18,6 +20,7 @@
             "length": 64
         },
         {
+            "label": "价格",
             "name": "price",
             "type": "decimal",
             "nullable": true
@@ -69,7 +72,7 @@
         },
         {
             "name": "sp_data",
-            "label": "商品销售属性，json格式",
+            "label": "商品销售属性",
             "type": "string",
             "comment": "商品销售属性，json格式",
             "length": 500,
@@ -78,8 +81,10 @@
     ],
     "option": {},
     "table": {
+        "comment": "商品sku库存",
         "name": "app_pms_sku_stock"
     },
-    "name": "app_pms_sku_stock",
+    "name": "app.pms.sku.stock",
+    "comment": "商品sku库存",
     "relations": {}
 }

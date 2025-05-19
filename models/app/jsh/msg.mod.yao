@@ -40,7 +40,7 @@
         },
         {
             "name": "status",
-            "label": "状态，1未读 2已读",
+            "label": "接收状态",
             "type": "string",
             "comment": "状态，1未读 2已读",
             "length": 1,

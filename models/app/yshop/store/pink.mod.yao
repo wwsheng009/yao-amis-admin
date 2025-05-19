@@ -13,14 +13,14 @@
     },
     {
       "name": "order_id",
-      "label": "订单id 生成",
+      "label": "订单id",
       "type": "string",
       "comment": "订单id 生成",
       "length": 32
     },
     {
       "name": "order_id_key",
-      "label": "订单id  数据库",
+      "label": "订单id",
       "type": "integer",
       "comment": "订单id  数据库"
     },
@@ -67,28 +67,28 @@
     },
     {
       "name": "k_id",
-      "label": "团长id 0为团长",
+      "label": "团长id",
       "type": "bigInteger",
       "comment": "团长id 0为团长",
       "default": 0
     },
     {
       "name": "is_tpl",
-      "label": "是否发送模板消息0未发送1已发送",
+      "label": "是否发送模板消息",
       "type": "tinyInteger",
       "comment": "是否发送模板消息0未发送1已发送",
       "default": 0
     },
     {
       "name": "is_refund",
-      "label": "是否退款 0未退款 1已退款",
+      "label": "是否退",
       "type": "tinyInteger",
       "comment": "是否退款 0未退款 1已退款",
       "default": 0
     },
     {
       "name": "status",
-      "label": "状态1进行中2已完成3未完成",
+      "label": "状态",
       "type": "tinyInteger",
       "comment": "状态1进行中2已完成3未完成",
       "default": 1

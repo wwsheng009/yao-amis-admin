@@ -77,7 +77,7 @@
         },
         {
             "name": "distance",
-            "label": "外卖配送距离,单位为千米。0表示不送外卖",
+            "label": "外卖配送距离",
             "type": "integer",
             "comment": "外卖配送距离,单位为千米。0表示不送外卖",
             "default": 0
@@ -106,7 +106,7 @@
         },
         {
             "name": "status",
-            "label": "是否营业:0=否,1=是",
+            "label": "是否营业",
             "type": "tinyInteger",
             "comment": "是否营业:0=否,1=是",
             "default": 0

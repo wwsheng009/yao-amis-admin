@@ -15,7 +15,7 @@
         },
         {
             "name": "app_id",
-            "label": "公众号 appId",
+            "label": "公众号",
             "type": "string",
             "comment": "公众号 appId",
             "length": 128
@@ -43,7 +43,7 @@
         },
         {
             "name": "url",
-            "label": "文件服务器的 URL",
+            "label": "文件服务器的URL",
             "type": "string",
             "comment": "文件服务器的 URL",
             "length": 1024,
@@ -59,7 +59,7 @@
         },
         {
             "name": "app_mp_url",
-            "label": "公众号文件 URL",
+            "label": "公众号文件URL",
             "type": "string",
             "comment": "公众号文件 URL",
             "length": 1024,

@@ -9,7 +9,7 @@
         },
         {
             "name": "username",
-            "label": "用户姓名--例如张三",
+            "label": "用户姓名",
             "type": "string",
             "comment": "用户姓名--例如张三",
             "length": 255
@@ -31,7 +31,7 @@
         },
         {
             "name": "leader_flag",
-            "label": "是否经理，0否，1是",
+            "label": "是否经理",
             "type": "string",
             "comment": "是否经理，0否，1是",
             "length": 1,
@@ -72,21 +72,21 @@
         },
         {
             "name": "ismanager",
-            "label": "是否为管理者 0==管理者 1==员工",
+            "label": "是否为管理者",
             "type": "tinyInteger",
             "comment": "是否为管理者 0==管理者 1==员工",
             "default": 1
         },
         {
             "name": "isystem",
-            "label": "是否系统自带数据 ",
+            "label": "是否系统自带数据",
             "type": "tinyInteger",
             "comment": "是否系统自带数据 ",
             "default": 0
         },
         {
             "name": "Status",
-            "label": "状态，0：正常，1：删除，2封禁",
+            "label": "状态",
             "type": "tinyInteger",
             "comment": "状态，0：正常，1：删除，2封禁",
             "nullable": true,

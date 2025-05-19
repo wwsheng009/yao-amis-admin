@@ -38,7 +38,7 @@
         },
         {
             "name": "status",
-            "label": "租户状态（0正常 1停用）",
+            "label": "租户状态",
             "type": "tinyInteger",
             "comment": "租户状态（0正常 1停用）",
             "default": 0

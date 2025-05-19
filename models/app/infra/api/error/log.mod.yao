@@ -9,9 +9,9 @@
         },
         {
             "name": "trace_id",
-            "label": "链路追踪编号\n     *\n     * 一般来说，通过链路追踪编号，可以将访问日志，错误日志，链路追踪日志，logger 打印日志等，结合在一起，从而进行排错。",
+            "label": "链路追踪编号",
             "type": "string",
-            "comment": "链路追踪编号\n     *\n     * 一般来说，通过链路追踪编号，可以将访问日志，错误日志，链路追踪日志，logger 打印日志等，结合在一起，从而进行排错。",
+            "comment": "链路追踪编号",
             "length": 64
         },
         {
@@ -30,9 +30,9 @@
         },
         {
             "name": "application_name",
-            "label": "应用名\n     *\n     * 目前读取 spring.application.name",
+            "label": "应用名",
             "type": "string",
-            "comment": "应用名\n     *\n     * 目前读取 spring.application.name",
+            "comment": "应用名",
             "length": 50
         },
         {
@@ -78,56 +78,56 @@
         },
         {
             "name": "exception_name",
-            "label": "异常名\n     *\n     * {@link Throwable#getClass()} 的类全名",
+            "label": "异常名",
             "type": "string",
-            "comment": "异常名\n     *\n     * {@link Throwable#getClass()} 的类全名",
+            "comment": "异常名",
             "length": 128,
             "default": ""
         },
         {
             "name": "exception_message",
-            "label": "异常导致的消息\n     *\n     * {@link cn.iocoder.common.framework.util.ExceptionUtil#getMessage(Throwable)}",
+            "label": "异常导致的消息",
             "type": "text",
-            "comment": "异常导致的消息\n     *\n     * {@link cn.iocoder.common.framework.util.ExceptionUtil#getMessage(Throwable)}"
+            "comment": "异常导致的消息"
         },
         {
             "name": "exception_root_cause_message",
-            "label": "异常导致的根消息\n     *\n     * {@link cn.iocoder.common.framework.util.ExceptionUtil#getRootCauseMessage(Throwable)}",
+            "label": "异常导致的根消息",
             "type": "text",
-            "comment": "异常导致的根消息\n     *\n     * {@link cn.iocoder.common.framework.util.ExceptionUtil#getRootCauseMessage(Throwable)}"
+            "comment": "异常导致的根消息"
         },
         {
             "name": "exception_stack_trace",
-            "label": "异常的栈轨迹\n     *\n     * {@link cn.iocoder.common.framework.util.ExceptionUtil#getServiceException(Exception)}",
+            "label": "异常的栈轨迹",
             "type": "text",
-            "comment": "异常的栈轨迹\n     *\n     * {@link cn.iocoder.common.framework.util.ExceptionUtil#getServiceException(Exception)}"
+            "comment": "异常的栈轨迹"
         },
         {
             "name": "exception_class_name",
-            "label": "异常发生的类全名\n     *\n     * {@link StackTraceElement#getClassName()}",
+            "label": "异常发生的类全名",
             "type": "string",
-            "comment": "异常发生的类全名\n     *\n     * {@link StackTraceElement#getClassName()}",
+            "comment": "异常发生的类全名",
             "length": 512
         },
         {
             "name": "exception_file_name",
-            "label": "异常发生的类文件\n     *\n     * {@link StackTraceElement#getFileName()}",
+            "label": "异常发生的类文件",
             "type": "string",
-            "comment": "异常发生的类文件\n     *\n     * {@link StackTraceElement#getFileName()}",
+            "comment": "异常发生的类文件",
             "length": 512
         },
         {
             "name": "exception_method_name",
-            "label": "异常发生的方法名\n     *\n     * {@link StackTraceElement#getMethodName()}",
+            "label": "异常发生的方法名",
             "type": "string",
-            "comment": "异常发生的方法名\n     *\n     * {@link StackTraceElement#getMethodName()}",
+            "comment": "异常发生的方法名",
             "length": 512
         },
         {
             "name": "exception_line_number",
-            "label": "异常发生的方法所在行\n     *\n     * {@link StackTraceElement#getLineNumber()}",
+            "label": "代码行",
             "type": "integer",
-            "comment": "异常发生的方法所在行\n     *\n     * {@link StackTraceElement#getLineNumber()}"
+            "comment": "异常发生的方法所在行"
         },
         {
             "name": "process_status",

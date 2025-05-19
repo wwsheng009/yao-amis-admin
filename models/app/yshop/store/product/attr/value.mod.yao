@@ -13,7 +13,7 @@
     },
     {
       "name": "sku",
-      "label": "商品属性索引值 (attr_value|attr_value[|....])",
+      "label": "商品属性索引值",
       "type": "string",
       "comment": "商品属性索引值 (attr_value|attr_value[|....])",
       "length": 128

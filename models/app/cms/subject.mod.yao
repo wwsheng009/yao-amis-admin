@@ -1,6 +1,7 @@
 {
     "columns": [
         {
+            "label": "ID",
             "name": "id",
             "type": "id",
             "primary": true
@@ -8,13 +9,15 @@
         {
             "name": "category_id",
             "type": "bigInteger",
-            "nullable": true
+            "nullable": true,
+            "label": "分类ID"
         },
         {
             "name": "title",
             "type": "string",
             "length": 100,
-            "nullable": true
+            "nullable": true,
+            "label": "标题"
         },
         {
             "name": "pic",
@@ -34,22 +37,26 @@
         {
             "name": "recommend_status",
             "type": "integer",
-            "nullable": true
+            "nullable": true,
+            "label": "推荐状态"
         },
         {
             "name": "collect_count",
             "type": "integer",
-            "nullable": true
+            "nullable": true,
+            "label": "收藏数"
         },
         {
             "name": "read_count",
             "type": "integer",
-            "nullable": true
+            "nullable": true,
+            "label": "阅读数"
         },
         {
             "name": "comment_count",
             "type": "integer",
-            "nullable": true
+            "nullable": true,
+            "label": "评论数"
         },
         {
             "name": "album_pics",
@@ -63,7 +70,8 @@
             "name": "description",
             "type": "string",
             "length": 1000,
-            "nullable": true
+            "nullable": true,
+            "label": "描述"
         },
         {
             "name": "show_status",
@@ -79,7 +87,8 @@
         {
             "name": "content",
             "type": "text",
-            "nullable": true
+            "nullable": true,
+            "label": "内容"
         },
         {
             "name": "forward_count",

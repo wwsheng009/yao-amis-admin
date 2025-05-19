@@ -1,66 +1,66 @@
 {
-  "name": "::Task Deliverables",
+  "name": "任务交付物",
   "table": {
     "name": "app_plm_task_deliverable",
-    "comment": "::Task Deliverables"
+    "comment": "任务交付物"
   },
   "columns": [
     {
-      "label": "::ID",
+      "label": "ID",
       "name": "id",
       "type": "ID"
     },
     {
-      "label": "::Project ID",
+      "label": "项目ID",
       "name": "project_id",
       "type": "bigInteger",
       "length": 20,
-      "comment": "::Project ID",
+      "comment": "项目ID",
       "index": true
     },
     {
-      "label": "::Task ID",
+      "label": "任务ID",
       "name": "task_id",
       "type": "bigInteger",
       "length": 20,
-      "comment": "::Task ID",
+      "comment": "任务ID",
       "index": true
     },
     {
-      "label": "::Product ID",
+      "label": "产品ID",
       "name": "product_id",
       "type": "bigInteger",
       "length": 20,
-      "comment": "::Product ID",
+      "comment": "产品ID",
       "nullable": true,
       "index": true
     },
     {
-      "label": "::Numbers",
+      "label": "数量",
       "name": "nums",
       "type": "integer",
       "length": 20,
-      "comment": "::Numbers",
+      "comment": "数量",
       "nullable": true,
       "index": true
     },
     {
-      "label": "::Deliverable",
+      "label": "交付物名称",
       "name": "name",
       "type": "string",
       "length": 200,
-      "comment": "::Deliverable"
+      "comment": "交付物名称"
     },
     {
-      "label": "::Files",
+      "label": "文件",
       "name": "files",
       "type": "JSON",
       "nullable": true,
-      "comment": "::Files"
+      "comment": "文件"
     },
     {
-      "label": "::Status",
-      "comment": "::Status",
+      "label": "状态",
+      "comment": "状态",
       "name": "status",
       "type": "enum",
       "default": "waiting",
@@ -75,7 +75,7 @@
           "args": [
             "string"
           ],
-          "message": "::{{input}} Error, {{label}} should be string"
+          "message": "{{input}}错误，状态类型错误"
         },
         {
           "method": "enum",
@@ -83,7 +83,7 @@
             "waiting",
             "done"
           ],
-          "message": "::{{input}} Error, {{label}} should be enabled/disabled"
+          "message": "{{input}}错误，状态只能为waiting/done"
         }
       ]
     }

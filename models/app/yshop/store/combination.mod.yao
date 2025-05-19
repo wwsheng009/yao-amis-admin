@@ -115,7 +115,7 @@
     },
     {
       "name": "mer_use",
-      "label": "商户是否可用1可用0不可用",
+      "label": "商户是否可用",
       "type": "tinyInteger",
       "comment": "商户是否可用1可用0不可用",
       "nullable": true
@@ -171,7 +171,7 @@
     },
     {
       "name": "spec_type",
-      "label": "规格 0单 1多",
+      "label": "规格",
       "type": "tinyInteger",
       "comment": "规格 0单 1多",
       "nullable": true

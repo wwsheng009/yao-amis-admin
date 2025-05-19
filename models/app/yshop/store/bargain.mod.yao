@@ -120,7 +120,7 @@
     },
     {
       "name": "status",
-      "label": "砍价状态 0(到砍价时间不自动开启)  1(到砍价时间自动开启时间)",
+      "label": "砍价状态",
       "type": "tinyInteger",
       "comment": "砍价状态 0(到砍价时间不自动开启)  1(到砍价时间自动开启时间)",
       "default": 1
@@ -163,14 +163,14 @@
     },
     {
       "name": "is_hot",
-      "label": "是否推荐0不推荐1推荐",
+      "label": "是否推荐",
       "type": "tinyInteger",
       "comment": "是否推荐0不推荐1推荐",
       "default": 0
     },
     {
       "name": "is_postage",
-      "label": "是否包邮 0不包邮 1包邮",
+      "label": "是否包邮",
       "type": "tinyInteger",
       "comment": "是否包邮 0不包邮 1包邮",
       "default": 1

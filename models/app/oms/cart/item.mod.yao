@@ -1,21 +1,25 @@
 {
     "columns": [
         {
+            "label": "ID",
             "name": "id",
             "type": "id",
             "primary": true
         },
         {
+            "label": "商品ID",
             "name": "product_id",
             "type": "bigInteger",
             "nullable": true
         },
         {
+            "label": "商品skuID",
             "name": "product_sku_id",
             "type": "bigInteger",
             "nullable": true
         },
         {
+            "label": "会员ID",
             "name": "member_id",
             "type": "bigInteger",
             "nullable": true
@@ -52,7 +56,7 @@
         },
         {
             "name": "product_sub_title",
-            "label": "商品副标题（卖点）",
+            "label": "商品副标题",
             "type": "string",
             "comment": "商品副标题（卖点）",
             "length": 500,
@@ -104,12 +108,14 @@
             "nullable": true
         },
         {
+            "label": "商品品牌",
             "name": "product_brand",
             "type": "string",
             "length": 200,
             "nullable": true
         },
         {
+            "label": "商品分类名称",
             "name": "product_sn",
             "type": "string",
             "length": 200,
@@ -117,7 +123,7 @@
         },
         {
             "name": "product_attr",
-            "label": "商品销售属性:[{\"key\":\"颜色\",\"value\":\"颜色\"},{\"key\":\"容量\",\"value\":\"4G\"}]",
+            "label": "商品销售属性",
             "type": "string",
             "comment": "商品销售属性:[{\"key\":\"颜色\",\"value\":\"颜色\"},{\"key\":\"容量\",\"value\":\"4G\"}]",
             "length": 500,

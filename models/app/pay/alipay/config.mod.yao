@@ -25,7 +25,7 @@
     },
     {
       "name": "format",
-      "label": "类型 固定格式json",
+      "label": "类型",
       "type": "string",
       "comment": "类型 固定格式json",
       "length": 255,

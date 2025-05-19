@@ -9,7 +9,7 @@
     },
     {
       "name": "bucket",
-      "label": "Bucket 识别符",
+      "label": "Bucket识别符",
       "type": "string",
       "comment": "Bucket 识别符",
       "length": 255,
@@ -33,7 +33,7 @@
     },
     {
       "name": "type",
-      "label": "文件类型：私有或公开",
+      "label": "文件类型",
       "type": "string",
       "comment": "文件类型：私有或公开",
       "length": 255,

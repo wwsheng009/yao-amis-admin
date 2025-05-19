@@ -114,7 +114,7 @@
     },
     {
       "name": "status",
-      "label": "-1 审核未通过 0未审核 1审核通过",
+      "label": "状态",
       "type": "tinyInteger",
       "comment": "-1 审核未通过 0未审核 1审核通过",
       "default": 0,
@@ -122,7 +122,7 @@
     },
     {
       "name": "is_lock",
-      "label": "0 = 开启 1= 关闭",
+      "label": "是否锁定",
       "type": "tinyInteger",
       "comment": "0 = 开启 1= 关闭",
       "default": 0,

@@ -1,6 +1,7 @@
 {
     "columns": [
         {
+            "label": "ID",
             "name": "id",
             "type": "id",
             "primary": true
@@ -8,23 +9,27 @@
         {
             "name": "category_id",
             "type": "bigInteger",
-            "nullable": true
+            "nullable": true,
+            "label": "分类ID"
         },
         {
             "name": "name",
             "type": "string",
             "length": 255,
-            "nullable": true
+            "nullable": true,
+            "label": "名称"
         },
         {
             "name": "start_time",
             "type": "datetime",
-            "nullable": true
+            "nullable": true,
+            "label": "开始时间"
         },
         {
             "name": "end_time",
             "type": "datetime",
-            "nullable": true
+            "nullable": true,
+            "label": "结束时间"
         },
         {
             "name": "attend_count",
@@ -43,7 +48,8 @@
         {
             "name": "read_count",
             "type": "integer",
-            "nullable": true
+            "nullable": true,
+            "label": "阅读数"
         },
         {
             "name": "award_name",

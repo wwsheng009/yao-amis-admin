@@ -9,7 +9,7 @@
         },
         {
             "name": "type",
-            "label": "类型(出库/入库)",
+            "label": "类型",
             "type": "string",
             "comment": "类型(出库/入库)",
             "length": 50,
@@ -71,7 +71,7 @@
         },
         {
             "name": "change_amount",
-            "label": "变动金额(收款/付款)",
+            "label": "变动金额",
             "type": "decimal",
             "comment": "变动金额(收款/付款)",
             "nullable": true
@@ -92,7 +92,7 @@
         },
         {
             "name": "pay_type",
-            "label": "付款类型(现金、记账等)",
+            "label": "付款类型",
             "type": "string",
             "comment": "付款类型(现金、记账等)",
             "length": 50,
@@ -124,7 +124,7 @@
         },
         {
             "name": "sales_man",
-            "label": "销售员（可以多个）",
+            "label": "销售员",
             "type": "string",
             "comment": "销售员（可以多个）",
             "length": 50,
@@ -183,7 +183,7 @@
         },
         {
             "name": "status",
-            "label": "状态，0未审核、1已审核、2完成采购|销售、3部分采购|销售、9审核中",
+            "label": "状态",
             "type": "string",
             "comment": "状态，0未审核、1已审核、2完成采购|销售、3部分采购|销售、9审核中",
             "length": 1,
@@ -191,7 +191,7 @@
         },
         {
             "name": "purchase_status",
-            "label": "采购状态，0未采购、2完成采购、3部分采购",
+            "label": "采购状态",
             "type": "string",
             "comment": "采购状态，0未采购、2完成采购、3部分采购",
             "length": 1,
@@ -199,7 +199,7 @@
         },
         {
             "name": "source",
-            "label": "单据来源，0-pc，1-手机",
+            "label": "单据来源",
             "type": "string",
             "comment": "单据来源，0-pc，1-手机",
             "length": 1,

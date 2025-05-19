@@ -57,7 +57,7 @@
         },
         {
             "name": "api_template_id",
-            "label": "短信 API 的模板编号",
+            "label": "短信API的模板编号",
             "type": "string",
             "comment": "短信 API 的模板编号",
             "length": 63

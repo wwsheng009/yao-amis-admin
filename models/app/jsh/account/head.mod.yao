@@ -9,7 +9,7 @@
         },
         {
             "name": "type",
-            "label": "类型(支出/收入/收款/付款/转账)",
+            "label": "类型",
             "type": "string",
             "comment": "类型(支出/收入/收款/付款/转账)",
             "length": 50,
@@ -17,7 +17,7 @@
         },
         {
             "name": "organ_id",
-            "label": "单位Id(收款/付款单位)",
+            "label": "单位Id",
             "type": "bigInteger",
             "comment": "单位Id(收款/付款单位)",
             "nullable": true,
@@ -40,7 +40,7 @@
         },
         {
             "name": "change_amount",
-            "label": "变动金额(优惠/收款/付款/实付)",
+            "label": "变动金额",
             "type": "decimal",
             "comment": "变动金额(优惠/收款/付款/实付)",
             "nullable": true
@@ -100,7 +100,7 @@
         },
         {
             "name": "status",
-            "label": "状态，0未审核、1已审核、9审核中",
+            "label": "状态",
             "type": "string",
             "comment": "状态，0未审核、1已审核、9审核中",
             "length": 1,
@@ -108,7 +108,7 @@
         },
         {
             "name": "source",
-            "label": "单据来源，0-pc，1-手机",
+            "label": "单据来源",
             "type": "string",
             "comment": "单据来源，0-pc，1-手机",
             "length": 1,

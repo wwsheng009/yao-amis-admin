@@ -50,7 +50,7 @@
         },
         {
             "name": "redirect_uri",
-            "label": "可重定向的 URI 地址",
+            "label": "重定向的URI地址",
             "type": "string",
             "comment": "可重定向的 URI 地址",
             "length": 255,

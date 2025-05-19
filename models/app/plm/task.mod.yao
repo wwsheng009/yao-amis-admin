@@ -1,108 +1,108 @@
 {
-  "name": "::Tasks",
+  "name": "任务",
   "table": {
     "name": "app_plm_task",
-    "comment": "::Tasks"
+    "comment": "任务"
   },
   "columns": [
     {
-      "label": "::ID",
+      "label": "ID",
       "name": "id",
       "type": "ID"
     },
     {
-      "label": "::Project ID",
+      "label": "项目ID",
       "name": "project_id",
       "type": "bigInteger",
       "length": 20,
-      "comment": "::Project ID",
+      "comment": "项目ID",
       "index": true
     },
     {
-      "label": "::Step ID",
+      "label": "步骤ID",
       "name": "step_id",
       "type": "bigInteger",
       "length": 20,
-      "comment": "::Step ID",
+      "comment": "步骤ID",
       "index": true
     },
     {
-      "label": "::Milestone ID",
+      "label": "里程碑ID",
       "name": "milestone_id",
       "type": "bigInteger",
       "length": 20,
-      "comment": "::Milestone ID",
+      "comment": "里程碑ID",
       "nullable": true,
       "index": true
     },
     {
-      "label": "::Task Name",
+      "label": "任务名称",
       "name": "name",
       "type": "string",
       "length": 200,
       "index": true,
-      "comment": "::Task Name"
+      "comment": "任务名称"
     },
     {
-      "label": "::Task Starting",
+      "label": "任务开始时间",
       "name": "start",
       "type": "date",
-      "comment": "::Task Starting",
+      "comment": "任务开始时间",
       "index": true,
       "nullable": true
     },
     {
-      "label": "::Task End",
+      "label": "任务结束时间",
       "name": "end",
       "type": "date",
-      "comment": "::Task End",
+      "comment": "任务结束时间",
       "index": true,
       "nullable": true
     },
     {
-      "label": "::Plan Starting",
+      "label": "计划开始时间",
       "name": "start_plan",
       "type": "date",
-      "comment": "::Plan Starting",
+      "comment": "计划开始时间",
       "index": true,
       "nullable": true
     },
     {
-      "label": "::Plan End",
+      "label": "计划结束时间",
       "name": "end_plan",
       "type": "date",
-      "comment": "::Plan End",
+      "comment": "计划结束时间",
       "index": true,
       "nullable": true
     },
     {
-      "label": "::Delayed",
+      "label": "是否延期",
       "name": "delayed",
       "type": "boolean",
-      "comment": "::Delayed",
+      "comment": "是否延期",
       "index": true,
       "nullable": true
     },
     {
-      "label": "::Delivered",
+      "label": "是否交付",
       "name": "delivered",
       "type": "boolean",
-      "comment": "::Delivered",
+      "comment": "是否交付",
       "index": true,
       "nullable": true
     },
     {
-      "label": "::Remark",
+      "label": "备注",
       "name": "remark",
       "type": "string",
       "length": 300,
-      "comment": "::Remark",
+      "comment": "备注",
       "nullable": true,
       "validations": []
     },
     {
-      "label": "::Status",
-      "comment": "::Status",
+      "label": "状态",
+      "comment": "状态",
       "name": "status",
       "type": "enum",
       "default": "waiting",
@@ -118,7 +118,7 @@
           "args": [
             "string"
           ],
-          "message": "::{{input}} Error, {{label}} should be string"
+          "message": "{{input}}错误，状态类型错误"
         },
         {
           "method": "enum",
@@ -127,7 +127,7 @@
             "doing",
             "done"
           ],
-          "message": "::{{input}} Error, {{label}} should be enabled/disabled"
+          "message": "{{input}}错误，状态只能为waiting/doing/done"
         }
       ]
     }

@@ -31,7 +31,7 @@
         },
         {
             "name": "is_sell",
-            "label": "是否卖出，0未卖出，1卖出",
+            "label": "是否卖出",
             "type": "string",
             "comment": "是否卖出，0未卖出，1卖出",
             "length": 1,

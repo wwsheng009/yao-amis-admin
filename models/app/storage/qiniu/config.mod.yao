@@ -9,14 +9,14 @@
     },
     {
       "name": "access_key",
-      "label": "accessKey",
+      "label": "访问Key",
       "type": "text",
       "comment": "accessKey",
       "nullable": true
     },
     {
       "name": "bucket",
-      "label": "Bucket 识别符",
+      "label": "Bucket识别符",
       "type": "string",
       "comment": "Bucket 识别符",
       "length": 255,
@@ -31,7 +31,7 @@
     },
     {
       "name": "secret_key",
-      "label": "secretKey",
+      "label": "密钥",
       "type": "text",
       "comment": "secretKey",
       "nullable": true

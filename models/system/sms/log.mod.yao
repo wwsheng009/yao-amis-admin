@@ -112,7 +112,7 @@
         },
         {
             "name": "api_send_code",
-            "label": "短信 API 发送结果的编码",
+            "label": "结果的编码",
             "type": "string",
             "comment": "短信 API 发送结果的编码",
             "length": 63,
@@ -120,7 +120,7 @@
         },
         {
             "name": "api_send_msg",
-            "label": "短信 API 发送失败的提示",
+            "label": "失败提示",
             "type": "string",
             "comment": "短信 API 发送失败的提示",
             "length": 255,
@@ -128,7 +128,7 @@
         },
         {
             "name": "api_request_id",
-            "label": "短信 API 发送返回的唯一请求 ID",
+            "label": "唯一请求ID",
             "type": "string",
             "comment": "短信 API 发送返回的唯一请求 ID",
             "length": 255,
@@ -136,7 +136,7 @@
         },
         {
             "name": "api_serial_no",
-            "label": "短信 API 发送返回的序号",
+            "label": "返回序号",
             "type": "string",
             "comment": "短信 API 发送返回的序号",
             "length": 255,
@@ -158,7 +158,7 @@
         },
         {
             "name": "api_receive_code",
-            "label": "API 接收结果的编码",
+            "label": "API接收结果的编码",
             "type": "string",
             "comment": "API 接收结果的编码",
             "length": 63,
@@ -166,7 +166,7 @@
         },
         {
             "name": "api_receive_msg",
-            "label": "API 接收结果的说明",
+            "label": "API接收结果的说明",
             "type": "string",
             "comment": "API 接收结果的说明",
             "length": 255,

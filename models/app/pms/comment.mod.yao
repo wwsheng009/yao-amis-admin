@@ -24,7 +24,7 @@
         },
         {
             "name": "star",
-            "label": "评价星数：0->5",
+            "label": "评价星数",
             "type": "integer",
             "comment": "评价星数：0->5",
             "nullable": true

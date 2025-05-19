@@ -15,7 +15,7 @@
         },
         {
             "name": "app_id",
-            "label": "公众号 appId",
+            "label": "公众号appId",
             "type": "string",
             "comment": "公众号 appId",
             "length": 128
@@ -66,7 +66,7 @@
         },
         {
             "name": "response_media_id",
-            "label": "回复的媒体文件 id",
+            "label": "回复的媒体文件id",
             "type": "string",
             "comment": "回复的媒体文件 id",
             "length": 128,
@@ -74,7 +74,7 @@
         },
         {
             "name": "response_media_url",
-            "label": "回复的媒体文件 URL",
+            "label": "回复的媒体文件URL",
             "type": "string",
             "comment": "回复的媒体文件 URL",
             "length": 1024,
@@ -98,7 +98,7 @@
         },
         {
             "name": "response_thumb_media_id",
-            "label": "回复的缩略图的媒体 id",
+            "label": "回复的缩略图的媒体id",
             "type": "string",
             "comment": "回复的缩略图的媒体 id",
             "length": 128,
@@ -106,7 +106,7 @@
         },
         {
             "name": "response_thumb_media_url",
-            "label": "回复的缩略图的媒体 URL",
+            "label": "回复的缩略图的媒体URL",
             "type": "string",
             "comment": "回复的缩略图的媒体 URL",
             "length": 1024,

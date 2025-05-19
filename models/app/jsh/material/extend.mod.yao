@@ -68,7 +68,7 @@
         },
         {
             "name": "default_flag",
-            "label": "是否为默认单位，1是，0否",
+            "label": "是否为默认单位",
             "type": "string",
             "comment": "是否为默认单位，1是，0否",
             "length": 1,

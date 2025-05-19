@@ -59,7 +59,7 @@
     },
     {
       "name": "is_must",
-      "label": "是否务必达成任务,1务必达成,0=满足其一",
+      "label": "是否务必达成任务",
       "type": "tinyInteger",
       "comment": "是否务必达成任务,1务必达成,0=满足其一",
       "default": 0

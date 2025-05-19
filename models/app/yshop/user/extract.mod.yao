@@ -21,7 +21,7 @@
     },
     {
       "name": "extract_type",
-      "label": "bank = 银行卡 alipay = 支付宝wx=微信",
+      "label": "支付类型",
       "type": "string",
       "comment": "bank = 银行卡 alipay = 支付宝wx=微信",
       "length": 32,
@@ -92,7 +92,7 @@
     },
     {
       "name": "status",
-      "label": "-1 未通过 0 审核中 1 已提现",
+      "label": "状态",
       "type": "tinyInteger",
       "comment": "-1 未通过 0 审核中 1 已提现",
       "nullable": true,

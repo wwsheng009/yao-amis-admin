@@ -9,7 +9,7 @@
         },
         {
             "name": "username",
-            "label": "用户账户(跟accout一样)",
+            "label": "用户账户",
             "type": "string",
             "comment": "用户账户(跟accout一样)",
             "length": 255,
@@ -18,7 +18,7 @@
         },
         {
             "name": "password",
-            "label": "用户密码（跟pwd）",
+            "label": "用户密码",
             "type": "string",
             "comment": "用户密码（跟pwd）",
             "length": 255,
@@ -183,7 +183,7 @@
         },
         {
             "name": "status",
-            "label": "1为正常，0为禁止",
+            "label": "状态",
             "type": "tinyInteger",
             "comment": "1为正常，0为禁止",
             "default": 1,
@@ -255,7 +255,7 @@
         },
         {
             "name": "adminid",
-            "label": "管理员编号 ",
+            "label": "管理员编号",
             "type": "integer",
             "comment": "管理员编号 ",
             "nullable": true,
@@ -263,7 +263,7 @@
         },
         {
             "name": "login_type",
-            "label": "用户登陆类型，h5,wechat,routine",
+            "label": "用户登陆类型",
             "type": "string",
             "comment": "用户登陆类型，h5,wechat,routine",
             "length": 36,
@@ -294,7 +294,7 @@
         },
         {
             "name": "gender",
-            "label": "性别0-男1-女",
+            "label": "性别",
             "type": "tinyInteger",
             "comment": "性别0-男1-女",
             "nullable": true,

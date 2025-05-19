@@ -46,7 +46,7 @@
         },
         {
             "name": "status",
-            "label": "帐号启用状态:0->禁用；1->启用",
+            "label": "帐号启用状态",
             "type": "integer",
             "comment": "帐号启用状态:0->禁用；1->启用",
             "nullable": true
@@ -61,7 +61,7 @@
         },
         {
             "name": "gender",
-            "label": "性别：0->未知；1->男；2->女",
+            "label": "性别",
             "type": "integer",
             "comment": "性别：0->未知；1->男；2->女",
             "nullable": true

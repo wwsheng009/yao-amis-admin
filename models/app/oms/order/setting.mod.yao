@@ -21,14 +21,14 @@
         },
         {
             "name": "confirm_overtime",
-            "label": "发货后自动确认收货时间（天）",
+            "label": "自动确认收货时间（天）",
             "type": "integer",
             "comment": "发货后自动确认收货时间（天）",
             "nullable": true
         },
         {
             "name": "finish_overtime",
-            "label": "自动完成交易时间，不能申请售后（天）",
+            "label": "自动完成交易时间",
             "type": "integer",
             "comment": "自动完成交易时间，不能申请售后（天）",
             "nullable": true

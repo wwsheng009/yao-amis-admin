@@ -1,21 +1,21 @@
 {
-  "name": "::Product",
+  "name": "产品",
   "table": {
     "name": "app_plm_product",
-    "comment": "::Product"
+    "comment": "产品"
   },
   "columns": [
     {
-      "label": "::ID",
+      "label": "ID",
       "name": "id",
       "type": "ID"
     },
     {
-      "label": "::Product SN",
+      "label": "产品编号",
       "name": "sn",
       "type": "string",
       "length": 80,
-      "comment": "::Product SN",
+      "comment": "产品编号",
       "index": true,
       "nullable": true,
       "validations": [
@@ -24,16 +24,16 @@
           "args": [
             "string"
           ],
-          "message": "::{{input}} Error"
+          "message": "输入值类型错误"
         }
       ]
     },
     {
-      "label": "::Product Name",
+      "label": "产品名称",
       "name": "name",
       "type": "string",
       "length": 100,
-      "comment": "::Product Name",
+      "comment": "产品名称",
       "index": true,
       "nullable": true,
       "validations": [
@@ -42,20 +42,20 @@
           "args": [
             "string"
           ],
-          "message": "::{{input}} Error"
+          "message": "输入值{{input}}类型错误"
         }
       ]
     },
     {
-      "label": "::Supplier ID",
+      "label": "供应商ID",
       "name": "supplier_id",
       "type": "bigInteger",
       "nullable": true,
       "index": true
     },
     {
-      "label": "::Product Type",
-      "comment": "::Product Type",
+      "label": "产品类型",
+      "comment": "产品类型",
       "name": "type",
       "type": "enum",
       "default": "finished",
@@ -73,7 +73,7 @@
           "args": [
             "string"
           ],
-          "message": "::{{input}} Error, {{label}} should be string"
+          "message": "{{input}}错误，类型应为字符串"
         },
         {
           "method": "enum",
@@ -84,22 +84,22 @@
             "utils",
             "dashboard"
           ],
-          "message": "::{{input}} Error, {{label}} should be enabled/disabled"
+          "message": "{{input}}错误，类型只能为finished/component/standard/utils/dashboard"
         }
       ]
     },
     {
-      "label": "::Remark",
+      "label": "备注",
       "name": "remark",
       "type": "string",
       "length": 300,
-      "comment": "::Remark",
+      "comment": "备注",
       "nullable": true,
       "validations": []
     },
     {
-      "label": "::Status",
-      "comment": "::Status",
+      "label": "状态",
+      "comment": "状态",
       "name": "status",
       "type": "enum",
       "default": "enabled",
@@ -114,7 +114,7 @@
           "args": [
             "string"
           ],
-          "message": "::{{input}} Error, {{label}} should be string"
+          "message": "{{input}}错误，状态应为字符串"
         },
         {
           "method": "enum",
@@ -122,7 +122,7 @@
             "enabled",
             "disabled"
           ],
-          "message": "::{{input}} Error, {{label}} should be enabled/disabled"
+          "message": "{{input}}错误，状态只能为enabled/disabled"
         }
       ]
     }
