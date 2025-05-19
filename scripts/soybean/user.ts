@@ -1,4 +1,4 @@
-import { Process } from '@yaoapps/client';
+import { Exception, Process } from '@yaoapps/client';
 
 /**
  * 获取用户信息
@@ -9,6 +9,9 @@ export function userInfo() {
   const user_id = Process('session.get', 'user_id');
   const user = Process('session.get', 'user');
 
+  if (!user_id || !user) {
+    throw new Exception('用户未登录', 401);
+  }
   return {
     userId: user_id,
     userName: user.name,
