@@ -52,7 +52,7 @@ export function Login(payload: {
       payload.captcha.code
     );
     if (captchaValid !== true) {
-      throw new Exception('验证码不正确!', 400);
+      throw new Exception('验证码不正确!', 401);
     }
   }
   const { password, email, mobile, userName } = payload;
@@ -67,17 +67,17 @@ export function Login(payload: {
   }
 
   if (!user) {
-    throw new Exception('用户不存在!', 400);
+    throw new Exception('用户不存在!', 401);
     // return Process('scripts.return.RError', '', 400, '用户不存在');
   }
   try {
     const passwordValid = Process('utils.pwd.Verify', password, user.password);
     if (passwordValid !== true) {
-      throw new Exception('密码不正确!', 400);
+      throw new Exception('密码不正确!', 401);
       // return Process('scripts.return.RError', '', 400, '密码不正确');
     }
   } catch (error) {
-    throw new Exception('密码不正确' + error.message, 400);
+    throw new Exception('密码不正确' + error.message, 401);
 
     // return Process(
     //   'scripts.return.RError',
