@@ -67,7 +67,7 @@ docker run -d --name=yao-amis-admin \
 ```
 ## 演示地址：
 
-演示地址：[demo](http://fun.wwsheng.online:5099/)，用户名：xiang@iqka.com 密码：A123456p+
+演示地址：[demo](http://fun.wwsheng.xyz:5099/)，用户名：xiang@iqka.com 密码：A123456p+
 
 ![entry](doc/img/entry_index.png)
 ![model_create](doc/img/model_create.png)
