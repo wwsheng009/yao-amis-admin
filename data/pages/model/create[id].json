@@ -44,6 +44,7 @@
                 "name": "source",
                 "static": true,
                 "type": "editor",
+                "editorTheme": "${__editor__theme}",
                 "value": "{}"
               },
               "type": "service"
@@ -67,7 +68,8 @@
                 "name": "source",
                 "static": true,
                 "type": "editor",
-                "value": "{}"
+                "value": "{}",
+                "editorTheme": "${__editor__theme}"
               },
               "type": "service"
             },
@@ -666,7 +668,8 @@
                                 "labelClassName": "hidden",
                                 "type": "editor",
                                 "name": "columns",
-                                "language": "json"
+                                "language": "json",
+                                "editorTheme": "${__editor__theme}"
                               }
                             ]
                           }
@@ -765,14 +768,16 @@
                                 "name": "json",
                                 "type": "editor",
                                 "language": "json",
-                                "size": "sm"
+                                "size": "sm",
+                                "editorTheme": "${__editor__theme}"
                               },
                               {
                                 "labelClassName": "hidden",
                                 "name": "columns",
                                 "type": "editor",
                                 "language": "json",
-                                "size": "md"
+                                "size": "md",
+                                "editorTheme": "${__editor__theme}"
                               }
                             ]
                           }
@@ -1402,7 +1407,8 @@
                   "name": "query",
                   "label": "关联查询",
                   "language": "json",
-                  "size": "sm"
+                  "size": "sm",
+                  "editorTheme": "${__editor__theme}"
                 }
               ]
             }

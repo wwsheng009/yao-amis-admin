@@ -95,7 +95,8 @@
               "label": "页面的配置",
               "type": "editor",
               "language": "json",
-              "name": "schema"
+              "name": "schema",
+              "editorTheme": "${__editor__theme}"
             }
           ],
           "editControls": [
@@ -170,7 +171,8 @@
               "label": "页面的配置",
               "type": "editor",
               "language": "json",
-              "name": "schema"
+              "name": "schema",
+              "editorTheme": "${__editor__theme}"
             }
           ],
           "creatable": true,

@@ -46,6 +46,7 @@
           "name": "payload",
           "label": "请求",
           "type": "editor",
+          "editorTheme": "${__editor__theme}",
           "id": "u:ec7de0286278",
           "lanuage": "json",
           "language": "json",
@@ -96,6 +97,7 @@
           "name": "result",
           "label": "结果",
           "type": "editor",
+          "editorTheme": "${__editor__theme}",
           "id": "u:92925dc0d5d0",
           "lauage": "json",
           "language": "json"

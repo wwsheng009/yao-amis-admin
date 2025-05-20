@@ -199,7 +199,8 @@
                         "language": "json",
                         "id": "u:18805e926840",
                         "name": "source",
-                        "type": "editor"
+                        "type": "editor",
+                        "editorTheme": "${__editor__theme}"
                       },
                       {
                         "label": "AI",

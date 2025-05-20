@@ -771,7 +771,8 @@
           "language": "${language || 'json'}",
           "name": "__code_source",
           "id": "code_editor",
-          "type": "editor"
+          "type": "editor",
+          "editorTheme": "${__editor__theme}"
         }
       ],
       "onEvent": {

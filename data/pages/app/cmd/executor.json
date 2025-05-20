@@ -1,8 +1,35 @@
 {
+  "onEvent": {
+    "init": {
+      "actions": [
+        {
+          "actionType": "toast",
+          "args": {
+            "msgType": "info",
+            "msg": "init"
+          }
+        }
+      ]
+    },
+    "inited": {
+      "actions": [
+        {
+          "actionType": "toast",
+          "args": {
+            "msgType": "info",
+            "msg": "${event.data.responseData|json}"
+          }
+        }
+      ]
+    }
+  },
   "editorState": "default",
   "id": "u:f30b51992cb8",
   "pullRefresh": {
     "disabled": true
+  },
+  "data": {
+    "editorTheme1": "${__theme}"
   },
   "regions": ["body"],
   "title": "cmd_runner",
@@ -115,27 +142,31 @@
           "id": "u:33d4fefcf4ae",
           "label": "命令工具",
           "name": "cmd",
-          "type": "input-text"
+          "type": "input-text",
+          "value": "${__theme}"
         },
         {
           "type": "input-text",
           "id": "u:69fbce840809",
           "label": "脚本名称",
-          "name": "name"
+          "name": "name",
+          "value": "${locale}"
         },
         {
           "type": "editor",
           "id": "u:c33b1cb3f344",
           "label": "脚本源代码",
           "language": "shell",
-          "name": "source"
+          "name": "source",
+          "editorTheme": "${__editor__theme}"
         },
         {
           "name": "output",
           "type": "editor",
           "id": "u:16561522caec",
           "label": "结果",
-          "language": "shell"
+          "language": "shell",
+          "editorTheme": "${__editor__theme}"
         }
       ],
       "dsType": "api",

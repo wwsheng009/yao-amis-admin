@@ -290,7 +290,8 @@
                         "labelClassName": "hidden",
                         "language": "json",
                         "name": "source",
-                        "type": "editor"
+                        "type": "editor",
+                        "editorTheme": "${__editor__theme}"
                       }
                     ]
                   }
@@ -587,7 +588,8 @@
                             "labelClassName": "hidden",
                             "language": "json",
                             "name": "source",
-                            "type": "editor"
+                            "type": "editor",
+                            "editorTheme": "${__editor__theme}"
                           }
                         ]
                       }

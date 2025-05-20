@@ -428,7 +428,8 @@
                       "lanuage": "json",
                       "language": "json",
                       "hidden": false,
-                      "visibleOn": "data.method === `post`"
+                      "visibleOn": "data.method === `post`",
+                      "editorTheme": "${__editor__theme}"
                     },
 
                     {
@@ -437,7 +438,8 @@
                       "type": "editor",
                       "id": "u:92925dc0d5d0",
                       "lauage": "json",
-                      "language": "json"
+                      "language": "json",
+                      "editorTheme": "${__editor__theme}"
                     }
                   ]
                 },

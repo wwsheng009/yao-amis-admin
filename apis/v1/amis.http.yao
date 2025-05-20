@@ -125,7 +125,8 @@
       "guard": "bearer-jwt",
       "process": "scripts.admin.menu.getAmisPageSchema",
       "in": [
-        "$param.page"
+        "$param.page",
+        "$query.theme"
       ],
       "out": {
         "status": 200,

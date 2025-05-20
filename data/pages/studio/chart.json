@@ -73,6 +73,7 @@
           "quickEdit": {
             "saveImmediately": true,
             "type": "editor",
+            "editorTheme": "${__editor__theme}",
             "language": "json",
             "required": true
           },
@@ -476,7 +477,8 @@
                           "name": "config",
                           "type": "editor",
                           "label": "配置",
-                          "language": "json"
+                          "language": "json",
+                          "editorTheme": "${__editor__theme}"
                         },
                         {
                           "name": "processor",
@@ -838,7 +840,8 @@
                       "name": "config",
                       "type": "editor",
                       "label": "配置",
-                      "language": "json"
+                      "language": "json",
+                      "editorTheme": "${__editor__theme}"
                     },
                     {
                       "name": "processor",

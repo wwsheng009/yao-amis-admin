@@ -75,7 +75,8 @@
           "label": "扩展信息",
           "language": "json",
           "name": "extra",
-          "type": "editor"
+          "type": "editor",
+          "editorTheme": "${__editor__theme}"
         },
         {
           "label": "状态",

@@ -271,6 +271,7 @@
                   {
                     "type": "editor",
                     "name": "content",
+                    "editorTheme": "${__editor__theme}",
                     "language": "markdown",
                     "label": "Markdown",
                     "required": false,
@@ -646,6 +647,7 @@
                 "name": "content",
                 "language": "markdown",
                 "label": "Markdown",
+                "editorTheme": "${__editor__theme}",
                 "required": false,
                 "visibleOn": "data.type == 'md'"
               },
