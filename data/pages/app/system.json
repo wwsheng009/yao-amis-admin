@@ -499,6 +499,310 @@
             "verticalAlign": "top"
           },
           "className": "text-left"
+        },
+        {
+          "type": "tpl",
+          "tpl": "磁盘空间",
+          "inline": true,
+          "wrapperComponent": "h2",
+          "id": "u:9d1f2d50545b",
+          "themeCss": {
+            "baseControlClassName": {
+              "padding-and-margin:default": {
+                "marginTop": "var(--sizes-size-4)"
+              }
+            }
+          }
+        },
+        {
+          "id": "u:fc01752aff39",
+          "type": "crud2",
+          "mode": "table2",
+          "dsType": "api",
+          "syncLocation": true,
+          "loadType": "pagination",
+          "api": {
+            "url": "/api/v2/app/system/disk",
+            "method": "get",
+            "requestAdaptor": "",
+            "adaptor": "",
+            "messages": {},
+            "dataType": "json",
+            "responseData": {
+              "items": "${system.diskUsages}"
+            }
+          },
+          "headerToolbar": [
+            {
+              "type": "flex",
+              "direction": "row",
+              "justify": "flex-start",
+              "alignItems": "stretch",
+              "style": {
+                "position": "static",
+                "flexWrap": "nowrap"
+              },
+              "items": [
+                {
+                  "type": "container",
+                  "align": "left",
+                  "behavior": [
+                    "Insert",
+                    "BulkEdit",
+                    "BulkDelete"
+                  ],
+                  "body": [],
+                  "wrapperBody": false,
+                  "style": {
+                    "flexGrow": 1,
+                    "flex": "1 1 auto",
+                    "position": "static",
+                    "display": "flex",
+                    "flexDirection": "row",
+                    "flexWrap": "nowrap",
+                    "alignItems": "stretch",
+                    "justifyContent": "flex-start"
+                  },
+                  "id": "u:829030ea7325",
+                  "isFixedHeight": false
+                },
+                {
+                  "type": "container",
+                  "align": "right",
+                  "behavior": [
+                    "FuzzyQuery"
+                  ],
+                  "body": [],
+                  "wrapperBody": false,
+                  "style": {
+                    "flexGrow": 1,
+                    "flex": "1 1 auto",
+                    "position": "static",
+                    "display": "flex",
+                    "flexDirection": "row",
+                    "flexWrap": "nowrap",
+                    "alignItems": "stretch",
+                    "justifyContent": "flex-end"
+                  },
+                  "id": "u:8a386e1db6f3",
+                  "isFixedHeight": false
+                }
+              ],
+              "id": "u:726f8bc7521a",
+              "isFixedHeight": false,
+              "isFixedWidth": false
+            }
+          ],
+          "footerToolbar": [
+            {
+              "type": "flex",
+              "direction": "row",
+              "justify": "flex-start",
+              "alignItems": "stretch",
+              "style": {
+                "position": "static",
+                "flexWrap": "nowrap"
+              },
+              "items": [
+                {
+                  "type": "container",
+                  "align": "left",
+                  "body": [],
+                  "wrapperBody": false,
+                  "style": {
+                    "flexGrow": 1,
+                    "flex": "1 1 auto",
+                    "position": "static",
+                    "display": "flex",
+                    "flexDirection": "row",
+                    "flexWrap": "nowrap",
+                    "alignItems": "stretch",
+                    "justifyContent": "flex-start"
+                  },
+                  "id": "u:8415afa4b0db",
+                  "isFixedHeight": false
+                }
+              ],
+              "id": "u:087f1f870281",
+              "isFixedHeight": false,
+              "isFixedWidth": false
+            }
+          ],
+          "columns": [
+            {
+              "type": "tpl",
+              "title": "路径",
+              "name": "path",
+              "id": "u:98f5a104560f",
+              "placeholder": "-"
+            },
+            {
+              "type": "tpl",
+              "title": "系统类型",
+              "name": "fstype",
+              "id": "u:9be7778235f7",
+              "placeholder": "-"
+            },
+            {
+              "type": "tpl",
+              "title": "总量",
+              "name": "total",
+              "id": "u:765ac07a1c78",
+              "placeholder": "-"
+            },
+            {
+              "type": "tpl",
+              "title": "已使用",
+              "name": "used",
+              "id": "u:c4d7d179b7ae",
+              "placeholder": "-"
+            },
+            {
+              "type": "tpl",
+              "title": "空闲",
+              "name": "free",
+              "id": "u:2ca83c9227d7",
+              "placeholder": "-"
+            },
+            {
+              "type": "tpl",
+              "title": "使用比例",
+              "name": "usedPercent",
+              "id": "u:12d7ffccccda",
+              "placeholder": "-",
+              "tpl": "${ROUND(usedPercent)}%"
+            },
+            {
+              "type": "operation",
+              "title": "操作",
+              "buttons": [
+                {
+                  "type": "button",
+                  "label": "查看",
+                  "level": "link",
+                  "behavior": "View",
+                  "onEvent": {
+                    "click": {
+                      "actions": [
+                        {
+                          "actionType": "dialog",
+                          "dialog": {
+                            "body": {
+                              "id": "u:1fa242ba1123",
+                              "type": "form",
+                              "title": "查看数据",
+                              "mode": "flex",
+                              "labelAlign": "top",
+                              "dsType": "api",
+                              "feat": "View",
+                              "body": [
+                                {
+                                  "name": "free",
+                                  "label": "空闲",
+                                  "row": 0,
+                                  "type": "input-text"
+                                },
+                                {
+                                  "name": "fstype",
+                                  "label": "系统类型",
+                                  "row": 1,
+                                  "type": "input-text"
+                                },
+                                {
+                                  "name": "inodesFree",
+                                  "label": "inodesFree",
+                                  "row": 2,
+                                  "type": "input-text"
+                                },
+                                {
+                                  "name": "inodesTotal",
+                                  "label": "inodesTotal",
+                                  "row": 3,
+                                  "type": "input-text"
+                                },
+                                {
+                                  "name": "inodesUsed",
+                                  "label": "inodesUsed",
+                                  "row": 4,
+                                  "type": "input-text"
+                                },
+                                {
+                                  "name": "inodesUsedPercent",
+                                  "label": "inodesUsedPercent",
+                                  "row": 5,
+                                  "type": "input-number"
+                                },
+                                {
+                                  "name": "path",
+                                  "label": "path",
+                                  "row": 6,
+                                  "type": "input-text"
+                                },
+                                {
+                                  "name": "total",
+                                  "label": "total",
+                                  "row": 7,
+                                  "type": "input-text"
+                                },
+                                {
+                                  "name": "used",
+                                  "label": "used",
+                                  "row": 8,
+                                  "type": "input-text"
+                                },
+                                {
+                                  "name": "usedPercent",
+                                  "label": "usedPercent",
+                                  "row": 9,
+                                  "type": "input-number"
+                                }
+                              ],
+                              "static": true,
+                              "actions": [
+                                {
+                                  "type": "button",
+                                  "actionType": "cancel",
+                                  "label": "关闭"
+                                }
+                              ],
+                              "onEvent": {
+                                "submitSucc": {
+                                  "actions": [
+                                    {
+                                      "actionType": "search",
+                                      "groupType": "component",
+                                      "componentId": "u:fc01752aff39"
+                                    }
+                                  ]
+                                }
+                              }
+                            },
+                            "title": "查看数据",
+                            "size": "md",
+                            "actions": [
+                              {
+                                "type": "button",
+                                "actionType": "cancel",
+                                "label": "关闭"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "id": "u:f63b9a7cf34f"
+                }
+              ],
+              "id": "u:e88e44be9ee9"
+            }
+          ],
+          "editorSetting": {
+            "mock": {
+              "enable": true,
+              "maxDisplayRows": 5
+            }
+          }
         }
       ],
       "dsType": "api",
