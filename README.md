@@ -144,7 +144,7 @@ Yao 模型是整个系统的核心组件，在这里，可以使用界面创建 
 
 ### Soybean-admin 集成
 
-amis-sdk 可以与 react 或是 vue 作集成开发，这里是把 amis-sdk 作为 vue 组件，嵌入到第三方的 admin 框架。
+amis-sdk 可以与 react 或是 vue 作集成开发，这里是把 amis-sdk 作为 vue 组件，嵌入到第三方的 admin 框架，**支持Vue KeepAlive组件**。
 
 ![soy-admin-integrate](doc/img/soy-admin-integrate.png)
 
@@ -185,6 +185,15 @@ git clone https://github.com/wwsheng009/yao-amis-admin
 
 cd yao-amis-admin
 
+# 插件js，部分功能使用到一些npm算法库
+pnpm i
+
+# 下载amis jssdk
+bash download_jssdk.sh
+
+# 下载插件，比如邮件，命令
+bash download_plugin.sh
+
 #如果需要配置默认配置
 cp .sqlite.env .env
 
@@ -193,13 +202,7 @@ yao migrate
 yao start
 ```
 
-本应用可以使用三个登录入口，
-
-Yao 本身的 Xgen 登录入口：http://localhost:5099/admin/login/admin
-
-soy-admin 登录入口：http://localhost:5099/soy-admin
-
-默认的登录入中：http://localhost:5099/amis-admin/login.html
+默认入口：http://localhost:5099/
 
 登录用户名：xiang@iqka.com
 密码：A123456p+
@@ -208,7 +211,7 @@ soy-admin 登录入口：http://localhost:5099/soy-admin
 
 ## 跨域
 
-在使用 amis 编辑器时，编辑器项目一般会放在单独的项目时，这时编辑器访问地址的域名跟 yao 服务器的域名不一样。为了让编辑器可以直接访问 yao api 地址，可以在 yao 项目的.env 文件里配置上参数 YAO_ALLOW_FROM，允许跨域访问。
+在开发阶段，比如soy-admin或是其它的前后端分离前端项目，这时编辑器访问地址的域名跟 yao 服务器的域名不一样。为了让前端项目可以直接访问 yao api 地址，可以在 yao 项目的.env 文件里配置上参数 YAO_ALLOW_FROM，允许跨域访问。
 
 ```sh
 YAO_ALLOW_FROM="localhost"。

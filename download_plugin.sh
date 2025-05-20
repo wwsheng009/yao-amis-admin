@@ -31,6 +31,8 @@ install_plugins() {
     log "解压amis-editor包"
     unzip -q public/amis-editor/latest.zip -d public/amis-editor/
     rm public/amis-editor/latest.zip
+    # 修复amis-editor中文档的访问地址
+    find public/amis-editor/ -type f -name "*.js" -exec sed -i 's/baidu\.gitee\.io/baidu\.github\.io/g' {} \;
 
     # 下载并安装soy-admin
     log "开始下载并安装soy-admin"
