@@ -22,7 +22,7 @@
               "weight": 0,
               "actions": [
                 {
-                  "componentId": "u:5ce017fa279d",
+                  "componentId": "table_maintainer",
                   "actionType": "setValue",
                   "args": {
                     "value": {
@@ -80,8 +80,12 @@
           "actions": [
             {
               "actionType": "setValue",
-              "componentId": "u:5ce017fa279d",
-              "args": { "value": { "model": "${mytable}" } }
+              "componentId": "table_maintainer",
+              "args": {
+                "value": {
+                  "model": "${model}"
+                }
+              }
             }
           ]
         }
@@ -90,7 +94,7 @@
       "body": [
         {
           "heightAuto": true,
-          "name": "mytable",
+          "name": "model",
           "type": "input-tree",
           "source": "/api/v1/system/meta/model/model_name_tree",
           "searchable": true,
@@ -115,7 +119,7 @@
       "initFetchSchema": true,
       "type": "service",
       "body": [],
-      "id": "u:5ce017fa279d",
+      "id": "table_maintainer",
       "messages": {}
     }
   ],
