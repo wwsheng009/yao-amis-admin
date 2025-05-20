@@ -278,7 +278,7 @@ export function createCurdPage(modelId: string) {
  * @returns
  */
 export function getAmisPageSchema(pageId: string) {
-  const page = pageId.replace('.', '/') + '.json';
+  const page = pageId.replaceAll('.', '/') + '.json';
 
   const fpath = PagesLocation + '/' + page;
   const isExist = Process('fs.system.Exists', fpath);
@@ -314,7 +314,7 @@ export function getAmisEditorPageSource(pageId: string, userId?: number) {
 
   pageId = pageId.replace(/^amis_editor\./, '');
   //page的id转换成文件路径
-  const page = pageId.replace('.', '/') + '.json';
+  const page = pageId.replaceAll('.', '/') + '.json';
 
   const fpath = dir + page;
   const isExist = Process('fs.system.Exists', fpath);

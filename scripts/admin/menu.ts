@@ -235,11 +235,14 @@ export function getAmisEditorSoyRoute() {
 
 /**
  * 把文件名列表转换成嵌套关系的路由结构
- * @param {string[]} list 文件路径列表
+ * 
+ * yao run scripts.admin.menu.convertAmisFileListToSoyRoute '::["/app/cmd/cmd_runner.json"]'
+ * 
+ * @param {string[]} fileList 文件路径列表
  * @returns []Route
  */
 export function convertAmisFileListToSoyRoute(
-  list: string[],
+  fileList: string[],
   sep: string = '/'
 ): Route {
   let order = 1000;
@@ -285,8 +288,7 @@ export function convertAmisFileListToSoyRoute(
         const newChild = {
           name: '', // update later
           subPath: subPath,
-          // fullpath: `${tempObj.fullpath}/${subPath}`,
-          path: tempObj.subPath ? `${tempObj.subPath}.${subPath}` : subPath,
+          path: subPathArr.slice(0, i + 1).join('.'),
           children: [],
           meta: { requiresAuth: true, title: subPath, keepAlive: true }
         } as Route;
@@ -297,7 +299,7 @@ export function convertAmisFileListToSoyRoute(
     }
   };
 
-  list.forEach((url) => {
+  fileList.forEach((url) => {
     const path = getPath(url);
     addSubPath(result, path.split(sep));
   });
@@ -306,7 +308,7 @@ export function convertAmisFileListToSoyRoute(
 
 /**
  * 把文件名列表转换成路由列表
- *
+ * yao run scripts.admin.menu.convertFileListToSoyRoute '::["/app/cmd/cmd_runner.json"]'
  * @param list 文件名列表
  * @returns 路由列表
  */
