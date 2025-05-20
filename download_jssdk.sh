@@ -109,7 +109,7 @@ downloadLibrary() {
 }
 
 # Download the vue3 file
-downloadLibrary "https://unpkg.com/vue@3/dist/vue.global.js" "vue3.global.js"
+downloadLibrary "https://unpkg.com/vue@3.5.14/dist/vue.global.prod.js" "vue3.global.js"
 
 # Download the js preview for excel
 downloadLibrary "https://cdn.jsdelivr.net/npm/@js-preview/excel@1.4.6/lib/index.umd.js" "js-preview-excel.umd.js"
