@@ -27,7 +27,7 @@ install_plugins() {
     rm -rf public/amis-editor/*
     log "下载amis-editor包"
     echo "正在下载amis-editor包..."
-    curl -# -fL "https://github.com/wwsheng009/amis-editor-yao/releases/download/1.1.3/amis-editor-1.1.3.zip" -o public/amis-editor/latest.zip || { log_error "下载amis-editor失败"; exit 1; }
+    curl -# -fL "https://github.com/wwsheng009/amis-editor-yao/releases/download/1.1.4/amis-editor-1.1.4.zip" -o public/amis-editor/latest.zip || { log_error "下载amis-editor失败"; exit 1; }
     log "解压amis-editor包"
     unzip -q public/amis-editor/latest.zip -d public/amis-editor/
     rm public/amis-editor/latest.zip

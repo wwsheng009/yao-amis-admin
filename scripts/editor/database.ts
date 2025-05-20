@@ -92,6 +92,8 @@ export function savePage(file: string, payload, userId?: number) {
   const user_id = Process('session.get', 'user_id');
   if (user_id) {
     userId = user_id;
+  } else {
+    throw new Exception('Invalid user id', 401)
   }
   const [row] = Process('models.system.amis.page.get', {
     select: ['id'],

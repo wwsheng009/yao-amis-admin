@@ -1,0 +1,518 @@
+{
+  "type": "page",
+  "asideResizor": false,
+  "body": [
+    {
+      "type": "flex",
+      "items": [
+        {
+          "type": "container",
+          "body": [
+            {
+              "type": "button",
+              "label": "刷新",
+              "onEvent": {
+                "click": {
+                  "actions": [
+                    {
+                      "componentId": "u:9efe7829b41f",
+                      "ignoreError": false,
+                      "actionType": "reload"
+                    },
+                    {
+                      "componentId": "u:0264cee81311",
+                      "ignoreError": false,
+                      "actionType": "reload"
+                    }
+                  ]
+                }
+              },
+              "id": "u:3cd0c38cb23d",
+              "disabledOnAction": false,
+              "level": "light",
+              "block": false,
+              "themeCss": {
+                "className": {
+                  "padding-and-margin:default": {
+                    "marginTop": "var(--sizes-size-2)",
+                    "marginRight": "var(--sizes-size-2)",
+                    "marginBottom": "var(--sizes-size-2)",
+                    "marginLeft": "var(--sizes-size-2)"
+                  }
+                }
+              }
+            }
+          ],
+          "size": "none",
+          "style": {
+            "position": "static",
+            "display": "flex",
+            "flex": "1 1 auto",
+            "flexGrow": 1,
+            "flexBasis": "0px",
+            "flex-direction": "right",
+            "flexWrap": "nowrap",
+            "flexDirection": "row",
+            "justifyContent": "flex-end"
+          },
+          "wrapperBody": false,
+          "isFixedHeight": false,
+          "isFixedWidth": false,
+          "id": "u:4f07275007ff"
+        }
+      ],
+      "style": {
+        "position": "relative",
+        "rowGap": "10px",
+        "columnGap": "10px",
+        "flexWrap": "nowrap",
+        "inset": "auto"
+      },
+      "id": "u:d50dd4f77ee1",
+      "isFixedHeight": false,
+      "isFixedWidth": false
+    },
+    {
+      "initFetch": true,
+      "replaceChartOption": true,
+      "interval": "5000ms",
+      "dataFilter": "",
+      "api": {
+        "method": "get",
+        "url": "/api/v2/app/system/cpu_percentage"
+      },
+      "trackExpression": "",
+      "type": "chart",
+      "config": {
+        "xAxis": {
+          "id": "u:ffa4f7a569ee",
+          "type": "category",
+          "data": "${serials}",
+          "title": "CPU"
+        },
+        "yAxis": {
+          "max": 100,
+          "id": "u:a208afb842fa",
+          "type": "value"
+        },
+        "tooltip": {
+          "trigger": "axis",
+          "axisPointer": {
+            "type": "shadow"
+          }
+        },
+        "backgroundColor": "transparent",
+        "series": [
+          {
+            "type": "bar",
+            "data": "${line}",
+            "id": "u:f2ecf2a159bd"
+          }
+        ],
+        "title": {
+          "text": "CPU负载"
+        }
+      },
+      "id": "u:0264cee81311",
+      "height": "300px"
+    },
+    {
+      "api": {
+        "method": "get",
+        "url": "/api/v2/app/system/dashboard"
+      },
+      "body": [
+        {
+          "column": 2,
+          "id": "u:39858c73d5ef",
+          "items": [
+            {
+              "content": "${system.hostInfo.hostname}",
+              "id": "u:153d9a58be35",
+              "label": "主机名",
+              "row": 0,
+              "span": 1
+            },
+            {
+              "content": "${system.hostInfo.platform}",
+              "id": "u:153d9a58be36",
+              "label": "操作系统",
+              "row": 0,
+              "span": 1
+            },
+            {
+              "content": "${system.hostInfo.platformVersion}",
+              "id": "u:153d9a58be37",
+              "label": "操作系统版本",
+              "row": 1,
+              "span": 1
+            },
+            {
+              "content": "${system.hostInfo.kernelVersion}",
+              "id": "u:153d9a58be38",
+              "label": "内核版本",
+              "row": 1,
+              "span": 1
+            },
+            {
+              "content": "${system.hostInfo.kernelArch}",
+              "id": "u:153d9a58be39",
+              "label": "内核架构",
+              "row": 2,
+              "span": 1
+            },
+            {
+              "content": "${system.hostInfo.hostId}",
+              "id": "u:153d9a58be3a",
+              "label": "主机ID",
+              "row": 2,
+              "span": 1
+            }
+          ],
+          "mode": "table",
+          "title": "主机信息",
+          "type": "property",
+          "labelStyle": {
+            "width": "20%",
+            "verticalAlign": "top"
+          },
+          "contentStyle": {
+            "width": "30%",
+            "verticalAlign": "top"
+          },
+          "className": "text-left"
+        },
+        {
+          "column": 2,
+          "id": "u:39858c73d5e9",
+          "items": [
+            {
+              "content": "${system.bootTime}",
+              "id": "u:153d9a58be1d",
+              "label": "启动时间",
+              "row": 0,
+              "span": 1
+            },
+            {
+              "content": "${ROUND(system.currentInfo.uptime/60/60/24)}天",
+              "id": "u:153d9a58be1e",
+              "label": "运行时间",
+              "row": 0,
+              "span": 1
+            },
+            {
+              "content": "${system.currentInfo.timeSinceUptime}",
+              "id": "u:153d9a58be1f",
+              "label": "自启动以来时间",
+              "row": 1,
+              "span": 1
+            }
+          ],
+          "mode": "table",
+          "title": "系统启动信息",
+          "type": "property",
+          "labelStyle": {
+            "textAlign": "left",
+            "width": "20%",
+            "verticalAlign": "top"
+          },
+          "contentStyle": {
+            "width": "30%",
+            "verticalAlign": "top"
+          },
+          "className": "text-left"
+        },
+        {
+          "column": 2,
+          "id": "u:39858c73d5ea",
+          "items": [
+            {
+              "content": {
+                "id": "u:789f8c833f5e",
+                "tpl": "${system.cpuCores} <b>Core</b>",
+                "type": "tpl"
+              },
+              "id": "u:153d9a58be20",
+              "label": "CPU核心数",
+              "row": 0,
+              "span": 1
+            },
+            {
+              "content": {
+                "id": "u:4e38269ef776",
+                "tpl": "${system.cpuLogicalCores} <b>Core</b>",
+                "type": "tpl"
+              },
+              "id": "u:153d9a58be21",
+              "label": "CPU逻辑核心数",
+              "row": 0,
+              "span": 1
+            },
+            {
+              "content": "${system.cpuModelName}",
+              "id": "u:153d9a58be22",
+              "label": "CPU型号",
+              "row": 1,
+              "span": 1
+            },
+            {
+              "content": "${ROUND(system.currentInfo.cpuUsedPercent)}%",
+              "id": "u:153d9a58be23",
+              "label": "CPU使用率",
+              "row": 1,
+              "span": 1
+            },
+            {
+              "content": "${system.currentInfo.cpuTotal}",
+              "id": "u:153d9a58be24",
+              "label": "CPU总核心数",
+              "row": 2,
+              "span": 1
+            },
+            {
+              "content": "${ROUND(system.currentInfo.cpuUsed)}%",
+              "id": "u:153d9a58be25",
+              "label": "CPU已使用核心",
+              "row": 2,
+              "span": 1
+            }
+          ],
+          "mode": "table",
+          "title": "CPU信息",
+          "type": "property",
+          "labelStyle": {
+            "textAlign": "left",
+            "width": "20%",
+            "verticalAlign": "top"
+          },
+          "contentStyle": {
+            "width": "30%",
+            "verticalAlign": "top"
+          },
+          "className": "text-left"
+        },
+        {
+          "column": 2,
+          "id": "u:39858c73d5eb",
+          "items": [
+            {
+              "content": "${system.currentInfo.memoryTotals}",
+              "id": "u:153d9a58be26",
+              "label": "内存总量",
+              "row": 0,
+              "span": 1
+            },
+            {
+              "content": "${system.currentInfo.memoryUseds}",
+              "id": "u:153d9a58be27",
+              "label": "内存使用量",
+              "row": 0,
+              "span": 1
+            },
+            {
+              "content": "${system.currentInfo.memoryAvailables}",
+              "id": "u:153d9a58be28",
+              "label": "内存可用量",
+              "row": 1,
+              "span": 1
+            },
+            {
+              "content": "${ROUND(system.currentInfo.memoryUsedPercent)}%",
+              "id": "u:153d9a58be29",
+              "label": "内存使用率",
+              "row": 1,
+              "span": 1
+            },
+            {
+              "span": 2,
+              "label": "内存使用比率",
+              "content": {
+                "type": "progress",
+                "value": "${ROUND(system.currentInfo.memoryUsedPercent)}",
+                "threshold": [
+                  {
+                    "value": "30%",
+                    "color": "green"
+                  },
+                  {
+                    "value": "90%",
+                    "color": "red"
+                  }
+                ],
+                "showThresholdText": true,
+                "id": "u:33665f93d9bd",
+                "map": [
+                  {
+                    "value": 30,
+                    "color": "green"
+                  },
+                  {
+                    "value": 90,
+                    "color": "red"
+                  }
+                ]
+              }
+            }
+          ],
+          "mode": "table",
+          "title": "内存信息",
+          "type": "property",
+          "labelStyle": {
+            "textAlign": "left",
+            "width": "20%",
+            "verticalAlign": "top"
+          },
+          "contentStyle": {
+            "width": "30%",
+            "verticalAlign": "top"
+          },
+          "className": "text-left"
+        },
+        {
+          "column": 2,
+          "id": "u:39858c73d5ec",
+          "items": [
+            {
+              "content": "${system.currentInfo.swapMemoryTotals}",
+              "id": "u:153d9a58be2a",
+              "label": "交换内存总量",
+              "row": 0,
+              "span": 1
+            },
+            {
+              "content": "${system.currentInfo.swapMemoryUseds}",
+              "id": "u:153d9a58be2b",
+              "label": "交换内存使用量",
+              "row": 0,
+              "span": 1
+            },
+            {
+              "content": "${system.currentInfo.swapMemoryAvailables}",
+              "id": "u:153d9a58be2c",
+              "label": "交换内存可用量",
+              "row": 1,
+              "span": 1
+            },
+            {
+              "content": "${system.currentInfo.swapMemoryUsedPercent}",
+              "id": "u:153d9a58be2d",
+              "label": "交换内存使用率",
+              "row": 1,
+              "span": 1
+            }
+          ],
+          "mode": "table",
+          "title": "交换内存信息",
+          "type": "property",
+          "labelStyle": {
+            "textAlign": "left",
+            "width": "20%",
+            "verticalAlign": "top"
+          },
+          "contentStyle": {
+            "width": "30%",
+            "verticalAlign": "top"
+          },
+          "className": "text-left"
+        },
+        {
+          "column": 2,
+          "id": "u:39858c73d5ed",
+          "items": [
+            {
+              "content": "${ROUND(system.currentInfo.netBytesRecv/1024/1024)}MB",
+              "id": "u:153d9a58be2e",
+              "label": "网络接收",
+              "row": 0,
+              "span": 1
+            },
+            {
+              "content": "${ROUND(system.currentInfo.netBytesSent/1024/1024)}MB",
+              "id": "u:153d9a58be2f",
+              "label": "网络发送",
+              "row": 0,
+              "span": 1
+            }
+          ],
+          "mode": "table",
+          "title": "网络信息",
+          "type": "property",
+          "labelStyle": {
+            "width": "20%",
+            "verticalAlign": "top"
+          },
+          "contentStyle": {
+            "width": "30%",
+            "verticalAlign": "top"
+          },
+          "className": "text-left"
+        },
+        {
+          "column": 2,
+          "id": "u:39858c73d5ee",
+          "items": [
+            {
+              "content": "${system.currentInfo.load1}%",
+              "id": "u:153d9a58be30",
+              "label": "系统负载 (1分钟)",
+              "row": 0,
+              "span": 1
+            },
+            {
+              "content": "${system.currentInfo.load5}%",
+              "id": "u:153d9a58be31",
+              "label": "系统负载 (5分钟)",
+              "row": 0,
+              "span": 1
+            },
+            {
+              "content": "${system.currentInfo.load15}%",
+              "id": "u:153d9a58be32",
+              "label": "系统负载 (15分钟)",
+              "row": 1,
+              "span": 1
+            },
+            {
+              "content": "${ROUND(system.currentInfo.loadUsagePercent)}%",
+              "id": "u:153d9a58be33",
+              "label": "负载使用率",
+              "row": 1,
+              "span": 1
+            },
+            {
+              "content": "${system.currentInfo.procs}",
+              "id": "u:153d9a58be34",
+              "label": "运行进程数",
+              "row": 2,
+              "span": 1
+            }
+          ],
+          "mode": "table",
+          "title": "系统负载信息",
+          "type": "property",
+          "labelStyle": {
+            "width": "20%",
+            "verticalAlign": "top"
+          },
+          "contentStyle": {
+            "width": "30%",
+            "verticalAlign": "top"
+          },
+          "className": "text-left"
+        }
+      ],
+      "dsType": "api",
+      "id": "u:9efe7829b41f",
+      "initFetchSchema": false,
+      "type": "service"
+    }
+  ],
+  "id": "u:414418601281",
+  "pullRefresh": {
+    "disabled": true
+  },
+  "title": "系统信息",
+  "regions": [
+    "body"
+  ]
+}

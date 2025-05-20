@@ -6,7 +6,19 @@
     "guard": "bearer-jwt",
     "paths": [
         {
-            // /api/v1/app/system/mem
+            // /api/v2/app/system/cpu_percentage
+            "label": "CPU-percentage",
+            "description": "CPU-percentage",
+            "path": "/cpu_percentage",
+            "method": "get",
+            "process": "scripts.app.monitor.getCpuInfo",
+            "out": {
+                "status": 200,
+                "type": "application/json"
+            }
+        },
+        {
+            // /api/v2/app/system/mem
             "label": "系统内存信息",
             "description": "系统内存信息",
             "path": "/mem",
@@ -18,7 +30,7 @@
             }
         },
         {
-            // /api/v1/app/system/mem2
+            // /api/v2/app/system/mem2
             "label": "系统内存信息",
             "description": "系统内存信息",
             "path": "/mem2",
@@ -30,7 +42,7 @@
             }
         },
         {
-            // /api/v1/app/system/disk
+            // /api/v2/app/system/disk
             "label": "系统硬盘信息",
             "description": "系统硬盘信息",
             "path": "/disk",
@@ -45,7 +57,7 @@
             }
         },
         {
-            // /api/v1/app/system/cpu
+            // /api/v2/app/system/cpu
             "label": "系统信息-CPU",
             "description": "系统信息-CPU",
             "path": "/cpu",
@@ -57,7 +69,7 @@
             }
         },
         {
-            // /api/v1/app/system/docker
+            // /api/v2/app/system/docker
             "label": "系统信息-docker",
             "description": "系统信息-docker",
             "path": "/docker",
@@ -69,7 +81,7 @@
             }
         },
         {
-            // /api/v1/app/system/docker
+            // /api/v2/app/system/docker
             "label": "系统信息-host",
             "description": "系统信息-host",
             "path": "/host",
@@ -81,7 +93,7 @@
             }
         },
         {
-            // /api/v1/app/system/docker
+            // /api/v2/app/system/docker
             "label": "系统信息-load",
             "description": "系统信息-load",
             "path": "/load",
@@ -93,7 +105,7 @@
             }
         },
         {
-            // /api/v1/app/system/dashboard
+            // /api/v2/app/system/dashboard
             "label": "系统信息-dashboard",
             "description": "系统信息-dashboard",
             "path": "/dashboard",
@@ -105,7 +117,7 @@
             }
         },
         {
-            // /api/v1/app/system/net
+            // /api/v2/app/system/net
             "label": "系统信息-net",
             "description": "系统信息-net",
             "path": "/net",
@@ -117,7 +129,7 @@
             }
         },
         {
-            // /api/v1/app/system/net2
+            // /api/v2/app/system/net2
             "label": "系统信息-net2",
             "description": "系统信息-net2",
             "path": "/net2",
@@ -129,7 +141,7 @@
             }
         },
         {
-            // /api/v1/app/system/process
+            // /api/v2/app/system/process
             "label": "系统信息-process",
             "description": "系统信息-process",
             "path": "/process",
@@ -141,7 +153,7 @@
             }
         },
         {
-            // /api/v1/app/system/ssh_session
+            // /api/v2/app/system/ssh_session
             "label": "系统信息-ssh_session",
             "description": "系统信息-ssh_session",
             "path": "/ssh_session",
@@ -153,7 +165,7 @@
             }
         },
         {
-            // /api/v1/app/system/winservices
+            // /api/v2/app/system/winservices
             "label": "系统信息-winservices",
             "description": "系统信息-winservices",
             "path": "/winservices",
