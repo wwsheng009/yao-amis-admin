@@ -277,7 +277,7 @@ export function createCurdPage(modelId: string) {
  * @param pageId
  * @returns
  */
-export function getAmisPageSchema(pageId: string) {
+export function getAmisPageSchema(pageId: string, theme: string) {
   const page = pageId.replaceAll('.', '/') + '.json';
 
   const fpath = PagesLocation + '/' + page;
@@ -286,7 +286,12 @@ export function getAmisPageSchema(pageId: string) {
     throw new Exception(`文件不存在：${fpath}`);
   }
 
-  const str = Process('fs.system.ReadFile', fpath);
+  let str = Process('fs.system.ReadFile', fpath);
+  if (theme === 'dark') {
+    str = str.replaceAll('${__editor__theme}', 'vs-dark');
+  } else {
+    str = str.replaceAll('${__editor__theme}', 'vs');
+  }
   const source = JSON.parse(str);
   if (source.type === 'app') {
     return {

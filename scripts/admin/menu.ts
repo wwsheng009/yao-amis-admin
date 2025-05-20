@@ -192,8 +192,8 @@ function getAmisLocalPageAsSoyRoutes() {
  * @param pageId
  * @returns
  */
-export function getAmisPageSchema(pageId: string) {
-  return Process('scripts.editor.localfile.getAmisPageSchema', pageId);
+export function getAmisPageSchema(pageId: string, theme: string) {
+  return Process('scripts.editor.localfile.getAmisPageSchema', pageId, theme);
 }
 
 /**
