@@ -1,0 +1,21 @@
+{
+  "type": "page",
+  "pullRefresh": {
+    "disabled": true
+  },
+  "regions": ["body"],
+  "body": [
+    {
+      "schemaApi": {
+        "url": "/api/v1/system/schema/app.cmd.log/crud-all",
+        "method": "get"
+      },
+      "name": "model",
+      "initFetchSchema": true,
+      "type": "service",
+      "body": [],
+      "messages": {}
+    }
+  ],
+  "id": "u:568b02cd6929"
+}
