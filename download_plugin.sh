@@ -27,12 +27,10 @@ install_plugins() {
     rm -rf public/amis-editor/*
     log "下载amis-editor包"
     echo "正在下载amis-editor包..."
-    curl -# -fL "https://github.com/wwsheng009/amis-editor-yao/releases/download/1.1.1/amis-editor-1.1.1.zip" -o public/amis-editor/latest.zip || { log_error "下载amis-editor失败"; exit 1; }
+    curl -# -fL "https://github.com/wwsheng009/amis-editor-yao/releases/download/1.1.3/amis-editor-1.1.3.zip" -o public/amis-editor/latest.zip || { log_error "下载amis-editor失败"; exit 1; }
     log "解压amis-editor包"
     unzip -q public/amis-editor/latest.zip -d public/amis-editor/
     rm public/amis-editor/latest.zip
-    # 修复amis-editor中文档的访问地址
-    find public/amis-editor/ -type f -name "*.js" -exec sed -i 's/baidu\.gitee\.io/baidu\.github\.io/g' {} \;
 
     # 下载并安装soy-admin
     log "开始下载并安装soy-admin"
