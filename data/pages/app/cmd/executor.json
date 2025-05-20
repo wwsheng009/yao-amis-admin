@@ -1,49 +1,152 @@
 {
-  "onEvent": {
-    "init": {
-      "actions": [
-        {
-          "actionType": "toast",
-          "args": {
-            "msgType": "info",
-            "msg": "init"
-          }
-        }
-      ]
-    },
-    "inited": {
-      "actions": [
-        {
-          "actionType": "toast",
-          "args": {
-            "msgType": "info",
-            "msg": "${event.data.responseData|json}"
-          }
-        }
-      ]
-    }
-  },
-  "editorState": "default",
-  "id": "u:f30b51992cb8",
-  "pullRefresh": {
-    "disabled": true
-  },
-  "data": {
-    "editorTheme1": "${__theme}"
-  },
-  "regions": ["body"],
-  "title": "cmd_runner",
   "type": "page",
   "asideResizor": false,
   "body": [
     {
-      "type": "form",
+      "id": "u:4a61caaadc84",
+      "isFixedHeight": false,
+      "isFixedWidth": false,
+      "items": [
+        {
+          "body": [
+            {
+              "disabledOnAction": false,
+              "id": "u:934925a3d5f6",
+              "label": "维护主机",
+              "level": "primary",
+              "onEvent": {
+                "click": {
+                  "actions": [
+                    {
+                      "actionType": "url",
+                      "args": {
+                        "blank": false,
+                        "url": "/amis/app/cmd/script"
+                      },
+                      "description": "",
+                      "ignoreError": false
+                    }
+                  ]
+                }
+              },
+              "themeCss": {
+                "className": {
+                  "padding-and-margin:default": {
+                    "marginBottom": "var(--sizes-size-4)",
+                    "marginLeft": "var(--sizes-size-4)",
+                    "marginRight": "var(--sizes-size-4)"
+                  }
+                }
+              },
+              "type": "button"
+            },
+            {
+              "disabledOnAction": false,
+              "id": "u:af099e82a80d",
+              "label": "维护脚本",
+              "level": "primary",
+              "onEvent": {
+                "click": {
+                  "actions": [
+                    {
+                      "actionType": "url",
+                      "args": {
+                        "blank": false,
+                        "url": "/amis/app/cmd/host"
+                      },
+                      "ignoreError": false
+                    }
+                  ]
+                }
+              },
+              "themeCss": {
+                "className": {
+                  "padding-and-margin:default": {
+                    "marginBottom": "var(--sizes-size-4)",
+                    "marginLeft": "var(--sizes-size-4)",
+                    "marginRight": "var(--sizes-size-4)"
+                  }
+                }
+              },
+              "type": "button"
+            },
+            {
+              "disabledOnAction": false,
+              "id": "u:a91c0c4ccd25",
+              "label": "查看日志",
+              "level": "light",
+              "onEvent": {
+                "click": {
+                  "actions": [
+                    {
+                      "actionType": "url",
+                      "args": {
+                        "blank": false,
+                        "url": "/amis/app/cmd/log"
+                      },
+                      "ignoreError": false
+                    }
+                  ]
+                }
+              },
+              "themeCss": {
+                "className": {
+                  "padding-and-margin:default": {
+                    "marginBottom": "var(--sizes-size-4)",
+                    "marginLeft": "var(--sizes-size-4)",
+                    "marginRight": "var(--sizes-size-4)"
+                  }
+                }
+              },
+              "type": "button"
+            }
+          ],
+          "id": "u:c61f556e3821",
+          "isFixedHeight": false,
+          "isFixedWidth": false,
+          "size": "none",
+          "style": {
+            "display": "flex",
+            "flex": "1 1 auto",
+            "flexBasis": "0px",
+            "flexDirection": "row",
+            "flexGrow": 1,
+            "flexWrap": "nowrap",
+            "justifyContent": "flex-start",
+            "position": "static"
+          },
+          "themeCss": {
+            "baseControlClassName": {
+              "padding-and-margin:default": {
+                "marginBottom": "var(--sizes-size-4)",
+                "marginLeft": "var(--sizes-size-4)",
+                "marginRight": "var(--sizes-size-4)"
+              }
+            }
+          },
+          "type": "container",
+          "wrapperBody": false,
+          "wrapperCustomStyle": {}
+        }
+      ],
+      "style": {
+        "columnGap": "10px",
+        "flexDirection": "row",
+        "flexWrap": "nowrap",
+        "inset": "auto",
+        "justifyContent": "flex-start",
+        "position": "relative",
+        "rowGap": "10px"
+      },
+      "type": "flex"
+    },
+    {
       "actions": [],
-      "feat": "Insert",
-      "mode": "horizontal",
-      "name": "host",
       "body": [
         {
+          "id": "u:633e5563fc2b",
+          "label": "主机",
+          "multiple": false,
           "name": "host",
           "onEvent": {
             "change": {
@@ -66,31 +169,30 @@
             "method": "get",
             "url": "/api/v1/system/model/app.cmd.host/select_options"
           },
-          "type": "select",
-          "id": "u:633e5563fc2b",
-          "label": "主机",
-          "multiple": false
+          "type": "select"
         },
         {
+          "id": "u:3bf8060a98c9",
+          "label": "脚本",
           "multiple": false,
           "name": "script_id",
           "onEvent": {
             "change": {
               "actions": [
                 {
+                  "actionType": "setValue",
                   "args": {
                     "value": {
                       "id": "${script_id}"
                     }
                   },
                   "componentId": "u:a5a93db0af23",
-                  "ignoreError": false,
-                  "actionType": "setValue"
+                  "ignoreError": false
                 },
                 {
-                  "ignoreError": false,
                   "actionType": "reload",
-                  "componentId": "u:a5a93db0af23"
+                  "componentId": "u:a5a93db0af23",
+                  "ignoreError": false
                 }
               ],
               "weight": 0
@@ -100,18 +202,28 @@
             "method": "get",
             "url": "/api/v1/system/model/app.cmd.script/select_options"
           },
-          "type": "select",
-          "id": "u:3bf8060a98c9",
-          "label": "脚本"
+          "type": "select"
         }
       ],
       "dsType": "api",
+      "feat": "Insert",
       "id": "u:b2783d29850b",
+      "labelAlign": "left",
+      "mode": "horizontal",
+      "name": "host",
       "resetAfterSubmit": true,
-      "title": ""
+      "title": "",
+      "type": "form"
     },
     {
-      "title": "",
+      "actions": [
+        {
+          "id": "u:3e33f6ad01de",
+          "label": "运行",
+          "primary": true,
+          "type": "submit"
+        }
+      ],
       "api": {
         "adaptor": "",
         "messages": {},
@@ -119,61 +231,59 @@
         "requestAdaptor": "",
         "url": "/api/v1/app/cmd/execute"
       },
-      "feat": "Edit",
-      "mode": "horizontal",
-      "initApi": {
-        "sendOn": "this.host != null",
-        "url": "/api/v1/system/model/app.cmd.script/find/${id}",
-        "adaptor": "",
-        "messages": {},
-        "method": "get",
-        "requestAdaptor": ""
-      },
-      "actions": [
-        {
-          "type": "submit",
-          "id": "u:3e33f6ad01de",
-          "label": "运行",
-          "primary": true
-        }
-      ],
       "body": [
         {
           "id": "u:33d4fefcf4ae",
           "label": "命令工具",
           "name": "cmd",
-          "type": "input-text",
-          "value": "${__theme}"
+          "type": "input-text"
         },
         {
-          "type": "input-text",
           "id": "u:69fbce840809",
           "label": "脚本名称",
           "name": "name",
-          "value": "${locale}"
+          "type": "input-text"
         },
         {
-          "type": "editor",
           "id": "u:c33b1cb3f344",
           "label": "脚本源代码",
           "language": "shell",
           "name": "source",
+          "type": "editor",
           "editorTheme": "${__editor__theme}"
         },
         {
-          "name": "output",
-          "type": "editor",
+          "editorTheme": "${__editor__theme}",
           "id": "u:16561522caec",
           "label": "结果",
           "language": "shell",
-          "editorTheme": "${__editor__theme}"
+          "name": "output",
+          "type": "editor"
         }
       ],
       "dsType": "api",
+      "feat": "Edit",
       "id": "u:a5a93db0af23",
-      "type": "form",
+      "initApi": {
+        "adaptor": "",
+        "messages": {},
+        "method": "get",
+        "requestAdaptor": "",
+        "sendOn": "this.host != null",
+        "url": "/api/v1/system/model/app.cmd.script/find/${id}"
+      },
+      "labelAlign": "left",
+      "mode": "horizontal",
       "name": "script",
-      "resetAfterSubmit": false
+      "resetAfterSubmit": false,
+      "title": "",
+      "type": "form"
     }
-  ]
+  ],
+  "id": "u:f30b51992cb8",
+  "pullRefresh": {
+    "disabled": true
+  },
+  "regions": ["body"],
+  "title": "cmd_runner"
 }
