@@ -21,11 +21,13 @@ services:
       - "6379:6379"
 
   yao-amis-admin:
-    image: wwsheng009/yao-amis-admin-amd64
+    image: wwsheng009/yao-amis-admin-amd64:latest
     ports:
       - "5099:5099"
     volumes:
       - ./.env.postgres:/data/.env
+      - ./upload:/data/app/data/upload
+      - ./logs:/data/app/logs
 
 volumes:
   pgvector_data:

@@ -1,4 +1,4 @@
-logs
+logs/*
 .trash
 *.db
 *.session
@@ -27,3 +27,5 @@ yarn.lock
 debug.log
 public/amis-admin/jssdk
 public/amis-admin/scripts/lib
+db/*
+!.gitkeep
