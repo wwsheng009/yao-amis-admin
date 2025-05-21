@@ -7,7 +7,7 @@ import { Process, Exception, Query } from '@yao/yao';
  * yao run scripts.app.cmd.execute
  * @param {object} payload
  */
-function execute(payload) {
+export function execute(payload) {
   //   console.log("payload", payload);
   const hostId = payload.host;
   const hostInfo = Process('models.app.cmd.host.find', hostId, {});
@@ -27,6 +27,9 @@ function execute(payload) {
     });
     if (result.error) {
       throw new Exception(result.error, 503);
+    }
+    if (result.status !== 0) {
+      throw new Exception(result.msg, 503);
     }
     return result;
   } else {
@@ -65,6 +68,9 @@ function execute(payload) {
     });
     if (result.error) {
       throw new Exception(result.error, 503);
+    }
+    if (result.status !== 0) {
+      throw new Exception(result.msg, 503);
     }
     return result;
   }

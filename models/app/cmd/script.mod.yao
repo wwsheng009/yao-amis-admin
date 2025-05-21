@@ -21,9 +21,18 @@
     {
       "name": "cmd",
       "comment": "命令工具",
+      "default": "bash",
       "option": [
         "sh",
-        "cmd"
+        "cmd",
+        "bash",
+        "csh",
+        "ksh",
+        "zsh",
+        "fish",
+        "scp",
+        "ssh",
+        "powershell"
       ],
       "type": "enum",
       "label": "命令工具"
