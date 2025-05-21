@@ -1,3 +1,7 @@
+# create the .env file,or copy .env.mysql .env
+# store the database password in .env file
+# docker-compose --env-file .env -f "$COMPOSE_FILE" up -d
+
 services:
   mariadb:
     image: mariadb:latest
@@ -33,9 +37,9 @@ services:
     ports:
       - "15099:5099"
     volumes:
-      - /absolute/path/to/.env.mysql:/data/.env
-      - /absolute/path/to/upload:/data/app/data/upload
-      - /absolute/path/to/logs:/data/app/logs
+      - ./.env:/data/.env
+      - ./upload:/data/app/data/upload
+      - ./logs:/data/app/logs
     depends_on:
       mariadb:
         condition: service_healthy
