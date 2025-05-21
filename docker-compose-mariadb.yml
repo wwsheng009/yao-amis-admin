@@ -1,54 +1,64 @@
-version: '3.8'
-
 services:
   mariadb:
     image: mariadb:latest
     environment:
-      MYSQL_ROOT_PASSWORD: 123456 # Consider using secrets for production
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-123456}
       MYSQL_DATABASE: yao
     ports:
-      - "3306:3306"
+      - "13306:3306"
     volumes:
       - mariadb_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-uroot", "-p${MYSQL_ROOT_PASSWORD:-123456}"]
       interval: 5s
       timeout: 10s
       retries: 5
+    networks:
+      - backend
 
   redis:
     image: redis:7.2
     ports:
-      - "6379:6379"
+      - "16379:6379"
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
       timeout: 10s
       retries: 5
+    networks:
+      - backend
 
   yao-amis-admin:
     image: wwsheng009/yao-amis-admin-amd64:latest
     ports:
-      - "5099:5099"
+      - "15099:5099"
     volumes:
-      - ./.env.mysql:/data/.env
-      - ./upload:/data/app/data/upload
-      - ./logs:/data/app/logs
+      - /absolute/path/to/.env.mysql:/data/.env
+      - /absolute/path/to/upload:/data/app/data/upload
+      - /absolute/path/to/logs:/data/app/logs
     depends_on:
       mariadb:
         condition: service_healthy
       redis:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5099/health"] # Adjust based on actual endpoint
+      test: ["CMD", "curl", "-f", "http://localhost:5099/api/v1/system/util/version"]
       interval: 10s
       timeout: 5s
       retries: 3
+    networks:
+      - backend
 
 volumes:
   mariadb_data:
 
 networks:
+  backend:
+    enable_ipv6: true
+    ipam:
+      config:
+        - subnet: 172.25.0.0/16
+        - subnet: fd02::/64
   default:
     enable_ipv6: true
     ipam:
