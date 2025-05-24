@@ -2,32 +2,20 @@
 #docker run -d --restart unless-stopped --name yao-amis-admin-dev -p 5099:5099 yao-amis-admin-dev
 
 ARG ARCH
-FROM wwsheng009/yao-${ARCH}:latest
+FROM wwsheng009/yao-${ARCH}:latest AS builder
 
 ARG ARCH
 ARG VERSION
 RUN mkdir -p /data/app
 WORKDIR /data/app
 
-
 RUN addgroup -S -g 1000 yao && adduser -S -G yao -u 999 yao
-# RUN mkdir -p /data/app && curl -fsSL "https://github.com/wwsheng009/yao-amis-admin/releases/download/yao-amis-admin-${VERSION}/yao-amis-admin-${VERSION}.zip" > /data/app/latest.zip && \
-#     unzip /data/app/latest.zip && rm /data/app/latest.zip && \
-#     rm -rf /data/app/.git && \
-#     chown -R yao:yao /data/app && \
-#     chmod +x /data/app/init.sh && \
-#     chmod +x /usr/local/bin/yao && \
-#     cp /data/app/app.sample.yao /data/app/app.yao && \
-#     mkdir -p /data/app/plugins && \
-#     mkdir -p /data/app/db
-
 
 ADD . /data/app
 RUN rm -rf /data/app/.git && \
     rm -rf /data/app/.github && \
     rm -rf /data/app/Dockerfile* && \
     rm -rf /data/app/node_modules && \
-    chown -R yao:yao /data/app && \
     chmod +x /data/app/init.sh && \
     chmod +x /usr/local/bin/yao && \
     mkdir -p /data/app/plugins && \
@@ -35,23 +23,22 @@ RUN rm -rf /data/app/.git && \
     cp /data/app/.env.sqlite /data/app/.env && \
     cp /data/app/app.sample.yao /data/app/app.yao
 
-
 RUN apk add --no-cache nodejs npm
 
 WORKDIR /data/app
-# download amis jssdk
 RUN sh download_jssdk.sh
-# download plugin
 RUN sh download_plugin.sh ${ARCH}
-# install the yarn tool
 RUN npm i yarn -g
-# install the npm packages
 RUN yarn install --production
+RUN chown -R yao:yao /data/app
 
+ARG ARCH
+FROM wwsheng009/yao-${ARCH}:latest
+RUN addgroup -S -g 1000 yao && adduser -S -G yao -u 999 yao
+COPY --from=builder /data/app /data/app
 USER root
 VOLUME [ "/data/app" ]
 WORKDIR /data/app
-
 
 EXPOSE 5099
 CMD ["sh", "init.sh"]
