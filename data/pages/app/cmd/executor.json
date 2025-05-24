@@ -21,7 +21,7 @@
                       "actionType": "url",
                       "args": {
                         "blank": false,
-                        "url": "/amis/app/cmd/script"
+                        "url": "/amis/app/cmd/host"
                       },
                       "description": "",
                       "ignoreError": false
@@ -52,7 +52,7 @@
                       "actionType": "url",
                       "args": {
                         "blank": false,
-                        "url": "/amis/app/cmd/host"
+                        "url": "/amis/app/cmd/script"
                       },
                       "ignoreError": false
                     }
