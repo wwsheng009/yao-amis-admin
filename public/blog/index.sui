@@ -20,15 +20,23 @@
 
   <!-- Main Css -->
 
-  <link rel="stylesheet" href="\blog\assets/css/tailwind.min.css"/>
-<script s:ns="" s:cn="" s:hash="script_a9c1fc9185ab7164" src="\blog\assets/libsui.min.js" type="text/javascript" name="libsui"></script>
+  <link rel="stylesheet" href="/blog/assets/css/tailwind.min.css"/>
+<script s:ns="" s:cn="" s:hash="script_5c5480e58a4165e2" src="/blog/assets/libsui.min.js" type="text/javascript" name="libsui"></script>
 </head>
 
-<body s:ns="ns_a17c1dec10d62df5" s:public="/blog" s:assets="\blog\assets">
+<body s:ns="page__index_2" s:public="/blog" s:assets="/blog/assets">
 
   <div class="container mx-auto p-4">
     <section aigc-enabled="true">
-  <ul class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+  <!-- <div>$env: {{$env}}</div> -->
+  <div s:if="len(articles.data) == 0" class="flex flex-col items-center justify-center py-12 px-4">
+    <svg class="w-16 h-16 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+    </svg>
+    <h3 class="text-xl font-medium text-gray-900 mb-2">暂无文章</h3>
+    <p class="text-gray-500 text-center">目前还没有任何文章发布，请稍后再来查看。</p>
+  </div>
+  <ul s:else="" class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
     <li s:for="articles.data" s:for-item="article" s:for-index="idx" class="relative transition-all duration-300 hover:scale-[1.02] hover:z-10">
       <article class="h-full">
         <a href="{{ article.url }}" class="block h-full group" target="_blank">
@@ -98,14 +106,62 @@
 
 
 
-<script s:ns="ns_a17c1dec10d62df5" s:cn="comp__index" s:hash="script_6ab7cc08747880c1" type="text/javascript">
-this.root=document.body;const __self=this;this.store=new __sui_store(this.root),this.state=new __sui_state(this),this.props=new __sui_props(this.root),this.$root=new __Query(this.root),this.find=function(selector){return new __Query(__self.root).find(selector)},this.query=function(selector){return __self.root.querySelector(selector)},this.queryAll=function(selector){return __self.root.querySelectorAll(selector)},this.render=function(name,data,option){return new __Render(__self,option).Exec(name,data)},this.emit=function(name,data){const event=new CustomEvent(name,{detail:data});__self.root.dispatchEvent(event)};function Hello(){console.log("Hello World!")}function Index(){return{title:"Customers",rows:[{name:"John",age:30,city:"New York"},{name:"Mary",age:20,city:"Paris"},{name:"Peter",age:40,city:"London"}]}}this.root.getAttribute("initialized")!="true"&&(__self.root.setAttribute("initialized","true"),__self.root.addEventListener("state:change",function(event){const name=this.getAttribute("s:cn"),target=event.detail.target,key=event.detail.key,value=event.detail.value,component=new window[name](this);new __sui_state(component).Set(key,value,target)}),__self.once&&__self.once());
+<script s:ns="page__index_2" s:cn="comp__index" s:hash="script_6ab7cc08747880c1" type="text/javascript">
+this.root = document.body;
+const __self = this;
+this.store = new __sui_store(this.root);
+this.state = new __sui_state(this);
+this.props = new __sui_props(this.root);
+this.$root = new __Query(this.root);
+this.find = function(selector) {
+  return new __Query(__self.root).find(selector);
+};
+this.query = function(selector) {
+  return __self.root.querySelector(selector);
+};
+this.queryAll = function(selector) {
+  return __self.root.querySelectorAll(selector);
+};
+this.render = function(name, data, option) {
+  const r = new __Render(__self, option);
+  return r.Exec(name, data);
+};
+this.emit = function(name, data) {
+  const event = new CustomEvent(name, { detail: data });
+  __self.root.dispatchEvent(event);
+};
+function Hello() {
+  console.log("Hello World!");
+}
+function Index() {
+  return {
+    title: "Customers",
+    rows: [
+      { name: "John", age: 30, city: "New York" },
+      { name: "Mary", age: 20, city: "Paris" },
+      { name: "Peter", age: 40, city: "London" }
+    ]
+  };
+}
+if (this.root.getAttribute("initialized") != "true") {
+  __self.root.setAttribute("initialized", "true");
+  __self.root.addEventListener("state:change", function(event) {
+    const name = this.getAttribute("s:cn");
+    const target = event.detail.target;
+    const key = event.detail.key;
+    const value = event.detail.value;
+    const component = new window[name](this);
+    const state = new __sui_state(component);
+    state.Set(key, value, target);
+  });
+  __self.once && __self.once();
+}
 
 </script>
 
 
 <script name="config" type="json">
-{"dataCache":0,"api":null,"root":"/blog","title":"Home Page | {{ $global.title }}","guard":"","cacheStore":"","cache":0}
+{"guard":"","cacheStore":"","cache":0,"dataCache":0,"api":null,"root":"/blog","title":"Home Page | {{ $global.title }}"}
 </script>
 
 
@@ -124,6 +180,12 @@ this.root=document.body;const __self=this;this.store=new __sui_store(this.root),
   "title": "Yao Blog"
 }
 
+</script>
+
+
+
+<script name="imports" type="json">
+{}
 </script>
 
 </body></html>

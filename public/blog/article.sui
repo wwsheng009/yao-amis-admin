@@ -20,15 +20,28 @@
 
   <!-- Main Css -->
 
-  <link rel="stylesheet" href="\blog\assets/css/tailwind.min.css"/>
-<script s:ns="" s:cn="" s:hash="script_a9c1fc9185ab7164" src="\blog\assets/libsui.min.js" type="text/javascript" name="libsui"></script>
-<style s:ns="ns_fe2c8dee578760bb" s:cn="__page" rel="stylesheet" type="text/css">
-.container{max-width:100%}.post-content{overflow:auto;word-wrap:break-word;white-space:pre-wrap}.dark .post-content{color:#e5e7eb}
+  <link rel="stylesheet" href="/blog/assets/css/tailwind.min.css"/>
+<script s:ns="" s:cn="" s:hash="script_5c5480e58a4165e2" src="/blog/assets/libsui.min.js" type="text/javascript" name="libsui"></script>
+<style s:ns="page__article_2" s:cn="__page" rel="stylesheet" type="text/css">
+.container {
+  max-width: 100%; /* 确保容器宽度不超过其父元素 */
+}
+
+.post-content {
+  overflow: auto; /* 添加滚动条以查看所有内容 */
+  word-wrap: break-word; /* 长单词自动换行 */
+  white-space: pre-wrap; /* 保留空格和换行符，并允许换行 */
+}
+
+.dark .post-content {
+  /* 如果需要针对暗色模式的特殊样式 */
+  color: #e5e7eb; /* 示例颜色 */
+}
 
 </style>
 </head>
 
-<body s:ns="ns_fe2c8dee578760bb" s:public="/blog" s:assets="\blog\assets">
+<body s:ns="page__article_2" s:public="/blog" s:assets="/blog/assets">
 
   <div class="container mx-auto p-4">
     <section>
@@ -63,14 +76,62 @@
 
 
 
-<script s:ns="ns_fe2c8dee578760bb" s:cn="comp__article" s:hash="script_deea49d0ba766d43" type="text/javascript">
-this.root=document.body;const __self=this;this.store=new __sui_store(this.root),this.state=new __sui_state(this),this.props=new __sui_props(this.root),this.$root=new __Query(this.root),this.find=function(selector){return new __Query(__self.root).find(selector)},this.query=function(selector){return __self.root.querySelector(selector)},this.queryAll=function(selector){return __self.root.querySelectorAll(selector)},this.render=function(name,data,option){return new __Render(__self,option).Exec(name,data)},this.emit=function(name,data){const event=new CustomEvent(name,{detail:data});__self.root.dispatchEvent(event)};function Hello(){console.log("Hello World!")}function Index(){return{title:"Customers",rows:[{name:"John",age:30,city:"New York"},{name:"Mary",age:20,city:"Paris"},{name:"Peter",age:40,city:"London"}]}}this.root.getAttribute("initialized")!="true"&&(__self.root.setAttribute("initialized","true"),__self.root.addEventListener("state:change",function(event){const name=this.getAttribute("s:cn"),target=event.detail.target,key=event.detail.key,value=event.detail.value,component=new window[name](this);new __sui_state(component).Set(key,value,target)}),__self.once&&__self.once());
+<script s:ns="page__article_2" s:cn="comp__article" s:hash="script_deea49d0ba766d43" type="text/javascript">
+this.root = document.body;
+const __self = this;
+this.store = new __sui_store(this.root);
+this.state = new __sui_state(this);
+this.props = new __sui_props(this.root);
+this.$root = new __Query(this.root);
+this.find = function(selector) {
+  return new __Query(__self.root).find(selector);
+};
+this.query = function(selector) {
+  return __self.root.querySelector(selector);
+};
+this.queryAll = function(selector) {
+  return __self.root.querySelectorAll(selector);
+};
+this.render = function(name, data, option) {
+  const r = new __Render(__self, option);
+  return r.Exec(name, data);
+};
+this.emit = function(name, data) {
+  const event = new CustomEvent(name, { detail: data });
+  __self.root.dispatchEvent(event);
+};
+function Hello() {
+  console.log("Hello World!");
+}
+function Index() {
+  return {
+    title: "Customers",
+    rows: [
+      { name: "John", age: 30, city: "New York" },
+      { name: "Mary", age: 20, city: "Paris" },
+      { name: "Peter", age: 40, city: "London" }
+    ]
+  };
+}
+if (this.root.getAttribute("initialized") != "true") {
+  __self.root.setAttribute("initialized", "true");
+  __self.root.addEventListener("state:change", function(event) {
+    const name = this.getAttribute("s:cn");
+    const target = event.detail.target;
+    const key = event.detail.key;
+    const value = event.detail.value;
+    const component = new window[name](this);
+    const state = new __sui_state(component);
+    state.Set(key, value, target);
+  });
+  __self.once && __self.once();
+}
 
 </script>
 
 
 <script name="config" type="json">
-{"guard":"","cacheStore":"","cache":0,"dataCache":0,"api":null,"root":"/blog","title":"{{ post.title }}"}
+{"cacheStore":"","cache":0,"dataCache":0,"api":null,"root":"/blog","title":"{{ post.title }}","guard":""}
 </script>
 
 
@@ -93,6 +154,12 @@ this.root=document.body;const __self=this;this.store=new __sui_store(this.root),
   "title": "Yao Blog"
 }
 
+</script>
+
+
+
+<script name="imports" type="json">
+{}
 </script>
 
 </body></html>
