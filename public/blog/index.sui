@@ -4,14 +4,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   <meta name="description" content="Tailwind CSS Saas &amp; Software Landing Page Template"/>
   <meta name="keywords" content="agency, application, business, clean, creative, cryptocurrency, it solutions, modern, multipurpose, nft marketplace, portfolio, saas, software, tailwind css"/>
-  <meta name="author" content="Shreethemes"/>
-  <meta name="website" content="https://shreethemes.in"/>
-  <meta name="email" content="support@shreethemes.in"/>
+  <meta name="author" content="wwsheng009"/>
+  <meta name="website" content="https://fun.wwsheng.xyz"/>
+  <meta name="email" content="wwsheng@qq.com"/>
   <meta name="version" content="2.0.0"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
   
 
   <!-- favicon -->
@@ -161,7 +158,7 @@ if (this.root.getAttribute("initialized") != "true") {
 
 
 <script name="config" type="json">
-{"guard":"","cacheStore":"","cache":0,"dataCache":0,"api":null,"root":"/blog","title":"Home Page | {{ $global.title }}"}
+{"cacheStore":"","cache":0,"dataCache":0,"api":null,"root":"/blog","title":"Home Page | {{ $global.title }}","guard":""}
 </script>
 
 
