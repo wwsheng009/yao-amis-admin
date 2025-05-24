@@ -23,7 +23,7 @@ RUN rm -rf /data/app/.git && \
     cp /data/app/.env.sqlite /data/app/.env && \
     cp /data/app/app.sample.yao /data/app/app.yao
 
-RUN apk add --no-cache nodejs npm
+RUN apk add --no-cache nodejs npm curl wget
 
 WORKDIR /data/app
 RUN sh download_jssdk.sh
