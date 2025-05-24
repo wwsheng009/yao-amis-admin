@@ -113,6 +113,8 @@ else
 fi
 
 # 主执行逻辑
+log "当前目录：$(pwd)"
+log "目录文件：$(ls -lrt ./public)"
 log "开始执行插件安装"
 if [ -n "$1" ]; then
     log "使用指定的架构: $1"

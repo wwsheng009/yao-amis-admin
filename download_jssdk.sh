@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # Function to check if a command exists
 command_exists() {
     command -v "$1" >/dev/null 2>&1
@@ -107,6 +109,8 @@ downloadLibrary() {
         return 1
     fi
 }
+
+echo "Current directory: $(pwd)"
 
 # Download the vue3 file
 downloadLibrary "https://unpkg.com/vue@3.5.14/dist/vue.global.prod.js" "vue3.global.js"
