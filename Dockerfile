@@ -36,7 +36,7 @@ RUN chown -R yao:yao /data/app
 
 FROM wwsheng009/yao-${ARCH}:latest
 # for bun js plugins
-RUN apk add --no-cache libstdc++ libgcc
+RUN apk add --no-cache curl libstdc++ libgcc
 RUN chmod +x /usr/local/bin/yao
 RUN addgroup -S -g 1000 yao && adduser -S -G yao -u 999 yao
 COPY --from=builder /data/app /data/app
