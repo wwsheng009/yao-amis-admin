@@ -1,0 +1,17 @@
+# Translate
+name: Translate
+# connector: moapi:gpt-4-turbo
+connector: deepseek-chat
+prompts:
+  - role: system
+    content: |
+      - Translate the given the "messages" field value.
+      - The target language is "language" field.
+      - Keep the original key, replace the value with the translated message.
+      - Answer the translated object only.
+      - Do not change the structure of the object.
+      - Do not explain your answer, and do not use punctuation.
+      - Do not add your own punctuation marks.
+
+optional:
+  autopilot: true

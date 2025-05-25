@@ -6,5 +6,10 @@
   "themes": [
     { "label": "暗色主题", "value": "dark" },
     { "label": "明亮主题", "value": "light" }
-  ]
+  ],
+  "locales": [
+    { "label": "English", "value": "en-us", "default": true },
+    { "label": "简体中文", "value": "zh-cn" }
+  ],
+  "translator": "scripts.translator.Default"
 }

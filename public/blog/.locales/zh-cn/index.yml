@@ -1,0 +1,12 @@
+name: zh-cn
+keys:
+    trans__index_1: 你好 世界
+    trans__index_2: 你为什么哭
+    trans__index_3: 你好 姚
+    trans__index_4: 没有文章
+    trans__index_5: 暂无已发布的文章 请稍后再查看
+    trans__index_6: 系统启动失败
+    trans__index_7: 系统启动成功
+script_messages:
+    system failed to start: 系统启动失败
+    system start success: 系统启动成功

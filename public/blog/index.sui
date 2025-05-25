@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en" scroll-smooth"="" dir="ltr"><head>
+<!DOCTYPE html><html locale="{{ $locale ?? &#39;en-us&#39; }}" lang="en" scroll-smooth"="" dir="ltr"><head>
   <meta charset="UTF-8"/>
   <title>Home Page | {{ $global.title }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
@@ -21,17 +21,20 @@
 <script s:ns="" s:cn="" s:hash="script_5c5480e58a4165e2" src="/blog/assets/libsui.min.js" type="text/javascript" name="libsui"></script>
 </head>
 
-<body s:ns="page__index_2" s:public="/blog" s:assets="/blog/assets">
+<body s:ns="ns_a17c1dec10d62df5" s:public="/blog" s:assets="/blog/assets">
 
   <div class="container mx-auto p-4">
     <section aigc-enabled="true">
   <!-- <div>$env: {{$env}}</div> -->
+   <div s:trans-text="trans__index_1,trans__index_2">{{ &#39;::hello world&#39; + &#39;::why you cry&#39; }}</div>
+   <div s:trans-text="trans__index_3">{{ &#34;::hello yao&#34; }}</div>
+
   <div s:if="len(articles.data) == 0" class="flex flex-col items-center justify-center py-12 px-4">
     <svg class="w-16 h-16 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
     </svg>
-    <h3 class="text-xl font-medium text-gray-900 mb-2">暂无文章</h3>
-    <p class="text-gray-500 text-center">目前还没有任何文章发布，请稍后再来查看。</p>
+    <h3 class="text-xl font-medium text-gray-900 mb-2" s:trans="" s:trans-node="trans__index_4" s:trans-escape="true">No Articles</h3>
+    <p class="text-gray-500 text-center" s:trans="" s:trans-node="trans__index_5" s:trans-escape="true">No articles have been published yet. Please check back later.</p>
   </div>
   <ul s:else="" class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
     <li s:for="articles.data" s:for-item="article" s:for-index="idx" class="relative transition-all duration-300 hover:scale-[1.02] hover:z-10">
@@ -103,62 +106,14 @@
 
 
 
-<script s:ns="page__index_2" s:cn="comp__index" s:hash="script_6ab7cc08747880c1" type="text/javascript">
-this.root = document.body;
-const __self = this;
-this.store = new __sui_store(this.root);
-this.state = new __sui_state(this);
-this.props = new __sui_props(this.root);
-this.$root = new __Query(this.root);
-this.find = function(selector) {
-  return new __Query(__self.root).find(selector);
-};
-this.query = function(selector) {
-  return __self.root.querySelector(selector);
-};
-this.queryAll = function(selector) {
-  return __self.root.querySelectorAll(selector);
-};
-this.render = function(name, data, option) {
-  const r = new __Render(__self, option);
-  return r.Exec(name, data);
-};
-this.emit = function(name, data) {
-  const event = new CustomEvent(name, { detail: data });
-  __self.root.dispatchEvent(event);
-};
-function Hello() {
-  console.log("Hello World!");
-}
-function Index() {
-  return {
-    title: "Customers",
-    rows: [
-      { name: "John", age: 30, city: "New York" },
-      { name: "Mary", age: 20, city: "Paris" },
-      { name: "Peter", age: 40, city: "London" }
-    ]
-  };
-}
-if (this.root.getAttribute("initialized") != "true") {
-  __self.root.setAttribute("initialized", "true");
-  __self.root.addEventListener("state:change", function(event) {
-    const name = this.getAttribute("s:cn");
-    const target = event.detail.target;
-    const key = event.detail.key;
-    const value = event.detail.value;
-    const component = new window[name](this);
-    const state = new __sui_state(component);
-    state.Set(key, value, target);
-  });
-  __self.once && __self.once();
-}
+<script s:ns="ns_a17c1dec10d62df5" s:cn="comp__index" s:hash="script_49223f4c4292b09d" type="text/javascript" s:trans-script="trans__index_6,trans__index_7">
+this.root=document.body;const __self=this;this.store=new __sui_store(this.root),this.state=new __sui_state(this),this.props=new __sui_props(this.root),this.$root=new __Query(this.root),this.find=function(selector){return new __Query(__self.root).find(selector)},this.query=function(selector){return __self.root.querySelector(selector)},this.queryAll=function(selector){return __self.root.querySelectorAll(selector)},this.render=function(name2,data,option){return new __Render(__self,option).Exec(name2,data)},this.emit=function(name2,data){const event=new CustomEvent(name2,{detail:data});__self.root.dispatchEvent(event)};function Hello(){console.log(__m("system failed to start")+name),console.log(__m("system start success")+name)}function Index(){return{title:"Customers",rows:[{name:"John",age:30,city:"New York"},{name:"Mary",age:20,city:"Paris"},{name:"Peter",age:40,city:"London"}]}}this.root.getAttribute("initialized")!="true"&&(__self.root.setAttribute("initialized","true"),__self.root.addEventListener("state:change",function(event){const name2=this.getAttribute("s:cn"),target=event.detail.target,key=event.detail.key,value=event.detail.value,component=new window[name2](this);new __sui_state(component).Set(key,value,target)}),__self.once&&__self.once());
 
 </script>
 
 
 <script name="config" type="json">
-{"cacheStore":"","cache":0,"dataCache":0,"api":null,"root":"/blog","title":"Home Page | {{ $global.title }}","guard":""}
+{"title":"Home Page | {{ $global.title }}","guard":"","cacheStore":"","cache":0,"dataCache":0,"api":null,"root":"/blog"}
 </script>
 
 

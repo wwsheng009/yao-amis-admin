@@ -1,5 +1,6 @@
 function Hello() {
-  console.log('Hello World!');
+  console.log(__m('system failed to start') + name);
+  console.log(__m("system start success") + name);
 }
 
 function Index() {

@@ -1,0 +1,16 @@
+keys:
+    trans__index_1: hello world
+    trans__index_2: why you cry
+    trans__index_3: hello yao
+    trans__index_4: No Articles
+    trans__index_5: No articles have been published yet. Please check back later.
+    trans__index_6: system failed to start
+    trans__index_7: system start success
+messages:
+    No Articles: 没有文章
+    No articles have been published yet. Please check back later.: 暂无已发布的文章 请稍后再查看
+    hello world: 你好 世界
+    hello yao: 你好 姚
+    system failed to start: 系统启动失败
+    system start success: 系统启动成功
+    why you cry: 你为什么哭
