@@ -1,5 +1,5 @@
 import { getWebPageContent } from '@lib/web';
-import { neo } from '@yao/neo';
+import { Message, neo, ResHookFail } from '@yao/neo';
 
 declare function Send(message: string | object): void;
 
@@ -83,10 +83,7 @@ export function Create(
  * @param output messages
  * @returns
  */
-function Done(
-  input: neo.ChatMessage[],
-  output: neo.ChatMessage[]
-): neo.ResHookDone | null {
+export function Done(input: Message[], output: Message[]): neo.ResHookDone | null {
   // case 1 return null,no change
   // return null
   return null;
@@ -107,7 +104,7 @@ function Done(
  * @param error error messages
  * @returns {next,input,output}
  */
-function Fail(input: neo.Message[], errror: string): neo.ResHookFail | null {
+function Fail(input: Message[], errror: string): ResHookFail | null {
   // case 1 return null,no change
   // return null
   return null;

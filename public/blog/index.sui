@@ -113,7 +113,7 @@ this.root=document.body;const __self=this;this.store=new __sui_store(this.root),
 
 
 <script name="config" type="json">
-{"title":"Home Page | {{ $global.title }}","guard":"","cacheStore":"","cache":0,"dataCache":0,"api":null,"root":"/blog"}
+{"guard":"","cacheStore":"","cache":0,"dataCache":0,"api":null,"root":"/blog","title":"Home Page | {{ $global.title }}"}
 </script>
 
 

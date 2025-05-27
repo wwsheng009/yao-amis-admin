@@ -2,7 +2,7 @@ import { ModelProxy } from '@lib/proxy';
 import { getWebPageContent } from '@lib/web';
 import { getWeatherByName } from '@scripts/app/weather/tool';
 import { IAdminUser } from '@scripts/db_types/admin/user';
-import { neo } from '@yao/neo';
+import { Message, ResHookFail } from '@yao/neo';
 
 declare function Send(message: string | object): void;
 /**
@@ -16,7 +16,7 @@ declare function Send(message: string | object): void;
  * @returns A response object containing the next action, input messages, and output data.
  */
 export function Create(
-  input: neo.Message[],
+  input: Message[],
   option: { [key: string]: any }
 ): neo.ResHookInit {
   //case 1 return null
@@ -96,10 +96,7 @@ export function Create(
  * @param writer for response
  * @returns
  */
-function Done(
-  input: neo.ChatMessage[],
-  output: neo.ChatMessage[]
-): any | null | string {
+function Done(input: Message[], output: Message[]): any | null | string {
   console.log('output');
   console.log(output);
   if (
@@ -119,7 +116,7 @@ function Done(
       console.log('get_weather:');
       console.log(data);
       return {
-        output: [{ text: data }] as neo.ChatMessage[]
+        output: [{ text: data }] as Message[]
       };
 
       // return '{"temperature": "15°C"}';
@@ -138,12 +135,12 @@ function Done(
       if (user) {
         console.log(user);
         return {
-          output: [{ text: user }] as neo.ChatMessage[]
+          output: [{ text: user }] as Message[]
         };
       } else {
         console.log('用户不存在');
         return {
-          output: [{ text: '用户不存在' }] as neo.ChatMessage[]
+          output: [{ text: '用户不存在' }] as Message[]
         };
       }
     }
@@ -151,7 +148,7 @@ function Done(
     return {
       ouput: [
         { text: '错误的调用，不支持的函数调用：' + funcName }
-      ] as neo.ChatMessage[]
+      ] as Message[]
     };
   }
 
@@ -175,7 +172,7 @@ function Done(
  * @param error error messages
  * @returns {next,input,output}
  */
-function Fail(input: neo.Message[], error: string): neo.ResHookFail | null {
+function Fail(input: Message[], error: string): ResHookFail | null {
   // case 1 return null,no change
   // return null
   return null;

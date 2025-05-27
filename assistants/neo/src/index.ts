@@ -1,5 +1,5 @@
 import { getWebPageContent, truncateText } from '@lib/web';
-import { neo, SendMessage } from '@yao/neo';
+import { Context, ResHookFail, Send } from '@yao/neo';
 
 /**
  * user request -> [Create hook] -> openai
@@ -94,13 +94,8 @@ export function Create(
  * @param output messages
  * @returns
  */
-function Done(
-  input: neo.ChatMessage[],
-  output: neo.ChatMessage[]
-): any | null | string {
-  console.log('context');
-  console.log(context);
-  console.log('input');
+export function Done(input: Message[], output: Message[]): any | null | string {
+
   console.log(input);
 
   if (input && input.length > 0 && input[0].text?.includes('[{"type":"text"')) {
@@ -126,7 +121,7 @@ function Done(
  * @param error error messages
  * @returns {next,input,output}
  */
-function Fail(context: neo.Context, error: string): neo.ResHookFail | null {
+function Fail(context: Context, error: string): ResHookFail | null {
   // case 1 return null,no change
   // return null
   return null;
