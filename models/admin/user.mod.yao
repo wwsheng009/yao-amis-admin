@@ -338,6 +338,20 @@
       "nullable": true
     },
     {
+      "label": "角色",
+      "name": "roles",
+      "type": "json",
+      "comment": "角色",
+      "nullable": true
+    },
+    {
+      "label": "权限",
+      "name": "permission",
+      "type": "json",
+      "comment": "权限",
+      "nullable": true
+    },
+    {
       "label": "状态",
       "comment": "用户状态 enabled 有效, disabled 无效",
       "name": "status",
