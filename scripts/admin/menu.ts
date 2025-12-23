@@ -5,7 +5,7 @@ import { filterTreeDataWithFunc } from '@scripts/amis/data/tree';
 import { getUserAuthMenuIds } from '@scripts/auth/lib';
 import { Process } from '@yao/yao';
 import { MenuSoybean } from '@scripts/amis/site';
-import { getPagesFileList } from '@scripts/editor/localfile';
+import { getPagesFileList,getAmisPageSchema as getAmisPageSchema1 } from '@scripts/editor/localfile';
 
 /**
  * 处理用户的菜单
@@ -193,7 +193,7 @@ function getAmisLocalPageAsSoyRoutes() {
  * @returns
  */
 export function getAmisPageSchema(pageId: string, theme: string) {
-  return Process('scripts.editor.localfile.getAmisPageSchema', pageId, theme);
+  return getAmisPageSchema1(pageId, theme);
 }
 
 /**
