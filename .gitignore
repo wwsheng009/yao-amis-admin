@@ -29,3 +29,4 @@ public/amis-admin/jssdk
 public/amis-admin/scripts/lib
 db/*
 !.gitkeep
+data/stores

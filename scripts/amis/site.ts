@@ -1,7 +1,7 @@
 import { getAmisEditorPages } from '@scripts/admin/menu';
 import { Process } from '@yao/yao';
 // site.js
-// scripts.amis.site.MenuSoybean
+// yao run scripts.amis.site.MenuSoybean
 export function MenuSoybean() {
   const menus = [
     {
@@ -28,18 +28,23 @@ export function MenuSoybean() {
  * yao run scripts.amis.site.Menu
  * @returns
  */
-function Menu() {
+export function Menu() {
   const user = Process('session.get', 'user');
   if (user?.type === 'super') {
+    
     return getSuperUserMenu();
   }
-  const pages = Process('scripts.admin.menu.getAmisPageRoutesFromDB');
-
+  let pages_db = Process('scripts.admin.menu.getAmisPageRoutesFromDB');
+  //check pages_db type is array
+  if (!Array.isArray(pages_db)) {
+    pages_db = [];
+  }
+  
   const siteMenu = {
     pages: [
       ...getHomeMenu(),
       {
-        children: pages
+        children: pages_db
       },
       {
         children: getSettingMenu()
@@ -51,6 +56,7 @@ function Menu() {
 
 /**
  * 超级管理员的菜单列表，直接从文件系统读取，而不是数据库
+ * yao run scripts.amis.site.getSuperUserMenu
  * @returns
  */
 function getSuperUserMenu() {
@@ -59,7 +65,11 @@ function getSuperUserMenu() {
   const user = Process('session.get', 'user');
   let pages_in = [];
   if (user?.type === 'super') {
+    console.log('超级管理员，加载所有页面');
     pages_in = Process('scripts.admin.menu.getAmisPages');
+  }
+  if (!Array.isArray(pages_in)) {
+    pages_in = [];
   }
   // else {
   //   let pages = Process("scripts.admin.menu.getAmisPageRoutesFromDB");
@@ -88,6 +98,7 @@ function getSuperUserMenu() {
   return siteMenu;
 }
 function getHomeMenu() {
+
   return [
     {
       url: '/',
@@ -224,12 +235,12 @@ function getSettingMenu() {
           schemaApi: '/api/v1/amis/pages/user.logout',
           url: '/logout'
         },
-        {
-          label: '404',
-          schemaApi: '/api/v1/amis/pages/system.404',
-          isDefaultPage: true,
-          visible: false
-        }
+        // {
+        //   label: '404',
+        //   schemaApi: '/api/v1/amis/pages/system.404',
+        //   isDefaultPage: true,
+        //   visible: false
+        // }
       ]
     }
   ];

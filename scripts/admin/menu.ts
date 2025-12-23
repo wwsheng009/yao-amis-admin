@@ -156,7 +156,7 @@ function saveLocalAmisSoyRoutesToDB() {
  */
 function saveSoyRoutesToDB() {
   // 导入前端本身的菜单
-  const routes = Process('scripts.amis.site.MenuSoybean')['routes'];
+  const routes = MenuSoybean().routes;
   saveTreeMenusToDB(routes, 'soy', false);
 }
 /**
