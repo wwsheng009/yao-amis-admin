@@ -1,0 +1,4 @@
+servers:read:all:
+  description: "Read all MCP servers"
+  endpoints:
+    - GET /mcp/servers

@@ -1,0 +1,59 @@
+# Chat Sessions Scopes
+
+sessions:read:all:
+  description: "Read all chat sessions"
+  endpoints:
+    - GET /chat/sessions
+    - GET /chat/sessions/:chat_id
+    - GET /chat/sessions/:chat_id/messages
+
+sessions:read:own:
+  owner: true
+  description: "Read own chat sessions"
+  endpoints:
+    - GET /chat/sessions/own
+    - GET /chat/sessions/own/:chat_id
+    - GET /chat/sessions/own/:chat_id/messages
+
+sessions:read:team:
+  team: true
+  description: "Read team chat sessions"
+  endpoints:
+    - GET /chat/sessions/team
+    - GET /chat/sessions/team/:chat_id
+    - GET /chat/sessions/team/:chat_id/messages
+
+sessions:write:all:
+  description: "Write all chat sessions"
+  endpoints:
+    - PUT /chat/sessions/:chat_id
+
+sessions:write:own:
+  owner: true
+  description: "Write own chat sessions"
+  endpoints:
+    - PUT /chat/sessions/own/:chat_id
+
+sessions:write:team:
+  team: true
+  description: "Write team chat sessions"
+  endpoints:
+    - PUT /chat/sessions/team/:chat_id
+
+sessions:delete:all:
+  description: "Delete all chat sessions"
+  endpoints:
+    - DELETE /chat/sessions/:chat_id
+
+sessions:delete:own:
+  owner: true
+  description: "Delete own chat sessions"
+  endpoints:
+    - DELETE /chat/sessions/own/:chat_id
+
+sessions:delete:team:
+  team: true
+  description: "Delete team chat sessions"
+  endpoints:
+    - DELETE /chat/sessions/team/:chat_id
+

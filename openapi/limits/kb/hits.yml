@@ -1,0 +1,73 @@
+guest:
+  minutes:
+    GET /kb/documents/:docID/segments/:segmentID/hits: 10
+    GET /kb/documents/:docID/segments/:segmentID/hits/search: 15
+    GET /kb/documents/:docID/segments/:segmentID/hits/:hitID: 20
+  hours:
+    GET /kb/documents/:docID/segments/:segmentID/hits: 100
+    GET /kb/documents/:docID/segments/:segmentID/hits/search: 150
+    GET /kb/documents/:docID/segments/:segmentID/hits/:hitID: 200
+  days:
+    GET /kb/documents/:docID/segments/:segmentID/hits: 1000
+    GET /kb/documents/:docID/segments/:segmentID/hits/search: 1500
+    GET /kb/documents/:docID/segments/:segmentID/hits/:hitID: 2000
+
+default:
+  minutes:
+    GET /kb/documents/:docID/segments/:segmentID/hits: 30
+    GET /kb/documents/:docID/segments/:segmentID/hits/search: 50
+    GET /kb/documents/:docID/segments/:segmentID/hits/:hitID: 60
+    POST /kb/documents/:docID/segments/:segmentID/hits: 10
+    DELETE /kb/documents/:docID/segments/:segmentID/hits: 5
+  hours:
+    GET /kb/documents/:docID/segments/:segmentID/hits: 300
+    GET /kb/documents/:docID/segments/:segmentID/hits/search: 500
+    GET /kb/documents/:docID/segments/:segmentID/hits/:hitID: 600
+    POST /kb/documents/:docID/segments/:segmentID/hits: 100
+    DELETE /kb/documents/:docID/segments/:segmentID/hits: 50
+  days:
+    GET /kb/documents/:docID/segments/:segmentID/hits: 3000
+    GET /kb/documents/:docID/segments/:segmentID/hits/search: 5000
+    GET /kb/documents/:docID/segments/:segmentID/hits/:hitID: 6000
+    POST /kb/documents/:docID/segments/:segmentID/hits: 1000
+    DELETE /kb/documents/:docID/segments/:segmentID/hits: 500
+
+premium:
+  minutes:
+    GET /kb/documents/:docID/segments/:segmentID/hits: 100
+    GET /kb/documents/:docID/segments/:segmentID/hits/search: 150
+    GET /kb/documents/:docID/segments/:segmentID/hits/:hitID: 200
+    POST /kb/documents/:docID/segments/:segmentID/hits: 30
+    DELETE /kb/documents/:docID/segments/:segmentID/hits: 20
+  hours:
+    GET /kb/documents/:docID/segments/:segmentID/hits: 1000
+    GET /kb/documents/:docID/segments/:segmentID/hits/search: 1500
+    GET /kb/documents/:docID/segments/:segmentID/hits/:hitID: 2000
+    POST /kb/documents/:docID/segments/:segmentID/hits: 300
+    DELETE /kb/documents/:docID/segments/:segmentID/hits: 200
+  days:
+    GET /kb/documents/:docID/segments/:segmentID/hits: 10000
+    GET /kb/documents/:docID/segments/:segmentID/hits/search: 15000
+    GET /kb/documents/:docID/segments/:segmentID/hits/:hitID: 20000
+    POST /kb/documents/:docID/segments/:segmentID/hits: 3000
+    DELETE /kb/documents/:docID/segments/:segmentID/hits: 2000
+
+enterprise:
+  minutes:
+    GET /kb/documents/:docID/segments/:segmentID/hits: 500
+    GET /kb/documents/:docID/segments/:segmentID/hits/search: 800
+    GET /kb/documents/:docID/segments/:segmentID/hits/:hitID: 1000
+    POST /kb/documents/:docID/segments/:segmentID/hits: 150
+    DELETE /kb/documents/:docID/segments/:segmentID/hits: 100
+  hours:
+    GET /kb/documents/:docID/segments/:segmentID/hits: 5000
+    GET /kb/documents/:docID/segments/:segmentID/hits/search: 8000
+    GET /kb/documents/:docID/segments/:segmentID/hits/:hitID: 10000
+    POST /kb/documents/:docID/segments/:segmentID/hits: 1500
+    DELETE /kb/documents/:docID/segments/:segmentID/hits: 1000
+  days:
+    GET /kb/documents/:docID/segments/:segmentID/hits: 50000
+    GET /kb/documents/:docID/segments/:segmentID/hits/search: 80000
+    GET /kb/documents/:docID/segments/:segmentID/hits/:hitID: 100000
+    POST /kb/documents/:docID/segments/:segmentID/hits: 15000
+    DELETE /kb/documents/:docID/segments/:segmentID/hits: 10000

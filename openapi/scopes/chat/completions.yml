@@ -1,0 +1,65 @@
+# Chat Completions Scopes
+
+completions:read:all:
+  description: "Read all chat completions"
+  endpoints:
+    - GET /chat/completions
+    - GET /chat/completions/:completion_id
+    - GET /chat/completions/:completion_id/messages
+
+completions:read:own:
+  owner: true
+  description: "Read own chat completions"
+  endpoints:
+    - GET /chat/completions/own
+    - GET /chat/completions/own/:completion_id
+    - GET /chat/completions/own/:completion_id/messages
+
+completions:read:team:
+  team: true
+  description: "Read team chat completions"
+  endpoints:
+    - GET /chat/completions/team
+    - GET /chat/completions/team/:completion_id
+    - GET /chat/completions/team/:completion_id/messages
+
+completions:write:all:
+  description: "Write all chat completions"
+  endpoints:
+    - POST /chat/completions
+    - PUT /chat/completions
+    - POST /chat/completions/:context_id/append
+
+completions:write:own:
+  owner: true
+  description: "Write own chat completions"
+  endpoints:
+    - POST /chat/completions/own
+    - PUT /chat/completions/own
+    - POST /chat/completions/own/:context_id/append
+
+completions:write:team:
+  team: true
+  description: "Write team chat completions"
+  endpoints:
+    - POST /chat/completions/team
+    - PUT /chat/completions/team
+    - POST /chat/completions/team/:context_id/append
+
+completions:delete:all:
+  description: "Delete all chat completions"
+  endpoints:
+    - DELETE /chat/completions/:completion_id
+
+completions:delete:own:
+  owner: true
+  description: "Delete own chat completions"
+  endpoints:
+    - DELETE /chat/completions/own/:completion_id
+
+completions:delete:team:
+  team: true
+  description: "Delete team chat completions"
+  endpoints:
+    - DELETE /chat/completions/team/:completion_id
+

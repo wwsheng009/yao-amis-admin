@@ -1,0 +1,4 @@
+team:settings:view:
+  description: "View team settings"
+team:settings:edit:
+  description: "Edit team settings"

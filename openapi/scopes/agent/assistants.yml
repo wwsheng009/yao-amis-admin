@@ -1,0 +1,62 @@
+assistants:read:all:
+  description: "Read all assistants"
+  endpoints:
+    - GET /agent/assistants
+    - GET /agent/assistants/:id
+
+assistants:read:own:
+  owner: true
+  description: "Read own assistants"
+  endpoints:
+    - GET /agent/assistants/own
+    - GET /agent/assistants/own/:id
+
+assistants:read:team:
+  team: true
+  description: "Read team assistants"
+  endpoints:
+    - GET /agent/assistants/team
+    - GET /agent/assistants/team/:id
+
+assistants:write:all:
+  description: "Write all assistants"
+  endpoints:
+    - POST /agent/assistants
+    - PUT /agent/assistants/:id
+
+assistants:write:own:
+  owner: true
+  description: "Write own assistants"
+  endpoints:
+    - POST /agent/assistants/own
+    - PUT /agent/assistants/own/:id
+
+assistants:write:team:
+  team: true
+  description: "Write team assistants"
+  endpoints:
+    - POST /agent/assistants/team
+    - PUT /agent/assistants/team/:id
+
+assistants:delete:all:
+  description: "Delete all assistants"
+  endpoints:
+    - DELETE /agent/assistants/:id
+
+assistants:delete:own:
+  owner: true
+  description: "Delete own assistants"
+  endpoints:
+    - DELETE /agent/assistants/own/:id
+
+assistants:delete:team:
+  team: true
+  description: "Delete team assistants"
+  endpoints:
+    - DELETE /agent/assistants/team/:id
+
+assistants:tags:read:all:
+  description: "Read all assistant tags"
+  endpoints:
+    - GET /agent/assistants/tags
+

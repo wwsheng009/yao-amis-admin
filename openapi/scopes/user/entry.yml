@@ -1,0 +1,20 @@
+entry:access:public:
+  description: "Public access to entry endpoints (no authentication required)"
+  endpoints:
+    - GET /user/entry
+    - GET /user/entry/captcha
+    - POST /user/entry/verify
+
+entry:register:authenticated:
+  description: "Register and login endpoints (with OAuth guard)"
+  endpoints:
+    - POST /user/entry/register
+    - POST /user/entry/login
+    - POST /user/entry/invite/verify
+    - POST /user/entry/otp
+
+entry:logout:own:
+  owner: true
+  description: "User logout"
+  endpoints:
+    - POST /user/logout

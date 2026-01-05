@@ -138,7 +138,7 @@ export function Login(payload: {
  */
 export function Info() {
   const user_id = Process('session.get', 'user_id');
-  const user = Process('session.get', 'user');
+  const user = Process('scripts.user.findUser');
 
   return {
     userId: user_id,

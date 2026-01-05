@@ -1,0 +1,39 @@
+jobs:read:all:
+  description: "Read jobs for all users"
+  endpoints:
+    - GET /job/jobs
+    - GET /job/jobs/:jobID
+    - GET /job/jobs/:jobID/progress
+
+jobs:read:own:
+  owner: true
+  description: "Read own jobs"
+  endpoints:
+    - GET /job/jobs/own
+    - GET /job/jobs/own/:jobID
+    - GET /job/jobs/own/:jobID/progress
+
+jobs:read:team:
+  team: true
+  description: "Read team jobs"
+  endpoints:
+    - GET /job/jobs/team
+    - GET /job/jobs/team/:jobID
+    - GET /job/jobs/team/:jobID/progress
+
+jobs:control:all:
+  description: "Control jobs for all users"
+  endpoints:
+    - POST /job/jobs/:jobID/stop
+
+jobs:control:own:
+  owner: true
+  description: "Control own jobs"
+  endpoints:
+    - POST /job/jobs/own/:jobID/stop
+
+jobs:control:team:
+  team: true
+  description: "Control team jobs"
+  endpoints:
+    - POST /job/jobs/team/:jobID/stop

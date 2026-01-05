@@ -1,0 +1,19 @@
+search:execute:all:
+  description: "Execute search for all users"
+  endpoints:
+    - POST /kb/search
+    - POST /kb/search/multi
+
+search:execute:own:
+  owner: true
+  description: "Execute search for own collections"
+  endpoints:
+    - POST /kb/search/own
+    - POST /kb/search/own/multi
+
+search:execute:team:
+  team: true
+  description: "Execute search for team collections"
+  endpoints:
+    - POST /kb/search/team
+    - POST /kb/search/team/multi

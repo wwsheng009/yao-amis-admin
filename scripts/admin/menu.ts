@@ -478,7 +478,7 @@ export function getAmisPageRoutesFromDB(): AmisAppPage[] {
   let routes = getAmisRoutesFromDB();
   // 转换成树结构
   routes = Process(`utils.arr.Tree`, routes, { parent: 'parent', empty: 0 });
-  const user = Process('session.get', 'user');
+  const user = Process('scripts.user.findUser');
   if (user?.type !== 'super') {
     const menusIds = getUserAuthMenuIds();
     routes = filterTreeDataWithFunc(routes, (item) => {

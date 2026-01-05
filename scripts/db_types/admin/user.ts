@@ -14,8 +14,6 @@ export interface IAdminUser {
   mobile?: string;
   /**登录密码 */
   password?: string;
-  /**操作密码 */
-  password2nd?: string;
   /**姓名 */
   name?: string;
   /**身份证号码 */

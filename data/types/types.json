@@ -1,0 +1,230 @@
+[
+  {
+    "type_id": "free",
+    "name": "Free",
+    "description": "Perfect for personal use and small projects",
+    "locale": "en-us",
+    "price_daily": 0,
+    "price_monthly": 0,
+    "price_yearly": 0,
+    "credits_monthly": 1000,
+    "introduction": "Perfect for personal use and small projects",
+    "sale_type": "online",
+    "status": "published",
+    "is_active": true,
+    "is_default": true,
+    "sort_order": 10,
+    "features": {
+      "basic_api": true,
+      "community_support": true,
+      "standard_response": true,
+      "advanced_features": false,
+      "priority_support": false
+    },
+    "limits": {
+      "api_calls_day": 100,
+      "storage_mb": 100
+    }
+  },
+  {
+    "type_id": "free_zh",
+    "name": "免费版",
+    "description": "适合个人用户和小型项目",
+    "locale": "zh-cn",
+    "price_daily": 0,
+    "price_monthly": 0,
+    "price_yearly": 0,
+    "credits_monthly": 1000,
+    "introduction": "适合个人用户和小型项目",
+    "sale_type": "online",
+    "status": "published",
+    "is_active": true,
+    "is_default": false,
+    "sort_order": 10,
+    "features": {
+      "basic_api": true,
+      "community_support": true,
+      "standard_response": true,
+      "advanced_features": false,
+      "priority_support": false
+    },
+    "limits": {
+      "api_calls_day": 100,
+      "storage_mb": 100
+    }
+  },
+  {
+    "type_id": "pro",
+    "name": "Pro",
+    "description": "Perfect for professionals and team collaboration",
+    "locale": "en-us",
+    "price_daily": 100,
+    "price_monthly": 2900,
+    "price_yearly": 24000,
+    "credits_monthly": 10000,
+    "introduction": "Perfect for professionals and team collaboration",
+    "sale_type": "online",
+    "status": "published",
+    "is_active": true,
+    "is_default": false,
+    "sort_order": 20,
+    "features": {
+      "full_api": true,
+      "priority_support": true,
+      "high_speed_response": true,
+      "advanced_features": true,
+      "team_collaboration": true
+    },
+    "limits": {
+      "api_calls_day": 10000,
+      "storage_mb": 10240
+    }
+  },
+  {
+    "type_id": "pro_zh",
+    "name": "Pro 版",
+    "description": "适合专业用户和团队协作",
+    "locale": "zh-cn",
+    "price_daily": 7,
+    "price_monthly": 199,
+    "price_yearly": 1650,
+    "credits_monthly": 10000,
+    "introduction": "适合专业用户和团队协作",
+    "sale_type": "online",
+    "status": "published",
+    "is_active": true,
+    "is_default": false,
+    "sort_order": 20,
+    "features": {
+      "full_api": true,
+      "priority_support": true,
+      "high_speed_response": true,
+      "advanced_features": true,
+      "team_collaboration": true
+    },
+    "limits": {
+      "api_calls_day": 10000,
+      "storage_mb": 10240
+    }
+  },
+  {
+    "type_id": "enterprise",
+    "name": "Enterprise",
+    "description": "Perfect for large teams and enterprise customers",
+    "locale": "en-us",
+    "price_daily": 0,
+    "price_monthly": 0,
+    "price_yearly": 0,
+    "credits_monthly": 200000,
+    "introduction": "Perfect for large teams and enterprise customers",
+    "sale_type": "offline",
+    "sale_link": "https://yaoapps.com/contact-sales",
+    "sale_price_label": "Contact Sales",
+    "sale_description": "Custom pricing based on your needs",
+    "status": "published",
+    "is_active": true,
+    "is_default": false,
+    "sort_order": 30,
+    "features": {
+      "full_api": true,
+      "dedicated_support": true,
+      "enterprise_sla": true,
+      "custom_features": true,
+      "multi_team": true
+    },
+    "limits": {
+      "api_calls_day": 100000,
+      "storage_mb": 102400
+    }
+  },
+  {
+    "type_id": "enterprise_zh",
+    "name": "企业版",
+    "description": "适合大型团队和企业客户",
+    "locale": "zh-cn",
+    "price_daily": 0,
+    "price_monthly": 0,
+    "price_yearly": 0,
+    "credits_monthly": 200000,
+    "introduction": "适合大型团队和企业客户",
+    "sale_type": "offline",
+    "sale_link": "https://yaoapps.com/contact-sales",
+    "sale_price_label": "联系销售",
+    "sale_description": "根据您的需求定制价格",
+    "status": "published",
+    "is_active": true,
+    "is_default": false,
+    "sort_order": 30,
+    "features": {
+      "full_api": true,
+      "dedicated_support": true,
+      "enterprise_sla": true,
+      "custom_features": true,
+      "multi_team": true
+    },
+    "limits": {
+      "api_calls_day": 100000,
+      "storage_mb": 102400
+    }
+  },
+  {
+    "type_id": "selfhosting",
+    "name": "Self-hosting",
+    "description": "Fully private on-premises deployment",
+    "locale": "en-us",
+    "price_daily": 0,
+    "price_monthly": 0,
+    "price_yearly": 0,
+    "credits_monthly": 999999,
+    "introduction": "Fully private on-premises deployment",
+    "sale_type": "offline",
+    "sale_link": "https://yaoapps.com/deployment",
+    "sale_price_label": "$999 - $4999 /month",
+    "sale_description": "Pricing based on deployment scale",
+    "status": "published",
+    "is_active": true,
+    "is_default": false,
+    "sort_order": 40,
+    "features": {
+      "fully_private": true,
+      "unlimited_usage": true,
+      "on_premises": true,
+      "full_data_control": true,
+      "deployment_license": true
+    },
+    "limits": {
+      "api_calls_day": 999999,
+      "storage_mb": 999999
+    }
+  },
+  {
+    "type_id": "selfhosting_zh",
+    "name": "私有部署",
+    "description": "完全私有化的本地部署方案",
+    "locale": "zh-cn",
+    "price_daily": 0,
+    "price_monthly": 0,
+    "price_yearly": 0,
+    "credits_monthly": 999999,
+    "introduction": "完全私有化的本地部署方案",
+    "sale_type": "offline",
+    "sale_link": "https://yaoapps.com/deployment",
+    "sale_price_label": "¥6999 - ¥29999 /月",
+    "sale_description": "根据部署规模定价",
+    "status": "published",
+    "is_active": true,
+    "is_default": false,
+    "sort_order": 40,
+    "features": {
+      "fully_private": true,
+      "unlimited_usage": true,
+      "on_premises": true,
+      "full_data_control": true,
+      "deployment_license": true
+    },
+    "limits": {
+      "api_calls_day": 999999,
+      "storage_mb": 999999
+    }
+  }
+]

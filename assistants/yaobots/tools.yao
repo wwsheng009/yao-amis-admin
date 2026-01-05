@@ -1,0 +1,24 @@
+{
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "select_assistant",
+        "description": "Select the most suitable assistant for the user's question",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "assistant_id": {
+              "type": "string",
+              "description": "The assistant_id of the assistant, which is a unique identifier given by the system messages. Use the assistant_id field from system message. it's not the index of the list, Do not add anything else."
+            }
+          },
+          "required": ["assistant_id"],
+          "additionalProperties": false
+        },
+        "strict": true
+      }
+    }
+  ],
+  "prompts": [] // Additional prompts
+}

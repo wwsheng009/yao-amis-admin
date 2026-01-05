@@ -1,0 +1,15 @@
+{
+  "name": "Primary Mailer",
+  "description": "Primary mailer email provider",
+  "connector": "mailer",
+  "options": {
+    "smtp": {
+      "host": "$ENV.SMTP_HOST",
+      "port": "$ENV.SMTP_PORT",
+      "username": "$ENV.SMTP_USERNAME",
+      "password": "$ENV.SMTP_PASSWORD",
+      "from": "$ENV.SMTP_FROM",
+      "use_ssl": false
+    }
+  }
+}

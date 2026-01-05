@@ -1,0 +1,19 @@
+categories:read:all:
+  description: "Read job categories for all users"
+  endpoints:
+    - GET /job/categories
+    - GET /job/categories/:categoryID
+
+categories:read:own:
+  owner: true
+  description: "Read own job categories"
+  endpoints:
+    - GET /job/categories/own
+    - GET /job/categories/own/:categoryID
+
+categories:read:team:
+  team: true
+  description: "Read team job categories"
+  endpoints:
+    - GET /job/categories/team
+    - GET /job/categories/team/:categoryID

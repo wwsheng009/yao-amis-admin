@@ -1,0 +1,56 @@
+hits:read:all:
+  description: "Read segment hits for all users"
+  endpoints:
+    - GET /kb/documents/:docID/segments/:segmentID/hits
+    - GET /kb/documents/:docID/segments/:segmentID/hits/search
+    - GET /kb/documents/:docID/segments/:segmentID/hits/:hitID
+
+hits:read:own:
+  owner: true
+  description: "Read segment hits for own documents"
+  endpoints:
+    - GET /kb/documents/own/:docID/segments/:segmentID/hits
+    - GET /kb/documents/own/:docID/segments/:segmentID/hits/search
+    - GET /kb/documents/own/:docID/segments/:segmentID/hits/:hitID
+
+hits:read:team:
+  team: true
+  description: "Read segment hits for team documents"
+  endpoints:
+    - GET /kb/documents/team/:docID/segments/:segmentID/hits
+    - GET /kb/documents/team/:docID/segments/:segmentID/hits/search
+    - GET /kb/documents/team/:docID/segments/:segmentID/hits/:hitID
+
+hits:write:all:
+  description: "Write segment hits for all users"
+  endpoints:
+    - POST /kb/documents/:docID/segments/:segmentID/hits
+
+hits:write:own:
+  owner: true
+  description: "Write segment hits for own documents"
+  endpoints:
+    - POST /kb/documents/own/:docID/segments/:segmentID/hits
+
+hits:write:team:
+  team: true
+  description: "Write segment hits for team documents"
+  endpoints:
+    - POST /kb/documents/team/:docID/segments/:segmentID/hits
+
+hits:delete:all:
+  description: "Delete segment hits for all users"
+  endpoints:
+    - DELETE /kb/documents/:docID/segments/:segmentID/hits
+
+hits:delete:own:
+  owner: true
+  description: "Delete segment hits for own documents"
+  endpoints:
+    - DELETE /kb/documents/own/:docID/segments/:segmentID/hits
+
+hits:delete:team:
+  team: true
+  description: "Delete segment hits for team documents"
+  endpoints:
+    - DELETE /kb/documents/team/:docID/segments/:segmentID/hits

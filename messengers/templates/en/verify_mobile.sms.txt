@@ -1,0 +1,2 @@
+Your verification code is: {{ code }}, valid for {{ expires_in }} minutes. If this wasn't you, please ignore this message.
+

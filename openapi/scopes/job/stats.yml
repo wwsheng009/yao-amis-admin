@@ -1,0 +1,16 @@
+stats:read:all:
+  description: "Read job statistics for all users"
+  endpoints:
+    - GET /job/stats
+
+stats:read:own:
+  owner: true
+  description: "Read own job statistics"
+  endpoints:
+    - GET /job/stats/own
+
+stats:read:team:
+  team: true
+  description: "Read team job statistics"
+  endpoints:
+    - GET /job/stats/team

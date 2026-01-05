@@ -21,7 +21,7 @@
       "path": "/getUserInfo", 
       "method": "GET",
       "guard": "bearer-jwt",
-      "process": "scripts.soybean.user.userInfo",
+      "process": "scripts.user.findUserInfo",
       "in": [],
       "out": {
         "status": 200,

@@ -1,0 +1,82 @@
+guest:
+  minutes:
+    GET /kb/collections: 10
+    GET /kb/collections/:collectionID: 20
+    GET /kb/collections/:collectionID/exists: 30
+  hours:
+    GET /kb/collections: 100
+    GET /kb/collections/:collectionID: 200
+    GET /kb/collections/:collectionID/exists: 300
+  days:
+    GET /kb/collections: 1000
+    GET /kb/collections/:collectionID: 2000
+    GET /kb/collections/:collectionID/exists: 3000
+
+default:
+  minutes:
+    GET /kb/collections: 30
+    GET /kb/collections/:collectionID: 60
+    GET /kb/collections/:collectionID/exists: 100
+    POST /kb/collections: 5
+    PUT /kb/collections/:collectionID: 10
+    DELETE /kb/collections/:collectionID: 5
+  hours:
+    GET /kb/collections: 300
+    GET /kb/collections/:collectionID: 600
+    GET /kb/collections/:collectionID/exists: 1000
+    POST /kb/collections: 50
+    PUT /kb/collections/:collectionID: 100
+    DELETE /kb/collections/:collectionID: 50
+  days:
+    GET /kb/collections: 3000
+    GET /kb/collections/:collectionID: 6000
+    GET /kb/collections/:collectionID/exists: 10000
+    POST /kb/collections: 500
+    PUT /kb/collections/:collectionID: 1000
+    DELETE /kb/collections/:collectionID: 500
+
+premium:
+  minutes:
+    GET /kb/collections: 100
+    GET /kb/collections/:collectionID: 200
+    GET /kb/collections/:collectionID/exists: 300
+    POST /kb/collections: 20
+    PUT /kb/collections/:collectionID: 30
+    DELETE /kb/collections/:collectionID: 20
+  hours:
+    GET /kb/collections: 1000
+    GET /kb/collections/:collectionID: 2000
+    GET /kb/collections/:collectionID/exists: 3000
+    POST /kb/collections: 200
+    PUT /kb/collections/:collectionID: 300
+    DELETE /kb/collections/:collectionID: 200
+  days:
+    GET /kb/collections: 10000
+    GET /kb/collections/:collectionID: 20000
+    GET /kb/collections/:collectionID/exists: 30000
+    POST /kb/collections: 2000
+    PUT /kb/collections/:collectionID: 3000
+    DELETE /kb/collections/:collectionID: 2000
+
+enterprise:
+  minutes:
+    GET /kb/collections: 500
+    GET /kb/collections/:collectionID: 1000
+    GET /kb/collections/:collectionID/exists: 1500
+    POST /kb/collections: 100
+    PUT /kb/collections/:collectionID: 150
+    DELETE /kb/collections/:collectionID: 100
+  hours:
+    GET /kb/collections: 5000
+    GET /kb/collections/:collectionID: 10000
+    GET /kb/collections/:collectionID/exists: 15000
+    POST /kb/collections: 1000
+    PUT /kb/collections/:collectionID: 1500
+    DELETE /kb/collections/:collectionID: 1000
+  days:
+    GET /kb/collections: 50000
+    GET /kb/collections/:collectionID: 100000
+    GET /kb/collections/:collectionID/exists: 150000
+    POST /kb/collections: 10000
+    PUT /kb/collections/:collectionID: 15000
+    DELETE /kb/collections/:collectionID: 10000

@@ -29,7 +29,7 @@ export function MenuSoybean() {
  * @returns
  */
 function Menu() {
-  const user = Process('session.get', 'user');
+  const user = Process('scripts.user.findUser');
   if (user?.type === 'super') {
     return getSuperUserMenu();
   }
@@ -56,7 +56,7 @@ function Menu() {
 function getSuperUserMenu() {
   const editorPages = getAmisEditorPages(); //Process('scripts.admin.menu.getAmisEditorPages');
 
-  const user = Process('session.get', 'user');
+  const user = Process('scripts.user.findUser');
   let pages_in = [];
   if (user?.type === 'super') {
     pages_in = Process('scripts.admin.menu.getAmisPages');

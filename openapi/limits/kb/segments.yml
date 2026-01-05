@@ -1,0 +1,139 @@
+guest:
+  minutes:
+    GET /kb/documents/:docID/segments: 10
+    GET /kb/documents/:docID/segments/search: 15
+    GET /kb/documents/:docID/segments/:segmentID: 20
+    GET /kb/documents/:docID/segments/:segmentID/parents: 20
+  hours:
+    GET /kb/documents/:docID/segments: 100
+    GET /kb/documents/:docID/segments/search: 150
+    GET /kb/documents/:docID/segments/:segmentID: 200
+    GET /kb/documents/:docID/segments/:segmentID/parents: 200
+  days:
+    GET /kb/documents/:docID/segments: 1000
+    GET /kb/documents/:docID/segments/search: 1500
+    GET /kb/documents/:docID/segments/:segmentID: 2000
+    GET /kb/documents/:docID/segments/:segmentID/parents: 2000
+
+default:
+  minutes:
+    GET /kb/documents/:docID/segments: 30
+    GET /kb/documents/:docID/segments/search: 50
+    GET /kb/documents/:docID/segments/:segmentID: 60
+    GET /kb/documents/:docID/segments/:segmentID/parents: 60
+    POST /kb/documents/:docID/segments: 10
+    POST /kb/documents/:docID/segments/async: 10
+    PUT /kb/documents/:docID/segments: 10
+    PUT /kb/documents/:docID/segments/async: 10
+    PUT /kb/documents/:docID/segments/scores: 15
+    PUT /kb/documents/:docID/segments/weights: 15
+    DELETE /kb/documents/:docID/segments: 5
+    DELETE /kb/documents/:docID/segments/all: 3
+  hours:
+    GET /kb/documents/:docID/segments: 300
+    GET /kb/documents/:docID/segments/search: 500
+    GET /kb/documents/:docID/segments/:segmentID: 600
+    GET /kb/documents/:docID/segments/:segmentID/parents: 600
+    POST /kb/documents/:docID/segments: 100
+    POST /kb/documents/:docID/segments/async: 100
+    PUT /kb/documents/:docID/segments: 100
+    PUT /kb/documents/:docID/segments/async: 100
+    PUT /kb/documents/:docID/segments/scores: 150
+    PUT /kb/documents/:docID/segments/weights: 150
+    DELETE /kb/documents/:docID/segments: 50
+    DELETE /kb/documents/:docID/segments/all: 30
+  days:
+    GET /kb/documents/:docID/segments: 3000
+    GET /kb/documents/:docID/segments/search: 5000
+    GET /kb/documents/:docID/segments/:segmentID: 6000
+    GET /kb/documents/:docID/segments/:segmentID/parents: 6000
+    POST /kb/documents/:docID/segments: 1000
+    POST /kb/documents/:docID/segments/async: 1000
+    PUT /kb/documents/:docID/segments: 1000
+    PUT /kb/documents/:docID/segments/async: 1000
+    PUT /kb/documents/:docID/segments/scores: 1500
+    PUT /kb/documents/:docID/segments/weights: 1500
+    DELETE /kb/documents/:docID/segments: 500
+    DELETE /kb/documents/:docID/segments/all: 300
+
+premium:
+  minutes:
+    GET /kb/documents/:docID/segments: 100
+    GET /kb/documents/:docID/segments/search: 150
+    GET /kb/documents/:docID/segments/:segmentID: 200
+    GET /kb/documents/:docID/segments/:segmentID/parents: 200
+    POST /kb/documents/:docID/segments: 30
+    POST /kb/documents/:docID/segments/async: 30
+    PUT /kb/documents/:docID/segments: 30
+    PUT /kb/documents/:docID/segments/async: 30
+    PUT /kb/documents/:docID/segments/scores: 50
+    PUT /kb/documents/:docID/segments/weights: 50
+    DELETE /kb/documents/:docID/segments: 20
+    DELETE /kb/documents/:docID/segments/all: 10
+  hours:
+    GET /kb/documents/:docID/segments: 1000
+    GET /kb/documents/:docID/segments/search: 1500
+    GET /kb/documents/:docID/segments/:segmentID: 2000
+    GET /kb/documents/:docID/segments/:segmentID/parents: 2000
+    POST /kb/documents/:docID/segments: 300
+    POST /kb/documents/:docID/segments/async: 300
+    PUT /kb/documents/:docID/segments: 300
+    PUT /kb/documents/:docID/segments/async: 300
+    PUT /kb/documents/:docID/segments/scores: 500
+    PUT /kb/documents/:docID/segments/weights: 500
+    DELETE /kb/documents/:docID/segments: 200
+    DELETE /kb/documents/:docID/segments/all: 100
+  days:
+    GET /kb/documents/:docID/segments: 10000
+    GET /kb/documents/:docID/segments/search: 15000
+    GET /kb/documents/:docID/segments/:segmentID: 20000
+    GET /kb/documents/:docID/segments/:segmentID/parents: 20000
+    POST /kb/documents/:docID/segments: 3000
+    POST /kb/documents/:docID/segments/async: 3000
+    PUT /kb/documents/:docID/segments: 3000
+    PUT /kb/documents/:docID/segments/async: 3000
+    PUT /kb/documents/:docID/segments/scores: 5000
+    PUT /kb/documents/:docID/segments/weights: 5000
+    DELETE /kb/documents/:docID/segments: 2000
+    DELETE /kb/documents/:docID/segments/all: 1000
+
+enterprise:
+  minutes:
+    GET /kb/documents/:docID/segments: 500
+    GET /kb/documents/:docID/segments/search: 800
+    GET /kb/documents/:docID/segments/:segmentID: 1000
+    GET /kb/documents/:docID/segments/:segmentID/parents: 1000
+    POST /kb/documents/:docID/segments: 150
+    POST /kb/documents/:docID/segments/async: 150
+    PUT /kb/documents/:docID/segments: 150
+    PUT /kb/documents/:docID/segments/async: 150
+    PUT /kb/documents/:docID/segments/scores: 200
+    PUT /kb/documents/:docID/segments/weights: 200
+    DELETE /kb/documents/:docID/segments: 100
+    DELETE /kb/documents/:docID/segments/all: 50
+  hours:
+    GET /kb/documents/:docID/segments: 5000
+    GET /kb/documents/:docID/segments/search: 8000
+    GET /kb/documents/:docID/segments/:segmentID: 10000
+    GET /kb/documents/:docID/segments/:segmentID/parents: 10000
+    POST /kb/documents/:docID/segments: 1500
+    POST /kb/documents/:docID/segments/async: 1500
+    PUT /kb/documents/:docID/segments: 1500
+    PUT /kb/documents/:docID/segments/async: 1500
+    PUT /kb/documents/:docID/segments/scores: 2000
+    PUT /kb/documents/:docID/segments/weights: 2000
+    DELETE /kb/documents/:docID/segments: 1000
+    DELETE /kb/documents/:docID/segments/all: 500
+  days:
+    GET /kb/documents/:docID/segments: 50000
+    GET /kb/documents/:docID/segments/search: 80000
+    GET /kb/documents/:docID/segments/:segmentID: 100000
+    GET /kb/documents/:docID/segments/:segmentID/parents: 100000
+    POST /kb/documents/:docID/segments: 15000
+    POST /kb/documents/:docID/segments/async: 15000
+    PUT /kb/documents/:docID/segments: 15000
+    PUT /kb/documents/:docID/segments/async: 15000
+    PUT /kb/documents/:docID/segments/scores: 20000
+    PUT /kb/documents/:docID/segments/weights: 20000
+    DELETE /kb/documents/:docID/segments: 10000
+    DELETE /kb/documents/:docID/segments/all: 5000

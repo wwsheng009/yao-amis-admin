@@ -1,4 +1,4 @@
-import { getWebPageContent, truncateText } from '@lib/web';
+import { getWebPageContent, truncateText } from '@scripts/lib/web';
 import { Context, ResHookFail, Send } from '@yao/neo';
 
 /**

@@ -1,0 +1,12 @@
+{
+  "client_id": "$ENV.GOOGLE_CLIENT_ID",
+  "client_secret": "$ENV.GOOGLE_CLIENT_SECRET",
+  "scopes": ["openid", "email", "profile"],
+  "endpoints": {
+    "authorization": "https://accounts.google.com/o/oauth2/v2/auth",
+    "token": "https://oauth2.googleapis.com/token",
+    "user_info": "https://www.googleapis.com/oauth2/v3/userinfo"
+  },
+  "mapping": "google",
+  "register": { "auto": true } // Auto register user if not exists
+}

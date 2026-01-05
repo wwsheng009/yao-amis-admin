@@ -1,0 +1,41 @@
+# Feature to Role Mapping
+# Maps role IDs to features (can use both aliases and actual feature names)
+
+# ============ System Roles ============
+
+# System Root - Super administrator with all features
+system:root:
+  - "*:*:*"
+
+# System Admin - Platform administrator
+system:admin:
+  - "*:*:*"
+
+# ============ Owner Roles (User Login) ============
+
+# Owner Free - Free tier account owner
+owner:free:
+  - profile:manage
+  - team:manage
+  - collections:create
+
+# Owner Pro - Professional tier account owner
+owner:pro:
+  - user:full
+
+# Owner Enterprise - Enterprise tier account owner
+owner:ent:
+  - user:full
+
+# ============ Team Roles (Team Login) ============
+
+# Team Admin - Team administrator with full team management
+team:admin:
+  - profile:manage
+  - team:manage
+  - collections:create
+
+# Team Member - Standard team member with basic features
+team:member:
+  - profile:manage
+  - collections:create

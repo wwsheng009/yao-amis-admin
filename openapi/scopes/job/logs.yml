@@ -1,0 +1,19 @@
+logs:read:all:
+  description: "Read logs for all users"
+  endpoints:
+    - GET /job/jobs/:jobID/logs
+    - GET /job/executions/:executionID/logs
+
+logs:read:own:
+  owner: true
+  description: "Read own logs"
+  endpoints:
+    - GET /job/jobs/own/:jobID/logs
+    - GET /job/executions/own/:executionID/logs
+
+logs:read:team:
+  team: true
+  description: "Read team logs"
+  endpoints:
+    - GET /job/jobs/team/:jobID/logs
+    - GET /job/executions/team/:executionID/logs

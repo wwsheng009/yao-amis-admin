@@ -3,6 +3,7 @@ import {
   collectTreeFields,
   collectAndCombineData
 } from '@scripts/amis/data/tree';
+import { findUser } from '@scripts/user';
 import {
   AuthFolder,
   AuthModel,
@@ -12,6 +13,7 @@ import {
   PermissionModel,
   PermissionRoute
 } from '@yao/auth';
+import { Authorized } from '@yao/runtime';
 
 import { Process, Exception } from '@yao/yao';
 
@@ -23,17 +25,7 @@ import { Process, Exception } from '@yao/yao';
  * @returns
  */
 function getUserPermission(userId?: number | string) {
-  let user_id = userId;
-  if (!user_id) {
-    user_id = Process('session.get', 'user_id');
-    if (!user_id) {
-      // user_id = 1;
-      throw new Exception('缺少用户ID', 500);
-    }
-  }
-
-  // get user roles
-  const user = Process('models.admin.user.find', user_id, {});
+  const user = findUser(userId);
   if (user == null) {
     throw new Exception('用户不存在', 500);
   }
@@ -209,7 +201,7 @@ function fillModelOpertion(methdMap) {
  * @returns
  */
 export function isSuperUser() {
-  const user = Process('session.get', 'user');
+  const user = Process('scripts.user.findUser');
   // 超级用户没有限制
   if (user?.type === 'super') {
     return true;

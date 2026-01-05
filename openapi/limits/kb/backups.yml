@@ -1,0 +1,43 @@
+guest:
+  minutes:
+    POST /kb/collections/:collectionID/backup: 1
+    POST /kb/collections/:collectionID/restore: 1
+  hours:
+    POST /kb/collections/:collectionID/backup: 5
+    POST /kb/collections/:collectionID/restore: 5
+  days:
+    POST /kb/collections/:collectionID/backup: 10
+    POST /kb/collections/:collectionID/restore: 10
+
+default:
+  minutes:
+    POST /kb/collections/:collectionID/backup: 2
+    POST /kb/collections/:collectionID/restore: 2
+  hours:
+    POST /kb/collections/:collectionID/backup: 10
+    POST /kb/collections/:collectionID/restore: 10
+  days:
+    POST /kb/collections/:collectionID/backup: 50
+    POST /kb/collections/:collectionID/restore: 50
+
+premium:
+  minutes:
+    POST /kb/collections/:collectionID/backup: 5
+    POST /kb/collections/:collectionID/restore: 5
+  hours:
+    POST /kb/collections/:collectionID/backup: 30
+    POST /kb/collections/:collectionID/restore: 30
+  days:
+    POST /kb/collections/:collectionID/backup: 200
+    POST /kb/collections/:collectionID/restore: 200
+
+enterprise:
+  minutes:
+    POST /kb/collections/:collectionID/backup: 20
+    POST /kb/collections/:collectionID/restore: 20
+  hours:
+    POST /kb/collections/:collectionID/backup: 100
+    POST /kb/collections/:collectionID/restore: 100
+  days:
+    POST /kb/collections/:collectionID/backup: 500
+    POST /kb/collections/:collectionID/restore: 500

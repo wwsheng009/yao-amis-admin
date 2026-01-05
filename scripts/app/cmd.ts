@@ -82,7 +82,7 @@ export function execute(payload) {
  */
 function writeCommandlog(data) {
   const user_id = Process('session.get', 'user_id');
-  const user = Process('session.get', 'user');
+  const user = Process('scripts.user.findUser');
   data.user_id = user_id;
   data.user_name = user.name;
   data.user_id = Process('models.app.cmd.log.save', data);

@@ -1,0 +1,56 @@
+votes:read:all:
+  description: "Read segment votes for all users"
+  endpoints:
+    - GET /kb/documents/:docID/segments/:segmentID/votes
+    - GET /kb/documents/:docID/segments/:segmentID/votes/search
+    - GET /kb/documents/:docID/segments/:segmentID/votes/:voteID
+
+votes:read:own:
+  owner: true
+  description: "Read segment votes for own documents"
+  endpoints:
+    - GET /kb/documents/own/:docID/segments/:segmentID/votes
+    - GET /kb/documents/own/:docID/segments/:segmentID/votes/search
+    - GET /kb/documents/own/:docID/segments/:segmentID/votes/:voteID
+
+votes:read:team:
+  team: true
+  description: "Read segment votes for team documents"
+  endpoints:
+    - GET /kb/documents/team/:docID/segments/:segmentID/votes
+    - GET /kb/documents/team/:docID/segments/:segmentID/votes/search
+    - GET /kb/documents/team/:docID/segments/:segmentID/votes/:voteID
+
+votes:write:all:
+  description: "Write segment votes for all users"
+  endpoints:
+    - POST /kb/documents/:docID/segments/:segmentID/votes
+
+votes:write:own:
+  owner: true
+  description: "Write segment votes for own documents"
+  endpoints:
+    - POST /kb/documents/own/:docID/segments/:segmentID/votes
+
+votes:write:team:
+  team: true
+  description: "Write segment votes for team documents"
+  endpoints:
+    - POST /kb/documents/team/:docID/segments/:segmentID/votes
+
+votes:delete:all:
+  description: "Delete segment votes for all users"
+  endpoints:
+    - DELETE /kb/documents/:docID/segments/:segmentID/votes
+
+votes:delete:own:
+  owner: true
+  description: "Delete segment votes for own documents"
+  endpoints:
+    - DELETE /kb/documents/own/:docID/segments/:segmentID/votes
+
+votes:delete:team:
+  team: true
+  description: "Delete segment votes for team documents"
+  endpoints:
+    - DELETE /kb/documents/team/:docID/segments/:segmentID/votes

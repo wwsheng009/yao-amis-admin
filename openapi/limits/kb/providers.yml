@@ -1,0 +1,43 @@
+guest:
+  minutes:
+    GET /kb/providers/:providerType: 20
+    GET /kb/providers/:providerType/:providerID/schema: 30
+  hours:
+    GET /kb/providers/:providerType: 200
+    GET /kb/providers/:providerType/:providerID/schema: 300
+  days:
+    GET /kb/providers/:providerType: 2000
+    GET /kb/providers/:providerType/:providerID/schema: 3000
+
+default:
+  minutes:
+    GET /kb/providers/:providerType: 50
+    GET /kb/providers/:providerType/:providerID/schema: 100
+  hours:
+    GET /kb/providers/:providerType: 500
+    GET /kb/providers/:providerType/:providerID/schema: 1000
+  days:
+    GET /kb/providers/:providerType: 5000
+    GET /kb/providers/:providerType/:providerID/schema: 10000
+
+premium:
+  minutes:
+    GET /kb/providers/:providerType: 150
+    GET /kb/providers/:providerType/:providerID/schema: 300
+  hours:
+    GET /kb/providers/:providerType: 1500
+    GET /kb/providers/:providerType/:providerID/schema: 3000
+  days:
+    GET /kb/providers/:providerType: 15000
+    GET /kb/providers/:providerType/:providerID/schema: 30000
+
+enterprise:
+  minutes:
+    GET /kb/providers/:providerType: 500
+    GET /kb/providers/:providerType/:providerID/schema: 1000
+  hours:
+    GET /kb/providers/:providerType: 5000
+    GET /kb/providers/:providerType/:providerID/schema: 10000
+  days:
+    GET /kb/providers/:providerType: 50000
+    GET /kb/providers/:providerType/:providerID/schema: 100000

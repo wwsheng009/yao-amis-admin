@@ -1,0 +1,1 @@
+您好！{{ inviter_name }} 邀请您加入 {{ team_name }}，我们欢迎您的加入！点击接受：{{ invite_link }}

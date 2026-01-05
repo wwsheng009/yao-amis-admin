@@ -1,0 +1,6 @@
+meta:edit:
+  description: "Edit document metadata"
+meta:view:
+  description: "View document metadata"
+meta:export:
+  description: "Export document metadata"

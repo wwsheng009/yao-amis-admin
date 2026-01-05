@@ -1,0 +1,45 @@
+graphs:read:all:
+  description: "Read segment graphs for all users"
+  endpoints:
+    - GET /kb/documents/:docID/segments/:segmentID/graph
+    - GET /kb/documents/:docID/segments/:segmentID/entities
+    - GET /kb/documents/:docID/segments/:segmentID/relationships
+    - GET /kb/documents/:docID/segments/:segmentID/relationships/by-entities
+
+graphs:read:own:
+  owner: true
+  description: "Read segment graphs for own documents"
+  endpoints:
+    - GET /kb/documents/own/:docID/segments/:segmentID/graph
+    - GET /kb/documents/own/:docID/segments/:segmentID/entities
+    - GET /kb/documents/own/:docID/segments/:segmentID/relationships
+    - GET /kb/documents/own/:docID/segments/:segmentID/relationships/by-entities
+
+graphs:read:team:
+  team: true
+  description: "Read segment graphs for team documents"
+  endpoints:
+    - GET /kb/documents/team/:docID/segments/:segmentID/graph
+    - GET /kb/documents/team/:docID/segments/:segmentID/entities
+    - GET /kb/documents/team/:docID/segments/:segmentID/relationships
+    - GET /kb/documents/team/:docID/segments/:segmentID/relationships/by-entities
+
+graphs:write:all:
+  description: "Extract segment graphs for all users"
+  endpoints:
+    - POST /kb/documents/:docID/segments/:segmentID/extract
+    - POST /kb/documents/:docID/segments/:segmentID/extract/async
+
+graphs:write:own:
+  owner: true
+  description: "Extract segment graphs for own documents"
+  endpoints:
+    - POST /kb/documents/own/:docID/segments/:segmentID/extract
+    - POST /kb/documents/own/:docID/segments/:segmentID/extract/async
+
+graphs:write:team:
+  team: true
+  description: "Extract segment graphs for team documents"
+  endpoints:
+    - POST /kb/documents/team/:docID/segments/:segmentID/extract
+    - POST /kb/documents/team/:docID/segments/:segmentID/extract/async

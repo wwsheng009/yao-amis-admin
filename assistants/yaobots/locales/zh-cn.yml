@@ -1,0 +1,9 @@
+chat:
+  title: 新对话
+  description: 您好，我是 Yaobots 智能助手，既是您的通用智能体，也是 Yaobots 产品客服。我可以调度专业智能体处理各类任务，也能解答 Yaobots 的任何产品问题。今天有什么可以帮您的吗？
+  prompts:
+    - 如何创建有自主能力的虚拟员工？
+    - Yaobots 可以实现哪些自动化任务？
+    - 如何让智能体访问我的数据库和 API？
+name: Yaobots 助手
+description: 通用智能体，可调度专业智能体执行任务，兼任 Yaobots 客服提供技术支持。

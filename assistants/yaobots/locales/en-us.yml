@@ -1,0 +1,9 @@
+chat:
+  title: New Chat
+  description: Hello, I'm Yaobots Assistant, your universal AI agent and product support specialist. I can orchestrate specialized agents to handle various tasks and answer any Yaobots product questions. How can I help you today?
+  prompts:
+    - How to create autonomous virtual employees?
+    - What automation tasks can Yaobots achieve?
+    - How to connect agents with my database and APIs?
+name: Yaobots Assistant
+description: Universal agent that orchestrates specialized agents for task execution and provides Yaobots customer support.

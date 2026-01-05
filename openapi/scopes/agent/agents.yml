@@ -1,0 +1,78 @@
+agents:read:all:
+  description: "Read all agents"
+  endpoints:
+    - GET /agent/agents
+    - GET /agent/agents/:id
+
+agents:read:own:
+  owner: true
+  description: "Read own agents"
+  endpoints:
+    - GET /agent/agents/own
+    - GET /agent/agents/own/:id
+
+agents:read:team:
+  team: true
+  description: "Read team agents"
+  endpoints:
+    - GET /agent/agents/team
+    - GET /agent/agents/team/:id
+
+agents:write:all:
+  description: "Write all agents"
+  endpoints:
+    - POST /agent/agents
+    - PUT /agent/agents/:id
+
+agents:write:own:
+  owner: true
+  description: "Write own agents"
+  endpoints:
+    - POST /agent/agents/own
+    - PUT /agent/agents/own/:id
+
+agents:write:team:
+  team: true
+  description: "Write team agents"
+  endpoints:
+    - POST /agent/agents/team
+    - PUT /agent/agents/team/:id
+
+agents:delete:all:
+  description: "Delete all agents"
+  endpoints:
+    - DELETE /agent/agents/:id
+
+agents:delete:own:
+  owner: true
+  description: "Delete own agents"
+  endpoints:
+    - DELETE /agent/agents/own/:id
+
+agents:delete:team:
+  team: true
+  description: "Delete team agents"
+  endpoints:
+    - DELETE /agent/agents/team/:id
+
+agents:call:all:
+  description: "Call all agents"
+  endpoints:
+    - POST /agent/agents/:id/call
+
+agents:call:own:
+  owner: true
+  description: "Call own agents"
+  endpoints:
+    - POST /agent/agents/own/:id/call
+
+agents:call:team:
+  team: true
+  description: "Call team agents"
+  endpoints:
+    - POST /agent/agents/team/:id/call
+
+agents:tags:read:all:
+  description: "Read all agent tags"
+  endpoints:
+    - GET /agent/agents/tags

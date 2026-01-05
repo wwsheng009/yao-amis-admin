@@ -1,0 +1,7 @@
+General: 通用
+Test: 测试
+Data Tools: 数据工具
+
+# Chat KB Collection
+kb.chat.name: 聊天知识库
+kb.chat.description: 自动为聊天会话创建的知识库集合

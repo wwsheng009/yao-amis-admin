@@ -1,4 +1,4 @@
-import { UtilsProxy } from '@lib/proxy';
+import { UtilsProxy } from '@scripts/lib/proxy';
 import {
   AppWeatherLocationService,
   IAppWeatherLocation
@@ -61,6 +61,7 @@ function updateLocation(province_code: string) {
 //yao run scripts.app.weather.tool.getWeatherByName 北京
 
 export function getWeatherByName(locationName: string) {
+  console.log('请求的地址：' + locationName);
   const [location] = AppWeatherLocationService.Get({
     wheres: [
       {
@@ -144,5 +145,7 @@ export function getWeatherByName(locationName: string) {
     return { code: 1, message: resp.message };
   }
   const body = responseData;
-  return body.data?.now?.temperature + '°C';
+  console.log('api 返回信息：');
+  console.log(body.data);
+  return locationName + ' 现在的温度：' + body.data?.now?.temperature + '°C';
 }

@@ -1,0 +1,5 @@
+features:read:own:
+  owner: true
+  description: "Read own feature permissions"
+  endpoints:
+    - GET /user/features

@@ -1,0 +1,19 @@
+backups:execute:all:
+  description: "Backup and restore collections for all users"
+  endpoints:
+    - POST /kb/collections/:collectionID/backup
+    - POST /kb/collections/:collectionID/restore
+
+backups:execute:own:
+  owner: true
+  description: "Backup and restore own collections"
+  endpoints:
+    - POST /kb/collections/own/:collectionID/backup
+    - POST /kb/collections/own/:collectionID/restore
+
+backups:execute:team:
+  team: true
+  description: "Backup and restore team collections"
+  endpoints:
+    - POST /kb/collections/team/:collectionID/backup
+    - POST /kb/collections/team/:collectionID/restore

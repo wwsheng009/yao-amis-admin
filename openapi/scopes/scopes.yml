@@ -1,0 +1,71 @@
+# Global scopes configuration
+
+# Default action for unmatched API endpoints
+default: allow # Options: deny / allow
+
+# Public endpoints (accessible without authentication)
+public:
+  - GET /user/entry
+  - GET /user/entry/captcha
+  - POST /user/entry/verify
+  - GET /user/teams/invitations/:invitation_id
+  - GET /helloworld/public
+  - POST /helloworld/public
+
+# Default endpoint rules (can be overridden by specific scopes)
+endpoints:
+  # Hello World - Protected endpoints allowed for authenticated users
+  - GET /helloworld/protected allow
+  - POST /helloworld/protected allow
+
+  # DSL Management - All operations allowed for authenticated users (for testing)
+  - GET /dsl/* allow
+  - POST /dsl/* allow
+  - PUT /dsl/* allow
+  - DELETE /dsl/* allow
+
+  # Knowledge Base - All operations allowed for authenticated users (for testing)
+  - GET /kb/* allow
+  - POST /kb/* allow
+  - PUT /kb/* allow
+  - DELETE /kb/* allow
+
+  # Job Management - Read operations allowed
+  - GET /job/* allow
+  - GET /job/jobs allow
+  - GET /job/executions allow
+
+  # Job Management - Control operations require specific scopes
+  - POST /job/* deny
+  - PUT /job/* deny
+  - DELETE /job/* deny
+
+  # File Management - All operations allowed for authenticated users (for testing)
+  - GET /file/* allow
+  - POST /file/* allow
+  - DELETE /file/* allow
+
+  # User Management - Profile operations allowed (with scope control)
+  - GET /user/profile allow
+  - PUT /user/profile allow
+  - GET /user/teams allow
+  - PUT /user/teams/*/members/*/profile allow
+
+  # User Management - Other write operations require specific scopes
+  - POST /user/* deny
+  - PUT /user/* deny
+  - DELETE /user/* deny
+
+  # Agent Management - All operations allowed for authenticated users (for testing)
+  - GET /agent/* allow
+  - POST /agent/* allow
+  - PUT /agent/* allow
+  - DELETE /agent/* allow
+
+  # LLM Provider Management - Read operations allowed
+  - GET /llm/* allow
+
+  # MCP Server Management - Read operations allowed
+  - GET /mcp/* allow
+
+  - POST /chat/* allow

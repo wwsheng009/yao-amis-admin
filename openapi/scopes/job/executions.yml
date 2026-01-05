@@ -1,0 +1,39 @@
+executions:read:all:
+  description: "Read executions for all users"
+  endpoints:
+    - GET /job/jobs/:jobID/executions
+    - GET /job/executions/:executionID
+    - GET /job/executions/:executionID/progress
+
+executions:read:own:
+  owner: true
+  description: "Read own executions"
+  endpoints:
+    - GET /job/jobs/own/:jobID/executions
+    - GET /job/executions/own/:executionID
+    - GET /job/executions/own/:executionID/progress
+
+executions:read:team:
+  team: true
+  description: "Read team executions"
+  endpoints:
+    - GET /job/jobs/team/:jobID/executions
+    - GET /job/executions/team/:executionID
+    - GET /job/executions/team/:executionID/progress
+
+executions:control:all:
+  description: "Control executions for all users"
+  endpoints:
+    - POST /job/executions/:executionID/stop
+
+executions:control:own:
+  owner: true
+  description: "Control own executions"
+  endpoints:
+    - POST /job/executions/own/:executionID/stop
+
+executions:control:team:
+  team: true
+  description: "Control team executions"
+  endpoints:
+    - POST /job/executions/team/:executionID/stop

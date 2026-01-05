@@ -100,7 +100,7 @@ export function getSoyUserMenu() {
     });
     return cleanUpRouteMenu(routes);
   } else {
-    const user = Process('session.get', 'user');
+    const user = Process('scripts.user.findUser');
     if (user?.type === 'super') {
       return getSoySuperUserMenu();
     }

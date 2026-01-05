@@ -1,0 +1,23 @@
+# guard: "scripts.ai.neo.Guard" # Custom guard, you can use it to check if the user is allowed to access the AI model
+
+# ===============================
+# Default Assistant Settings
+# ===============================
+uses:
+  default: "yaobots" # The Brand Name of the assistant
+  title: "workers.system.title" # The assistant for generating the topic title.
+  prompt: "workers.system.prompt" # The assistant for generating the prompt.
+  vision: "workers.system.vision" # optional, The assistant for generating the image/video description, if the assistant enable the vision and model not support vision, use the vision model to describe the image/video, and return the messages with the image/video's description.
+  search: "workers.system.search" # optional, The assistant for searching the knowledge, global web search. If not set, and the assistant enable the knowledge, it will search the result from the knowledge automatically.
+  fetch: "workers.system.fetch" # optional, The assistant for fetching the http/https/ftp/sftp/etc. file, and return the file's content. if not set, use the http process to fetch the file.
+
+system:
+  default: "deepseek.v3"
+
+# ===============================
+# Conversation Store Settings
+# ===============================
+store:
+  max_size: 20 # optional, default is 20, The max size of the conversation, when the LLM request the conversation, it will be limited to the max size.
+  expiration: "90d" # optional, if not set, the conversation will never be deleted.
+cache: "__yao.agent.cache" # optional, The cache store of the assistant, if not set, default is "__yao.agent.cache"

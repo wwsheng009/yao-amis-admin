@@ -1,6 +1,6 @@
 connector: deepseek-chat
 use: 
-  default: "neo" # default assistannt
+  default: "neo-assistant" # default assistannt
   title: "Neo"
   prompt: "neo"
 

@@ -9,9 +9,6 @@
       "@yao/*": [
         "./.vscode/types/*"
       ],
-      "@lib/*": [
-        "./scripts/lib/*"
-      ],
       "@scripts/*": [
         "./scripts/*"
       ]

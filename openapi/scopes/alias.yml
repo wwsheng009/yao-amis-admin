@@ -1,0 +1,322 @@
+# API Scope Aliases - One alias can map to multiple scopes
+# Used to simplify permission management, one alias can map to multiple specific scopes
+
+# ============ User Management Aliases ============
+
+# User basic access - for user login, registration and other basic operations
+user:auth:
+  - entry:access:public
+  - entry:register:authenticated
+  - entry:logout:own
+
+# User full permission - users can access all their own resources
+user:full:
+  - profile:read:own
+  - profile:update:own
+  - member:profile:update:own
+  - features:read:own
+  - entry:logout:own
+
+# ============ Knowledge Base (KB) Aliases ============
+
+# Knowledge Base read-only permission - for viewing knowledge base content
+kb:read:
+  - collections:read:all
+  - documents:read:all
+  - search:read:all
+  - hits:read:all
+
+# Knowledge Base personal permission - users can manage their own knowledge base content
+kb:own:
+  - collections:read:own
+  - collections:write:own
+  - collections:delete:own
+  - documents:read:own
+  - documents:write:own
+  - documents:delete:own
+  - search:read:own
+
+# Knowledge Base team permission - team members can manage team knowledge base content
+kb:team:
+  - collections:read:team
+  - collections:delete:team
+  - documents:read:team
+  - documents:delete:team
+
+# Knowledge Base full permission - admin permission to operate all knowledge bases
+kb:admin:
+  - collections:read:all
+  - collections:write:all
+  - collections:delete:all
+  - documents:read:all
+  - documents:write:all
+  - documents:delete:all
+  - search:read:all
+  - graphs:read:all
+  - segments:read:all
+  - backups:read:all
+  - providers:read:all
+
+# ============ Job Management Aliases ============
+
+# Job read-only permission - for viewing job status
+job:read:
+  - jobs:read:all
+  - executions:read:all
+  - logs:read:all
+  - stats:read:all
+
+# Job personal permission - users can manage their own jobs
+job:own:
+  - jobs:read:own
+  - jobs:control:own
+  - executions:read:own
+  - logs:read:own
+
+# Job team permission - team members can manage team jobs
+job:team:
+  - jobs:read:team
+  - jobs:control:team
+  - executions:read:team
+
+# Job full permission - admin permission to operate all jobs
+job:admin:
+  - jobs:read:all
+  - jobs:control:all
+  - executions:read:all
+  - logs:read:all
+  - stats:read:all
+  - categories:read:all
+
+# ============ Chat Management Aliases ============
+
+# Chat read-only permission - for viewing chat sessions and completions
+chat:read:
+  - sessions:read:all
+  - completions:read:all
+  - references:read:all
+
+# Chat personal permission - users can manage their own chats
+chat:own:
+  - sessions:read:own
+  - sessions:write:own
+  - sessions:delete:own
+  - completions:read:own
+  - completions:write:own
+  - completions:delete:own
+  - references:read:own
+
+# Chat team permission - team members can manage team chats
+chat:team:
+  - sessions:read:team
+  - sessions:write:team
+  - sessions:delete:team
+  - completions:read:team
+  - completions:write:team
+  - completions:delete:team
+  - references:read:team
+
+# Chat full permission - admin permission to operate all chats
+chat:admin:
+  - sessions:read:all
+  - sessions:write:all
+  - sessions:delete:all
+  - completions:read:all
+  - completions:write:all
+  - completions:delete:all
+  - references:read:all
+
+# ============ Agent Management Aliases ============
+
+# Agent read-only permission - for viewing agents
+agent:read:
+  - agents:read:all
+  - assistants:read:all
+  - models:read:all
+
+# Agent personal permission - users can manage their own agents
+agent:own:
+  - agents:read:own
+  - agents:write:own
+  - agents:delete:own
+  - agents:call:own
+  - assistants:read:own
+  - assistants:write:own
+  - assistants:delete:own
+  - models:read:own
+
+# Agent team permission - team members can manage team agents
+agent:team:
+  - agents:read:team
+  - agents:write:team
+  - agents:delete:team
+  - agents:call:team
+  - assistants:read:team
+  - assistants:write:team
+  - assistants:delete:team
+  - models:read:team
+
+# Agent full permission - admin permission to operate all agents
+agent:admin:
+  - agents:read:all
+  - agents:write:all
+  - agents:delete:all
+  - agents:call:all
+  - agents:tags:read:all
+  - assistants:read:all
+  - assistants:write:all
+  - assistants:delete:all
+  - assistants:tags:read:all
+  - models:read:all
+
+# ============ LLM Provider Management Aliases ============
+
+# LLM Provider read permission - for viewing available LLM providers
+llm:read:
+  - providers:read:all
+
+# ============ MCP Server Management Aliases ============
+
+# MCP Server read permission - for viewing available MCP servers
+mcp:read:
+  - servers:read:all
+
+# ============ File Management Aliases ============
+
+# File read-only permission - for downloading and viewing files
+file:read:
+  - files:read:all
+
+# File personal permission - users can manage their own files
+file:own:
+  - files:read:own
+  - files:write:own
+  - files:delete:own
+
+# File team permission - team members can manage team files
+file:team:
+  - files:read:team
+  - files:write:team
+  - files:delete:team
+
+# File full permission - admin permission to operate all files
+file:admin:
+  - files:read:all
+  - files:write:all
+  - files:delete:all
+
+# ============ Combined Feature Aliases ============
+
+# Basic user permission - default permission set for newly registered users
+user:basic:
+  - profile:read:own
+  - profile:update:own
+  - member:profile:update:own
+  - features:read:own
+  - entry:logout:own
+  - kb:read
+  - job:read
+  - file:read
+  - agent:read
+  - chat:read
+  - llm:read
+  - mcp:read
+
+# Content creator permission - for users who can create knowledge base and upload files
+user:creator:
+  - profile:read:own
+  - profile:update:own
+  - member:profile:update:own
+  - features:read:own
+  - entry:logout:own
+  - kb:own
+  - job:own
+  - file:own
+  - agent:own
+  - chat:own
+
+# Team member permission - basic team collaboration permission
+user:team_member:
+  - profile:read:own
+  - profile:update:own
+  - member:profile:update:own
+  - features:read:own
+  - entry:logout:own
+  - kb:team
+  - job:team
+  - file:team
+  - chat:team
+  - collections:read:team
+  - documents:read:team
+
+# Team admin permission - admin permission within the team
+user:team_admin:
+  - profile:read:own
+  - profile:update:own
+  - member:profile:update:own
+  - features:read:own
+  - entry:logout:own
+  - kb:admin
+  - job:admin
+  - file:admin
+
+# System admin permission - highest privilege, can access all resources
+user:admin:
+  - entry:access:public
+  - entry:register:authenticated
+  - entry:logout:own
+  - profile:read:own
+  - profile:update:own
+  - member:profile:update:own
+  - features:read:own
+  - kb:admin
+  - job:admin
+  - file:admin
+  - agent:admin
+  - chat:admin
+  - llm:read
+  - mcp:read
+
+# ============ Trace Management Aliases ============
+
+# Trace read-only permission - for viewing trace information
+trace:read:
+  - trace:traces:read:all
+  - trace:events:read:all
+  - trace:nodes:read:all
+  - trace:logs:read:all
+
+# Trace personal permission - users can read their own traces
+trace:own:
+  - trace:traces:read:own
+  - trace:events:read:own
+  - trace:nodes:read:own
+  - trace:logs:read:own
+
+# Trace team permission - team members can read team traces
+trace:team:
+  - trace:traces:read:team
+  - trace:events:read:team
+  - trace:nodes:read:team
+  - trace:logs:read:team
+
+# Trace full permission - admin permission to read all traces
+trace:admin:
+  - trace:traces:read:all
+  - trace:events:read:all
+  - trace:nodes:read:all
+  - trace:logs:read:all
+
+# ============ Combined Feature Aliases (Updated) ============
+
+# System root permission - absolute highest privilege with wildcard access
+system:root:
+  - "*:*:*" # Matches 3-part scopes (resource:action:level)
+  - "*:*:*:*" # Matches 4-part scopes (e.g., member:profile:update:own)
+
+# Public access permission - can only access public content
+user:public:
+  - entry:access:public
+  - kb:read
+  - job:read
+  - file:read

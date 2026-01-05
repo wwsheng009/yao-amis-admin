@@ -1,0 +1,8 @@
+document:create:
+  description: "Create documents"
+document:edit:
+  description: "Edit documents"
+document:delete:
+  description: "Delete documents"
+document:share:
+  description: "Share documents"

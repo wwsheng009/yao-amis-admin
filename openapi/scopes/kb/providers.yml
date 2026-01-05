@@ -1,0 +1,19 @@
+providers:read:all:
+  description: "Read provider configurations for all users"
+  endpoints:
+    - GET /kb/providers/:providerType
+    - GET /kb/providers/:providerType/:providerID/schema
+
+providers:read:own:
+  owner: true
+  description: "Read provider configurations for own usage"
+  endpoints:
+    - GET /kb/providers/own/:providerType
+    - GET /kb/providers/own/:providerType/:providerID/schema
+
+providers:read:team:
+  team: true
+  description: "Read provider configurations for team usage"
+  endpoints:
+    - GET /kb/providers/team/:providerType
+    - GET /kb/providers/team/:providerType/:providerID/schema

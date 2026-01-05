@@ -1,0 +1,43 @@
+guest:
+  minutes:
+    POST /kb/search: 5
+    POST /kb/search/multi: 3
+  hours:
+    POST /kb/search: 50
+    POST /kb/search/multi: 30
+  days:
+    POST /kb/search: 500
+    POST /kb/search/multi: 300
+
+default:
+  minutes:
+    POST /kb/search: 20
+    POST /kb/search/multi: 10
+  hours:
+    POST /kb/search: 200
+    POST /kb/search/multi: 100
+  days:
+    POST /kb/search: 2000
+    POST /kb/search/multi: 1000
+
+premium:
+  minutes:
+    POST /kb/search: 60
+    POST /kb/search/multi: 30
+  hours:
+    POST /kb/search: 600
+    POST /kb/search/multi: 300
+  days:
+    POST /kb/search: 6000
+    POST /kb/search/multi: 3000
+
+enterprise:
+  minutes:
+    POST /kb/search: 300
+    POST /kb/search/multi: 150
+  hours:
+    POST /kb/search: 3000
+    POST /kb/search/multi: 1500
+  days:
+    POST /kb/search: 30000
+    POST /kb/search/multi: 15000

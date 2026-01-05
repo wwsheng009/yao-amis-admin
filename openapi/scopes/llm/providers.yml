@@ -1,0 +1,4 @@
+providers:read:all:
+  description: "Read all LLM providers"
+  endpoints:
+    - GET /llm/providers

@@ -1,0 +1,6 @@
+team:members:list:
+  description: "List team members"
+team:members:add:
+  description: "Add team members"
+team:members:remove:
+  description: "Remove team members"

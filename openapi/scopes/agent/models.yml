@@ -1,0 +1,20 @@
+models:read:all:
+  description: "Read all models"
+  endpoints:
+    - GET /models
+    - GET /models/:model_name
+
+models:read:own:
+  owner: true
+  description: "Read own models"
+  endpoints:
+    - GET /models/own
+    - GET /models/own/:model_name
+
+models:read:team:
+  team: true
+  description: "Read team models"
+  endpoints:
+    - GET /models/team
+    - GET /models/team/:model_name
+

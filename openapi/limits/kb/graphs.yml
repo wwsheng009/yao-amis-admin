@@ -1,0 +1,85 @@
+guest:
+  minutes:
+    GET /kb/documents/:docID/segments/:segmentID/graph: 10
+    GET /kb/documents/:docID/segments/:segmentID/entities: 15
+    GET /kb/documents/:docID/segments/:segmentID/relationships: 15
+    GET /kb/documents/:docID/segments/:segmentID/relationships/by-entities: 15
+  hours:
+    GET /kb/documents/:docID/segments/:segmentID/graph: 100
+    GET /kb/documents/:docID/segments/:segmentID/entities: 150
+    GET /kb/documents/:docID/segments/:segmentID/relationships: 150
+    GET /kb/documents/:docID/segments/:segmentID/relationships/by-entities: 150
+  days:
+    GET /kb/documents/:docID/segments/:segmentID/graph: 1000
+    GET /kb/documents/:docID/segments/:segmentID/entities: 1500
+    GET /kb/documents/:docID/segments/:segmentID/relationships: 1500
+    GET /kb/documents/:docID/segments/:segmentID/relationships/by-entities: 1500
+
+default:
+  minutes:
+    GET /kb/documents/:docID/segments/:segmentID/graph: 30
+    GET /kb/documents/:docID/segments/:segmentID/entities: 50
+    GET /kb/documents/:docID/segments/:segmentID/relationships: 50
+    GET /kb/documents/:docID/segments/:segmentID/relationships/by-entities: 50
+    POST /kb/documents/:docID/segments/:segmentID/extract: 5
+    POST /kb/documents/:docID/segments/:segmentID/extract/async: 5
+  hours:
+    GET /kb/documents/:docID/segments/:segmentID/graph: 300
+    GET /kb/documents/:docID/segments/:segmentID/entities: 500
+    GET /kb/documents/:docID/segments/:segmentID/relationships: 500
+    GET /kb/documents/:docID/segments/:segmentID/relationships/by-entities: 500
+    POST /kb/documents/:docID/segments/:segmentID/extract: 50
+    POST /kb/documents/:docID/segments/:segmentID/extract/async: 50
+  days:
+    GET /kb/documents/:docID/segments/:segmentID/graph: 3000
+    GET /kb/documents/:docID/segments/:segmentID/entities: 5000
+    GET /kb/documents/:docID/segments/:segmentID/relationships: 5000
+    GET /kb/documents/:docID/segments/:segmentID/relationships/by-entities: 5000
+    POST /kb/documents/:docID/segments/:segmentID/extract: 500
+    POST /kb/documents/:docID/segments/:segmentID/extract/async: 500
+
+premium:
+  minutes:
+    GET /kb/documents/:docID/segments/:segmentID/graph: 100
+    GET /kb/documents/:docID/segments/:segmentID/entities: 150
+    GET /kb/documents/:docID/segments/:segmentID/relationships: 150
+    GET /kb/documents/:docID/segments/:segmentID/relationships/by-entities: 150
+    POST /kb/documents/:docID/segments/:segmentID/extract: 20
+    POST /kb/documents/:docID/segments/:segmentID/extract/async: 20
+  hours:
+    GET /kb/documents/:docID/segments/:segmentID/graph: 1000
+    GET /kb/documents/:docID/segments/:segmentID/entities: 1500
+    GET /kb/documents/:docID/segments/:segmentID/relationships: 1500
+    GET /kb/documents/:docID/segments/:segmentID/relationships/by-entities: 1500
+    POST /kb/documents/:docID/segments/:segmentID/extract: 200
+    POST /kb/documents/:docID/segments/:segmentID/extract/async: 200
+  days:
+    GET /kb/documents/:docID/segments/:segmentID/graph: 10000
+    GET /kb/documents/:docID/segments/:segmentID/entities: 15000
+    GET /kb/documents/:docID/segments/:segmentID/relationships: 15000
+    GET /kb/documents/:docID/segments/:segmentID/relationships/by-entities: 15000
+    POST /kb/documents/:docID/segments/:segmentID/extract: 2000
+    POST /kb/documents/:docID/segments/:segmentID/extract/async: 2000
+
+enterprise:
+  minutes:
+    GET /kb/documents/:docID/segments/:segmentID/graph: 500
+    GET /kb/documents/:docID/segments/:segmentID/entities: 800
+    GET /kb/documents/:docID/segments/:segmentID/relationships: 800
+    GET /kb/documents/:docID/segments/:segmentID/relationships/by-entities: 800
+    POST /kb/documents/:docID/segments/:segmentID/extract: 100
+    POST /kb/documents/:docID/segments/:segmentID/extract/async: 100
+  hours:
+    GET /kb/documents/:docID/segments/:segmentID/graph: 5000
+    GET /kb/documents/:docID/segments/:segmentID/entities: 8000
+    GET /kb/documents/:docID/segments/:segmentID/relationships: 8000
+    GET /kb/documents/:docID/segments/:segmentID/relationships/by-entities: 8000
+    POST /kb/documents/:docID/segments/:segmentID/extract: 1000
+    POST /kb/documents/:docID/segments/:segmentID/extract/async: 1000
+  days:
+    GET /kb/documents/:docID/segments/:segmentID/graph: 50000
+    GET /kb/documents/:docID/segments/:segmentID/entities: 80000
+    GET /kb/documents/:docID/segments/:segmentID/relationships: 80000
+    GET /kb/documents/:docID/segments/:segmentID/relationships/by-entities: 80000
+    POST /kb/documents/:docID/segments/:segmentID/extract: 10000
+    POST /kb/documents/:docID/segments/:segmentID/extract/async: 10000

@@ -1,0 +1,23 @@
+{
+  "name": "Reliable Mailer",
+  "description": "Reliable mailer email provider for high availability",
+  "connector": "mailer",
+  "options": {
+    "smtp": {
+      "host": "$ENV.RELIABLE_SMTP_HOST",
+      "port": 587,
+      "username": "$ENV.RELIABLE_SMTP_USERNAME",
+      "password": "$ENV.RELIABLE_SMTP_PASSWORD",
+      "from": "$ENV.RELIABLE_SMTP_FROM",
+      "use_tls": true
+    },
+    "imap": {
+      "host": "$ENV.RELIABLE_IMAP_HOST",
+      "port": "$ENV.RELIABLE_IMAP_PORT",
+      "username": "$ENV.RELIABLE_IMAP_USERNAME",
+      "password": "$ENV.RELIABLE_IMAP_PASSWORD",
+      "use_ssl": true,
+      "mailbox": "INBOX"
+    }
+  }
+}

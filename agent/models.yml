@@ -1,0 +1,184 @@
+# ============================================
+# OpenAI GPT-5 Series
+# ============================================
+gpt-5:
+  vision: true
+  tools: true
+gpt-5-mini:
+  vision: true
+  tools: true
+gpt-5-nano:
+  vision: true
+  tools: true
+gpt-5-pro:
+  vision: true
+  tools: true
+
+# ============================================
+# OpenAI GPT-4.1 Series
+# ============================================
+gpt-4_1:
+  vision: true
+  tools: true
+gpt-4_1-mini:
+  vision: true
+  tools: true
+gpt-4_1-nano:
+  vision: true
+  tools: true
+
+# ============================================
+# OpenAI GPT-4o Series
+# ============================================
+gpt-4o:
+  vision: true
+  tools: true
+gpt-4o-mini:
+  vision: true
+  tools: true
+
+# ============================================
+# OpenAI Embedding Models
+# ============================================
+text-embedding-3-small:
+  vision: false
+  tools: false
+text-embedding-3-large:
+  vision: false
+  tools: false
+text-embedding-ada-002:
+  vision: false
+  tools: false
+
+# ============================================
+# Claude Haiku Series
+# ============================================
+claude-haiku-3_0:
+  vision: false
+  tools: true
+claude-haiku-3_5:
+  vision: true
+  tools: true
+claude-haiku-4_5:
+  vision: true
+  tools: true
+
+# ============================================
+# Claude Sonnet Series (via OpenAI-compatible proxy)
+# ============================================
+claude.sonnet-4_0:
+  vision: "claude" # Claude format (converts image_url to base64)
+  tool_calls: true
+  audio: false
+  reasoning: false # Standard Sonnet 4 doesn't expose reasoning
+  streaming: true
+  json: true
+  multimodal: true
+claude.sonnet-4_0-thinking:
+  vision: "claude" # Claude format (converts image_url to base64)
+  tool_calls: false # Thinking mode typically doesn't support tools
+  audio: false
+  reasoning: true # Thinking mode exposes reasoning process
+  streaming: true
+  json: true
+  multimodal: true
+claude-sonnet-4_0:
+  vision: true
+  tools: true
+claude-sonnet-4_5:
+  vision: true
+  tools: true
+
+# ============================================
+# Claude Opus Series
+# ============================================
+claude-opus-4_0:
+  vision: true
+  tools: true
+claude-opus-4_1:
+  vision: true
+  tools: true
+
+# ============================================
+# DeepSeek Series
+# ============================================
+deepseek.r1:
+  vision: false
+  tool_calls: false
+  audio: false
+  reasoning: true
+  streaming: true
+  json: false
+  multimodal: false
+deepseek.v3:
+  vision: false
+  tool_calls: true
+  audio: false
+  reasoning: false
+  streaming: true
+  json: true
+  multimodal: false
+deepseek.v3_1:
+  vision: false
+  tool_calls: false
+  audio: false
+  reasoning: false
+  streaming: true
+  json: true
+  multimodal: false
+
+# ============================================
+# OpenAI GPT-4o Series
+# ============================================
+openai.gpt-4o:
+  vision: true
+  tool_calls: true
+  audio: true
+  reasoning: false
+  streaming: true
+  json: true
+  multimodal: true
+openai.gpt-4o-mini:
+  vision: true
+  tool_calls: true
+  audio: false
+  reasoning: false
+  streaming: true
+  json: true
+  multimodal: true
+
+# ============================================
+# OpenAI GPT-5 Series
+# ============================================
+openai.gpt-5:
+  vision: true
+  tool_calls: true
+  audio: false
+  reasoning: true # GPT-5 supports reasoning (hidden, only reasoning_tokens)
+  streaming: true
+  json: true
+  multimodal: true
+openai.gpt-5-mini:
+  vision: true
+  tool_calls: true
+  audio: false
+  reasoning: true # GPT-5 mini supports reasoning
+  streaming: true
+  json: true
+  multimodal: true
+openai.gpt-5-nano:
+  vision: true
+  tool_calls: true
+  audio: false
+  reasoning: true # GPT-5 nano supports reasoning
+  streaming: true
+  json: true
+  multimodal: true
+openai.gpt-5-pro:
+  vision: true
+  tool_calls: true
+  audio: false
+  reasoning: true # GPT-5 pro supports reasoning
+  streaming: true
+  json: true
+  multimodal: true

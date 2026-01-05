@@ -1,0 +1,56 @@
+[
+  {
+    "role_id": "system:root",
+    "name": "System Root",
+    "description": "Admin role",
+    "permissions": [
+      "system:admin",
+      "*:*:*",
+      "*:*:*:*",
+      "entry:register:authenticated",
+      "builtin:entry:verification",
+      "agent:admin",
+      "agent:read",
+      "llm:read",
+      "sessions:read:all",
+      "completions:write:all",
+      "trace:traces:read:own",
+      "trace:traces:read:team",
+      "trace:traces:read:all",
+      "stats:read:all"
+    ]
+  },
+  {
+    "role_id": "admin",
+    "name": "Admin",
+    "description": "Admin role",
+    "permissions": [
+      "system:admin"
+    ]
+  },
+  {
+    "role_id": "guest",
+    "name": "Guest",
+    "description": "Guest role",
+    "permissions": [
+      "dsl:read:own",
+      "dsl:write:own",
+      "file:read:own",
+      "file:write:own",
+      "dsl:execute:own",
+      "user:read:own",
+      "user:write:own",
+      "chat:completions",
+      "entry:register:authenticated",
+      "builtin:entry:verification",
+      "llm:read",
+      "agent:admin",
+      "sessions:read:all",
+      "completions:write:all",
+      "trace:traces:read:own",
+      "trace:traces:read:team",
+      "trace:traces:read:all",
+      "stats:read:all"
+    ]
+  }
+]

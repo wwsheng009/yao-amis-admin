@@ -1,0 +1,1 @@
+Hi! {{ inviter_name }} invited you to join {{ team_name }}. We'd love to have you! Accept here: {{ invitation_link }}

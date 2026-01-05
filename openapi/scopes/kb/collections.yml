@@ -1,0 +1,53 @@
+collections:read:all:
+  description: "Read knowledge base for all users"
+  endpoints:
+    - GET /kb/collections
+    - GET /kb/collections/:collectionID
+    - GET /kb/collections/:collectionID/exists
+
+collections:read:own:
+  owner: true
+  description: "Read knowledge base for own collections"
+  endpoints:
+    - GET /kb/collections/own
+    - GET /kb/collections/own/:collectionID
+    - GET /kb/collections/own/:collectionID/exists
+
+collections:read:team:
+  team: true
+  description: "Read knowledge base for team collections"
+  endpoints:
+    - GET /kb/collections/team
+    - GET /kb/collections/team/:collectionID
+    - GET /kb/collections/team/:collectionID/exists
+
+collections:write:all:
+  description: "Write knowledge base for all users"
+  endpoints:
+    - POST /kb/collections
+    - PUT /kb/collections/:collectionID
+
+collections:write:own:
+  owner: true
+  description: "Write knowledge base for own collections"
+  endpoints:
+    - POST /kb/collections/own
+    - PUT /kb/collections/own/:collectionID
+    - DELETE /kb/collections/own/:collectionID
+
+collections:delete:all:
+  description: "Delete knowledge base for all users"
+  endpoints:
+    - DELETE /kb/collections/:collectionID
+
+collections:delete:own:
+  owner: true
+  description: "Delete knowledge base for own collections"
+  endpoints:
+    - DELETE /kb/collections/own/:collectionID
+
+collections:delete:team:
+  team: true
+  description: "Delete knowledge base for team collections"
+  endpoints:
+    - DELETE /kb/collections/team/:collectionID

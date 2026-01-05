@@ -1,4 +1,4 @@
-import { getWebPageContent } from '@lib/web';
+import { getWebPageContent } from '@scripts/lib/web';
 import { Message, neo, ResHookFail } from '@yao/neo';
 
 declare function Send(message: string | object): void;

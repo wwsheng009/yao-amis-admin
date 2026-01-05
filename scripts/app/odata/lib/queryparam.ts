@@ -2,7 +2,7 @@ import { getOdataModel } from '@scripts/app/odata/lib/model';
 
 import { Exception } from '@yao/yao';
 import { QueryObjectIn } from '@yao/request';
-import { convertUrlQueryObj, getFirstConfigByKey } from '@lib/request';
+import { convertUrlQueryObj, getFirstConfigByKey } from '@scripts/lib/request';
 import { Qsl } from '@yao/odata';
 
 const OPERATORS_KEYS = ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'has'];

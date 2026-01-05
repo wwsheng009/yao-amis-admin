@@ -1,0 +1,11 @@
+{
+  "name": "Marketing Mailgun",
+  "description": "Mailgun email provider for marketing",
+  "connector": "mailgun",
+  "options": {
+    "domain": "$ENV.MAILGUN_DOMAIN",
+    "api_key": "$ENV.MAILGUN_API_KEY",
+    "from": "$ENV.MAILGUN_FROM",
+    "base_url": "https://api.mailgun.net/v3"
+  }
+}

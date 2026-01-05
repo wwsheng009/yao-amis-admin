@@ -1,0 +1,85 @@
+teams:invitation:public:
+  description: "Public access to view team invitations"
+  endpoints:
+    - GET /user/teams/invitations/:invitation_id
+
+teams:invitation:accept:
+  description: "Accept team invitation and login"
+  endpoints:
+    - POST /user/teams/invitations/:invitation_id/accept
+
+teams:config:read:
+  description: "Read team configuration"
+  endpoints:
+    - GET /user/teams/config
+
+teams:select:own:
+  owner: true
+  description: "Select a team for current user"
+  endpoints:
+    - POST /user/teams/select
+
+teams:read:own:
+  owner: true
+  description: "Read own teams"
+  endpoints:
+    - GET /user/teams
+    - GET /user/teams/:id
+
+teams:write:own:
+  owner: true
+  description: "Create and update own teams"
+  endpoints:
+    - POST /user/teams
+    - PUT /user/teams/:id
+
+teams:delete:own:
+  owner: true
+  description: "Delete own teams"
+  endpoints:
+    - DELETE /user/teams/:id
+
+teams:members:read:
+  description: "Read team members"
+  endpoints:
+    - GET /user/teams/:id/members
+    - GET /user/teams/:id/members/check
+    - GET /user/teams/:id/members/check-robot-email
+    - GET /user/teams/:id/members/:member_id
+    - GET /user/teams/:id/members/:member_id/profile
+
+teams:members:write:
+  description: "Manage team members"
+  endpoints:
+    - POST /user/teams/:id/members
+    - POST /user/teams/:id/members/robots
+    - PUT /user/teams/:id/members/:member_id
+    - PUT /user/teams/:id/members/robots/:member_id
+
+member:profile:update:own:
+  owner: true
+  description: "Update own member profile"
+  endpoints:
+    - PUT /user/teams/:id/members/:member_id/profile
+
+teams:members:delete:
+  description: "Remove team members"
+  endpoints:
+    - DELETE /user/teams/:id/members/:member_id
+
+teams:invitations:read:
+  description: "Read team invitations"
+  endpoints:
+    - GET /user/teams/:id/invitations
+    - GET /user/teams/:id/invitations/:invitation_id
+
+teams:invitations:write:
+  description: "Create and resend team invitations"
+  endpoints:
+    - POST /user/teams/:id/invitations
+    - PUT /user/teams/:id/invitations/:invitation_id/resend
+
+teams:invitations:delete:
+  description: "Cancel team invitations"
+  endpoints:
+    - DELETE /user/teams/:id/invitations/:invitation_id

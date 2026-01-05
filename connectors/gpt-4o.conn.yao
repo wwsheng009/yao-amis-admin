@@ -1,0 +1,11 @@
+{
+  "label": "Model gpt-4o",
+  "type": "openai",
+  "options": {
+    // "model": "gpt-4o",
+    // "key": "$ENV.OPENAI_TEST_KEY"
+    "model": "$ENV.DEEPSEEK_MODELS_V3",
+    "key": "$ENV.DEEPSEEK_API_KEY",
+    "proxy": "$ENV.DEEPSEEK_API_PROXY",
+  }
+}

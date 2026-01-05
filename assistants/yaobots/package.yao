@@ -1,0 +1,22 @@
+{
+  "name": "Yaobots",
+  "avatar": "/api/__yao/app/icons/app.png",
+  "connector": "gpt-4o",
+  "description": "{{ description }}",
+  "options": { "temperature": 0 },
+  "public": true,
+  "placeholder": {
+    "title": "{{ chat.title }}",
+    "description": "{{ chat.description }}",
+    "prompts": [
+      "{{ chat.prompts.0 }}",
+      "{{ chat.prompts.1 }}",
+      "{{ chat.prompts.2 }}"
+    ]
+  },
+  "tags": ["General"],
+  "sort": 1,
+  "readonly": true,
+  "automated": false,
+  "mentionable": false
+}

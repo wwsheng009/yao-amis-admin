@@ -1,5 +1,5 @@
-import { ModelProxy } from '@lib/proxy';
-import { getWebPageContent } from '@lib/web';
+import { ModelProxy } from '@scripts/lib/proxy';
+import { getWebPageContent } from '@scripts/lib/web';
 import { getWeatherByName } from '@scripts/app/weather/tool';
 import { IAdminUser } from '@scripts/db_types/admin/user';
 import { Message, ResHookFail, ResHookInit } from '@yao/neo';

@@ -1,0 +1,58 @@
+{
+  "default": {
+    "description": "Default messaging channel for general communications",
+    "email": {
+      "provider": "primary",
+      "description": "Default email using primary SMTP provider"
+    },
+    "sms": {
+      "provider": "unified",
+      "description": "Default SMS using Twilio"
+    },
+    "whatsapp": {
+      "provider": "unified",
+      "description": "Default WhatsApp using Twilio"
+    }
+  },
+  "promotions": {
+    "description": "Marketing and promotional messages channel",
+    "email": {
+      "provider": "marketing",
+      "description": "Marketing emails using Mailgun"
+    },
+    "sms": {
+      "provider": "unified",
+      "description": "Marketing SMS using Twilio"
+    },
+    "whatsapp": {
+      "provider": "unified",
+      "description": "Marketing WhatsApp using Twilio"
+    }
+  },
+  "alerts": {
+    "description": "Critical system alerts channel",
+    "email": {
+      "provider": "reliable",
+      "description": "Alert emails using reliable SMTP for high availability"
+    },
+    "sms": {
+      "provider": "unified",
+      "description": "Alert SMS using Twilio"
+    },
+    "whatsapp": {
+      "provider": "unified",
+      "description": "Alert WhatsApp using Twilio"
+    }
+  },
+  "notifications": {
+    "description": "System notifications channel",
+    "email": {
+      "provider": "primary",
+      "description": "Notification emails using primary SMTP"
+    },
+    "sms": {
+      "provider": "unified",
+      "description": "Notification SMS using Twilio"
+    }
+  }
+}

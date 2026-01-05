@@ -1,0 +1,11 @@
+profile:read:own:
+  owner: true
+  description: "Read own profile"
+  endpoints:
+    - GET /user/profile
+
+profile:update:own:
+  owner: true
+  description: "Update own profile"
+  endpoints:
+    - PUT /user/profile

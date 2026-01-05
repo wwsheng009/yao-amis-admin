@@ -1,0 +1,13 @@
+<Mail>
+  <Subject>邀请您加入 {{ team_name }}</Subject>
+  <content>
+    <p>您好！</p>
+    <p>
+      {{ inviter_name }} 邀请您加入 {{ team_name }} 团队，我们非常欢迎您的加入！
+    </p>
+    <p>请点击下方链接接受邀请：</p>
+    <a href="{{ invitation_link }}">{{ invitation_link }}</a>
+    <p>此邀请将于 {{ expires_at }} 过期。</p>
+    <p>此致<br />{{ team_name }} 团队</p>
+  </content>
+</Mail>

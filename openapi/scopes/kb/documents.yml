@@ -1,0 +1,68 @@
+documents:read:all:
+  description: "Read documents for all users"
+  endpoints:
+    - GET /kb/documents
+    - GET /kb/documents/:docID
+
+documents:read:own:
+  owner: true
+  description: "Read documents for own collections"
+  endpoints:
+    - GET /kb/documents/own
+    - GET /kb/documents/own/:docID
+
+documents:read:team:
+  team: true
+  description: "Read documents for team collections"
+  endpoints:
+    - GET /kb/documents/team
+    - GET /kb/documents/team/:docID
+
+documents:write:all:
+  description: "Write documents for all users"
+  endpoints:
+    - POST /kb/collections/:collectionID/documents/file
+    - POST /kb/collections/:collectionID/documents/file/async
+    - POST /kb/collections/:collectionID/documents/text
+    - POST /kb/collections/:collectionID/documents/text/async
+    - POST /kb/collections/:collectionID/documents/url
+    - POST /kb/collections/:collectionID/documents/url/async
+
+documents:write:own:
+  owner: true
+  description: "Write documents for own collections"
+  endpoints:
+    - POST /kb/collections/own/:collectionID/documents/file
+    - POST /kb/collections/own/:collectionID/documents/file/async
+    - POST /kb/collections/own/:collectionID/documents/text
+    - POST /kb/collections/own/:collectionID/documents/text/async
+    - POST /kb/collections/own/:collectionID/documents/url
+    - POST /kb/collections/own/:collectionID/documents/url/async
+
+documents:write:team:
+  team: true
+  description: "Write documents for team collections"
+  endpoints:
+    - POST /kb/collections/team/:collectionID/documents/file
+    - POST /kb/collections/team/:collectionID/documents/file/async
+    - POST /kb/collections/team/:collectionID/documents/text
+    - POST /kb/collections/team/:collectionID/documents/text/async
+    - POST /kb/collections/team/:collectionID/documents/url
+    - POST /kb/collections/team/:collectionID/documents/url/async
+
+documents:delete:all:
+  description: "Delete documents for all users"
+  endpoints:
+    - DELETE /kb/documents
+
+documents:delete:own:
+  owner: true
+  description: "Delete documents for own collections"
+  endpoints:
+    - DELETE /kb/documents/own
+
+documents:delete:team:
+  team: true
+  description: "Delete documents for team collections"
+  endpoints:
+    - DELETE /kb/documents/team
