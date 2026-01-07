@@ -9,12 +9,12 @@
   "oauth": {
     "issuer_url": "https://localhost:5099", // Required: OAuth token issuer URL for OAuth server
     "signing": {
-      "signing_cert_path": "signing-cert.pem", // Required: Path relative to {YAO_ROOT}/openapi/certs/ directory
-      "signing_key_path": "signing-key.pem", // Required: Path relative to {YAO_ROOT}/openapi/certs/ directory
+      "signing_cert_path": "demo/signing-cert.pem", // Required: Path relative to {YAO_ROOT}/openapi/certs/ directory
+      "signing_key_path": "demo/signing-key.pem", // Required: Path relative to {YAO_ROOT}/openapi/certs/ directory
       "signing_key_password": "", // Optional: Password for encrypted private key (default: empty)
       "signing_algorithm": "RS256", // Optional: Token signing algorithm (default: RS256)
       "verification_certs": [], // Optional: Additional certificates for token verification (default: empty)
-      "mtls_client_ca_cert_path": "mtls-client-ca.pem", // Optional: CA certificate path relative to {YAO_ROOT}/openapi/certs/
+      "mtls_client_ca_cert_path": "demo/mtls-client-ca.pem", // Optional: CA certificate path relative to {YAO_ROOT}/openapi/certs/
       "mtls_enabled": true, // Optional: Enable mutual TLS authentication (default: false)
       "cert_rotation_enabled": false, // Optional: Enable automatic certificate rotation (default: false)
       "cert_rotation_interval": "24h" // Optional: Certificate rotation interval (default: 24h)
