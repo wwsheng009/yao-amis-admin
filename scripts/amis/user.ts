@@ -33,12 +33,12 @@ function getUserInfo(type, value) {
 /**
  * 自定义一个用户登录的处理器,使用用户名密码登录，不需要验证码
  *
- * yao run scripts.amis.user.Login
+ * yao run scripts.amis.user.AmisLogin
  *
  * @param {object} payload 用户登录信息
  * @returns 返回登录信息
  */
-export function Login(payload: {
+export function AmisLogin(payload: {
   email?: string;
   mobile?: string;
   userName?: string;

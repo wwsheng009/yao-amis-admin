@@ -4,7 +4,7 @@ use:
   title: "Neo"
   prompt: "neo"
 
-guard: "scripts.auth.token.CheckToken"
+guard: "bearer-jwt"
 
 
 store:

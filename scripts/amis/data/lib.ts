@@ -27,6 +27,7 @@ import { QueryObjectIn } from '@yao/request';
 import { getModelDslById, getYaoModelColumnMap } from '@scripts/system/model';
 
 import { addModelMetaFields } from '@scripts/system/model_convert';
+import { findUser } from '@scripts/user';
 
 // 推荐在循环对象属性的时候，使用for...in,
 // 在遍历数组的时候的时候使用for...of。
@@ -468,8 +469,8 @@ export function updateInputData(
   const yaoColMap = getYaoModelColumnMap(model);
 
   const hasUserId = yaoColMap['user_id'] !== null; // columns.some(col=>col.name = 'user_id')
-  const user_id = Process('session.get', 'user_id');
-
+  // const user_id = Process('session.get', 'user_id');
+  const user_id = findUser()?.user_id;
   function updateLine(line: { [x: string]: any }) {
     if (typeof line !== 'object') {
       return line;

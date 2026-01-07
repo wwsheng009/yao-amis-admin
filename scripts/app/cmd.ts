@@ -1,6 +1,7 @@
 // 使用命令插件调用操作系统的功能，引功能需要command插件的支持
 // 命令插件支持调用本地系统的命令，或是通过ssh在远程服务器上执行命令
 // https://github.com/wwsheng009/yao-amis-admin
+import { findUser } from '@scripts/user';
 import { Process, Exception, Query } from '@yao/yao';
 
 /**
@@ -81,8 +82,12 @@ export function execute(payload) {
  * @param {object} data
  */
 function writeCommandlog(data) {
-  const user_id = Process('session.get', 'user_id');
-  const user = Process('scripts.user.findUser');
+  const user_id = findUser()?.user_id;
+  // const user_id = Process('session.get', 'user_id');
+  const user = findUser()?.user_id;
+  if (!user_id) {
+    throw new Exception('请登录系统', 401);
+  }
   data.user_id = user_id;
   data.user_name = user.name;
   data.user_id = Process('models.app.cmd.log.save', data);

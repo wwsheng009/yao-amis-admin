@@ -1,5 +1,6 @@
 import { curdTemplate } from '@scripts/amis/curd';
 import { FileNameConvert } from '@scripts/system/lib';
+import { findUser } from '@scripts/user';
 import { Process, FS, Exception } from '@yao/yao';
 
 /**
@@ -12,9 +13,10 @@ const WorkingPagesLocation = '/amis_editor';
 const PagesLocation = '/pages';
 
 export function getUserDir() {
-  let user_id = Process('session.get', 'user_id');
+  const user_id = findUser()?.user_id;
+  // let user_id = Process('session.get', 'user_id');
   if (!user_id) {
-    user_id = '1';
+    throw new Exception('请登录系统', 401);
   }
   let dir = `${WorkingPagesLocation}/${user_id}/`;
   dir = dir.replaceAll('//', '/');
@@ -111,9 +113,10 @@ export function savePage(file: string, payload: { body: any; type: string }) {
   }
   const userDir = getUserDir();
   const nfilename = userDir + fname;
-  let user_id = Process('session.get', 'user_id');
+  const user_id = findUser()?.user_id;
+  // let user_id = Process('session.get', 'user_id');
   if (!user_id) {
-    user_id = '1';
+    throw new Exception('请登录系统', 401);
   }
 
   // 备份后再保存
@@ -131,9 +134,10 @@ export function savePage(file: string, payload: { body: any; type: string }) {
 export function deletePage(file: string) {
   const dir = getUserDir();
 
-  let user_id = Process('session.get', 'user_id');
+  const user_id = findUser()?.user_id;
+  // let user_id = Process('session.get', 'user_id');
   if (!user_id) {
-    user_id = '1';
+    throw new Exception('请登录系统', 401);
   }
   let nfilename = dir + file;
   if (!nfilename.toUpperCase().endsWith('.JSON')) {
@@ -309,9 +313,10 @@ export function getAmisPageSchema(pageId: string, theme: string) {
  * @returns
  */
 export function getAmisEditorPageSource(pageId: string, userId?: number) {
-  const user_id = Process('session.get', 'user_id');
-  if (user_id) {
-    userId = user_id;
+  const user_id = findUser()?.user_id;
+  // const user_id = Process('session.get', 'user_id');
+  if (!user_id) {
+    throw new Exception('请登录系统', 401);
   }
   let dir = `${WorkingPagesLocation}/${userId}/`;
   dir = dir.replace(/\\/g, '/');
@@ -357,11 +362,13 @@ export function getPagesFileList() {
  * @returns
  */
 export function getEditorPagesFileList(userId: string) {
-  const user_id = Process('session.get', 'user_id');
-  if (user_id) {
-    // return [];
-    userId = user_id;
+  const user_id = findUser()?.user_id;
+  // const user_id = Process('session.get', 'user_id');
+  if (!user_id) {
+    throw new Exception('请登录系统', 401);
   }
+  // return [];
+  userId = user_id;
   let dir = `${WorkingPagesLocation}/${userId}/`;
   dir = dir.replace(/\\/g, '/');
   dir = dir.replace(/\/\//g, '/');

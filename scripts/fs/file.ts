@@ -3,6 +3,7 @@ import { Exception, FS, Process } from '@yao/yao';
 import { PaginateArrayWithQuery } from '@scripts/amis/data/lib';
 import { getUserAuthFolderCache, isSuperUser } from '@scripts/auth/lib';
 import { QueryObjectIn } from '@yao/request';
+import { findUser } from '@scripts/user';
 const uploadDir = '/upload';
 const userDir = '/user';
 const projectDir = '/project';
@@ -351,7 +352,11 @@ function writeLog(
   file_name2: string,
   operation: 'remove' | 'upload' | 'delete_folder' | 'move_folder'
 ) {
-  const user_id = Process('session.get', 'user_id') || '';
+  // const user_id = Process('session.get', 'user_id') || '';
+  const user_id = findUser()?.user_id || '';
+  if (!user_id) {
+    throw new Exception('请登录系统', 401);
+  }
   Process('models.system.log.file.save', {
     user_id,
     file_name,
@@ -382,9 +387,10 @@ function getFolder(type: string) {
   let filePath = `${uploadDir}/public`;
   switch (type) {
     case 'user': {
-      const user_id = Process('session.get', 'user_id');
+      // const user_id = Process('session.get', 'user_id');
+      const user_id = findUser()?.user_id;
       if (!user_id) {
-        throw new Exception('用户未登录');
+        throw new Exception('请登录系统', 401);
       }
       filePath = `${uploadDir}${userDir}/${user_id}`;
       break;

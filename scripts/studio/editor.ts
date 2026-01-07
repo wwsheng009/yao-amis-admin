@@ -26,7 +26,8 @@
  */
 
 import { FileNameConvert } from '@scripts/system/lib';
-import { FS, log, Process } from '@yao/yao';
+import { findUser } from '@scripts/user';
+import { Exception, FS, log, Process } from '@yao/yao';
 
 // 1 防止误操作，在特定的目录下使用editor的创建与编辑，创建好后再手动复制到正式的目录pages
 // 2 编辑器的功能比较简单，目录结构不支持嵌套的目录结构
@@ -34,9 +35,13 @@ const pagesWorking = '/public/amis-admin/pages_working/';
 const pagesFolder = '/public/amis-admin/pages/';
 
 export function getUserDir() {
-  let user_id = Process('session.get', 'user_id');
+  // let user_id = Process('session.get', 'user_id');
+  // if (!user_id) {
+  //   user_id = '1';
+  // }
+  const user_id = findUser()?.user_id;
   if (!user_id) {
-    user_id = '1';
+    throw new Exception('请登录系统', 401);
   }
   let dir = `${pagesWorking}/${user_id}/`;
   dir = dir.replaceAll('\\', '/');
@@ -143,9 +148,10 @@ export function savePage(
   const userDir = getUserDir();
   const nfilename = userDir + fname;
   // if (!fs.Exists(nfilename)) {
-  let user_id = Process('session.get', 'user_id');
+  const user_id = findUser()?.user_id;
+  // let user_id = Process('session.get', 'user_id');
   if (!user_id) {
-    user_id = '1';
+    throw new Exception('请登录系统', 401);
   }
 
   // }
@@ -164,10 +170,10 @@ export function savePage(
 // 删除文件
 export function deletePage(file: string) {
   const dir = getUserDir();
-
-  let user_id = Process('session.get', 'user_id');
+  const user_id = findUser()?.user_id;
+  // let user_id = Process('session.get', 'user_id');
   if (!user_id) {
-    user_id = '1';
+    throw new Exception('请登录系统', 401);
   }
   let nfilename = dir + file;
   if (!nfilename.toUpperCase().endsWith('.JSON')) {

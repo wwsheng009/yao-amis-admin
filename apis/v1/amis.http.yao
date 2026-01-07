@@ -11,7 +11,7 @@
       "path": "/login",
       "method": "POST",
       "guard": "-",
-      "process": "scripts.amis.user.Login",
+      "process": "scripts.amis.user.AmisLogin",
       "in": [
         ":payload"
       ],
@@ -62,7 +62,7 @@
       "path": "/menu",
       "method": "GET",
       "guard": "bearer-jwt",
-      "process": "scripts.amis.site.Menu",
+      "process": "scripts.amis.site.AmisMenu",
       "in": [],
       "out": {
         "status": 200,
@@ -155,7 +155,7 @@
       "description": "读取设置",
       "path": "/setting",
       "method": "GET",
-      "guard": "scripts.auth.token.CheckToken",
+      "guard": "bearer-jwt",
       "process": "scripts.admin.user.readSetting",
       "in": [],
       "out": {

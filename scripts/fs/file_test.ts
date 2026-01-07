@@ -1,11 +1,13 @@
+import { findUser } from '@scripts/user';
 import { Process, Exception, Query, FS } from '@yao/yao';
 
 // 禁止使用
 // yao run scripts.fs.file.Download '/20231115/微信图片_20220601141654.png'
 function Download_abandan(name) {
-  let user_id = Process('session.get', 'user_id');
+  const user_id = findUser()?.user_id;
+  // const user_id = Process('session.get', 'user_id');
   if (!user_id) {
-    user_id = '1';
+    throw new Exception('请登录系统', 401);
   }
   name = normalizeFolder(name);
   const uploadDir = '/data/upload';

@@ -1,11 +1,30 @@
 {
-  "regions": ["body"],
-  "title": "登录",
   "type": "page",
   "aside": [],
   "asideResizor": false,
   "body": [
     {
+      "style": {
+        "flexDirection": "column",
+        "justifyContent": "center",
+        "background-image": "url('/image/background.jpeg')",
+        "background-size": "cover",
+        "overflowX": "visible",
+        "alignItems": "center",
+        "height": "100%",
+        "background-repeat": "no-repeat",
+        "overflowY": "auto",
+        "inset": "auto",
+        "flexWrap": "nowrap",
+        "position": "relative"
+      },
+      "themeCss": {
+        "baseControlClassName": {
+          "padding-and-margin:default": {
+            "padding": "0"
+          }
+        }
+      },
       "type": "flex",
       "className": "p-1",
       "id": "u:b966e0d731ee",
@@ -13,129 +32,186 @@
       "isFixedWidth": true,
       "items": [
         {
-          "isFixedWidth": false,
-          "size": "xs",
-          "style": {
-            "display": "block",
-            "flex": "0",
-            "flexBasis": "auto",
-            "overflowX": "auto",
-            "overflowY": "auto",
-            "position": "static"
-          },
-          "type": "container",
-          "wrapperBody": false,
           "body": [
             {
               "body": [
                 {
-                  "tpl": "${app.description}",
-                  "type": "tpl",
-                  "wrapperComponent": "h1",
                   "id": "u:984c8b793d59",
                   "inline": true,
-                  "style": {
-                    "color": "white"
-                  }
+                  "style": {},
+                  "themeCss": {
+                    "baseControlClassName": {
+                      "font:default": {
+                        "color": "white"
+                      }
+                    }
+                  },
+                  "tpl": "${app.description}",
+                  "type": "tpl",
+                  "wrapperComponent": "h1"
                 }
               ],
               "id": "u:ca90e0af9a90",
               "isFixedHeight": false,
               "isFixedWidth": false,
               "style": {
-                "display": "block",
                 "position": "static",
-                "text-align": "center"
+                "text-align": "center",
+                "display": "block"
               },
               "type": "container",
               "wrapperBody": false
             },
             {
-              "redirect": "/amis-admin",
-              "data": {
-                "username": "${cookie:email}"
+              "labelAlign": "left",
+              "api": {
+                "url": "",
+                "adaptor": "return yao_amis.login(payload,response,api,context)",
+                "data": {
+                  "password": "${password}",
+                  "sid": "${ls:temp_sid}",
+                  "captcha": {
+                    "id": "${captcha.id}",
+                    "code": "${code}"
+                  },
+                  "email": "${username}"
+                },
+                "dataType": "json",
+                "method": "get"
               },
-              "mode": "horizontal",
+              "dsType": "api",
+              "feat": "Insert",
               "name": "login_form",
               "title": "",
-              "type": "form",
-              "wrapWithPanel": true,
               "actions": [
                 {
                   "disabled": false,
+                  "disabledOnAction": false,
                   "id": "u:b4412e3fb86c",
                   "label": "登录",
                   "level": "primary",
+                  "onEvent": {
+                    "click": {
+                      "actions": [
+                        {
+                          "actionType": "ajax",
+                          "ignoreError": false,
+                          "options": {},
+                          "api": {
+                            "dataType": "json",
+                            "url": "/api/user/entry/verify",
+                            "method": "post",
+                            "requestAdaptor": "",
+                            "adaptor": "",
+                            "messages": {},
+                            "silent": true,
+                            "data": {
+                              "username": "${username}",
+                              "locale": "zh-CN",
+                              "captcha": "${captcha}",
+                              "captcha_id": "${captcha_id}"
+                            }
+                          }
+                        },
+                        {
+                          "expression": "${responseData.user_exists == false}",
+                          "ignoreError": false,
+                          "actionType": "toast",
+                          "args": {
+                            "msg": "用户未注册",
+                            "className": "theme-toast-action-scope",
+                            "msgType": "error",
+                            "position": "top-right",
+                            "closeButton": true,
+                            "showIcon": true
+                          }
+                        },
+                        {
+                          "expression": "${responseData.user_exists == true}",
+                          "api": {
+                            "messages": {},
+                            "data": {
+                              "password": "${password}"
+                            },
+                            "headers": {
+                              "authorization": "Bearer ${responseData.access_token}"
+                            },
+                            "url": "/api/user/entry/login",
+                            "method": "post",
+                            "requestAdaptor": "",
+                            "adaptor": "",
+                            "silent": true
+                          },
+                          "ignoreError": false,
+                          "actionType": "ajax",
+                          "options": {}
+                        }
+                      ],
+                      "weight": 0
+                    }
+                  },
                   "type": "submit"
                 }
               ],
-              "api": {
-                "adaptor": "return yao_amis.login(payload,response,api,context)",
-                "data": {
-                  "captcha": {
-                    "code": "${code}",
-                    "id": "${captcha.id}"
-                  },
-                  "email": "${username}",
-                  "password": "${password}",
-                  "sid": "${ls:temp_sid}"
-                },
-                "dataType": "json",
-                "method": "post",
-                "url": "/api/v1/amis/login"
-              },
+              "id": "u:478b66087163",
               "body": [
                 {
+                  "type": "input-email",
                   "id": "u:31e63ad3f078",
                   "label": "用户名",
                   "labelWidth": "25%",
                   "name": "username",
-                  "required": true,
-                  "type": "input-email"
+                  "required": true
                 },
                 {
                   "showCounter": false,
-                  "type": "input-password",
                   "validations": {},
                   "id": "u:1409ae59b46a",
-                  "label": "密码",
-                  "labelWidth": "25%",
-                  "name": "password",
-                  "required": true,
                   "size": "full",
-                  "validationErrors": {}
+                  "validationErrors": {},
+                  "labelWidth": "25%",
+                  "type": "input-password",
+                  "label": "密码",
+                  "name": "password",
+                  "required": true
                 },
                 {
-                  "isFixedHeight": false,
                   "isFixedWidth": false,
                   "items": [
                     {
+                      "body": [
+                        {
+                          "labelWidth": "93px",
+                          "name": "captcha",
+                          "required": true,
+                          "type": "input-text",
+                          "id": "u:ec84b7362fdc",
+                          "label": "验证码"
+                        }
+                      ],
+                      "id": "u:ffb31fbc5a2f",
                       "isFixedHeight": false,
                       "isFixedWidth": false,
                       "size": "xs",
                       "style": {
+                        "flexGrow": "1",
+                        "position": "static",
                         "display": "block",
                         "flex": "1 1 auto",
-                        "flexBasis": "auto",
-                        "flexGrow": "1",
-                        "position": "static"
+                        "flexBasis": "auto"
                       },
                       "type": "container",
-                      "wrapperBody": false,
-                      "body": [
-                        {
-                          "editorState": "default",
-                          "id": "u:ec84b7362fdc",
-                          "label": "验证码",
-                          "labelWidth": "93px",
-                          "name": "code",
-                          "required": true,
-                          "type": "input-text"
-                        }
-                      ],
-                      "id": "u:ffb31fbc5a2f"
+                      "wrapperBody": false
                     },
                     {
+                      "isFixedHeight": false,
+                      "themeCss": {
+                        "baseControlClassName": {
+                          "padding-and-margin:default": {
+                            "margin-left": "5px"
+                          }
+                        }
+                      },
                       "body": [
                         {
                           "id": "u:8397fdf65bcf",
@@ -143,28 +219,33 @@
                           "name": "captcha",
                           "type": "service",
                           "api": {
-                            "messages": {},
                             "method": "get",
-                            "url": "/api/v1/amis/captcha?type=digit"
+                            "url": "/api/user/entry/captcha",
+                            "messages": {}
                           },
                           "body": [
                             {
-                              "height": 50,
-                              "id": "u:ba0e071441b0",
+                              "name": "captcha_image",
                               "type": "image",
-                              "name": "captcha.code",
+                              "height": 50,
+                              "style": {
+                                "display": "inline-block"
+                              },
+                              "id": "u:ba0e071441b0",
+                              "maxScale": 200,
                               "width": 111,
                               "clickAction": {
-                                "target": "captcha",
-                                "actionType": "reload"
+                                "actionType": "reload",
+                                "target": "captcha"
                               },
-                              "enlargeAble": false
+                              "enlargeAble": false,
+                              "minScale": 50
                             }
-                          ]
+                          ],
+                          "dsType": "api"
                         }
                       ],
                       "id": "u:484e51667851",
-                      "isFixedHeight": false,
                       "isFixedWidth": false,
                       "size": "xs",
                       "style": {
@@ -172,25 +253,38 @@
                         "display": "block",
                         "flex": "1 1 auto",
                         "flexBasis": "auto",
-                        "flexGrow": "1",
-                        "margin-left": "5px"
+                        "flexGrow": "1"
                       },
-                      "type": "container",
-                      "wrapperBody": false
+                      "wrapperBody": false,
+                      "type": "container"
                     }
                   ],
                   "style": {
+                    "flexDirection": "row",
+                    "flexWrap": "nowrap",
                     "inset": "auto",
                     "justifyContent": "flex-start",
                     "position": "relative",
-                    "alignItems": "flex-start",
-                    "flexDirection": "row",
-                    "flexWrap": "nowrap"
+                    "alignItems": "flex-start"
                   },
                   "type": "flex",
-                  "id": "u:964b6f951a7b"
+                  "id": "u:964b6f951a7b",
+                  "isFixedHeight": false
                 },
                 {
+                  "isFixedWidth": false,
+                  "style": {
+                    "text-align": "right",
+                    "display": "block",
+                    "position": "static"
+                  },
+                  "themeCss": {
+                    "baseControlClassName": {
+                      "padding-and-margin:default": {
+                        "padding": "4px"
+                      }
+                    }
+                  },
                   "type": "container",
                   "wrapperBody": false,
                   "body": [
@@ -203,29 +297,23 @@
                     }
                   ],
                   "id": "u:663b59115c4a",
-                  "isFixedHeight": false,
-                  "isFixedWidth": false,
-                  "style": {
-                    "display": "block",
-                    "padding": "4px",
-                    "position": "static",
-                    "text-align": "right"
-                  }
+                  "isFixedHeight": false
                 },
                 {
                   "wrapperBody": false,
                   "body": [
                     {
-                      "id": "u:6280709f459d",
-                      "inline": true,
                       "style": {
                         "width": "100%"
                       },
                       "tpl": "",
                       "type": "tpl",
-                      "wrapperComponent": ""
+                      "wrapperComponent": "",
+                      "id": "u:6280709f459d",
+                      "inline": true
                     }
                   ],
+                  "hide": true,
                   "id": "u:b4735bec3346",
                   "isFixedHeight": false,
                   "isFixedWidth": false,
@@ -234,32 +322,42 @@
                     "position": "static",
                     "textAlign": "center"
                   },
-                  "type": "container",
-                  "hide": true
+                  "type": "container"
                 }
               ],
-              "id": "u:478b66087163"
+              "data": {
+                "username": "${cookie:email}"
+              },
+              "wrapWithPanel": true,
+              "mode": "horizontal",
+              "redirect": "/amis-admin",
+              "type": "form"
             }
           ],
           "id": "u:03d22f862544",
-          "isFixedHeight": false
+          "isFixedHeight": false,
+          "isFixedWidth": false,
+          "size": "xs",
+          "style": {
+            "flex": "0",
+            "flexBasis": "auto",
+            "overflowX": "auto",
+            "overflowY": "auto",
+            "position": "static",
+            "display": "block"
+          },
+          "type": "container",
+          "wrapperBody": false
         }
-      ],
-      "style": {
-        "padding": "0",
-        "position": "relative",
-        "background-image": "url('/image/background.jpeg')",
-        "background-size": "cover",
-        "flexDirection": "column",
-        "flexWrap": "nowrap",
-        "justifyContent": "center",
-        "overflowY": "auto",
-        "alignItems": "center",
-        "background-repeat": "no-repeat",
-        "height": "100%",
-        "inset": "auto"
-      }
+      ]
     }
   ],
-  "id": "u:a7238be79bbc"
+  "id": "u:a7238be79bbc",
+  "pullRefresh": {
+    "disabled": true
+  },
+  "regions": [
+    "body"
+  ],
+  "title": "登录"
 }

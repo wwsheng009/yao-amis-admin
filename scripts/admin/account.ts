@@ -1,5 +1,11 @@
+import { findUser } from '@scripts/user';
 import { Process, Query } from '@yao/yao';
 
+export function UserInfo(id?: string) {
+  const user = findUser();
+  delete user.password_hash;
+  return user;
+}
 /**
  *
  *
@@ -7,7 +13,7 @@ import { Process, Query } from '@yao/yao';
  *
  * @returns 当前登录用户的信息
  */
-export function UserInfo(id: string) {
+export function UserInfoOld(id: string) {
   let user_id = Process('session.get', 'user_id');
   if (id) {
     user_id = id;

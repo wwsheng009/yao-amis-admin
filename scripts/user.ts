@@ -19,9 +19,10 @@ export function findUserInfo(user_id?: string) {
 /**
  * yao run scripts.user.findUser
  */
-export function findUser(user_id) {
+export function findUser(user_id?: string) {
+  // console.log('user_login', JSON.stringify(Authorized()));
   if (!user_id) {
-    user_id = Authorized().user_id;
+    user_id = Authorized()?.user_id;
   }
   if (!user_id) {
     return null;

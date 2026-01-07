@@ -10,7 +10,7 @@
       "path": "/login", 
       "method": "POST",
       "guard": "-",
-      "process": "scripts.amis.user.Login",
+      "process": "scripts.amis.user.AmisLogin",
       "in": [":payload"],
       "out": {
         "status": 200,

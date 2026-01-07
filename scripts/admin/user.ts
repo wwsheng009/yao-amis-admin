@@ -1,11 +1,14 @@
 // const { User, admin_user } = Require("admin.types.user");
-import { Process } from '@yao/yao';
+import { findUser } from '@scripts/user';
+import { Exception, Process } from '@yao/yao';
 
 // scripts.admin.user.saveSetting
 export function saveSetting(payload) {
   // console.log('scripts.admin.user.saveSetting');
-  const user_id = Process('session.get', 'user_id');
-
+  const user_id = findUser()?.user_id;
+  if (!user_id) {
+    throw new Exception('请登录系统', 401);
+  }
   let setting = payload.system_theme_setting;
   if (typeof setting === 'string') {
     try {

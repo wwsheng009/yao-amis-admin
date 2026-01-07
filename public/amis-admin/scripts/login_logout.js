@@ -128,14 +128,20 @@ async function __amisFetcher(api) {
       config.withCredentials = false;
     }
   } catch (error) { }
-  if (token) {
-    config.headers["Authorization"] = `Bearer ${token}`;
-  } else {
-    window.location.href = "login.html";
-    return;
-  }
+  // if (token) {
+  //   config.headers["Authorization"] = `Bearer ${token}`;
+  // } else {
+  //   window.location.href = "login.html";
+  //   return;
+  // }
   const catcherr = (error) => {
     if (error.response) {
+      if (error.response.data?.error_description) {
+          error.message = error.response.data.error_description;
+        }
+      if (error.response.status == 401 || error.response.data?.error == 'token_missing'){
+        window.location.href = "login.html";
+      }
       if (error.response.data?.message) {
         error.message = error.response.data.message;
       }
@@ -166,7 +172,9 @@ async function __amisFetcher(api) {
   };
   const check = (response) => {
     response = attachmentAdpator(response, api);
-
+    if (response.data?.error_descriptionor) {
+        response.message = response.data.error_description;
+      }
     //判断返回结构是否已经是amis结构
     if (
       typeof response.data === "object" &&
@@ -370,40 +378,41 @@ var yao_amis = {
     const token = encodeURIComponent(payload.token);
 
     let newDate = new Date();
-    if (payload.expires_at) {
-      newDate.setTime(payload.expires_at * 1000);
+    if (payload.expires_in) {
+      newDate.setTime(payload.expires_in * 1000);
     } else {
-      newDate.setTime(newDate.getTime() + 24 * 60 * 60 * 1000);
+      newDate.setTime(newDate.getTime() + 2 * 60 * 60 * 1000);
     }
 
     let expires = "expires=" + newDate.toGMTString();
     document.cookie = `token=${token};${expires};path=/`;
-    document.cookie = `username=${payload.user.name};${expires};path=/`;
-    document.cookie = `email=${payload.user.email};${expires};path=/`;
+    document.cookie = `__Host-access_token=${token};${expires};path=/`;
+    // document.cookie = `username=${payload.user.name};${expires};path=/`;
+    // document.cookie = `email=${payload.user.email};${expires};path=/`;
 
     const tokenStoarageType = this.getTokenStorageType();
     this.xgenSetStorage("xgen:token", token, tokenStoarageType);
-    this.xgenSetStorage("xgen:user", payload.user);
+    // this.xgenSetStorage("xgen:user", payload.user);
 
     if (payload.menus) {
       this.updateXgenMenus(payload.menus)
     }
 
-    if (payload.studio) {
-      //studio
+    // if (payload.studio) {
+    //   //studio
 
-      if (payload.studio.expires_at) {
-        newDate.setTime(payload.studio.expires_at * 1000);
-      } else {
-        newDate.setTime(newDate.getTime() + 24 * 60 * 60 * 1000);
-      }
-      expires = "expires=" + newDate.toGMTString();
-      document.cookie = `studio=${encodeURIComponent(
-        payload.studio.token
-      )};${expires};path=/`;
+    //   if (payload.studio.expires_at) {
+    //     newDate.setTime(payload.studio.expires_at * 1000);
+    //   } else {
+    //     newDate.setTime(newDate.getTime() + 24 * 60 * 60 * 1000);
+    //   }
+    //   expires = "expires=" + newDate.toGMTString();
+    //   document.cookie = `studio=${encodeURIComponent(
+    //     payload.studio.token
+    //   )};${expires};path=/`;
 
-      this.xgenSetStorage("xgen:studio", payload.studio, tokenStoarageType);
-    }
+    //   this.xgenSetStorage("xgen:studio", payload.studio, tokenStoarageType);
+    // }
   },
 
   /**
@@ -467,6 +476,17 @@ var yao_amis = {
     return null;
   },
 
+  getSecureCookie(name) {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith(name + "=")) {
+        return cookie.substring(name.length + 1);
+      }
+    }
+    return null;
+  },
+
   setCookie(name, value, hours) {
     let expires = "";
     if (hours) {
@@ -487,10 +507,20 @@ var yao_amis = {
     this.deleteCookie(tokenName);
   },
   getToken(tokenIn) {
+    const cookie = this.getCookie('__Host-access_token');
+    let token = null;
+    // trim Bearer+ in cookie
+    // check if the cookie is startwith Bearer+
+    if (cookie?.startsWith('Bearer+')) {
+      token = cookie?.substring(7);
+    }
+    if (token) {
+      return token;
+    }
     const tokenName = tokenIn ? tokenIn : "token";
     const stoarage_type = this.getTokenStorageType();
 
-    let token = this.xgenGetStorage(`xgen:${tokenName}`, stoarage_type);
+    token = this.xgenGetStorage(`xgen:${tokenName}`, stoarage_type);
 
     if (token) {
       token = token.value;

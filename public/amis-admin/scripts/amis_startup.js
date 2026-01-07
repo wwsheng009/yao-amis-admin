@@ -1,4 +1,4 @@
-yao_amis.checkToken();
+// yao_amis.checkToken();
 (async function () {
     
     const axios = amisRequire('axios').default || amisRequire('axios');

@@ -1,11 +1,15 @@
+import { findUser } from '@scripts/user';
 import { Exception, Process } from '@yao/yao';
 import { YaoQueryParam } from '@yaoapps/types';
 
 // yao run scripts.editor.database.getPages 1
 export function getPages(userId?: number) {
-  const user_id = Process('session.get', 'user_id');
-  if (user_id) {
-    userId = user_id;
+  // const user_id = Process('session.get', 'user_id');
+  if (!userId) {
+    userId = findUser()?.user_id;
+  }
+  if (!userId) {
+    throw new Exception('请登录系统', 401);
   }
 
   const amisdsl = Process('models.system.amis.page.get', {
@@ -46,9 +50,10 @@ function removeFileExtension(filename) {
  * @returns
  */
 export function getPage(file: string, userId?: number) {
-  const user_id = Process('session.get', 'user_id');
-  if (user_id) {
-    userId = user_id;
+  const user_id = findUser()?.user_id;
+  // const user_id = Process('session.get', 'user_id');
+  if (!user_id) {
+    throw new Exception('请登录系统', 401);
   }
 
   const [amisdsl] = Process('models.system.amis.page.get', {
@@ -89,11 +94,12 @@ export function savePage(file: string, payload, userId?: number) {
     throw new Exception('Invalid page config');
     // return;
   }
-  const user_id = Process('session.get', 'user_id');
+  const user_id = findUser()?.user_id;
+  // const user_id = Process('session.get', 'user_id');
   if (user_id) {
     userId = user_id;
   } else {
-    throw new Exception('Invalid user id', 401)
+    throw new Exception('请登录系统', 401);
   }
   const [row] = Process('models.system.amis.page.get', {
     select: ['id'],
@@ -126,9 +132,10 @@ export function savePage(file: string, payload, userId?: number) {
  */
 export function deletePage(file: string, userId?: number) {
   // Process('widget.remove', 'amis', file);
-  const user_id = Process('session.get', 'user_id');
-  if (user_id) {
-    userId = user_id;
+  const user_id = findUser()?.user_id;
+  // const user_id = Process('session.get', 'user_id');
+  if (!user_id) {
+    throw new Exception('请登录系统', 401);
   }
   Process('models.system.amis.page.deletewhere', {
     wheres: [
@@ -159,9 +166,12 @@ export function getAmisEditorPageSource(pageId: string, userId?: number) {
  * @returns
  */
 export function getEditorPagesFileList(userId: string) {
-  const user_id = Process('session.get', 'user_id');
+  const user_id = findUser()?.user_id;
+  // const user_id = Process('session.get', 'user_id');
   if (user_id) {
     userId = user_id;
+  } else {
+    throw new Exception('请登录系统', 401);
   }
 
   const amisdsl = Process('models.system.amis.page.get', {

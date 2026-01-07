@@ -15,7 +15,7 @@ import { Process } from '@yao/yao';
  */
 // const supported = ['database', 'localfile', 'widget'];
 
-const mode = `database`;
+const mode = `localfile`;
 // 获取页面源代码列表
 export function getPages() {
   return Process(`scripts.editor.${mode}.getPages`);

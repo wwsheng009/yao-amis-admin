@@ -21,6 +21,7 @@ export function getPages() {
 //    -d '{ "args":[file,payload],"method":"savePage"}'
 
 export function savePage(file: string, payload) {
+  // console.log('user_login', JSON.stringify(Authorized()));
   return Process(`scripts.editor.entry.savePage`, file, payload);
 }
 // 删除页面

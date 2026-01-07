@@ -1,5 +1,9 @@
-import { getAmisEditorPages } from '@scripts/admin/menu';
-import { Process } from '@yao/yao';
+import {
+  getAmisEditorPages,
+  getAmisPageRoutesFromDB,
+  getAmisPages
+} from '@scripts/admin/menu';
+import { findUser } from '@scripts/user';
 // site.js
 // scripts.amis.site.MenuSoybean
 export function MenuSoybean() {
@@ -25,21 +29,24 @@ export function MenuSoybean() {
 
 /**
  * 普通用户的菜单列表，根据会话中的用户信息进行过滤
- * yao run scripts.amis.site.Menu
+ * yao run scripts.amis.site.AmisMenu
  * @returns
  */
-function Menu() {
-  const user = Process('scripts.user.findUser');
+export function AmisMenu() {
+  // const user1 = Process('scripts.user.findUser');
+  // console.log('user1', user1);
+  const user = findUser();
+  // console.log('user', user);
   if (user?.type === 'super') {
     return getSuperUserMenu();
   }
-  const pages = Process('scripts.admin.menu.getAmisPageRoutesFromDB');
+  const pages_in = getAmisPageRoutesFromDB();
 
   const siteMenu = {
     pages: [
       ...getHomeMenu(),
       {
-        children: pages
+        children: pages_in
       },
       {
         children: getSettingMenu()
@@ -56,10 +63,10 @@ function Menu() {
 function getSuperUserMenu() {
   const editorPages = getAmisEditorPages(); //Process('scripts.admin.menu.getAmisEditorPages');
 
-  const user = Process('scripts.user.findUser');
+  const user = findUser();
   let pages_in = [];
   if (user?.type === 'super') {
-    pages_in = Process('scripts.admin.menu.getAmisPages');
+    pages_in = getAmisPages();
   }
   // else {
   //   let pages = Process("scripts.admin.menu.getAmisPageRoutesFromDB");

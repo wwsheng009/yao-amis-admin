@@ -64,7 +64,9 @@
         data: {
           app: appInfo.data
         }
-      });
+      },{
+          fetcher: __amisFetcher,
+        });
 
       let temp_id = yao_amis.generateUniqueId();
       yao_amis.xgenSetStorage('xgen:temp_sid', temp_id)

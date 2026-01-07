@@ -38,7 +38,7 @@
   <div id="root" class="app-wrapper"></div>
   <script type="text/javascript">
     (async function () {
-      let amis = amisRequire('amis/embed');
+      let amisEmbed = amisRequire('amis/embed');
       const axios = amisRequire('axios').default || amisRequire('axios');
       const configJson = await axios.get("pages/user/register.json")
       // 通过替换下面这个配置来生成不同页面
