@@ -235,6 +235,11 @@ pnpm add -g typedoc;
 
 typedoc --out ./dist/docs ./scripts/**/*
 ```
+## 修改日志
+
+- 2026-01-07: 1.0.0版本的yao升级了openapi登录模块后，旧有的登录方式已不再支持，用户登录方式切换使用yao的openapi登录方式，用户的session获取方式使用内置的脚本`Authorized()`。旧有的登录方式使用的是jwt自定义方式，一旦存在目录openapi，就自动启用了openapi登录方式。
+
+- js脚本中不要使用Process('scripts.')调用其他的js脚本，直接调用即可。除了额外增加调用成本，还有会导致脚本重复引用的问题。
 
 ## 参考
 

@@ -165,7 +165,7 @@ export function getAmisEditorPageSource(pageId: string, userId?: number) {
  * yao run scripts.editor.database.getEditorPagesFileList
  * @returns
  */
-export function getEditorPagesFileList(userId: string) {
+export function getEditorPagesFileList(userId?: string) {
   const user_id = findUser()?.user_id;
   // const user_id = Process('session.get', 'user_id');
   if (user_id) {

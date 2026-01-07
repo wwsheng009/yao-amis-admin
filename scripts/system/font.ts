@@ -1,4 +1,5 @@
 import { Process } from '@yao/yao';
+import { cleanTable } from './db';
 
 // yao run scripts.system.font.loadfont2
 function loadfont2() {
@@ -26,7 +27,7 @@ function loadfont2() {
   }
 
   const { columns, values } = Process('utils.arr.split', iconArray);
-  Process('scripts.system.db.cleanTable', 'system_font');
+  cleanTable('system_font');
   Process('models.system.font.insert', columns, values);
   return { message: '加载成功' };
 }
@@ -85,7 +86,7 @@ export function loadfont() {
   }
 
   const { columns, values } = Process('utils.arr.split', iconArray);
-  Process('scripts.system.db.cleanTable', 'system_font');
+  cleanTable('system_font');
   Process('models.system.font.insert', columns, values);
   return { message: '加载成功' };
 }

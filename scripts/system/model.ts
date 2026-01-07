@@ -46,7 +46,7 @@ import {
   completeAmisModel,
   guessModelColumnsType
 } from './model_convert';
-import { ErrorMessage, SuccessMessage } from '@scripts/return';
+import { ErrorMessage, RSuccess, SuccessMessage } from '@scripts/return';
 import { deleteModelLocalFile, saveModelToFile } from './model_file';
 import { buildHierarchy } from '@scripts/system/hierarchy';
 
@@ -149,14 +149,14 @@ export function saveModelApi(payload: AmisUIModel) {
     );
 
     if (err?.message) {
-      return Process('scripts.return.ErrorMessage', err.Code, err.Message);
+      return ErrorMessage(err.Code, err.Message);
     }
   } else {
-    return Process('scripts.return.ErrorMessage', 403, '保存模型失败');
+    return ErrorMessage(403, '保存模型失败');
   }
   saveModelToFile(model);
 
-  return Process('scripts.return.RSuccess', getModelApi(id), '保存成功');
+  return RSuccess(getModelApi(id), '保存成功');
 }
 
 /**
@@ -376,7 +376,7 @@ export function ImportModelFromSource(payload: { ID: string; source: string }) {
   if (id) {
     const err = loadModeltoMemory(model, !model.option?.read_only);
     if (err && err.Message) {
-      return Process('scripts.return.ErrorMessage', err.Code, err.Message);
+      return ErrorMessage(err.Code, err.Message);
     }
   } else {
     return Process(
@@ -387,7 +387,7 @@ export function ImportModelFromSource(payload: { ID: string; source: string }) {
   }
   saveModelToFile(model);
 
-  return Process('scripts.return.RSuccess', { id: id }, '导入成功');
+  return RSuccess({ id: id }, '导入成功');
 }
 
 /**
@@ -656,7 +656,7 @@ function ImportTableAction(payload: { name: string }) {
  */
 export function LoadToCacheFromDB(payload: { model: string }) {
   if (!payload) {
-    return Process('scripts.return.ErrorMessage', 500, '数据不正确');
+    return ErrorMessage(500, '数据不正确');
   }
   const modelId = payload.model;
   const model = getModelFromDB(modelId);
@@ -721,7 +721,7 @@ export function ImportFromNeo(modelDsl: AmisUIModel) {
 }
 export function ImportFromCached(payload: { model: string }) {
   if (!payload) {
-    return Process('scripts.return.ErrorMessage', 500, '数据不正确');
+    return ErrorMessage(500, '数据不正确');
   }
   ImportCachedModelById(payload.model);
   return { message: `模型:${payload.model}导入成功` };
@@ -745,7 +745,7 @@ export function ImportFromCachedBatch(payload: { items: { model: string }[] }) {
 export function ImportTableStruct(payload) {
   // console.log(payload);
   if (!payload) {
-    return Process('scripts.return.ErrorMessage', 500, '数据不正确');
+    return ErrorMessage(500, '数据不正确');
   }
   const model = CheckImportModelLine(payload.model, payload.name);
   if (model != null) {

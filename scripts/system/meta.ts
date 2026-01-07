@@ -204,7 +204,7 @@ function cleanPath(path: string): string {
  * @returns
  */
 export function modelApiList(modelId: string) {
-  const apiList = allApi(); //Process('scripts.system.meta.allApi');
+  const apiList = allApi();
   const apilist = apiList.filter((api) => api.group == '/v1/system/model');
   apilist.forEach((api) => {
     api.fullpath = api.fullpath.replace(':model', modelId);

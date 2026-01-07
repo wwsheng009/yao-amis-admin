@@ -1,5 +1,6 @@
 import { curdTemplate } from '@scripts/amis/curd';
 import { curdListPage } from '@scripts/amis/schema';
+import { getCachedModelsNameOptions } from '@scripts/system/model';
 import { generateCodeTemplate } from '@scripts/template/tscode';
 import { createModelType } from '@scripts/template/tstype';
 import { AmisUIColumn, ModelId } from '@yao/types';
@@ -98,7 +99,7 @@ export function getTables2() {
   //    -H 'Authorization: Bearer <Studio JWT>' \
   //    -d '{ "args":[],"method":"getTables"}'
 
-  return Process('scripts.system.model.getCachedModelsNameOptions');
+  return getCachedModelsNameOptions();
 }
 
 /**
@@ -136,7 +137,7 @@ export function CRUDListTemplate(modelId: ModelId, columns?: AmisUIColumn[]) {
         language: 'json',
         title: '增删改查-列表',
         can_preview: true,
-        __code_source: curdListPage(modelId, columns) // Process('scripts.amis.schema.curdListPage',
+        __code_source: curdListPage(modelId, columns)
       }
     ]
   };

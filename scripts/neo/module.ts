@@ -1,4 +1,5 @@
 import { DotName, UnderscoreName, SlashName } from '@scripts/system/lib';
+import { ImportFromNeo } from '@scripts/system/model';
 import { AmisViewComponent } from '@yao/types';
 import { Exception, FS, Process, ssWrite } from '@yao/yao';
 import { YaoForm, YaoModel, YaoTable } from '@yaoapps/types';
@@ -203,7 +204,7 @@ function saveModel(data: AiModel) {
     });
   });
 
-  Process('scripts.system.model.ImportFromNeo', model);
+  ImportFromNeo(model);
   // return id;
 
   // const dsl = new FS('app');

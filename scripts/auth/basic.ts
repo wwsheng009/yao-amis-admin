@@ -1,3 +1,4 @@
+import { userVerify } from '@scripts/amis/user';
 import { Process, Exception } from '@yao/yao';
 
 /**
@@ -47,7 +48,7 @@ export function checkOdataBasicAuth(headers: Record<string, string[]>): void {
     throw new Exception('Invalid credentials format', 401);
   }
 
-  const result = Process('scripts.amis.user.userVerify', userName, password);
+  const result = userVerify(userName, password);
 
   if (result.code !== 200) {
     throw new Exception('Not Authorized', 401);
@@ -97,7 +98,7 @@ export function checkBasicAuth(headers: Record<string, string[]>): void {
     throw new Exception('Invalid credentials format', 403);
   }
 
-  const result = Process('scripts.amis.user.userVerify', userName, password);
+  const result = userVerify(userName, password);
 
   if (result.code !== 200) {
     throw new Exception('Not Authorized', 403);

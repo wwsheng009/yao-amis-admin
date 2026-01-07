@@ -1,4 +1,6 @@
+import { xgenMenu } from '@scripts/admin/menu_node';
 import { getUserAuthObjects } from '@scripts/auth/lib';
+import { findUser } from '@scripts/user';
 
 import { Process, Exception } from '@yao/yao';
 
@@ -68,13 +70,11 @@ export function AmisLogin(payload: {
 
   if (!user) {
     throw new Exception('用户不存在!', 401);
-    // return Process('scripts.return.RError', '', 400, '用户不存在');
   }
   try {
     const passwordValid = Process('utils.pwd.Verify', password, user.password);
     if (passwordValid !== true) {
       throw new Exception('密码不正确!', 401);
-      // return Process('scripts.return.RError', '', 400, '密码不正确');
     }
   } catch (error) {
     throw new Exception('密码不正确' + error.message, 401);
@@ -118,17 +118,10 @@ export function AmisLogin(payload: {
   return {
     sid: sessionId,
     user: userData,
-    menus: Process('scripts.admin.menu_node.xgenMenu'),
+    menus: xgenMenu(),
     token: jwt.token,
     expires_at: jwt.expires_at
   };
-  // return Process('scripts.return.RSuccess', {
-  //   sid: sessionId,
-  //   user: userData,
-  //   menus: Process('scripts.admin.menu_node.xgenMenu'),
-  //   token: jwt.token,
-  //   expires_at: jwt.expires_at
-  // });
 }
 
 /**
@@ -137,11 +130,10 @@ export function AmisLogin(payload: {
  * @returns 包含用户ID、用户名和用户角色的对象
  */
 export function Info() {
-  const user_id = Process('session.get', 'user_id');
-  const user = Process('scripts.user.findUser');
+  const user = findUser();
 
   return {
-    userId: user_id,
+    userId: user.id,
     userName: user.name,
     userRole: user.type || 'user'
   };

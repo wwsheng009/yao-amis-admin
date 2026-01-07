@@ -5,7 +5,15 @@ import { filterTreeDataWithFunc } from '@scripts/amis/data/tree';
 import { getUserAuthMenuIds } from '@scripts/auth/lib';
 import { Process } from '@yao/yao';
 import { MenuSoybean } from '@scripts/amis/site';
-import { getPagesFileList,getAmisPageSchema as getAmisPageSchema1 } from '@scripts/editor/localfile';
+import {
+  getPagesFileList,
+  getAmisPageSchema as getAmisPageSchema1
+} from '@scripts/editor/localfile';
+import {
+  getAmisEditorPageSource,
+  getEditorPagesFileList
+} from '@scripts/editor/entry';
+import { findUser } from '@scripts/user';
 
 /**
  * 处理用户的菜单
@@ -50,7 +58,7 @@ export function getSoySuperUserMenu() {
   // if (routes.length === 0) {
   const routesSoy = MenuSoybean().routes;
   const routesLocal = getAmisLocalPageAsSoyRoutes();
-  const editor_routes = getAmisEditorSoyRoute(); //Process('scripts.admin.menu.getAmisEditorSoyRoute');
+  const editor_routes = getAmisEditorSoyRoute();
 
   const localRoutes = [...routesSoy, ...routesLocal, ...editor_routes];
 
@@ -156,7 +164,7 @@ function saveLocalAmisSoyRoutesToDB() {
  */
 function saveSoyRoutesToDB() {
   // 导入前端本身的菜单
-  const routes = Process('scripts.amis.site.MenuSoybean')['routes'];
+  const routes = MenuSoybean()['routes'];
   saveTreeMenusToDB(routes, 'soy', false);
 }
 /**
@@ -197,18 +205,19 @@ export function getAmisPageSchema(pageId: string, theme: string) {
 }
 
 /**
- * yao run scripts.admin.menu.getAmisEditorPageSource
+ * yao run scripts.admin.menu.PageSource
  * 读取当前用户下的编辑器页面的源代码
  * @param {*} pageId page id
  * @returns
  */
-export function getAmisEditorPageSource(pageId: string) {
-  return Process('scripts.editor.entry.getAmisEditorPageSource', pageId);
+export function PageSource(pageId: string) {
+  return getAmisEditorPageSource(pageId);
 }
 
 // yao run scripts.admin.menu.getAmisEditorSoyRoute
 export function getAmisEditorSoyRoute() {
-  const files = Process('scripts.editor.entry.getEditorPagesFileList');
+  const files = getEditorPagesFileList();
+
   // 这里包装了一个顶层
   const rootRoutes = [
     {
@@ -235,9 +244,9 @@ export function getAmisEditorSoyRoute() {
 
 /**
  * 把文件名列表转换成嵌套关系的路由结构
- * 
+ *
  * yao run scripts.admin.menu.convertAmisFileListToSoyRoute '::["/app/cmd/cmd_runner.json"]'
- * 
+ *
  * @param {string[]} fileList 文件路径列表
  * @returns []Route
  */
@@ -478,7 +487,7 @@ export function getAmisPageRoutesFromDB(): AmisAppPage[] {
   let routes = getAmisRoutesFromDB();
   // 转换成树结构
   routes = Process(`utils.arr.Tree`, routes, { parent: 'parent', empty: 0 });
-  const user = Process('scripts.user.findUser');
+  const user = findUser();
   if (user?.type !== 'super') {
     const menusIds = getUserAuthMenuIds();
     routes = filterTreeDataWithFunc(routes, (item) => {

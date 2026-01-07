@@ -33,10 +33,7 @@ export function MenuSoybean() {
  * @returns
  */
 export function AmisMenu() {
-  // const user1 = Process('scripts.user.findUser');
-  // console.log('user1', user1);
   const user = findUser();
-  // console.log('user', user);
   if (user?.type === 'super') {
     return getSuperUserMenu();
   }
@@ -57,11 +54,12 @@ export function AmisMenu() {
 }
 
 /**
+ * yao run scripts.amis.site.getSuperUserMenu
  * 超级管理员的菜单列表，直接从文件系统读取，而不是数据库
  * @returns
  */
 function getSuperUserMenu() {
-  const editorPages = getAmisEditorPages(); //Process('scripts.admin.menu.getAmisEditorPages');
+  const editorPages = getAmisEditorPages();
 
   const user = findUser();
   let pages_in = [];

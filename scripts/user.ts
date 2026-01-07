@@ -25,6 +25,14 @@ export function findUser(user_id?: string) {
     user_id = Authorized()?.user_id;
   }
   if (!user_id) {
+    const yaoEnv = Process('utils.env.Get', 'YAO_ENV');
+    if (yaoEnv === 'development') {
+      user_id = Process('utils.env.Get', 'YAO_USER_ID');
+      console.log('debug user_id:', user_id);
+    }
+  }
+
+  if (!user_id) {
     return null;
   }
 

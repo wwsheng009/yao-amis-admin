@@ -1,9 +1,10 @@
-import { Process } from '@yao/yao';
+import { reLoadAndSaveMenus } from '@scripts/admin/menu';
+import { cleanTable } from '@scripts/system/db';
 
 export function resetMenu() {
-  Process('scripts.system.db.cleanTable', 'admin_menu');
+  cleanTable('admin_menu');
 }
 
 export function importMenu() {
-  Process('scripts.admin.menu.reLoadAndSaveMenus');
+  reLoadAndSaveMenus();
 }

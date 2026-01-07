@@ -140,7 +140,7 @@
       "path": "/edit_pages/:page",
       "method": "GET",
       "guard": "bearer-jwt",
-      "process": "scripts.admin.menu.getAmisEditorPageSource",
+      "process": "scripts.admin.menu.PageSource",
       "in": [
         "$param.page"
       ],

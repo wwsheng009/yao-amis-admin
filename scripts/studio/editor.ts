@@ -28,6 +28,8 @@
 import { FileNameConvert } from '@scripts/system/lib';
 import { findUser } from '@scripts/user';
 import { Exception, FS, log, Process } from '@yao/yao';
+import * as entry from '@scripts/editor/entry';
+import { curdTemplate } from '@scripts/amis/curd';
 
 // 1 防止误操作，在特定的目录下使用editor的创建与编辑，创建好后再手动复制到正式的目录pages
 // 2 编辑器的功能比较简单，目录结构不支持嵌套的目录结构
@@ -203,19 +205,12 @@ export function loadSinglePageToDB(fname: string) {
 // dump the pages form database to file
 // yao run scripts.stuido.editor.dumpPagesFromDB
 export function dumpPagesFromDB() {
-  const pages = Process('scripts.editor.getPages');
+  const pages = entry.getPages();
   for (const key in pages) {
     const page = pages[key];
     if (page.type && page.type !== 'app') {
       savePage(key, page);
     }
-  }
-}
-// yao run scripts.stuido.editor.dumpSinglePageFromDB "tables.json"
-export function dumpSinglePageFromDB(fname: string) {
-  const page = Process('scripts.editor.getPage', fname);
-  if (page.type && page.type !== 'app') {
-    savePage(fname, page);
   }
 }
 
@@ -298,7 +293,7 @@ export function Mkdir(name: string) {
 //    -H 'Authorization: Bearer <Studio JWT>' \
 //    -d '{ "args":["admin.menu"],"method":"createCurdPage"}'
 export function createCurdPage(table: string) {
-  const page = Process('scripts.amis.curd.curdTemplate', table);
+  const page = curdTemplate(table);
 
   const fs = new FS('app');
   const fname = pagesWorking + table + '_amis_page.json';

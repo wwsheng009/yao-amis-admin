@@ -14,7 +14,7 @@ import { AmisUIColumn, ModelId } from '@yao/types';
 // 对格式有要求的，使用studio命令生成页面后再修改
 
 // yao run scripts.amis.curd.curdTemplate
-export function curdTemplate(modelId: ModelId, columns: AmisUIColumn[]) {
+export function curdTemplate(modelId: ModelId, columns?: AmisUIColumn[]) {
   const filterForm = getFilterFormFields(modelId, columns);
 
   const curdColumns = [...getModelFieldsWithQuick(modelId, columns)];

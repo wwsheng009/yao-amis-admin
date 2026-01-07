@@ -201,7 +201,7 @@ function fillModelOpertion(methdMap) {
  * @returns
  */
 export function isSuperUser() {
-  const user = Process('scripts.user.findUser');
+  const user = findUser();
   // 超级用户没有限制
   if (user?.type === 'super') {
     return true;

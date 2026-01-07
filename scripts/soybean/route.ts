@@ -5,6 +5,7 @@ import {
 } from '@scripts/admin/menu';
 import { filterTreeDataWithFunc } from '@scripts/amis/data/tree';
 import { getUserAuthMenuIds } from '@scripts/auth/lib';
+import { findUser } from '@scripts/user';
 import { Process } from '@yaoapps/client';
 
 export function getConstantRoutes() {
@@ -100,7 +101,7 @@ export function getSoyUserMenu() {
     });
     return cleanUpRouteMenu(routes);
   } else {
-    const user = Process('scripts.user.findUser');
+    const user = findUser();
     if (user?.type === 'super') {
       return getSoySuperUserMenu();
     }

@@ -1,3 +1,4 @@
+import { userVerify } from '@scripts/amis/user';
 import { Exception, FS, log, Process, Require } from '@yao/yao';
 
 const convert = Require('app.blog.xml-js');
@@ -73,7 +74,7 @@ export function metaWeblogHandler(
   const userName = params[userNamePos];
   const password = params[passwordPos];
 
-  const result = Process('scripts.amis.user.userVerify', userName, password);
+  const result = userVerify(userName, password);
   if (result.code != 200) {
     return getErrorMessage(result.message, result.code);
   }

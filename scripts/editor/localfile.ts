@@ -24,7 +24,7 @@ export function getUserDir() {
   return dir;
 }
 // 读取所有的page列表
-export function getPages(dirIn: string) {
+export function getPages(dirIn?: string) {
   let dir = dirIn;
   if (dir == null) {
     dir = getUserDir();
@@ -164,25 +164,6 @@ export function loadSinglePageToDB(fname: string) {
   }
 }
 
-// dump the pages form database to file
-// yao run scripts.editor.localfil.edumpPagesFromDB
-export function dumpPagesFromDB() {
-  const pages = Process('scripts.editor.getPages');
-  for (const key in pages) {
-    const page = pages[key];
-    if (page.type && page.type !== 'app') {
-      savePage(key, page);
-    }
-  }
-}
-// yao run scripts.editor.localfile.dumpSinglePageFromDB "tables.json"
-export function dumpSinglePageFromDB(fname: string) {
-  const page = Process('scripts.editor.getPage', fname);
-  if (page.type && page.type !== 'app') {
-    savePage(fname, page);
-  }
-}
-
 /**
  * 创建yao dsl 配置文件，如果已经存在，移动到.trash目录
  *
@@ -262,7 +243,7 @@ export function Mkdir(name: string) {
 //    -H 'Authorization: Bearer <Studio JWT>' \
 //    -d '{ "args":["admin.menu"],"method":"createCurdPage"}'
 export function createCurdPage(modelId: string) {
-  const page = curdTemplate(modelId, null); //Process('scripts.amis.curd.curdTemplate', table);
+  const page = curdTemplate(modelId, null);
 
   const fs = new FS('system');
   const fname = WorkingPagesLocation + '/' + modelId + '_amis_page.json';
@@ -313,9 +294,11 @@ export function getAmisPageSchema(pageId: string, theme: string) {
  * @returns
  */
 export function getAmisEditorPageSource(pageId: string, userId?: number) {
-  const user_id = findUser()?.user_id;
+  if (!userId) {
+    userId = findUser()?.user_id;
+  }
   // const user_id = Process('session.get', 'user_id');
-  if (!user_id) {
+  if (!userId) {
     throw new Exception('请登录系统', 401);
   }
   let dir = `${WorkingPagesLocation}/${userId}/`;
@@ -361,7 +344,7 @@ export function getPagesFileList() {
  * yao run scripts.editor.localfile.getEditorPagesFileList
  * @returns
  */
-export function getEditorPagesFileList(userId: string) {
+export function getEditorPagesFileList(userId?: string) {
   const user_id = findUser()?.user_id;
   // const user_id = Process('session.get', 'user_id');
   if (!user_id) {

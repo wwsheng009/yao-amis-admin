@@ -1,3 +1,4 @@
+import { RError } from '@scripts/return';
 import { findUser } from '@scripts/user';
 import { Process, Query } from '@yao/yao';
 
@@ -92,7 +93,7 @@ export function UserList() {
 export function changeOwnassword({ current, new_password, confirm }) {
   const user_id = Process('session.get', 'user_id');
   if (!user_id) {
-    return Process('scripts.return.RError', '', 400, '用户不存在');
+    return RError('', 400, '用户不存在');
   }
   const q = new Query();
   const user = q.First({
@@ -114,7 +115,7 @@ export function changeOwnassword({ current, new_password, confirm }) {
       user.password
     );
     if (password_validate !== true) {
-      return Process('scripts.return.RError', '', 400, '密码不正确');
+      return RError('', 400, '密码不正确');
     }
   } catch (error) {
     return Process(
@@ -126,7 +127,7 @@ export function changeOwnassword({ current, new_password, confirm }) {
   }
 
   if (new_password !== confirm) {
-    return Process('scripts.return.RError', '', 400, '密码不一致');
+    return RError('', 400, '密码不一致');
   }
   user.password = new_password;
   Process('models.admin.user.save', user);
@@ -150,7 +151,7 @@ export function register(payload: {
   const ok = Process('utils.captcha.Verify', captcha.id, captcha.code);
   if (ok) {
     if (password !== confirm) {
-      return Process('scripts.return.RError', '', 400, '密码不一致');
+      return RError('', 400, '密码不一致');
     }
 
     const q = new Query();
@@ -168,7 +169,7 @@ export function register(payload: {
     });
 
     if (user) {
-      return Process('scripts.return.RError', '', '400', '用户已存在');
+      return RError('', 400, '用户已存在');
     }
 
     if (!name) {
@@ -183,7 +184,7 @@ export function register(payload: {
       Process('models.admin.user.Create', user1);
     } catch (error) {
       // 为了返回的数据好看
-      return Process('scripts.return.RError', '', error.code, error.message);
+      return RError('', error.code, error.message);
     }
   }
   return {};
