@@ -82,7 +82,7 @@
                 },
                 "dataType": "json",
                 "method": "post",
-                "url": "/api/v1/amis/login"
+                "url": "/api/v1/amis/login3"
               },
               "body": [
                 {

@@ -57,7 +57,7 @@ export function GetMenuNodeItems(id: number) {
  * yao run scripts.admin.menu_node.xgenMenu
  */
 export function xgenMenu() {
-  const tabs = getTableListFromApis(); //Process('scripts.system.meta.getTableListFromApis');
+  const tabs = getTableListFromApis();
   const menuTab = tabs.map((name, idx) => {
     const setting = Process('yao.table.setting', name);
     const label = setting.name || name;

@@ -17,6 +17,20 @@
         "type": "application/json"
       }
     },{
+      // /api/v1/soybean/auth/login3
+      "path": "/login3",
+      "method": "POST",
+      "guard": "-",
+      "process": "scripts.openapi.user.OpenApiLogin",
+      "in": [
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
       // /api/v1/soybean/auth/getUserInfo
       "path": "/getUserInfo", 
       "method": "GET",

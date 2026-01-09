@@ -112,27 +112,30 @@ async function __amisFetcher(api) {
   let token = yao_amis.getToken();
 
   config.withCredentials = true;
-  try {
-    // debugger;
-    const url2 = new URL(url);
-    //跨域
-    //后端可能会设置：Access-Control-Allow-Origin:'*'，与withCredentials会有冲突
-    if (
-      url2.port !== window.location.port ||
-      url2.host !== window.location.host ||
-      url2.protocol != window.location.protocol
-    ) {
-      //使用studio
-      token = getStudioToken();
+  // try {
+  //   // debugger;
+  //   const url2 = new URL(url);
+  //   //跨域
+  //   //后端可能会设置：Access-Control-Allow-Origin:'*'，与withCredentials会有冲突
+  //   if (
+  //     url2.port !== window.location.port ||
+  //     url2.host !== window.location.host ||
+  //     url2.protocol != window.location.protocol
+  //   ) {
+  //     //使用studio
+  //     token = getStudioToken();
 
-      config.withCredentials = false;
-    }
-  } catch (error) { }
+  //     config.withCredentials = false;
+  //   }
+  // } catch (error) { }
   // if (token) {
   //   config.headers["Authorization"] = `Bearer ${token}`;
   // } else {
   //   window.location.href = "login.html";
   //   return;
+  if (token) {
+    config.headers["Authorization"] = `Bearer ${token}`;
+  } 
   // }
   const catcherr = (error) => {
     if (error.response) {
@@ -385,8 +388,9 @@ var yao_amis = {
     }
 
     let expires = "expires=" + newDate.toGMTString();
-    document.cookie = `token=${token};${expires};path=/`;
-    document.cookie = `__Host-access_token=${token};${expires};path=/`;
+    document.cookie = `access_token=Bearer ${token};${expires};path=/`;
+    document.cookie = `__Secure-access_token=Bearer ${token};Secure;${expires};path=/`;
+
     // document.cookie = `username=${payload.user.name};${expires};path=/`;
     // document.cookie = `email=${payload.user.email};${expires};path=/`;
 
@@ -397,22 +401,6 @@ var yao_amis = {
     if (payload.menus) {
       this.updateXgenMenus(payload.menus)
     }
-
-    // if (payload.studio) {
-    //   //studio
-
-    //   if (payload.studio.expires_at) {
-    //     newDate.setTime(payload.studio.expires_at * 1000);
-    //   } else {
-    //     newDate.setTime(newDate.getTime() + 24 * 60 * 60 * 1000);
-    //   }
-    //   expires = "expires=" + newDate.toGMTString();
-    //   document.cookie = `studio=${encodeURIComponent(
-    //     payload.studio.token
-    //   )};${expires};path=/`;
-
-    //   this.xgenSetStorage("xgen:studio", payload.studio, tokenStoarageType);
-    // }
   },
 
   /**
@@ -500,40 +488,38 @@ var yao_amis = {
     document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
   },
 
-  deleteToken(tokenIn) {
-    const tokenName = tokenIn ? tokenIn : "token";
-    sessionStorage.removeItem(`xgen:${tokenName}`);
-    localStorage.getItem(`xgen:${tokenName}`);
-    this.deleteCookie(tokenName);
+  deleteToken() {
+    sessionStorage.removeItem(`xgen:token`);
+    localStorage.removeItem(`xgen:token`);
+    this.deleteCookie('access_token');
+    this.deleteCookie('__Secure-access_token');
   },
-  getToken(tokenIn) {
-    const cookie = this.getCookie('__Host-access_token');
-    let token = null;
+  getToken() {
+    let token = this.getCookie('__Secure-access_token');
+    if (!token) {
+      token = this.getCookie('access_token');
+    } 
     // trim Bearer+ in cookie
     // check if the cookie is startwith Bearer+
-    if (cookie?.startsWith('Bearer+')) {
-      token = cookie?.substring(7);
+    if (token?.startsWith('Bearer+')) {
+      token = token?.substring(7);
+    }
+    if (token?.startsWith('Bearer ')) {
+      token = token?.substring(7);
     }
     if (token) {
       return token;
     }
-    const tokenName = tokenIn ? tokenIn : "token";
     const stoarage_type = this.getTokenStorageType();
 
-    token = this.xgenGetStorage(`xgen:${tokenName}`, stoarage_type);
+    token = this.xgenGetStorage(`xgen:token`, stoarage_type);
 
-    if (token) {
-      token = token.value;
-      if (tokenName == "studio") {
-        token = token.value.token;
-      }
-    }
-    if (token) {
-      this.setCookie(tokenName, token, 8);
-    } else {
-      // 需要确保当从xgen里退出后，本地的cookie也不能生效，两边的token进行同步
-      this.deleteCookie(tokenName);
-    }
+    // if (token) {
+    //   this.setCookie('access_token', token, 8);
+    // } else {
+    //   // 需要确保当从xgen里退出后，本地的cookie也不能生效，两边的token进行同步
+    //   this.deleteCookie('access_token');
+    // }
     return token;
   },
 
@@ -565,14 +551,6 @@ var yao_amis = {
         this.tokenRefreshTimer = null;
         window.location.href = this.loginUrl;
       }
-    }
-  },
-
-  checkStudioToken() {
-    let token = this.getToken("studio");
-
-    if (!token) {
-      window.location.href = this.loginUrl;
     }
   },
 

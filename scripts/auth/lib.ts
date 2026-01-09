@@ -13,8 +13,6 @@ import {
   PermissionModel,
   PermissionRoute
 } from '@yao/auth';
-import { Authorized } from '@yao/runtime';
-
 import { Process, Exception } from '@yao/yao';
 
 /**
@@ -26,7 +24,7 @@ import { Process, Exception } from '@yao/yao';
  */
 function getUserPermission(userId?: number | string) {
   const user = findUser(userId);
-  if (user == null) {
+  if (!user) {
     throw new Exception('用户不存在', 500);
   }
   if (user.role == null) {

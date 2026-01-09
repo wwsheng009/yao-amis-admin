@@ -21,6 +21,22 @@
       }
     },
     {
+      // /api/v1/amis/login3
+      "label": "OpenApi登录请求",
+      "description": "用户自定义登录请求",
+      "path": "/login3",
+      "method": "POST",
+      "guard": "-",
+      "process": "scripts.openapi.user.OpenApiLogin",
+      "in": [
+        ":payload"
+      ],
+      "out": {
+        "status": 200,
+        "type": "application/json"
+      }
+    },
+    {
       // /api/v1/amis/refresh_token
       "label": "刷新token",
       "description": "刷新token",
