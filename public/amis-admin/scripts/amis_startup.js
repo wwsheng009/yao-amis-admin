@@ -171,10 +171,36 @@
             isCurrentUrl: isCurrentUrl,
             theme: 'cxd',
             // theme: 'antd',
-            enableAMISDebug: true,
+            enableAMISDebug: getDebugMode(),
             // pdfjsWorkerSrc: `https://unpkg.com/pdfjs-dist@4.3.136/build/pdf.worker.min.mjs` // pdfJsUrl1
         }
     );
+    // 根据 URL 参数或 cookie 判断是否开启调试
+    function getDebugMode() {
+        // 从 hash 中提取查询参数
+        const hash = window.location.hash;
+        let queryString = '';
+        if (hash && hash.includes('?')) {
+            queryString = hash.substring(hash.indexOf('?') + 1);
+        }
+        const params = new URLSearchParams(queryString);
+        const debugParam = params.get('amis_debug');
+        const cookies = document.cookie.split(';').map(c => c.trim());
+        const debugCookie = cookies.find(c => c.startsWith('amis_debug='));
+
+        if (debugParam === 'true' || debugParam === 'false') {
+            // URL 参数优先，设置 cookie
+            document.cookie = `amis_debug=${debugParam}; path=/; max-age=2592000`;
+            return debugParam === 'true';
+        }
+
+        if (debugCookie) {
+            return debugCookie.split('=')[1] === 'true';
+        }
+
+        return false;
+    }
+
     window.amisInstance = amisInstance;
 
     // console.log("amisInstance", amisInstance)
