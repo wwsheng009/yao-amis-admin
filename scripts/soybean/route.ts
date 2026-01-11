@@ -1,5 +1,6 @@
 import {
   cleanUpRouteMenu,
+  getBasicUserMenu,
   getSoyRoutesFromDB,
   getSoySuperUserMenu
 } from '@scripts/admin/menu';
@@ -106,7 +107,8 @@ export function getSoyUserMenu() {
       return getSoySuperUserMenu();
     }
   }
-  return [];
+  // throw new Exception('用户没配置权限', 500);
+  return getBasicUserMenu();
 }
 
 export function isRouteExist(routeName: string) {

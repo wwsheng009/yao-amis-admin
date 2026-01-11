@@ -3,6 +3,7 @@
  */
 
 import { FindCachedModelById } from '@scripts/service/data';
+import { getCachedModelIDList } from '@scripts/system/model_lib';
 import { FS, http, Process } from '@yaoapps/client';
 import { YaoModel } from '@yaoapps/types';
 
@@ -19,9 +20,6 @@ export interface CachedModelTree {
   data?: CachedModel;
 }
 
-export function getCachedModelIDList(): string[] {
-  return Process('model.list').map((m) => m.id);
-}
 /**
  * use the yao-amis-admin service to generate the code
  *

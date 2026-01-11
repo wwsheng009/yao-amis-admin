@@ -26,6 +26,7 @@ export function findUser(user_id?: string | number) {
   }
   if (!user_id) {
     user_id = Authorized()?.user_id;
+    console.log('Authorized user_id:', user_id);
   }
   if (!user_id) {
     const yaoEnv = Process('utils.env.Get', 'YAO_ENV');

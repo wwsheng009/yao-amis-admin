@@ -65,6 +65,12 @@ export function getSoySuperUserMenu() {
   return cleanUpRouteMenu(localRoutes);
 }
 
+export function getBasicUserMenu() {
+  const routesSoy = MenuSoybean().routes;
+  const localRoutes = [...routesSoy];
+  return cleanUpRouteMenu(localRoutes);
+}
+
 /**
  * yao run scripts.admin.menu.getSoyRoutesFromDB
  * 读取数据库中所有的菜单配置列表
