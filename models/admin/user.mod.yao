@@ -483,6 +483,7 @@
       "label": "Role ID",
       "comment": "User role identifier (references role.role_id)",
       "length": 50,
+      "default": "guest",
       "nullable": true,
       "index": true
     },
@@ -629,8 +630,7 @@
     }
   ],
   "relations": {},
-  "values": [
-  ],
+  "values": [],
   "option": {
     "timestamps": true,
     "soft_deletes": true

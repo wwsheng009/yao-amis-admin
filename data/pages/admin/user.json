@@ -6,7 +6,7 @@
           "&": "$$"
         },
         "method": "post",
-        "url": "/api/v1/system/model/admin.user/search?select=id,type,email,name,phone,role,mobile,status,created_at,updated_at,location"
+        "url": "/api/v1/system/model/admin.user/search?select=id,user_id,type,email,name,phone,role,mobile,status,created_at,updated_at,location"
       },
       "autoFillHeight": true,
       "bulkActions": [
@@ -26,6 +26,14 @@
           "searchable": true,
           "sortable": true,
           "type": "number"
+        },
+        {
+          "label": "用户ID",
+          "name": "user_id",
+          "quickEdit": false,
+          "searchable": true,
+          "sortable": true,
+          "type": "text"
         },
         {
           "label": "姓名",
@@ -126,6 +134,14 @@
                       "name": "type",
                       "static": true,
                       "type": "select"
+                    },
+                    {
+                      "label": "用户ID",
+                      "name": "user_id",
+                      "quickEdit": false,
+                      "searchable": true,
+                      "sortable": true,
+                      "type": "input-text"
                     },
                     {
                       "label": "邮箱",
@@ -255,6 +271,11 @@
                       }
                     },
                     {
+                      "label": "用户ID",
+                      "name": "user_id",
+                      "type": "input-text"
+                    },
+                    {
                       "label": "手机号",
                       "maxLength": 50,
                       "name": "mobile",
@@ -283,12 +304,40 @@
                       "value": "enabled",
                       "options": [
                         {
-                          "label": "启用",
-                          "value": "enabled"
+                          "label": "待审核",
+                          "value": "pending"
                         },
                         {
-                          "label": "停用",
+                          "label": "待邀请验证",
+                          "value": "pending_invite"
+                        },
+                        {
+                          "label": "已启用",
+                          "value": "active"
+                        },
+                        {
+                          "label": "已禁用",
                           "value": "disabled"
+                        },
+                        {
+                          "label": "已封禁（暂停）",
+                          "value": "suspended"
+                        },
+                        {
+                          "label": "已锁定",
+                          "value": "locked"
+                        },
+                        {
+                          "label": "密码已过期",
+                          "value": "password_expired"
+                        },
+                        {
+                          "label": "邮箱未验证",
+                          "value": "email_unverified"
+                        },
+                        {
+                          "label": "已归档",
+                          "value": "archived"
                         }
                       ]
                     },
@@ -356,7 +405,7 @@
                     {
                       "label": "登录密码",
                       "maxLength": 256,
-                      "name": "password",
+                      "name": "password_hash",
                       "type": "input-password",
                       "validationErrors": {
                         "matchRegexp": "登录密码应该至少包含一个数字",
@@ -499,12 +548,40 @@
             "value": "enabled",
             "options": [
               {
-                "label": "启用",
-                "value": "enabled"
+                "label": "待审核",
+                "value": "pending"
               },
               {
-                "label": "停用",
+                "label": "待邀请验证",
+                "value": "pending_invite"
+              },
+              {
+                "label": "已启用",
+                "value": "active"
+              },
+              {
+                "label": "已禁用",
                 "value": "disabled"
+              },
+              {
+                "label": "已封禁（暂停）",
+                "value": "suspended"
+              },
+              {
+                "label": "已锁定",
+                "value": "locked"
+              },
+              {
+                "label": "密码已过期",
+                "value": "password_expired"
+              },
+              {
+                "label": "邮箱未验证",
+                "value": "email_unverified"
+              },
+              {
+                "label": "已归档",
+                "value": "archived"
               }
             ]
           },
@@ -567,7 +644,7 @@
               "body": [
                 {
                   "label": "姓名",
-                  "maxLength": 80,
+                  "maxLength": 20,
                   "name": "name",
                   "type": "input-text",
                   "validationErrors": {
@@ -575,7 +652,21 @@
                     "minLength": "姓名至少需要2个字"
                   },
                   "validations": {
-                    "maxLength": 40,
+                    "maxLength": 20,
+                    "minLength": 2
+                  }
+                },
+                {
+                  "label": "ID",
+                  "maxLength": 80,
+                  "name": "user_id",
+                  "type": "input-text",
+                  "validationErrors": {
+                    "maxLength": "ID不能超过20个字",
+                    "minLength": "ID至少需要2个字"
+                  },
+                  "validations": {
+                    "maxLength": 20,
                     "minLength": 2
                   }
                 },
@@ -650,15 +741,43 @@
                   "label": "状态",
                   "name": "status",
                   "type": "select",
-                  "value": "enabled",
+                  "value": "active",
                   "options": [
                     {
-                      "label": "启用",
-                      "value": "enabled"
+                      "label": "待审核",
+                      "value": "pending"
                     },
                     {
-                      "label": "停用",
+                      "label": "待邀请验证",
+                      "value": "pending_invite"
+                    },
+                    {
+                      "label": "已启用",
+                      "value": "active"
+                    },
+                    {
+                      "label": "已禁用",
                       "value": "disabled"
+                    },
+                    {
+                      "label": "已封禁（暂停）",
+                      "value": "suspended"
+                    },
+                    {
+                      "label": "已锁定",
+                      "value": "locked"
+                    },
+                    {
+                      "label": "密码已过期",
+                      "value": "password_expired"
+                    },
+                    {
+                      "label": "邮箱未验证",
+                      "value": "email_unverified"
+                    },
+                    {
+                      "label": "已归档",
+                      "value": "archived"
                     }
                   ]
                 },
@@ -862,12 +981,40 @@
                       "quickEdit": {
                         "options": [
                           {
-                            "label": "enabled",
-                            "value": "enabled"
+                            "label": "待审核",
+                            "value": "pending"
                           },
                           {
-                            "label": "disabled",
+                            "label": "待邀请验证",
+                            "value": "pending_invite"
+                          },
+                          {
+                            "label": "已启用",
+                            "value": "active"
+                          },
+                          {
+                            "label": "已禁用",
                             "value": "disabled"
+                          },
+                          {
+                            "label": "已封禁（暂停）",
+                            "value": "suspended"
+                          },
+                          {
+                            "label": "已锁定",
+                            "value": "locked"
+                          },
+                          {
+                            "label": "密码已过期",
+                            "value": "password_expired"
+                          },
+                          {
+                            "label": "邮箱未验证",
+                            "value": "email_unverified"
+                          },
+                          {
+                            "label": "已归档",
+                            "value": "archived"
                           }
                         ],
                         "saveImmediately": true,
