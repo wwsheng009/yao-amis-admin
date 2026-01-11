@@ -7,16 +7,19 @@
   "paths": [
     {
       // /api/v1/soybean/auth/login
-      "path": "/login", 
+      "path": "/login",
       "method": "POST",
       "guard": "-",
       "process": "scripts.amis.user.AmisLogin",
-      "in": [":payload"],
+      "in": [
+        ":payload"
+      ],
       "out": {
         "status": 200,
         "type": "application/json"
       }
-    },{
+    },
+    {
       // /api/v1/soybean/auth/login3
       "path": "/login3",
       "method": "POST",
@@ -32,7 +35,7 @@
     },
     {
       // /api/v1/soybean/auth/getUserInfo
-      "path": "/getUserInfo", 
+      "path": "/getUserInfo",
       "method": "GET",
       "guard": "bearer-jwt",
       "process": "scripts.user.findUserInfo",

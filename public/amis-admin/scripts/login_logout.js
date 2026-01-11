@@ -507,19 +507,10 @@ var yao_amis = {
     if (token?.startsWith('Bearer ')) {
       token = token?.substring(7);
     }
-    if (token) {
-      return token;
+    if (!token) {
+      const stoarage_type = this.getTokenStorageType();
+      token = this.xgenGetStorage(`xgen:token`, stoarage_type)?.value;
     }
-    const stoarage_type = this.getTokenStorageType();
-
-    token = this.xgenGetStorage(`xgen:token`, stoarage_type);
-
-    // if (token) {
-    //   this.setCookie('access_token', token, 8);
-    // } else {
-    //   // 需要确保当从xgen里退出后，本地的cookie也不能生效，两边的token进行同步
-    //   this.deleteCookie('access_token');
-    // }
     return token;
   },
 
