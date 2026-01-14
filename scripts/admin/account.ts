@@ -2,15 +2,13 @@ import { RError } from '@scripts/return';
 import { findUser } from '@scripts/user';
 import { Process, Query } from '@yao/yao';
 
-export function UserInfo(id?: string) {
-  const user = findUser();
+//yao run scripts.admin.account.UserInfo
+export function UserInfo(user_id?: string) {
+  const user = findUser(user_id);
   delete user.password_hash;
   return user;
 }
 /**
- *
- *
- * yao run scripts.system.account.UserInfo
  *
  * @returns 当前登录用户的信息
  */

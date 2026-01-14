@@ -1,21 +1,27 @@
-import { agent, Exception, Process, time } from "@yao/runtime";
+import { agent } from '@yao/runtime';
 
 /**
  * Initialize the assistant session
  *
  * @param ctx Context
  */
-function Create(input: agent.Input, options: agent.Options): agent.Create {}
+function Create(
+  ctx: agent.Context,
+  messages: agent.Message[]
+): agent.CreateHookResponse {
+  return null;
+}
 
 /**
- * Process completion of assistant response
+ * Next step
+ *
  * @param ctx Context
+ * @param payload Payload
  */
-function Done(input: agent.Input, output: agent.Output): agent.Done {}
-
-/**
- * Failback hook
- * @param input
- * @param output
- */
-function Failback(input: agent.Input, output: agent.Output): agent.Done {}
+function Next(
+  ctx: agent.Context,
+  payload: agent.NextHookPayload
+): agent.NextHookResponse {
+  //返回null,不干预ai处理流程
+  return null;
+}
